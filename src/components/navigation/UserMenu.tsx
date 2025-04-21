@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User as UserIcon } from "lucide-react";
+import { LogOut, Settings, User as UserIcon, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -54,6 +54,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
           <DropdownMenuItem onClick={() => navigate("/profile")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/profile")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+            <CreditCard className="mr-2 h-4 w-4" />
+            <span>Manage Subscription</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => navigate("/settings")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
             <Settings className="mr-2 h-4 w-4" />

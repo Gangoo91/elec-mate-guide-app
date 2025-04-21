@@ -1,194 +1,193 @@
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { useToast } from "@/hooks/use-toast";
-import Navbar from "@/components/navigation/Navbar";
+import React, { useState, useEffect } from "react";
+import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader2, CreditCard, Calendar, ShieldCheck, X, Check, ArrowRight } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Badge } from "@/components/ui/badge";
+
+type SubscriptionInfo = {
+  subscribed: boolean;
+  subscription_tier: string | null;
+  subscription_end: string | null;
+  price_id: string | null;
+  billing_period: string | null;
+};
 
 const Profile = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [company, setCompany] = useState("");
-  const [updating, setUpdating] = useState(false);
-  
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isManaging, setIsManaging] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+  const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
+  // Check subscription status on load
   useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        navigate("/login");
-        return;
-      }
-      
-      setUser(session.user);
-      
-      // Load user metadata
-      if (session.user.user_metadata) {
-        setName(session.user.user_metadata.name || "");
-        setPhone(session.user.user_metadata.phone || "");
-        setCompany(session.user.user_metadata.company || "");
-      }
-      
-      setLoading(false);
-    };
-    
-    checkUser();
-    
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT") {
-        navigate("/login");
-      }
-    });
+    checkSubscription();
+  }, []);
 
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
-  const updateProfile = async () => {
-    if (!user) return;
-    
-    setUpdating(true);
-    
-    const { error } = await supabase.auth.updateUser({
-      data: {
-        name,
-        phone,
-        company
-      }
-    });
-    
-    setUpdating(false);
-    
-    if (error) {
+  const checkSubscription = async () => {
+    try {
+      setIsChecking(true);
+      const { data, error } = await supabase.functions.invoke("check-subscription");
+      if (error) throw new Error(error.message);
+      setSubscription(data);
+    } catch (error: any) {
       toast({
-        title: "Error updating profile",
-        description: error.message,
-        variant: "destructive"
+        title: "Could not retrieve subscription",
+        description: error?.message || "Please try again later",
+        variant: "destructive",
       });
-      return;
+    } finally {
+      setIsChecking(false);
     }
-    
-    toast({
-      title: "Profile updated",
-      description: "Your profile has been updated successfully"
+  };
+
+  const handleManageSubscription = async () => {
+    setIsManaging(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("customer-portal");
+      if (error) throw new Error(error.message);
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("Failed to get customer portal URL");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Could not access subscription management",
+        description: error?.message || "Please try again later",
+        variant: "destructive",
+      });
+      setIsManaging(false);
+    }
+  };
+
+  const handleStartSubscription = () => {
+    navigate("/subscription");
+  };
+
+  const formatDate = (dateStr: string | null) => {
+    if (!dateStr) return "N/A";
+    return new Date(dateStr).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
     });
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFC900]"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      
-      <main className="container pt-24 pb-16">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-6">Your Profile</h1>
-          
-          <Tabs defaultValue="details" className="w-full">
-            <TabsList className="mb-4">
-              <TabsTrigger value="details">Personal Details</TabsTrigger>
-              <TabsTrigger value="security">Security</TabsTrigger>
-              <TabsTrigger value="preferences">Preferences</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="details">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
-                  <CardDescription>
-                    Update your personal details
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" value={user?.email || ""} disabled />
+    <MainLayout>
+      <div className="container max-w-4xl px-4 py-12">
+        <h1 className="text-3xl font-bold text-[#FFC900] mb-8">Profile Settings</h1>
+
+        <Card className="mb-10 bg-[#22251e] border-[#FFC900]/20">
+          <CardHeader>
+            <CardTitle className="text-[#FFC900] flex items-center gap-2">
+              <CreditCard className="h-5 w-5" />
+              Subscription
+            </CardTitle>
+            <CardDescription className="text-[#FFC900]/70">
+              Manage your subscription and billing information
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {isChecking ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-[#FFC900]" />
+                <span className="ml-2 text-[#FFC900]/70">Checking subscription status...</span>
+              </div>
+            ) : subscription?.subscribed ? (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-medium text-[#FFC900]">Current Plan</h3>
+                    <div className="flex items-center mt-1">
+                      <Badge className="bg-[#FFC900] text-black font-medium">
+                        {subscription.subscription_tier || "Premium"} Plan
+                      </Badge>
+                      <span className="ml-2 text-sm text-[#FFC900]/70">
+                        ({subscription.billing_period || "Monthly"})
+                      </span>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input 
-                      id="name" 
-                      value={name} 
-                      onChange={(e) => setName(e.target.value)} 
-                      placeholder="Enter your full name" 
-                    />
+                  <div className="flex items-center text-[#FFC900]/70">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    <span className="text-sm">
+                      Renews: {formatDate(subscription.subscription_end)}
+                    </span>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input 
-                      id="phone" 
-                      value={phone} 
-                      onChange={(e) => setPhone(e.target.value)} 
-                      placeholder="Enter your phone number" 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Company/Organization</Label>
-                    <Input 
-                      id="company" 
-                      value={company} 
-                      onChange={(e) => setCompany(e.target.value)} 
-                      placeholder="Enter your company or organization" 
-                    />
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button onClick={updateProfile} disabled={updating}>
-                    {updating ? "Updating..." : "Update Profile"}
-                  </Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="security">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Security Settings</CardTitle>
-                  <CardDescription>
-                    Manage your password and security preferences
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button onClick={() => navigate("/reset-password")} variant="outline">
-                    Change Password
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="preferences">
-              <Card>
-                <CardHeader>
-                  <CardTitle>User Preferences</CardTitle>
-                  <CardDescription>
-                    Configure your account preferences
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p>Preference settings coming soon.</p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </main>
-    </div>
+                </div>
+
+                <div className="bg-[#151812]/60 rounded-lg p-4 border border-[#FFC900]/10">
+                  <h4 className="text-sm font-medium text-[#FFC900] mb-2">Your Access Includes:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#FFC900]/80">
+                        {subscription.subscription_tier === "Apprentice" ? "Apprentice resources" : 
+                         subscription.subscription_tier === "Electrician" ? "Apprentice and Electrician resources" :
+                         "Full access to all platform resources"}
+                      </span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#FFC900]/80">Priority support via email</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span className="text-[#FFC900]/80">Cancel or change plans anytime</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-6">
+                <ShieldCheck className="h-12 w-12 text-[#FFC900]/50 mx-auto mb-3" />
+                <h3 className="text-xl font-medium text-[#FFC900] mb-2">No Active Subscription</h3>
+                <p className="text-[#FFC900]/70 mb-4">
+                  Subscribe to access premium features and resources
+                </p>
+                <Button
+                  className="bg-[#FFC900] text-black hover:bg-[#f5bb13] font-medium"
+                  onClick={handleStartSubscription}
+                >
+                  Start 7-Day Free Trial
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            )}
+          </CardContent>
+          {subscription?.subscribed && (
+            <CardFooter className="flex justify-between border-t border-[#FFC900]/10 pt-4">
+              <div className="text-sm text-[#FFC900]/60 flex items-center">
+                <ShieldCheck className="h-4 w-4 mr-1" />
+                Securely managed through Stripe
+              </div>
+              <Button
+                variant="outline"
+                className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+                onClick={handleManageSubscription}
+                disabled={isManaging}
+              >
+                {isManaging ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Please wait...
+                  </>
+                ) : (
+                  "Manage Subscription"
+                )}
+              </Button>
+            </CardFooter>
+          )}
+        </Card>
+      </div>
+    </MainLayout>
   );
 };
 

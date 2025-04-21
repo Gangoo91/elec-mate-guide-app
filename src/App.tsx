@@ -19,6 +19,7 @@ import ElectriciansPage from "./pages/ElectriciansPage";
 import EmployersPage from "./pages/EmployersPage";
 import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
+import SubscriptionGuard from "./components/guards/SubscriptionGuard";
 
 const queryClient = new QueryClient();
 
@@ -31,13 +32,41 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/apprentices" element={<ApprenticesPage />} />
-          <Route path="/electricians" element={<ElectriciansPage />} />
-          <Route path="/employers" element={<EmployersPage />} />
-          <Route path="/apprentice-hub" element={<ApprenticeHub />} />
-          <Route path="/training" element={<ApprenticeHub />} />
-          <Route path="/certification" element={<ApprenticeHub />} />
-          <Route path="/tools" element={<ApprenticeHub />} />
+          <Route path="/apprentices" element={
+            <SubscriptionGuard requiredTier="Apprentice">
+              <ApprenticesPage />
+            </SubscriptionGuard>
+          } />
+          <Route path="/electricians" element={
+            <SubscriptionGuard requiredTier="Electrician">
+              <ElectriciansPage />
+            </SubscriptionGuard>
+          } />
+          <Route path="/employers" element={
+            <SubscriptionGuard requiredTier="Employer">
+              <EmployersPage />
+            </SubscriptionGuard>
+          } />
+          <Route path="/apprentice-hub" element={
+            <SubscriptionGuard requiredTier="Apprentice">
+              <ApprenticeHub />
+            </SubscriptionGuard>
+          } />
+          <Route path="/training" element={
+            <SubscriptionGuard requiredTier="Apprentice">
+              <ApprenticeHub />
+            </SubscriptionGuard>
+          } />
+          <Route path="/certification" element={
+            <SubscriptionGuard requiredTier="Apprentice">
+              <ApprenticeHub />
+            </SubscriptionGuard>
+          } />
+          <Route path="/tools" element={
+            <SubscriptionGuard requiredTier="Apprentice">
+              <ApprenticeHub />
+            </SubscriptionGuard>
+          } />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
