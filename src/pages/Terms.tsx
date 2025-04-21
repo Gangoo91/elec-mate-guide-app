@@ -22,7 +22,7 @@ const Terms = () => (
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold text-[#FFC900]">1. Use of Service</h2>
               <p className="text-[#FFC900]/80 leading-relaxed">
-                You must be at least 18 years old to use Elec-Mate. By accessing our platform, you agree to:
+                You must be at least 16 years old to use Elec-Mate. By accessing our platform, you agree to:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
                 <li>Use the service legally and responsibly</li>
