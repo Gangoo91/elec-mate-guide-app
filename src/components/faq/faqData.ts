@@ -1,124 +1,139 @@
 
-import React from "react";
-import { HelpCircle, Users, Lightbulb, Award, MessageSquare, Heart } from "lucide-react";
-
-export interface FAQQuestionType {
-  id: string;
+export interface FAQItem {
   question: string;
   answer: string;
 }
 
-export interface FAQItemType {
-  section: string;
-  icon: React.ReactNode;
-  questions: FAQQuestionType[];
+export interface FAQSection {
+  title: string;
+  category: string;
+  questions: FAQItem[];
 }
 
-export const faqItems: FAQItemType[] = [
-  // General Platform Questions
+export const faqItems: FAQSection[] = [
   {
-    section: "About Elec-Mate",
-    icon: React.createElement(HelpCircle, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "General Questions",
+    category: "general",
     questions: [
       {
-        id: "item-1",
-        question: "What makes Elec-Mate unique in the UK electrical industry?",
-        answer: "Elec-Mate is the UK's premier digital platform designed exclusively for electrical professionals. We provide comprehensive tools, learning resources, and networking opportunities tailored specifically to the British electrical sector, ensuring compliance with UK standards and supporting professional development."
+        question: "What is Elec-Mate?",
+        answer: "Elec-Mate is a comprehensive platform for electrical professionals in the UK, providing resources, training, certification support, and community tools to help advance your career in the electrical industry."
       },
       {
-        id: "item-8",
+        question: "Who can use Elec-Mate?",
+        answer: "Elec-Mate is designed for apprentices, electricians, and employers in the UK electrical industry. Different subscription tiers provide access to features tailored to your specific role and career stage."
+      },
+      {
         question: "How do I get started with Elec-Mate?",
-        answer: "Getting started is simple. Sign up and select your professional role: Apprentice, Electrician, or Employer. Complete your profile to unlock UK-specific features, including industry-aligned learning materials, project management tools, and professional networking opportunities."
-      },
-      {
-        id: "item-9",
-        question: "How does Elec-Mate protect my data?",
-        answer: "Your data security is our top priority. Elec-Mate is fully compliant with UK GDPR and data protection regulations. We implement robust security measures to ensure your personal and professional information remains confidential and protected according to the highest UK standards."
+        answer: "Simply sign up for an account, choose your role (Apprentice, Electrician, or Employer), select a subscription plan, and start exploring the features and resources available to you."
       }
     ]
   },
-  // Apprentice-focused
   {
-    section: "For Apprentices",
-    icon: React.createElement(Users, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "Apprentice Resources",
+    category: "apprentices",
     questions: [
       {
-        id: "item-2",
-        question: "What resources are available for electrical apprentices?",
-        answer: "Elec-Mate offers comprehensive resources for UK electrical apprentices, including: study guides aligned with City & Guilds and EAL qualifications, practical assessment preparation, mentorship connections, and tools to track your apprenticeship progress and professional development."
+        question: "What training materials are available for apprentices?",
+        answer: "Apprentices have access to a comprehensive library of training materials, including video tutorials, interactive learning modules, practice tests, and study guides aligned with UK qualification standards."
       },
       {
-        id: "item-10",
-        question: "How does Elec-Mate support my technical certificate preparation?",
-        answer: "Our platform provides targeted study resources specifically designed for UK electrical apprenticeship technical certificates. Access practice questions, simulations, and learning modules that align with EAL and City & Guilds requirements, helping you excel in your professional journey."
+        question: "How can I track my apprenticeship progress?",
+        answer: "The platform provides a digital logbook where you can record your work experience, track completed training modules, and monitor your progress toward qualification requirements."
+      },
+      {
+        question: "Can I find a mentor through Elec-Mate?",
+        answer: "Yes, our mentorship matching system connects apprentices with experienced electricians who can provide guidance, answer questions, and offer career advice."
       }
     ]
   },
-  // Electrician-focused
   {
-    section: "For Electricians",
-    icon: React.createElement(Lightbulb, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "Electrician Tools",
+    category: "electricians",
     questions: [
       {
-        id: "item-3",
-        question: "What AI tools are available for electricians?",
-        answer: "Electricians benefit from our AI-powered tools designed for the UK market. These include project planning assistants, compliance documentation generators, and technical resource managers, all built to ensure adherence to BS 7671 (UK Wiring Regulations) and industry best practices."
+        question: "What professional tools does Elec-Mate offer for qualified electricians?",
+        answer: "Electricians gain access to quote generators, code compliance checkers, material calculators, continued professional development resources, and industry updates to stay current with regulations."
       },
       {
-        id: "item-11",
-        question: "How does Elec-Mate keep me updated with industry regulations?",
-        answer: "Stay informed with our real-time regulatory updates. We provide instant notifications and comprehensive explanations of changes to IET Wiring Regulations, electrical safety standards, and other critical UK electrical industry guidelines."
+        question: "How can I showcase my qualifications and experience?",
+        answer: "Your professional profile allows you to display your qualifications, certifications, specialized skills, and work history, which can be shared with potential employers or clients."
+      },
+      {
+        question: "Are there continuing education resources available?",
+        answer: "Yes, we provide access to continuing education modules, webinars, and resources to help you maintain certifications and stay updated on the latest industry developments."
       }
     ]
   },
-  // Employer-focused
   {
-    section: "For Employers",
-    icon: React.createElement(Award, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "Employer Features",
+    category: "employers",
     questions: [
       {
-        id: "item-4",
-        question: "How can Elec-Mate benefit electrical businesses?",
-        answer: "Elec-Mate offers UK employers advanced workforce management tools, including AI-powered tendering systems aligned with British procurement standards, apprentice development tracking, and comprehensive project management capabilities tailored to the electrical contracting sector."
+        question: "How can Elec-Mate help me find qualified electricians?",
+        answer: "Our platform allows employers to search for qualified professionals based on location, skills, qualifications, and availability, with verified credentials and work history."
       },
       {
-        id: "item-12",
-        question: "Can Elec-Mate help with compliance documentation?",
-        answer: "Absolutely. Our platform streamlines compliance documentation management, helping you generate and maintain essential UK electrical industry documents such as Electrical Installation Condition Reports (EICR), minor works certificates, and other regulatory documentation."
+        question: "Can I track my team's certifications and qualifications?",
+        answer: "Yes, the team management tools allow you to monitor your employees' certifications, ensure compliance, and receive notifications when renewals are approaching."
+      },
+      {
+        question: "What analytics are available for business owners?",
+        answer: "Employers can access analytics dashboards showing team performance metrics, training completion rates, and other business insights to help optimize operations."
       }
     ]
   },
-  // Support & Community
   {
-    section: "Support & Community",
-    icon: React.createElement(MessageSquare, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "Account & Billing",
+    category: "account",
     questions: [
       {
-        id: "item-5",
-        question: "What mental health support is available?",
-        answer: "We've partnered with leading UK mental health organisations like Mind and the Electrical Industries Charity to provide confidential support services. Our Mental Health Hub offers resources, counselling connections, and peer support specifically tailored to professionals in the electrical sector."
+        question: "How do I update my subscription?",
+        answer: "You can update your subscription at any time by navigating to the 'Manage Subscription' page in your account settings, where you can upgrade, downgrade, or cancel your plan."
       },
       {
-        id: "item-6",
-        question: "How does the mentorship program work?",
-        answer: "Our Mentor Connect service matches apprentices and early-career electricians with experienced UK professionals. Mentors provide guidance on industry practices, local regulations, and career development opportunities within the British electrical sector."
+        question: "Is my payment information secure?",
+        answer: "Yes, we use industry-standard encryption and never store your complete payment details. All payments are processed securely through our trusted payment provider."
+      },
+      {
+        question: "Can I switch between subscription tiers?",
+        answer: "Yes, you can switch between Apprentice, Electrician, and Employer tiers as your career progresses. When upgrading, you'll immediately gain access to the additional features."
       }
     ]
   },
-  // Qualifications & Training
   {
-    section: "Qualifications & Professional Development",
-    icon: React.createElement(Heart, { className: "h-5 w-5 text-[#FFC900]" }),
+    title: "Technical Support",
+    category: "support",
     questions: [
       {
-        id: "item-7",
-        question: "Which qualifications does Elec-Mate support?",
-        answer: "We comprehensively support UK electrical qualifications, including City & Guilds, EAL, and other nationally recognised certifications. Track your progress towards NVQs, AM2 assessments, and continuous professional development requirements set by industry bodies like the JIB and Electrical Contractors Association (ECA)."
+        question: "How do I contact support?",
+        answer: "You can reach our support team through the help center, by email at support@elec-mate.co.uk, or through the live chat feature available during business hours."
       },
       {
-        id: "item-13",
-        question: "What Continuous Professional Development (CPD) opportunities are available?",
-        answer: "Access a wide range of CPD courses recognised by UK electrical governing bodies. These courses help maintain your professional status and keep your skills current with the latest technologies and industry standards in the electrical sector."
+        question: "What should I do if I find a bug?",
+        answer: "Please report any bugs or issues through the 'Report a Problem' option in the help menu, providing as much detail as possible about what occurred."
+      },
+      {
+        question: "Is Elec-Mate available offline?",
+        answer: "Some features of Elec-Mate can be used offline, with data syncing when you reconnect to the internet. However, full functionality requires an internet connection."
+      }
+    ]
+  },
+  {
+    title: "Mental Health & Wellness",
+    category: "wellness",
+    questions: [
+      {
+        question: "What mental health resources are available?",
+        answer: "Elec-Mate provides anonymous access to mental health resources, including self-assessment tools, stress management techniques, and crisis support information tailored to the electrical industry."
+      },
+      {
+        question: "How does the Wellness Score feature work?",
+        answer: "Our Wellness Score feature allows you to track your work-life balance, stress levels, and overall wellbeing through confidential check-ins, providing personalized recommendations for improvement."
+      },
+      {
+        question: "Is my mental health information kept private?",
+        answer: "Absolutely. All mental health and wellness data is anonymous and encrypted. We never share this information with employers or other users."
       }
     ]
   }

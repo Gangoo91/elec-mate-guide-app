@@ -6,9 +6,11 @@ import FAQSections from "@/components/faq/FAQSections";
 import FAQSearchBar from "@/components/faq/FAQSearchBar";
 import NoResultsFound from "@/components/faq/NoResultsFound";
 import { faqItems } from "@/components/faq/faqData";
+import FAQCategoryTabs from "@/components/faq/FAQCategoryTabs";
 
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
   
   const handleSetSearchQuery = useCallback((query: string) => {
     setSearchQuery(query);
@@ -18,19 +20,45 @@ const FAQ = () => {
     setSearchQuery("");
   }, []);
   
+  const handleCategoryChange = useCallback((category: string) => {
+    setActiveCategory(category);
+    setSearchQuery(""); // Clear search when changing categories
+  }, []);
+  
   const filteredFAQItems = useMemo(() => {
-    if (!searchQuery) return faqItems;
+    if (!searchQuery && activeCategory === "all") return faqItems;
     
-    return faqItems
-      .map(section => ({
+    let filtered = [...faqItems];
+    
+    // Filter by category first if not "all"
+    if (activeCategory !== "all") {
+      filtered = filtered.filter(section => 
+        section.category.toLowerCase() === activeCategory.toLowerCase()
+      );
+    }
+    
+    // Then apply search filter if needed
+    if (searchQuery) {
+      filtered = filtered.map(section => ({
         ...section,
         questions: section.questions.filter(item => 
           item.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
           item.answer.toLowerCase().includes(searchQuery.toLowerCase())
         )
-      }))
-      .filter(section => section.questions.length > 0);
-  }, [searchQuery]);
+      })).filter(section => section.questions.length > 0);
+    }
+    
+    return filtered;
+  }, [searchQuery, activeCategory]);
+  
+  // Extract all unique categories from FAQ data
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set<string>();
+    faqItems.forEach(item => {
+      uniqueCategories.add(item.category);
+    });
+    return ["all", ...Array.from(uniqueCategories)];
+  }, []);
     
   return (
     <MainLayout>
@@ -43,6 +71,12 @@ const FAQ = () => {
         <FAQSearchBar 
           searchQuery={searchQuery} 
           setSearchQuery={handleSetSearchQuery} 
+        />
+        
+        <FAQCategoryTabs 
+          categories={categories}
+          activeCategory={activeCategory}
+          onCategoryChange={handleCategoryChange}
         />
         
         <div className="mt-8 space-y-8 max-w-4xl mx-auto">
