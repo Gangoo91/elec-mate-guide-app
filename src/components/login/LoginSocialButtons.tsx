@@ -12,12 +12,12 @@ const LoginSocialButtons: React.FC<LoginSocialButtonsProps> = ({
   onSocialLogin,
   isSubmitting,
 }) => (
-  <div className="grid grid-cols-2 gap-4 mb-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-3">
     <Button
       type="button"
       onClick={() => onSocialLogin("Google")}
       variant="outline"
-      className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white"
+      className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white w-full"
       disabled={isSubmitting}
     >
       <img src="/lovable-uploads/photo-1573804633927-bfcbcd909acd" alt="Google logo" className="w-5 h-5 mr-2" />
@@ -27,7 +27,7 @@ const LoginSocialButtons: React.FC<LoginSocialButtonsProps> = ({
       type="button"
       onClick={() => onSocialLogin("GitHub")}
       variant="outline"
-      className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white"
+      className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white w-full"
       disabled={isSubmitting}
     >
       <Github size={20} className="mr-2" />
