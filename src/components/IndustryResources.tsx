@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Rss, Info } from "lucide-react";
 
-// Update the NewsItem and FeedSource types
 type NewsItem = {
   source: string;
   title: string;
@@ -16,7 +15,7 @@ type FeedSource = {
   label: string;
 };
 
-// Only UK-based RSS feed sources: HSE (UK), Electrical Safety First, Electrical Review
+// UK-based RSS feed sources
 const FEED_SOURCES: FeedSource[] = [
   {
     url: "https://www.hse.gov.uk/news/hse-news.xml",
@@ -29,6 +28,14 @@ const FEED_SOURCES: FeedSource[] = [
   {
     url: "https://electricalreview.co.uk/feed/", // Electrical Review industry news
     label: "Electrical Review",
+  },
+  {
+    url: "https://www.jib.org.uk/feed.rss", // Joint Industry Board (UK)
+    label: "JIB",
+  },
+  {
+    url: "https://www.eca.co.uk/news/rss", // Electrical Contractors' Association (UK)
+    label: "ECA",
   },
 ];
 
@@ -69,7 +76,6 @@ const IndustryResources: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // Fetch all feeds in parallel
       const allNews = (
         await Promise.allSettled(FEED_SOURCES.map(src => fetchFeed(src.url)))
       )
@@ -80,7 +86,6 @@ const IndustryResources: React.FC = () => {
         )
         .flat();
 
-      // Sort by date (most recent first)
       const sorted = allNews
         .filter(item => item.title && item.link)
         .sort((a, b) => {
@@ -109,7 +114,7 @@ const IndustryResources: React.FC = () => {
       <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 flex flex-col items-center">
         <h2 className="text-2xl font-bold text-[#FFC900] mb-3">Industry Resources</h2>
         <p className="text-[#FFC900]/70 mb-7 text-center">
-          Stay up to date with recent developments, safety news, and regulation changes for the UK electrical industry—live updates from trusted organisations like HSE and Electrical Safety First.
+          Stay up to date with recent developments, safety news, and regulation changes for the UK electrical industry—live updates from trusted organisations like HSE, Electrical Safety First, JIB, ECA, and Electrical Review.
         </p>
         <div className="w-full max-w-md">
           <div className="flex items-center mb-2 justify-between">
@@ -140,15 +145,10 @@ const IndustryResources: React.FC = () => {
               <ul className="space-y-2">
                 {news.map((item, idx) => (
                   <li key={idx} className="flex flex-col">
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#FFC900] hover:underline flex items-center gap-2 text-base"
-                    >
+                    <span className="text-[#FFC900] flex items-center gap-2 text-base">
                       {item.title}
                       <Info className="h-4 w-4 inline-block opacity-70" />
-                    </a>
+                    </span>
                     <div className="flex items-center gap-2 mt-0.5">
                       {item.pubDate && (
                         <span className="text-xs text-[#FFC900]/50">{formatDate(item.pubDate)}</span>
@@ -160,7 +160,7 @@ const IndustryResources: React.FC = () => {
               </ul>
             )}
           </div>
-          {/* Removed the "Sources" links section */}
+          {/* Sources section is intentionally removed */}
         </div>
       </div>
     </div>
@@ -168,4 +168,3 @@ const IndustryResources: React.FC = () => {
 };
 
 export default IndustryResources;
-
