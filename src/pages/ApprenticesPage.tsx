@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import BackButton from "@/components/navigation/BackButton";
 
 const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
@@ -94,6 +94,7 @@ const ApprenticesPage = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-12">
+        <BackButton />
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentice Hub</h1>
           <p className="text-lg text-[#FFC900]/80 max-w-2xl mx-auto">

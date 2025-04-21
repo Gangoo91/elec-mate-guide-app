@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Briefcase, Search, Users, ChartBar } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import BackButton from "@/components/navigation/BackButton";
 
 const EmployersPage = () => {
   const employerResources = [
@@ -35,6 +35,7 @@ const EmployersPage = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-12">
+        <BackButton />
         <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Employers Portal</h1>
           <p className="text-lg text-[#FFC900]/80 max-w-2xl mx-auto">

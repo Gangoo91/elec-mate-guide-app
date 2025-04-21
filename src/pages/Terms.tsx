@@ -1,9 +1,11 @@
 
 import { Link } from "react-router-dom";
+import BackButton from "@/components/navigation/BackButton";
 
 const Terms = () => (
   <div className="min-h-screen flex flex-col items-center justify-start px-6 py-12 bg-background text-foreground">
     <div className="w-full max-w-3xl">
+      <BackButton />
       <h1 className="text-4xl font-extrabold text-center mb-8 text-primary-foreground">
         Terms of Service
       </h1>
@@ -50,7 +52,6 @@ const Terms = () => (
       <p className="text-sm text-muted-foreground mb-8">
         If you have any questions about these Terms, please contact us at <a href="mailto:support@elec-mate.com" className="text-primary hover:underline">support@elec-mate.com</a>.
       </p>
-
       <Link to="/" className="block text-center text-primary font-semibold hover:underline">
         &larr; Back to Home
       </Link>
