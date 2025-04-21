@@ -3,27 +3,22 @@ import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-// Colors inspired by screenshot
-const bgColor = "#151812";
-const cardColor = "#FFC900";
-const textColor = "#FFFDE6";
-
 const roles = [
   {
     label: "APPRENTICES",
-    icon: <Book size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    icon: <Book size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
     path: "/dashboard",
     description: "Access apprentice resources and training materials",
   },
   {
     label: "ELECTRICIANS",
-    icon: <Lightbulb size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    icon: <Lightbulb size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
     path: "/dashboard",
     description: "Professional tools and job opportunities",
   },
   {
     label: "EMPLOYERS",
-    icon: <Briefcase size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    icon: <Briefcase size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
     path: "/dashboard",
     description: "Find qualified electricians and apprentices",
   },
@@ -38,21 +33,21 @@ const Index = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-start px-4"
-      style={{ background: bgColor }}
+      style={{ background: "#151812" }}
     >
       <h1
-        className="text-[2.5rem] sm:text-5xl font-extrabold text-center mb-8 mt-14 leading-tight drop-shadow"
-        style={{ color: textColor, letterSpacing: 0 }}
+        className="text-[2rem] sm:text-5xl font-extrabold text-center mb-6 mt-8 leading-tight drop-shadow"
+        style={{ color: "#FFFDE6", letterSpacing: 0 }}
       >
         THE ELECTRICAL<br />INDUSTRY APP
       </h1>
-      <div className="w-full max-w-xl mb-14 flex items-center px-2">
+      <div className="w-full max-w-xl mb-8 flex items-center px-2">
         <div className="relative w-full">
           <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
-            <Search size={26} />
+            <Search size={22} />
           </span>
           <input
-            className="w-full pl-14 pr-5 py-4 rounded-2xl bg-[#23261e]/80 text-lg text-gray-300 placeholder:text-gray-400 border-none outline-none focus:ring-2 focus:ring-[#FFC900] transition"
+            className="w-full pl-14 pr-5 py-3 rounded-2xl bg-[#23261e]/80 text-lg text-gray-300 placeholder:text-gray-400 border-none outline-none focus:ring-2 focus:ring-[#FFC900] transition"
             placeholder="Search"
             type="text"
             style={{ fontWeight: 500 }}
@@ -61,8 +56,8 @@ const Index = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-7 w-full max-w-xl items-center">
-        <div className="flex flex-col sm:flex-row gap-7 w-full">
+      <div className="flex flex-col gap-4 w-full max-w-xl items-center">
+        <div className="flex flex-col sm:flex-row gap-4 w-full">
           {filteredRoles.slice(0, 2).map((role) => (
             <Link
               to={role.path}
@@ -74,9 +69,9 @@ const Index = () => {
               <div
                 className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
                 style={{
-                  background: cardColor,
-                  padding: "2.8rem 0.5rem",
-                  minHeight: 200,
+                  background: "#FFC900",
+                  padding: "2rem 0.5rem",
+                  minHeight: 160,
                 }}
               >
                 {role.icon}
@@ -99,9 +94,9 @@ const Index = () => {
             <div
               className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
               style={{
-                background: cardColor,
-                padding: "2.8rem 0.5rem",
-                minHeight: 200,
+                background: "#FFC900",
+                padding: "2rem 0.5rem",
+                minHeight: 160,
               }}
             >
               {filteredRoles[2].icon}
