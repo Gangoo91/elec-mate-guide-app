@@ -40,6 +40,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
     }
   };
 
+  // Handler specifically for subscription management
+  const handleManageSubscription = () => {
+    // Navigate to profile page with a timestamp parameter to ensure it's fresh
+    navigate(`/profile?t=${Date.now()}`);
+  };
+
   if (user || bypassAuth) {
     return (
       <DropdownMenu>
@@ -55,7 +61,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/profile")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+          <DropdownMenuItem onClick={handleManageSubscription} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Manage Subscription</span>
           </DropdownMenuItem>

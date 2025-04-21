@@ -21,6 +21,7 @@ serve(async (req: Request) => {
   try {
     const stripeKey = Deno.env.get("Stripe_Payment_Key");
     if (!stripeKey) throw new Error("Stripe secret key missing");
+    
     // Service role key to lookup users
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -37,40 +38,69 @@ serve(async (req: Request) => {
     logStep("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
+    
+    // Try to find customer by email
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    
+    // If no customer exists, create one
+    let customerId;
     if (customers.data.length === 0) {
-      throw new Error("No Stripe customer found for this user");
-    }
-    const customerId = customers.data[0].id;
-    logStep("Found Stripe customer", { customerId });
-
-    const origin = req.headers.get("origin") || "http://localhost:3000";
-    
-    // First check if any portal configurations exist
-    const configs = await stripe.billingPortal.configurations.list({ limit: 1 });
-    let portalSession;
-    
-    if (configs.data.length > 0) {
-      // Use existing configuration
-      portalSession = await stripe.billingPortal.sessions.create({
-        customer: customerId,
-        return_url: `${origin}/profile`,
-        configuration: configs.data[0].id
+      const newCustomer = await stripe.customers.create({
+        email: user.email,
+        metadata: {
+          user_id: user.id
+        }
       });
+      customerId = newCustomer.id;
+      logStep("Created new Stripe customer", { customerId });
     } else {
-      // If no configuration exists, create a basic session without specifying configuration
-      // Stripe will use default settings
-      portalSession = await stripe.billingPortal.sessions.create({
-        customer: customerId,
-        return_url: `${origin}/profile`
-      });
+      customerId = customers.data[0].id;
+      logStep("Found existing Stripe customer", { customerId });
     }
 
-    logStep("Customer portal session created", { sessionId: portalSession.id, url: portalSession.url });
-    return new Response(
-      JSON.stringify({ url: portalSession.url }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
-    );
+    // Create a return URL that includes a cache-busting parameter
+    const origin = req.headers.get("origin") || "http://localhost:3000";
+    const timestamp = Date.now();
+    const returnUrl = `${origin}/profile?t=${timestamp}`;
+    
+    // Create a billing portal session
+    logStep("Creating portal session", { customerId, returnUrl });
+    
+    try {
+      // Create a portal session without explicitly specifying configuration
+      // This will use default settings or the most recently created configuration
+      const portalSession = await stripe.billingPortal.sessions.create({
+        customer: customerId,
+        return_url: returnUrl,
+      });
+      
+      logStep("Portal session created successfully", { 
+        sessionId: portalSession.id, 
+        url: portalSession.url 
+      });
+      
+      return new Response(
+        JSON.stringify({ url: portalSession.url }),
+        { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+          status: 200 
+        }
+      );
+    } catch (portalError: any) {
+      // If there's an issue with configuration, log detailed error
+      logStep("Portal creation error", { 
+        message: portalError.message,
+        type: portalError.type,
+        code: portalError.code
+      });
+      
+      // Provide a more helpful message to the client
+      const errorMessage = portalError.message.includes("configuration") 
+        ? "Stripe customer portal is not properly configured. Please set up your customer portal in the Stripe dashboard."
+        : portalError.message;
+        
+      throw new Error(errorMessage);
+    }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     logStep("ERROR", { message: msg });
