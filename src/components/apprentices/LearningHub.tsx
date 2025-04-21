@@ -1,10 +1,9 @@
 
 import React from 'react';
-import { Search } from "lucide-react";
+import { Search, Lightbulb, CalendarCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { CalendarCheck } from "lucide-react";
-import AILearningTools from "./AILearningTools";
+import { Link } from "react-router-dom";
 
 const LearningHub = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -33,7 +32,21 @@ const LearningHub = () => {
         </CardHeader>
       </Card>
 
-      <AILearningTools />
+      <Link to="/apprentices/ai-tools">
+        <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+          <CardHeader>
+            <CardTitle className="text-[#FFC900] flex items-center gap-2">
+              <Lightbulb className="h-6 w-6" />
+              AI Learning Tools
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-[#FFC900]/70">
+              Access our AI-powered assistants for technical diagnostics and regulatory guidance.
+            </p>
+          </CardContent>
+        </Card>
+      </Link>
       
       <Card className="bg-[#22251e] border-[#FFC900]/20">
         <CardHeader>

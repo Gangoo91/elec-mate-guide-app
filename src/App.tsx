@@ -25,6 +25,7 @@ import FAQ from "./pages/FAQ";
 import MentalHealth from "./pages/MentalHealth";
 import Mentorship from "./pages/Mentorship";
 import LearningHubPage from "./pages/LearningHubPage";
+import AIToolsPage from "./pages/AIToolsPage";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,11 @@ const App = () => (
               <Route path="/apprentices/learning-hub" element={
                 <SubscriptionGuard requiredTier="Apprentice">
                   <LearningHubPage />
+                </SubscriptionGuard>
+              } />
+              <Route path="/apprentices/ai-tools" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <AIToolsPage />
                 </SubscriptionGuard>
               } />
               <Route path="/electricians" element={
