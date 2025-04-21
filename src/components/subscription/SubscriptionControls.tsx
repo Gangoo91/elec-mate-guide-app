@@ -34,6 +34,7 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
         description: error?.message || "Please try again later",
         variant: "destructive",
       });
+    } finally {
       setIsManaging(false);
     }
   };
