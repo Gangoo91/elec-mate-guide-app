@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,6 +24,7 @@ const tierAccess = {
 export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardProps) => {
   const [loading, setLoading] = useState(true);
   const [subscription, setSubscription] = useState<SubscriptionStatus | null>(null);
+  const [showToast, setShowToast] = useState(false);
   const location = useLocation();
   const { toast } = useToast();
 
@@ -44,19 +46,27 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
         setSubscription(data);
       } catch (error: any) {
         console.error("Error checking subscription:", error);
-        toast({
-          title: "Access error",
-          description: "There was a problem verifying your subscription status.",
-          variant: "destructive",
-        });
         setSubscription({ subscribed: false, subscription_tier: null });
+        setShowToast(true);
       } finally {
         setLoading(false);
       }
     };
 
     checkSubscription();
-  }, [toast]);
+  }, []);
+
+  // Handle toast separately to avoid React warning
+  useEffect(() => {
+    if (showToast) {
+      toast({
+        title: "Access error",
+        description: "There was a problem verifying your subscription status.",
+        variant: "destructive",
+      });
+      setShowToast(false);
+    }
+  }, [showToast, toast]);
 
   if (loading) {
     return (
@@ -72,11 +82,18 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
   }
 
   if (!subscription?.subscribed) {
-    toast({
-      title: "Subscription required",
-      description: "Please subscribe to access this content.",
-      variant: "destructive",
-    });
+    // Use local storage to prevent toast from showing on every render
+    const hasShownSubscriptionToast = localStorage.getItem('hasShownSubscriptionToast');
+    if (!hasShownSubscriptionToast) {
+      toast({
+        title: "Subscription required",
+        description: "Please subscribe to access this content.",
+        variant: "destructive",
+      });
+      localStorage.setItem('hasShownSubscriptionToast', 'true');
+      // Clear this after 5 seconds to allow it to show again if needed
+      setTimeout(() => localStorage.removeItem('hasShownSubscriptionToast'), 5000);
+    }
     return <Navigate to="/subscription" state={{ from: location }} replace />;
   }
 
@@ -84,11 +101,18 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
   const allowedTiers = tierAccess[userTier as keyof typeof tierAccess] || [];
   
   if (!allowedTiers.includes(requiredTier)) {
-    toast({
-      title: "Access denied",
-      description: `Your ${userTier} subscription doesn't include access to ${requiredTier} resources. Please upgrade your plan.`,
-      variant: "destructive",
-    });
+    // Use local storage to prevent toast from showing on every render
+    const hasShownTierToast = localStorage.getItem('hasShownTierToast');
+    if (!hasShownTierToast) {
+      toast({
+        title: "Access denied",
+        description: `Your ${userTier} subscription doesn't include access to ${requiredTier} resources. Please upgrade your plan.`,
+        variant: "destructive",
+      });
+      localStorage.setItem('hasShownTierToast', 'true');
+      // Clear this after 5 seconds to allow it to show again if needed
+      setTimeout(() => localStorage.removeItem('hasShownTierToast'), 5000);
+    }
     return <Navigate to="/profile" state={{ from: location }} replace />;
   }
 
