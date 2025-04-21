@@ -2,11 +2,11 @@
 import { Input } from "@/components/ui/input";
 import React from "react";
 
-interface LoginEmailInputProps {
+type LoginEmailInputProps = {
   email: string;
   error?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 const LoginEmailInput: React.FC<LoginEmailInputProps> = ({ email, error, onChange }) => (
   <div className="space-y-1">
