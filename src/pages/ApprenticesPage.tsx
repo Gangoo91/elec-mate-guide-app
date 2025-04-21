@@ -65,18 +65,6 @@ const ApprenticesPage = () => {
       link: "#tools"
     },
     {
-      title: "Skill Assessments",
-      description: "Test your knowledge and track progress",
-      icon: <Award className="h-6 w-6 text-[#FFC900]" />,
-      link: "#assessments"
-    },
-    {
-      title: "Training Events",
-      description: "Workshops and training opportunities",
-      icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
-      link: "#events"
-    },
-    {
       title: "Mentor Connect",
       description: "Connect with experienced electricians",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
@@ -88,6 +76,18 @@ const ApprenticesPage = () => {
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
       link: null,
       showMHModal: true,
+    },
+    {
+      title: "Skill Assessments",
+      description: "Test your knowledge and track progress",
+      icon: <Award className="h-6 w-6 text-[#FFC900]" />,
+      link: "#assessments"
+    },
+    {
+      title: "Training Events",
+      description: "Workshops and training opportunities",
+      icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
+      link: "#events"
     }
   ];
 
