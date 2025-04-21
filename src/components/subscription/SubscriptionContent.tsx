@@ -19,6 +19,7 @@ const SubscriptionContent = () => {
     billingCycle,
     checkingAuth,
     error,
+    lastResponse,
     setSelectedPlan,
     setBillingCycle,
     handleCheckout
@@ -137,7 +138,7 @@ const SubscriptionContent = () => {
           </DialogTrigger>
           <DialogContent className="max-w-md bg-black/90 border-yellow-600/30 text-yellow-500 text-xs">
             <DialogTitle>Checkout Debug Information</DialogTitle>
-            <div className="space-y-2">
+            <div className="space-y-2 overflow-auto max-h-[400px]">
               <div>
                 <strong>Selected Plan:</strong> {selectedPlan}
               </div>
@@ -168,6 +169,28 @@ const SubscriptionContent = () => {
                   </pre>
                 </>
               )}
+              {lastResponse && (
+                <>
+                  <div className="mt-4 pt-2 border-t border-yellow-600/30">
+                    <strong>Last API Response:</strong>
+                  </div>
+                  <pre className="text-[10px] overflow-auto max-h-[150px] p-2 bg-black/50 rounded border border-yellow-600/20">
+                    {JSON.stringify(lastResponse, null, 2)}
+                  </pre>
+                </>
+              )}
+              <div className="mt-4 pt-2 border-t border-yellow-600/30">
+                <strong>Browser Information:</strong>
+              </div>
+              <div>
+                <strong>User Agent:</strong> {navigator.userAgent}
+              </div>
+              <div>
+                <strong>Platform:</strong> {navigator.platform}
+              </div>
+              <div>
+                <strong>Languages:</strong> {navigator.languages?.join(', ')}
+              </div>
             </div>
           </DialogContent>
         </Dialog>

@@ -102,6 +102,7 @@ serve(async (req: Request) => {
       { price: price_id, quantity: 1 }
     ];
 
+    // Get the URL origin from request headers or default to localhost
     const url = req.headers.get("origin") || "http://localhost:3000";
     logStep("Creating checkout session", { 
       customerId: customerId || "new customer", 
@@ -111,35 +112,67 @@ serve(async (req: Request) => {
       cancelUrl: `${url}/subscription?checkout=cancel`
     });
     
-    // Enhanced checkout session creation
+    // Create checkout session with expanded options
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
-      line_items: lineItems as any,
+      line_items: lineItems,
       mode: "subscription",
       success_url: `${url}/subscription/success`,
       cancel_url: `${url}/subscription?checkout=cancel`,
-      payment_method_types: ['card'],  // Explicitly specify payment methods
-      allow_promotion_codes: true,     // Allow promo codes
-      billing_address_collection: 'auto', // Collect billing address
-      client_reference_id: user.id,    // Add user ID as reference
-      metadata: {                      // Add metadata for tracking
+      payment_method_types: ['card'],
+      allow_promotion_codes: true,
+      billing_address_collection: 'auto',
+      client_reference_id: user.id,
+      locale: 'auto',  // Let Stripe determine the best locale
+      metadata: {
         user_id: user.id,
         subscription_plan: price_id,
       },
     });
 
-    logStep("Checkout session created", { sessionId: session.id, url: session.url });
+    if (!session.url) {
+      logStep("No URL returned in checkout session", { session });
+      throw new Error("Stripe session created but no URL was returned");
+    }
+
+    logStep("Checkout session created successfully", { 
+      sessionId: session.id, 
+      url: session.url 
+    });
+
+    // Return the checkout session URL with CORS headers
     return new Response(
-      JSON.stringify({ url: session.url }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      JSON.stringify({ 
+        url: session.url,
+        sessionId: session.id,
+        status: "success" 
+      }),
+      { 
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store" 
+        },
+        status: 200 
+      }
     );
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     logStep("ERROR", { message: msg });
-    return new Response(JSON.stringify({ error: msg }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500
-    });
+    return new Response(
+      JSON.stringify({ 
+        error: msg,
+        status: "error" 
+      }),
+      {
+        headers: { 
+          ...corsHeaders, 
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store"
+        },
+        status: 500
+      }
+    );
   }
 });

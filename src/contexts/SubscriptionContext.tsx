@@ -11,6 +11,7 @@ type SubscriptionContextType = {
   billingCycle: "monthly" | "yearly";
   checkingAuth: boolean;
   error: string | null;
+  lastResponse: any; // For debugging
   setSelectedPlan: (plan: string) => void;
   setBillingCycle: (cycle: "monthly" | "yearly") => void;
   handleCheckout: () => Promise<void>;
@@ -32,6 +33,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastResponse, setLastResponse] = useState<any>(null);
   const { toast } = useToast();
   const { user, session } = useAuth();
 
@@ -54,32 +56,37 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
 
     setIsLoading(true);
     setError(null);
-    console.log("Starting checkout with:", {
-      plan: selectedPlan,
-      cycle: billingCycle,
-      price_id: stripePriceIds[selectedPlan][billingCycle]
-    });
-
+    
     try {
+      // Get the price ID for the selected plan
       const price_id = stripePriceIds[selectedPlan][billingCycle];
-      console.log("Invoking create-checkout with price_id:", price_id);
       
-      // Check if price_id exists
+      console.log("Starting checkout with:", {
+        plan: selectedPlan,
+        cycle: billingCycle,
+        price_id: price_id
+      });
+      
+      // Validate price_id exists
       if (!price_id) {
         throw new Error(`Invalid price ID for ${selectedPlan} (${billingCycle})`);
       }
       
-      const { data, error } = await supabase.functions.invoke("create-checkout", {
+      console.log("Invoking create-checkout with price_id:", price_id);
+      
+      // Call the edge function with the price_id
+      const { data, error: functionError } = await supabase.functions.invoke("create-checkout", {
         body: { price_id }
       });
       
-      console.log("Checkout response:", data, error);
+      setLastResponse(data); // Store response for debugging
+      console.log("Checkout response:", data, functionError);
 
-      if (error) {
-        throw new Error(error?.message || "Failed to create checkout session");
+      if (functionError) {
+        throw new Error(functionError?.message || "Failed to create checkout session");
       }
 
-      if (!data?.url) {
+      if (!data || !data.url) {
         throw new Error("No checkout URL returned from server");
       }
 
@@ -87,14 +94,14 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
       
       // Add a small delay before redirection to ensure logs are visible
       setTimeout(() => {
-        // Open in new tab for better debugging
         window.location.href = data.url;
-      }, 100);
+      }, 500);
       
     } catch (error: any) {
       const errorMessage = error?.message || "Unknown error";
       console.error("Checkout error:", errorMessage);
       setError(errorMessage);
+      setLastResponse({ error: errorMessage });
       toast({
         title: "Payment initiation failed",
         description: errorMessage,
@@ -111,6 +118,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
     billingCycle,
     checkingAuth,
     error,
+    lastResponse,
     setSelectedPlan,
     setBillingCycle,
     handleCheckout
