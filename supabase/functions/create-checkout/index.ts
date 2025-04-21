@@ -29,28 +29,29 @@ serve(async (req: Request) => {
     if (!user?.email) throw new Error("Authenticated user not found");
     // Stripe instance
     const stripe = new Stripe(Deno.env.get("Stripe_Payment_Key")!, { apiVersion: "2023-10-16" });
+
+    // Get price_id from POST body (prefer client selection), fallback to default Electrician monthly
+    let price_id;
+    try {
+      const body = await req.json();
+      price_id = body.price_id;
+    } catch (_) {
+      price_id = undefined;
+    }
+    // Fallback to monthly Electrician if none provided
+    if (!price_id) price_id = "price_1RGIdw2RKw5t5RAmEWjKbGx1";
+
     // Check if the customer exists in Stripe
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     let customerId: string | undefined = undefined;
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
     }
-    // Pricing details: default to a monthly premium plan, customize as you grow!
-    const priceId = Deno.env.get("STRIPE_PRICE_ID") || undefined;
-    // fallback: example product, should be updated for your project
+
     const lineItems = [
-      priceId
-        ? { price: priceId, quantity: 1 }
-        : {
-            price_data: {
-              currency: "gbp",
-              product_data: { name: "Elec-Mate Premium Subscription" },
-              unit_amount: 699,
-              recurring: { interval: "month" },
-            },
-            quantity: 1,
-          },
+      { price: price_id, quantity: 1 }
     ];
+
     const url = req.headers.get("origin") || "http://localhost:3000";
     const session = await stripe.checkout.sessions.create({
       customer: customerId,

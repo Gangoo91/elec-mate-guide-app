@@ -5,23 +5,42 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layout/MainLayout";
-import { Loader2, Lock, ShieldCheck, X } from "lucide-react";
+import { Loader2, Lock, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+// Stripe Price IDs for each plan/billing option
+const stripePriceIds: Record<string, { monthly: string; yearly: string }> = {
+  Apprentice: {
+    monthly: "price_1RGIaQ2RKw5t5RAmh7lzac0R",
+    yearly: "price_1RGIbj2RKw5t5RAm8xkaH5I2",
+  },
+  Electrician: {
+    monthly: "price_1RGIdw2RKw5t5RAmEWjKbGx1",
+    yearly: "price_1RGId02RKw5t5RAm2iGQJ9xU",
+  },
+  Employer: {
+    monthly: "price_1RGIgX2RKw5t5RAma3zfsmAc",
+    yearly: "price_1RGIhM2RKw5t5RAmhTfWgGLO",
+  },
+};
 
 const subscriptionPlans = [
   {
     name: "Apprentice",
-    price: "£3.99",
+    monthlyPrice: "£2.99",
+    yearlyPrice: "£29.99",
     description: "Access to all apprentice resources and training tools",
   },
   {
     name: "Electrician",
-    price: "£6.99",
+    monthlyPrice: "£6.99",
+    yearlyPrice: "£69.99",
     description: "Access to electrician and apprentice resources",
   },
   {
     name: "Employer",
-    price: "£9.99",
+    monthlyPrice: "£49.99",
+    yearlyPrice: "£499.99",
     description: "Full access to all platform features and resources",
   },
 ];
@@ -29,6 +48,7 @@ const subscriptionPlans = [
 const Subscription = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Electrician");
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +56,10 @@ const Subscription = () => {
   const handleCheckout = async () => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke("create-checkout");
+      const price_id = stripePriceIds[selectedPlan][billingCycle];
+      const { data, error } = await supabase.functions.invoke("create-checkout", {
+        body: { price_id },
+      });
       if (error) throw new Error(error.message);
       if (data?.url) {
         window.location.href = data.url;
@@ -54,13 +77,13 @@ const Subscription = () => {
     }
   };
 
-  // Optionally display a success notification if redirected from checkout
-  React.useEffect(() => {
+  // Redirect post-checkout feedback
+  useEffect(() => {
     if (location.search.includes("checkout=success")) {
       toast({
         title: "Subscription started!",
         description: "You have started your free trial. Welcome to Elec-Mate!",
-        variant: "default", // Changed from "success" to "default" to fix the TypeScript error
+        variant: "default",
       });
       navigate("/subscription/success", { replace: true });
     }
@@ -84,8 +107,24 @@ const Subscription = () => {
             Start Your 7-Day Free Trial
           </h1>
           <p className="text-center text-gray-300 mb-3 max-w-md">
-            Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed monthly.
+            Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed {billingCycle}.
           </p>
+
+          {/* Billing Cycle Toggle */}
+          <div className="flex justify-center gap-2 my-2">
+            <Button
+              variant={billingCycle === "monthly" ? "default" : "outline"}
+              className={`rounded-full px-7 py-2 ${billingCycle === "monthly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
+              onClick={() => setBillingCycle("monthly")}
+              disabled={isLoading}
+            >Monthly</Button>
+            <Button
+              variant={billingCycle === "yearly" ? "default" : "outline"}
+              className={`rounded-full px-7 py-2 ${billingCycle === "yearly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
+              onClick={() => setBillingCycle("yearly")}
+              disabled={isLoading}
+            >Yearly <span className="ml-1 text-xs font-semibold">(Save 17%)</span></Button>
+          </div>
 
           <div className="w-full my-6 space-y-3">
             {subscriptionPlans.map((plan) => (
@@ -102,8 +141,13 @@ const Subscription = () => {
                   <h3 className="text-[#FFC900] font-semibold">{plan.name} Plan</h3>
                   <p className="text-sm text-[#FFC900]/70">{plan.description}</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-[#FFC900]">{plan.price}<span className="text-xs font-normal">/mo</span></span>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="font-bold text-[#FFC900]">
+                    {billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
+                    <span className="text-xs font-normal">
+                      {billingCycle === "monthly" ? "/mo" : "/yr"}
+                    </span>
+                  </span>
                   <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
                     selectedPlan === plan.name 
                       ? "bg-[#FFC900]" 
@@ -133,7 +177,7 @@ const Subscription = () => {
                 Redirecting...
               </span>
             ) : (
-              "Enter Payment Details"
+              `Enter Payment Details`
             )}
           </Button>
 
