@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Lightbulb, Users, Certificate, Briefcase } from "lucide-react";
+import { Lightbulb, Users, Award, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -9,7 +9,7 @@ const ElectriciansPage = () => {
     {
       title: "Professional Development",
       description: "Advanced training and specialization courses",
-      icon: <Certificate className="h-6 w-6 text-[#FFC900]" />,
+      icon: <Award className="h-6 w-6 text-[#FFC900]" />,
       link: "#development"
     },
     {
