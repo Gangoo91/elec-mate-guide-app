@@ -14,6 +14,7 @@ const logStep = (step: string, details?: any) => {
 };
 
 serve(async (req: Request) => {
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -80,7 +81,11 @@ serve(async (req: Request) => {
       return new Response(
         JSON.stringify({ url: portalSession.url }),
         { 
-          headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache, no-store, must-revalidate"
+          }, 
           status: 200 
         }
       );
@@ -115,7 +120,11 @@ serve(async (req: Request) => {
             }
           }),
           { 
-            headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json",
+              "Cache-Control": "no-cache, no-store, must-revalidate"
+            }, 
             status: 200 
           }
         );
@@ -135,7 +144,11 @@ serve(async (req: Request) => {
     const msg = err instanceof Error ? err.message : String(err);
     logStep("ERROR", { message: msg });
     return new Response(JSON.stringify({ error: msg }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: {
+        ...corsHeaders, 
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
       status: 500
     });
   }

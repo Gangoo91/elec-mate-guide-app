@@ -32,17 +32,26 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Electrician");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [checkingAuth, setCheckingAuth] = useState(false); // Changed from true to avoid blocking render
   const [error, setError] = useState<string | null>(null);
   const [lastResponse, setLastResponse] = useState<any>(null);
   const { toast } = useToast();
   const { user, session } = useAuth();
   const navigate = useNavigate();
 
+  // Handle auth state changes with error handling
   useEffect(() => {
-    setCheckingAuth(!user || !session);
-    if (user && session) {
-      console.log("Authenticated user:", user.email);
+    try {
+      // Only mark as checking if we need to
+      if (!user || !session) {
+        setCheckingAuth(true);
+      } else {
+        setCheckingAuth(false);
+        console.log("Authenticated user:", user.email);
+      }
+    } catch (err) {
+      console.error("Auth check error:", err);
+      setCheckingAuth(false); // Ensure we don't block rendering on error
     }
   }, [user, session]);
 
@@ -121,6 +130,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
         description: errorMessage,
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
