@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-[#151812] px-2">
-      <Logo size={80} />
+      <Logo size={80} className="mt-8" />
       <h1 className="text-[2.4rem] sm:text-5xl font-extrabold text-center mt-8 mb-1 leading-tight text-[#FFC900] tracking-tight drop-shadow-xl animate-fade-in select-none">
         THE ELECTRICAL<br />INDUSTRY APP
       </h1>
@@ -76,4 +76,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
