@@ -1,8 +1,11 @@
+
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -86,36 +89,6 @@ const MentalHealthHubDrawer = ({ open, onOpenChange }: { open: boolean; onOpenCh
       </DrawerClose>
     </DrawerContent>
   </Drawer>
-);
-
-const ResourceCard = ({ resource, openMHModal }: { resource: any, openMHModal: () => void }) => (
-  <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
-    <CardHeader className="pb-2">
-      <div className="flex items-center gap-3">
-        {resource.icon}
-        <CardTitle className="text-[#FFC900] text-xl">{resource.title}</CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent className="flex flex-col justify-between flex-grow pt-2">
-      <CardDescription className="text-[#FFC900]/70 text-sm mb-3">{resource.description}</CardDescription>
-      {resource.showMHModal ? (
-        <Button 
-          variant="ghost" 
-          className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-          onClick={openMHModal}
-        >
-          Learn more →
-        </Button>
-      ) : (
-        <a 
-          href={resource.link} 
-          className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-        >
-          Learn more →
-        </a>
-      )}
-    </CardContent>
-  </Card>
 );
 
 const ApprenticesPage = () => {
