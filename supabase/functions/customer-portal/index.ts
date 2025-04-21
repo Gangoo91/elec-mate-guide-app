@@ -47,7 +47,9 @@ serve(async (req: Request) => {
     const origin = req.headers.get("origin") || "http://localhost:3000";
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: `${origin}/dashboard`,
+      return_url: `${origin}/profile`,
+      // Adding explicit configuration to address the missing configuration error
+      configuration: await getOrCreatePortalConfiguration(stripe)
     });
 
     logStep("Customer portal session created", { sessionId: portalSession.id, url: portalSession.url });
@@ -64,3 +66,47 @@ serve(async (req: Request) => {
     });
   }
 });
+
+// Helper function to get or create a portal configuration
+async function getOrCreatePortalConfiguration(stripe: Stripe) {
+  try {
+    // Try to fetch existing configurations
+    const configs = await stripe.billingPortal.configurations.list({ limit: 1 });
+    if (configs.data.length > 0) {
+      return configs.data[0].id;
+    }
+    
+    // Create a basic configuration if none exists
+    const newConfig = await stripe.billingPortal.configurations.create({
+      business_profile: {
+        headline: "Manage your subscription",
+      },
+      features: {
+        subscription_cancel: {
+          enabled: true,
+          mode: "at_period_end",
+        },
+        subscription_update: {
+          enabled: true,
+          default_allowed_updates: ["price"],
+          proration_behavior: "create_prorations",
+        },
+        customer_update: {
+          enabled: true,
+          allowed_updates: ["email", "address", "shipping", "phone", "tax_id"],
+        },
+        payment_method_update: {
+          enabled: true,
+        },
+        invoice_history: {
+          enabled: true,
+        },
+      },
+    });
+    return newConfig.id;
+  } catch (error) {
+    console.error("Error managing portal configuration:", error);
+    // Return undefined, which will use Stripe's default configuration
+    return undefined;
+  }
+}
