@@ -1,5 +1,6 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { LucideIcon } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,12 +31,21 @@ const ResourceCard = ({ title, description, icon, action }: ResourceCardProps) =
         </CardDescription>
         {action && (
           action.href ? (
-            <a 
-              href={action.href}
-              className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-            >
-              {action.label} →
-            </a>
+            action.href.startsWith("#") ? (
+              <a 
+                href={action.href}
+                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+              >
+                {action.label} →
+              </a>
+            ) : (
+              <Link 
+                to={action.href}
+                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+              >
+                {action.label} →
+              </Link>
+            )
           ) : (
             <Button 
               variant="ghost" 
