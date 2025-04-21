@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -149,50 +150,50 @@ const Subscription = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#151812] px-2 py-8">
-        <div className="w-full max-w-md glass-morphism rounded-3xl border border-[#FFC900]/15 bg-[#151812]/40 shadow-lg flex flex-col items-center animate-fade-in p-8 md:p-10">
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#151812] px-1 py-6 sm:px-3 md:px-2">
+        <div className="w-full max-w-md glass-morphism rounded-2xl border border-[#FFC900]/15 bg-[#151812]/40 shadow-lg flex flex-col items-center animate-fade-in p-4 sm:p-6 md:p-10">
           <div className="flex justify-center w-full mb-6">
-            <Logo size={80} />
+            <Logo size={70} />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-4 leading-tight drop-shadow-[0_0_4px_rgba(255,201,0,0.5)] tracking-wide select-none">
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#FFC900] text-center mb-4 leading-tight drop-shadow-[0_0_4px_rgba(255,201,0,0.5)] tracking-wide select-none">
             Start Your 7-Day Free Trial
           </h1>
-          <p className="text-center text-gray-300 mb-3 max-w-md">
+          <p className="text-center text-gray-300 mb-3 max-w-md text-xs sm:text-base">
             Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed {billingCycle}.
           </p>
 
-          <div className="flex justify-center gap-2 my-2">
+          <div className="flex justify-center gap-1 mb-4">
             <Button
               variant={billingCycle === "monthly" ? "default" : "outline"}
-              className={`rounded-full px-7 py-2 ${billingCycle === "monthly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
+              className={`rounded-full px-6 py-2 text-sm sm:text-base ${billingCycle === "monthly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
               onClick={() => setBillingCycle("monthly")}
               disabled={isLoading}
             >Monthly</Button>
             <Button
               variant={billingCycle === "yearly" ? "default" : "outline"}
-              className={`rounded-full px-7 py-2 ${billingCycle === "yearly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
+              className={`rounded-full px-6 py-2 text-xs sm:text-base ${billingCycle === "yearly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
               onClick={() => setBillingCycle("yearly")}
               disabled={isLoading}
-            >Yearly <span className="ml-1 text-xs font-semibold">(Save 17%)</span></Button>
+            >Yearly <span className="ml-1 text-[11px] sm:text-xs font-semibold">(Save 17%)</span></Button>
           </div>
 
-          <div className="w-full my-6 space-y-3">
+          <div className="w-full my-4 space-y-2">
             {subscriptionPlans.map((plan) => (
               <div 
                 key={plan.name}
                 onClick={() => setSelectedPlan(plan.name)}
-                className={`flex items-center justify-between p-4 rounded-xl transition-all cursor-pointer ${
+                className={`flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer ${
                   selectedPlan === plan.name 
                     ? "bg-[#FFC900]/20 border-2 border-[#FFC900]" 
                     : "bg-[#151812]/80 border border-[#FFC900]/30 hover:border-[#FFC900]/60"
                 }`}
               >
-                <div className="flex-1">
-                  <h3 className="text-[#FFC900] font-semibold">{plan.name} Plan</h3>
-                  <p className="text-sm text-[#FFC900]/70">{plan.description}</p>
+                <div className="flex-1 pr-2">
+                  <h3 className="text-[#FFC900] font-semibold text-base">{plan.name} Plan</h3>
+                  <p className="text-xs text-[#FFC900]/70">{plan.description}</p>
                 </div>
                 <div className="flex flex-col items-end gap-1">
-                  <span className="font-bold text-[#FFC900]">
+                  <span className="font-bold text-[#FFC900] text-base">
                     {billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
                     <span className="text-xs font-normal">
                       {billingCycle === "monthly" ? "/mo" : "/yr"}
@@ -212,7 +213,7 @@ const Subscription = () => {
             ))}
           </div>
 
-          <p className="text-center text-[#FFC900] font-semibold mb-6">
+          <p className="text-center text-[#FFC900] font-semibold mb-6 text-xs sm:text-sm">
             Cancel anytime — no commitment, no hidden fees.
           </p>
 
@@ -226,7 +227,7 @@ const Subscription = () => {
           <Button
             onClick={handleCheckout}
             disabled={isLoading}
-            className="w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto mb-4 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
+            className="w-full rounded-xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-5 mt-0 mb-3 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
@@ -238,7 +239,7 @@ const Subscription = () => {
             )}
           </Button>
 
-          <div className="flex items-center w-full justify-center gap-3 mt-2 mb-3">
+          <div className="flex items-center w-full justify-center gap-3 mt-2 mb-1">
             <div className="flex items-center text-xs text-[#FFC900]/60">
               <Lock className="h-3 w-3 mr-1" />
               Secure payment
@@ -250,7 +251,7 @@ const Subscription = () => {
             </div>
           </div>
           
-          <p className="text-xs text-gray-400 mt-2 text-center">
+          <p className="text-[10px] sm:text-xs text-gray-400 mt-2 text-center">
             Secure payment powered by Stripe.<br />
             You can cancel, upgrade, or manage your subscription any time in your profile settings.
           </p>
