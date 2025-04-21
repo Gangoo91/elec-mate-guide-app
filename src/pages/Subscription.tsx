@@ -41,7 +41,7 @@ const Subscription = () => {
       toast({
         title: "Subscription started!",
         description: "You have started your free trial. Welcome to Elec-Mate!",
-        variant: "success",
+        variant: "default", // Changed from "success" to "default" to fix the TypeScript error
       });
       navigate("/subscription/success", { replace: true });
     }
