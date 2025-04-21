@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/supabaseClient";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -54,10 +55,9 @@ const Signup = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Reset errors
     setErrors({ email: "", password: "", confirmPassword: "" });
 
     let isValid = true;
@@ -86,22 +86,33 @@ const Signup = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      // Simulate signup process (replace with real backend call)
-      setTimeout(() => {
-        setIsSubmitting(false);
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      setIsSubmitting(false);
+
+      if (error) {
         toast({
-          title: "Signup Successful",
-          description: "Your account has been created 🎉",
+          title: "Signup Failed",
+          description: error.message,
+          variant: "destructive",
         });
-        navigate("/dashboard"); // Redirect to the dashboard after successful signup
-      }, 1500);
+        return;
+      }
+
+      toast({
+        title: "Signup Successful",
+        description: "Check your email to confirm your account.",
+      });
+      navigate("/dashboard");
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#151812] px-2 py-8 overflow-auto">
       <div className="w-full max-w-md bg-transparent flex flex-col items-center animate-fade-in">
-        {/* Logo placed prominently */}
         <Logo size={80} />
         <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-8 mt-6 leading-tight drop-shadow-[0_0_8px_rgba(255,201,0,0.75)] tracking-wide select-none">
           Create Your Account

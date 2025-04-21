@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import LoginEmailInput from "@/components/login/LoginEmailInput";
 import LoginPasswordInput from "@/components/login/LoginPasswordInput";
 import LoginSocialButtons from "@/components/login/LoginSocialButtons";
+import { supabase } from "@/supabaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -62,7 +63,7 @@ const Login = () => {
     setRememberMe(checked);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     setErrors({ email: "", password: "" });
@@ -87,21 +88,34 @@ const Login = () => {
     
     if (isValid) {
       setIsSubmitting(true);
-      
+
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
       } else {
         localStorage.removeItem("rememberedEmail");
       }
-      
-      setTimeout(() => {
-        setIsSubmitting(false);
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      setIsSubmitting(false);
+
+      if (error) {
         toast({
-          title: "Login Successful",
-          description: "Welcome back to Elec-Mate!",
+          title: "Login Failed",
+          description: error.message,
+          variant: "destructive",
         });
-        navigate("/dashboard");
-      }, 1500);
+        return;
+      }
+
+      toast({
+        title: "Login Successful",
+        description: "Welcome back to Elec-Mate!",
+      });
+      navigate("/dashboard");
     }
   };
 
