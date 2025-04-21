@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Book, Lightbulb, Briefcase, Search, Activity, Users, Award } from "lucide-react";
+import { Book, Lightbulb, Briefcase, Search, Users } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,27 +29,7 @@ const roles = [
   },
 ];
 
-// Featured content to highlight important industry updates
-const featuredContent = [
-  {
-    title: "Latest Code Updates",
-    description: "Stay current with the 2023 National Electric Code changes",
-    icon: <Award className="h-6 w-6 text-[#FFC900]" />,
-    metric: "Updated 2w ago"
-  },
-  {
-    title: "Industry Growth",
-    description: "Electrical jobs projected to grow 9% over next 5 years",
-    icon: <Activity className="h-6 w-6 text-[#FFC900]" />,
-    metric: "+9% growth"
-  },
-  {
-    title: "Community Size",
-    description: "Join thousands of electrical professionals nationwide",
-    icon: <Users className="h-6 w-6 text-[#FFC900]" />,
-    metric: "15k+ members"
-  }
-];
+// Removed featuredContent and related "Industry Highlights" code
 
 const Dashboard = () => {
   const [query, setQuery] = useState("");
@@ -99,6 +80,15 @@ const Dashboard = () => {
             >
               Sign In
             </Button>
+          </div>
+          {/* Community Size metric */}
+          <div
+            className="flex items-center justify-center gap-2 mt-5 bg-[#22251e] border border-[#FFC900]/30 rounded-full px-5 py-2 shadow text-[#FFC900] text-sm font-semibold"
+            style={{ maxWidth: 280 }}
+          >
+            <Users className="h-5 w-5" />
+            <span>Community Size:</span>
+            <span className="ml-2 text-[#FFC900] font-bold">15k+ members</span>
           </div>
         </div>
 
@@ -153,33 +143,6 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Featured Content & Metrics */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-6 text-center">Industry Highlights</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {featuredContent.map((item, index) => (
-              <div 
-                key={index} 
-                className="bg-[#22251e] rounded-xl p-6 border border-[#FFC900]/20 hover:border-[#FFC900]/40 transition-all duration-300 animate-on-load opacity-0"
-                style={{ animationDelay: `${(index + 3) * 100}ms` }}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    {item.icon}
-                    <h3 className="font-bold text-[#FFC900]">{item.title}</h3>
-                  </div>
-                  <span className="text-sm font-medium text-[#FFC900]/60 bg-[#FFC900]/10 px-2 py-1 rounded-full">
-                    {item.metric}
-                  </span>
-                </div>
-                <p className="text-[#FFC900]/70">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* App Description */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 animate-on-load opacity-0" style={{ animationDelay: '600ms' }}>
           <h2 className="text-2xl font-bold text-[#FFC900] mb-2">About This App</h2>
@@ -205,3 +168,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
