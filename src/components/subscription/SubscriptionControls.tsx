@@ -37,6 +37,7 @@ type SubscriptionData = {
   amount: number | null;
   currency: string;
   interval: string | null;
+  billing_period: string;
 };
 
 export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionControlsProps) => {
@@ -290,7 +291,7 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
               subscriptionData.map((subscription) => (
                 <div key={subscription.id} className="border border-[#FFC900]/20 rounded-lg p-4 space-y-3">
                   <div className="flex justify-between items-center">
-                    <div className="font-medium text-[#FFC900]">{subscription.plan || "Standard Plan"}</div>
+                    <div className="font-medium text-[#FFC900]">{subscription.plan}</div>
                     <div className="flex items-center">
                       {subscription.status === "active" ? (
                         <span className="bg-green-700/20 text-green-400 text-xs px-2.5 py-1 rounded-full flex items-center">
@@ -319,6 +320,10 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
                     <div>
                       <span className="font-medium">Next billing date:</span>{" "}
                       {formatDate(subscription.current_period_end)}
+                    </div>
+                    <div>
+                      <span className="font-medium">Billing cycle:</span>{" "}
+                      {subscription.billing_period || (subscription.interval === 'year' ? 'Yearly' : 'Monthly')}
                     </div>
                     {subscription.cancel_at_period_end && (
                       <div className="col-span-2">

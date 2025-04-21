@@ -99,7 +99,38 @@ serve(async (req: Request) => {
           customer: customerId,
           status: 'all',
           limit: 10,
-          expand: ['data.default_payment_method']
+          expand: ['data.default_payment_method', 'data.items.data.price']
+        });
+        
+        // Map subscription data and properly determine plan names from price IDs
+        const mappedSubscriptions = subscriptions.data.map(sub => {
+          const priceId = sub.items.data[0]?.price.id;
+          let planName = "Unknown Plan";
+          
+          // Map from price ID to plan name based on our known values
+          if (priceId === "price_1RGIaQ2RKw5t5RAmh7lzac0R" || priceId === "price_1RGIbj2RKw5t5RAm8xkaH5I2") {
+            planName = "Apprentice";
+          } else if (priceId === "price_1RGIdw2RKw5t5RAmEWjKbGx1" || priceId === "price_1RGId02RKw5t5RAm2iGQJ9xU") {
+            planName = "Electrician";
+          } else if (priceId === "price_1RGIgX2RKw5t5RAma3zfsmAc" || priceId === "price_1RGIhM2RKw5t5RAmhTfWgGLO") {
+            planName = "Employer";
+          }
+          
+          // Get billing period from the price
+          const interval = sub.items.data[0]?.price.recurring?.interval;
+          const billingPeriod = interval === 'year' ? 'Yearly' : 'Monthly';
+          
+          return {
+            id: sub.id,
+            status: sub.status,
+            current_period_end: sub.current_period_end,
+            cancel_at_period_end: sub.cancel_at_period_end,
+            plan: planName,
+            amount: sub.items.data[0]?.price.unit_amount,
+            currency: sub.items.data[0]?.price.currency,
+            interval: interval,
+            billing_period: billingPeriod
+          };
         });
         
         // Return a special response with subscription data instead of a portal URL
@@ -107,16 +138,7 @@ serve(async (req: Request) => {
           JSON.stringify({
             bypass_portal: true,
             subscription_data: {
-              subscriptions: subscriptions.data.map(sub => ({
-                id: sub.id,
-                status: sub.status,
-                current_period_end: sub.current_period_end,
-                cancel_at_period_end: sub.cancel_at_period_end,
-                plan: sub.items.data[0]?.price.nickname || 'Unknown Plan',
-                amount: sub.items.data[0]?.price.unit_amount,
-                currency: sub.items.data[0]?.price.currency,
-                interval: sub.items.data[0]?.price.recurring?.interval
-              }))
+              subscriptions: mappedSubscriptions
             }
           }),
           { 
