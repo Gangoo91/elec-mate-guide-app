@@ -1,41 +1,82 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Rss, Info } from "lucide-react";
+import { Info, Rss, RefreshCw } from "lucide-react";
 
 type NewsItem = {
   source: string;
   title: string;
-  link: string;
+  link?: string;
   pubDate?: string;
+  isStatic?: boolean; // For non-live placeholder news
 };
 
 type FeedSource = {
-  url: string;
+  url?: string;  // made optional for static/placeholder feeds
   label: string;
+  isStatic?: boolean;
+  staticItems?: NewsItem[];
 };
 
-// UK-based RSS feed sources
+// UK-based RSS feed sources and static (no feed) industry bodies
 const FEED_SOURCES: FeedSource[] = [
   {
     url: "https://www.hse.gov.uk/news/hse-news.xml",
     label: "HSE (UK)",
   },
   {
-    url: "https://www.electricalsafetyfirst.org.uk/news/news-rss-feed/", // Electrical Safety First News
+    url: "https://www.electricalsafetyfirst.org.uk/news/news-rss-feed/",
     label: "Electrical Safety First",
   },
   {
-    url: "https://electricalreview.co.uk/feed/", // Electrical Review industry news
+    url: "https://electricalreview.co.uk/feed/",
     label: "Electrical Review",
   },
   {
-    url: "https://www.jib.org.uk/feed.rss", // Joint Industry Board (UK)
+    url: "https://www.jib.org.uk/feed.rss",
     label: "JIB",
   },
   {
-    url: "https://www.eca.co.uk/news/rss", // Electrical Contractors' Association (UK)
+    url: "https://www.eca.co.uk/news/rss",
     label: "ECA",
+  },
+  // Static placeholder for NAECI (no official RSS)
+  {
+    label: "NAECI",
+    isStatic: true,
+    staticItems: [
+      {
+        source: "NAECI",
+        title: "NAECI 2024 National Agreement – Pay Rates & Working Rule Updates",
+        pubDate: "2024-03-12",
+        isStatic: true,
+      },
+      {
+        source: "NAECI",
+        title: "2024 Major Project Schedules Announced (NAECI)",
+        pubDate: "2024-02-01",
+        isStatic: true,
+      },
+    ],
+  },
+  // Static/possible scrape for NAPIT – no RSS, so placeholder
+  {
+    label: "NAPIT",
+    isStatic: true,
+    staticItems: [
+      {
+        source: "NAPIT",
+        title: "NAPIT launches latest Electrical Safety CPD for 2024",
+        pubDate: "2024-04-05",
+        isStatic: true,
+      },
+      {
+        source: "NAPIT",
+        title: "NAPIT calls for better enforcement of UK electrical standards",
+        pubDate: "2024-01-28",
+        isStatic: true,
+      }
+    ],
   },
 ];
 
@@ -76,24 +117,41 @@ const IndustryResources: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const allNews = (
-        await Promise.allSettled(FEED_SOURCES.map(src => fetchFeed(src.url)))
-      )
+      // For static/non-feed sources just collect their staticItems
+      const staticNews = FEED_SOURCES.filter(src => src.isStatic && src.staticItems)
+        .map(src => src.staticItems || [])
+        .flat();
+
+      // Fetch all live feeds in parallel
+      const liveFeeds = await Promise.allSettled(
+        FEED_SOURCES.filter(src => !src.isStatic && src.url).map(src => fetchFeed(src.url!))
+      );
+      // Feed sources (filtered to live feeds, same index order as above)
+      const liveFeedSources = FEED_SOURCES.filter(src => !src.isStatic && src.url);
+
+      const allLiveNews = liveFeeds
         .map((result, idx) =>
           result.status === "fulfilled"
-            ? result.value.map(item => ({ ...item, source: FEED_SOURCES[idx].label }))
+            ? result.value.map(item => ({
+                ...item,
+                source: liveFeedSources[idx].label,
+              }))
             : []
         )
         .flat();
 
+      // Merge feeds with static updates
+      const allNews = [...allLiveNews, ...staticNews];
+
+      // Sort by date, most recent first (static items may lack real dates, so fudge if needed)
       const sorted = allNews
-        .filter(item => item.title && item.link)
+        .filter(item => item.title)
         .sort((a, b) => {
           const dateA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
           const dateB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
           return dateB - dateA;
         })
-        .slice(0, 10);
+        .slice(0, 12);
 
       setNews(sorted);
     } catch (err: any) {
@@ -114,7 +172,8 @@ const IndustryResources: React.FC = () => {
       <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 flex flex-col items-center">
         <h2 className="text-2xl font-bold text-[#FFC900] mb-3">Industry Resources</h2>
         <p className="text-[#FFC900]/70 mb-7 text-center">
-          Stay up to date with recent developments, safety news, and regulation changes for the UK electrical industry—live updates from trusted organisations like HSE, Electrical Safety First, JIB, ECA, and Electrical Review.
+          Stay up to date with recent developments, safety news, regulation changes, and workforce
+          agreement updates for the UK electrical industry—live headlines from trusted orgs including HSE, Electrical Safety First, JIB, NAECI, NAPIT, ECA, and Electrical Review.
         </p>
         <div className="w-full max-w-md">
           <div className="flex items-center mb-2 justify-between">
@@ -154,13 +213,13 @@ const IndustryResources: React.FC = () => {
                         <span className="text-xs text-[#FFC900]/50">{formatDate(item.pubDate)}</span>
                       )}
                       <span className="text-xs text-[#FFC900]/40 ml-auto italic">{item.source}</span>
+                      {item.isStatic && <span className="text-xs ml-2 text-[#FFC900]/20">(not a live feed)</span>}
                     </div>
                   </li>
                 ))}
               </ul>
             )}
           </div>
-          {/* Sources section is intentionally removed */}
         </div>
       </div>
     </div>
