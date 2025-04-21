@@ -3,11 +3,52 @@ import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 import BackButton from "@/components/navigation/BackButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
+// Modal content component shared between Dialog and Drawer
+const MentalHealthHubContent = () => (
+  <>
+    <div className="py-2 space-y-4">
+      <section>
+        <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Mental Health Buddies</h3>
+        <p className="text-[#FFC900]/80">Connect with a peer buddy trained to provide support and listen when things feel tough. <span className="italic">Feature launching soon.</span></p>
+      </section>
+      <hr className="border-[#FFC900]/20" />
+      <section>
+        <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">External Help</h3>
+        <ul className="list-disc list-inside text-[#FFC900]/80 space-y-1">
+          <li>
+            <a className="underline hover:text-[#FFF200] transition" href="https://www.lifeline.org.au/" target="_blank" rel="noopener noreferrer">
+              Lifeline (24/7 Crisis Support)
+            </a>
+          </li>
+          <li>
+            <a className="underline hover:text-[#FFF200] transition" href="https://www.beyondblue.org.au/" target="_blank" rel="noopener noreferrer">
+              Beyond Blue
+            </a>
+          </li>
+        </ul>
+      </section>
+      <hr className="border-[#FFC900]/20" />
+      <section>
+        <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Coping Mechanisms</h3>
+        <ul className="text-[#FFC900]/80 list-disc list-inside space-y-1">
+          <li>Guided breathing & mindfulness exercises</li>
+          <li>Tips for managing job site stress</li>
+          <li>Links to podcasts & articles</li>
+          <li className="italic">More coming soon...</li>
+        </ul>
+      </section>
+    </div>
+  </>
+);
+
+// Dialog for desktop
+const MentalHealthHubDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent className="max-w-lg bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
       <DialogHeader>
@@ -19,44 +60,72 @@ const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenCha
           Support and resources for apprentices' mental health and well-being.
         </DialogDescription>
       </DialogHeader>
-      <div className="py-2 space-y-4">
-        <section>
-          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Mental Health Buddies</h3>
-          <p className="text-[#FFC900]/80">Connect with a peer buddy trained to provide support and listen when things feel tough. <span className="italic">Feature launching soon.</span></p>
-        </section>
-        <hr className="border-[#FFC900]/20" />
-        <section>
-          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">External Help</h3>
-          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-1">
-            <li>
-              <a className="underline hover:text-[#FFF200] transition" href="https://www.lifeline.org.au/" target="_blank" rel="noopener noreferrer">
-                Lifeline (24/7 Crisis Support)
-              </a>
-            </li>
-            <li>
-              <a className="underline hover:text-[#FFF200] transition" href="https://www.beyondblue.org.au/" target="_blank" rel="noopener noreferrer">
-                Beyond Blue
-              </a>
-            </li>
-          </ul>
-        </section>
-        <hr className="border-[#FFC900]/20" />
-        <section>
-          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Coping Mechanisms</h3>
-          <ul className="text-[#FFC900]/80 list-disc list-inside space-y-1">
-            <li>Guided breathing & mindfulness exercises</li>
-            <li>Tips for managing job site stress</li>
-            <li>Links to podcasts & articles</li>
-            <li className="italic">More coming soon...</li>
-          </ul>
-        </section>
-      </div>
+      <MentalHealthHubContent />
     </DialogContent>
   </Dialog>
 );
 
+// Drawer for mobile
+const MentalHealthHubDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
+  <Drawer open={open} onOpenChange={onOpenChange}>
+    <DrawerContent className="bg-[#22251e] border-t-[#FFC900]/20 text-[#FFC900] max-h-[85vh]">
+      <div className="mx-auto w-full max-w-lg">
+        <DrawerHeader>
+          <DrawerTitle className="flex items-center gap-2 justify-center">
+            <Heart className="h-6 w-6 text-[#FFC900]" />
+            Mental Health Hub
+          </DrawerTitle>
+          <DrawerDescription className="text-[#FFC900]/80 text-center">
+            Support and resources for apprentices' mental health and well-being.
+          </DrawerDescription>
+        </DrawerHeader>
+        <div className="px-4 pb-8">
+          <MentalHealthHubContent />
+        </div>
+      </div>
+      <DrawerClose className="absolute top-4 right-4 rounded-full p-1.5 bg-[#FFC900]/10 hover:bg-[#FFC900]/20">
+        <span className="sr-only">Close</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#FFC900]">
+          <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+        </svg>
+      </DrawerClose>
+    </DrawerContent>
+  </Drawer>
+);
+
+const ResourceCard = ({ resource, openMHModal }: { resource: any, openMHModal: () => void }) => (
+  <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
+    <CardHeader className="pb-2">
+      <div className="flex items-center gap-3">
+        {resource.icon}
+        <CardTitle className="text-[#FFC900] text-xl">{resource.title}</CardTitle>
+      </div>
+    </CardHeader>
+    <CardContent className="flex flex-col justify-between flex-grow pt-2">
+      <CardDescription className="text-[#FFC900]/70 text-sm mb-3">{resource.description}</CardDescription>
+      {resource.showMHModal ? (
+        <Button 
+          variant="ghost" 
+          className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
+          onClick={openMHModal}
+        >
+          Learn more →
+        </Button>
+      ) : (
+        <a 
+          href={resource.link} 
+          className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+        >
+          Learn more →
+        </a>
+      )}
+    </CardContent>
+  </Card>
+);
+
 const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   const apprenticeResources = [
     {
@@ -95,58 +164,39 @@ const ApprenticesPage = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-12">
+      <div className="container px-4 py-8 pt-20">
         <BackButton />
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentice Hub</h1>
-          <p className="text-lg text-[#FFC900]/80 max-w-2xl mx-auto">
+        <div className="text-center mb-8 animate-fade-in">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#FFC900] mb-3">Apprentice Hub</h1>
+          <p className="text-base md:text-lg text-[#FFC900]/80 max-w-2xl mx-auto">
             Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage.
-            Whether you're just beginning or progressing further, you'll find support along your pathway through the electrical journey—from essential learning tools to well-being and skills development.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           {apprenticeResources.map((resource, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  {resource.icon}
-                  <CardTitle className="text-[#FFC900]">{resource.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="flex flex-col justify-between">
-                <div>
-                  <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
-                </div>
-                {resource.showMHModal ? (
-                  <a
-                    className="mt-4 inline-block text-[#FFC900] font-medium hover:underline"
-                    onClick={() => setMhModalOpen(true)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    Learn more →
-                  </a>
-                ) : (
-                  <a href={resource.link!} className="mt-4 inline-block text-[#FFC900] font-medium hover:underline">
-                    Learn more →
-                  </a>
-                )}
-              </CardContent>
-            </Card>
+            <ResourceCard 
+              key={index} 
+              resource={resource} 
+              openMHModal={() => setMhModalOpen(true)} 
+            />
           ))}
         </div>
 
-        <MentalHealthHubModal open={mhModalOpen} onOpenChange={setMhModalOpen} />
+        {isMobile ? (
+          <MentalHealthHubDrawer open={mhModalOpen} onOpenChange={setMhModalOpen} />
+        ) : (
+          <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
+        )}
 
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-4">Getting Started as an Apprentice</h2>
-          <p className="text-[#FFC900]/80 mb-6">
+        <div className="bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
+          <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>
+          <p className="text-[#FFC900]/80 mb-4 text-sm md:text-base">
             The path to becoming a licensed electrician starts with a strong apprenticeship.
             Here you'll uncover helpful tools to support you, plus advice and info about every step along your pathway through the electrical trade.
           </p>
-          <div className="space-y-4">
-            <p className="text-[#FFC900]/80">
+          <div className="space-y-3">
+            <p className="text-[#FFC900]/80 text-sm md:text-base">
               Content for apprentices will be expanded soon with interactive learning modules, progress tracking, study tools,
               and resources to prepare you for each stage of your journey.
             </p>
