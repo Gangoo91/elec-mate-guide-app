@@ -7,14 +7,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const diagnosticResponses = {
-  'circuit breaker': 'If a circuit breaker keeps tripping: 1) Identify which circuit is affected 2) Unplug devices on that circuit 3) Check for signs of overloading 4) Reset breaker 5) If it trips again immediately, call a licensed electrician',
-  'outlet not working': 'For a non-working outlet: 1) Test if GFCI needs resetting 2) Check if breaker is tripped 3) Verify if other outlets nearby work 4) Test with a different device 5) If still not working, consult an electrician',
-  'flickering lights': 'Flickering lights could indicate: 1) Loose bulb 2) Loose wiring connection 3) Circuit overload 4) Voltage fluctuations. Start by checking bulb connections and ensuring circuit isn\'t overloaded',
-  'voltage testing': 'When testing voltage: 1) Always use proper PPE 2) Ensure meter is rated appropriately 3) Verify meter operation first 4) Maintain safe working distance 5) Follow proper testing procedures',
-  'default': 'For this type of electrical issue, please: 1) Ensure power is off before inspection 2) Document symptoms thoroughly 3) Check for obvious damage 4) Test with proper equipment if safe 5) When in doubt, consult a licensed electrician'
-};
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -22,12 +14,44 @@ serve(async (req) => {
 
   try {
     const { query } = await req.json();
-    
-    // Simple keyword matching for common issues
-    const response = Object.entries(diagnosticResponses).find(([key]) => 
-      query.toLowerCase().includes(key))?.[1] || diagnosticResponses.default;
+    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
-    return new Response(JSON.stringify({ response }), {
+    if (!openAIApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { 
+            role: 'system', 
+            content: `You are an AI electrical diagnostic assistant specializing in helping apprentice electricians. 
+                     Provide clear, concise, and professional technical guidance.
+                     Format your responses in a structured way with numbered steps when applicable.
+                     Always prioritize safety and mention when a licensed electrician should be consulted.
+                     Keep responses focused and under 200 words.` 
+          },
+          { role: 'user', content: query }
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('OpenAI API error:', error);
+      throw new Error('Failed to get response from OpenAI');
+    }
+
+    const data = await response.json();
+    const assistantResponse = data.choices[0].message.content;
+
+    return new Response(JSON.stringify({ response: assistantResponse }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
