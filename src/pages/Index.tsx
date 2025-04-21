@@ -1,18 +1,111 @@
 
-import Logo from "@/components/Logo";
+import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
+import { Link } from "react-router-dom";
+
+// Colors inspired by screenshot
+const bgColor = "#151812";
+const cardColor = "#FFC900";
+const textColor = "#FFFDE6";
+
+const roles = [
+  {
+    label: "APPRENTICES",
+    icon: <Book size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    path: "/apprentices",
+  },
+  {
+    label: "ELECTRICIANS",
+    icon: <Lightbulb size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    path: "/electricians",
+  },
+  {
+    label: "EMPLOYERS",
+    icon: <Briefcase size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
+    path: "/employers",
+  },
+];
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center animate-fade-in">
-        <Logo size={128} />
-        <h1 className="text-4xl font-bold mb-2 mt-6 text-primary">Welcome to Elec-Mate!</h1>
-        <p className="text-lg text-gray-600 mb-2">
-          Your friendly guide for everything electrical. Get started by logging in and exploring!
-        </p>
+    <div
+      className="min-h-screen flex flex-col items-center justify-start px-4"
+      style={{ background: bgColor }}
+    >
+      <h1
+        className="text-[2.5rem] sm:text-5xl font-extrabold text-center mb-8 mt-14 leading-tight drop-shadow"
+        style={{ color: textColor, letterSpacing: 0 }}
+      >
+        THE ELECTRICAL<br />INDUSTRY APP
+      </h1>
+      <div className="w-full max-w-xl mb-14 flex items-center px-2">
+        <div className="relative w-full">
+          <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
+            <Search size={26} />
+          </span>
+          <input
+            className="w-full pl-14 pr-5 py-4 rounded-2xl bg-[#23261e]/80 text-lg text-gray-300 placeholder:text-gray-400 border-none outline-none focus:ring-2 focus:ring-[#FFC900] transition"
+            placeholder="Search"
+            type="text"
+            style={{ fontWeight: 500 }}
+            disabled // display only, not functional for now
+          />
+        </div>
+      </div>
+      <div className="flex flex-col gap-7 w-full max-w-xl items-center">
+        <div className="flex flex-col sm:flex-row gap-7 w-full">
+          {roles.slice(0, 2).map((role) => (
+            <Link
+              to={role.path}
+              key={role.label}
+              className="flex-1 rounded-2xl shadow-xl"
+              style={{ minWidth: 0 }}
+              tabIndex={-1}
+            >
+              <div
+                className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
+                style={{
+                  background: cardColor,
+                  padding: "2.8rem 0.5rem",
+                  minHeight: 200,
+                }}
+              >
+                {role.icon}
+                <span
+                  className="text-xl sm:text-2xl font-bold tracking-wide"
+                  style={{ color: "#fff", letterSpacing: "0.06em" }}
+                >
+                  {role.label}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <Link
+          to={roles[2].path}
+          className="w-full rounded-2xl shadow-xl"
+          tabIndex={-1}
+        >
+          <div
+            className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
+            style={{
+              background: cardColor,
+              padding: "2.8rem 0.5rem",
+              minHeight: 200,
+            }}
+          >
+            {roles[2].icon}
+            <span
+              className="text-xl sm:text-2xl font-bold tracking-wide"
+              style={{ color: "#fff", letterSpacing: "0.06em" }}
+            >
+              {roles[2].label}
+            </span>
+          </div>
+        </Link>
       </div>
     </div>
   );
 };
 
 export default Index;
+
