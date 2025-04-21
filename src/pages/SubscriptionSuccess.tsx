@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronRight, Loader2 } from "lucide-react";
+import { Check, ChevronRight, Loader2, HomeIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -101,6 +101,15 @@ const SubscriptionSuccess = () => {
                   <ChevronRight className="ml-1 h-5 w-5" />
                 </Button>
               </div>
+              
+              {/* New button to go to dashboard */}
+              <Button
+                className="w-full rounded-xl border-2 border-[#FFC900] bg-transparent text-[#FFC900] text-lg font-bold py-4 hover:bg-[#FFC900]/10 mt-3 transition-all duration-300 flex items-center justify-center"
+                onClick={() => navigate("/dashboard")}
+              >
+                Go To Dashboard
+                <HomeIcon className="ml-2 h-5 w-5" />
+              </Button>
             </>
           )}
         </div>
