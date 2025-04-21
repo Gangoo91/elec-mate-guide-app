@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, CreditCard, Calendar, ShieldCheck, X, Check, ArrowRight } from "lucide-react";
+import { Loader2, CreditCard, Calendar, ShieldCheck, X, Check, ArrowRight, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +21,7 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isManaging, setIsManaging] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -28,23 +29,54 @@ const Profile = () => {
   // Check subscription status on load
   useEffect(() => {
     checkSubscription();
+
+    // Set up a timer to periodically check subscription status (every 60 seconds)
+    const checkInterval = setInterval(() => {
+      checkSubscription(true);
+    }, 60000);
+
+    return () => {
+      clearInterval(checkInterval);
+    };
   }, []);
 
-  const checkSubscription = async () => {
+  const checkSubscription = async (silent = false) => {
     try {
-      setIsChecking(true);
+      if (!silent) {
+        setIsChecking(true);
+      } else {
+        setIsRefreshing(true);
+      }
+      
       const { data, error } = await supabase.functions.invoke("check-subscription");
       if (error) throw new Error(error.message);
+      
+      console.log("Subscription status:", data);
       setSubscription(data);
+      
+      if (!silent && data?.subscribed) {
+        toast({
+          title: "Subscription active",
+          description: `Your ${data.subscription_tier || 'Premium'} subscription is active`,
+        });
+      }
     } catch (error: any) {
-      toast({
-        title: "Could not retrieve subscription",
-        description: error?.message || "Please try again later",
-        variant: "destructive",
-      });
+      if (!silent) {
+        toast({
+          title: "Could not retrieve subscription",
+          description: error?.message || "Please try again later",
+          variant: "destructive",
+        });
+      }
+      console.error("Error checking subscription:", error);
     } finally {
       setIsChecking(false);
+      setIsRefreshing(false);
     }
+  };
+
+  const handleManualRefresh = () => {
+    checkSubscription();
   };
 
   const handleManageSubscription = async () => {
@@ -87,13 +119,33 @@ const Profile = () => {
 
         <Card className="mb-10 bg-[#22251e] border-[#FFC900]/20">
           <CardHeader>
-            <CardTitle className="text-[#FFC900] flex items-center gap-2">
-              <CreditCard className="h-5 w-5" />
-              Subscription
-            </CardTitle>
-            <CardDescription className="text-[#FFC900]/70">
-              Manage your subscription and billing information
-            </CardDescription>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                  <CreditCard className="h-5 w-5" />
+                  Subscription
+                </CardTitle>
+                <CardDescription className="text-[#FFC900]/70">
+                  Manage your subscription and billing information
+                </CardDescription>
+              </div>
+              {!isChecking && subscription && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-[#FFC900]/30 text-[#FFC900]/70 hover:bg-[#FFC900]/10"
+                  onClick={handleManualRefresh}
+                  disabled={isRefreshing}
+                >
+                  {isRefreshing ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RefreshCcw className="h-4 w-4" />
+                  )}
+                  <span className="ml-1 sr-only md:not-sr-only">Refresh</span>
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent>
             {isChecking ? (

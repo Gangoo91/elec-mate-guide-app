@@ -29,16 +29,31 @@ serve(async (req: Request) => {
     logStep("Function started");
     const stripeKey = Deno.env.get("Stripe_Payment_Key");
     if (!stripeKey) throw new Error("Stripe secret key missing");
+
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) throw new Error("No authorization header");
     const token = authHeader.replace("Bearer ", "");
+    
+    logStep("Authenticating user with token");
     const { data: { user }, error: userError } = await supabase.auth.getUser(token);
-    if (userError) throw new Error(`Authentication error: ${userError.message}`);
-    if (!user?.email) throw new Error("User not authenticated or email not available");
+    
+    if (userError) {
+      logStep("Authentication error", { error: userError.message });
+      throw new Error(`Authentication error: ${userError.message}`);
+    }
+
+    if (!user?.email) {
+      logStep("No user email found");
+      throw new Error("User not authenticated or email not available");
+    }
     logStep("User authenticated", { userId: user.id, email: user.email });
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
+    
+    // Look for customer by email
+    logStep("Searching for Stripe customer", { email: user.email });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    
     if (customers.data.length === 0) {
       logStep("No customer found, unsubscribing");
       await supabase.from("subscribers").upsert({
@@ -50,18 +65,26 @@ serve(async (req: Request) => {
         subscription_end: null,
         updated_at: new Date().toISOString(),
       }, { onConflict: 'email' });
+      
       return new Response(JSON.stringify({ subscribed: false }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 200,
       });
     }
+    
     const customerId = customers.data[0].id;
     logStep("Found customer", { customerId });
+    
+    // Get active subscriptions
     const subscriptions = await stripe.subscriptions.list({
       customer: customerId,
       status: "active",
-      limit: 1,
+      limit: 5,
+      expand: ['data.default_payment_method'],
     });
+    
+    logStep("Found subscriptions", { count: subscriptions.data.length });
+
     const hasActiveSub = subscriptions.data.length > 0;
     let subscriptionTier = null;
     let subscriptionEnd = null;
@@ -73,6 +96,7 @@ serve(async (req: Request) => {
       subscriptionEnd = new Date(sub.current_period_end * 1000).toISOString();
       price_id = sub.items.data[0].price.id;
       billing_period = sub.items.data[0].price.recurring?.interval || null;
+      
       // Determine tier by amount or metadata
       const amount = sub.items.data[0].price.unit_amount || 0;
       if (amount <= 399) {
@@ -82,12 +106,20 @@ serve(async (req: Request) => {
       } else {
         subscriptionTier = "Employer";
       }
-      logStep("Active subscription found", { subscriptionTier, billing_period, subscriptionEnd });
+      
+      logStep("Active subscription found", { 
+        subscriptionTier, 
+        billing_period, 
+        subscriptionEnd,
+        priceId: price_id
+      });
     } else {
       logStep("No active subscription found");
     }
 
-    await supabase.from("subscribers").upsert({
+    // Update the database
+    logStep("Updating database");
+    const updateResult = await supabase.from("subscribers").upsert({
       email: user.email,
       user_id: user.id,
       stripe_customer_id: customerId,
@@ -99,7 +131,13 @@ serve(async (req: Request) => {
       billing_period,
     }, { onConflict: 'email' });
 
-    logStep("Database updated", { subscribed: hasActiveSub, subscriptionTier });
+    if (updateResult.error) {
+      logStep("Database update error", { error: updateResult.error });
+    } else {
+      logStep("Database updated successfully");
+    }
+
+    logStep("Returning subscription data");
     return new Response(
       JSON.stringify({
         subscribed: hasActiveSub,

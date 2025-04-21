@@ -1,8 +1,10 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { stripePriceIds } from "@/config/subscriptionPlans";
+import { useNavigate } from 'react-router-dom';
 
 type SubscriptionContextType = {
   isLoading: boolean;
@@ -35,6 +37,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
   const [lastResponse, setLastResponse] = useState<any>(null);
   const { toast } = useToast();
   const { user, session } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCheckingAuth(!user || !session);
@@ -76,7 +79,10 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
       
       // Call the edge function with the price_id
       const { data, error: functionError } = await supabase.functions.invoke("create-checkout", {
-        body: { price_id }
+        body: { 
+          price_id,
+          success_url: `${window.location.origin}/subscription/success` // Ensure proper success URL
+        }
       });
       
       // Store full response for debugging
@@ -98,14 +104,8 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
 
       console.log(`Redirecting to checkout: ${data.url}`);
       
-      // Try opening checkout in a new window first, fallback to same window
-      const checkoutWindow = window.open(data.url, '_blank');
-      
-      if (!checkoutWindow || checkoutWindow.closed || typeof checkoutWindow.closed === 'undefined') {
-        // Popup was blocked or couldn't open, fallback to same window
-        console.log("Popup blocked or couldn't open, redirecting in same window");
-        window.location.href = data.url;
-      }
+      // Try opening checkout in the same window (more reliable)
+      window.location.href = data.url;
       
     } catch (error: any) {
       const errorMessage = error?.message || "Unknown error";
@@ -121,11 +121,7 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
         description: errorMessage,
         variant: "destructive",
       });
-    } finally {
-      // Keep loading state active for less time to prevent UI confusion
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+      setIsLoading(false);
     }
   };
 
