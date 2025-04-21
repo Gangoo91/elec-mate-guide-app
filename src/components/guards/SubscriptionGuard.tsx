@@ -28,7 +28,8 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
   const location = useLocation();
   const { toast } = useToast();
 
-  const bypassSubscriptionCheck = import.meta.env.VITE_BYPASS_SUBSCRIPTION === "true";
+  // Set this to true to bypass subscription checks during development
+  const bypassSubscriptionCheck = true;
 
   useEffect(() => {
     if (bypassSubscriptionCheck) {
