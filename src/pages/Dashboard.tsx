@@ -1,10 +1,11 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
 import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
+import { useRoleFilter } from "@/hooks/useRoleFilter";
 
 const roles = [
   {
@@ -28,12 +29,13 @@ const roles = [
 ];
 
 const Dashboard = () => {
-  const [query, setQuery] = useState("");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-
-  const filteredRoles = roles.filter((role) =>
-    role.label.toLowerCase().includes(query.toLowerCase())
-  );
+  const {
+    query,
+    setQuery,
+    isSearchFocused,
+    setIsSearchFocused,
+    filteredRoles
+  } = useRoleFilter(roles);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,4 +67,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
