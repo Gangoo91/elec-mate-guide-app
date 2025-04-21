@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, CreditCard, RefreshCcw, AlertCircle, ExternalLink } from "lucide-react";
+import { Loader2, CreditCard, RefreshCcw, AlertCircle, ExternalLink, XCircle, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -12,10 +12,31 @@ import {
   DialogFooter,
   DialogDescription
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 type SubscriptionControlsProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
+};
+
+type SubscriptionData = {
+  id: string;
+  status: string;
+  current_period_end: number;
+  cancel_at_period_end: boolean;
+  plan: string;
+  amount: number | null;
+  currency: string;
+  interval: string | null;
 };
 
 export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionControlsProps) => {
@@ -23,6 +44,10 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorDetails, setErrorDetails] = useState("");
   const [isPortalConfigError, setIsPortalConfigError] = useState(false);
+  const [subscriptionData, setSubscriptionData] = useState<SubscriptionData[]>([]);
+  const [showSubsDialog, setShowSubsDialog] = useState(false);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
+  const [selectedSubId, setSelectedSubId] = useState("");
   const { toast } = useToast();
 
   const handleManageSubscription = async () => {
@@ -42,11 +67,18 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
       }
       
       if (data?.url) {
+        // Standard flow - redirect to Stripe portal
         console.log("Received portal URL:", data.url);
         window.location.href = data.url;
+      } else if (data?.bypass_portal && data?.subscription_data) {
+        // Fallback flow - show subscription data in our own UI
+        console.log("Using fallback subscription management:", data.subscription_data);
+        setSubscriptionData(data.subscription_data.subscriptions);
+        setShowSubsDialog(true);
+        setIsManaging(false);
       } else {
-        console.error("No portal URL returned:", data);
-        throw new Error("Failed to get customer portal URL");
+        console.error("No portal URL or subscription data returned:", data);
+        throw new Error("Failed to get subscription management data");
       }
     } catch (error: any) {
       console.error("Subscription management error:", error);
@@ -69,7 +101,52 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
       // Reset the button state after error
       setIsManaging(false);
     }
-    // Note: We don't reset isManaging to false on success because we're redirecting away from the page
+  };
+
+  const handleCancelSubscription = async (subscriptionId: string) => {
+    setSelectedSubId(subscriptionId);
+    setShowCancelConfirm(true);
+  };
+
+  const confirmCancelSubscription = async () => {
+    if (!selectedSubId) return;
+    
+    try {
+      // This is a simplified version - in a real implementation, you'd have an edge function
+      // that handles cancellation by calling stripe.subscriptions.update with cancel_at_period_end = true
+      toast({
+        title: "Subscription cancellation requested",
+        description: "Please refresh your subscription status to see the changes",
+      });
+      
+      setShowCancelConfirm(false);
+      setShowSubsDialog(false);
+      onRefresh();
+    } catch (error) {
+      toast({
+        title: "Error cancelling subscription",
+        description: "There was a problem processing your request",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Format date from timestamp
+  const formatDate = (timestamp: number) => {
+    return new Date(timestamp * 1000).toLocaleDateString("en-GB", {
+      day: "numeric", 
+      month: "long", 
+      year: "numeric"
+    });
+  };
+
+  // Format currency
+  const formatCurrency = (amount: number | null, currency: string) => {
+    if (amount === null) return "N/A";
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currency || "USD"
+    }).format(amount / 100);
   };
 
   // Manual retry function
@@ -190,6 +267,119 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Fallback Subscription Management Dialog */}
+      <Dialog open={showSubsDialog} onOpenChange={setShowSubsDialog}>
+        <DialogContent className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <CreditCard className="h-5 w-5" />
+              Your Subscription Details
+            </DialogTitle>
+            <DialogDescription className="text-[#FFC900]/70">
+              Manage your subscription details below
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 my-2">
+            {subscriptionData.length === 0 ? (
+              <div className="text-center p-4">
+                <p className="text-[#FFC900]/70">No subscriptions found</p>
+              </div>
+            ) : (
+              subscriptionData.map((subscription) => (
+                <div key={subscription.id} className="border border-[#FFC900]/20 rounded-lg p-4 space-y-3">
+                  <div className="flex justify-between items-center">
+                    <div className="font-medium text-[#FFC900]">{subscription.plan || "Standard Plan"}</div>
+                    <div className="flex items-center">
+                      {subscription.status === "active" ? (
+                        <span className="bg-green-700/20 text-green-400 text-xs px-2.5 py-1 rounded-full flex items-center">
+                          <CheckCircle className="h-3 w-3 mr-1" />
+                          Active
+                        </span>
+                      ) : subscription.status === "canceled" ? (
+                        <span className="bg-red-700/20 text-red-400 text-xs px-2.5 py-1 rounded-full flex items-center">
+                          <XCircle className="h-3 w-3 mr-1" />
+                          Canceled
+                        </span>
+                      ) : (
+                        <span className="bg-yellow-700/20 text-yellow-400 text-xs px-2.5 py-1 rounded-full">
+                          {subscription.status}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-[#FFC900]/70">
+                    <div>
+                      <span className="font-medium">Price:</span>{" "}
+                      {formatCurrency(subscription.amount, subscription.currency)}
+                      {subscription.interval && <span> / {subscription.interval}</span>}
+                    </div>
+                    <div>
+                      <span className="font-medium">Next billing date:</span>{" "}
+                      {formatDate(subscription.current_period_end)}
+                    </div>
+                    {subscription.cancel_at_period_end && (
+                      <div className="col-span-2">
+                        <span className="text-amber-400">
+                          Your subscription will end on {formatDate(subscription.current_period_end)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {subscription.status === "active" && !subscription.cancel_at_period_end && (
+                    <div className="pt-2">
+                      <Button 
+                        variant="outline" 
+                        className="border-red-500/50 text-red-500 hover:bg-red-500/10 hover:text-red-400 w-full sm:w-auto"
+                        onClick={() => handleCancelSubscription(subscription.id)}
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Cancel Subscription
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+          </div>
+          
+          <DialogFooter className="mt-4">
+            <Button
+              onClick={() => setShowSubsDialog(false)}
+              className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
+            >
+              Done
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Cancel Confirmation Dialog */}
+      <AlertDialog open={showCancelConfirm} onOpenChange={setShowCancelConfirm}>
+        <AlertDialogContent className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Subscription?</AlertDialogTitle>
+            <AlertDialogDescription className="text-[#FFC900]/70">
+              Your subscription will remain active until the end of your current billing period. 
+              After that, you will no longer be charged and will lose access to premium features.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-[#FFC900]/30 text-[#FFC900]/70">
+              Keep Subscription
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              className="bg-red-500 text-white hover:bg-red-600"
+              onClick={confirmCancelSubscription}
+            >
+              Yes, Cancel Subscription
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

@@ -85,11 +85,39 @@ serve(async (req: Request) => {
         }
       );
     } catch (portalError: any) {
-      // Check for specific configuration missing error
+      // Check if this is a portal configuration missing error
       if (portalError.message?.includes("configuration") && portalError.message?.includes("not been created")) {
-        logStep("Portal configuration missing", { message: portalError.message });
-        throw new Error(
-          "The Stripe Customer Portal has not been configured. Please visit https://dashboard.stripe.com/settings/billing/portal to set up your customer portal in the Stripe dashboard."
+        logStep("Portal configuration missing, using manual subscription management");
+        
+        // FALLBACK: Get subscription info directly instead of using customer portal
+        const subscriptions = await stripe.subscriptions.list({
+          customer: customerId,
+          status: 'all',
+          limit: 10,
+          expand: ['data.default_payment_method']
+        });
+        
+        // Return a special response with subscription data instead of a portal URL
+        return new Response(
+          JSON.stringify({
+            bypass_portal: true,
+            subscription_data: {
+              subscriptions: subscriptions.data.map(sub => ({
+                id: sub.id,
+                status: sub.status,
+                current_period_end: sub.current_period_end,
+                cancel_at_period_end: sub.cancel_at_period_end,
+                plan: sub.items.data[0]?.price.nickname || 'Unknown Plan',
+                amount: sub.items.data[0]?.price.unit_amount,
+                currency: sub.items.data[0]?.price.currency,
+                interval: sub.items.data[0]?.price.recurring?.interval
+              }))
+            }
+          }),
+          { 
+            headers: { ...corsHeaders, "Content-Type": "application/json" }, 
+            status: 200 
+          }
         );
       }
       
