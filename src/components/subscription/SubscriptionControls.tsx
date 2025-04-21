@@ -20,23 +20,27 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
       const { data, error } = await supabase.functions.invoke("customer-portal");
       
       if (error) {
-        throw new Error(error.message);
+        console.error("Customer portal error:", error);
+        throw new Error(error.message || "Failed to access customer portal");
       }
       
       if (data?.url) {
         window.location.href = data.url;
       } else {
+        console.error("No portal URL returned:", data);
         throw new Error("Failed to get customer portal URL");
       }
     } catch (error: any) {
+      console.error("Subscription management error:", error);
       toast({
         title: "Could not access subscription management",
         description: error?.message || "Please try again later",
         variant: "destructive",
       });
-    } finally {
+      // Reset the button state after error
       setIsManaging(false);
     }
+    // Note: We don't reset isManaging to false on success because we're redirecting away from the page
   };
 
   return (
