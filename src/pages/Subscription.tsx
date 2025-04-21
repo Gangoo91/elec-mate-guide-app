@@ -49,27 +49,49 @@ const Subscription = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("Electrician");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
+  const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleCheckout = async () => {
     setIsLoading(true);
+    setError(null);
+    
     try {
+      // Ensure we have an authenticated user
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error("Please log in to continue with your subscription");
+      }
+      
       const price_id = stripePriceIds[selectedPlan][billingCycle];
+      console.log("Starting checkout with price ID:", price_id);
+      
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { price_id },
       });
-      if (error) throw new Error(error.message);
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        throw new Error("Failed to get checkout URL");
+      
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw new Error(`Payment error: ${error.message}`);
       }
+      
+      if (!data?.url) {
+        console.error("No checkout URL returned:", data);
+        throw new Error("Failed to create checkout session");
+      }
+      
+      console.log("Redirecting to checkout URL:", data.url);
+      window.location.href = data.url;
     } catch (error: any) {
+      console.error("Checkout error:", error);
+      const errorMessage = error?.message || "Unknown error";
+      setError(errorMessage);
       toast({
         title: "Payment initiation failed",
-        description: error?.message || "Unknown error",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -126,6 +148,7 @@ const Subscription = () => {
             >Yearly <span className="ml-1 text-xs font-semibold">(Save 17%)</span></Button>
           </div>
 
+          {/* Subscription plans selection */}
           <div className="w-full my-6 space-y-3">
             {subscriptionPlans.map((plan) => (
               <div 
@@ -165,6 +188,14 @@ const Subscription = () => {
           <p className="text-center text-[#FFC900] font-semibold mb-6">
             Cancel anytime — no commitment, no hidden fees.
           </p>
+
+          {/* Display error message if there was one */}
+          {error && (
+            <div className="w-full p-3 mb-4 bg-red-900/20 border border-red-500/50 text-red-300 rounded-lg text-sm">
+              <p className="font-semibold">Error:</p>
+              <p>{error}</p>
+            </div>
+          )}
 
           <Button
             onClick={handleCheckout}

@@ -8,12 +8,18 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+const logStep = (step: string, details?: any) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  console.log(`[CREATE-CHECKOUT] ${step}${detailsStr}`);
+};
+
 serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    logStep("Function started");
     // Initialize Supabase with anon key (reading auth info only)
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -22,30 +28,66 @@ serve(async (req: Request) => {
 
     // Get the current user via JWT
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("Missing authorization header");
+    if (!authHeader) {
+      logStep("Missing authorization header");
+      throw new Error("Missing authorization header");
+    }
+    
     const token = authHeader.replace("Bearer ", "");
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-    if (authError) throw new Error(authError.message);
-    if (!user?.email) throw new Error("Authenticated user not found");
+    logStep("Authenticating user with token");
+    
+    // Use the JWT to get the user
+    const { data: authData, error: authError } = await supabase.auth.getUser(token);
+    
+    if (authError || !authData.user) {
+      logStep("Authentication failed", { error: authError?.message });
+      throw new Error(authError?.message || "Authentication failed");
+    }
+    
+    const user = authData.user;
+    logStep("User authenticated", { id: user.id, email: user.email });
+    
+    if (!user.email) {
+      logStep("Email missing from authenticated user");
+      throw new Error("Authenticated user email not found");
+    }
+
     // Stripe instance
-    const stripe = new Stripe(Deno.env.get("Stripe_Payment_Key")!, { apiVersion: "2023-10-16" });
+    const stripeKey = Deno.env.get("Stripe_Payment_Key");
+    if (!stripeKey) {
+      logStep("Stripe key is missing");
+      throw new Error("Stripe secret key not configured");
+    }
+    
+    const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
+    logStep("Stripe initialized");
 
     // Get price_id from POST body (prefer client selection), fallback to default Electrician monthly
     let price_id;
     try {
       const body = await req.json();
       price_id = body.price_id;
-    } catch (_) {
+      logStep("Received request with price_id", { price_id });
+    } catch (parseError) {
+      logStep("Error parsing request body", { error: parseError });
       price_id = undefined;
     }
+    
     // Fallback to monthly Electrician if none provided
-    if (!price_id) price_id = "price_1RGIdw2RKw5t5RAmEWjKbGx1";
+    if (!price_id) {
+      logStep("No price_id provided, using default");
+      price_id = "price_1RGIdw2RKw5t5RAmEWjKbGx1"; // Default to Electrician monthly
+    }
 
     // Check if the customer exists in Stripe
+    logStep("Checking for existing customer", { email: user.email });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     let customerId: string | undefined = undefined;
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
+      logStep("Found existing customer", { customerId });
+    } else {
+      logStep("No existing customer found");
     }
 
     const lineItems = [
@@ -53,6 +95,14 @@ serve(async (req: Request) => {
     ];
 
     const url = req.headers.get("origin") || "http://localhost:3000";
+    logStep("Creating checkout session", { 
+      customerId: customerId || "new customer", 
+      customerEmail: customerId ? "using existing" : user.email,
+      lineItems, 
+      successUrl: `${url}/dashboard?checkout=success`,
+      cancelUrl: `${url}/dashboard?checkout=cancel`
+    });
+    
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
@@ -62,12 +112,14 @@ serve(async (req: Request) => {
       cancel_url: `${url}/dashboard?checkout=cancel`,
     });
 
+    logStep("Checkout session created", { sessionId: session.id, url: session.url });
     return new Response(
       JSON.stringify({ url: session.url }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
     );
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
+    logStep("ERROR", { message: msg });
     return new Response(JSON.stringify({ error: msg }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500
