@@ -29,8 +29,6 @@ const roles = [
   },
 ];
 
-// Removed featuredContent and related "Industry Highlights" code
-
 const Dashboard = () => {
   const [query, setQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -146,8 +144,47 @@ const Dashboard = () => {
         {/* Industry Resources (External Links) */}
         <IndustryResources />
 
+        {/* Get Involved Section */}
+        <div className="bg-[#151812] rounded-xl p-8 border border-[#FFC900]/30 mt-10 flex flex-col items-center text-center animate-on-load opacity-0" style={{ animationDelay: "700ms" }}>
+          <h2 className="text-xl font-bold text-[#FFC900] mb-2">Get Involved</h2>
+          <p className="text-[#FFC900]/80 mb-5 max-w-2xl">
+            We’re building this community together! Have a question, want to share an idea, or contribute helpful resources? 
+            <br className="hidden sm:block" />
+            Start a discussion, suggest features, or help future-proof the Electrical Industry Hub for everyone.
+          </p>
+          <div className="flex gap-3 flex-wrap justify-center">
+            <Button
+              variant="outline"
+              className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => {
+                window.open('mailto:hello@elec-mate.com?subject=Community%20Suggestion', '_blank');
+              }}
+            >
+              Suggest an Idea
+            </Button>
+            <Button
+              variant="outline"
+              className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => {
+                window.open('mailto:hello@elec-mate.com?subject=Submit%20a%20Resource', '_blank');
+              }}
+            >
+              Share a Resource
+            </Button>
+            <Button
+              variant="outline"
+              className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => {
+                window.open('mailto:hello@elec-mate.com?subject=General%20Enquiry', '_blank');
+              }}
+            >
+              Ask a Question
+            </Button>
+          </div>
+        </div>
+
         {/* App Description - Moved to the bottom */}
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mt-10 animate-on-load opacity-0" style={{ animationDelay: '600ms' }}>
+        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mt-10 animate-on-load opacity-0" style={{ animationDelay: '900ms' }}>
           <h2 className="text-2xl font-bold text-[#FFC900] mb-2">About This App</h2>
           <p className="text-[#FFC900]/80 mb-4">
             Designed to empower every stage of your electrical industry journey. Select your portal to get started!
@@ -169,3 +206,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
