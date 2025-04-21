@@ -52,7 +52,7 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
-  // Do not show UserMenu on these auth/guest pages
+  // Do not show UserMenu or mobile menu on these auth/guest pages
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
 
   return (
@@ -146,14 +146,16 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           {/* Mobile menu button */}
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="md:hidden" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5 text-[#FFC900]" /> : <Menu className="h-5 w-5 text-[#FFC900]" />}
-          </Button>
+          {!hideUserMenuPaths.includes(location.pathname) && (
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden" 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5 text-[#FFC900]" /> : <Menu className="h-5 w-5 text-[#FFC900]" />}
+            </Button>
+          )}
 
           {/* User/account menu */}
           {!hideUserMenuPaths.includes(location.pathname) && (
