@@ -8,6 +8,7 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import SignupFormFields from "@/components/signup/SignupFormFields";
 import { useSignupForm } from "@/hooks/useSignupForm";
+import MainLayout from "@/components/layout/MainLayout";
 
 const Signup = () => {
   const {
@@ -64,50 +65,52 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#151812] px-2 py-8 overflow-auto">
-      <div className="w-full max-w-md bg-transparent flex flex-col items-center animate-fade-in">
-        <Logo size={80} />
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-8 mt-6 leading-tight drop-shadow-[0_0_8px_rgba(255,201,0,0.75)] tracking-wide select-none">
-          Create Your Account
-        </h1>
+    <MainLayout>
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#151812] px-2 py-8 overflow-auto">
+        <div className="w-full max-w-md bg-transparent flex flex-col items-center animate-fade-in">
+          <Logo size={80} />
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-8 mt-6 leading-tight drop-shadow-[0_0_8px_rgba(255,201,0,0.75)] tracking-wide select-none">
+            Create Your Account
+          </h1>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-6">
-          <SignupFormFields
-            plan={plan}
-            email={email}
-            password={password}
-            confirmPassword={confirmPassword}
-            errors={errors}
-            onPlanChange={onPlanChange}
-            onEmailChange={onEmailChange}
-            onPasswordChange={onPasswordChange}
-            onConfirmPasswordChange={onConfirmPasswordChange}
-          />
+          <form onSubmit={handleSubmit} className="w-full space-y-6">
+            <SignupFormFields
+              plan={plan}
+              email={email}
+              password={password}
+              confirmPassword={confirmPassword}
+              errors={errors}
+              onPlanChange={onPlanChange}
+              onEmailChange={onEmailChange}
+              onPasswordChange={onPasswordChange}
+              onConfirmPasswordChange={onConfirmPasswordChange}
+            />
 
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto mb-4 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
-          >
-            {isSubmitting ? (
-              <span className="flex items-center justify-center">
-                <Loader2 className="animate-spin mr-2" size={20} />
-                CREATING ACCOUNT...
-              </span>
-            ) : (
-              "SIGN UP"
-            )}
-          </Button>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto mb-4 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center">
+                  <Loader2 className="animate-spin mr-2" size={20} />
+                  CREATING ACCOUNT...
+                </span>
+              ) : (
+                "SIGN UP"
+              )}
+            </Button>
 
-          <div className="mt-8 text-center text-white text-base">
-            Already have an account?<br />
-            <Link to="/login" className="text-[#FFC900] font-semibold hover:underline">
-              Log In
-            </Link>
-          </div>
-        </form>
+            <div className="mt-8 text-center text-white text-base">
+              Already have an account?<br />
+              <Link to="/login" className="text-[#FFC900] font-semibold hover:underline">
+                Log In
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

@@ -14,6 +14,9 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Welcome from "./pages/Welcome";
 import Profile from "./pages/Profile";
+import ApprenticesPage from "./pages/ApprenticesPage";
+import ElectriciansPage from "./pages/ElectriciansPage";
+import EmployersPage from "./pages/EmployersPage";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +29,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/apprentices" element={<Dashboard />} />
-          <Route path="/electricians" element={<Dashboard />} />
-          <Route path="/employers" element={<Dashboard />} />
+          <Route path="/apprentices" element={<ApprenticesPage />} />
+          <Route path="/electricians" element={<ElectriciansPage />} />
+          <Route path="/employers" element={<EmployersPage />} />
           <Route path="/apprentice-hub" element={<ApprenticeHub />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
