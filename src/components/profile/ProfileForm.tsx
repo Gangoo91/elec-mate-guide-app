@@ -93,12 +93,14 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
 
   const qualificationLevels = [
     "Apprentice",
+    "Electrical Mate",
     "Electrician",
     "Advanced Electrician",
-    "Electrical Mate",
-    "Electrical Designer",
-    "Electrical Engineer",
+    "Commissioning Tech",
+    "Commissioning Engineer",
     "Electrical Inspector",
+    "Electrical Engineer",
+    "Electrical Designer",
     "Other"
   ];
 
