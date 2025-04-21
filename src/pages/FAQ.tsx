@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -8,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Search, HelpCircle, MessageSquare, Users, Award, Lightbulb, Heart } from "lucide-react";
+import { Search, HelpCircle } from "lucide-react";
 import { useState } from "react";
 
 const FAQ = () => {
@@ -124,7 +123,6 @@ const FAQ = () => {
     }
   ];
   
-  // Filter FAQ items based on search query
   const filteredFAQItems = searchQuery 
     ? faqItems.map(section => ({
         ...section,
@@ -143,7 +141,6 @@ const FAQ = () => {
           description="Comprehensive support and guidance for UK electrical professionals"
         />
         
-        {/* Search Bar */}
         <div className="max-w-2xl mx-auto mt-8 mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FFC900]" />
@@ -182,7 +179,6 @@ const FAQ = () => {
             )
           ))}
           
-          {/* Show when no results found */}
           {filteredFAQItems.length === 0 || filteredFAQItems.every(section => section.questions.length === 0) ? (
             <div className="text-center py-8">
               <HelpCircle className="mx-auto h-12 w-12 text-[#FFC900]/40 mb-3" />
@@ -195,20 +191,6 @@ const FAQ = () => {
               </button>
             </div>
           ) : null}
-        </div>
-
-        {/* Contact support */}
-        <div className="mt-12 max-w-2xl mx-auto bg-[#22251e] rounded-lg p-6 border border-[#FFC900]/20">
-          <h2 className="text-xl font-semibold text-[#FFC900] mb-3 flex items-center">
-            <MessageSquare className="h-5 w-5 mr-2" />
-            Need more help?
-          </h2>
-          <p className="text-[#FFC900]/70 mb-4">
-            Our dedicated UK-based support team specialises in electrical industry support. We're here to help you navigate your professional journey with expert guidance.
-          </p>
-          <button className="bg-[#FFC900] text-black font-medium px-6 py-2 rounded-md hover:bg-[#FFC900]/90 transition-colors">
-            Contact Electrical Industry Support
-          </button>
         </div>
       </div>
     </MainLayout>
