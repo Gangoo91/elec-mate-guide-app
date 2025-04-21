@@ -1,62 +1,107 @@
 
 import { Link } from "react-router-dom";
-import BackButton from "@/components/navigation/BackButton";
+import MainLayout from "@/components/layout/MainLayout";
 
 const Terms = () => (
-  <div className="min-h-screen flex flex-col items-center justify-start px-6 py-12 bg-background text-foreground">
-    <div className="w-full max-w-3xl">
-      <BackButton />
-      <h1 className="text-4xl font-extrabold text-center mb-8 text-primary-foreground">
-        Terms of Service
-      </h1>
+  <MainLayout>
+    <div className="min-h-screen max-w-4xl mx-auto px-4 py-12">
+      <div className="space-y-8 animate-fade-in">
+        <header className="text-center space-y-4">
+          <h1 className="text-4xl font-bold text-[#FFC900]">Terms of Service</h1>
+          <p className="text-[#FFC900]/80 text-lg">
+            Last updated: April 21, 2025
+          </p>
+        </header>
 
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        Welcome to Elec-Mate. These Terms of Service govern your use of our application. By accessing or using the app, you agree to comply with and be bound by these terms.
-      </p>
+        <section className="prose prose-lg max-w-none space-y-6">
+          <p className="text-[#FFC900]/90 leading-relaxed">
+            Welcome to Elec-Mate. By using our platform, you agree to comply with and be bound by these Terms of Service. Please read them carefully.
+          </p>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">1. Use of the App</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        You must be at least 18 years old to use this app. You agree to use the app only for lawful purposes and in a way that does not infringe the rights of others or restrict their use.
-      </p>
+          <div className="space-y-8">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">1. Use of Service</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                You must be at least 18 years old to use Elec-Mate. By accessing our platform, you agree to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Use the service legally and responsibly</li>
+                <li>Maintain accurate account information</li>
+                <li>Protect your account credentials</li>
+                <li>Report any unauthorized account access</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">2. Account Registration</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        When creating an account, you agree to provide accurate information and keep your login credentials confidential. You are responsible for all activities under your account.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">2. Account Registration</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                When creating an account, you agree to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Provide accurate and complete information</li>
+                <li>Keep your login credentials secure</li>
+                <li>Update your information as needed</li>
+                <li>Accept responsibility for account activities</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">3. Prohibited Conduct</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        Users must not engage in any harmful or unauthorized activities such as hacking, spamming, or distributing malware. Violations may result in account suspension or termination.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">3. Platform Rules</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                Users must not:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Engage in any harmful or malicious activities</li>
+                <li>Attempt to breach platform security</li>
+                <li>Share inappropriate or illegal content</li>
+                <li>Impersonate other users or entities</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">4. Intellectual Property</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        All content and materials provided in the app are owned by Elec-Mate or its licensors and are protected by intellectual property laws.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">4. Intellectual Property</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                All content and materials on Elec-Mate are protected by intellectual property laws and belong to us or our licensors. Users agree to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Respect intellectual property rights</li>
+                <li>Not copy or distribute protected content</li>
+                <li>Only use materials as permitted</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">5. Disclaimer of Warranties</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        The app is provided "as is" without warranties of any kind. We do not guarantee uninterrupted access or error-free performance.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">5. Service Modifications</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                We reserve the right to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Modify or discontinue services</li>
+                <li>Update these terms at any time</li>
+                <li>Change pricing and features</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">6. Limitation of Liability</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        We are not liable for any indirect, incidental, or consequential damages arising from your use of the app.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">6. Contact Information</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                For questions about these Terms of Service, please contact us at{" "}
+                <a href="mailto:support@elec-mate.com" className="text-[#FFC900] hover:underline">
+                  support@elec-mate.com
+                </a>
+              </p>
+            </section>
+          </div>
+        </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">7. Changes to Terms</h2>
-      <p className="text-base leading-relaxed mb-10 text-muted-foreground">
-        We may update these terms from time to time. Continued use of the app constitutes acceptance of the new terms.
-      </p>
-
-      <p className="text-sm text-muted-foreground mb-8">
-        If you have any questions about these Terms, please contact us at <a href="mailto:support@elec-mate.com" className="text-primary hover:underline">support@elec-mate.com</a>.
-      </p>
-      <Link to="/" className="block text-center text-primary font-semibold hover:underline">
-        &larr; Back to Home
-      </Link>
+        <footer className="pt-8 text-center">
+          <Link to="/" className="text-[#FFC900] hover:underline inline-flex items-center gap-2">
+            &larr; Back to Home
+          </Link>
+        </footer>
+      </div>
     </div>
-  </div>
+  </MainLayout>
 );
 
 export default Terms;
