@@ -8,22 +8,32 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { User, Pencil } from "lucide-react";
+import { User, Pencil, CheckCircle } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileFormValues {
   first_name: string;
   last_name: string;
 }
 
-export function ProfileForm() {
+interface ProfileFormProps {
+  initialData?: {
+    first_name?: string | null;
+    last_name?: string | null;
+  } | null;
+}
+
+export function ProfileForm({ initialData }: ProfileFormProps) {
   const { toast } = useToast();
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const queryClient = useQueryClient();
 
   const form = useForm<ProfileFormValues>({
     defaultValues: {
-      first_name: "",
-      last_name: "",
+      first_name: initialData?.first_name || "",
+      last_name: initialData?.last_name || "",
     },
   });
 
@@ -31,6 +41,8 @@ export function ProfileForm() {
     if (!user?.id) return;
     
     setIsLoading(true);
+    setUpdateSuccess(false);
+    
     try {
       const { error } = await supabase
         .from('profiles')
@@ -43,6 +55,10 @@ export function ProfileForm() {
 
       if (error) throw error;
 
+      // Invalidate the profile query to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+      
+      setUpdateSuccess(true);
       toast({
         title: "Profile updated",
         description: "Your profile has been updated successfully.",
@@ -103,20 +119,32 @@ export function ProfileForm() {
                 </FormItem>
               )}
             />
-            <Button 
-              type="submit" 
-              disabled={isLoading}
-              className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
-            >
-              {isLoading ? (
-                <>Saving...</>
-              ) : (
-                <>
-                  <Pencil className="w-4 h-4 mr-2" />
-                  Update Profile
-                </>
+            <div className="flex items-center justify-between">
+              <Button 
+                type="submit" 
+                disabled={isLoading}
+                className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Pencil className="w-4 h-4 mr-2" />
+                    Update Profile
+                  </>
+                )}
+              </Button>
+              
+              {updateSuccess && (
+                <div className="flex items-center text-green-500">
+                  <CheckCircle className="w-4 h-4 mr-1" />
+                  <span className="text-sm">Saved successfully</span>
+                </div>
               )}
-            </Button>
+            </div>
           </form>
         </Form>
       </CardContent>

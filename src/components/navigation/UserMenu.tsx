@@ -13,6 +13,7 @@ import {
 import { LogOut, Settings, User as UserIcon, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 type UserMenuProps = {
   user: any;
@@ -22,10 +23,13 @@ type UserMenuProps = {
 const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
+      // Clear all queries in the cache when logging out
+      queryClient.clear();
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",
