@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,6 +21,7 @@ import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionGuard from "./components/guards/SubscriptionGuard";
 import { AuthProvider } from "@/hooks/useAuth";
+import ManageSubscription from "./pages/ManageSubscription";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/manage-subscription" element={<ManageSubscription />} />
             <Route path="/subscription" element={<Subscription />} />
             <Route path="/subscription/success" element={<SubscriptionSuccess />} />
             <Route path="*" element={<NotFound />} />
