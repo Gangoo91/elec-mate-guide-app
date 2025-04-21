@@ -1,14 +1,12 @@
-
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
+import AIDiagnosticAssistant from "@/components/apprentices/AIDiagnosticAssistant";
 
 const MentalHealthHubContent = () => (
   <>
@@ -126,6 +124,12 @@ const ApprenticesPage = () => {
       description: "Workshops and training opportunities",
       icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Learn more", href: "#events" }
+    },
+    {
+      title: "AI Diagnostic Assistant",
+      description: "Get instant technical guidance and troubleshooting help for electrical challenges.",
+      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
+      action: { label: "Get Help", onClick: () => {} }
     }
   ];
 
@@ -154,6 +158,10 @@ const ApprenticesPage = () => {
         ) : (
           <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
         )}
+
+        <div className="mt-8 space-y-4">
+          <AIDiagnosticAssistant />
+        </div>
 
         <div className="bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
           <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>
