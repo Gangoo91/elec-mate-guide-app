@@ -182,24 +182,6 @@ const Dashboard = () => {
             </Button>
           </div>
         </div>
-
-        {/* App Description - Moved to the bottom */}
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mt-10 animate-on-load opacity-0" style={{ animationDelay: '900ms' }}>
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-2">About This App</h2>
-          <p className="text-[#FFC900]/80 mb-4">
-            Designed to empower every stage of your electrical industry journey. Select your portal to get started!
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-            <div className="bg-[#151812] rounded-lg p-4 border border-[#FFC900]/10">
-              <h3 className="text-[#FFC900] font-semibold mb-2 text-lg">For Professionals</h3>
-              <p className="text-[#FFC900]/70 text-sm">Access resources, certifications, and job opportunities tailored to your career stage.</p>
-            </div>
-            <div className="bg-[#151812] rounded-lg p-4 border border-[#FFC900]/10">
-              <h3 className="text-[#FFC900] font-semibold mb-2 text-lg">For Organizations</h3>
-              <p className="text-[#FFC900]/70 text-sm">Find qualified talent, manage workforce, and access industry-specific tools.</p>
-            </div>
-          </div>
-        </div>
       </div>
     </MainLayout>
   );
