@@ -69,11 +69,14 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
       });
     } finally {
       setIsUploading(false);
+      // Clear the input value to allow selecting the same file again
+      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+      if (fileInput) fileInput.value = '';
     }
   };
 
   return (
-    <div className="group relative">
+    <div className="group relative cursor-pointer">
       <Avatar className="w-24 h-24 border-2 border-[#FFC900]/30 transition-all duration-200 group-hover:border-[#FFC900]/50">
         <AvatarImage src={url || ""} />
         <AvatarFallback className="bg-[#22251e] text-[#FFC900] text-xl">
@@ -82,14 +85,15 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
       </Avatar>
       
       <div className="absolute inset-0 flex items-center justify-center">
-        <input
-          type="file"
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          accept="image/jpeg,image/png,image/webp,image/heic"
-          onChange={uploadAvatar}
-          disabled={isUploading}
-          aria-label="Upload profile picture"
-        />
+        <label className="absolute inset-0 w-full h-full cursor-pointer z-10" aria-label="Upload profile picture">
+          <input
+            type="file"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            accept="image/jpeg,image/png,image/webp,image/heic"
+            onChange={uploadAvatar}
+            disabled={isUploading}
+          />
+        </label>
         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/50 absolute inset-0 rounded-full flex flex-col items-center justify-center">
           <Camera className="w-6 h-6 text-white mb-1" />
           <span className="text-white text-xs px-2 text-center">Click to change photo</span>
