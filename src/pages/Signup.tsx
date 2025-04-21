@@ -23,7 +23,7 @@ const Signup = () => {
 
         <Logo size={80} />
         <h1 className="text-3xl sm:text-4xl font-black text-white text-center mb-8 mt-6 leading-snug drop-shadow">
-          THE ELECTRICAL<br />INDUSTRY APP
+          Elec-Mate
         </h1>
         <div className="w-full space-y-4 mb-6">
           <Input
@@ -84,3 +84,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
