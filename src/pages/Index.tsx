@@ -1,6 +1,7 @@
 
 import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 // Colors inspired by screenshot
 const bgColor = "#151812";
@@ -26,6 +27,11 @@ const roles = [
 ];
 
 const Index = () => {
+  const [query, setQuery] = useState("");
+  const filteredRoles = roles.filter((role) =>
+    role.label.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-start px-4"
@@ -47,13 +53,14 @@ const Index = () => {
             placeholder="Search"
             type="text"
             style={{ fontWeight: 500 }}
-            disabled // display only, not functional for now
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
         </div>
       </div>
       <div className="flex flex-col gap-7 w-full max-w-xl items-center">
         <div className="flex flex-col sm:flex-row gap-7 w-full">
-          {roles.slice(0, 2).map((role) => (
+          {filteredRoles.slice(0, 2).map((role) => (
             <Link
               to={role.path}
               key={role.label}
@@ -80,32 +87,38 @@ const Index = () => {
             </Link>
           ))}
         </div>
-        <Link
-          to={roles[2].path}
-          className="w-full rounded-2xl shadow-xl"
-          tabIndex={-1}
-        >
-          <div
-            className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
-            style={{
-              background: cardColor,
-              padding: "2.8rem 0.5rem",
-              minHeight: 200,
-            }}
+        {filteredRoles[2] && (
+          <Link
+            to={filteredRoles[2].path}
+            className="w-full rounded-2xl shadow-xl"
+            tabIndex={-1}
           >
-            {roles[2].icon}
-            <span
-              className="text-xl sm:text-2xl font-bold tracking-wide"
-              style={{ color: "#fff", letterSpacing: "0.06em" }}
+            <div
+              className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
+              style={{
+                background: cardColor,
+                padding: "2.8rem 0.5rem",
+                minHeight: 200,
+              }}
             >
-              {roles[2].label}
-            </span>
+              {filteredRoles[2].icon}
+              <span
+                className="text-xl sm:text-2xl font-bold tracking-wide"
+                style={{ color: "#fff", letterSpacing: "0.06em" }}
+              >
+                {filteredRoles[2].label}
+              </span>
+            </div>
+          </Link>
+        )}
+        {filteredRoles.length === 0 && (
+          <div className="w-full rounded-2xl shadow-xl bg-[#23261e]/60 p-8 text-gray-400 text-center text-lg">
+            No results found.
           </div>
-        </Link>
+        )}
       </div>
     </div>
   );
 };
 
 export default Index;
-

@@ -1,13 +1,26 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#151812] px-2">
-      <form className="w-full max-w-md bg-transparent flex flex-col items-center">
+      <form className="w-full max-w-md bg-transparent flex flex-col items-center relative">
+        {/* Back button */}
+        <button
+          type="button"
+          aria-label="Go back"
+          className="absolute left-0 top-6 flex items-center px-2 py-2 rounded-full hover:bg-white/10 transition"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeft className="text-[#FFC900]" size={28} />
+        </button>
+
         <Logo size={80} />
         <h1 className="text-3xl sm:text-4xl font-black text-white text-center mb-8 mt-6 leading-snug drop-shadow">
           THE ELECTRICAL<br />INDUSTRY APP
@@ -21,7 +34,7 @@ const Signup = () => {
           <Input
             type="email"
             placeholder="Email"
-            className="bg-[#222822]\\/70 border-none placeholder:text-gray-400 text-white rounded-2xl text-lg px-5 py-4 shadow"
+            className="bg-[#222822]/70 border-none placeholder:text-gray-400 text-white rounded-2xl text-lg px-5 py-4 shadow"
           />
           <Input
             type="password"
