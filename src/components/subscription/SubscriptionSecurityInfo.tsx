@@ -2,7 +2,7 @@
 import React from "react";
 import { Lock, ShieldCheck } from "lucide-react";
 
-const SubscriptionSecurityInfo = () => {
+const SubscriptionSecurityInfo = React.memo(() => {
   return (
     <div className="flex items-center w-full justify-center gap-3 mt-2 mb-1">
       <div className="flex items-center text-xs text-[#FFC900]/60">
@@ -16,6 +16,8 @@ const SubscriptionSecurityInfo = () => {
       </div>
     </div>
   );
-};
+});
+
+SubscriptionSecurityInfo.displayName = "SubscriptionSecurityInfo";
 
 export default SubscriptionSecurityInfo;
