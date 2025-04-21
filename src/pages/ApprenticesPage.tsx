@@ -8,6 +8,7 @@ import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
+import IndustryResources from "@/components/IndustryResources";
 
 const MentalHealthHubContent = () => (
   <>
@@ -149,6 +150,17 @@ const ApprenticesPage = () => {
         ) : (
           <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
         )}
+
+        <div id="toolbox-talk" className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
+          <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Toolbox Talk Hub</h2>
+          <p className="text-[#FFC900]/80 mb-4 text-sm md:text-base">
+            Stay informed and connected with community discussions, safety topics, and industry updates.
+            This is your one-stop resource for important electrical industry news and information.
+          </p>
+          
+          {/* Industry Resources moved here */}
+          <IndustryResources />
+        </div>
 
         <div className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
           <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>

@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Lightbulb, Users, Award, Briefcase, Heart, Handshake, Wrench, MessageCircle, Clock } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -5,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
+import IndustryResources from "@/components/IndustryResources";
 
 const ElectriciansPage = () => {
   const electricianResources = [
@@ -99,7 +101,7 @@ const ElectriciansPage = () => {
           </div>
         </div>
 
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
+        <div id="toolbox-talk" className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
           <div className="flex items-center gap-3 mb-4">
             <Wrench className="h-8 w-8 text-[#FFC900]" />
             <h2 className="text-2xl font-bold text-[#FFC900]">Toolbox Talk</h2>
@@ -113,6 +115,7 @@ const ElectriciansPage = () => {
             <TabsList className="bg-[#151812] border border-[#FFC900]/10 mb-6">
               <TabsTrigger value="topics" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Safety Topics</TabsTrigger>
               <TabsTrigger value="community" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Community Discussions</TabsTrigger>
+              <TabsTrigger value="industry" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Industry News</TabsTrigger>
             </TabsList>
             
             <TabsContent value="topics">
@@ -167,6 +170,11 @@ const ElectriciansPage = () => {
                   </Button>
                 </div>
               </div>
+            </TabsContent>
+            
+            {/* New Industry News tab with IndustryResources component */}
+            <TabsContent value="industry">
+              <IndustryResources />
             </TabsContent>
           </Tabs>
         </div>
