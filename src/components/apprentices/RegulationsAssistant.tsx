@@ -40,12 +40,12 @@ const RegulationsAssistant: React.FC = () => {
     <Card className="bg-[#22251e] border-[#FFC900]/20">
       <CardHeader className="flex flex-row items-center gap-2">
         <BookOpen className="h-6 w-6 text-[#FFC900]" />
-        <CardTitle className="text-[#FFC900]">Regulations Compliance Assistant</CardTitle>
+        <CardTitle className="text-[#FFC900]">UK Regulations Compliance Assistant</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <Textarea 
-            placeholder="Ask about electrical regulations, standards, or compliance requirements..."
+            placeholder="Ask about UK electrical regulations, BS 7671, or compliance requirements..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
