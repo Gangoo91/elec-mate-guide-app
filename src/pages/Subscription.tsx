@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,8 +6,8 @@ import Logo from "@/components/Logo";
 import MainLayout from "@/components/layout/MainLayout";
 import { Loader2, Lock, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
-// Stripe Price IDs for each plan/billing option
 const stripePriceIds: Record<string, { monthly: string; yearly: string }> = {
   Apprentice: {
     monthly: "price_1RGIaQ2RKw5t5RAmh7lzac0R",
@@ -55,73 +54,72 @@ const Subscription = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, session, loading: authLoading } = useAuth();
 
-  // Check authentication on component mount
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session && session.user) {
-          setIsAuthenticated(true);
-        } else {
-          // If not authenticated, show a toast and redirect to login
-          toast({
-            title: "Authentication required",
-            description: "Please log in to subscribe to a plan",
-            variant: "destructive",
-          });
-          navigate("/login", { 
-            state: { from: location, message: "Please log in to subscribe" } 
-          });
-        }
-      } catch (err) {
-        console.error("Auth check error:", err);
-        setError("Failed to check authentication status");
-      } finally {
-        setIsCheckingAuth(false);
-      }
-    };
+    setIsCheckingAuth(true);
+    if (authLoading) return;
 
-    checkAuth();
-  }, [navigate, location, toast]);
+    if (user && session) {
+      setIsAuthenticated(true);
+      setIsCheckingAuth(false);
+    } else {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to subscribe to a plan",
+        variant: "destructive",
+      });
+      navigate("/login", { 
+        state: { from: location, message: "Please log in to subscribe" } 
+      });
+      setIsCheckingAuth(false);
+    }
+  }, [user, session, authLoading, navigate, location, toast]);
 
   const handleCheckout = async () => {
     setIsLoading(true);
     setError(null);
-    
+
+    if (!session || !user) {
+      setIsLoading(false);
+      setError("You must be logged in to subscribe.");
+      toast({
+        title: "Authentication error",
+        description: "Please log in again to continue with your subscription",
+        variant: "destructive",
+      });
+      navigate("/login", { 
+        state: { from: location, message: "Please log in to subscribe" } 
+      });
+      return;
+    }
+
     try {
-      // Verify authentication is still valid before proceeding
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        toast({
-          title: "Session expired",
-          description: "Please log in again to continue with your subscription",
-          variant: "destructive",
-        });
-        navigate("/login", { 
-          state: { from: location, message: "Please log in to subscribe" } 
-        });
-        return;
+      const { data: { session: latestSession } } = await supabase.auth.getSession();
+      if (!latestSession || !latestSession.access_token) {
+        throw new Error("Session token missing or expired! Please log in again.");
       }
-      
+
       const price_id = stripePriceIds[selectedPlan][billingCycle];
       console.log("Starting checkout with price ID:", price_id);
-      
+
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { price_id },
+        headers: {
+          Authorization: `Bearer ${latestSession.access_token}`,
+        },
       });
-      
-      if (error) {
+
+      if (error || !data) {
         console.error("Supabase function error:", error);
-        throw new Error(`Payment error: ${error.message}`);
+        throw new Error(error?.message || "Payment error occurred (unexpected/no data)");
       }
-      
-      if (!data?.url) {
+
+      if (!data.url) {
         console.error("No checkout URL returned:", data);
         throw new Error("Failed to create checkout session");
       }
-      
+
       console.log("Redirecting to checkout URL:", data.url);
       window.location.href = data.url;
     } catch (error: any) {
@@ -138,27 +136,7 @@ const Subscription = () => {
     }
   };
 
-  // Redirect post-checkout feedback
-  useEffect(() => {
-    if (location.search.includes("checkout=success")) {
-      toast({
-        title: "Subscription started!",
-        description: "You have started your free trial. Welcome to Elec-Mate!",
-        variant: "default",
-      });
-      navigate("/subscription/success", { replace: true });
-    }
-    if (location.search.includes("checkout=cancel")) {
-      toast({
-        title: "Payment was cancelled",
-        description: "You can try again to enter your payment details.",
-        variant: "destructive",
-      });
-    }
-  }, [location, toast, navigate]);
-
-  // Show loading indicator while checking authentication
-  if (isCheckingAuth) {
+  if (isCheckingAuth || authLoading) {
     return (
       <MainLayout>
         <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
@@ -183,7 +161,6 @@ const Subscription = () => {
             Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed {billingCycle}.
           </p>
 
-          {/* Billing Cycle Toggle */}
           <div className="flex justify-center gap-2 my-2">
             <Button
               variant={billingCycle === "monthly" ? "default" : "outline"}
@@ -199,7 +176,6 @@ const Subscription = () => {
             >Yearly <span className="ml-1 text-xs font-semibold">(Save 17%)</span></Button>
           </div>
 
-          {/* Subscription plans selection */}
           <div className="w-full my-6 space-y-3">
             {subscriptionPlans.map((plan) => (
               <div 
@@ -240,7 +216,6 @@ const Subscription = () => {
             Cancel anytime — no commitment, no hidden fees.
           </p>
 
-          {/* Display error message if there was one */}
           {error && (
             <div className="w-full p-3 mb-4 bg-red-900/20 border border-red-500/50 text-red-300 rounded-lg text-sm">
               <p className="font-semibold">Error:</p>
