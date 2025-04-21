@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, CreditCard, RefreshCcw, AlertCircle } from "lucide-react";
+import { Loader2, CreditCard, RefreshCcw, AlertCircle, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -22,6 +22,7 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
   const [isManaging, setIsManaging] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorDetails, setErrorDetails] = useState("");
+  const [isPortalConfigError, setIsPortalConfigError] = useState(false);
   const { toast } = useToast();
 
   const handleManageSubscription = async () => {
@@ -50,8 +51,12 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
     } catch (error: any) {
       console.error("Subscription management error:", error);
       
+      // Check if this is a portal configuration error
+      const errorMessage = error?.message || "Unknown error occurred";
+      setIsPortalConfigError(errorMessage.includes("portal") && errorMessage.includes("configuration"));
+      
       // Set error details for the dialog
-      setErrorDetails(error?.message || "Unknown error occurred");
+      setErrorDetails(errorMessage);
       setShowErrorDialog(true);
       
       // Also show a toast
@@ -72,6 +77,10 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
     setShowErrorDialog(false);
     // Wait a brief moment before retrying
     setTimeout(handleManageSubscription, 500);
+  };
+
+  const openStripeSettings = () => {
+    window.open("https://dashboard.stripe.com/settings/billing/portal", "_blank");
   };
 
   return (
@@ -118,20 +127,41 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertCircle className="h-5 w-5" />
-              Subscription Management Error
+              {isPortalConfigError ? "Stripe Configuration Required" : "Subscription Management Error"}
             </DialogTitle>
           </DialogHeader>
-          <DialogDescription className="text-[#FFC900]/70">
-            <div className="space-y-4">
-              <p>There was an error accessing the subscription management portal:</p>
+          
+          {isPortalConfigError ? (
+            <div className="space-y-4 text-[#FFC900]/70">
+              <p>The Stripe Customer Portal needs to be configured before it can be used:</p>
               <div className="p-3 bg-[#151812] rounded-md text-sm font-mono text-[#FFC900]/80">
                 {errorDetails}
               </div>
-              <p>
-                This may be due to a temporary issue with Stripe or because the customer portal hasn't been properly configured.
-              </p>
+              <div className="space-y-2">
+                <p className="font-medium">How to fix this:</p>
+                <ol className="list-decimal pl-5 space-y-1">
+                  <li>Log in to your Stripe Dashboard</li>
+                  <li>Go to Settings → Customer Portal</li>
+                  <li>Configure your Customer Portal settings</li>
+                  <li>Save your settings</li>
+                  <li>Come back and try again</li>
+                </ol>
+              </div>
             </div>
-          </DialogDescription>
+          ) : (
+            <DialogDescription className="text-[#FFC900]/70">
+              <div className="space-y-4">
+                <p>There was an error accessing the subscription management portal:</p>
+                <div className="p-3 bg-[#151812] rounded-md text-sm font-mono text-[#FFC900]/80">
+                  {errorDetails}
+                </div>
+                <p>
+                  This may be due to a temporary issue with Stripe. Please try again in a few moments.
+                </p>
+              </div>
+            </DialogDescription>
+          )}
+          
           <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
             <Button
               variant="outline"
@@ -140,12 +170,23 @@ export const SubscriptionControls = ({ isRefreshing, onRefresh }: SubscriptionCo
             >
               Close
             </Button>
-            <Button
-              onClick={handleManualRetry}
-              className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
-            >
-              Try Again
-            </Button>
+            
+            {isPortalConfigError ? (
+              <Button
+                onClick={openStripeSettings}
+                className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Open Stripe Settings
+              </Button>
+            ) : (
+              <Button
+                onClick={handleManualRetry}
+                className="bg-[#FFC900] text-black hover:bg-[#e5b700]"
+              >
+                Try Again
+              </Button>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

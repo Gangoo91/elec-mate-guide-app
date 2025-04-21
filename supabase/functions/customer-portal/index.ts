@@ -67,8 +67,6 @@ serve(async (req: Request) => {
     logStep("Creating portal session", { customerId, returnUrl });
     
     try {
-      // Create a portal session without explicitly specifying configuration
-      // This will use default settings or the most recently created configuration
       const portalSession = await stripe.billingPortal.sessions.create({
         customer: customerId,
         return_url: returnUrl,
@@ -87,19 +85,23 @@ serve(async (req: Request) => {
         }
       );
     } catch (portalError: any) {
-      // If there's an issue with configuration, log detailed error
+      // Check for specific configuration missing error
+      if (portalError.message?.includes("configuration") && portalError.message?.includes("not been created")) {
+        logStep("Portal configuration missing", { message: portalError.message });
+        throw new Error(
+          "The Stripe Customer Portal has not been configured. Please visit https://dashboard.stripe.com/settings/billing/portal to set up your customer portal in the Stripe dashboard."
+        );
+      }
+      
+      // For other errors
       logStep("Portal creation error", { 
         message: portalError.message,
         type: portalError.type,
         code: portalError.code
       });
       
-      // Provide a more helpful message to the client
-      const errorMessage = portalError.message.includes("configuration") 
-        ? "Stripe customer portal is not properly configured. Please set up your customer portal in the Stripe dashboard."
-        : portalError.message;
-        
-      throw new Error(errorMessage);
+      // Re-throw with a more helpful message
+      throw portalError;
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
