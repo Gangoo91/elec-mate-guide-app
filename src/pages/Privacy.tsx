@@ -1,61 +1,98 @@
 
 import { Link } from "react-router-dom";
+import MainLayout from "@/components/layout/MainLayout";
 
 const Privacy = () => (
-  <div className="min-h-screen flex flex-col items-center justify-start px-6 py-12 bg-background text-foreground">
-    <div className="w-full max-w-3xl">
-      <h1 className="text-4xl font-extrabold text-center mb-8 text-primary-foreground">
-        Privacy Policy
-      </h1>
+  <MainLayout>
+    <div className="min-h-screen max-w-4xl mx-auto px-4 py-12">
+      <div className="space-y-8 animate-fade-in">
+        <header className="text-center space-y-4">
+          <h1 className="text-4xl font-bold text-[#FFC900]">Privacy Policy</h1>
+          <p className="text-[#FFC900]/80 text-lg">
+            Last updated: April 21, 2025
+          </p>
+        </header>
 
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use Elec-Mate. Please read this policy carefully to understand our views and practices regarding your personal data.
-      </p>
+        <section className="prose prose-lg max-w-none space-y-6">
+          <p className="text-[#FFC900]/90 leading-relaxed">
+            At Elec-Mate, we value and respect your privacy. This Privacy Policy outlines our practices regarding the collection, use, and protection of your personal information when you use our platform.
+          </p>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">1. Information We Collect</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        We collect information that you provide directly when registering, logging in, or using our services. This may include your name, email address, password, and any other data you choose to provide.
-      </p>
+          <div className="space-y-8">
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">1. Information We Collect</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                When you use Elec-Mate, we collect information that helps us provide and improve our services:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Account information (name, email, professional credentials)</li>
+                <li>Profile data (work history, certifications, skills)</li>
+                <li>Usage information (interactions, preferences, activity logs)</li>
+                <li>Device information (browser type, IP address, access times)</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">2. How We Use Your Information</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        Your information helps us provide, maintain, and improve our services. We use your data to authenticate your account, communicate important updates, customize your experience, and for security purposes.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">2. How We Use Your Information</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                Your information enables us to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Provide and maintain our services</li>
+                <li>Personalize your experience</li>
+                <li>Send important updates and notifications</li>
+                <li>Improve our platform and user experience</li>
+                <li>Ensure platform security and prevent fraud</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">3. Sharing Your Information</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        We do not sell or rent your personal data. We may share your information with trusted service providers that help operate our app, comply with legal requirements, or protect our rights.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">3. Data Protection</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                We implement robust security measures to protect your personal information from unauthorized access, alteration, or disclosure. Our security practices include:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Encryption of sensitive data</li>
+                <li>Regular security assessments</li>
+                <li>Strict access controls</li>
+                <li>Continuous monitoring for potential threats</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">4. Security of Your Information</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">4. Your Rights and Choices</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                You have the right to:
+              </p>
+              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                <li>Access your personal information</li>
+                <li>Request corrections to your data</li>
+                <li>Delete your account and associated data</li>
+                <li>Opt-out of marketing communications</li>
+                <li>Export your data in a portable format</li>
+              </ul>
+            </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">5. Your Choices</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        You may update or delete your account information by contacting support. You can also control how we communicate with you through notification settings.
-      </p>
+            <section className="space-y-4">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">5. Contact Us</h2>
+              <p className="text-[#FFC900]/80 leading-relaxed">
+                If you have questions about this Privacy Policy or your personal information, please contact our Privacy Team at{" "}
+                <a href="mailto:privacy@elec-mate.com" className="text-[#FFC900] hover:underline">
+                  privacy@elec-mate.com
+                </a>
+              </p>
+            </section>
+          </div>
+        </section>
 
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">6. Children&apos;s Privacy</h2>
-      <p className="text-base leading-relaxed mb-6 text-muted-foreground">
-        This app is not intended for children under 13 years of age. We do not knowingly collect personal data from children under 13.
-      </p>
-
-      <h2 className="text-2xl font-semibold mt-8 mb-3 text-primary-foreground">7. Changes to This Policy</h2>
-      <p className="text-base leading-relaxed mb-10 text-muted-foreground">
-        We may update this Privacy Policy from time to time. We encourage you to review it periodically for any changes.
-      </p>
-
-      <p className="text-sm text-muted-foreground mb-8">
-        If you have questions or concerns about your privacy, please contact us at <a href="mailto:support@elec-mate.com" className="text-primary hover:underline">support@elec-mate.com</a>.
-      </p>
-
-      <Link to="/" className="block text-center text-primary font-semibold hover:underline">
-        &larr; Back to Home
-      </Link>
+        <footer className="pt-8 text-center">
+          <Link to="/" className="text-[#FFC900] hover:underline inline-flex items-center gap-2">
+            &larr; Back to Home
+          </Link>
+        </footer>
+      </div>
     </div>
-  </div>
+  </MainLayout>
 );
 
 export default Privacy;
