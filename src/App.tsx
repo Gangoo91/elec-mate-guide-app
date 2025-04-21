@@ -3,13 +3,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
-import ApprenticeHub from "./pages/ApprenticeHub";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Welcome from "./pages/Welcome";
@@ -52,24 +51,19 @@ const App = () => (
                   <EmployersPage />
                 </SubscriptionGuard>
               } />
-              <Route path="/apprentice-hub" element={
-                <SubscriptionGuard requiredTier="Apprentice">
-                  <ApprenticeHub />
-                </SubscriptionGuard>
-              } />
               <Route path="/training" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <ApprenticeHub />
+                  <Dashboard />
                 </SubscriptionGuard>
               } />
               <Route path="/certification" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <ApprenticeHub />
+                  <Dashboard />
                 </SubscriptionGuard>
               } />
               <Route path="/tools" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <ApprenticeHub />
+                  <Dashboard />
                 </SubscriptionGuard>
               } />
               <Route path="/signup" element={<Signup />} />

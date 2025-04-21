@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -22,13 +21,12 @@ import NotificationBell from "../notifications/NotificationBell";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [bypassAuth, setBypassAuth] = useState(true); // Add bypass state for demo purposes
+  const [bypassAuth, setBypassAuth] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   
-  // Sample notifications for demo
   const [notifications, setNotifications] = useState([
     {
       id: "1",
@@ -43,7 +41,7 @@ const Navbar = () => {
       title: "New Apprentice Resources",
       message: "Check out the new training materials in the Apprentice Hub",
       read: false,
-      date: new Date(Date.now() - 86400000), // 1 day ago
+      date: new Date(Date.now() - 86400000),
       type: "success" as const
     }
   ]);
@@ -59,14 +57,12 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_, session) => {
         setUser(session?.user ?? null);
       }
     );
 
-    // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
@@ -75,7 +71,6 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    // Close mobile menu when route changes
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
@@ -83,7 +78,6 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
-  // Do not show UserMenu, mobile menu, or navigation menu on these auth/guest pages
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
 
   return (
@@ -95,7 +89,6 @@ const Navbar = () => {
             <span className="text-xl font-bold text-[#FFC900]">Elec-Mate</span>
           </Link>
 
-          {/* Navigation menu hidden on auth pages */}
           {!hideUserMenuPaths.includes(location.pathname) && (
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
@@ -132,21 +125,6 @@ const Navbar = () => {
                   <NavigationMenuContent>
                     <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
                       <li>
-                        <NavigationMenuLink asChild>
-                          <Link
-                            to="/apprentice-hub"
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-[#FFC900]/10 to-[#FFC900]/5 p-6 no-underline outline-none focus:shadow-md hover:bg-[#FFC900]/20"
-                          >
-                            <div className="mb-2 mt-4 text-lg font-medium text-[#FFC900]">
-                              Apprentice Hub
-                            </div>
-                            <p className="text-sm leading-tight text-[#FFC900]/70">
-                              Access training resources and certification programs
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
                         <Link to="/training" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
                           <div className="text-sm font-medium leading-none text-[#FFC900]">Training</div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
@@ -179,34 +157,28 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Mobile menu button & user menu hidden on auth pages */}
-          {!hideUserMenuPaths.includes(location.pathname) && (
-            <>
-              {(user || bypassAuth) && (
-                <NotificationBell 
-                  notifications={notifications} 
-                  onMarkAsRead={markNotificationAsRead}
-                  onMarkAllAsRead={markAllNotificationsAsRead}
-                  className="mr-1"
-                />
-              )}
-              
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="md:hidden" 
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="h-5 w-5 text-[#FFC900]" /> : <Menu className="h-5 w-5 text-[#FFC900]" />}
-              </Button>
-
-              <UserMenu user={user} bypassAuth={bypassAuth} />
-            </>
+          {(user || bypassAuth) && (
+            <NotificationBell 
+              notifications={notifications} 
+              onMarkAsRead={markNotificationAsRead}
+              onMarkAllAsRead={markAllNotificationsAsRead}
+              className="mr-1"
+            />
           )}
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden" 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5 text-[#FFC900]" /> : <Menu className="h-5 w-5 text-[#FFC900]" />}
+          </Button>
+
+          <UserMenu user={user} bypassAuth={bypassAuth} />
         </div>
       </div>
       
-      {/* Mobile menu */}
       {mobileMenuOpen && (
         <MobileMenu
           isActive={isActive}

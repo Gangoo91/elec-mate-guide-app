@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -35,7 +34,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
           <button
             onClick={() => setResourcesOpen(!resourcesOpen)}
             className={`w-full flex justify-between items-center px-3 py-2 rounded-md ${
-              isActive('/apprentice-hub') || isActive('/training') || isActive('/certification') || isActive('/tools')
+              isActive('/training') || isActive('/certification') || isActive('/tools')
                 ? 'bg-[#FFC900]/10'
                 : ''
             } text-[#FFC900] font-medium`}
@@ -46,9 +45,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
           
           {resourcesOpen && (
             <div className="mt-2 ml-4 flex flex-col space-y-2 border-l-2 border-[#FFC900]/20 pl-4">
-              <Link to="/apprentice-hub" className={`px-3 py-2 rounded-md ${isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-                Apprentice Hub
-              </Link>
               <Link to="/training" className={`px-3 py-2 rounded-md ${isActive('/training') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
                 Training
               </Link>
