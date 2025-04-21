@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { ProfileForm } from "@/components/profile/ProfileForm";
@@ -11,7 +10,6 @@ import { CreditCard } from "lucide-react";
 const Profile = () => {
   const { user } = useAuth();
 
-  // Load profile data when component mounts
   useEffect(() => {
     const loadProfile = async () => {
       if (!user?.id) return;
@@ -23,7 +21,6 @@ const Profile = () => {
           .single();
           
         if (error) throw error;
-        // Update form with existing data if available
         if (data) {
           const form = document.querySelector('form');
           if (form) {
@@ -50,9 +47,8 @@ const Profile = () => {
         
         <div className="mt-8 flex justify-center">
           <Button 
-            as={Link} 
-            to="/manage-subscription" 
             variant="outline"
+            onClick={() => window.location.href = "/manage-subscription"}
             className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
           >
             <CreditCard className="mr-2 h-4 w-4" />
