@@ -5,64 +5,35 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import Logo from "@/components/Logo";
 import MainLayout from "@/components/layout/MainLayout";
-import { Loader2, Lock, ShieldCheck } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-
-const stripePriceIds: Record<string, { monthly: string; yearly: string }> = {
-  Apprentice: {
-    monthly: "price_1RGIaQ2RKw5t5RAmh7lzac0R",
-    yearly: "price_1RGIbj2RKw5t5RAm8xkaH5I2",
-  },
-  Electrician: {
-    monthly: "price_1RGIdw2RKw5t5RAmEWjKbGx1",
-    yearly: "price_1RGId02RKw5t5RAm2iGQJ9xU",
-  },
-  Employer: {
-    monthly: "price_1RGIgX2RKw5t5RAma3zfsmAc",
-    yearly: "price_1RGIhM2RKw5t5RAmhTfWgGLO",
-  },
-};
-
-const subscriptionPlans = [
-  {
-    name: "Apprentice",
-    monthlyPrice: "£2.99",
-    yearlyPrice: "£29.99",
-    description: "Access to all apprentice resources and training tools",
-  },
-  {
-    name: "Electrician",
-    monthlyPrice: "£6.99",
-    yearlyPrice: "£69.99",
-    description: "Access to electrician and apprentice resources",
-  },
-  {
-    name: "Employer",
-    monthlyPrice: "£49.99",
-    yearlyPrice: "£499.99",
-    description: "Full access to all platform features and resources",
-  },
-];
+import GlassCard from "@/components/shared/GlassCard";
+import SubscriptionPlanCard from "@/components/subscription/SubscriptionPlanCard";
+import BillingCycleSelector from "@/components/subscription/BillingCycleSelector";
+import SubscriptionSecurityInfo from "@/components/subscription/SubscriptionSecurityInfo";
+import { useSubscription, subscriptionPlans } from "@/hooks/useSubscription";
 
 const Subscription = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [selectedPlan, setSelectedPlan] = useState("Electrician");
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-  const [error, setError] = useState<string | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const { user, session, loading: authLoading } = useAuth();
+  const {
+    isLoading,
+    selectedPlan,
+    setSelectedPlan,
+    billingCycle,
+    setBillingCycle,
+    error,
+    handleCheckout
+  } = useSubscription();
 
+  // Check authentication once when component mounts
   useEffect(() => {
-    setIsCheckingAuth(true);
     if (authLoading) return;
 
     if (user && session) {
-      setIsAuthenticated(true);
       setIsCheckingAuth(false);
     } else {
       toast({
@@ -73,69 +44,8 @@ const Subscription = () => {
       navigate("/login", { 
         state: { from: location, message: "Please log in to subscribe" } 
       });
-      setIsCheckingAuth(false);
     }
   }, [user, session, authLoading, navigate, location, toast]);
-
-  const handleCheckout = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    if (!session || !user) {
-      setIsLoading(false);
-      setError("You must be logged in to subscribe.");
-      toast({
-        title: "Authentication error",
-        description: "Please log in again to continue with your subscription",
-        variant: "destructive",
-      });
-      navigate("/login", { 
-        state: { from: location, message: "Please log in to subscribe" } 
-      });
-      return;
-    }
-
-    try {
-      const { data: { session: latestSession } } = await supabase.auth.getSession();
-      if (!latestSession || !latestSession.access_token) {
-        throw new Error("Session token missing or expired! Please log in again.");
-      }
-
-      const price_id = stripePriceIds[selectedPlan][billingCycle];
-      console.log("Starting checkout with price ID:", price_id);
-
-      const { data, error } = await supabase.functions.invoke("create-checkout", {
-        body: { price_id },
-        headers: {
-          Authorization: `Bearer ${latestSession.access_token}`,
-        },
-      });
-
-      if (error || !data) {
-        console.error("Supabase function error:", error);
-        throw new Error(error?.message || "Payment error occurred (unexpected/no data)");
-      }
-
-      if (!data.url) {
-        console.error("No checkout URL returned:", data);
-        throw new Error("Failed to create checkout session");
-      }
-
-      console.log("Redirecting to checkout URL:", data.url);
-      window.location.href = data.url;
-    } catch (error: any) {
-      console.error("Checkout error:", error);
-      const errorMessage = error?.message || "Unknown error";
-      setError(errorMessage);
-      toast({
-        title: "Payment initiation failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   if (isCheckingAuth || authLoading) {
     return (
@@ -151,110 +61,74 @@ const Subscription = () => {
   return (
     <MainLayout>
       <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#151812] px-1 py-6 sm:px-3 md:px-2">
-        <div className="w-full max-w-md glass-morphism rounded-2xl border border-[#FFC900]/15 bg-[#151812]/40 shadow-lg flex flex-col items-center animate-fade-in p-4 sm:p-6 md:p-10">
-          <div className="flex justify-center w-full mb-6">
-            <Logo size={70} />
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#FFC900] text-center mb-4 leading-tight drop-shadow-[0_0_4px_rgba(255,201,0,0.5)] tracking-wide select-none">
-            Start Your 7-Day Free Trial
-          </h1>
-          <p className="text-center text-gray-300 mb-3 max-w-md text-xs sm:text-base">
-            Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed {billingCycle}.
-          </p>
+        <div className="w-full max-w-md">
+          <GlassCard className="p-4 sm:p-6 md:p-10">
+            <div className="flex justify-center w-full mb-6">
+              <Logo size={70} />
+            </div>
+            
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#FFC900] text-center mb-4 leading-tight drop-shadow-[0_0_4px_rgba(255,201,0,0.5)] tracking-wide select-none">
+              Start Your 7-Day Free Trial
+            </h1>
+            
+            <p className="text-center text-gray-300 mb-3 max-w-md text-xs sm:text-base">
+              Enjoy full access to all Elec-Mate features for 7 days. After your trial, your subscription starts automatically and you will be billed {billingCycle}.
+            </p>
 
-          <div className="flex justify-center gap-1 mb-4">
-            <Button
-              variant={billingCycle === "monthly" ? "default" : "outline"}
-              className={`rounded-full px-6 py-2 text-sm sm:text-base ${billingCycle === "monthly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
-              onClick={() => setBillingCycle("monthly")}
-              disabled={isLoading}
-            >Monthly</Button>
-            <Button
-              variant={billingCycle === "yearly" ? "default" : "outline"}
-              className={`rounded-full px-6 py-2 text-xs sm:text-base ${billingCycle === "yearly" ? "bg-[#FFC900] text-black font-bold" : "border-[#FFC900] text-[#FFC900]"}`}
-              onClick={() => setBillingCycle("yearly")}
-              disabled={isLoading}
-            >Yearly <span className="ml-1 text-[11px] sm:text-xs font-semibold">(Save 17%)</span></Button>
-          </div>
+            <BillingCycleSelector 
+              billingCycle={billingCycle} 
+              setBillingCycle={setBillingCycle} 
+              isLoading={isLoading} 
+            />
 
-          <div className="w-full my-4 space-y-2">
-            {subscriptionPlans.map((plan) => (
-              <div 
-                key={plan.name}
-                onClick={() => setSelectedPlan(plan.name)}
-                className={`flex items-center justify-between p-3 rounded-xl transition-all cursor-pointer ${
-                  selectedPlan === plan.name 
-                    ? "bg-[#FFC900]/20 border-2 border-[#FFC900]" 
-                    : "bg-[#151812]/80 border border-[#FFC900]/30 hover:border-[#FFC900]/60"
-                }`}
-              >
-                <div className="flex-1 pr-2">
-                  <h3 className="text-[#FFC900] font-semibold text-base">{plan.name} Plan</h3>
-                  <p className="text-xs text-[#FFC900]/70">{plan.description}</p>
-                </div>
-                <div className="flex flex-col items-end gap-1">
-                  <span className="font-bold text-[#FFC900] text-base">
-                    {billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice}
-                    <span className="text-xs font-normal">
-                      {billingCycle === "monthly" ? "/mo" : "/yr"}
-                    </span>
-                  </span>
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
-                    selectedPlan === plan.name 
-                      ? "bg-[#FFC900]" 
-                      : "border border-[#FFC900]/50"
-                  }`}>
-                    {selectedPlan === plan.name && (
-                      <div className="w-2.5 h-2.5 rounded-full bg-black"></div>
-                    )}
-                  </div>
-                </div>
+            <div className="w-full my-4 space-y-2">
+              {subscriptionPlans.map((plan) => (
+                <SubscriptionPlanCard
+                  key={plan.name}
+                  name={plan.name}
+                  monthlyPrice={plan.monthlyPrice}
+                  yearlyPrice={plan.yearlyPrice}
+                  description={plan.description}
+                  isSelected={selectedPlan === plan.name}
+                  billingCycle={billingCycle}
+                  onSelect={() => setSelectedPlan(plan.name)}
+                />
+              ))}
+            </div>
+
+            <p className="text-center text-[#FFC900] font-semibold mb-6 text-xs sm:text-sm">
+              Cancel anytime — no commitment, no hidden fees.
+            </p>
+
+            {error && (
+              <div className="w-full p-3 mb-4 bg-red-900/20 border border-red-500/50 text-red-300 rounded-lg text-sm">
+                <p className="font-semibold">Error:</p>
+                <p>{error}</p>
               </div>
-            ))}
-          </div>
-
-          <p className="text-center text-[#FFC900] font-semibold mb-6 text-xs sm:text-sm">
-            Cancel anytime — no commitment, no hidden fees.
-          </p>
-
-          {error && (
-            <div className="w-full p-3 mb-4 bg-red-900/20 border border-red-500/50 text-red-300 rounded-lg text-sm">
-              <p className="font-semibold">Error:</p>
-              <p>{error}</p>
-            </div>
-          )}
-
-          <Button
-            onClick={handleCheckout}
-            disabled={isLoading}
-            className="w-full rounded-xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-5 mt-0 mb-3 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
-          >
-            {isLoading ? (
-              <span className="flex items-center justify-center">
-                <Loader2 className="animate-spin mr-2" size={20} />
-                Redirecting...
-              </span>
-            ) : (
-              `Enter Payment Details`
             )}
-          </Button>
 
-          <div className="flex items-center w-full justify-center gap-3 mt-2 mb-1">
-            <div className="flex items-center text-xs text-[#FFC900]/60">
-              <Lock className="h-3 w-3 mr-1" />
-              Secure payment
-            </div>
-            <div className="h-3 w-[1px] bg-[#FFC900]/30"></div>
-            <div className="flex items-center text-xs text-[#FFC900]/60">
-              <ShieldCheck className="h-3 w-3 mr-1" />
-              SSL encrypted
-            </div>
-          </div>
-          
-          <p className="text-[10px] sm:text-xs text-gray-400 mt-2 text-center">
-            Secure payment powered by Stripe.<br />
-            You can cancel, upgrade, or manage your subscription any time in your profile settings.
-          </p>
+            <Button
+              onClick={handleCheckout}
+              disabled={isLoading}
+              className="w-full rounded-xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-5 mt-0 mb-3 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <Loader2 className="animate-spin mr-2" size={20} />
+                  Redirecting...
+                </span>
+              ) : (
+                `Enter Payment Details`
+              )}
+            </Button>
+
+            <SubscriptionSecurityInfo />
+            
+            <p className="text-[10px] sm:text-xs text-gray-400 mt-2 text-center">
+              Secure payment powered by Stripe.<br />
+              You can cancel, upgrade, or manage your subscription any time in your profile settings.
+            </p>
+          </GlassCard>
         </div>
       </div>
     </MainLayout>
