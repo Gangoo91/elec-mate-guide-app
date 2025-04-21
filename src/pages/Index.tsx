@@ -1,24 +1,24 @@
 
+import React, { useState } from "react";
 import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const roles = [
   {
     label: "APPRENTICES",
-    icon: <Book size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
+    icon: <Book size={48} strokeWidth={2.2} className="mx-auto mb-3" />,
     path: "/dashboard",
     description: "Access apprentice resources and training materials",
   },
   {
     label: "ELECTRICIANS",
-    icon: <Lightbulb size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
+    icon: <Lightbulb size={48} strokeWidth={2.2} className="mx-auto mb-3" />,
     path: "/dashboard",
     description: "Professional tools and job opportunities",
   },
   {
     label: "EMPLOYERS",
-    icon: <Briefcase size={48} strokeWidth={2.2} className="mx-auto mb-4" />,
+    icon: <Briefcase size={48} strokeWidth={2.2} className="mx-auto mb-3" />,
     path: "/dashboard",
     description: "Find qualified electricians and apprentices",
   },
@@ -32,16 +32,16 @@ const Index = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-start px-4"
+      className="min-h-screen flex flex-col items-center justify-start px-4 pt-4"
       style={{ background: "#151812" }}
     >
       <h1
-        className="text-[2rem] sm:text-5xl font-extrabold text-center mb-6 mt-8 leading-tight drop-shadow"
+        className="text-[1.8rem] sm:text-4xl font-extrabold text-center mb-4 leading-tight drop-shadow"
         style={{ color: "#FFFDE6", letterSpacing: 0 }}
       >
         THE ELECTRICAL<br />INDUSTRY APP
       </h1>
-      <div className="w-full max-w-xl mb-8 flex items-center px-2">
+      <div className="w-full max-w-xl mb-6 flex items-center px-2">
         <div className="relative w-full">
           <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
             <Search size={22} />
@@ -70,13 +70,13 @@ const Index = () => {
                 className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
                 style={{
                   background: "#FFC900",
-                  padding: "2rem 0.5rem",
-                  minHeight: 160,
+                  padding: "1.5rem 0.5rem",
+                  minHeight: 140,
                 }}
               >
                 {role.icon}
                 <span
-                  className="text-xl sm:text-2xl font-bold tracking-wide"
+                  className="text-lg sm:text-xl font-bold tracking-wide"
                   style={{ color: "#fff", letterSpacing: "0.06em" }}
                 >
                   {role.label}
@@ -95,13 +95,13 @@ const Index = () => {
               className="flex flex-col items-center justify-center rounded-2xl transition-transform duration-200 hover:scale-105"
               style={{
                 background: "#FFC900",
-                padding: "2rem 0.5rem",
-                minHeight: 160,
+                padding: "1.5rem 0.5rem",
+                minHeight: 140,
               }}
             >
               {filteredRoles[2].icon}
               <span
-                className="text-xl sm:text-2xl font-bold tracking-wide"
+                className="text-lg sm:text-xl font-bold tracking-wide"
                 style={{ color: "#fff", letterSpacing: "0.06em" }}
               >
                 {filteredRoles[2].label}
@@ -120,3 +120,4 @@ const Index = () => {
 };
 
 export default Index;
+
