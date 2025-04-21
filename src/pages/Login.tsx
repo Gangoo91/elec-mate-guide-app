@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Github, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
+import LoginEmailInput from "@/components/login/LoginEmailInput";
+import LoginPasswordInput from "@/components/login/LoginPasswordInput";
+import LoginSocialButtons from "@/components/login/LoginSocialButtons";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -112,52 +115,21 @@ const Login = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#151812] px-2 py-8 overflow-auto">
       <div className="w-full max-w-md bg-transparent flex flex-col items-center animate-fade-in">
         <Logo size={80} />
-        
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="space-y-4">
-            <div className="space-y-1">
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={handleEmailChange}
-                aria-label="Email"
-                className={`bg-[#222822]/70 border-none placeholder:text-gray-400 text-white rounded-2xl text-lg px-5 py-4 shadow transition-all duration-300 ${errors.email ? 'border-red-500 focus-visible:ring-red-500' : 'focus-visible:ring-[#FFC900]'}`}
-              />
-              {errors.email && (
-                <p className="text-red-400 text-sm mt-1 pl-2 animate-fade-in">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-            
-            <div className="space-y-1">
-              <div className="relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  aria-label="Password"
-                  className={`bg-[#222822]/70 border-none placeholder:text-gray-400 text-white rounded-2xl text-lg px-5 py-4 shadow transition-all duration-300 ${errors.password ? 'border-red-500 focus-visible:ring-red-500' : 'focus-visible:ring-[#FFC900]'}`}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none focus:text-white transition-colors"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-400 text-sm mt-1 pl-2 animate-fade-in">
-                  {errors.password}
-                </p>
-              )}
-            </div>
+            <LoginEmailInput
+              email={email}
+              error={errors.email}
+              onChange={handleEmailChange}
+            />
+            <LoginPasswordInput
+              password={password}
+              showPassword={showPassword}
+              error={errors.password}
+              onChange={handlePasswordChange}
+              onToggleShow={() => setShowPassword(s => !s)}
+            />
           </div>
-          
           <div className="flex items-center">
             <Checkbox 
               id="remember-me" 
@@ -171,7 +143,6 @@ const Login = () => {
             >
               Remember me
             </label>
-            
             <Link
               to="/forgot-password"
               className="text-[#FFC900] font-semibold hover:underline ml-auto text-sm"
@@ -179,7 +150,6 @@ const Login = () => {
               Forgot password?
             </Link>
           </div>
-
           <Button
             type="submit"
             disabled={isSubmitting}
@@ -194,7 +164,6 @@ const Login = () => {
               "LOG IN"
             )}
           </Button>
-
           <div className="relative mb-6">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-gray-600" />
@@ -203,29 +172,8 @@ const Login = () => {
               <span className="bg-[#151812] px-2 text-gray-400">Or continue with</span>
             </div>
           </div>
-
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            <Button 
-              type="button"
-              onClick={() => handleSocialLogin("Google")}
-              variant="outline"
-              className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white"
-            >
-              <img src="/lovable-uploads/photo-1573804633927-bfcbcd909acd" alt="Google" className="w-5 h-5 mr-2" />
-              Google
-            </Button>
-            <Button 
-              type="button"
-              onClick={() => handleSocialLogin("GitHub")}
-              variant="outline"
-              className="bg-transparent border border-gray-600 hover:bg-gray-800 text-white"
-            >
-              <Github size={20} className="mr-2" />
-              GitHub
-            </Button>
-          </div>
+          <LoginSocialButtons onSocialLogin={handleSocialLogin} isSubmitting={isSubmitting} />
         </form>
-
         <div className="mt-8 text-center text-white text-base">
           Don't have an account?<br />
           <Link to="/signup" className="text-[#FFC900] font-semibold hover:underline">
