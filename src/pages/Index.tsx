@@ -1,11 +1,15 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import Logo from "@/components/Logo";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center animate-fade-in">
+        <Logo size={128} />
+        <h1 className="text-4xl font-bold mb-2 mt-6 text-primary">Welcome to Elec-Mate!</h1>
+        <p className="text-lg text-gray-600 mb-2">
+          Your friendly guide for everything electrical. Get started by logging in and exploring!
+        </p>
       </div>
     </div>
   );
