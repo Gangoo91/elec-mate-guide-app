@@ -23,6 +23,8 @@ import { AuthProvider } from "@/hooks/useAuth";
 import ManageSubscription from "./pages/ManageSubscription";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import FAQ from "./pages/FAQ";
+import MentalHealth from "./pages/MentalHealth";
+import Mentorship from "./pages/Mentorship";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +69,8 @@ const App = () => (
                   <Dashboard />
                 </SubscriptionGuard>
               } />
+              <Route path="/mental-health" element={<MentalHealth />} />
+              <Route path="/mentorship" element={<Mentorship />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />

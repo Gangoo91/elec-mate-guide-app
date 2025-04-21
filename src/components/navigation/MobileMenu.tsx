@@ -21,8 +21,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
         <Link to="/faq" className={`px-3 py-2 rounded-md ${isActive('/faq') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
           FAQ
         </Link>
-        <Link to="/tools" className={`px-3 py-2 rounded-md ${isActive('/tools') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Tools
+        <Link to="/mental-health" className={`px-3 py-2 rounded-md ${isActive('/mental-health') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Mental Health Hub
+        </Link>
+        <Link to="/mentorship" className={`px-3 py-2 rounded-md ${isActive('/mentorship') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Mentor Connect
         </Link>
         
         {/* Authentication buttons only for non-logged in users */}
