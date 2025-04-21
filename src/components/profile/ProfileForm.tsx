@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -93,15 +92,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   };
 
   const qualificationLevels = [
-    "Apprentice Level 1",
-    "Apprentice Level 2",
-    "Apprentice Level 3",
-    "Apprentice Level 4",
-    "Journeyman Electrician",
-    "Master Electrician",
-    "Electrical Engineer",
-    "Electrical Inspector",
-    "Other"
+    "Apprentice",
+    "Electrician",
+    "Advanced Electrician",
+    "Commissioning Tech",
+    "Commissioning Engineer"
   ];
 
   return (
