@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Lightbulb, Users, Award, Briefcase, Heart, Handshake, Toolbox } from "lucide-react";
+import { Lightbulb, Users, Award, Briefcase, Heart, Handshake, Tool } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -93,7 +93,7 @@ const ElectriciansPage = () => {
         {/* Toolbox Talk Section */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Toolbox className="h-8 w-8 text-[#FFC900]" />
+            <Tool className="h-8 w-8 text-[#FFC900]" />
             <h2 className="text-2xl font-bold text-[#FFC900]">Toolbox Talk</h2>
           </div>
           <p className="text-[#FFC900]/80 mb-6">
