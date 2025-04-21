@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Logo from "@/components/Logo";
@@ -11,6 +11,7 @@ import { subscriptionPlans } from "@/config/subscriptionPlans";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { stripePriceIds } from "@/config/subscriptionPlans";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const SubscriptionContent = () => {
   const {
@@ -26,6 +27,15 @@ const SubscriptionContent = () => {
   } = useSubscription();
 
   const [stripeDebugInfo, setStripeDebugInfo] = useState<any>(null);
+  const [checkoutAttempts, setCheckoutAttempts] = useState(0);
+  const [showDirectLink, setShowDirectLink] = useState(false);
+
+  useEffect(() => {
+    // Only show direct link option if we've had multiple attempts
+    if (checkoutAttempts > 1 && lastResponse?.data?.url) {
+      setShowDirectLink(true);
+    }
+  }, [checkoutAttempts, lastResponse]);
 
   // Add comprehensive logging to the checkout process
   const handleCheckoutClick = async () => {
@@ -41,8 +51,15 @@ const SubscriptionContent = () => {
       plan: selectedPlan,
       cycle: billingCycle,
       priceId: priceId,
-      sessionInfo: { user: "authenticated", status: "starting checkout" }
+      sessionInfo: { 
+        user: "authenticated", 
+        status: "starting checkout",
+        checkoutAttempt: checkoutAttempts + 1
+      }
     });
+    
+    // Track number of attempts
+    setCheckoutAttempts(prev => prev + 1);
     
     try {
       await handleCheckout();
@@ -53,6 +70,13 @@ const SubscriptionContent = () => {
         error: err instanceof Error ? err.message : String(err),
         errorTimestamp: new Date().toISOString()
       }));
+    }
+  };
+
+  // Handle direct link click
+  const handleDirectLinkClick = () => {
+    if (lastResponse?.data?.url) {
+      window.open(lastResponse.data.url, '_blank');
     }
   };
 
@@ -97,10 +121,22 @@ const SubscriptionContent = () => {
         </p>
 
         {error && (
-          <div className="w-full p-3 mb-4 bg-red-900/20 border border-red-500/50 text-red-300 rounded-lg text-sm">
-            <p className="font-semibold">Error:</p>
-            <p>{error}</p>
-          </div>
+          <Alert variant="destructive" className="mb-4 bg-red-900/20 border border-red-500/50 text-red-300">
+            <AlertTitle>Error:</AlertTitle>
+            <AlertDescription className="text-sm">{error}</AlertDescription>
+            {showDirectLink && lastResponse?.data?.url && (
+              <div className="mt-3">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={handleDirectLinkClick}
+                  className="w-full border-red-500/50 hover:border-red-500 hover:bg-red-900/30"
+                >
+                  Try Direct Link to Checkout
+                </Button>
+              </div>
+            )}
+          </Alert>
         )}
 
         <Button
@@ -154,6 +190,9 @@ const SubscriptionContent = () => {
               <div>
                 <strong>Checking Auth:</strong> {checkingAuth ? 'Yes' : 'No'}
               </div>
+              <div>
+                <strong>Checkout Attempts:</strong> {checkoutAttempts}
+              </div>
               {error && (
                 <div>
                   <strong>Error:</strong> {error}
@@ -190,6 +229,18 @@ const SubscriptionContent = () => {
               </div>
               <div>
                 <strong>Languages:</strong> {navigator.languages?.join(', ')}
+              </div>
+              <div>
+                <strong>Cookies Enabled:</strong> {navigator.cookieEnabled ? 'Yes' : 'No'}
+              </div>
+              <div>
+                <strong>Online:</strong> {navigator.onLine ? 'Yes' : 'No'}
+              </div>
+              <div>
+                <strong>Screen Size:</strong> {window.innerWidth}x{window.innerHeight}
+              </div>
+              <div>
+                <strong>Current URL:</strong> {window.location.href}
               </div>
             </div>
           </DialogContent>

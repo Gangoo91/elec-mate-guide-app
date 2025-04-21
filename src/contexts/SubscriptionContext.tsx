@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -72,14 +71,21 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
         throw new Error(`Invalid price ID for ${selectedPlan} (${billingCycle})`);
       }
       
-      console.log("Invoking create-checkout with price_id:", price_id);
+      // Add timestamp to log for tracking timing issues
+      console.log(`Invoking create-checkout with price_id: ${price_id} at ${new Date().toISOString()}`);
       
       // Call the edge function with the price_id
       const { data, error: functionError } = await supabase.functions.invoke("create-checkout", {
         body: { price_id }
       });
       
-      setLastResponse(data); // Store response for debugging
+      // Store full response for debugging
+      setLastResponse({
+        timestamp: new Date().toISOString(),
+        data,
+        error: functionError
+      });
+      
       console.log("Checkout response:", data, functionError);
 
       if (functionError) {
@@ -90,25 +96,36 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
         throw new Error("No checkout URL returned from server");
       }
 
-      console.log("Redirecting to checkout:", data.url);
+      console.log(`Redirecting to checkout: ${data.url}`);
       
-      // Add a small delay before redirection to ensure logs are visible
-      setTimeout(() => {
+      // Try opening checkout in a new window first, fallback to same window
+      const checkoutWindow = window.open(data.url, '_blank');
+      
+      if (!checkoutWindow || checkoutWindow.closed || typeof checkoutWindow.closed === 'undefined') {
+        // Popup was blocked or couldn't open, fallback to same window
+        console.log("Popup blocked or couldn't open, redirecting in same window");
         window.location.href = data.url;
-      }, 500);
+      }
       
     } catch (error: any) {
       const errorMessage = error?.message || "Unknown error";
       console.error("Checkout error:", errorMessage);
       setError(errorMessage);
-      setLastResponse({ error: errorMessage });
+      setLastResponse({ 
+        timestamp: new Date().toISOString(), 
+        error: errorMessage,
+        errorStack: error?.stack 
+      });
       toast({
         title: "Payment initiation failed",
         description: errorMessage,
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      // Keep loading state active for less time to prevent UI confusion
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 

@@ -15,7 +15,11 @@ const logStep = (step: string, details?: any) => {
 
 serve(async (req: Request) => {
   // Log start of request processing
-  logStep("Request received", { method: req.method, headers: Object.fromEntries(req.headers) });
+  logStep("Request received", { 
+    method: req.method,
+    headers: Object.fromEntries(req.headers),
+    url: req.url
+  });
 
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -69,7 +73,7 @@ serve(async (req: Request) => {
     }
     
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
-    logStep("Stripe initialized");
+    logStep("Stripe initialized with API version 2023-10-16");
 
     // Get price_id from POST body
     let price_id;
@@ -112,7 +116,7 @@ serve(async (req: Request) => {
       cancelUrl: `${url}/subscription?checkout=cancel`
     });
     
-    // Create checkout session with expanded options
+    // Create checkout session with expanded options for better compatibility
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
@@ -124,10 +128,13 @@ serve(async (req: Request) => {
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
       client_reference_id: user.id,
-      locale: 'auto',  // Let Stripe determine the best locale
+      locale: 'auto',
+      ui_mode: 'hosted',  // Explicitly set to hosted mode
       metadata: {
         user_id: user.id,
         subscription_plan: price_id,
+        app_version: "1.0.0",
+        timestamp: new Date().toISOString(),
       },
     });
 
@@ -138,7 +145,8 @@ serve(async (req: Request) => {
 
     logStep("Checkout session created successfully", { 
       sessionId: session.id, 
-      url: session.url 
+      url: session.url,
+      expiresAt: session.expires_at
     });
 
     // Return the checkout session URL with CORS headers
