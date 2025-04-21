@@ -7,6 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
 import AIDiagnosticAssistant from "@/components/apprentices/AIDiagnosticAssistant";
+import RegulationsAssistant from "@/components/apprentices/RegulationsAssistant";
 
 const MentalHealthHubContent = () => (
   <>
@@ -97,9 +98,9 @@ const ApprenticesPage = () => {
     {
       title: "Learning Tools",
       description:
-        "A growing toolbox to help apprentices study, revise, and practice. Includes knowledge tests and skill assessments to track your progress.",
+        "A growing toolbox to help apprentices study, revise, and practice. Includes knowledge tests, skill assessments, and regulations guidance.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Learn more", href: "#tools" }
+      action: { label: "Access Tools", onClick: () => {} }
     },
     {
       title: "Mentor Connect",
@@ -161,6 +162,7 @@ const ApprenticesPage = () => {
 
         <div className="mt-8 space-y-4">
           <AIDiagnosticAssistant />
+          <RegulationsAssistant />
         </div>
 
         <div className="bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
