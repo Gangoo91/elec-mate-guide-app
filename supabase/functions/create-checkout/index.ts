@@ -14,6 +14,9 @@ const logStep = (step: string, details?: any) => {
 };
 
 serve(async (req: Request) => {
+  // Log start of request processing
+  logStep("Request received", { method: req.method, headers: Object.fromEntries(req.headers) });
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -132,3 +135,4 @@ serve(async (req: Request) => {
     });
   }
 });
+
