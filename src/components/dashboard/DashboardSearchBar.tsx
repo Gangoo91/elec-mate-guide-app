@@ -33,8 +33,8 @@ const DashboardSearchBar = ({
         role="searchbox"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        onFocus={() => setIsSearchFocused(true)}
-        onBlur={() => setIsSearchFocused(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
     </div>
   </div>
