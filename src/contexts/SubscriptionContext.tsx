@@ -64,18 +64,33 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
       const price_id = stripePriceIds[selectedPlan][billingCycle];
       console.log("Invoking create-checkout with price_id:", price_id);
       
+      // Check if price_id exists
+      if (!price_id) {
+        throw new Error(`Invalid price ID for ${selectedPlan} (${billingCycle})`);
+      }
+      
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { price_id }
       });
       
       console.log("Checkout response:", data, error);
 
-      if (error || !data?.url) {
+      if (error) {
         throw new Error(error?.message || "Failed to create checkout session");
       }
 
+      if (!data?.url) {
+        throw new Error("No checkout URL returned from server");
+      }
+
       console.log("Redirecting to checkout:", data.url);
-      window.location.href = data.url;
+      
+      // Add a small delay before redirection to ensure logs are visible
+      setTimeout(() => {
+        // Open in new tab for better debugging
+        window.location.href = data.url;
+      }, 100);
+      
     } catch (error: any) {
       const errorMessage = error?.message || "Unknown error";
       console.error("Checkout error:", errorMessage);

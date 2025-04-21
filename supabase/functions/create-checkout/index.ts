@@ -71,21 +71,20 @@ serve(async (req: Request) => {
     const stripe = new Stripe(stripeKey, { apiVersion: "2023-10-16" });
     logStep("Stripe initialized");
 
-    // Get price_id from POST body (prefer client selection), fallback to default Electrician monthly
+    // Get price_id from POST body
     let price_id;
     try {
       const body = await req.json();
       price_id = body.price_id;
       logStep("Received request with price_id", { price_id });
+      
+      if (!price_id) {
+        logStep("No price_id provided in request body");
+        throw new Error("Price ID is required");
+      }
     } catch (parseError) {
       logStep("Error parsing request body", { error: parseError });
-      price_id = undefined;
-    }
-    
-    // Fallback to monthly Electrician if none provided
-    if (!price_id) {
-      logStep("No price_id provided, using default");
-      price_id = "price_1RGIdw2RKw5t5RAmEWjKbGx1"; // Default to Electrician monthly
+      throw new Error("Invalid request format or missing price_id");
     }
 
     // Check if the customer exists in Stripe
@@ -96,7 +95,7 @@ serve(async (req: Request) => {
       customerId = customers.data[0].id;
       logStep("Found existing customer", { customerId });
     } else {
-      logStep("No existing customer found");
+      logStep("No existing customer found, will create new customer");
     }
 
     const lineItems = [
@@ -112,6 +111,7 @@ serve(async (req: Request) => {
       cancelUrl: `${url}/subscription?checkout=cancel`
     });
     
+    // Enhanced checkout session creation
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
@@ -119,6 +119,14 @@ serve(async (req: Request) => {
       mode: "subscription",
       success_url: `${url}/subscription/success`,
       cancel_url: `${url}/subscription?checkout=cancel`,
+      payment_method_types: ['card'],  // Explicitly specify payment methods
+      allow_promotion_codes: true,     // Allow promo codes
+      billing_address_collection: 'auto', // Collect billing address
+      client_reference_id: user.id,    // Add user ID as reference
+      metadata: {                      // Add metadata for tracking
+        user_id: user.id,
+        subscription_plan: price_id,
+      },
     });
 
     logStep("Checkout session created", { sessionId: session.id, url: session.url });
@@ -135,4 +143,3 @@ serve(async (req: Request) => {
     });
   }
 });
-

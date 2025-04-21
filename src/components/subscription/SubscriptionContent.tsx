@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Logo from "@/components/Logo";
@@ -24,17 +24,34 @@ const SubscriptionContent = () => {
     handleCheckout
   } = useSubscription();
 
-  // Add more comprehensive logging to the checkout process
+  const [stripeDebugInfo, setStripeDebugInfo] = useState<any>(null);
+
+  // Add comprehensive logging to the checkout process
   const handleCheckoutClick = async () => {
     console.log("Starting checkout process");
     console.log("Selected Plan:", selectedPlan);
     console.log("Billing Cycle:", billingCycle);
-    console.log("Price ID:", stripePriceIds[selectedPlan][billingCycle]);
+    const priceId = stripePriceIds[selectedPlan][billingCycle];
+    console.log("Price ID:", priceId);
+    
+    // Store debug info
+    setStripeDebugInfo({
+      timestamp: new Date().toISOString(),
+      plan: selectedPlan,
+      cycle: billingCycle,
+      priceId: priceId,
+      sessionInfo: { user: "authenticated", status: "starting checkout" }
+    });
     
     try {
       await handleCheckout();
     } catch (err) {
       console.error("Detailed Checkout Error:", err);
+      setStripeDebugInfo(prev => ({
+        ...prev,
+        error: err instanceof Error ? err.message : String(err),
+        errorTimestamp: new Date().toISOString()
+      }));
     }
   };
 
@@ -93,7 +110,7 @@ const SubscriptionContent = () => {
           {isLoading ? (
             <span className="flex items-center justify-center">
               <Loader2 className="animate-spin mr-2" size={20} />
-              Redirecting...
+              Redirecting to Stripe...
             </span>
           ) : checkingAuth ? (
             <span className="flex items-center justify-center">
@@ -140,6 +157,16 @@ const SubscriptionContent = () => {
                 <div>
                   <strong>Error:</strong> {error}
                 </div>
+              )}
+              {stripeDebugInfo && (
+                <>
+                  <div className="mt-4 pt-2 border-t border-yellow-600/30">
+                    <strong>Last Checkout Attempt:</strong>
+                  </div>
+                  <pre className="text-[10px] overflow-auto max-h-[150px] p-2 bg-black/50 rounded border border-yellow-600/20">
+                    {JSON.stringify(stripeDebugInfo, null, 2)}
+                  </pre>
+                </>
               )}
             </div>
           </DialogContent>
