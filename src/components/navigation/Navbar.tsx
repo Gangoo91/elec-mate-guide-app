@@ -52,6 +52,9 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
+  // Do not show UserMenu on these auth/guest pages
+  const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
+
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b border-[#FFC900]/20 bg-[#151812]/95 backdrop-blur supports-[backdrop-filter]:bg-[#151812]/60">
       <div className="container flex h-16 items-center justify-between">
@@ -153,7 +156,9 @@ const Navbar = () => {
           </Button>
 
           {/* User/account menu */}
-          <UserMenu user={user} bypassAuth={bypassAuth} />
+          {!hideUserMenuPaths.includes(location.pathname) && (
+            <UserMenu user={user} bypassAuth={bypassAuth} />
+          )}
         </div>
       </div>
       
