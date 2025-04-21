@@ -143,8 +143,11 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* App Description */}
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 animate-on-load opacity-0" style={{ animationDelay: '600ms' }}>
+        {/* Industry Resources (External Links) */}
+        <IndustryResources />
+
+        {/* App Description - Moved to the bottom */}
+        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mt-10 animate-on-load opacity-0" style={{ animationDelay: '600ms' }}>
           <h2 className="text-2xl font-bold text-[#FFC900] mb-2">About This App</h2>
           <p className="text-[#FFC900]/80 mb-4">
             Designed to empower every stage of your electrical industry journey. Select your portal to get started!
@@ -160,12 +163,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* Industry Resources (External Links) */}
-        <IndustryResources />
       </div>
     </MainLayout>
   );
 };
 
 export default Dashboard;
-
