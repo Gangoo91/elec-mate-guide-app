@@ -13,6 +13,7 @@ const AIToolsPage = () => {
         <PageHeader 
           title="AI Learning Tools"
           description="Access our AI-powered assistants to help with technical diagnostics and regulatory compliance."
+          hideBackButton={true} // Add this prop to hide the built-in back button
         />
         <div className="space-y-6">
           <AILearningTools />
