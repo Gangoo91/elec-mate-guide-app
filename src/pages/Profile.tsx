@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, CreditCard, Calendar, ShieldCheck, X, Check, ArrowRight, RefreshCcw } from "lucide-react";
+import { Loader2, CreditCard, Calendar, ShieldCheck, RefreshCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,11 +25,9 @@ const Profile = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Check subscription status on load
   useEffect(() => {
     checkSubscription();
 
-    // Set up a timer to periodically check subscription status (every 60 seconds)
     const checkInterval = setInterval(() => {
       checkSubscription(true);
     }, 60000);
@@ -83,7 +80,11 @@ const Profile = () => {
     setIsManaging(true);
     try {
       const { data, error } = await supabase.functions.invoke("customer-portal");
-      if (error) throw new Error(error.message);
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
       if (data?.url) {
         window.location.href = data.url;
       } else {
@@ -97,10 +98,6 @@ const Profile = () => {
       });
       setIsManaging(false);
     }
-  };
-
-  const handleStartSubscription = () => {
-    navigate("/subscription");
   };
 
   const formatDate = (dateStr: string | null) => {
@@ -196,6 +193,42 @@ const Profile = () => {
                     </li>
                   </ul>
                 </div>
+
+                <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+                    onClick={handleManageSubscription}
+                    disabled={isManaging}
+                  >
+                    {isManaging ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Please wait...
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="mr-2 h-4 w-4" />
+                        Manage Subscription
+                      </>
+                    )}
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="w-full sm:w-auto border-[#FFC900]/30 text-[#FFC900]/70 hover:bg-[#FFC900]/10"
+                    onClick={handleManualRefresh}
+                    disabled={isRefreshing}
+                  >
+                    {isRefreshing ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <RefreshCcw className="h-4 w-4" />
+                    )}
+                    <span className="ml-2 sm:hidden">Refresh Subscription Status</span>
+                  </Button>
+                </div>
               </div>
             ) : (
               <div className="text-center py-6">
@@ -220,21 +253,6 @@ const Profile = () => {
                 <ShieldCheck className="h-4 w-4 mr-1" />
                 Securely managed through Stripe
               </div>
-              <Button
-                variant="outline"
-                className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
-                onClick={handleManageSubscription}
-                disabled={isManaging}
-              >
-                {isManaging ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Please wait...
-                  </>
-                ) : (
-                  "Manage Subscription"
-                )}
-              </Button>
             </CardFooter>
           )}
         </Card>
