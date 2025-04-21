@@ -67,9 +67,11 @@ const ForgotPassword = () => {
           <ArrowLeft className="text-[#FFC900]" size={28} />
         </Link>
 
-        <Logo size={80} />
+        <div className="flex justify-center w-full">
+          <Logo size={80} />
+        </div>
 
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-4 mt-6 leading-tight drop-shadow-[0_0_8px_rgba(255,201,0,0.75)] tracking-wide select-none">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-4 mt-6 leading-tight drop-shadow-[0_0_4px_rgba(255,201,0,0.5)] tracking-wide select-none">
           Reset Password
         </h1>
 
