@@ -59,10 +59,10 @@ const ApprenticesPage = () => {
 
   const apprenticeResources = [
     {
-      title: "Learning Paths",
-      description: "Structured curriculum for electrical apprentices",
+      title: "Learning Tools",
+      description: "A growing toolbox to help apprentices study, revise, and practice.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      link: "#paths"
+      link: "#tools"
     },
     {
       title: "Skill Assessments",
@@ -95,9 +95,10 @@ const ApprenticesPage = () => {
     <MainLayout>
       <div className="container px-4 py-12">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentice Portal</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentice Hub</h1>
           <p className="text-lg text-[#FFC900]/80 max-w-2xl mx-auto">
-            Resources, training, and opportunities designed specifically for electrical apprentices at every stage.
+            Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage.
+            Whether you're just beginning or progressing further, you'll find support along your pathway through the electrical journey—from essential learning tools to well-being and skills development.
           </p>
         </div>
 
@@ -138,13 +139,13 @@ const ApprenticesPage = () => {
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
           <h2 className="text-2xl font-bold text-[#FFC900] mb-4">Getting Started as an Apprentice</h2>
           <p className="text-[#FFC900]/80 mb-6">
-            The path to becoming a licensed electrician starts with a strong apprenticeship. 
-            Here's what you need to know to begin your journey in the electrical trade.
+            The path to becoming a licensed electrician starts with a strong apprenticeship.
+            Here you'll uncover helpful tools to support you, plus advice and info about every step along your pathway through the electrical trade.
           </p>
           <div className="space-y-4">
             <p className="text-[#FFC900]/80">
-              Content for apprentices will be expanded soon with interactive learning modules, progress tracking, 
-              and certification preparation resources.
+              Content for apprentices will be expanded soon with interactive learning modules, progress tracking, study tools,
+              and resources to prepare you for each stage of your journey.
             </p>
           </div>
         </div>
@@ -154,4 +155,3 @@ const ApprenticesPage = () => {
 };
 
 export default ApprenticesPage;
-
