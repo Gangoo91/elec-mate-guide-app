@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Rss, Info } from "lucide-react";
 
+// Update the NewsItem and FeedSource types
 type NewsItem = {
   source: string;
   title: string;
@@ -15,29 +16,26 @@ type FeedSource = {
   label: string;
 };
 
-// RSS feed sources: HSE (UK), NFPA (US), EC&M (industry news)
+// Only UK-based RSS feed sources: HSE (UK), Electrical Safety First, Electrical Review
 const FEED_SOURCES: FeedSource[] = [
   {
     url: "https://www.hse.gov.uk/news/hse-news.xml",
     label: "HSE (UK)",
   },
   {
-    url: "https://www.nfpa.org/news-and-research/news-and-media/rss-feeds/news-releases",
-    label: "NFPA (US)",
+    url: "https://www.electricalsafetyfirst.org.uk/news/news-rss-feed/", // Electrical Safety First News
+    label: "Electrical Safety First",
   },
   {
-    url: "https://www.ecmweb.com/rss.xml",
-    label: "EC&M Industry News",
+    url: "https://electricalreview.co.uk/feed/", // Electrical Review industry news
+    label: "Electrical Review",
   },
 ];
 
 const fetchFeed = async (feedUrl: string): Promise<NewsItem[]> => {
-  // Use the same CORS bypass as before
   const API_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
   const response = await fetch(API_URL);
   const text = await response.text();
-
-  // Dynamically import rss-parser (avoids SSR errors)
   const Parser = (await import("rss-parser")).default;
   const parser = new Parser();
   const feed = await parser.parseString(text);
@@ -86,7 +84,6 @@ const IndustryResources: React.FC = () => {
       const sorted = allNews
         .filter(item => item.title && item.link)
         .sort((a, b) => {
-          // Use pubDate if available, else default order
           const dateA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
           const dateB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
           return dateB - dateA;
@@ -112,13 +109,13 @@ const IndustryResources: React.FC = () => {
       <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 flex flex-col items-center">
         <h2 className="text-2xl font-bold text-[#FFC900] mb-3">Industry Resources</h2>
         <p className="text-[#FFC900]/70 mb-7 text-center">
-          Stay up to date with recent developments, safety news, and industry changes—curated from trusted organizations.
+          Stay up to date with recent developments, safety news, and regulation changes for the UK electrical industry—live updates from trusted organisations like HSE and Electrical Safety First.
         </p>
         <div className="w-full max-w-md">
           <div className="flex items-center mb-2 justify-between">
             <h3 className="text-lg text-[#FFC900] font-semibold flex items-center gap-1">
               <Rss className="h-4 w-4 mr-1" />
-              Live Industry News
+              Live UK Industry News
             </h3>
             <Button
               variant="ghost"
@@ -163,22 +160,7 @@ const IndustryResources: React.FC = () => {
               </ul>
             )}
           </div>
-          <div className="text-xs text-[#FFC900]/60 mt-1 text-right w-full">
-            Sources:&nbsp;
-            {FEED_SOURCES.map((src, idx) => (
-              <span key={src.url}>
-                <a
-                  href={src.url}
-                  target="_blank"
-                  className="hover:underline text-[#FFC900]"
-                  rel="noopener noreferrer"
-                >
-                  {src.label}
-                </a>
-                {idx < FEED_SOURCES.length - 1 && ", "}
-              </span>
-            ))}
-          </div>
+          {/* Removed the "Sources" links section */}
         </div>
       </div>
     </div>
@@ -186,3 +168,4 @@ const IndustryResources: React.FC = () => {
 };
 
 export default IndustryResources;
+
