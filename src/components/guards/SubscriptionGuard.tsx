@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,7 +26,15 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
   const location = useLocation();
   const { toast } = useToast();
 
+  const bypassSubscriptionCheck = import.meta.env.VITE_BYPASS_SUBSCRIPTION === "true";
+
   useEffect(() => {
+    if (bypassSubscriptionCheck) {
+      setLoading(false);
+      setSubscription({ subscribed: true, subscription_tier: "Employer" });
+      return;
+    }
+
     const checkSubscription = async () => {
       try {
         setLoading(true);
@@ -60,7 +67,10 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
     );
   }
 
-  // Check if user has an active subscription
+  if (bypassSubscriptionCheck) {
+    return <>{children}</>;
+  }
+
   if (!subscription?.subscribed) {
     toast({
       title: "Subscription required",
@@ -70,7 +80,6 @@ export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardP
     return <Navigate to="/subscription" state={{ from: location }} replace />;
   }
 
-  // Check if user's tier has access to the required tier
   const userTier = subscription.subscription_tier || "Apprentice";
   const allowedTiers = tierAccess[userTier as keyof typeof tierAccess] || [];
   
