@@ -105,8 +105,8 @@ serve(async (req: Request) => {
       customerId: customerId || "new customer", 
       customerEmail: customerId ? "using existing" : user.email,
       lineItems, 
-      successUrl: `${url}/dashboard?checkout=success`,
-      cancelUrl: `${url}/dashboard?checkout=cancel`
+      successUrl: `${url}/subscription/success`,
+      cancelUrl: `${url}/subscription?checkout=cancel`
     });
     
     const session = await stripe.checkout.sessions.create({
@@ -114,8 +114,8 @@ serve(async (req: Request) => {
       customer_email: customerId ? undefined : user.email,
       line_items: lineItems as any,
       mode: "subscription",
-      success_url: `${url}/dashboard?checkout=success`,
-      cancel_url: `${url}/dashboard?checkout=cancel`,
+      success_url: `${url}/subscription/success`,
+      cancel_url: `${url}/subscription?checkout=cancel`,
     });
 
     logStep("Checkout session created", { sessionId: session.id, url: session.url });

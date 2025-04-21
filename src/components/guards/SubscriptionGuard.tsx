@@ -21,7 +21,7 @@ const tierAccess = {
   Employer: ["Employer", "Electrician", "Apprentice"],
 };
 
-export const SubscriptionGuard = ({ children }: SubscriptionGuardProps) => {
+export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardProps) => {
   // Always bypass the subscription check for now
   // This effectively disables the guard completely, allowing access to all routes
   return <>{children}</>;

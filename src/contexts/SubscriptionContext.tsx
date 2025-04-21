@@ -37,6 +37,9 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     setCheckingAuth(!user || !session);
+    if (user && session) {
+      console.log("Authenticated user:", user.email);
+    }
   }, [user, session]);
 
   const handleCheckout = async () => {
@@ -51,20 +54,31 @@ export const SubscriptionProvider = ({ children }: { children: React.ReactNode }
 
     setIsLoading(true);
     setError(null);
+    console.log("Starting checkout with:", {
+      plan: selectedPlan,
+      cycle: billingCycle,
+      price_id: stripePriceIds[selectedPlan][billingCycle]
+    });
 
     try {
       const price_id = stripePriceIds[selectedPlan][billingCycle];
+      console.log("Invoking create-checkout with price_id:", price_id);
+      
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { price_id }
       });
+      
+      console.log("Checkout response:", data, error);
 
       if (error || !data?.url) {
         throw new Error(error?.message || "Failed to create checkout session");
       }
 
+      console.log("Redirecting to checkout:", data.url);
       window.location.href = data.url;
     } catch (error: any) {
       const errorMessage = error?.message || "Unknown error";
+      console.error("Checkout error:", errorMessage);
       setError(errorMessage);
       toast({
         title: "Payment initiation failed",

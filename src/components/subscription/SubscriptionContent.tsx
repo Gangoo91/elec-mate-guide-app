@@ -9,6 +9,7 @@ import BillingCycleSelector from "@/components/subscription/BillingCycleSelector
 import SubscriptionSecurityInfo from "@/components/subscription/SubscriptionSecurityInfo";
 import { subscriptionPlans } from "@/config/subscriptionPlans";
 import { useSubscription } from "@/contexts/SubscriptionContext";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 const SubscriptionContent = () => {
   const {
@@ -21,6 +22,16 @@ const SubscriptionContent = () => {
     setBillingCycle,
     handleCheckout
   } = useSubscription();
+
+  // Add console logs to debug the checkout process
+  const handleCheckoutClick = async () => {
+    console.log("Starting checkout process");
+    try {
+      await handleCheckout();
+    } catch (err) {
+      console.error("Checkout error:", err);
+    }
+  };
 
   return (
     <div className="w-full max-w-md">
@@ -70,7 +81,7 @@ const SubscriptionContent = () => {
         )}
 
         <Button
-          onClick={handleCheckout}
+          onClick={handleCheckoutClick}
           disabled={isLoading || checkingAuth}
           className="w-full rounded-xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-5 mt-0 mb-3 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
         >
@@ -95,9 +106,36 @@ const SubscriptionContent = () => {
           Secure payment powered by Stripe.<br />
           You can cancel, upgrade, or manage your subscription any time in your profile settings.
         </p>
+        
+        {/* Debug Dialog - only in development */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="ghost" size="sm" className="mt-4 text-xs opacity-50 w-full">
+              Debug Info
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-md bg-black/90 border-yellow-600/30 text-yellow-500 text-xs">
+            <DialogTitle>Debug Subscription Info</DialogTitle>
+            <pre className="overflow-auto max-h-[70vh] p-4">
+              {JSON.stringify(
+                {
+                  selectedPlan,
+                  billingCycle,
+                  isLoading,
+                  checkingAuth,
+                  priceId: stripePriceIds[selectedPlan]?.[billingCycle],
+                  error,
+                },
+                null,
+                2
+              )}
+            </pre>
+          </DialogContent>
+        </Dialog>
       </GlassCard>
     </div>
   );
 };
 
+import { stripePriceIds } from "@/config/subscriptionPlans";
 export default SubscriptionContent;
