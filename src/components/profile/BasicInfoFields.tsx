@@ -1,7 +1,7 @@
 
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { User, IdentificationCard } from "lucide-react";
+import { User, IdCard } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ProfileFormValues } from "./schema";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -59,7 +59,7 @@ export const BasicInfoFields = ({ form }: BasicInfoFieldsProps) => {
               <FormLabel className="text-[#FFC900]">Last Name</FormLabel>
               <FormControl>
                 <div className="flex items-center">
-                  <IdentificationCard className="h-4 w-4 mr-2 text-[#FFC900]/50" />
+                  <IdCard className="h-4 w-4 mr-2 text-[#FFC900]/50" />
                   <Input placeholder="Enter your last name" {...field} className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]" />
                 </div>
               </FormControl>
