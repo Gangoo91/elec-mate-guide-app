@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -61,7 +60,7 @@ const Signup = () => {
       title: "Signup Successful",
       description: "Check your email to confirm your account.",
     });
-    navigate("/dashboard");
+    navigate("/subscription");
   };
 
   return (
