@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 export function useLoginForm() {
@@ -13,6 +13,7 @@ export function useLoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
@@ -112,7 +113,10 @@ export function useLoginForm() {
       title: "Login Successful",
       description: "Welcome back to Elec-Mate!",
     });
-    navigate("/dashboard");
+    
+    // Check if we have a from location in the state (e.g., redirected from subscription page)
+    const from = location.state?.from?.pathname || "/dashboard";
+    navigate(from, { replace: true });
   };
 
   const handleSocialLogin = (provider: string) => {

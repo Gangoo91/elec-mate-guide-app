@@ -20,6 +20,7 @@ serve(async (req: Request) => {
 
   try {
     logStep("Function started");
+    
     // Initialize Supabase with anon key (reading auth info only)
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
@@ -39,9 +40,14 @@ serve(async (req: Request) => {
     // Use the JWT to get the user
     const { data: authData, error: authError } = await supabase.auth.getUser(token);
     
-    if (authError || !authData.user) {
-      logStep("Authentication failed", { error: authError?.message });
+    if (authError) {
+      logStep("Authentication failed", { error: authError.message });
       throw new Error(authError?.message || "Authentication failed");
+    }
+    
+    if (!authData?.user) {
+      logStep("No user found in auth data");
+      throw new Error("No authenticated user found");
     }
     
     const user = authData.user;

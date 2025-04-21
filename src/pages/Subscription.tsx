@@ -47,23 +47,62 @@ const subscriptionPlans = [
 
 const Subscription = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState("Electrician");
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Check authentication on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && session.user) {
+          setIsAuthenticated(true);
+        } else {
+          // If not authenticated, show a toast and redirect to login
+          toast({
+            title: "Authentication required",
+            description: "Please log in to subscribe to a plan",
+            variant: "destructive",
+          });
+          navigate("/login", { 
+            state: { from: location, message: "Please log in to subscribe" } 
+          });
+        }
+      } catch (err) {
+        console.error("Auth check error:", err);
+        setError("Failed to check authentication status");
+      } finally {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    checkAuth();
+  }, [navigate, location, toast]);
 
   const handleCheckout = async () => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Ensure we have an authenticated user
+      // Verify authentication is still valid before proceeding
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
-        throw new Error("Please log in to continue with your subscription");
+        toast({
+          title: "Session expired",
+          description: "Please log in again to continue with your subscription",
+          variant: "destructive",
+        });
+        navigate("/login", { 
+          state: { from: location, message: "Please log in to subscribe" } 
+        });
+        return;
       }
       
       const price_id = stripePriceIds[selectedPlan][billingCycle];
@@ -117,6 +156,18 @@ const Subscription = () => {
       });
     }
   }, [location, toast, navigate]);
+
+  // Show loading indicator while checking authentication
+  if (isCheckingAuth) {
+    return (
+      <MainLayout>
+        <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
+          <Loader2 className="h-12 w-12 text-[#FFC900] animate-spin mb-4" />
+          <p className="text-[#FFC900]">Preparing subscription options...</p>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>

@@ -2,7 +2,7 @@
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
 import LoginEmailInput from "@/components/login/LoginEmailInput";
 import LoginPasswordInput from "@/components/login/LoginPasswordInput";
@@ -24,9 +24,17 @@ const LoginForm = () => {
     handleSubmit,
     handleSocialLogin
   } = useLoginForm();
+  
+  const location = useLocation();
+  const message = location.state?.message;
 
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-6">
+      {message && (
+        <div className="p-3 mb-2 bg-amber-900/20 border border-amber-500/50 text-amber-300 rounded-lg text-sm">
+          <p>{message}</p>
+        </div>
+      )}
       <div className="space-y-4">
         <LoginEmailInput
           email={email}
