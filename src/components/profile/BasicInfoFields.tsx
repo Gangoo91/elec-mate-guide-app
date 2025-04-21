@@ -25,12 +25,12 @@ export const BasicInfoFields = ({ form, avatarUrl, onAvatarUpload }: BasicInfoFi
         <AvatarUpload 
           url={avatarUrl}
           onUploadComplete={onAvatarUpload}
-          userInitials={getInitials() || "EC"}
+          userInitials={getInitials() || "EM"}
         />
         <div className="text-center md:text-left">
           <h3 className="text-[#FFC900] text-lg font-medium">Your Profile</h3>
           <p className="text-[#FFC900]/70 text-sm">
-            Complete your profile to get the most out of ElectroConnect
+            Complete your profile to get the most out of Elec-Mate
           </p>
         </div>
       </div>
