@@ -12,17 +12,20 @@ const roles = [
   {
     label: "APPRENTICES",
     icon: <Book size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
-    path: "/apprentices",
+    path: "/dashboard",
+    description: "Access apprentice resources and training materials",
   },
   {
     label: "ELECTRICIANS",
     icon: <Lightbulb size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
-    path: "/electricians",
+    path: "/dashboard",
+    description: "Professional tools and job opportunities",
   },
   {
     label: "EMPLOYERS",
     icon: <Briefcase size={64} strokeWidth={2.2} className="mx-auto mb-5" />,
-    path: "/employers",
+    path: "/dashboard",
+    description: "Find qualified electricians and apprentices",
   },
 ];
 
