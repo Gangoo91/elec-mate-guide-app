@@ -1,6 +1,5 @@
-
 import React from "react";
-import { Lightbulb, Users, Award, Briefcase, Heart, Handshake, Tool } from "lucide-react";
+import { Lightbulb, Users, Award, Briefcase, Heart, Handshake, Wrench } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,7 +61,6 @@ const ElectriciansPage = () => {
           ))}
         </div>
         
-        {/* Mental Health Hub Section */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
           <div className="flex items-center gap-3 mb-4">
             <Heart className="h-8 w-8 text-[#FFC900]" />
@@ -90,10 +88,9 @@ const ElectriciansPage = () => {
           </div>
         </div>
 
-        {/* Toolbox Talk Section */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <Tool className="h-8 w-8 text-[#FFC900]" />
+            <Wrench className="h-8 w-8 text-[#FFC900]" />
             <h2 className="text-2xl font-bold text-[#FFC900]">Toolbox Talk</h2>
           </div>
           <p className="text-[#FFC900]/80 mb-6">
@@ -116,7 +113,6 @@ const ElectriciansPage = () => {
           </div>
         </div>
 
-        {/* Continuing Education Section (original section) */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
           <h2 className="text-2xl font-bold text-[#FFC900] mb-4">Continuing Education for Electricians</h2>
           <p className="text-[#FFC900]/80 mb-6">
