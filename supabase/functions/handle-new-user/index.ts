@@ -33,7 +33,11 @@ serve(async (req) => {
     if (!existingProfile) {
       const { error } = await supabaseClient
         .from('profiles')
-        .insert([{ id: user_id }]);
+        .insert([{ 
+          id: user_id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }]);
 
       if (error) throw error;
     }

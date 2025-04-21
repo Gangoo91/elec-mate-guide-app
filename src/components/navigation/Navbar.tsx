@@ -18,6 +18,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
+import NotificationBell from "../notifications/NotificationBell";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -26,6 +27,36 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
+  
+  // Sample notifications for demo
+  const [notifications, setNotifications] = useState([
+    {
+      id: "1",
+      title: "Profile Update",
+      message: "Complete your profile to unlock all features",
+      read: false,
+      date: new Date(),
+      type: "info" as const
+    },
+    {
+      id: "2",
+      title: "New Apprentice Resources",
+      message: "Check out the new training materials in the Apprentice Hub",
+      read: false,
+      date: new Date(Date.now() - 86400000), // 1 day ago
+      type: "success" as const
+    }
+  ]);
+
+  const markNotificationAsRead = (id: string) => {
+    setNotifications(notifications.map(notification => 
+      notification.id === id ? { ...notification, read: true } : notification
+    ));
+  };
+
+  const markAllNotificationsAsRead = () => {
+    setNotifications(notifications.map(notification => ({ ...notification, read: true })));
+  };
 
   useEffect(() => {
     // Set up auth state listener
@@ -151,6 +182,15 @@ const Navbar = () => {
           {/* Mobile menu button & user menu hidden on auth pages */}
           {!hideUserMenuPaths.includes(location.pathname) && (
             <>
+              {(user || bypassAuth) && (
+                <NotificationBell 
+                  notifications={notifications} 
+                  onMarkAsRead={markNotificationAsRead}
+                  onMarkAllAsRead={markAllNotificationsAsRead}
+                  className="mr-1"
+                />
+              )}
+              
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -180,4 +220,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

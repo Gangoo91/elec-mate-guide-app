@@ -22,67 +22,70 @@ import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionGuard from "./components/guards/SubscriptionGuard";
 import { AuthProvider } from "@/hooks/useAuth";
 import ManageSubscription from "./pages/ManageSubscription";
+import { NotificationProvider } from "./contexts/NotificationContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <AuthProvider>
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/apprentices" element={
-              <SubscriptionGuard requiredTier="Apprentice">
-                <ApprenticesPage />
-              </SubscriptionGuard>
-            } />
-            <Route path="/electricians" element={
-              <SubscriptionGuard requiredTier="Electrician">
-                <ElectriciansPage />
-              </SubscriptionGuard>
-            } />
-            <Route path="/employers" element={
-              <SubscriptionGuard requiredTier="Employer">
-                <EmployersPage />
-              </SubscriptionGuard>
-            } />
-            <Route path="/apprentice-hub" element={
-              <SubscriptionGuard requiredTier="Apprentice">
-                <ApprenticeHub />
-              </SubscriptionGuard>
-            } />
-            <Route path="/training" element={
-              <SubscriptionGuard requiredTier="Apprentice">
-                <ApprenticeHub />
-              </SubscriptionGuard>
-            } />
-            <Route path="/certification" element={
-              <SubscriptionGuard requiredTier="Apprentice">
-                <ApprenticeHub />
-              </SubscriptionGuard>
-            } />
-            <Route path="/tools" element={
-              <SubscriptionGuard requiredTier="Apprentice">
-                <ApprenticeHub />
-              </SubscriptionGuard>
-            } />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/manage-subscription" element={<ManageSubscription />} />
-            <Route path="/subscription" element={<Subscription />} />
-            <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <NotificationProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/apprentices" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <ApprenticesPage />
+                </SubscriptionGuard>
+              } />
+              <Route path="/electricians" element={
+                <SubscriptionGuard requiredTier="Electrician">
+                  <ElectriciansPage />
+                </SubscriptionGuard>
+              } />
+              <Route path="/employers" element={
+                <SubscriptionGuard requiredTier="Employer">
+                  <EmployersPage />
+                </SubscriptionGuard>
+              } />
+              <Route path="/apprentice-hub" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <ApprenticeHub />
+                </SubscriptionGuard>
+              } />
+              <Route path="/training" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <ApprenticeHub />
+                </SubscriptionGuard>
+              } />
+              <Route path="/certification" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <ApprenticeHub />
+                </SubscriptionGuard>
+              } />
+              <Route path="/tools" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <ApprenticeHub />
+                </SubscriptionGuard>
+              } />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/manage-subscription" element={<ManageSubscription />} />
+              <Route path="/subscription" element={<Subscription />} />
+              <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </NotificationProvider>
     </QueryClientProvider>
   </AuthProvider>
 );
