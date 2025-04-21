@@ -115,13 +115,14 @@ const ApprenticesPage = () => {
                   <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
                 </div>
                 {resource.showMHModal ? (
-                  <Button
-                    variant="outline"
-                    className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium self-start"
+                  <a
+                    className="mt-4 inline-block text-[#FFC900] font-medium hover:underline"
                     onClick={() => setMhModalOpen(true)}
+                    role="button"
+                    tabIndex={0}
                   >
                     Learn more →
-                  </Button>
+                  </a>
                 ) : (
                   <a href={resource.link!} className="mt-4 inline-block text-[#FFC900] font-medium hover:underline">
                     Learn more →
@@ -153,3 +154,4 @@ const ApprenticesPage = () => {
 };
 
 export default ApprenticesPage;
+
