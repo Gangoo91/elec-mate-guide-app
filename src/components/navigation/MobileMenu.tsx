@@ -18,14 +18,20 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
       </div>
       
       <nav className="flex flex-col space-y-3">
+        <Link to="/" className={`px-3 py-2 rounded-md ${isActive('/') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Home
+        </Link>
+        <Link to="/apprentices" className={`px-3 py-2 rounded-md ${isActive('/apprentices') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Apprentices
+        </Link>
+        <Link to="/electricians" className={`px-3 py-2 rounded-md ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Electricians
+        </Link>
+        <Link to="/employers" className={`px-3 py-2 rounded-md ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Employers
+        </Link>
         <Link to="/faq" className={`px-3 py-2 rounded-md ${isActive('/faq') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
           FAQ
-        </Link>
-        <Link to="/mental-health" className={`px-3 py-2 rounded-md ${isActive('/mental-health') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Mental Health Hub
-        </Link>
-        <Link to="/mentorship" className={`px-3 py-2 rounded-md ${isActive('/mentorship') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Mentor Connect
         </Link>
         
         {/* Authentication buttons only for non-logged in users */}
@@ -45,4 +51,3 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
 };
 
 export default MobileMenu;
-
