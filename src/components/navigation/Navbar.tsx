@@ -122,6 +122,14 @@ const Navbar = () => {
                           </p>
                         </Link>
                       </li>
+                      <li>
+                        <Link to="/faq" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
+                          <div className="text-sm font-medium leading-none text-[#FFC900]">FAQ</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
+                            Frequently asked questions
+                          </p>
+                        </Link>
+                      </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>

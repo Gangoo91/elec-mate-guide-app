@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+
+import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
 
 type MobileMenuProps = {
   isActive: (path: string) => boolean;
@@ -11,55 +11,23 @@ type MobileMenuProps = {
 };
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, navigate }) => {
-  const [resourcesOpen, setResourcesOpen] = useState(false);
-
   return (
     <div className="md:hidden py-4 px-4 bg-[#151812] border-b border-[#FFC900]/20">
+      <div className="text-center mb-4">
+        <p className="text-[#FFC900]/80 text-sm">Quick Access</p>
+      </div>
+      
       <nav className="flex flex-col space-y-3">
-        <Link to="/" className={`px-3 py-2 rounded-md ${isActive('/') || isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Dashboard
+        <Link to="/faq" className={`px-3 py-2 rounded-md ${isActive('/faq') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          FAQ
         </Link>
-        <Link to="/apprentices" className={`px-3 py-2 rounded-md ${isActive('/apprentices') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Apprentices
-        </Link>
-        <Link to="/electricians" className={`px-3 py-2 rounded-md ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Electricians
-        </Link>
-        <Link to="/employers" className={`px-3 py-2 rounded-md ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Employers
+        <Link to="/tools" className={`px-3 py-2 rounded-md ${isActive('/tools') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
+          Tools
         </Link>
         
-        {/* Resources dropdown for mobile */}
-        <div className="border-t border-[#FFC900]/20 pt-3">
-          <button
-            onClick={() => setResourcesOpen(!resourcesOpen)}
-            className={`w-full flex justify-between items-center px-3 py-2 rounded-md ${
-              isActive('/training') || isActive('/certification') || isActive('/tools')
-                ? 'bg-[#FFC900]/10'
-                : ''
-            } text-[#FFC900] font-medium`}
-          >
-            <span>Resources</span>
-            {resourcesOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-          
-          {resourcesOpen && (
-            <div className="mt-2 ml-4 flex flex-col space-y-2 border-l-2 border-[#FFC900]/20 pl-4">
-              <Link to="/training" className={`px-3 py-2 rounded-md ${isActive('/training') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-                Training
-              </Link>
-              <Link to="/certification" className={`px-3 py-2 rounded-md ${isActive('/certification') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-                Certification
-              </Link>
-              <Link to="/tools" className={`px-3 py-2 rounded-md ${isActive('/tools') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-                Tools
-              </Link>
-            </div>
-          )}
-        </div>
-
+        {/* Authentication buttons only for non-logged in users */}
         {!user && !bypassAuth && (
-          <div className="flex flex-col space-y-2 pt-2 border-t border-[#FFC900]/20">
+          <div className="flex flex-col space-y-2 pt-3 border-t border-[#FFC900]/20">
             <Button variant="outline" onClick={() => navigate("/login")} className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 justify-start">
               Login
             </Button>
@@ -69,6 +37,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
           </div>
         )}
       </nav>
+      
+      <div className="mt-6 pt-4 border-t border-[#FFC900]/20 text-center">
+        <p className="text-[#FFC900]/70 text-sm">
+          Click the Elec-Mate logo to return to home
+        </p>
+      </div>
     </div>
   );
 };

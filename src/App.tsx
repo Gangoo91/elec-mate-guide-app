@@ -22,6 +22,7 @@ import SubscriptionGuard from "./components/guards/SubscriptionGuard";
 import { AuthProvider } from "@/hooks/useAuth";
 import ManageSubscription from "./pages/ManageSubscription";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
                   <Dashboard />
                 </SubscriptionGuard>
               } />
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
