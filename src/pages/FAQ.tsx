@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import FAQSections from "@/components/faq/FAQSections";
@@ -18,15 +18,19 @@ const FAQ = () => {
     setSearchQuery("");
   }, []);
   
-  const filteredFAQItems = searchQuery 
-    ? faqItems.map(section => ({
+  const filteredFAQItems = useMemo(() => {
+    if (!searchQuery) return faqItems;
+    
+    return faqItems
+      .map(section => ({
         ...section,
         questions: section.questions.filter(item => 
           item.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
           item.answer.toLowerCase().includes(searchQuery.toLowerCase())
         )
-      })).filter(section => section.questions.length > 0)
-    : faqItems;
+      }))
+      .filter(section => section.questions.length > 0);
+  }, [searchQuery]);
     
   return (
     <MainLayout>

@@ -11,9 +11,12 @@ const FAQSearchBar = ({ searchQuery, setSearchQuery }: FAQSearchBarProps) => {
   return (
     <div className="max-w-2xl mx-auto mt-8 mb-6">
       <div className="relative">
+        <label htmlFor="faq-search" className="sr-only">Search FAQs</label>
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#FFC900]" />
         <input
+          id="faq-search"
           type="text"
+          aria-label="Search FAQs for electrical professionals"
           placeholder="Search FAQs for electrical professionals..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
