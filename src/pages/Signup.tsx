@@ -6,12 +6,31 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
+
+const plans = [
+  { value: "apprentice", label: "Apprentice" },
+  { value: "electrician", label: "Electrician" },
+  { value: "employer", label: "Employer" },
+];
 
 const Signup = () => {
+  const [plan, setPlan] = useState<string>("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "", confirmPassword: "" });
+  const [errors, setErrors] = useState({
+    plan: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -19,6 +38,15 @@ const Signup = () => {
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const handlePlanChange = (value: string) => {
+    setPlan(value);
+    if (!value) {
+      setErrors(prev => ({ ...prev, plan: "Membership plan is required" }));
+    } else {
+      setErrors(prev => ({ ...prev, plan: "" }));
+    }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,10 +86,14 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setErrors({ email: "", password: "", confirmPassword: "" });
+    setErrors({ plan: "", email: "", password: "", confirmPassword: "" });
 
     let isValid = true;
 
+    if (!plan) {
+      setErrors(prev => ({ ...prev, plan: "Membership plan is required" }));
+      isValid = false;
+    }
     if (!email) {
       setErrors(prev => ({ ...prev, email: "Email is required" }));
       isValid = false;
@@ -69,7 +101,6 @@ const Signup = () => {
       setErrors(prev => ({ ...prev, email: "Please enter a valid email" }));
       isValid = false;
     }
-
     if (!password) {
       setErrors(prev => ({ ...prev, password: "Password is required" }));
       isValid = false;
@@ -77,7 +108,6 @@ const Signup = () => {
       setErrors(prev => ({ ...prev, password: "Password must be at least 8 characters" }));
       isValid = false;
     }
-
     if (confirmPassword !== password) {
       setErrors(prev => ({ ...prev, confirmPassword: "Passwords do not match" }));
       isValid = false;
@@ -89,6 +119,9 @@ const Signup = () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: { plan }
+        }
       });
 
       setIsSubmitting(false);
@@ -120,6 +153,29 @@ const Signup = () => {
 
         <form onSubmit={handleSubmit} className="w-full space-y-6">
           <div className="space-y-4">
+            <div className="space-y-1">
+              <Select value={plan} onValueChange={handlePlanChange}>
+                <SelectTrigger
+                  className={`bg-[#222822]/70 border-none text-white rounded-2xl text-lg px-5 py-4 shadow transition-all duration-300 ${
+                    errors.plan ? "border-red-500 focus-visible:ring-red-500" : "focus-visible:ring-[#FFC900]"
+                  }`}
+                  aria-label="Select Membership Plan"
+                >
+                  <SelectValue placeholder="Choose your membership plan" />
+                </SelectTrigger>
+                <SelectContent className="z-50 bg-[#1a1a1a] text-white">
+                  {plans.map((p) => (
+                    <SelectItem value={p.value} key={p.value} className="cursor-pointer">
+                      {p.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.plan && (
+                <p className="text-red-400 text-sm mt-1 pl-2 animate-fade-in">{errors.plan}</p>
+              )}
+            </div>
+
             <div className="space-y-1">
               <Input
                 type="email"
