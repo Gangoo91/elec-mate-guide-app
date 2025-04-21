@@ -1,10 +1,10 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +13,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({ email: "", password: "", confirmPassword: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -92,6 +93,7 @@ const Signup = () => {
           title: "Signup Successful",
           description: "Your account has been created 🎉",
         });
+        navigate("/dashboard"); // Redirect to the dashboard after successful signup
       }, 1500);
     }
   };
@@ -157,7 +159,14 @@ const Signup = () => {
             disabled={isSubmitting}
             className="w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto mb-4 shadow-none border-none disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg transition-all duration-300"
           >
-            {isSubmitting ? "CREATING ACCOUNT..." : "SIGN UP"}
+            {isSubmitting ? (
+              <span className="flex items-center justify-center">
+                <Loader2 className="animate-spin mr-2" size={20} />
+                CREATING ACCOUNT...
+              </span>
+            ) : (
+              "SIGN UP"
+            )}
           </Button>
 
           <div className="mt-8 text-center text-white text-base">

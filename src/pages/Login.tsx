@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Github, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import LoginEmailInput from "@/components/login/LoginEmailInput";
@@ -18,6 +17,7 @@ const Login = () => {
   const [errors, setErrors] = useState({ email: "", password: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
@@ -100,6 +100,7 @@ const Login = () => {
           title: "Login Successful",
           description: "Welcome back to Elec-Mate!",
         });
+        navigate("/dashboard");
       }, 1500);
     }
   };

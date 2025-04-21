@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ApprenticeHub from "./pages/ApprenticeHub";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
+import Welcome from "./pages/Welcome";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/dashboard" element={<Index />} />
           <Route path="/apprentices" element={<ApprenticeHub />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
