@@ -1,16 +1,18 @@
 
-import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { User, IdCard } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ProfileFormValues } from "./schema";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarUpload } from "./AvatarUpload";
 
 interface BasicInfoFieldsProps {
   form: UseFormReturn<ProfileFormValues>;
+  avatarUrl: string | null;
+  onAvatarUpload: (url: string) => void;
 }
 
-export const BasicInfoFields = ({ form }: BasicInfoFieldsProps) => {
+export const BasicInfoFields = ({ form, avatarUrl, onAvatarUpload }: BasicInfoFieldsProps) => {
   const getInitials = () => {
     const firstName = form.watch("first_name") || "";
     const lastName = form.watch("last_name") || "";
@@ -20,12 +22,11 @@ export const BasicInfoFields = ({ form }: BasicInfoFieldsProps) => {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-6 items-center mb-6">
-        <Avatar className="w-20 h-20 border-2 border-[#FFC900]/30">
-          <AvatarImage src="" />
-          <AvatarFallback className="bg-[#22251e] text-[#FFC900] text-xl">
-            {getInitials() || "EC"}
-          </AvatarFallback>
-        </Avatar>
+        <AvatarUpload 
+          url={avatarUrl}
+          onUploadComplete={onAvatarUpload}
+          userInitials={getInitials() || "EC"}
+        />
         <div className="text-center md:text-left">
           <h3 className="text-[#FFC900] text-lg font-medium">Your Profile</h3>
           <p className="text-[#FFC900]/70 text-sm">

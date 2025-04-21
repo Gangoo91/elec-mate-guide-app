@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Camera, User } from "lucide-react";
+import { Camera } from "lucide-react";
 
 interface AvatarUploadProps {
   url: string | null;
@@ -41,11 +41,6 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
         .getPublicUrl(filePath);
 
       onUploadComplete(publicUrl);
-      
-      toast({
-        title: "Avatar updated",
-        description: "Your profile picture has been updated successfully.",
-      });
     } catch (error) {
       console.error('Error uploading avatar:', error);
       toast({
@@ -59,19 +54,15 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <Avatar className="w-24 h-24 border-2 border-[#FFC900]/30">
+    <div className="group relative">
+      <Avatar className="w-24 h-24 border-2 border-[#FFC900]/30 transition-all duration-200 group-hover:border-[#FFC900]/50">
         <AvatarImage src={url || ""} />
         <AvatarFallback className="bg-[#22251e] text-[#FFC900] text-xl">
           {userInitials}
         </AvatarFallback>
       </Avatar>
       
-      <Button 
-        variant="outline" 
-        className="relative border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
-        disabled={isUploading}
-      >
+      <div className="absolute inset-0 flex items-center justify-center">
         <input
           type="file"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -79,9 +70,16 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
           onChange={uploadAvatar}
           disabled={isUploading}
         />
-        <Camera className="mr-2 h-4 w-4" />
-        {isUploading ? "Uploading..." : "Change Avatar"}
-      </Button>
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/50 absolute inset-0 rounded-full flex items-center justify-center">
+          <Camera className="w-6 h-6 text-white" />
+        </div>
+      </div>
+      
+      {isUploading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full">
+          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   );
 }

@@ -61,6 +61,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
       if (error) throw error;
       
       queryClient.invalidateQueries({ queryKey: ['profile'] });
+      
+      toast({
+        title: "Avatar updated",
+        description: "Your profile picture has been updated successfully.",
+      });
     } catch (error) {
       console.error('Error updating profile with new avatar:', error);
       toast({
@@ -127,26 +132,21 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   return (
     <Card className="mb-6 bg-[#22251e] border-[#FFC900]/20 rounded-xl shadow-lg">
       <CardHeader className="border-b border-[#FFC900]/10 pb-4">
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-[#FFC900] flex items-center gap-2 text-2xl">
-              Profile Settings
-            </CardTitle>
-            <CardDescription className="text-[#FFC900]/70 mt-1">
-              Update your personal information and qualifications
-            </CardDescription>
-          </div>
-          <AvatarUpload 
-            url={initialData?.avatar_url || null}
-            onUploadComplete={handleAvatarUpload}
-            userInitials={getInitials()}
-          />
-        </div>
+        <CardTitle className="text-[#FFC900] text-2xl">
+          Profile Settings
+        </CardTitle>
+        <CardDescription className="text-[#FFC900]/70 mt-1">
+          Update your personal information and qualifications
+        </CardDescription>
       </CardHeader>
       <CardContent className="pt-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <BasicInfoFields form={form} />
+            <BasicInfoFields 
+              form={form} 
+              avatarUrl={initialData?.avatar_url || null}
+              onAvatarUpload={handleAvatarUpload}
+            />
             
             <Separator className="my-6 bg-[#FFC900]/10" />
             <h3 className="text-[#FFC900] text-lg font-medium mb-4">Contact Information</h3>
