@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,6 +27,9 @@ import MentalHealth from "./pages/MentalHealth";
 import Mentorship from "./pages/Mentorship";
 import LearningHubPage from "./pages/LearningHubPage";
 import AIToolsPage from "./pages/AIToolsPage";
+import StudyMaterialsPage from "./pages/StudyMaterialsPage";
+import PracticeExamsPage from "./pages/PracticeExamsPage";
+import CertificationsPage from "./pages/CertificationsPage";
 
 const queryClient = new QueryClient();
 
@@ -57,17 +61,17 @@ const App = () => (
               } />
               <Route path="/apprentices/study-materials" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <Dashboard />
+                  <StudyMaterialsPage />
                 </SubscriptionGuard>
               } />
               <Route path="/apprentices/practice-exams" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <Dashboard />
+                  <PracticeExamsPage />
                 </SubscriptionGuard>
               } />
               <Route path="/apprentices/certifications" element={
                 <SubscriptionGuard requiredTier="Apprentice">
-                  <Dashboard />
+                  <CertificationsPage />
                 </SubscriptionGuard>
               } />
               <Route path="/electricians" element={
