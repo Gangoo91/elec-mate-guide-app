@@ -6,8 +6,7 @@ import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
-import AIDiagnosticAssistant from "@/components/apprentices/AIDiagnosticAssistant";
-import RegulationsAssistant from "@/components/apprentices/RegulationsAssistant";
+import LearningHub from "@/components/apprentices/LearningHub";
 
 const MentalHealthHubContent = () => (
   <>
@@ -96,11 +95,11 @@ const ApprenticesPage = () => {
 
   const apprenticeResources = [
     {
-      title: "Learning Tools",
+      title: "Learning Hub",
       description:
-        "A growing toolbox to help apprentices study, revise, and practice. Includes knowledge tests, skill assessments, and regulations guidance.",
+        "Access our comprehensive learning tools, AI assistants, and training events all in one place. Get instant help and grow your skills.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Access Tools", onClick: () => {} }
+      action: { label: "Start Learning", onClick: () => {} }
     },
     {
       title: "Mentor Connect",
@@ -119,18 +118,6 @@ const ApprenticesPage = () => {
       description: "Explore discussions, safety topics, and community conversation all in one space.",
       icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Learn more", href: "#toolbox-talk" }
-    },
-    {
-      title: "Training Events",
-      description: "Workshops and training opportunities",
-      icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Learn more", href: "#events" }
-    },
-    {
-      title: "AI Diagnostic Assistant",
-      description: "Get instant technical guidance and troubleshooting help for electrical challenges.",
-      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Get Help", onClick: () => {} }
     }
   ];
 
@@ -142,7 +129,7 @@ const ApprenticesPage = () => {
           description="Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
           {apprenticeResources.map((resource, index) => (
             <ResourceCard 
               key={index}
@@ -160,12 +147,11 @@ const ApprenticesPage = () => {
           <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
         )}
 
-        <div className="mt-8 space-y-4">
-          <AIDiagnosticAssistant />
-          <RegulationsAssistant />
+        <div className="mt-8">
+          <LearningHub />
         </div>
 
-        <div className="bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
+        <div className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
           <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>
           <p className="text-[#FFC900]/80 mb-4 text-sm md:text-base">
             The path to becoming a licensed electrician starts with a strong apprenticeship.
