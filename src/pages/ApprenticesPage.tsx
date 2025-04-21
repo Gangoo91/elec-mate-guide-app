@@ -4,7 +4,7 @@ import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 // Simple modal for Mental Health Hub details (could be its own file/component later)
 const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
@@ -16,7 +16,7 @@ const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenCha
           Mental Health Hub
         </DialogTitle>
         <DialogDescription className="text-[#FFC900]/80">
-          Support and resources for apprentices’ mental health and well-being.
+          Support and resources for apprentices' mental health and well-being.
         </DialogDescription>
       </DialogHeader>
       <div className="py-2 space-y-4">
@@ -59,7 +59,7 @@ const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenCha
 const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
 
-  // Update the resource cards to add Mental Health Hub, and remove main Mentor Connect modal at page bottom
+  // Resource cards including Mental Health Hub
   const apprenticeResources = [
     {
       title: "Learning Paths",
@@ -119,15 +119,13 @@ const ApprenticesPage = () => {
                 <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
                 {/* If it's the Mental Health card, open modal */}
                 {resource.showMHModal ? (
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium"
-                      onClick={() => setMhModalOpen(true)}
-                    >
-                      Learn more →
-                    </Button>
-                  </DialogTrigger>
+                  <Button
+                    variant="outline"
+                    className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium"
+                    onClick={() => setMhModalOpen(true)}
+                  >
+                    Learn more →
+                  </Button>
                 ) : (
                   <a href={resource.link!} className="mt-4 inline-block text-[#FFC900] font-medium hover:underline">
                     Learn more →
