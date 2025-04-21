@@ -1,9 +1,7 @@
 
-import React from "react";
+import React, { useState, useCallback } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Search, HelpCircle } from "lucide-react";
-import { useState } from "react";
 import FAQSections from "@/components/faq/FAQSections";
 import FAQSearchBar from "@/components/faq/FAQSearchBar";
 import NoResultsFound from "@/components/faq/NoResultsFound";
@@ -11,6 +9,14 @@ import { faqItems } from "@/components/faq/faqData";
 
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  
+  const handleSetSearchQuery = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
+  const handleClearSearch = useCallback(() => {
+    setSearchQuery("");
+  }, []);
   
   const filteredFAQItems = searchQuery 
     ? faqItems.map(section => ({
@@ -32,14 +38,14 @@ const FAQ = () => {
         
         <FAQSearchBar 
           searchQuery={searchQuery} 
-          setSearchQuery={setSearchQuery} 
+          setSearchQuery={handleSetSearchQuery} 
         />
         
         <div className="mt-8 space-y-8 max-w-4xl mx-auto">
           <FAQSections filteredFAQItems={filteredFAQItems} />
           
           {filteredFAQItems.length === 0 || filteredFAQItems.every(section => section.questions.length === 0) ? (
-            <NoResultsFound onClearSearch={() => setSearchQuery("")} />
+            <NoResultsFound onClearSearch={handleClearSearch} />
           ) : null}
         </div>
       </div>

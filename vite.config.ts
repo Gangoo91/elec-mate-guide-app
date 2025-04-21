@@ -4,7 +4,6 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
@@ -27,6 +26,9 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       external: ['stream', 'timers', 'events'], // Explicitly mark these as external
     },
+    sourcemap: true, // Enable source maps for better debugging
+    minify: 'terser', // Use terser for better minification
+    target: 'esnext', // Target modern browsers for better optimization
+    chunkSizeWarningLimit: 1000, // Increase chunk size warning limit
   },
 }));
-

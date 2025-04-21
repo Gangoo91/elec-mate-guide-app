@@ -1,12 +1,12 @@
 
-import React from "react";
+import React, { memo } from "react";
 import { HelpCircle } from "lucide-react";
 
 interface NoResultsFoundProps {
   onClearSearch: () => void;
 }
 
-const NoResultsFound = ({ onClearSearch }: NoResultsFoundProps) => {
+const NoResultsFound = memo(({ onClearSearch }: NoResultsFoundProps) => {
   return (
     <div className="text-center py-8">
       <HelpCircle className="mx-auto h-12 w-12 text-[#FFC900]/40 mb-3" />
@@ -19,6 +19,8 @@ const NoResultsFound = ({ onClearSearch }: NoResultsFoundProps) => {
       </button>
     </div>
   );
-};
+});
+
+NoResultsFound.displayName = 'NoResultsFound';
 
 export default NoResultsFound;
