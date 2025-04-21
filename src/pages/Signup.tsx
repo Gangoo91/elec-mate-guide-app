@@ -22,9 +22,12 @@ const Signup = () => {
         </button>
 
         <Logo size={80} />
-        <h1 className="text-3xl sm:text-4xl font-black text-white text-center mb-8 mt-6 leading-snug drop-shadow">
+
+        {/* Updated title styling with yellow color and shadow */}
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] text-center mb-8 mt-6 leading-tight drop-shadow-[0_0_8px_rgba(255,201,0,0.75)] tracking-wide select-none">
           Elec-Mate
         </h1>
+
         <div className="w-full space-y-4 mb-6">
           <Input
             type="text"
