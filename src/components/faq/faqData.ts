@@ -1,5 +1,6 @@
 
 export interface FAQItem {
+  id: string;
   question: string;
   answer: string;
 }
@@ -8,6 +9,16 @@ export interface FAQSection {
   title: string;
   category: string;
   questions: FAQItem[];
+}
+
+export interface FAQItemType {
+  section: string;
+  icon: React.ReactNode;
+  questions: {
+    id: string;
+    question: string;
+    answer: string;
+  }[];
 }
 
 export const faqItems: FAQSection[] = [

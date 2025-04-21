@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Info, Rss, RefreshCw } from "lucide-react";
+// We'll fix the import below by using dynamic import instead
 
 type NewsItem = {
   source: string;
@@ -82,18 +83,25 @@ const FEED_SOURCES: FeedSource[] = [
 
 const fetchFeed = async (feedUrl: string): Promise<NewsItem[]> => {
   const API_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(feedUrl)}`;
-  const response = await fetch(API_URL);
-  const text = await response.text();
-  const Parser = (await import("rss-parser")).default;
-  const parser = new Parser();
-  const feed = await parser.parseString(text);
+  try {
+    const response = await fetch(API_URL);
+    const text = await response.text();
+    
+    // Use dynamic import for rss-parser to fix the build error
+    const Parser = await import('rss-parser').then(module => module.default);
+    const parser = new Parser();
+    const feed = await parser.parseString(text);
 
-  return (feed.items || []).slice(0, 5).map((item: any) => ({
-    source: feed.title,
-    title: item.title || "",
-    link: item.link || "#",
-    pubDate: item.pubDate,
-  }));
+    return (feed.items || []).slice(0, 5).map((item: any) => ({
+      source: feed.title,
+      title: item.title || "",
+      link: item.link || "#",
+      pubDate: item.pubDate,
+    }));
+  } catch (error) {
+    console.error("Error fetching feed:", error);
+    return [];
+  }
 };
 
 const formatDate = (pubDate?: string): string => {
