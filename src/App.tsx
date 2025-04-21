@@ -13,6 +13,8 @@ import ApprenticeHub from "./pages/ApprenticeHub";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Welcome from "./pages/Welcome";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -24,13 +26,14 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route path="/dashboard" element={<Index />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/apprentices" element={<ApprenticeHub />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/profile" element={<Profile />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import LoginEmailInput from "@/components/login/LoginEmailInput";
 import LoginPasswordInput from "@/components/login/LoginPasswordInput";
 import LoginSocialButtons from "@/components/login/LoginSocialButtons";
-import { supabase } from "@/supabaseClient";
+import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
