@@ -1,11 +1,65 @@
 
-import React from "react";
-import { Book, Search, CalendarCheck, Award, Heart, Handshake } from "lucide-react";
+import React, { useState } from "react";
+import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+// Simple modal for Mental Health Hub details (could be its own file/component later)
+const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogContent className="max-w-lg bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2">
+          <Heart className="h-6 w-6 text-[#FFC900]" />
+          Mental Health Hub
+        </DialogTitle>
+        <DialogDescription className="text-[#FFC900]/80">
+          Support and resources for apprentices’ mental health and well-being.
+        </DialogDescription>
+      </DialogHeader>
+      <div className="py-2 space-y-4">
+        <section>
+          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Mental Health Buddies</h3>
+          <p className="text-[#FFC900]/80">Connect with a peer buddy trained to provide support and listen when things feel tough. <span className="italic">Feature launching soon.</span></p>
+        </section>
+        <hr className="border-[#FFC900]/20" />
+        <section>
+          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">External Help</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-1">
+            <li>
+              <a className="underline hover:text-[#FFF200] transition" href="https://www.lifeline.org.au/" target="_blank" rel="noopener noreferrer">
+                Lifeline (24/7 Crisis Support)
+              </a>
+            </li>
+            <li>
+              <a className="underline hover:text-[#FFF200] transition" href="https://www.beyondblue.org.au/" target="_blank" rel="noopener noreferrer">
+                Beyond Blue
+              </a>
+            </li>
+            {/* Add more as needed */}
+          </ul>
+        </section>
+        <hr className="border-[#FFC900]/20" />
+        <section>
+          <h3 className="font-semibold text-lg mb-1 text-[#FFC900]">Coping Mechanisms</h3>
+          <ul className="text-[#FFC900]/80 list-disc list-inside space-y-1">
+            <li>Guided breathing & mindfulness exercises</li>
+            <li>Tips for managing job site stress</li>
+            <li>Links to podcasts & articles</li>
+            <li className="italic">More coming soon...</li>
+          </ul>
+        </section>
+      </div>
+    </DialogContent>
+  </Dialog>
+);
 
 const ApprenticesPage = () => {
+  const [mhModalOpen, setMhModalOpen] = useState(false);
+
+  // Update the resource cards to add Mental Health Hub, and remove main Mentor Connect modal at page bottom
   const apprenticeResources = [
     {
       title: "Learning Paths",
@@ -20,16 +74,24 @@ const ApprenticesPage = () => {
       link: "#assessments"
     },
     {
+      title: "Training Events",
+      description: "Workshops and training opportunities",
+      icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
+      link: "#events"
+    },
+    {
       title: "Mentor Connect",
       description: "Connect with experienced electricians",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
       link: "#mentor-connect"
     },
     {
-      title: "Training Events",
-      description: "Workshops and training opportunities",
-      icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
-      link: "#events"
+      title: "Mental Health Hub",
+      description: "Support, community, and resources for apprentice mental health & well-being.",
+      icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
+      // Setting link to null; we'll use onClick/modal instead
+      link: null,
+      showMHModal: true,
     }
   ];
 
@@ -43,7 +105,8 @@ const ApprenticesPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* Resource Cards Including Mental Health Hub */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
           {apprenticeResources.map((resource, index) => (
             <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
               <CardHeader>
@@ -54,65 +117,28 @@ const ApprenticesPage = () => {
               </CardHeader>
               <CardContent>
                 <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
-                <a href={resource.link} className="mt-4 inline-block text-[#FFC900] font-medium hover:underline">
-                  Learn more →
-                </a>
+                {/* If it's the Mental Health card, open modal */}
+                {resource.showMHModal ? (
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium"
+                      onClick={() => setMhModalOpen(true)}
+                    >
+                      Learn more →
+                    </Button>
+                  </DialogTrigger>
+                ) : (
+                  <a href={resource.link!} className="mt-4 inline-block text-[#FFC900] font-medium hover:underline">
+                    Learn more →
+                  </a>
+                )}
               </CardContent>
             </Card>
           ))}
         </div>
-        
-        {/* Mental Health Hub Section */}
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Heart className="h-8 w-8 text-[#FFC900]" />
-            <h2 className="text-2xl font-bold text-[#FFC900]">Mental Health Hub</h2>
-          </div>
-          <p className="text-[#FFC900]/80 mb-6">
-            Support for apprentices dealing with the unique stresses and challenges of the electrical trade. 
-            Building mental resilience is as important as building technical skills.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-[#151812] rounded-lg p-5 border border-[#FFC900]/10">
-              <h3 className="text-[#FFC900] font-semibold mb-2">Apprenticeship Stress</h3>
-              <p className="text-[#FFC900]/70 mb-4">Strategies to manage the pressures of learning while working in a demanding field.</p>
-              <Button variant="outline" className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10">
-                Learn More
-              </Button>
-            </div>
-            <div className="bg-[#151812] rounded-lg p-5 border border-[#FFC900]/10">
-              <h3 className="text-[#FFC900] font-semibold mb-2">Peer Support</h3>
-              <p className="text-[#FFC900]/70 mb-4">Connect with fellow apprentices who understand what you're going through.</p>
-              <Button variant="outline" className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10">
-                Join Community
-              </Button>
-            </div>
-          </div>
-        </div>
-        
-        {/* Mentor Connect Section - More detailed than card above */}
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Handshake className="h-8 w-8 text-[#FFC900]" />
-            <h2 className="text-2xl font-bold text-[#FFC900]">Mentor Connect</h2>
-          </div>
-          <p className="text-[#FFC900]/80 mb-6">
-            Find an experienced electrician who can guide your career development, offer practical advice,
-            and help you navigate the challenges of the electrical trade.
-          </p>
-          <div className="bg-[#151812] rounded-lg p-5 border border-[#FFC900]/10">
-            <h3 className="text-[#FFC900] font-semibold mb-3">How Mentor Connect Works</h3>
-            <ol className="list-decimal list-inside text-[#FFC900]/70 space-y-2 mb-4">
-              <li>Complete your apprentice profile highlighting your goals</li>
-              <li>Browse available mentors based on expertise and experience</li>
-              <li>Request a mentorship connection</li>
-              <li>Schedule regular check-ins and learning sessions</li>
-            </ol>
-            <Button className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]">
-              Find a Mentor
-            </Button>
-          </div>
-        </div>
+        {/* Modal for Mental Health hub */}
+        <MentalHealthHubModal open={mhModalOpen} onOpenChange={setMhModalOpen} />
 
         {/* Getting Started Section (original section) */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
