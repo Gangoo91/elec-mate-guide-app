@@ -5,8 +5,9 @@ import PageHeader from "@/components/layout/PageHeader";
 import FAQSections from "@/components/faq/FAQSections";
 import FAQSearchBar from "@/components/faq/FAQSearchBar";
 import NoResultsFound from "@/components/faq/NoResultsFound";
-import { faqItems } from "@/components/faq/faqData";
+import { faqItems, FAQSection } from "@/components/faq/faqData";
 import FAQCategoryTabs from "@/components/faq/FAQCategoryTabs";
+import { HelpCircle, Users, Wrench, Briefcase, CreditCard, HeadphonesIcon, Heart } from "lucide-react";
 
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,10 +26,43 @@ const FAQ = () => {
     setSearchQuery(""); // Clear search when changing categories
   }, []);
   
+  // Add icons to FAQ sections
+  const faqSectionsWithIcons = useMemo(() => {
+    return faqItems.map(section => {
+      let icon;
+      switch (section.category) {
+        case 'general':
+          icon = <HelpCircle className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'apprentices':
+          icon = <Users className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'electricians':
+          icon = <Wrench className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'employers':
+          icon = <Briefcase className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'account':
+          icon = <CreditCard className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'support':
+          icon = <HeadphonesIcon className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        case 'wellness':
+          icon = <Heart className="h-5 w-5 text-[#FFC900]" />;
+          break;
+        default:
+          icon = <HelpCircle className="h-5 w-5 text-[#FFC900]" />;
+      }
+      return { ...section, icon };
+    });
+  }, []);
+  
   const filteredFAQItems = useMemo(() => {
-    if (!searchQuery && activeCategory === "all") return faqItems;
+    if (!searchQuery && activeCategory === "all") return faqSectionsWithIcons;
     
-    let filtered = [...faqItems];
+    let filtered = [...faqSectionsWithIcons];
     
     // Filter by category first if not "all"
     if (activeCategory !== "all") {
@@ -49,7 +83,7 @@ const FAQ = () => {
     }
     
     return filtered;
-  }, [searchQuery, activeCategory]);
+  }, [searchQuery, activeCategory, faqSectionsWithIcons]);
   
   // Extract all unique categories from FAQ data
   const categories = useMemo(() => {

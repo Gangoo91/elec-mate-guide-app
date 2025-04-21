@@ -6,10 +6,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FAQItemType } from "./faqData";
+import { FAQSection } from "./faqData";
 
 interface FAQSectionsProps {
-  filteredFAQItems: FAQItemType[];
+  filteredFAQItems: FAQSection[];
 }
 
 const FAQSections = ({ filteredFAQItems }: FAQSectionsProps) => {
@@ -20,7 +20,7 @@ const FAQSections = ({ filteredFAQItems }: FAQSectionsProps) => {
           <div key={index} className="space-y-4">
             <div className="flex items-center gap-2 border-b border-[#FFC900]/20 pb-2">
               {section.icon}
-              <h2 className="text-xl font-semibold text-[#FFC900]">{section.section}</h2>
+              <h2 className="text-xl font-semibold text-[#FFC900]">{section.title}</h2>
             </div>
             
             <Accordion type="single" collapsible className="w-full space-y-4">
