@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
-// Simple modal for Mental Health Hub details (could be its own file/component later)
 const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent className="max-w-lg bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
@@ -38,7 +37,6 @@ const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenCha
                 Beyond Blue
               </a>
             </li>
-            {/* Add more as needed */}
           </ul>
         </section>
         <hr className="border-[#FFC900]/20" />
@@ -59,7 +57,6 @@ const MentalHealthHubModal = ({ open, onOpenChange }: { open: boolean; onOpenCha
 const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
 
-  // Resource cards including Mental Health Hub
   const apprenticeResources = [
     {
       title: "Learning Paths",
@@ -89,7 +86,6 @@ const ApprenticesPage = () => {
       title: "Mental Health Hub",
       description: "Support, community, and resources for apprentice mental health & well-being.",
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
-      // Setting link to null; we'll use onClick/modal instead
       link: null,
       showMHModal: true,
     }
@@ -99,13 +95,12 @@ const ApprenticesPage = () => {
     <MainLayout>
       <div className="container px-4 py-12">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentices Portal</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#FFC900] mb-4">Apprentice Portal</h1>
           <p className="text-lg text-[#FFC900]/80 max-w-2xl mx-auto">
             Resources, training, and opportunities designed specifically for electrical apprentices at every stage.
           </p>
         </div>
 
-        {/* Resource Cards Including Mental Health Hub */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
           {apprenticeResources.map((resource, index) => (
             <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
@@ -115,13 +110,14 @@ const ApprenticesPage = () => {
                   <CardTitle className="text-[#FFC900]">{resource.title}</CardTitle>
                 </div>
               </CardHeader>
-              <CardContent>
-                <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
-                {/* If it's the Mental Health card, open modal */}
+              <CardContent className="flex flex-col justify-between">
+                <div>
+                  <CardDescription className="text-[#FFC900]/70">{resource.description}</CardDescription>
+                </div>
                 {resource.showMHModal ? (
                   <Button
                     variant="outline"
-                    className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium"
+                    className="mt-4 border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 font-medium self-start"
                     onClick={() => setMhModalOpen(true)}
                   >
                     Learn more →
@@ -135,10 +131,9 @@ const ApprenticesPage = () => {
             </Card>
           ))}
         </div>
-        {/* Modal for Mental Health hub */}
+
         <MentalHealthHubModal open={mhModalOpen} onOpenChange={setMhModalOpen} />
 
-        {/* Getting Started Section (original section) */}
         <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
           <h2 className="text-2xl font-bold text-[#FFC900] mb-4">Getting Started as an Apprentice</h2>
           <p className="text-[#FFC900]/80 mb-6">
