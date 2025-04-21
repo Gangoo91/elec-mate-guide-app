@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { User, Pencil, CheckCircle } from "lucide-react";
+import { User, Pencil, CheckCircle, Loader2 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileFormValues {
@@ -55,7 +54,6 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
 
       if (error) throw error;
 
-      // Invalidate the profile query to refetch fresh data
       queryClient.invalidateQueries({ queryKey: ['profile'] });
       
       setUpdateSuccess(true);
