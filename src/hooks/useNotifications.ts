@@ -13,6 +13,9 @@ export type Notification = {
   link?: string;
 };
 
+// Store notifications in localStorage to persist across page navigations
+const NOTIFICATIONS_STORAGE_KEY = 'elec-mate-notifications';
+
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,8 +25,26 @@ export const useNotifications = () => {
   const fetchNotifications = async () => {
     setLoading(true);
     
-    // Sample notifications for now
-    // In a real implementation, we would fetch from Supabase
+    try {
+      // First try to get from localStorage
+      const storedNotifications = localStorage.getItem(NOTIFICATIONS_STORAGE_KEY);
+      
+      if (storedNotifications) {
+        const parsedNotifications = JSON.parse(storedNotifications);
+        // Convert string dates back to Date objects
+        const processedNotifications = parsedNotifications.map((notif: any) => ({
+          ...notif,
+          date: new Date(notif.date)
+        }));
+        setNotifications(processedNotifications);
+        setLoading(false);
+        return;
+      }
+    } catch (error) {
+      console.error('Error reading notifications from localStorage:', error);
+    }
+    
+    // If no stored notifications or error, use sample data
     const sampleNotifications = [
       {
         id: "1",
@@ -55,30 +76,49 @@ export const useNotifications = () => {
     ];
     
     setNotifications(sampleNotifications);
+    
+    // Save to localStorage
+    try {
+      localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(sampleNotifications));
+    } catch (error) {
+      console.error('Error storing notifications in localStorage:', error);
+    }
+    
     setLoading(false);
+  };
+
+  // Save notifications to localStorage
+  const saveNotifications = (notifications: Notification[]) => {
+    try {
+      localStorage.setItem(NOTIFICATIONS_STORAGE_KEY, JSON.stringify(notifications));
+    } catch (error) {
+      console.error('Error saving notifications to localStorage:', error);
+    }
   };
 
   // Mark a notification as read
   const markAsRead = async (id: string) => {
-    setNotifications(prevNotifications =>
-      prevNotifications.map(notification =>
-        notification.id === id
-          ? { ...notification, read: true }
-          : notification
-      )
+    const updatedNotifications = notifications.map(notification =>
+      notification.id === id
+        ? { ...notification, read: true }
+        : notification
     );
+    
+    setNotifications(updatedNotifications);
+    saveNotifications(updatedNotifications);
     
     // In a real implementation, we would update the read status in Supabase
   };
 
   // Mark all notifications as read
   const markAllAsRead = async () => {
-    setNotifications(prevNotifications =>
-      prevNotifications.map(notification => ({
-        ...notification,
-        read: true
-      }))
-    );
+    const updatedNotifications = notifications.map(notification => ({
+      ...notification,
+      read: true
+    }));
+    
+    setNotifications(updatedNotifications);
+    saveNotifications(updatedNotifications);
     
     // In a real implementation, we would update all read statuses in Supabase
   };
@@ -92,7 +132,9 @@ export const useNotifications = () => {
       read: false
     };
     
-    setNotifications(prev => [newNotification, ...prev]);
+    const updatedNotifications = [newNotification, ...notifications];
+    setNotifications(updatedNotifications);
+    saveNotifications(updatedNotifications);
     
     // In a real implementation, we would add the notification to Supabase
   };
@@ -100,6 +142,7 @@ export const useNotifications = () => {
   // Clear all notifications
   const clearNotifications = () => {
     setNotifications([]);
+    saveNotifications([]);
     
     // In a real implementation, we would clear notifications in Supabase
   };

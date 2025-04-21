@@ -18,6 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import NotificationBell from "../notifications/NotificationBell";
+import { useNotificationContext } from "@/contexts/NotificationContext";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -27,34 +28,7 @@ const Navbar = () => {
   const location = useLocation();
   const { toast } = useToast();
   
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      title: "Profile Update",
-      message: "Complete your profile to unlock all features",
-      read: false,
-      date: new Date(),
-      type: "info" as const
-    },
-    {
-      id: "2",
-      title: "New Apprentice Resources",
-      message: "Check out the new training materials in the Apprentice Hub",
-      read: false,
-      date: new Date(Date.now() - 86400000),
-      type: "success" as const
-    }
-  ]);
-
-  const markNotificationAsRead = (id: string) => {
-    setNotifications(notifications.map(notification => 
-      notification.id === id ? { ...notification, read: true } : notification
-    ));
-  };
-
-  const markAllNotificationsAsRead = () => {
-    setNotifications(notifications.map(notification => ({ ...notification, read: true })));
-  };
+  const { notifications } = useNotificationContext();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -158,12 +132,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           {(user || bypassAuth) && (
-            <NotificationBell 
-              notifications={notifications} 
-              onMarkAsRead={markNotificationAsRead}
-              onMarkAllAsRead={markAllNotificationsAsRead}
-              className="mr-1"
-            />
+            <NotificationBell className="mr-1" />
           )}
           
           <Button 

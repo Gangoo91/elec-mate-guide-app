@@ -8,43 +8,24 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNotificationContext } from "@/contexts/NotificationContext";
+import { Link } from "react-router-dom";
 
-type Notification = {
-  id: string;
-  title: string;
-  message: string;
-  read: boolean;
-  date: Date;
-  type?: "info" | "warning" | "success" | "error";
-};
-
-type NotificationBellProps = {
-  notifications?: Notification[];
-  onMarkAsRead?: (id: string) => void;
-  onMarkAllAsRead?: () => void;
-  className?: string;
-};
-
-const NotificationBell: React.FC<NotificationBellProps> = ({
-  notifications = [],
-  onMarkAsRead,
-  onMarkAllAsRead,
-  className,
-}) => {
+const NotificationBell: React.FC<{ className?: string }> = ({ className }) => {
   const [open, setOpen] = useState(false);
-  
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const { 
+    notifications,
+    markAsRead,
+    markAllAsRead,
+    unreadCount
+  } = useNotificationContext();
   
   const handleMarkAsRead = (id: string) => {
-    if (onMarkAsRead) {
-      onMarkAsRead(id);
-    }
+    markAsRead(id);
   };
   
   const handleMarkAllAsRead = () => {
-    if (onMarkAllAsRead) {
-      onMarkAllAsRead();
-    }
+    markAllAsRead();
     setOpen(false);
   };
 
@@ -87,15 +68,20 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
                   "p-4 border-b border-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5",
                   !notification.read && "bg-[#FFC900]/10"
                 )}
-                onClick={() => handleMarkAsRead(notification.id)}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <p className="font-medium text-[#FFC900]">{notification.title}</p>
-                  <span className="text-xs text-[#FFC900]/50">
-                    {new Date(notification.date).toLocaleDateString()}
-                  </span>
-                </div>
-                <p className="text-sm text-[#FFC900]/70">{notification.message}</p>
+                {notification.link ? (
+                  <Link 
+                    to={notification.link} 
+                    className="block" 
+                    onClick={() => handleMarkAsRead(notification.id)}
+                  >
+                    <NotificationItem notification={notification} />
+                  </Link>
+                ) : (
+                  <div onClick={() => handleMarkAsRead(notification.id)}>
+                    <NotificationItem notification={notification} />
+                  </div>
+                )}
               </div>
             ))
           ) : (
@@ -108,5 +94,18 @@ const NotificationBell: React.FC<NotificationBellProps> = ({
     </Popover>
   );
 };
+
+// Separate component for notification content
+const NotificationItem = ({ notification }) => (
+  <>
+    <div className="flex items-center justify-between mb-1">
+      <p className="font-medium text-[#FFC900]">{notification.title}</p>
+      <span className="text-xs text-[#FFC900]/50">
+        {new Date(notification.date).toLocaleDateString()}
+      </span>
+    </div>
+    <p className="text-sm text-[#FFC900]/70">{notification.message}</p>
+  </>
+);
 
 export default NotificationBell;
