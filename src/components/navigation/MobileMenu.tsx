@@ -40,14 +40,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
           </div>
         )}
       </nav>
-      
-      <div className="mt-6 pt-4 border-t border-[#FFC900]/20 text-center">
-        <p className="text-[#FFC900]/70 text-sm">
-          Click the Elec-Mate logo to return to home
-        </p>
-      </div>
     </div>
   );
 };
 
 export default MobileMenu;
+
