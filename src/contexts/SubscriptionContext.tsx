@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { stripePriceIds } from "@/config/subscriptionPlans";
 
 type SubscriptionContextType = {
   isLoading: boolean;

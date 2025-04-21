@@ -7,7 +7,7 @@ import GlassCard from "@/components/shared/GlassCard";
 import SubscriptionPlanCard from "@/components/subscription/SubscriptionPlanCard";
 import BillingCycleSelector from "@/components/subscription/BillingCycleSelector";
 import SubscriptionSecurityInfo from "@/components/subscription/SubscriptionSecurityInfo";
-import { subscriptionPlans } from "@/hooks/useSubscription";
+import { subscriptionPlans } from "@/config/subscriptionPlans";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 
 const SubscriptionContent = () => {
