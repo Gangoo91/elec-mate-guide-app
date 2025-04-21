@@ -95,8 +95,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
     "Apprentice",
     "Electrician",
     "Advanced Electrician",
-    "Commissioning Tech",
-    "Commissioning Engineer"
+    "Electrical Mate",
+    "Electrical Designer",
+    "Electrical Engineer",
+    "Electrical Inspector",
+    "Other"
   ];
 
   return (
