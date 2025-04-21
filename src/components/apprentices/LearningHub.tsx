@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Search, Lightbulb, CalendarCheck } from "lucide-react";
+import { Search, Lightbulb, CalendarCheck, BookOpen, TestTube, BookCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -35,40 +35,82 @@ const LearningHub = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-[#22251e] border-[#FFC900]/20">
-        <CardHeader>
-          <CardTitle className="text-[#FFC900] flex items-center gap-2">
-            <Search className="h-6 w-6" />
-            Learning Hub Search
-          </CardTitle>
-          <div className="relative">
-            <Input
-              type="search"
-              placeholder="Search learning resources, diagnostics, events..."
-              value={searchQuery}
-              onChange={handleSearch}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
-            />
-          </div>
-        </CardHeader>
-      </Card>
+      <div className="relative mb-8">
+        <Input
+          type="search"
+          placeholder="Search learning resources, diagnostics, events..."
+          value={searchQuery}
+          onChange={handleSearch}
+          className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
+        />
+      </div>
 
-      <Link to="/apprentices/ai-tools">
-        <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-          <CardHeader>
-            <CardTitle className="text-[#FFC900] flex items-center gap-2">
-              <Lightbulb className="h-6 w-6" />
-              AI Learning Tools
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-[#FFC900]/70">
-              Access our AI-powered assistants for technical diagnostics and regulatory guidance.
-            </p>
-          </CardContent>
-        </Card>
-      </Link>
-      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Link to="/apprentices/ai-tools">
+          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+            <CardHeader>
+              <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                <Lightbulb className="h-6 w-6" />
+                AI Learning Tools
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#FFC900]/70">
+                Access our AI-powered assistants for technical diagnostics and regulatory guidance.
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/apprentices/study-materials">
+          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+            <CardHeader>
+              <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                <BookOpen className="h-6 w-6" />
+                Study Materials
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#FFC900]/70">
+                Access comprehensive study guides, video tutorials, and reference materials.
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/apprentices/practice-exams">
+          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+            <CardHeader>
+              <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                <TestTube className="h-6 w-6" />
+                Practice Exams
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#FFC900]/70">
+                Test your knowledge with mock exams and quizzes covering various electrical topics.
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/apprentices/certifications">
+          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+            <CardHeader>
+              <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                <BookCheck className="h-6 w-6" />
+                Certification Prep
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-[#FFC900]/70">
+                Prepare for your electrical certification with structured learning paths and practice tests.
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
+
       <Card className="bg-[#22251e] border-[#FFC900]/20">
         <CardHeader>
           <CardTitle className="text-[#FFC900] flex items-center gap-2">

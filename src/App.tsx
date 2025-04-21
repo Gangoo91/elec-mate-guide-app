@@ -55,6 +55,21 @@ const App = () => (
                   <AIToolsPage />
                 </SubscriptionGuard>
               } />
+              <Route path="/apprentices/study-materials" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <Dashboard />
+                </SubscriptionGuard>
+              } />
+              <Route path="/apprentices/practice-exams" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <Dashboard />
+                </SubscriptionGuard>
+              } />
+              <Route path="/apprentices/certifications" element={
+                <SubscriptionGuard requiredTier="Apprentice">
+                  <Dashboard />
+                </SubscriptionGuard>
+              } />
               <Route path="/electricians" element={
                 <SubscriptionGuard requiredTier="Electrician">
                   <ElectriciansPage />
