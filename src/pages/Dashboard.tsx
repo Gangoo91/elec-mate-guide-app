@@ -1,203 +1,116 @@
 
-import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { useToast } from "@/hooks/use-toast";
-import Navbar from "@/components/navigation/Navbar";
-import { Book, Lightbulb, Briefcase, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
+
+const bgColor = "#1A1F2C";
+const cardColor = "#FFC900";
+const textColor = "#FFFDE6";
+
+const roles = [
+  {
+    label: "APPRENTICES",
+    icon: <Book size={84} strokeWidth={2.5} className="mx-auto mb-6" />,
+    path: "/apprentices",
+  },
+  {
+    label: "ELECTRICIANS",
+    icon: <Lightbulb size={84} strokeWidth={2.5} className="mx-auto mb-6" />,
+    path: "/electricians",
+  },
+  {
+    label: "EMPLOYERS",
+    icon: <Briefcase size={84} strokeWidth={2.5} className="mx-auto mb-6" />,
+    path: "/employers",
+  },
+];
 
 const Dashboard = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [activeRole, setActiveRole] = useState<string>("apprentice");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
-  const { toast } = useToast();
-  const [bypassAuth, setBypassAuth] = useState(true); // Add bypass state for demo purposes
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session && !bypassAuth) { // Only redirect if not bypassing auth
-        navigate("/login");
-        return;
-      }
-      
-      if (session) {
-        setUser(session.user);
-      }
-      setLoading(false);
-    };
-    
-    checkUser();
-    
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" && !bypassAuth) { // Only redirect if not bypassing auth
-        navigate("/login");
-      } else if (session) {
-        setUser(session.user);
-      }
-    });
-
-    // Check if we have a specific role from the pathname
-    const pathname = location.pathname.toLowerCase();
-    if (pathname.includes("apprentices")) {
-      setActiveRole("apprentice");
-    } else if (pathname.includes("electrician")) {
-      setActiveRole("electrician");
-    } else if (pathname.includes("employers")) {
-      setActiveRole("employer");
-    }
-
-    return () => subscription.unsubscribe();
-  }, [navigate, location, bypassAuth]);
-
-  const handleRoleSwitch = (role: string) => {
-    setActiveRole(role);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FFC900]"></div>
-      </div>
-    );
-  }
+  const filteredRoles = roles.filter((role) =>
+    role.label.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      
-      <main className="container pt-24 pb-16">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-4xl font-bold">Dashboard</h1>
-          
-          <div className="flex space-x-4">
-            <Button 
-              variant={activeRole === "apprentice" ? "default" : "outline"}
-              className={activeRole === "apprentice" ? "bg-[#FFC900] hover:bg-[#E6B800] text-white" : ""}
-              onClick={() => handleRoleSwitch("apprentice")}
-            >
-              <Book className="mr-2 h-4 w-4" />
-              Apprentice
-            </Button>
-            <Button 
-              variant={activeRole === "electrician" ? "default" : "outline"}
-              className={activeRole === "electrician" ? "bg-[#FFC900] hover:bg-[#E6B800] text-white" : ""}
-              onClick={() => handleRoleSwitch("electrician")}
-            >
-              <Lightbulb className="mr-2 h-4 w-4" />
-              Electrician
-            </Button>
-            <Button 
-              variant={activeRole === "employer" ? "default" : "outline"}
-              className={activeRole === "employer" ? "bg-[#FFC900] hover:bg-[#E6B800] text-white" : ""}
-              onClick={() => handleRoleSwitch("employer")}
-            >
-              <Briefcase className="mr-2 h-4 w-4" />
-              Employer
-            </Button>
-          </div>
+    <div
+      className="min-h-screen flex flex-col items-center justify-start px-4"
+      style={{ background: bgColor }}
+    >
+      <h1
+        className="text-[2.5rem] sm:text-5xl font-extrabold text-center mb-10 mt-16 leading-tight drop-shadow"
+        style={{ color: textColor, letterSpacing: 0 }}
+      >
+        THE ELECTRICAL<br />INDUSTRY APP
+      </h1>
+      <div className="w-full max-w-xl mb-16 flex items-center px-2">
+        <div className="relative w-full">
+          <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
+            <Search size={28} />
+          </span>
+          <input
+            className="w-full pl-16 pr-5 py-5 rounded-2xl bg-[#23261e]/90 text-xl text-gray-200 placeholder:text-gray-400 border-none outline-none focus:ring-2 focus:ring-[#FFC900] transition"
+            placeholder="Search"
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            style={{ fontWeight: 600 }}
+            autoFocus={false}
+          />
         </div>
-        
-        {activeRole === "apprentice" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Welcome, Apprentice</h2>
-              <p className="text-gray-600">Your apprentice dashboard is ready. Access training materials, track your progress, and connect with potential employers.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Upcoming Training</h2>
-              <p className="text-gray-600">Your next training session is scheduled for April 25, 2025.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/training")}
+      </div>
+      <div className="flex flex-col gap-10 w-full max-w-2xl items-center">
+        <div className="flex flex-col sm:flex-row gap-10 w-full">
+          {filteredRoles.slice(0, 2).map((role) => (
+            <button
+              key={role.label}
+              className="flex-1 rounded-2xl shadow-xl transition-transform duration-200 hover:scale-105 focus:scale-105 outline-none"
+              style={{
+                background: cardColor,
+                minHeight: 210,
+                minWidth: 0,
+              }}
+              onClick={() => navigate(role.path)}
+            >
+              <div className="flex flex-col items-center justify-center h-full px-2 py-8">
+                {role.icon}
+                <span
+                  className="text-2xl font-bold tracking-wide"
+                  style={{ color: "#fff", letterSpacing: "0.06em" }}
+                >
+                  {role.label}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+        {filteredRoles[2] && (
+          <button
+            className="w-full rounded-2xl shadow-xl transition-transform duration-200 hover:scale-105 focus:scale-105 outline-none"
+            style={{
+              background: cardColor,
+              minHeight: 210,
+            }}
+            onClick={() => navigate(filteredRoles[2].path)}
+          >
+            <div className="flex flex-col items-center justify-center h-full px-2 py-8">
+              {filteredRoles[2].icon}
+              <span
+                className="text-2xl font-bold tracking-wide"
+                style={{ color: "#fff", letterSpacing: "0.06em" }}
               >
-                <Calendar className="mr-2 h-4 w-4" />
-                View Schedule
-              </Button>
+                {filteredRoles[2].label}
+              </span>
             </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Certifications</h2>
-              <p className="text-gray-600">Track your certification progress and requirements.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/certification")}
-              >
-                <Calendar className="mr-2 h-4 w-4" />
-                View Certifications
-              </Button>
-            </div>
+          </button>
+        )}
+        {filteredRoles.length === 0 && (
+          <div className="w-full rounded-2xl shadow-xl bg-[#23261e]/70 p-8 text-gray-300 text-center text-lg">
+            No results found.
           </div>
         )}
-        
-        {activeRole === "electrician" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Welcome, Electrician</h2>
-              <p className="text-gray-600">Your electrician dashboard is ready. Find jobs, access tools, and manage your certifications.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Available Jobs</h2>
-              <p className="text-gray-600">3 new jobs in your area match your qualifications.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/jobs")}
-              >
-                Browse Jobs
-              </Button>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">License Renewal</h2>
-              <p className="text-gray-600">Your license renewal is due in 45 days.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/license")}
-              >
-                Renew License
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        {activeRole === "employer" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Welcome, Employer</h2>
-              <p className="text-gray-600">Your employer dashboard is ready. Post jobs, find qualified electricians, and manage your projects.</p>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Your Job Postings</h2>
-              <p className="text-gray-600">You have 2 active job postings with 5 applicants.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/manage-jobs")}
-              >
-                Manage Postings
-              </Button>
-            </div>
-            
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">Find Talent</h2>
-              <p className="text-gray-600">Search for qualified electricians and apprentices in your area.</p>
-              <Button 
-                className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
-                onClick={() => navigate("/search-talent")}
-              >
-                Search Talent
-              </Button>
-            </div>
-          </div>
-        )}
-      </main>
+      </div>
     </div>
   );
 };
