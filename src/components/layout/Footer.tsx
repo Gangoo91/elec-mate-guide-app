@@ -27,12 +27,6 @@ const Footer = () => {
             >
               Terms of Service
             </Link>
-            <Link 
-              to="/apprentice-hub" 
-              className="text-[#FFC900]/80 hover:text-[#FFC900] transition-colors"
-            >
-              Apprentice Hub
-            </Link>
           </nav>
         </div>
       </div>
