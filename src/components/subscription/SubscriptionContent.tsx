@@ -10,6 +10,7 @@ import SubscriptionSecurityInfo from "@/components/subscription/SubscriptionSecu
 import { subscriptionPlans } from "@/config/subscriptionPlans";
 import { useSubscription } from "@/contexts/SubscriptionContext";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { stripePriceIds } from "@/config/subscriptionPlans";
 
 const SubscriptionContent = () => {
   const {
@@ -23,13 +24,17 @@ const SubscriptionContent = () => {
     handleCheckout
   } = useSubscription();
 
-  // Add console logs to debug the checkout process
+  // Add more comprehensive logging to the checkout process
   const handleCheckoutClick = async () => {
     console.log("Starting checkout process");
+    console.log("Selected Plan:", selectedPlan);
+    console.log("Billing Cycle:", billingCycle);
+    console.log("Price ID:", stripePriceIds[selectedPlan][billingCycle]);
+    
     try {
       await handleCheckout();
     } catch (err) {
-      console.error("Checkout error:", err);
+      console.error("Detailed Checkout Error:", err);
     }
   };
 
@@ -107,29 +112,36 @@ const SubscriptionContent = () => {
           You can cancel, upgrade, or manage your subscription any time in your profile settings.
         </p>
         
-        {/* Debug Dialog - only in development */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="ghost" size="sm" className="mt-4 text-xs opacity-50 w-full">
-              Debug Info
+              Checkout Debug Info
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-md bg-black/90 border-yellow-600/30 text-yellow-500 text-xs">
-            <DialogTitle>Debug Subscription Info</DialogTitle>
-            <pre className="overflow-auto max-h-[70vh] p-4">
-              {JSON.stringify(
-                {
-                  selectedPlan,
-                  billingCycle,
-                  isLoading,
-                  checkingAuth,
-                  priceId: stripePriceIds[selectedPlan]?.[billingCycle],
-                  error,
-                },
-                null,
-                2
+            <DialogTitle>Checkout Debug Information</DialogTitle>
+            <div className="space-y-2">
+              <div>
+                <strong>Selected Plan:</strong> {selectedPlan}
+              </div>
+              <div>
+                <strong>Billing Cycle:</strong> {billingCycle}
+              </div>
+              <div>
+                <strong>Price ID:</strong> {stripePriceIds[selectedPlan][billingCycle]}
+              </div>
+              <div>
+                <strong>Loading State:</strong> {isLoading ? 'Yes' : 'No'}
+              </div>
+              <div>
+                <strong>Checking Auth:</strong> {checkingAuth ? 'Yes' : 'No'}
+              </div>
+              {error && (
+                <div>
+                  <strong>Error:</strong> {error}
+                </div>
               )}
-            </pre>
+            </div>
           </DialogContent>
         </Dialog>
       </GlassCard>
@@ -137,5 +149,4 @@ const SubscriptionContent = () => {
   );
 };
 
-import { stripePriceIds } from "@/config/subscriptionPlans";
 export default SubscriptionContent;
