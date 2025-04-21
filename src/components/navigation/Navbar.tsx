@@ -27,6 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [bypassAuth, setBypassAuth] = useState(true); // Add bypass state for demo purposes
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -88,60 +89,58 @@ const Navbar = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              {user && (
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/premium"
-                          >
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              Premium Services
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Access exclusive training and certification programs
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <Link to="/training" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                          <div className="text-sm font-medium leading-none">Training</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Professional development courses
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          href="/premium"
+                        >
+                          <div className="mb-2 mt-4 text-lg font-medium">
+                            Premium Services
+                          </div>
+                          <p className="text-sm leading-tight text-muted-foreground">
+                            Access exclusive training and certification programs
                           </p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/certification" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                          <div className="text-sm font-medium leading-none">Certification</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Industry-recognized certifications
-                          </p>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="/tools" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                          <div className="text-sm font-medium leading-none">Tools</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                            Professional tools and equipment
-                          </p>
-                        </Link>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              )}
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <Link to="/training" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Training</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Professional development courses
+                        </p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/certification" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Certification</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Industry-recognized certifications
+                        </p>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/tools" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <div className="text-sm font-medium leading-none">Tools</div>
+                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                          Professional tools and equipment
+                        </p>
+                      </Link>
+                    </li>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
 
         <div className="flex items-center gap-2">
-          {user ? (
+          {user || bypassAuth ? ( // Show user menu if logged in or bypassing auth
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="rounded-full">

@@ -15,24 +15,27 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
+  const [bypassAuth, setBypassAuth] = useState(true); // Add bypass state for demo purposes
 
   useEffect(() => {
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       
-      if (!session) {
+      if (!session && !bypassAuth) { // Only redirect if not bypassing auth
         navigate("/login");
         return;
       }
       
-      setUser(session.user);
+      if (session) {
+        setUser(session.user);
+      }
       setLoading(false);
     };
     
     checkUser();
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT") {
+      if (event === "SIGNED_OUT" && !bypassAuth) { // Only redirect if not bypassing auth
         navigate("/login");
       } else if (session) {
         setUser(session.user);
@@ -50,7 +53,7 @@ const Dashboard = () => {
     }
 
     return () => subscription.unsubscribe();
-  }, [navigate, location]);
+  }, [navigate, location, bypassAuth]);
 
   const handleRoleSwitch = (role: string) => {
     setActiveRole(role);
