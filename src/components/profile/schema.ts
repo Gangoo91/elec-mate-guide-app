@@ -9,6 +9,7 @@ export const ProfileFormSchema = z.object({
   qualification_level: z.string().optional(),
   bio: z.string().max(500, "Bio must be 500 characters or less").optional(),
   years_experience: z.string().optional(),
+  avatar_url: z.string().optional(),
 });
 
 export type ProfileFormValues = z.infer<typeof ProfileFormSchema>;

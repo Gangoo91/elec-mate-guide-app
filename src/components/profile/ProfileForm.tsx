@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,6 +14,7 @@ import { BasicInfoFields } from "./BasicInfoFields";
 import { ContactFields } from "./ContactFields";
 import { QualificationAndBioFields } from "./QualificationAndBioFields";
 import { Separator } from "@/components/ui/separator";
+import { AvatarUpload } from "./AvatarUpload";
 
 interface ProfileFormProps {
   initialData?: {
@@ -25,6 +25,7 @@ interface ProfileFormProps {
     qualification_level?: string | null;
     bio?: string | null;
     years_experience?: string | null;
+    avatar_url?: string | null;
   } | null;
 }
 
@@ -47,6 +48,34 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
       years_experience: initialData?.years_experience || "",
     },
   });
+
+  const handleAvatarUpload = async (url: string) => {
+    if (!user?.id) return;
+    
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: url })
+        .eq('id', user.id);
+
+      if (error) throw error;
+      
+      queryClient.invalidateQueries({ queryKey: ['profile'] });
+    } catch (error) {
+      console.error('Error updating profile with new avatar:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update profile with new avatar.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getInitials = () => {
+    const firstName = form.watch("first_name") || "";
+    const lastName = form.watch("last_name") || "";
+    return (firstName.charAt(0) + lastName.charAt(0)).toUpperCase() || "EM";
+  };
 
   const onSubmit = async (data: ProfileFormValues) => {
     if (!user?.id) return;
@@ -98,7 +127,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   return (
     <Card className="mb-6 bg-[#22251e] border-[#FFC900]/20 rounded-xl shadow-lg">
       <CardHeader className="border-b border-[#FFC900]/10 pb-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start">
           <div>
             <CardTitle className="text-[#FFC900] flex items-center gap-2 text-2xl">
               Profile Settings
@@ -107,6 +136,11 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
               Update your personal information and qualifications
             </CardDescription>
           </div>
+          <AvatarUpload 
+            url={initialData?.avatar_url || null}
+            onUploadComplete={handleAvatarUpload}
+            userInitials={getInitials()}
+          />
         </div>
       </CardHeader>
       <CardContent className="pt-6">
