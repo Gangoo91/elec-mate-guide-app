@@ -18,7 +18,7 @@ export const faqItems: FAQItemType[] = [
   // General Platform Questions
   {
     section: "About Elec-Mate",
-    icon: <HelpCircle className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(HelpCircle, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-1",
@@ -40,7 +40,7 @@ export const faqItems: FAQItemType[] = [
   // Apprentice-focused
   {
     section: "For Apprentices",
-    icon: <Users className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(Users, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-2",
@@ -57,7 +57,7 @@ export const faqItems: FAQItemType[] = [
   // Electrician-focused
   {
     section: "For Electricians",
-    icon: <Lightbulb className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(Lightbulb, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-3",
@@ -74,7 +74,7 @@ export const faqItems: FAQItemType[] = [
   // Employer-focused
   {
     section: "For Employers",
-    icon: <Award className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(Award, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-4",
@@ -91,7 +91,7 @@ export const faqItems: FAQItemType[] = [
   // Support & Community
   {
     section: "Support & Community",
-    icon: <MessageSquare className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(MessageSquare, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-5",
@@ -108,7 +108,7 @@ export const faqItems: FAQItemType[] = [
   // Qualifications & Training
   {
     section: "Qualifications & Professional Development",
-    icon: <Heart className="h-5 w-5 text-[#FFC900]" />,
+    icon: React.createElement(Heart, { className: "h-5 w-5 text-[#FFC900]" }),
     questions: [
       {
         id: "item-7",
