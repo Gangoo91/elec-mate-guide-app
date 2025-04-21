@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
 import Navbar from "@/components/navigation/Navbar";
-import { Book, Lightbulb, Briefcase, Calendar, Certificate } from "lucide-react";
+import { Book, Lightbulb, Briefcase, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
@@ -126,7 +126,7 @@ const Dashboard = () => {
                 className="mt-4 px-4 py-2 bg-[#FFC900] text-white rounded-md hover:bg-[#E6B800] transition-colors"
                 onClick={() => navigate("/certification")}
               >
-                <Certificate className="mr-2 h-4 w-4" />
+                <Calendar className="mr-2 h-4 w-4" />
                 View Certifications
               </Button>
             </div>
