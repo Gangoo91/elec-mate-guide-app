@@ -33,6 +33,9 @@ const App = () => (
           <Route path="/electricians" element={<ElectriciansPage />} />
           <Route path="/employers" element={<EmployersPage />} />
           <Route path="/apprentice-hub" element={<ApprenticeHub />} />
+          <Route path="/training" element={<ApprenticeHub />} /> {/* Temporarily point to ApprenticeHub */}
+          <Route path="/certification" element={<ApprenticeHub />} /> {/* Temporarily point to ApprenticeHub */}
+          <Route path="/tools" element={<ApprenticeHub />} /> {/* Temporarily point to ApprenticeHub */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
