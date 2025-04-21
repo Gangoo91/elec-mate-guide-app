@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -17,7 +16,6 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  // Check for saved email if remember me was checked previously
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
     if (savedEmail) {
@@ -31,7 +29,6 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
-  // Real-time validation as user types
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
@@ -65,10 +62,8 @@ const Login = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Reset errors
     setErrors({ email: "", password: "" });
     
-    // Validate inputs
     let isValid = true;
     
     if (!email) {
@@ -90,14 +85,12 @@ const Login = () => {
     if (isValid) {
       setIsSubmitting(true);
       
-      // Handle remember me functionality
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
       } else {
         localStorage.removeItem("rememberedEmail");
       }
       
-      // Simulate authentication (replace with actual auth when backend is ready)
       setTimeout(() => {
         setIsSubmitting(false);
         toast({
@@ -109,7 +102,6 @@ const Login = () => {
   };
 
   const handleSocialLogin = (provider: string) => {
-    // Would normally integrate with OAuth provider
     toast({
       title: `${provider} Login`,
       description: `${provider} authentication would be implemented here.`,
