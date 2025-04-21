@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -6,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-const DashboardHeroSection = () => {
+const DashboardHeroSection = ({ hideLogoOverride = false }) => {
   const navigate = useNavigate();
 
   const { data: userCount = 0, isLoading } = useQuery({
@@ -27,7 +28,7 @@ const DashboardHeroSection = () => {
 
   return (
     <div className="flex flex-col items-center text-center mb-12 animate-fade-in">
-      <Logo size={80} />
+      {!hideLogoOverride && <Logo size={80} />}
       <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FFC900] mb-4 mt-6">
         Electrical Industry Hub
       </h1>
@@ -64,3 +65,4 @@ const DashboardHeroSection = () => {
 };
 
 export default DashboardHeroSection;
+
