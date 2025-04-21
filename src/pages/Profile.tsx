@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CreditCard, Calendar, Loader2, ShieldCheck } from "lucide-react";
@@ -8,9 +8,13 @@ import { useSubscription } from "@/hooks/useSubscription";
 import { SubscriptionBenefits } from "@/components/subscription/SubscriptionBenefits";
 import { SubscriptionControls } from "@/components/subscription/SubscriptionControls";
 import { NoSubscriptionState } from "@/components/subscription/NoSubscriptionState";
+import { ProfileForm } from "@/components/profile/ProfileForm";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 const Profile = () => {
   const { isChecking, isRefreshing, subscription, checkSubscription } = useSubscription();
+  const { user } = useAuth();
 
   const formatDate = (dateStr: string | null) => {
     if (!dateStr) return "N/A";
@@ -21,12 +25,44 @@ const Profile = () => {
     });
   };
 
+  // Load profile data when component mounts
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!user?.id) return;
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+          
+        if (error) throw error;
+        // Update form with existing data if available
+        if (data) {
+          const form = document.querySelector('form');
+          if (form) {
+            const firstNameInput = form.querySelector('input[name="first_name"]') as HTMLInputElement;
+            const lastNameInput = form.querySelector('input[name="last_name"]') as HTMLInputElement;
+            if (firstNameInput) firstNameInput.value = data.first_name || '';
+            if (lastNameInput) lastNameInput.value = data.last_name || '';
+          }
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+      }
+    };
+
+    loadProfile();
+  }, [user?.id]);
+
   return (
     <MainLayout>
       <div className="container max-w-4xl px-4 py-12">
         <h1 className="text-3xl font-bold text-[#FFC900] mb-8">Profile Settings</h1>
 
-        <Card className="mb-10 bg-[#22251e] border-[#FFC900]/20">
+        <ProfileForm />
+
+        <Card className="bg-[#22251e] border-[#FFC900]/20">
           <CardHeader>
             <div className="flex justify-between items-center">
               <div>
