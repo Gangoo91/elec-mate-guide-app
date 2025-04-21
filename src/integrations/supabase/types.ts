@@ -11,24 +11,36 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          bio: string | null
           created_at: string | null
           first_name: string | null
           id: string
           last_name: string | null
+          location: string | null
+          phone_number: string | null
+          qualification_level: string | null
           updated_at: string | null
         }
         Insert: {
+          bio?: string | null
           created_at?: string | null
           first_name?: string | null
           id: string
           last_name?: string | null
+          location?: string | null
+          phone_number?: string | null
+          qualification_level?: string | null
           updated_at?: string | null
         }
         Update: {
+          bio?: string | null
           created_at?: string | null
           first_name?: string | null
           id?: string
           last_name?: string | null
+          location?: string | null
+          phone_number?: string | null
+          qualification_level?: string | null
           updated_at?: string | null
         }
         Relationships: []

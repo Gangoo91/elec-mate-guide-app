@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,15 +12,20 @@ import { User, Pencil, CheckCircle, Loader2, Phone, MapPin, Award } from "lucide
 import { useQueryClient } from "@tanstack/react-query";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
-interface ProfileFormValues {
-  first_name: string;
-  last_name: string;
-  phone_number: string;
-  location: string;
-  qualification_level: string;
-  bio: string;
-}
+// Add validation schema
+const ProfileFormSchema = z.object({
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  phone_number: z.string().optional(),
+  location: z.string().optional(),
+  qualification_level: z.string().optional(),
+  bio: z.string().optional(),
+});
+
+interface ProfileFormValues extends z.infer<typeof ProfileFormSchema> {}
 
 interface ProfileFormProps {
   initialData?: {
@@ -40,6 +46,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   const queryClient = useQueryClient();
 
   const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(ProfileFormSchema),
     defaultValues: {
       first_name: initialData?.first_name || "",
       last_name: initialData?.last_name || "",
@@ -94,7 +101,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
   const qualificationLevels = [
     "Apprentice",
     "Electrical Mate",
-    "Electrician",
+    "Electrician", 
     "Advanced Electrician",
     "Commissioning Tech",
     "Commissioning Engineer",
