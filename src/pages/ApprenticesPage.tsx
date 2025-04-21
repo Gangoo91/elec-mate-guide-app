@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
+import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -60,7 +61,8 @@ const ApprenticesPage = () => {
   const apprenticeResources = [
     {
       title: "Learning Tools",
-      description: "A growing toolbox to help apprentices study, revise, and practice.",
+      description:
+        "A growing toolbox to help apprentices study, revise, and practice. Includes knowledge tests and skill assessments to track your progress.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       link: "#tools"
     },
@@ -78,10 +80,10 @@ const ApprenticesPage = () => {
       showMHModal: true,
     },
     {
-      title: "Skill Assessments",
-      description: "Test your knowledge and track progress",
-      icon: <Award className="h-6 w-6 text-[#FFC900]" />,
-      link: "#assessments"
+      title: "Toolbox Talk",
+      description: "Explore discussions, safety topics, and community conversation all in one space.",
+      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
+      link: "#toolbox-talk"
     },
     {
       title: "Training Events",
