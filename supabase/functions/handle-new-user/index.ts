@@ -23,15 +23,25 @@ serve(async (req) => {
       throw new Error("user_id is required");
     }
 
-    // Create a profile for the new user if it doesn't exist
-    const { data: existingProfile } = await supabaseClient
+    console.log(`Creating or verifying profile for user: ${user_id}`);
+
+    // Check if profile exists
+    const { data: existingProfile, error: checkError } = await supabaseClient
       .from('profiles')
       .select('id')
       .eq('id', user_id)
       .maybeSingle();
 
+    if (checkError) {
+      console.error(`Error checking profile: ${JSON.stringify(checkError)}`);
+      throw checkError;
+    }
+
+    // Create profile if it doesn't exist
     if (!existingProfile) {
-      const { error } = await supabaseClient
+      console.log(`No profile found, creating new profile for user: ${user_id}`);
+      
+      const { error: insertError } = await supabaseClient
         .from('profiles')
         .insert([{ 
           id: user_id,
@@ -39,7 +49,14 @@ serve(async (req) => {
           updated_at: new Date().toISOString()
         }]);
 
-      if (error) throw error;
+      if (insertError) {
+        console.error(`Error creating profile: ${JSON.stringify(insertError)}`);
+        throw insertError;
+      }
+      
+      console.log(`Successfully created profile for user: ${user_id}`);
+    } else {
+      console.log(`Found existing profile for user: ${user_id}`);
     }
 
     return new Response(JSON.stringify({ success: true }), {

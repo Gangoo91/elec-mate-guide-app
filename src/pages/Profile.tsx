@@ -8,48 +8,66 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { CreditCard, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const { data: profile, isLoading, error } = useQuery({
+  const { data: profile, isLoading, error, refetch } = useQuery({
     queryKey: ['profile', user?.id],
     queryFn: async () => {
       if (!user?.id) return null;
       
-      // Create profile if it doesn't exist
-      const { data: existingProfile, error: checkError } = await supabase
+      // Try to fetch existing profile
+      const { data: existingProfile, error: fetchError } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', user.id)
         .maybeSingle();
       
-      if (checkError && checkError.code !== 'PGRST116') {
-        console.error('Error checking profile:', checkError);
-        throw new Error('Failed to load profile');
+      if (fetchError) {
+        console.error('Error fetching profile:', fetchError);
+        throw new Error('Failed to fetch profile');
+      }
+      
+      // If profile exists, return it
+      if (existingProfile) {
+        return existingProfile;
       }
       
       // If profile doesn't exist, create it
-      if (!existingProfile) {
-        const { data: newProfile, error: createError } = await supabase
-          .from('profiles')
-          .insert([{ id: user.id }])
-          .select()
-          .single();
-          
-        if (createError) {
-          console.error('Error creating profile:', createError);
-          throw new Error('Failed to create profile');
-        }
-        
-        return newProfile;
+      const { data: newProfile, error: createError } = await supabase
+        .from('profiles')
+        .insert([{ 
+          id: user.id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }])
+        .select()
+        .single();
+      
+      if (createError) {
+        console.error('Error creating profile:', createError);
+        toast({
+          title: "Profile Creation Failed",
+          description: "We couldn't create your profile. Please try again later.",
+          variant: "destructive",
+        });
+        throw new Error('Failed to create profile');
       }
       
-      return existingProfile;
+      return newProfile;
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
+    retry: 1
   });
+
+  // Handle retry on error
+  const handleRetry = () => {
+    refetch();
+  };
 
   return (
     <MainLayout>
@@ -65,7 +83,7 @@ const Profile = () => {
           <div className="bg-red-100/10 border border-red-300/30 p-6 rounded-lg text-center">
             <p className="text-red-400">There was a problem loading your profile.</p>
             <Button 
-              onClick={() => window.location.reload()}
+              onClick={handleRetry}
               variant="outline"
               className="mt-4 border-red-400/50 text-red-400 hover:bg-red-400/10"
             >
