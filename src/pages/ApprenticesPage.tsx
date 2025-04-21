@@ -6,7 +6,6 @@ import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
-import LearningHub from "@/components/apprentices/LearningHub";
 
 const MentalHealthHubContent = () => (
   <>
@@ -99,7 +98,7 @@ const ApprenticesPage = () => {
       description:
         "Access our comprehensive learning tools, AI assistants, and training events all in one place. Get instant help and grow your skills.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Start Learning", onClick: () => {} }
+      action: { label: "Start Learning", href: "/apprentices/learning-hub" }
     },
     {
       title: "Mentor Connect",
@@ -146,10 +145,6 @@ const ApprenticesPage = () => {
         ) : (
           <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
         )}
-
-        <div className="mt-8">
-          <LearningHub />
-        </div>
 
         <div className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
           <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>
