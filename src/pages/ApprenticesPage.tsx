@@ -100,11 +100,11 @@ const ApprenticesPage = () => {
       description:
         "Access our comprehensive learning tools, AI assistants, and training events all in one place. Get instant help and grow your skills.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      fullCardLink: "/apprentices/learning-hub", // Add fullCardLink instead of action
+      fullCardLink: "/apprentices/learning-hub",
       action: { label: "Start Learning", href: "/apprentices/learning-hub" }
     },
     {
-      title: "Mentor Connect",
+      title: "Mentor Connect Hub",
       description: "Connect with experienced electricians",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Learn more", href: "#mentor-connect" }
@@ -116,7 +116,7 @@ const ApprenticesPage = () => {
       action: { label: "Learn more", onClick: () => setMhModalOpen(true) }
     },
     {
-      title: "Toolbox Talk",
+      title: "Toolbox Talk Hub",
       description: "Explore discussions, safety topics, and community conversation all in one space.",
       icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Learn more", href: "#toolbox-talk" }
