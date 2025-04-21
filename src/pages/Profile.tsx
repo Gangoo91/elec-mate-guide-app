@@ -1,14 +1,16 @@
+
 import React, { useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CreditCard } from "lucide-react";
 
 const Profile = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -48,7 +50,7 @@ const Profile = () => {
         <div className="mt-8 flex justify-center">
           <Button 
             variant="outline"
-            onClick={() => window.location.href = "/manage-subscription"}
+            onClick={() => navigate("/manage-subscription")}
             className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
           >
             <CreditCard className="mr-2 h-4 w-4" />
