@@ -1,15 +1,12 @@
-
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
-import BackButton from "@/components/navigation/BackButton";
+import PageHeader from "@/components/layout/PageHeader";
+import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Modal content component shared between Dialog and Drawer
 const MentalHealthHubContent = () => (
   <>
     <div className="py-2 space-y-4">
@@ -47,7 +44,6 @@ const MentalHealthHubContent = () => (
   </>
 );
 
-// Dialog for desktop
 const MentalHealthHubDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
     <DialogContent className="max-w-lg bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
@@ -65,7 +61,6 @@ const MentalHealthHubDialog = ({ open, onOpenChange }: { open: boolean; onOpenCh
   </Dialog>
 );
 
-// Drawer for mobile
 const MentalHealthHubDrawer = ({ open, onOpenChange }: { open: boolean; onOpenChange: (val: boolean) => void }) => (
   <Drawer open={open} onOpenChange={onOpenChange}>
     <DrawerContent className="bg-[#22251e] border-t-[#FFC900]/20 text-[#FFC900] max-h-[85vh]">
@@ -133,52 +128,50 @@ const ApprenticesPage = () => {
       description:
         "A growing toolbox to help apprentices study, revise, and practice. Includes knowledge tests and skill assessments to track your progress.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      link: "#tools"
+      action: { label: "Learn more", href: "#tools" }
     },
     {
       title: "Mentor Connect",
       description: "Connect with experienced electricians",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
-      link: "#mentor-connect"
+      action: { label: "Learn more", href: "#mentor-connect" }
     },
     {
       title: "Mental Health Hub",
       description: "Support, community, and resources for apprentice mental health & well-being.",
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
-      link: null,
-      showMHModal: true,
+      action: { label: "Learn more", onClick: () => setMhModalOpen(true) }
     },
     {
       title: "Toolbox Talk",
       description: "Explore discussions, safety topics, and community conversation all in one space.",
       icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
-      link: "#toolbox-talk"
+      action: { label: "Learn more", href: "#toolbox-talk" }
     },
     {
       title: "Training Events",
       description: "Workshops and training opportunities",
       icon: <CalendarCheck className="h-6 w-6 text-[#FFC900]" />,
-      link: "#events"
+      action: { label: "Learn more", href: "#events" }
     }
   ];
 
   return (
     <MainLayout>
-      <div className="container px-4 py-8 pt-20">
-        <BackButton />
-        <div className="text-center mb-8 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#FFC900] mb-3">Apprentice Hub</h1>
-          <p className="text-base md:text-lg text-[#FFC900]/80 max-w-2xl mx-auto">
-            Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage.
-          </p>
-        </div>
+      <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
+        <PageHeader 
+          title="Apprentice Hub"
+          description="Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage."
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {apprenticeResources.map((resource, index) => (
             <ResourceCard 
-              key={index} 
-              resource={resource} 
-              openMHModal={() => setMhModalOpen(true)} 
+              key={index}
+              title={resource.title}
+              description={resource.description}
+              icon={resource.icon}
+              action={resource.action}
             />
           ))}
         </div>
