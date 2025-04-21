@@ -1,10 +1,12 @@
 
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Camera } from "lucide-react";
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic"];
 
 interface AvatarUploadProps {
   url: string | null;
@@ -16,12 +18,24 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
 
+  const validateFile = (file: File) => {
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      throw new Error("Please upload a valid image file (JPEG, PNG, WEBP, or HEIC)");
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error("File size must be less than 5MB");
+    }
+  };
+
   const uploadAvatar = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setIsUploading(true);
       
       const file = event.target.files?.[0];
       if (!file) return;
+
+      // Validate file type and size
+      validateFile(file);
 
       const user = supabase.auth.getUser();
       if (!user) throw new Error("No user found");
@@ -41,11 +55,16 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
         .getPublicUrl(filePath);
 
       onUploadComplete(publicUrl);
-    } catch (error) {
+      
+      toast({
+        title: "Avatar updated",
+        description: "Your profile picture has been successfully updated.",
+      });
+    } catch (error: any) {
       console.error('Error uploading avatar:', error);
       toast({
         title: "Upload failed",
-        description: "There was a problem uploading your avatar.",
+        description: error.message || "There was a problem uploading your avatar.",
         variant: "destructive",
       });
     } finally {
@@ -66,12 +85,14 @@ export function AvatarUpload({ url, onUploadComplete, userInitials }: AvatarUplo
         <input
           type="file"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp,image/heic"
           onChange={uploadAvatar}
           disabled={isUploading}
+          aria-label="Upload profile picture"
         />
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/50 absolute inset-0 rounded-full flex items-center justify-center">
-          <Camera className="w-6 h-6 text-white" />
+        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/50 absolute inset-0 rounded-full flex flex-col items-center justify-center">
+          <Camera className="w-6 h-6 text-white mb-1" />
+          <span className="text-white text-xs px-2 text-center">Click to change photo</span>
         </div>
       </div>
       
