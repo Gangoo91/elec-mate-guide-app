@@ -100,6 +100,7 @@ const ApprenticesPage = () => {
       description:
         "Access our comprehensive learning tools, AI assistants, and training events all in one place. Get instant help and grow your skills.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      fullCardLink: "/apprentices/learning-hub", // Add fullCardLink instead of action
       action: { label: "Start Learning", href: "/apprentices/learning-hub" }
     },
     {
@@ -138,6 +139,7 @@ const ApprenticesPage = () => {
               description={resource.description}
               icon={resource.icon}
               action={resource.action}
+              fullCardLink={resource.fullCardLink} // Pass the new prop
             />
           ))}
         </div>
