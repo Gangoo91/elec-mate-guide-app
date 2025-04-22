@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import BackButton from "@/components/navigation/BackButton";
 import MainLayout from "@/components/layout/MainLayout";
 import InteractiveQuiz from "@/components/study/InteractiveQuiz";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { BookOpen, ListCheck, ListOrdered } from "lucide-react";
 
 interface UnitPageProps {
   unitNumber: string;
@@ -46,49 +47,82 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
         </div>
         
         <div className="grid gap-6 animate-fade-in">
+          {/* Unit Overview Card */}
           <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent className="pt-6">
-              <div className="space-y-6">
-                <h3 className="text-xl font-semibold text-[#FFC900] mb-4">{title}</h3>
-                <p className="text-[#FFC900]/70 mb-6">{description}</p>
-
-                <Accordion type="single" collapsible className="w-full space-y-4">
-                  <AccordionItem value="course-content" className="border-[#FFC900]/20">
-                    <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
-                      Course Content
-                    </AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/70 pt-4">
-                      <ul className="space-y-4">
-                        {content.map((item, index) => (
-                          <li key={index} className="flex items-start gap-3">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70 mt-2"></span>
-                            <span className="flex-1">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-
-                  <AccordionItem value="learning-outcomes" className="border-[#FFC900]/20">
-                    <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
-                      Learning Outcomes
-                    </AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/70 pt-4">
-                      <ul className="space-y-4">
-                        {learningOutcomes.map((outcome, index) => (
-                          <li key={index} className="flex items-start gap-3">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70 mt-2"></span>
-                            <span className="flex-1">{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-            </CardContent>
+            <CardHeader>
+              <CardTitle className="text-[#FFC900] text-2xl md:text-3xl">{title}</CardTitle>
+              <p className="text-[#FFC900]/70 mt-2">{description}</p>
+            </CardHeader>
           </Card>
 
+          {/* Interactive Course Content */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <ListOrdered className="text-[#FFC900] h-5 w-5" />
+                  <CardTitle className="text-[#FFC900] text-xl">Course Content</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                  {content.map((item, index) => (
+                    <AccordionItem 
+                      key={index} 
+                      value={`item-${index}`}
+                      className="border-[#FFC900]/20"
+                    >
+                      <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
+                        {item}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-[#FFC900]/70">
+                        <div className="p-4 space-y-4">
+                          <p>Key points to remember:</p>
+                          <ul className="list-disc list-inside space-y-2 ml-4">
+                            <li>Understanding the core concepts</li>
+                            <li>Practical applications</li>
+                            <li>Common scenarios and solutions</li>
+                          </ul>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+
+            {/* Learning Outcomes */}
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <ListCheck className="text-[#FFC900] h-5 w-5" />
+                  <CardTitle className="text-[#FFC900] text-xl">Learning Outcomes</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                  {learningOutcomes.map((outcome, index) => (
+                    <AccordionItem 
+                      key={index} 
+                      value={`outcome-${index}`}
+                      className="border-[#FFC900]/20"
+                    >
+                      <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
+                        Outcome {index + 1}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-[#FFC900]/70">
+                        <div className="p-4">
+                          <p>{outcome}</p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Interactive Quizzes */}
           {loading ? (
             <div className="flex justify-center p-8">
               <LoadingSpinner />
