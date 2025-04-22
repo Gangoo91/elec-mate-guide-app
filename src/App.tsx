@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -21,6 +22,7 @@ import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionGuard from "./components/guards/SubscriptionGuard";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 import ManageSubscription from "./pages/ManageSubscription";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import FAQ from "./pages/FAQ";

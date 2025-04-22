@@ -44,15 +44,14 @@ export const useUserPreferences = () => {
       window.addEventListener('storage', handleStorageChange);
       window.addEventListener('preferredRoleChange', handleCustomStorageChange);
       
+      // Return cleanup function
       return () => {
         window.removeEventListener('storage', handleStorageChange);
         window.removeEventListener('preferredRoleChange', handleCustomStorageChange);
       };
     } catch (error) {
       console.error("Error accessing localStorage:", error);
-      return {
-        preferredRole: null,
-      };
+      // Don't return anything here, just log the error
     }
   }, []);
 
