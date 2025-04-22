@@ -8,9 +8,22 @@ const BackButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Hide back on entry-point ("/" or "/dashboard")
+  // Hide back on entry-point routes
   const isEntry =
-    location.pathname === "/" || location.pathname === "/dashboard";
+    location.pathname === "/" || 
+    location.pathname === "/dashboard" || 
+    location.pathname === "/apprentice-hub";
+
+  const handleGoBack = () => {
+    // Special handling for Electricians route to go back to dashboard
+    if (location.pathname === "/electricians") {
+      navigate("/dashboard");
+      return;
+    }
+    
+    // Default behavior for all other routes
+    navigate(-1);
+  };
 
   if (isEntry) return null;
 
@@ -19,7 +32,7 @@ const BackButton = () => {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => navigate(-1)}
+        onClick={handleGoBack}
         className="flex items-center gap-2 text-[#FFC900] hover:bg-[#FFC900]/10 transition"
         aria-label="Go back"
       >
