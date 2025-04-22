@@ -105,10 +105,11 @@ const ApprenticesPage = () => {
       action: { label: "Start Learning", href: "/apprentices/learning-hub" }
     },
     {
-      title: "Mentor Connect Hub",
+      title: "Mentor Connect",
       description: "Connect with experienced electricians for guidance, support, and career advice on your professional journey.",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Find a Mentor", href: "/mentorship" }
+      action: { label: "Find a Mentor", href: "/mentorship" },
+      fullCardLink: "/mentorship"
     },
     {
       title: "Mental Health Hub",

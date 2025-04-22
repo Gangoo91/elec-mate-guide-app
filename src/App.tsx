@@ -53,61 +53,17 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/apprentices" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <ApprenticesPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/apprentices/learning-hub" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <LearningHubPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/apprentices/ai-tools" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <AIToolsPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/apprentices/study-materials" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <StudyMaterialsPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/apprentices/practice-exams" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <PracticeExamsPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/apprentices/certifications" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <CertificationsPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/electricians" element={
-                  <SubscriptionGuard requiredTier="Electrician">
-                    <ElectriciansPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/employers" element={
-                  <SubscriptionGuard requiredTier="Employer">
-                    <EmployersPage />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/training" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <Dashboard />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/certification" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <Dashboard />
-                  </SubscriptionGuard>
-                } />
-                <Route path="/tools" element={
-                  <SubscriptionGuard requiredTier="Apprentice">
-                    <Dashboard />
-                  </SubscriptionGuard>
-                } />
+                <Route path="/apprentices" element={<ApprenticesPage />} />
+                <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
+                <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
+                <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
+                <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
+                <Route path="/apprentices/certifications" element={<CertificationsPage />} />
+                <Route path="/electricians" element={<ElectriciansPage />} />
+                <Route path="/employers" element={<EmployersPage />} />
+                <Route path="/training" element={<Dashboard />} />
+                <Route path="/certification" element={<Dashboard />} />
+                <Route path="/tools" element={<Dashboard />} />
                 <Route path="/mental-health" element={<MentalHealth />} />
                 <Route path="/mentorship" element={<Mentorship />} />
                 <Route path="/faq" element={<FAQ />} />
