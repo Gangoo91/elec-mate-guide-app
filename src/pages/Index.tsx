@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Navigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
 // This component ensures we always render the Dashboard component

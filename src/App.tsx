@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -50,9 +51,8 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Index />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
-                <Route path="*" element={<Navigate to="/" />} />
                 <Route path="/dashboard" element={<Navigate to="/" replace />} />
                 <Route path="/apprentices" element={<ApprenticesPage />} />
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
@@ -77,6 +77,7 @@ const App = () => (
                 <Route path="/manage-subscription" element={<ManageSubscription />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
