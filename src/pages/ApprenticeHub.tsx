@@ -1,11 +1,12 @@
 
 import React, { useEffect } from "react";
+import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
-// Ensures the /apprentice-hub route renders the full ApprenticesPage component
-const ApprenticeHub = () => {
+// Memoize the component to prevent unnecessary re-renders
+const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
   const { refreshSession } = useAuth();
   
@@ -19,6 +20,8 @@ const ApprenticeHub = () => {
   }, [refreshSession]);
   
   return <ApprenticesPage />;
-};
+});
+
+ApprenticeHub.displayName = "ApprenticeHub";
 
 export default ApprenticeHub;

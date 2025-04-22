@@ -13,13 +13,37 @@ export function useDataCaching<T>(key: string, tableName: TableName, options = {
   const { handleError } = useErrorHandler();
   const { toast } = useToast();
 
+  // Improved fetch function with error handling and timeout
   const fetchData = async () => {
     try {
-      const { data, error } = await supabase
+      // Set a reasonable timeout for queries
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error(`Query timeout for ${tableName}`)), 8000)
+      );
+      
+      const queryPromise = supabase
         .from(tableName)
         .select('*');
       
+      // Race between the query and the timeout
+      const { data, error } = await Promise.race([
+        queryPromise,
+        timeoutPromise.then(() => { throw new Error(`Query timeout for ${tableName}`); })
+      ]) as any;
+      
       if (error) throw new Error(error.message);
+      
+      // Cache the result in localStorage for faster initial loads on subsequent visits
+      try {
+        localStorage.setItem(`cache_${key}`, JSON.stringify({
+          timestamp: Date.now(),
+          data
+        }));
+      } catch (e) {
+        // Silent fail for storage errors (quota exceeded, etc.)
+        console.warn("Failed to cache data locally:", e);
+      }
+      
       return data as T[];
     } catch (error) {
       handleError(error, `Failed to fetch ${tableName}`);
@@ -27,10 +51,30 @@ export function useDataCaching<T>(key: string, tableName: TableName, options = {
     }
   };
 
+  // Enhanced query with stale-while-revalidate pattern
   const query = useQuery({
     queryKey: [key],
     queryFn: fetchData,
-    ...options
+    staleTime: 5 * 60 * 1000, // Data stays fresh for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep unused data for 10 minutes
+    ...options,
+    initialData: () => {
+      // Try to load from cache for initial render
+      try {
+        const cached = localStorage.getItem(`cache_${key}`);
+        if (cached) {
+          const { timestamp, data } = JSON.parse(cached);
+          // Use cache if less than 5 minutes old
+          if (Date.now() - timestamp < 5 * 60 * 1000) {
+            return data as T[];
+          }
+        }
+      } catch (e) {
+        // Silent fail for parsing errors
+        console.warn("Failed to load cached data:", e);
+      }
+      return undefined;
+    }
   });
 
   // Add a mutation for updating data with automatic cache invalidation

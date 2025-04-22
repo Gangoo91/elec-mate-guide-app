@@ -1,14 +1,16 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
-import StudyUnitContent from "@/components/study/StudyUnitContent";
-import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 import LoadingSpinner from "@/components/LoadingSpinner";
+
+// Lazy load components to improve initial page load
+const StudyUnitContent = lazy(() => import("@/components/study/StudyUnitContent"));
+const StudyMaterialsGrid = lazy(() => import("@/components/study/StudyMaterialsGrid"));
 
 const StudyMaterialsPage = () => {
   const params = useParams();
@@ -26,27 +28,48 @@ const StudyMaterialsPage = () => {
   
   const contentKey = getContentKey();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (studyType && !validStudyTypes.includes(studyType)) {
       navigate('/apprentices/study-materials');
+    }
+    
+    // Preload other content if needed
+    if (studyType) {
+      // Prefetch related content based on current study type
+      const prefetchTimeout = setTimeout(() => {
+        // This will run after the main content is loaded
+        import("@/components/study/UnitQuiz");
+      }, 2000);
+      
+      return () => clearTimeout(prefetchTimeout);
     }
   }, [studyType, navigate]);
 
   const renderContent = () => {
     if (!studyType) {
-      return <StudyMaterialsGrid />;
+      return (
+        <Suspense fallback={<LoadingSpinner size="lg" message="Loading study materials..." />}>
+          <StudyMaterialsGrid />
+        </Suspense>
+      );
     }
 
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
       return (
-        <StudyUnitContent 
-          {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} 
-          basePath={`/apprentices/study-materials/${studyType}`}
-        />
+        <Suspense fallback={<LoadingSpinner size="lg" message="Loading study content..." />}>
+          <StudyUnitContent 
+            {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} 
+            basePath={`/apprentices/study-materials/${studyType}`}
+          />
+        </Suspense>
       );
     }
     
-    return <StudyMaterialsGrid />;
+    return (
+      <Suspense fallback={<LoadingSpinner size="lg" message="Loading study materials..." />}>
+        <StudyMaterialsGrid />
+      </Suspense>
+    );
   };
 
   const getPageTitle = () => {
@@ -72,7 +95,9 @@ const StudyMaterialsPage = () => {
           hideBackButton={true}
         />
         
-        {renderContent()}
+        <ErrorBoundary>
+          {renderContent()}
+        </ErrorBoundary>
       </div>
     </MainLayout>
   );
