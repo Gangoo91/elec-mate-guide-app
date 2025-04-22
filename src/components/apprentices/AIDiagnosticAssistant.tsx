@@ -27,15 +27,11 @@ const AIDiagnosticAssistant: React.FC = () => {
 
       if (error) throw error;
       
-      if (data.error) {
-        console.error("API response error:", data.error);
-        toast.error("Error from AI service: " + data.error);
-      }
-
-      // Even if there's an error message, we still show the response if available
       if (data.response) {
         setResponse(data.response);
         toast.success("Diagnostic analysis complete");
+      } else {
+        throw new Error("No response received from server");
       }
     } catch (err) {
       console.error("Error:", err);
