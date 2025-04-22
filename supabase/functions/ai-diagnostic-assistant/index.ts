@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
@@ -16,33 +15,60 @@ serve(async (req) => {
   try {
     const { query } = await req.json();
     
-    // More detailed environment variable logging
-    console.log("Environment Variables:", JSON.stringify(Deno.env.toObject(), null, 2));
+    // Comprehensive environment variable logging
+    console.log("All Environment Variables:", JSON.stringify(
+      Object.fromEntries(
+        Object.entries(Deno.env.toObject()).filter(([key]) => 
+          key.includes('OPENAI') || key.includes('API')
+        )
+      ), 
+      null, 2
+    ));
     
-    // Try multiple ways to retrieve the OpenAI API key
-    const openAIApiKey = 
-      Deno.env.get('OPENAI_API_KEY') || 
-      Deno.env.get('OpenAI API') || 
-      Deno.env.get('OPENAI_KEY');
-    
-    console.log("OpenAI API Key Retrieval Methods:", {
-      directKey: !!Deno.env.get('OPENAI_API_KEY'),
-      alternateKey: !!Deno.env.get('OpenAI API'),
-      fallbackKey: !!Deno.env.get('OPENAI_KEY')
-    });
+    // Enhanced key retrieval with detailed logging
+    const keyVariants = [
+      'OPENAI_API_KEY',
+      'OpenAI API',
+      'OPENAI_KEY',
+      'OPENAI_SECRET',
+      'OPEN_AI_KEY'
+    ];
+
+    let openAIApiKey = null;
+    for (const variant of keyVariants) {
+      const key = Deno.env.get(variant);
+      console.log(`Checking variant ${variant}:`, key ? 'Key found' : 'No key');
+      if (key) {
+        openAIApiKey = key;
+        break;
+      }
+    }
 
     if (!openAIApiKey) {
-      console.error("No OpenAI API key found through any retrieval method");
+      console.error("CRITICAL: No OpenAI API key found through any method");
       return new Response(JSON.stringify({ 
-        error: "API key not configured", 
-        response: "The OpenAI API key is not properly configured. Please check the Supabase secrets and ensure the key is set correctly."
+        error: "API key configuration failed", 
+        response: "Cannot find OpenAI API key. Please verify the secret in Supabase project settings.",
+        keyVariantsChecked: keyVariants
       }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    console.log("Processing technical query:", query);
+    // Validate key format (basic check)
+    if (!openAIApiKey.startsWith('sk-')) {
+      console.error("VALIDATION: API key does not start with expected 'sk-' prefix");
+      return new Response(JSON.stringify({ 
+        error: "Invalid API key format", 
+        response: "The OpenAI API key appears to be incorrectly formatted. Please regenerate your key.",
+      }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    console.log("Processing diagnostic query:", query);
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -102,4 +128,3 @@ serve(async (req) => {
     });
   }
 });
-
