@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
+import PageHeader from "@/components/layout/PageHeader";
 
 interface UnitPageProps {
   unitNumber: string;
@@ -54,3 +55,4 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
 };
 
 export default UnitPage;
+
