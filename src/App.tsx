@@ -4,7 +4,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -51,10 +50,10 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                {/* All homepage routes go to Index component which renders Dashboard */}
-                <Route path="/" element={<Index />} />
-                <Route path="/index" element={<Navigate to="/" replace />} />
-                <Route path="/dashboard" element={<Navigate to="/" replace />} />
+                {/* Direct Dashboard rendering for all homepage routes to prevent caching issues */}
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/index" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 
                 {/* All other routes */}
                 <Route path="/apprentices" element={<ApprenticesPage />} />
