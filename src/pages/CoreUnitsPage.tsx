@@ -38,8 +38,6 @@ const CoreUnitsPage = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-16">
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#FFC900] mb-6 text-center">NVQ Level 2 Core Units</h1>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
           {units.map((unit) => (
             <Card 
