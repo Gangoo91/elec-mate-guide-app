@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -30,6 +31,10 @@ import PracticeExamsPage from "./pages/PracticeExamsPage";
 import CertificationsPage from "./pages/CertificationsPage";
 import ErrorBoundary from "./components/ErrorBoundary";
 import CoreUnitsPage from "./pages/CoreUnitsPage";
+import Unit201Page from "./pages/study/nvq2/units/Unit201Page";
+import Unit202Page from "./pages/study/nvq2/units/Unit202Page";
+import Unit203Page from "./pages/study/nvq2/units/Unit203Page";
+import Unit204Page from "./pages/study/nvq2/units/Unit204Page";
 
 // Create QueryClient with optimized settings
 const queryClient = new QueryClient({
@@ -89,7 +94,15 @@ const App = () => (
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                
+                {/* Study materials routes */}
                 <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/core-units" element={<PrivateRoute><CoreUnitsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/core-units/201" element={<PrivateRoute><Unit201Page /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/core-units/202" element={<PrivateRoute><Unit202Page /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/core-units/203" element={<PrivateRoute><Unit203Page /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/core-units/204" element={<PrivateRoute><Unit204Page /></PrivateRoute>} />
+                
                 <Route path="/apprentices/study-materials/:studyType/*" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
