@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
+import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -105,7 +106,7 @@ const ApprenticesPage = () => {
     },
     {
       title: "Mentor Connect Hub",
-      description: "Connect with experienced electricians for guidance and support in your journey.",
+      description: "Connect with experienced electricians for guidance, support, and career advice on your professional journey.",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Find a Mentor", href: "/mentorship" }
     },
@@ -114,12 +115,6 @@ const ApprenticesPage = () => {
       description: "Support, community, and resources for apprentice mental health & well-being.",
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Learn more", onClick: () => setMhModalOpen(true) }
-    },
-    {
-      title: "Toolbox Talk Hub",
-      description: "Explore discussions, safety topics, and community conversation all in one space.",
-      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Join Discussion", href: "/toolbox-talk" }
     }
   ];
 
@@ -131,7 +126,7 @@ const ApprenticesPage = () => {
           description="Discover tools, resources, and opportunities designed specifically for electrical apprentices at every stage."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {apprenticeResources.map((resource, index) => (
             <ResourceCard 
               key={index}
