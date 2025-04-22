@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import BackButton from "@/components/navigation/BackButton";
 import MainLayout from "@/components/layout/MainLayout";
 import InteractiveQuiz from "@/components/study/InteractiveQuiz";
+import CourseContentSection from "@/components/study/CourseContentSection";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { BookOpen, ListCheck, ListOrdered } from "lucide-react";
@@ -19,25 +20,48 @@ interface UnitPageProps {
 
 const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }: UnitPageProps) => {
   const [interactiveContent, setInteractiveContent] = useState<any[]>([]);
+  const [courseContent, setCourseContent] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedContent, setSelectedContent] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchInteractiveContent = async () => {
-      const { data, error } = await supabase
-        .from('interactive_content')
-        .select('*')
-        .eq('unit_id', unitNumber);
-        
-      if (error) {
-        console.error('Error fetching interactive content:', error);
-      } else {
-        setInteractiveContent(data || []);
+    const fetchContent = async () => {
+      try {
+        // Fetch interactive content (quizzes)
+        const { data: quizData, error: quizError } = await supabase
+          .from('interactive_content')
+          .select('*')
+          .eq('unit_id', unitNumber);
+          
+        if (quizError) {
+          console.error('Error fetching interactive content:', quizError);
+        }
+
+        // Fetch course content
+        const { data: contentData, error: contentError } = await supabase
+          .from('course_content')
+          .select('*')
+          .eq('unit_id', unitNumber)
+          .order('order_index');
+
+        if (contentError) {
+          console.error('Error fetching course content:', contentError);
+        }
+
+        setInteractiveContent(quizData || []);
+        setCourseContent(contentData || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
       setLoading(false);
     };
 
-    fetchInteractiveContent();
+    fetchContent();
   }, [unitNumber]);
+
+  const handleContentSelect = (value: string) => {
+    setSelectedContent(value === selectedContent ? null : value);
+  };
 
   return (
     <MainLayout>
@@ -57,6 +81,7 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
 
           {/* Interactive Course Content */}
           <div className="grid md:grid-cols-2 gap-6">
+            {/* Course Content */}
             <Card className="bg-[#22251e] border-[#FFC900]/20">
               <CardHeader>
                 <div className="flex items-center gap-2">
@@ -65,28 +90,37 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
                 </div>
               </CardHeader>
               <CardContent>
-                <Accordion type="single" collapsible className="w-full">
-                  {content.map((item, index) => (
-                    <AccordionItem 
-                      key={index} 
-                      value={`item-${index}`}
-                      className="border-[#FFC900]/20"
-                    >
-                      <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
-                        {item}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-[#FFC900]/70">
-                        <div className="p-4 space-y-4">
-                          <p>Key points to remember:</p>
-                          <ul className="list-disc list-inside space-y-2 ml-4">
-                            <li>Understanding the core concepts</li>
-                            <li>Practical applications</li>
-                            <li>Common scenarios and solutions</li>
-                          </ul>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
+                <Accordion 
+                  type="single" 
+                  collapsible 
+                  className="w-full"
+                  value={selectedContent || ''}
+                  onValueChange={handleContentSelect}
+                >
+                  {content.map((item, index) => {
+                    const contentData = courseContent.find(c => c.section_title === item);
+                    
+                    return (
+                      <AccordionItem 
+                        key={index} 
+                        value={`item-${index}`}
+                        className="border-[#FFC900]/20"
+                      >
+                        <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
+                          {item}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-[#FFC900]/70">
+                          {contentData ? (
+                            <CourseContentSection content={contentData.content} />
+                          ) : (
+                            <div className="p-4 text-center text-[#FFC900]/50">
+                              Content coming soon...
+                            </div>
+                          )}
+                        </AccordionContent>
+                      </AccordionItem>
+                    );
+                  })}
                 </Accordion>
               </CardContent>
             </Card>
