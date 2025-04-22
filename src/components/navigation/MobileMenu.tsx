@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -34,10 +35,10 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
           href="#" 
           onClick={handleHomeClick} 
           className={`text-lg py-2 px-4 rounded-lg font-medium ${
-            isActive("/") || isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+            isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
           }`}
         >
-          {user ? "Dashboard" : "Home"}
+          Dashboard
         </a>
 
         {user ? (

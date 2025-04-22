@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -45,12 +46,12 @@ const Navbar = () => {
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
   const isHiddenUserMenuPath = hideUserMenuPaths.includes(location.pathname);
   
-  // Handle home navigation based on authentication status
+  // Handle logo click - now should always go to dashboard when logged in
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
     if (user) {
-      // Always go to dashboard when clicking the logo
+      // Always navigate to dashboard when clicking the logo
       navigate('/dashboard');
     } else {
       navigate('/welcome');
@@ -58,7 +59,8 @@ const Navbar = () => {
   };
 
   // Handle apprentice hub click to ensure role is properly set
-  const handleApprenticeHubClick = () => {
+  const handleApprenticeHubClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     localStorage.setItem('preferredRole', 'apprentice');
     navigate('/apprentice-hub');
   };
@@ -77,8 +79,8 @@ const Navbar = () => {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <div onClick={handleHomeClick} className="cursor-pointer">
-                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/') || isActive('/dashboard') || isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>
-                      {user ? 'Dashboard' : 'Home'}
+                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
+                      Dashboard
                     </NavigationMenuLink>
                   </div>
                 </NavigationMenuItem>
