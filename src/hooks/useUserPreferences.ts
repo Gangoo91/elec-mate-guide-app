@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 type UserPreferences = {
   preferredRole: string | null;
@@ -62,7 +62,7 @@ export const useUserPreferences = () => {
   }, []);
 
   // Update preferredRole and persist to localStorage
-  const setPreferredRole = (role: string | null) => {
+  const setPreferredRole = useCallback((role: string | null) => {
     try {
       console.log("Setting preferredRole:", role);
       
@@ -82,7 +82,7 @@ export const useUserPreferences = () => {
     } catch (error) {
       console.error("Error updating localStorage:", error);
     }
-  };
+  }, []);
 
   return {
     preferences,

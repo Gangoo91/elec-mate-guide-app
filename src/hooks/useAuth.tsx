@@ -1,5 +1,5 @@
 
-import { useEffect, useState, createContext, useContext } from "react";
+import { useEffect, useState, createContext, useContext, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   // Function to refresh the session manually
-  const refreshSession = async () => {
+  const refreshSession = useCallback(async () => {
     try {
       const { data, error } = await supabase.auth.getSession();
       if (error) throw error;
@@ -35,30 +35,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       // Cache auth data for faster initial loads
       if (data.session?.user) {
-        localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
-        localStorage.setItem('userAuthenticated', 'true');
+        sessionStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+        sessionStorage.setItem('userAuthenticated', 'true');
       } else {
-        localStorage.removeItem('userAuthData');
-        localStorage.removeItem('userAuthenticated');
+        sessionStorage.removeItem('userAuthData');
+        sessionStorage.removeItem('userAuthenticated');
       }
     } catch (error) {
       console.error("Error refreshing session:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     console.log("Auth provider initialized");
     
-    // Check localStorage first for a faster initial state
-    const hasAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
+    // Check sessionStorage first for a faster initial state
+    const hasAuthenticated = sessionStorage.getItem('userAuthenticated') === 'true';
     if (hasAuthenticated) {
-      const storedUser = localStorage.getItem('userAuthData');
+      const storedUser = sessionStorage.getItem('userAuthData');
       if (storedUser) {
         try {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
+          setLoading(false); // Reduce flicker while waiting for the auth check
         } catch (e) {
           // Invalid stored data, will be fixed by the auth check
         }
@@ -74,11 +75,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       // Cache auth data for faster initial loads
       if (currentSession?.user) {
-        localStorage.setItem('userAuthData', JSON.stringify(currentSession.user));
-        localStorage.setItem('userAuthenticated', 'true');
+        sessionStorage.setItem('userAuthData', JSON.stringify(currentSession.user));
+        sessionStorage.setItem('userAuthenticated', 'true');
       } else {
-        localStorage.removeItem('userAuthData');
-        localStorage.removeItem('userAuthenticated');
+        sessionStorage.removeItem('userAuthData');
+        sessionStorage.removeItem('userAuthenticated');
       }
       
       setLoading(false);
@@ -94,11 +95,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(data.session?.user ?? null);
         
         if (data.session?.user) {
-          localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
-          localStorage.setItem('userAuthenticated', 'true');
+          sessionStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+          sessionStorage.setItem('userAuthenticated', 'true');
         } else {
-          localStorage.removeItem('userAuthData');
-          localStorage.removeItem('userAuthenticated');
+          sessionStorage.removeItem('userAuthData');
+          sessionStorage.removeItem('userAuthenticated');
         }
       } catch (e) {
         console.error("Session check error:", e);

@@ -22,21 +22,20 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
       
       if (preferredRole === 'apprentice') {
         console.log("Mobile menu: Navigating to apprentice-hub based on preferredRole");
-        setPreferredRole('apprentice'); // Reinforce preference
         navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Mobile menu: Navigating to dashboard (no specific role preference)");
-        setPreferredRole(null); // Clear preference
+        setPreferredRole(null); // Ensure preference is cleared
         navigate('/dashboard', { replace: true });
       }
     } else {
-      navigate('/');
+      navigate('/welcome', { replace: true });
     }
   };
 
   const handleApprenticeHubClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("Mobile menu: Apprentice Hub clicked");
+    console.log("Mobile menu: Apprentice Hub clicked, setting role");
     setPreferredRole('apprentice');
     navigate('/apprentice-hub', { replace: true });
   };

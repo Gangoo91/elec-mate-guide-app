@@ -11,19 +11,18 @@ type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const { refreshSession, user } = useAuth();
-  const { preferences } = useUserPreferences();
+  const { refreshSession } = useAuth();
   
-  // Ensure auth session is refreshed on layout mount
+  // Ensure auth session is refreshed on layout mount - simplified to reduce unnecessary rerenders
   useEffect(() => {
-    console.log("MainLayout - Refreshing session, current preferred role:", preferences.preferredRole);
-    // Add a short delay to ensure auth state is stable
+    console.log("MainLayout - Refreshing session");
+    // Use a very small delay to ensure auth state is stable and prevent race conditions
     const refreshTimer = setTimeout(() => {
       refreshSession();
     }, 50);
     
     return () => clearTimeout(refreshTimer);
-  }, [refreshSession, preferences.preferredRole]);
+  }, [refreshSession]);
   
   return (
     <div className="flex flex-col min-h-screen bg-background">

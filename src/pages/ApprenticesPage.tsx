@@ -148,7 +148,7 @@ const ApprenticesPage = () => {
     setPreferredRole('apprentice');
     
     if (resource.fullCardLink) {
-      navigate(resource.fullCardLink);
+      navigate(resource.fullCardLink, { replace: true });
     } else if (resource.action?.onClick) {
       resource.action.onClick();
     }

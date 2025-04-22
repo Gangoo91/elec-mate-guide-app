@@ -19,11 +19,9 @@ const ApprenticeHub = memo(() => {
     console.log("ApprenticeHub - Component mounted, refreshing session");
     refreshSession();
     
-    // Set preferred role in localStorage with fallback
-    if (!loading) {
-      console.log("ApprenticeHub - Setting preferredRole to apprentice");
-      setPreferredRole('apprentice');
-    }
+    // Always set role to apprentice when on this page, even after reloads
+    console.log("ApprenticeHub - Setting preferredRole to apprentice");
+    setPreferredRole('apprentice');
     
     // Additional check to ensure navigation works after reload
     if (!loading && !user) {

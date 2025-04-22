@@ -47,12 +47,9 @@ const Dashboard = () => {
   useEffect(() => {
     refreshSession();
     
-    // Default to no specific role when viewing the dashboard
-    const currentPath = window.location.pathname;
-    if (currentPath === '/dashboard') {
-      console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
-      setPreferredRole(null);
-    }
+    // Always clear preferred role when viewing the dashboard
+    console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
+    setPreferredRole(null);
   }, [refreshSession, setPreferredRole]);
 
   // Handle role selection with direct navigation

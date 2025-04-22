@@ -133,23 +133,26 @@ const RootRedirect = () => {
     console.log("RootRedirect - Component mounted");
     refreshSession();
     
-    if (!loading) {
+    const redirectWithDelay = () => {
       if (user) {
         const preferredRole = preferences.preferredRole;
         console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
         
-        setTimeout(() => {
-          if (preferredRole === 'apprentice') {
-            console.log("RootRedirect - Navigating to apprentice hub");
-            navigate('/apprentice-hub', { replace: true });
-          } else {
-            console.log("RootRedirect - Navigating to dashboard");
-            navigate('/dashboard', { replace: true });
-          }
-        }, 100);
+        if (preferredRole === 'apprentice') {
+          console.log("RootRedirect - Navigating to apprentice hub");
+          navigate('/apprentice-hub', { replace: true });
+        } else {
+          console.log("RootRedirect - Navigating to dashboard");
+          navigate('/dashboard', { replace: true });
+        }
       } else {
         navigate('/welcome', { replace: true });
       }
+    };
+
+    // Only redirect if not loading
+    if (!loading) {
+      redirectWithDelay();
     }
   }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
   

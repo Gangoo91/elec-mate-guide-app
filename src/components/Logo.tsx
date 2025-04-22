@@ -36,13 +36,13 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
       
       if (preferredRole === 'apprentice') {
         console.log("Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub');
+        navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Navigating to dashboard (no specific role preference)");
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       }
     } else {
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
   };
 

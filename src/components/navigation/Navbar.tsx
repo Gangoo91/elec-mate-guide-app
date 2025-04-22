@@ -25,16 +25,17 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const { user, loading, refreshSession } = useAuth();
+  const { user, refreshSession } = useAuth();
   const { notifications } = useNotificationContext();
   const { setPreferredRole, preferences } = useUserPreferences();
 
-  // Refresh session when navbar is mounted
+  // Refresh session when navbar is mounted, but don't add preferences as dependency
   useEffect(() => {
     console.log("Navbar - Component mounted, refreshing session");
     refreshSession();
   }, [refreshSession]);
 
+  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
@@ -57,11 +58,10 @@ const Navbar = () => {
       
       if (preferredRole === 'apprentice') {
         console.log("Navbar: Navigating to apprentice-hub based on preferredRole");
-        setPreferredRole('apprentice'); // Reinforce preference
         navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Navbar: Navigating to dashboard (no specific role preference)");
-        setPreferredRole(null); // Clear preference
+        setPreferredRole(null); // Ensure preference is cleared when going to dashboard
         navigate('/dashboard', { replace: true });
       }
     } else {

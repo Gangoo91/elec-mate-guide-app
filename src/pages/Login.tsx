@@ -10,10 +10,15 @@ import { Loader2 } from "lucide-react";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Login = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { preferences } = useUserPreferences();
+
+  // On component mount, ensure we have the latest session
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
   
   // Redirect authenticated users based on preferred role
   useEffect(() => {
