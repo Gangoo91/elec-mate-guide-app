@@ -1,14 +1,22 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
+import { useAuth } from "@/hooks/useAuth";
 
 type MainLayoutProps = {
   children: React.ReactNode;
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const { refreshSession } = useAuth();
+  
+  // Ensure auth session is refreshed on layout mount
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
+  
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />

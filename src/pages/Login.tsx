@@ -9,13 +9,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
   
   // Redirect authenticated users based on preferred role
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       setIsRedirecting(true);
       const preferredRole = localStorage.getItem('preferredRole');
       console.log("Login - User authenticated, preferred role:", preferredRole);
@@ -33,10 +33,18 @@ const Login = () => {
       
       return () => clearTimeout(redirectTimeout);
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
 
   // Memoize the logo component to prevent unnecessary re-renders
-  const MemoizedLogo = memo(() => <Logo size={70} />);
+  const MemoizedLogo = memo(() => (
+    <Logo 
+      size={70} 
+      onClick={(e) => {
+        e.preventDefault();
+        navigate('/welcome');
+      }}
+    />
+  ));
   MemoizedLogo.displayName = "MemoizedLogo";
 
   return (

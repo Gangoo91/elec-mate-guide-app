@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -56,13 +55,13 @@ const Navbar = () => {
       
       if (preferredRole === 'apprentice') {
         console.log("Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub', { replace: true });
+        navigate('/apprentice-hub');
       } else {
         console.log("Navigating to dashboard (no specific role preference)");
-        navigate('/dashboard', { replace: true });
+        navigate('/dashboard');
       }
     } else {
-      navigate('/welcome', { replace: true });
+      navigate('/welcome');
     }
   };
 
@@ -71,7 +70,7 @@ const Navbar = () => {
     e.preventDefault();
     console.log("Apprentice hub clicked, setting role and navigating");
     localStorage.setItem('preferredRole', 'apprentice');
-    navigate('/apprentice-hub', { replace: true });
+    navigate('/apprentice-hub');
   };
 
   return (
