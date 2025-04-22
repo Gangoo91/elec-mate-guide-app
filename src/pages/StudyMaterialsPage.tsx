@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -7,6 +8,11 @@ import StudyUnitContent from "@/components/study/StudyUnitContent";
 import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import CoreUnitsPage from "@/pages/CoreUnitsPage";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
+
+// Lazy load the NVQ2 specific pages
+const InteractiveLessonsPage = lazy(() => import('./study/nvq2/InteractiveLessonsPage'));
+const QuizzesProgressPage = lazy(() => import('./study/nvq2/QuizzesProgressPage'));
+const VideoContentPage = lazy(() => import('./study/nvq2/VideoContentPage'));
 
 const StudyMaterialsPage = () => {
   const params = useParams();
@@ -41,13 +47,25 @@ const StudyMaterialsPage = () => {
           <Route path="/*" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
           <Route path="/core-units" element={<CoreUnitsPage />} />
           <Route path="/interactive-lessons" element={
-            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/InteractiveLessonsPage')) : <CoreUnitsPage />
+            studyType === 'nvq2' ? (
+              <Suspense fallback={<div>Loading...</div>}>
+                <InteractiveLessonsPage />
+              </Suspense>
+            ) : <CoreUnitsPage />
           } />
           <Route path="/quizzes" element={
-            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/QuizzesProgressPage')) : <CoreUnitsPage />
+            studyType === 'nvq2' ? (
+              <Suspense fallback={<div>Loading...</div>}>
+                <QuizzesProgressPage />
+              </Suspense>
+            ) : <CoreUnitsPage />
           } />
           <Route path="/videos" element={
-            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/VideoContentPage')) : <CoreUnitsPage />
+            studyType === 'nvq2' ? (
+              <Suspense fallback={<div>Loading...</div>}>
+                <VideoContentPage />
+              </Suspense>
+            ) : <CoreUnitsPage />
           } />
         </Routes>
       );
