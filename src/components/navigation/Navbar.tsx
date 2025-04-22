@@ -70,9 +70,9 @@ const Navbar = () => {
                 {user && (
                   <>
                     <NavigationMenuItem>
-                      <Link to="/apprentices">
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentices') ? 'bg-[#FFC900]/10' : ''}`}>
-                          Apprentices
+                      <Link to="/apprentice-hub">
+                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>
+                          Apprentice Hub
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>

@@ -32,12 +32,12 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
         {user ? (
           <>
             <Link
-              to="/apprentices"
+              to="/apprentice-hub"
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/apprentices") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+                isActive("/apprentice-hub") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
-              Apprentices
+              Apprentice Hub
             </Link>
             <Link
               to="/electricians"

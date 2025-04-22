@@ -35,6 +35,7 @@ import Unit201Page from "./pages/study/nvq2/units/Unit201Page";
 import Unit202Page from "./pages/study/nvq2/units/Unit202Page";
 import Unit203Page from "./pages/study/nvq2/units/Unit203Page";
 import Unit204Page from "./pages/study/nvq2/units/Unit204Page";
+import ApprenticeHub from "./pages/ApprenticeHub";
 
 // Create QueryClient with optimized settings
 const queryClient = new QueryClient({
@@ -91,6 +92,7 @@ const App = () => (
                 {/* Routes that require authentication */}
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/apprentices" element={<PrivateRoute><ApprenticesPage /></PrivateRoute>} />
+                <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
