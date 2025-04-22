@@ -4,20 +4,35 @@ import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import LearningHub from "@/components/apprentices/LearningHub";
-import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
-import { Award } from "lucide-react";
+import { Award, BookOpen, FileText, BookText } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import ProgressSummary from "@/components/apprentices/ProgressSummary";
 
 const ApprenticeHub = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  // This would typically come from a database, but for now we'll use mock data
-  const userProgress = {
-    completed: 2,
-    total: 10,
-    percentComplete: 20
-  };
+  const featuredResources = [
+    {
+      title: "18th Edition Wiring Regulations",
+      description: "Latest updates and requirements for electrical installations",
+      icon: <FileText className="h-5 w-5 text-[#FFC900]" />,
+      action: () => navigate("/apprentices/study-materials/regulations")
+    },
+    {
+      title: "NVQ Level 2 Core Units",
+      description: "Essential units for your electrical qualification",
+      icon: <BookText className="h-5 w-5 text-[#FFC900]" />,
+      action: () => navigate("/apprentices/study-materials/nvq2/core-units")
+    },
+    {
+      title: "Practice Exams",
+      description: "Test your knowledge with mock assessments",
+      icon: <BookOpen className="h-5 w-5 text-[#FFC900]" />,
+      action: () => navigate("/apprentices/practice-exams")
+    }
+  ];
 
   return (
     <MainLayout>
@@ -37,34 +52,53 @@ const ApprenticeHub = () => {
             <Button 
               className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10" 
               variant="outline"
+              onClick={() => navigate("/apprentices/practice-exams")}
             >
-              Track Progress
+              Practice Tests
             </Button>
           </div>
         </div>
         
-        {/* Progress Overview */}
-        <div className="mb-8 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-[#FFC900] flex items-center gap-2">
-              <Award className="h-5 w-5" />
-              Learning Progress
-            </h2>
-            <span className="text-[#FFC900] font-medium">
-              {userProgress.completed}/{userProgress.total} Units
-            </span>
+        {/* Main content area - two column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left column - Progress Summary */}
+          <div className="lg:col-span-1">
+            <ProgressSummary />
+            
+            {/* Featured Resources */}
+            <Card className="bg-[#22251e] border-[#FFC900]/20 mt-6">
+              <CardHeader>
+                <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                  <Award className="h-5 w-5" />
+                  Featured Resources
+                </CardTitle>
+                <CardDescription className="text-[#FFC900]/70">
+                  Recommended materials for your level
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {featuredResources.map((resource, index) => (
+                  <div 
+                    key={index}
+                    className="p-3 border border-[#FFC900]/20 rounded-md hover:bg-[#FFC900]/5 hover:border-[#FFC900]/40 cursor-pointer transition-colors"
+                    onClick={resource.action}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      {resource.icon}
+                      <h3 className="font-medium text-[#FFC900]">{resource.title}</h3>
+                    </div>
+                    <p className="text-sm text-[#FFC900]/60 ml-7">{resource.description}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </div>
-          <Progress value={userProgress.percentComplete} className="h-2 bg-[#151812]" />
-          <p className="text-[#FFC900]/70 text-sm mt-2">
-            You've completed {userProgress.percentComplete}% of your learning material.
-            {userProgress.percentComplete < 50 ? 
-              " Keep going!" : 
-              " Great progress!"}
-          </p>
+          
+          {/* Right column - Learning Hub */}
+          <div className="lg:col-span-2">
+            <LearningHub />
+          </div>
         </div>
-
-        {/* Main content area */}
-        <LearningHub />
       </div>
     </MainLayout>
   );
