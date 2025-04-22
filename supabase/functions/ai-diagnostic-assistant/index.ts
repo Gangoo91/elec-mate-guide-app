@@ -20,6 +20,8 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
+    console.log('Received query:', query);
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -49,6 +51,7 @@ serve(async (req) => {
     }
 
     const data = await response.json();
+    console.log('Received response from OpenAI');
     const assistantResponse = data.choices[0].message.content;
 
     return new Response(JSON.stringify({ response: assistantResponse }), {

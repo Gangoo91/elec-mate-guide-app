@@ -13,11 +13,30 @@ serve(async (req) => {
   }
 
   try {
-    const { query } = await req.json();
+    const { query, mode = 'find' } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
+    }
+
+    console.log('Received query:', query, 'Mode:', mode);
+
+    let systemPrompt;
+    if (mode === 'find') {
+      systemPrompt = `You are an expert on UK electrical regulations, particularly BS 7671 (IET Wiring Regulations).
+                     Search your knowledge base and provide specific regulations related to the user's query.
+                     Format your response with regulation numbers and direct quotes where applicable.
+                     Provide explanations in clear, concise language appropriate for apprentice electricians.
+                     Focus on UK electrical standards only.
+                     If you're unsure about any specific regulation, clearly state that.`;
+    } else {
+      systemPrompt = `You are an expert on UK electrical compliance and regulations.
+                     Evaluate the described installation or scenario against current UK electrical regulations (BS 7671).
+                     Identify any potential compliance issues or violations.
+                     Provide specific references to relevant regulations.
+                     Suggest corrective actions if needed.
+                     Format your response in clear sections: Evaluation, Compliance Issues (if any), and Recommendations.`;
     }
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -29,16 +48,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { 
-            role: 'system', 
-            content: `You are an AI electrical regulations expert specializing in helping apprentice electricians understand compliance requirements.
-                     Focus on UK electrical standards and regulations, including BS 7671 (IET Wiring Regulations).
-                     Provide clear, accurate, and structured responses about UK electrical regulations, codes, and compliance requirements.
-                     Always cite relevant standards or codes when applicable, especially BS 7671 and other relevant UK standards.
-                     Format responses in a clear, structured way.
-                     If a regulation is complex or situational, recommend consulting a licensed electrician or relevant authority.
-                     Keep responses focused and under 200 words.` 
-          },
+          { role: 'system', content: systemPrompt },
           { role: 'user', content: query }
         ],
       }),
@@ -51,13 +61,14 @@ serve(async (req) => {
     }
 
     const data = await response.json();
+    console.log('Received response from OpenAI');
     const assistantResponse = data.choices[0].message.content;
 
     return new Response(JSON.stringify({ response: assistantResponse }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Error in regulations assistant:', error);
+    console.error('Error in Regulations Assistant:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

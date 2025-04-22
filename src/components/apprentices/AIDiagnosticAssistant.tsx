@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { CircuitBoard } from "lucide-react";
 
 const AIDiagnosticAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -23,47 +23,52 @@ const AIDiagnosticAssistant: React.FC = () => {
         body: JSON.stringify({ query })
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error calling function:", error);
+        throw error;
+      }
 
-      setResponse(data.response);
+      console.log("Response from function:", data);
+      setResponse(data.response || "No response from the AI assistant. Please try again.");
       toast.success("Diagnostic assistance retrieved");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to get diagnostic assistance");
+      console.error("Caught error:", err);
+      toast.error("Failed to get diagnostic assistance. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Card className="bg-[#22251e] border-[#FFC900]/20">
-      <CardHeader>
-        <CardTitle className="text-[#FFC900]">AI Diagnostic Assistant</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <Textarea 
-            placeholder="Describe your technical challenge or electrical issue..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
-          />
-          <Button 
-            onClick={handleDiagnosticQuery} 
-            disabled={isLoading}
-            className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
-          >
-            {isLoading ? 'Getting Assistance...' : 'Get Diagnostic Help'}
-          </Button>
-          {response && (
-            <div className="mt-4 p-3 bg-[#2C2F24] rounded text-[#FFC900]/80">
-              <h4 className="font-semibold mb-2">Diagnostic Response:</h4>
-              <p>{response}</p>
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <CircuitBoard className="h-6 w-6 text-[#FFC900]" />
+        <h2 className="text-xl font-semibold text-[#FFC900]">AI Diagnostic Assistant</h2>
+      </div>
+      
+      <div className="space-y-4">
+        <Textarea 
+          placeholder="Describe your technical challenge or electrical issue..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
+        />
+        <Button 
+          onClick={handleDiagnosticQuery} 
+          disabled={isLoading}
+          className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
+        >
+          <CircuitBoard className="h-4 w-4 mr-2" />
+          {isLoading ? 'Getting Assistance...' : 'Get Diagnostic Help'}
+        </Button>
+        {response && (
+          <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
+            <h4 className="font-semibold mb-2 text-[#FFC900]">Diagnostic Response:</h4>
+            <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
