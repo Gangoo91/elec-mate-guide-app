@@ -11,10 +11,19 @@ const Login = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
-  // Redirect authenticated users to dashboard
+  // Redirect authenticated users based on preferred role
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      const preferredRole = localStorage.getItem('preferredRole');
+      console.log("Login - User authenticated, preferred role:", preferredRole);
+      
+      if (preferredRole === 'apprentice') {
+        console.log("Login - Redirecting to apprentice hub");
+        navigate("/apprentice-hub", { replace: true });
+      } else {
+        console.log("Login - Redirecting to dashboard");
+        navigate("/dashboard", { replace: true });
+      }
     }
   }, [user, navigate]);
 

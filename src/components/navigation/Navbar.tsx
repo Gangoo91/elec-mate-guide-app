@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -45,14 +46,21 @@ const Navbar = () => {
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
   const isHiddenUserMenuPath = hideUserMenuPaths.includes(location.pathname);
   
-  // Handle logo click - ALWAYS navigate to dashboard when logged in
+  // Handle logo click - navigate based on preferences
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("Logo clicked, navigating to dashboard");
     
     if (user) {
-      // Always navigate to dashboard when clicking the logo
-      navigate('/dashboard', { replace: true });
+      const preferredRole = localStorage.getItem('preferredRole');
+      console.log("Logo clicked, preferredRole:", preferredRole);
+      
+      if (preferredRole === 'apprentice') {
+        console.log("Navigating to apprentice-hub based on preferredRole");
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        console.log("Navigating to dashboard (no specific role preference)");
+        navigate('/dashboard', { replace: true });
+      }
     } else {
       navigate('/welcome', { replace: true });
     }
@@ -79,7 +87,11 @@ const Navbar = () => {
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <div onClick={handleHomeClick} className="cursor-pointer">
+                  <div onClick={() => {
+                    console.log("Dashboard menu item clicked - clearing preferredRole");
+                    localStorage.removeItem('preferredRole');
+                    navigate('/dashboard', { replace: true });
+                  }} className="cursor-pointer">
                     <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
                       Dashboard
                     </NavigationMenuLink>
@@ -99,7 +111,10 @@ const Navbar = () => {
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                       <div 
-                        onClick={() => navigate('/electricians')}
+                        onClick={() => {
+                          localStorage.removeItem('preferredRole');
+                          navigate('/electricians', { replace: true });
+                        }}
                         className="cursor-pointer"
                       >
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''}`}>
@@ -109,7 +124,10 @@ const Navbar = () => {
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                       <div 
-                        onClick={() => navigate('/employers')}
+                        onClick={() => {
+                          localStorage.removeItem('preferredRole');
+                          navigate('/employers', { replace: true });
+                        }}
                         className="cursor-pointer"
                       >
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''}`}>

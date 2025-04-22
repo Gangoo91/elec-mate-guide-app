@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,11 +13,18 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("Mobile menu: Dashboard clicked");
     
     if (user) {
-      // Always navigate to dashboard when clicking home
-      navigate('/dashboard', { replace: true });
+      const preferredRole = localStorage.getItem('preferredRole');
+      console.log("Mobile menu: Home clicked, preferredRole:", preferredRole);
+      
+      if (preferredRole === 'apprentice') {
+        console.log("Mobile menu: Navigating to apprentice-hub based on preferredRole");
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        console.log("Mobile menu: Navigating to dashboard (no specific role preference)");
+        navigate('/dashboard', { replace: true });
+      }
     } else {
       navigate('/');
     }
@@ -29,12 +37,31 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
     navigate('/apprentice-hub', { replace: true });
   };
 
+  const handleElectriciansClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Mobile menu: Electricians clicked");
+    localStorage.removeItem('preferredRole'); 
+    navigate('/electricians', { replace: true });
+  };
+
+  const handleEmployersClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Mobile menu: Employers clicked");
+    localStorage.removeItem('preferredRole');
+    navigate('/employers', { replace: true });
+  };
+
   return (
     <div className="md:hidden border-t border-[#FFC900]/20 bg-[#151812] px-4 py-2 pb-4">
       <nav className="flex flex-col space-y-3">
         <a 
           href="#" 
-          onClick={handleHomeClick} 
+          onClick={(e) => {
+            e.preventDefault();
+            console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
+            localStorage.removeItem('preferredRole');
+            navigate('/dashboard', { replace: true });
+          }} 
           className={`text-lg py-2 px-4 rounded-lg font-medium ${
             isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
           }`}
@@ -53,22 +80,24 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
             >
               Apprentice Hub
             </a>
-            <Link
-              to="/electricians"
+            <a
+              href="#"
+              onClick={handleElectriciansClick}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/electricians") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Electricians
-            </Link>
-            <Link
-              to="/employers"
+            </a>
+            <a
+              href="#"
+              onClick={handleEmployersClick}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/employers") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Employers
-            </Link>
+            </a>
             <Link
               to="/faq"
               className={`text-lg py-2 px-4 rounded-lg font-medium ${

@@ -98,9 +98,11 @@ const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  // Ensure we're setting the role preference and refreshing the session
   useEffect(() => {
-    refreshSession();
+    console.log("ApprenticesPage - Setting preferredRole to apprentice");
     localStorage.setItem('preferredRole', 'apprentice');
+    refreshSession();
   }, [refreshSession]);
 
   const apprenticeResources = [
@@ -142,6 +144,10 @@ const ApprenticesPage = () => {
 
   const handleResourceCardClick = (resource: any) => {
     console.log("Resource card clicked:", resource.title);
+    
+    // Ensure we maintain the apprentice role preference when clicking cards
+    localStorage.setItem('preferredRole', 'apprentice');
+    
     if (resource.fullCardLink) {
       navigate(resource.fullCardLink);
     } else if (resource.action?.onClick) {
@@ -162,7 +168,7 @@ const ApprenticesPage = () => {
             <div 
               key={index}
               onClick={() => handleResourceCardClick(resource)}
-              className="cursor-pointer z-10 relative" // Added z-index and relative positioning
+              className="cursor-pointer z-10 relative" 
             >
               <ResourceCard 
                 title={resource.title}

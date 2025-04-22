@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -69,8 +70,15 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && user) {
-      // If user is already logged in, always navigate to dashboard regardless of preferred role
-      navigate('/dashboard', { replace: true });
+      // If user is already logged in, navigate based on their preferred role if set
+      const preferredRole = localStorage.getItem('preferredRole');
+      console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
+      
+      if (preferredRole === 'apprentice') {
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     }
   }, [user, loading, navigate]);
   
@@ -111,7 +119,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
-// Special redirect component for root route
+// Special redirect component for root route that respects saved preferences
 const RootRedirect = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -119,8 +127,17 @@ const RootRedirect = () => {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        // Always navigate to dashboard when at root path
-        navigate('/dashboard', { replace: true });
+        // Check for preferred role in localStorage
+        const preferredRole = localStorage.getItem('preferredRole');
+        console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
+        
+        if (preferredRole === 'apprentice') {
+          console.log("RootRedirect - Navigating to apprentice hub");
+          navigate('/apprentice-hub', { replace: true });
+        } else {
+          console.log("RootRedirect - Navigating to dashboard");
+          navigate('/dashboard', { replace: true });
+        }
       } else {
         navigate('/welcome', { replace: true });
       }

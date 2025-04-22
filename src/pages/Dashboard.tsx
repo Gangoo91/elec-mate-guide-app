@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
@@ -32,7 +32,7 @@ const roles = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const {
     query,
     setQuery,
@@ -41,13 +41,31 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
+  // Ensure the session is fresh when visiting dashboard
+  useEffect(() => {
+    refreshSession();
+    
+    // Default to no specific role when viewing the dashboard
+    const currentPath = window.location.pathname;
+    if (currentPath === '/dashboard') {
+      console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
+      localStorage.removeItem('preferredRole');
+    }
+  }, [refreshSession]);
+
   // Handle role selection with direct navigation
   const handleRoleSelected = (role: any) => {
     console.log("Role selected:", role.label);
     if (role.label === 'Apprentices') {
+      console.log("Setting preferredRole to apprentice");
       localStorage.setItem('preferredRole', 'apprentice');
+      navigate(role.path, { replace: true });
+    } else {
+      // For other roles, clear the preference
+      console.log("Clearing preferredRole for non-apprentice role");
+      localStorage.removeItem('preferredRole');
+      navigate(role.path, { replace: true });
     }
-    navigate(role.path);
   };
   
   // Show loading state while authenticating
