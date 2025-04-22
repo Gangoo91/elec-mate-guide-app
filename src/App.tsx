@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -15,6 +14,8 @@ import Terms from "./pages/Terms";
 import Profile from "./pages/Profile";
 import ApprenticesPage from "./pages/ApprenticesPage";
 import ElectriciansPage from "./pages/ElectriciansPage";
+import ElectriciansMentalHealth from "./pages/ElectriciansMentalHealth";
+import ElectriciansToolboxTalk from "./pages/ElectriciansToolboxTalk";
 import EmployersPage from "./pages/EmployersPage";
 import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
@@ -150,6 +151,8 @@ const App = () => (
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
                 <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
+                <Route path="/electricians/mental-health" element={<PrivateRoute><ElectriciansMentalHealth /></PrivateRoute>} />
+                <Route path="/electricians/toolbox-talk" element={<PrivateRoute><ElectriciansToolboxTalk /></PrivateRoute>} />
                 <Route path="/employers" element={<PrivateRoute><EmployersPage /></PrivateRoute>} />
                 <Route path="/mental-health" element={<PrivateRoute><MentalHealth /></PrivateRoute>} />
                 <Route path="/mentorship" element={<PrivateRoute><Mentorship /></PrivateRoute>} />
