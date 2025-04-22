@@ -9,7 +9,7 @@ import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 
 const StudyMaterialsPage = () => {
-  const { studyType } = useParams();
+  const { studyType } = useParams<{ studyType: string }>();
   const navigate = useNavigate();
 
   // Define valid study types and map URL parameters to content keys
