@@ -17,6 +17,13 @@ type DashboardRoleGridProps = {
 };
 
 const DashboardRoleGrid = ({ roles, filteredRoles, onRoleSelected }: DashboardRoleGridProps) => {
+  const handleRoleClick = (role: Role) => {
+    console.log("Grid handling role click:", role.label);
+    if (onRoleSelected) {
+      onRoleSelected(role);
+    }
+  };
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto px-4 md:px-8">
       {filteredRoles.length === 0 ? (
@@ -40,7 +47,7 @@ const DashboardRoleGrid = ({ roles, filteredRoles, onRoleSelected }: DashboardRo
           >
             <DashboardRoleCard 
               {...role} 
-              onClick={onRoleSelected ? () => onRoleSelected(role) : undefined}
+              onClick={() => handleRoleClick(role)} 
             />
           </motion.div>
         ))

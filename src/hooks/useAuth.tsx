@@ -23,31 +23,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [initialized, setInitialized] = useState(false);
-
-  // Check localStorage first for a faster initial state
-  useEffect(() => {
-    const hasAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
-    if (hasAuthenticated) {
-      // This will be overridden by the actual session check, but prevents flickering
-      const storedUser = localStorage.getItem('userAuthData');
-      if (storedUser) {
-        try {
-          const parsedUser = JSON.parse(storedUser);
-          setUser(parsedUser);
-          setLoading(false);
-        } catch (e) {
-          // Invalid stored data, will be fixed by the actual auth check
-        }
-      }
-    }
-    
-    setInitialized(true);
-  }, []);
 
   // Function to refresh the session manually
   const refreshSession = async () => {
-    setLoading(true);
     try {
       const { data, error } = await supabase.auth.getSession();
       if (error) throw error;
@@ -71,36 +49,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (!initialized) return;
-    
     console.log("Auth provider initialized");
     
-    // First check for existing session synchronously to prevent flicker
-    const initialSessionCheck = async () => {
-      try {
-        const { data } = await supabase.auth.getSession();
-        console.log("Initial session check:", data.session ? "exists" : "none");
-        setSession(data.session);
-        setUser(data.session?.user ?? null);
-        
-        // Cache auth data for faster initial loads
-        if (data.session?.user) {
-          localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
-          localStorage.setItem('userAuthenticated', 'true');
-        } else {
-          localStorage.removeItem('userAuthData');
-          localStorage.removeItem('userAuthenticated');
+    // Check localStorage first for a faster initial state
+    const hasAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
+    if (hasAuthenticated) {
+      const storedUser = localStorage.getItem('userAuthData');
+      if (storedUser) {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        } catch (e) {
+          // Invalid stored data, will be fixed by the auth check
         }
-      } catch (e) {
-        console.error("Session check error:", e);
-      } finally {
-        setLoading(false);
       }
-    };
+    }
     
-    initialSessionCheck();
-
-    // Then set up the auth state change listener
+    // Set up the auth state change listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, currentSession) => {
       console.log("Auth state changed:", event);
       
@@ -119,19 +84,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     });
 
+    // Then check for existing session
+    const initialSessionCheck = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        console.log("Initial session check:", data.session ? "exists" : "none");
+        
+        setSession(data.session);
+        setUser(data.session?.user ?? null);
+        
+        if (data.session?.user) {
+          localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+          localStorage.setItem('userAuthenticated', 'true');
+        } else {
+          localStorage.removeItem('userAuthData');
+          localStorage.removeItem('userAuthenticated');
+        }
+      } catch (e) {
+        console.error("Session check error:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    initialSessionCheck();
+
     // Add a safety timeout in case the auth check gets stuck
     const safetyTimer = setTimeout(() => {
       if (loading) {
         console.log("Auth loading timeout triggered");
         setLoading(false);
       }
-    }, 1000); // Reduced timeout
+    }, 2000);
 
     return () => {
       subscription.unsubscribe();
       clearTimeout(safetyTimer);
     };
-  }, [initialized]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, refreshSession }}>

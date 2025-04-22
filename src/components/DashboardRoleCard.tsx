@@ -11,8 +11,8 @@ type DashboardRoleCardProps = {
 };
 
 const DashboardRoleCard = ({ label, icon, path, description, onClick }: DashboardRoleCardProps) => {
-  // Simple click handler without preventDefault to ensure navigation works correctly
   const handleClick = () => {
+    console.log(`Role card clicked: ${label}`);
     if (onClick) {
       onClick({ label, path });
     }
@@ -22,6 +22,9 @@ const DashboardRoleCard = ({ label, icon, path, description, onClick }: Dashboar
     <div 
       className="bg-[#151812]/80 rounded-2xl border border-[#FFC900]/20 p-6 hover:border-[#FFC900]/40 transition-all duration-300 cursor-pointer"
       onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      aria-label={`Select ${label} role`}
     >
       <div className="flex items-center gap-3 mb-3">
         <div className="text-[#FFC900]">

@@ -1,15 +1,13 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
-import { useDashboardController } from "@/hooks/useDashboardController";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate, useNavigate } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import PageHeader from "@/components/layout/PageHeader";
 
 const roles = [
   {
@@ -43,12 +41,7 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
-  // Simple check for auth
-  if (!loading && !user) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  // Handle role selection with direct navigation - no state changes that could cause flickering
+  // Handle role selection with direct navigation
   const handleRoleSelected = (role: any) => {
     console.log("Role selected:", role.label);
     if (role.label === 'Apprentices') {
@@ -56,6 +49,22 @@ const Dashboard = () => {
     }
     navigate(role.path);
   };
+  
+  // Show loading state while authenticating
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="min-h-screen bg-[#22251e] flex items-center justify-center">
+          <LoadingSpinner size="lg" message="Loading dashboard..." />
+        </div>
+      </MainLayout>
+    );
+  }
+  
+  // If not authenticated, redirect to login
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
   
   return (
     <MainLayout>
