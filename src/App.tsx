@@ -51,9 +51,12 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
+                {/* All homepage routes go to Index component which renders Dashboard */}
                 <Route path="/" element={<Index />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
                 <Route path="/dashboard" element={<Navigate to="/" replace />} />
+                
+                {/* All other routes */}
                 <Route path="/apprentices" element={<ApprenticesPage />} />
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
                 <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />

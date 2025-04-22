@@ -3,8 +3,9 @@ import React from "react";
 import Dashboard from "./Dashboard";
 
 /**
- * This component ensures we always render the Dashboard component
- * as the main landing page of the application
+ * Main application entry point - renders the Dashboard component
+ * This component must remain simple with no routing logic or conditionals
+ * to ensure consistent behavior across all environments
  */
 const Index = () => {
   return <Dashboard />;
