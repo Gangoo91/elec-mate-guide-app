@@ -24,6 +24,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Check localStorage first for a faster initial state
+  useEffect(() => {
+    const hasAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
+    if (hasAuthenticated) {
+      // This will be overridden by the actual session check, but prevents flickering
+      const storedUser = localStorage.getItem('userAuthData');
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (e) {
+          // Invalid stored data, will be fixed by the actual auth check
+        }
+      }
+    }
+  }, []);
+
   // Function to refresh the session manually
   const refreshSession = async () => {
     setLoading(true);
@@ -33,6 +49,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       setSession(data.session);
       setUser(data.session?.user ?? null);
+      
+      // Cache auth data for faster initial loads
+      if (data.session?.user) {
+        localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+      } else {
+        localStorage.removeItem('userAuthData');
+      }
     } catch (error) {
       console.error("Error refreshing session:", error);
     } finally {
@@ -42,14 +65,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     console.log("Auth provider initialized");
-    setLoading(true);
-
+    
     // First check for existing session synchronously to prevent flicker
     const initialSessionCheck = async () => {
       const { data } = await supabase.auth.getSession();
       console.log("Initial session check:", data.session ? "exists" : "none");
       setSession(data.session);
       setUser(data.session?.user ?? null);
+      
+      // Cache auth data for faster initial loads
+      if (data.session?.user) {
+        localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+      }
+      
       setLoading(false);
     };
     
@@ -61,6 +89,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
+      
+      // Cache auth data for faster initial loads
+      if (currentSession?.user) {
+        localStorage.setItem('userAuthData', JSON.stringify(currentSession.user));
+      } else {
+        localStorage.removeItem('userAuthData');
+      }
+      
       setLoading(false);
     });
 
@@ -70,7 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("Auth loading timeout triggered");
         setLoading(false);
       }
-    }, 3000);
+    }, 1500); // Reduced timeout
 
     return () => {
       subscription.unsubscribe();
@@ -84,6 +120,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem('userAuthenticated', 'true');
     } else if (!loading) {
       localStorage.removeItem('userAuthenticated');
+      localStorage.removeItem('userAuthData');
     }
   }, [user, loading]);
 
