@@ -1,9 +1,12 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import BackButton from "@/components/navigation/BackButton";
 import MainLayout from "@/components/layout/MainLayout";
+import InteractiveQuiz from "@/components/study/InteractiveQuiz";
+import { supabase } from "@/integrations/supabase/client";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface UnitPageProps {
   unitNumber: string;
@@ -14,6 +17,27 @@ interface UnitPageProps {
 }
 
 const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }: UnitPageProps) => {
+  const [interactiveContent, setInteractiveContent] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInteractiveContent = async () => {
+      const { data, error } = await supabase
+        .from('interactive_content')
+        .select('*')
+        .eq('unit_id', unitNumber);
+        
+      if (error) {
+        console.error('Error fetching interactive content:', error);
+      } else {
+        setInteractiveContent(data || []);
+      }
+      setLoading(false);
+    };
+
+    fetchInteractiveContent();
+  }, [unitNumber]);
+
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
@@ -64,6 +88,26 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
               </div>
             </CardContent>
           </Card>
+
+          {loading ? (
+            <div className="flex justify-center p-8">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {interactiveContent.map((content) => (
+                <div key={content.id}>
+                  {content.content_type === 'quiz' && (
+                    <InteractiveQuiz
+                      contentId={content.id}
+                      title={content.title}
+                      questions={content.content.questions}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </MainLayout>

@@ -9,6 +9,39 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      interactive_content: {
+        Row: {
+          content: Json
+          content_type: string
+          created_at: string | null
+          description: string | null
+          id: string
+          title: string
+          unit_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          content: Json
+          content_type: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          title: string
+          unit_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          content?: Json
+          content_type?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          title?: string
+          unit_id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       mental_health_resources: {
         Row: {
           created_at: string | null
@@ -179,6 +212,44 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      user_progress: {
+        Row: {
+          content_id: string
+          created_at: string | null
+          id: string
+          last_accessed: string | null
+          progress: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content_id: string
+          created_at?: string | null
+          id?: string
+          last_accessed?: string | null
+          progress?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content_id?: string
+          created_at?: string | null
+          id?: string
+          last_accessed?: string | null
+          progress?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "interactive_content"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
