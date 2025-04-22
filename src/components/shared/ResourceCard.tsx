@@ -43,6 +43,7 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
                 <a 
                   href={action.href}
                   className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                  onClick={(e) => e.stopPropagation()} // Prevent triggering parent card click
                 >
                   {action.label} →
                 </a>

@@ -13,15 +13,7 @@ const StudyMaterialsPage = () => {
 
   const renderContent = () => {
     if (!studyType) {
-      return (
-        <>
-          <StudyMaterialsGrid />
-          <div className="mt-8 space-y-8">
-            <StudyUnitContent {...studyMaterialsContent.level2} />
-            <StudyUnitContent {...studyMaterialsContent.level3} />
-          </div>
-        </>
-      );
+      return <StudyMaterialsGrid />;
     }
 
     // Display specific content based on URL parameter
