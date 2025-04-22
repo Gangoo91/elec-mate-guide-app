@@ -59,8 +59,14 @@ const Navbar = () => {
         navigate('/dashboard');
       }
     } else {
-      navigate('/');
+      navigate('/welcome');
     }
+  };
+
+  // Handle apprentice hub click to ensure role is properly set
+  const handleApprenticeHubClick = () => {
+    localStorage.setItem('preferredRole', 'apprentice');
+    navigate('/apprentice-hub');
   };
 
   return (
@@ -86,7 +92,7 @@ const Navbar = () => {
                   <>
                     <NavigationMenuItem>
                       <div 
-                        onClick={() => navigate('/apprentice-hub')}
+                        onClick={handleApprenticeHubClick}
                         className="cursor-pointer"
                       >
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>

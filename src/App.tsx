@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -93,9 +94,13 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   
   // Try to refresh session when mounting a protected route
   useEffect(() => {
-    if (!user && !loading) {
-      refreshSession();
-    }
+    const checkAuth = async () => {
+      if (!user && !loading) {
+        await refreshSession();
+      }
+    };
+    
+    checkAuth();
   }, [user, loading, refreshSession]);
   
   useEffect(() => {
@@ -112,6 +117,31 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
+// Special redirect component for root route
+const RootRedirect = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loading) {
+      // Check auth status
+      if (user) {
+        // Check preferred role in localStorage
+        const preferredRole = localStorage.getItem('preferredRole');
+        if (preferredRole === 'apprentice') {
+          navigate('/apprentice-hub', { replace: true });
+        } else {
+          navigate('/dashboard', { replace: true });
+        }
+      } else {
+        navigate('/welcome', { replace: true });
+      }
+    }
+  }, [user, loading, navigate]);
+  
+  return <div className="flex items-center justify-center h-screen">Loading...</div>;
+};
+
 const App = () => (
   <ErrorBoundary>
     <AuthProvider>
@@ -122,10 +152,9 @@ const App = () => (
             <BrowserRouter>
               <ScrollToTop />
               <Routes>
-                {/* Root route - redirect to dashboard if authenticated, welcome if not */}
-                <Route path="/" element={
-                  <PublicRoute><Welcome /></PublicRoute>
-                } />
+                {/* Root route - use special handler */}
+                <Route path="/" element={<RootRedirect />} />
+                <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
                 
                 {/* Public routes - redirect to dashboard if authenticated */}
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />

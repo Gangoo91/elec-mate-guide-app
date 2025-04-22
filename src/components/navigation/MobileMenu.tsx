@@ -13,7 +13,24 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(user ? "/dashboard" : "/");
+    
+    if (user) {
+      // Check preferred role
+      const preferredRole = localStorage.getItem('preferredRole');
+      if (preferredRole === 'apprentice') {
+        navigate('/apprentice-hub');
+      } else {
+        navigate('/dashboard');
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
+  const handleApprenticeHubClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    localStorage.setItem('preferredRole', 'apprentice');
+    navigate('/apprentice-hub');
   };
 
   return (
@@ -31,14 +48,15 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
 
         {user ? (
           <>
-            <Link
-              to="/apprentice-hub"
+            <a
+              href="#"
+              onClick={handleApprenticeHubClick}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/apprentice-hub") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Apprentice Hub
-            </Link>
+            </a>
             <Link
               to="/electricians"
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
