@@ -97,19 +97,19 @@ const StudyMaterialsPage = () => {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/dashboard">
+                <BreadcrumbLink href="/dashboard">
                   <Home className="h-4 w-4" />
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/apprentices">
+                <BreadcrumbLink href="/apprentices">
                   Apprentices
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink as={Link} to="/apprentices/study-materials">
+                <BreadcrumbLink href="/apprentices/study-materials">
                   Study Materials
                 </BreadcrumbLink>
               </BreadcrumbItem>
