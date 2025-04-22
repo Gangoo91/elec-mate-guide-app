@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
@@ -9,6 +9,7 @@ import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const roles = [
   {
@@ -34,6 +35,7 @@ const roles = [
 const Dashboard = () => {
   const { isReady } = useDashboardController();
   const { user, loading } = useAuth();
+  const [localLoading, setLocalLoading] = useState(true);
   const {
     query,
     setQuery,
@@ -42,26 +44,40 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
+  // Improved initialization to ensure we're fully ready to render
   useEffect(() => {
-    // Apply animations after component mounts without clearing caches
-    const timer = setTimeout(() => {
-      const elements = document.querySelectorAll('.animate-on-load');
-      elements.forEach((el, i) => {
-        setTimeout(() => {
-          el.classList.add('animate-fade-in');
-        }, i * 100);
-      });
-    }, 100);
+    if (!loading && isReady) {
+      // Short delay to ensure all child components are ready
+      const timer = setTimeout(() => {
+        setLocalLoading(false);
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [loading, isReady]);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Force page refresh when needed to ensure consistent styling
   useEffect(() => {
-    // Set a flag in sessionStorage to track if the dashboard has been loaded this session
-    const dashboardLoaded = sessionStorage.getItem('dashboardLoaded');
+    // Apply animations after component is fully loaded
+    if (!localLoading) {
+      const timer = setTimeout(() => {
+        const elements = document.querySelectorAll('.animate-on-load');
+        elements.forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.add('animate-fade-in');
+          }, i * 100);
+        });
+      }, 100);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [localLoading]);
+
+  // Persist dashboard loaded state in localStorage instead of sessionStorage
+  // to survive page refreshes better
+  useEffect(() => {
+    const dashboardLoaded = localStorage.getItem('dashboardLoaded');
     if (!dashboardLoaded) {
-      sessionStorage.setItem('dashboardLoaded', 'true');
+      localStorage.setItem('dashboardLoaded', 'true');
     }
   }, []);
 
@@ -70,14 +86,12 @@ const Dashboard = () => {
     return <Navigate to="/login" replace />;
   }
   
-  // If not ready yet, show a minimal loading state
-  if (!isReady || loading) {
+  // Improved loading state with a proper loading component
+  if (loading || localLoading || !isReady) {
     return (
       <MainLayout>
-        <div className="container px-4 py-10 md:py-16">
-          <div className="flex items-center justify-center h-screen">
-            <div className="animate-pulse">Loading dashboard...</div>
-          </div>
+        <div className="container h-screen flex items-center justify-center">
+          <LoadingSpinner size="lg" />
         </div>
       </MainLayout>
     );

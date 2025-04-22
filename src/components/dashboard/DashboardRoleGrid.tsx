@@ -1,8 +1,8 @@
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
+import DashboardRoleCard from "@/components/DashboardRoleCard";
 
 type Role = {
   label: string;
@@ -17,8 +17,6 @@ type DashboardRoleGridProps = {
 };
 
 const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => {
-  const navigate = useNavigate();
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16">
       <AnimatePresence>
@@ -39,26 +37,13 @@ const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ delay: index * 0.1 }}
+            className="flex justify-center"
           >
-            <Card
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 cursor-pointer h-full flex flex-col"
-              onClick={() => navigate(role.path)}
-              role="button"
-              tabIndex={0}
-            >
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  {role.icon}
-                  <CardTitle className="text-[#FFC900]">{role.label}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="grow flex flex-col items-start">
-                <CardDescription className="text-[#FFC900]/70">{role.description}</CardDescription>
-                <span className="mt-5 ml-auto text-[#FFC900] font-medium hover:underline">
-                  Go to {role.label} →
-                </span>
-              </CardContent>
-            </Card>
+            <DashboardRoleCard 
+              label={role.label} 
+              icon={role.icon}
+              path={role.path}
+            />
           </motion.div>
         ))}
       </AnimatePresence>
