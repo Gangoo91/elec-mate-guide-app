@@ -1,6 +1,5 @@
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 type DashboardRoleCardProps = {
@@ -8,21 +7,14 @@ type DashboardRoleCardProps = {
   icon: React.ReactNode;
   path: string;
   description: string;
-  onClick?: (role: { label: string; path: string }) => void; // Updated type
+  onClick?: (role: { label: string; path: string }) => void;
 };
 
 const DashboardRoleCard = ({ label, icon, path, description, onClick }: DashboardRoleCardProps) => {
-  const navigate = useNavigate();
-  
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent default to ensure our handler runs
-    
-    // Call the onClick handler if provided
+  // Simple click handler without preventDefault to ensure navigation works correctly
+  const handleClick = () => {
     if (onClick) {
       onClick({ label, path });
-    } else {
-      // Default navigation if no handler provided
-      navigate(path);
     }
   };
   

@@ -3,39 +3,18 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 /**
- * Custom hook to control Dashboard rendering and prevent caching issues
+ * Custom hook to control Dashboard rendering and prevent flickering issues
  */
 export function useDashboardController() {
   const location = useLocation();
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(true); // Start with true to prevent flickering
   
   useEffect(() => {
-    // Set initial state from storage
-    const initialState = localStorage.getItem('dashboardContent') === 'true';
-    setIsReady(initialState);
-    
-    // Ensure DOM is ready
-    const timer = setTimeout(() => {
-      setIsReady(true);
-      localStorage.setItem('dashboardContent', 'true');
-      console.log("Dashboard controller is ready");
-    }, 10);
-    
-    return () => clearTimeout(timer);
+    // Simplified loading logic to prevent flickering
+    // No localStorage or timers that could cause race conditions
+    setIsReady(true);
+    console.log("Dashboard controller is ready - simplified");
   }, [location.pathname]);
-  
-  // Force ready state after a maximum timeout to prevent stuck loading
-  useEffect(() => {
-    if (!isReady) {
-      const forceReadyTimer = setTimeout(() => {
-        console.log("Force ready dashboard controller");
-        setIsReady(true);
-        localStorage.setItem('dashboardContent', 'true');
-      }, 300); // Shorter safety timeout
-      
-      return () => clearTimeout(forceReadyTimer);
-    }
-  }, [isReady]);
   
   return { isReady };
 }
