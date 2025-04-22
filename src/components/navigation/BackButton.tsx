@@ -23,7 +23,7 @@ const BackButton = () => {
     
     // Specific handling for apprentices mental health route
     if (location.pathname === "/apprentices/mental-health") {
-      navigate("/apprentices");
+      navigate("/apprentice-hub");
       return;
     }
     

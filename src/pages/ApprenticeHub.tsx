@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
 import LearningHub from "@/components/apprentices/LearningHub";
 import { useAuth } from "@/hooks/useAuth";
-import { Award, BookOpen, FileText, BookText } from "lucide-react";
+import { Award, BookOpen, FileText, BookText, Heart } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import ProgressSummary from "@/components/apprentices/ProgressSummary";
 
@@ -38,6 +38,12 @@ const ApprenticeHub = () => {
       description: "Test your knowledge with mock assessments",
       icon: <BookOpen className="h-5 w-5 text-[#FFC900]" />,
       action: () => navigate("/apprentices/practice-exams")
+    },
+    {
+      title: "Mental Health Hub",
+      description: "Support, community, and resources for apprentice mental health & well-being",
+      icon: <Heart className="h-5 w-5 text-[#FFC900]" />,
+      action: () => navigate("/apprentices/mental-health")
     }
   ];
 
@@ -70,9 +76,9 @@ const ApprenticeHub = () => {
             <Button 
               className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10" 
               variant="outline"
-              onClick={() => navigate("/apprentices/practice-exams")}
+              onClick={() => navigate("/apprentices/mental-health")}
             >
-              Practice Tests
+              Mental Health Hub
             </Button>
           </div>
         </div>
@@ -99,7 +105,7 @@ const ApprenticeHub = () => {
                   <div 
                     key={index}
                     className="p-3 border border-[#FFC900]/20 rounded-md hover:bg-[#FFC900]/5 hover:border-[#FFC900]/40 cursor-pointer transition-colors"
-                    onClick={resource.action}
+                    onClick={() => resource.action()}
                   >
                     <div className="flex items-center gap-2 mb-1">
                       {resource.icon}
