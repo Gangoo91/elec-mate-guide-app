@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
 import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
@@ -11,7 +10,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PageHeader from "@/components/layout/PageHeader";
-import GlassCard from "@/components/shared/GlassCard";
 
 const roles = [
   {
@@ -101,23 +99,25 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container max-w-6xl mx-auto px-4 py-8">
+      <div className="container px-4 py-6 md:py-12">
         <PageHeader 
           title="Electrical Industry Hub"
           description="Your all-in-one platform for apprentices, electricians, and employers to connect, learn, and thrive."
           hideBackButton={true}
         />
-        
-        <GlassCard>
-          <DashboardSearchBar
-            query={query}
-            setQuery={setQuery}
-            isFocused={isSearchFocused}
-            setIsFocused={setIsSearchFocused}
-          />
+
+        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
+          <div className="mb-8">
+            <DashboardSearchBar
+              query={query}
+              setQuery={setQuery}
+              isFocused={isSearchFocused}
+              setIsFocused={setIsSearchFocused}
+            />
+          </div>
           
           <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
-        </GlassCard>
+        </div>
       </div>
     </MainLayout>
   );

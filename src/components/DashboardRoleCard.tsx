@@ -18,14 +18,14 @@ const DashboardRoleCard = ({ label, icon, path }: DashboardRoleCardProps) => {
 
   return (
     <button
-      className="flex flex-col items-center justify-center w-full bg-[#151812]/60 backdrop-blur-lg border border-[#FFC900]/15 rounded-3xl shadow-lg hover:scale-105 transition-all duration-300 p-7 focus:outline-none focus:ring-2 focus:ring-[#FFC900]/50"
+      className="bg-[#151812] hover:bg-[#1a1d15] border border-[#FFC900]/20 rounded-xl p-6 transition-all duration-300 hover:scale-105 w-full flex flex-col items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[#FFC900]/50"
       onClick={handleClick}
       type="button"
     >
-      <div className="flex flex-col items-center mb-5">
+      <div className="p-4 rounded-lg bg-[#FFC900]/10">
         {icon}
       </div>
-      <span className="block text-2xl font-extrabold tracking-wide text-[#FFC900]">
+      <span className="text-xl font-semibold text-[#FFC900]">
         {label}
       </span>
     </button>

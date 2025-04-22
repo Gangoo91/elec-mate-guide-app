@@ -17,14 +17,14 @@ type DashboardRoleGridProps = {
 
 const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <AnimatePresence>
         {filteredRoles.length === 0 && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="col-span-full bg-[#23230a] p-7 rounded-xl text-[#FFC900c0] text-center text-lg font-bold shadow-md border-2 border-[#FFC90022]"
+            className="col-span-full bg-[#151812] p-7 rounded-xl text-[#FFC900c0] text-center text-lg font-bold border border-[#FFC900]/20"
           >
             No results found.
           </motion.div>
@@ -36,7 +36,6 @@ const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ delay: index * 0.1 }}
-            className="flex justify-center"
           >
             <DashboardRoleCard 
               label={role.label} 
