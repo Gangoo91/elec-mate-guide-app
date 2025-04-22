@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -30,6 +29,7 @@ import StudyMaterialsPage from "./pages/StudyMaterialsPage";
 import PracticeExamsPage from "./pages/PracticeExamsPage";
 import CertificationsPage from "./pages/CertificationsPage";
 import ErrorBoundary from "./components/ErrorBoundary";
+import CoreUnitsPage from "./pages/CoreUnitsPage";
 
 // Create QueryClient with optimized settings
 const queryClient = new QueryClient({
@@ -90,6 +90,7 @@ const App = () => (
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/:studyType/*" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
                 <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
