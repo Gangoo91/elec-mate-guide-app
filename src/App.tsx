@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -72,8 +73,12 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
+                {/* Root route - redirect to dashboard if authenticated, welcome if not */}
+                <Route path="/" element={
+                  <PublicRoute><Welcome /></PublicRoute>
+                } />
+                
                 {/* Public routes - redirect to dashboard if authenticated */}
-                <Route path="/" element={<PublicRoute><Welcome /></PublicRoute>} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -107,8 +112,8 @@ const App = () => (
                 <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
                 <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
                 
-                {/* Catch all - redirect to dashboard */}
-                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                {/* Catch all - redirect to 404 or dashboard if signed in */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>

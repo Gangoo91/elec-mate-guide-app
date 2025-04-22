@@ -56,6 +56,15 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Force page refresh when needed to ensure consistent styling
+  useEffect(() => {
+    // Set a flag in sessionStorage to track if the dashboard has been loaded this session
+    const dashboardLoaded = sessionStorage.getItem('dashboardLoaded');
+    if (!dashboardLoaded) {
+      sessionStorage.setItem('dashboardLoaded', 'true');
+    }
+  }, []);
+
   // Redirect to login if not authenticated
   if (!loading && !user) {
     return <Navigate to="/login" replace />;
