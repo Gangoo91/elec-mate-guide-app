@@ -8,10 +8,18 @@ type DashboardRoleCardProps = {
   icon: React.ReactNode;
   path: string;
   description: string;
+  onClick?: () => void; // Add onClick prop
 };
 
-const DashboardRoleCard = ({ label, icon, path, description }: DashboardRoleCardProps) => {
+const DashboardRoleCard = ({ label, icon, path, description, onClick }: DashboardRoleCardProps) => {
   const navigate = useNavigate();
+  
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    navigate(path);
+  };
   
   return (
     <div className="bg-[#151812]/80 rounded-2xl border border-[#FFC900]/20 p-6 hover:border-[#FFC900]/40 transition-all duration-300">
@@ -25,7 +33,7 @@ const DashboardRoleCard = ({ label, icon, path, description }: DashboardRoleCard
       <p className="text-[#FFC900]/70 text-lg mb-6">{description}</p>
       
       <button
-        onClick={() => navigate(path)}
+        onClick={handleClick}
         className="flex items-center justify-between w-full text-[#FFC900] hover:text-[#FFC900] transition-colors duration-200 text-lg font-medium group"
       >
         Go to {label}

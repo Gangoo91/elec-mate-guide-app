@@ -13,9 +13,10 @@ type Role = {
 type DashboardRoleGridProps = {
   roles: Role[];
   filteredRoles: Role[];
+  onRoleSelected?: (role: Role) => void; // Make this prop optional
 };
 
-const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => {
+const DashboardRoleGrid = ({ roles, filteredRoles, onRoleSelected }: DashboardRoleGridProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto px-4 md:px-8">
       {filteredRoles.length === 0 ? (
@@ -37,7 +38,10 @@ const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => 
             transition={{ delay: index * 0.1 }}
             className="flex-1"
           >
-            <DashboardRoleCard {...role} />
+            <DashboardRoleCard 
+              {...role} 
+              onClick={onRoleSelected ? () => onRoleSelected(role) : undefined}
+            />
           </motion.div>
         ))
       )}
