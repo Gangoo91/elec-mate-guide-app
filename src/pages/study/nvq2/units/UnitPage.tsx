@@ -1,8 +1,5 @@
 
 import React from 'react';
-import MainLayout from "@/components/layout/MainLayout";
-import PageHeader from "@/components/layout/PageHeader";
-import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface UnitPageProps {
@@ -15,22 +12,15 @@ interface UnitPageProps {
 
 const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }: UnitPageProps) => {
   return (
-    <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
-        <div className="mb-4">
-          <BackButton />
-        </div>
-        
-        <PageHeader 
-          title={`Unit ${unitNumber}: ${title}`}
-          description={description}
-          hideBackButton={true}
-        />
+    <div className="container px-4 py-2 md:py-4">
+      <div className="grid gap-6 animate-fade-in">
+        <Card className="bg-[#22251e] border-[#FFC900]/20">
+          <CardContent className="pt-6">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Unit {unitNumber}: {title}</h3>
+                <p className="text-[#FFC900]/70 mb-4">{description}</p>
 
-        <div className="grid gap-6 animate-fade-in">
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent className="pt-6">
-              <div className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Course Content</h3>
                   <ul className="space-y-2">
@@ -43,7 +33,7 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
                   </ul>
                 </div>
 
-                <div>
+                <div className="mt-6">
                   <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Learning Outcomes</h3>
                   <ul className="space-y-2">
                     {learningOutcomes.map((outcome, index) => (
@@ -55,12 +45,13 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
                   </ul>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </MainLayout>
+    </div>
   );
 };
 
 export default UnitPage;
+
