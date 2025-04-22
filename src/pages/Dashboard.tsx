@@ -35,7 +35,7 @@ const roles = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const { isReady } = useDashboardController();
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const [localLoading, setLocalLoading] = useState(true);
   const {
     query,
@@ -45,11 +45,10 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
-  // Only refresh session once on initial mount
+  // Refresh session once on initial mount
   useEffect(() => {
-    // We don't need to explicitly refresh on each dashboard load
-    // The useAuth hook already handles this
-    console.log("Dashboard mounted");
+    refreshSession().catch(console.error);
+    console.log("Dashboard mounted, refreshing session");
   }, []);
 
   // More stable loading state management
@@ -60,6 +59,8 @@ const Dashboard = () => {
       const timer = setTimeout(() => {
         setLocalLoading(false);
         console.log("Dashboard loading complete - showing content");
+        // Ensure we mark content as loaded for future visits
+        localStorage.setItem('dashboardContent', 'true');
       }, 50);
       
       return () => clearTimeout(timer);
@@ -72,30 +73,12 @@ const Dashboard = () => {
       if (localLoading) {
         console.log("Maximum loading time reached - forcing dashboard display");
         setLocalLoading(false);
+        localStorage.setItem('dashboardContent', 'true');
       }
-    }, 1500); // Shorter timeout to prevent long loading
+    }, 1000); // Shorter timeout to prevent long loading
     
     return () => clearTimeout(maxLoadingTimer);
   }, [localLoading]);
-
-  // Store dashboard state for better persistence
-  useEffect(() => {
-    if (!localLoading && user) {
-      localStorage.setItem('dashboardLoaded', 'true');
-      localStorage.setItem('lastDashboardLoad', Date.now().toString());
-    }
-  }, [localLoading, user]);
-
-  // Quick navigation for users with stored preferences
-  useEffect(() => {
-    if (user && !loading && !localLoading) {
-      // If there's a stored role preference, navigate there directly
-      const preferredRole = localStorage.getItem('preferredRole');
-      if (preferredRole === 'apprentice') {
-        navigate('/apprentice-hub');
-      }
-    }
-  }, [user, loading, localLoading, navigate]);
 
   // Improved redirect condition that's less likely to flicker
   if (!loading && !user) {
@@ -104,7 +87,7 @@ const Dashboard = () => {
   }
   
   // Only show loading when absolutely necessary
-  if ((loading || localLoading) && !localStorage.getItem('dashboardContent')) {
+  if (localLoading && loading) {
     console.log("Showing loading spinner");
     return (
       <MainLayout>
@@ -118,9 +101,6 @@ const Dashboard = () => {
   // Once we get here, we're showing the dashboard content
   console.log("Rendering dashboard content");
   
-  // Store that we've successfully rendered the dashboard
-  localStorage.setItem('dashboardContent', 'true');
-
   return (
     <MainLayout>
       <div className="min-h-screen bg-[#22251e]">
@@ -141,7 +121,8 @@ const Dashboard = () => {
               if (role.label === 'Apprentices') {
                 localStorage.setItem('preferredRole', 'apprentice');
               }
-            }} 
+              navigate(role.path);
+            }}
           />
         </div>
       </div>

@@ -13,7 +13,7 @@ type Role = {
 type DashboardRoleGridProps = {
   roles: Role[];
   filteredRoles: Role[];
-  onRoleSelected?: (role: Role) => void; // Make this prop optional
+  onRoleSelected?: (role: Role) => void;
 };
 
 const DashboardRoleGrid = ({ roles, filteredRoles, onRoleSelected }: DashboardRoleGridProps) => {

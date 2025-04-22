@@ -10,13 +10,14 @@ export function useDashboardController() {
   const [isReady, setIsReady] = useState(false);
   
   useEffect(() => {
-    // Set initial state
-    const initialState = localStorage.getItem('dashboardContent') ? true : false;
+    // Set initial state from storage
+    const initialState = localStorage.getItem('dashboardContent') === 'true';
     setIsReady(initialState);
     
-    // Small timeout to ensure DOM is ready
+    // Ensure DOM is ready
     const timer = setTimeout(() => {
       setIsReady(true);
+      localStorage.setItem('dashboardContent', 'true');
       console.log("Dashboard controller is ready");
     }, 10);
     
@@ -29,7 +30,8 @@ export function useDashboardController() {
       const forceReadyTimer = setTimeout(() => {
         console.log("Force ready dashboard controller");
         setIsReady(true);
-      }, 500); // Shorter safety timeout
+        localStorage.setItem('dashboardContent', 'true');
+      }, 300); // Shorter safety timeout
       
       return () => clearTimeout(forceReadyTimer);
     }

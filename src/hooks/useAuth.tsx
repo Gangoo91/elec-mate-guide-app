@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
   // Check localStorage first for a faster initial state
   useEffect(() => {
@@ -32,12 +33,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const storedUser = localStorage.getItem('userAuthData');
       if (storedUser) {
         try {
-          setUser(JSON.parse(storedUser));
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+          setLoading(false);
         } catch (e) {
           // Invalid stored data, will be fixed by the actual auth check
         }
       }
     }
+    
+    setInitialized(true);
   }, []);
 
   // Function to refresh the session manually
@@ -53,8 +58,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // Cache auth data for faster initial loads
       if (data.session?.user) {
         localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+        localStorage.setItem('userAuthenticated', 'true');
       } else {
         localStorage.removeItem('userAuthData');
+        localStorage.removeItem('userAuthenticated');
       }
     } catch (error) {
       console.error("Error refreshing session:", error);
@@ -64,21 +71,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    if (!initialized) return;
+    
     console.log("Auth provider initialized");
     
     // First check for existing session synchronously to prevent flicker
     const initialSessionCheck = async () => {
-      const { data } = await supabase.auth.getSession();
-      console.log("Initial session check:", data.session ? "exists" : "none");
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      
-      // Cache auth data for faster initial loads
-      if (data.session?.user) {
-        localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+      try {
+        const { data } = await supabase.auth.getSession();
+        console.log("Initial session check:", data.session ? "exists" : "none");
+        setSession(data.session);
+        setUser(data.session?.user ?? null);
+        
+        // Cache auth data for faster initial loads
+        if (data.session?.user) {
+          localStorage.setItem('userAuthData', JSON.stringify(data.session.user));
+          localStorage.setItem('userAuthenticated', 'true');
+        } else {
+          localStorage.removeItem('userAuthData');
+          localStorage.removeItem('userAuthenticated');
+        }
+      } catch (e) {
+        console.error("Session check error:", e);
+      } finally {
+        setLoading(false);
       }
-      
-      setLoading(false);
     };
     
     initialSessionCheck();
@@ -93,8 +110,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // Cache auth data for faster initial loads
       if (currentSession?.user) {
         localStorage.setItem('userAuthData', JSON.stringify(currentSession.user));
+        localStorage.setItem('userAuthenticated', 'true');
       } else {
         localStorage.removeItem('userAuthData');
+        localStorage.removeItem('userAuthenticated');
       }
       
       setLoading(false);
@@ -106,23 +125,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.log("Auth loading timeout triggered");
         setLoading(false);
       }
-    }, 1500); // Reduced timeout
+    }, 1000); // Reduced timeout
 
     return () => {
       subscription.unsubscribe();
       clearTimeout(safetyTimer);
     };
-  }, []);
-
-  // Add local storage sync for additional resilience
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('userAuthenticated', 'true');
-    } else if (!loading) {
-      localStorage.removeItem('userAuthenticated');
-      localStorage.removeItem('userAuthData');
-    }
-  }, [user, loading]);
+  }, [initialized]);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, refreshSession }}>
