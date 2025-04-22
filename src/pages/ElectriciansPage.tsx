@@ -28,8 +28,8 @@ const ElectriciansPage = () => {
   // Technical resources and other links
   const electricianResources = [
     {
-      title: "Technical Resources",
-      description: "Code updates and technical information.",
+      title: "On the Job Tooling",
+      description: "All-in-one toolbox for electricians",
       icon: <Lightbulb className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "#"
     },
