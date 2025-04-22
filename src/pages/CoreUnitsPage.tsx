@@ -1,10 +1,11 @@
+
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { BookText, Video, Progress as ProgressIcon } from "lucide-react";
+import { BookText, Video, ActivityIcon } from "lucide-react";
 
 interface CoreUnitProps {
   title: string;
@@ -91,7 +92,7 @@ const CoreUnitsPage = () => {
                   
                   <Card className="bg-[#22251e]/50 border-[#FFC900]/10 cursor-pointer hover:border-[#FFC900]/50 transition-all">
                     <CardContent className="flex items-center gap-2 p-4">
-                      <ProgressIcon className="text-[#FFC900]" />
+                      <ActivityIcon className="text-[#FFC900]" />
                       <span className="text-[#FFC900]">Practice Quiz</span>
                     </CardContent>
                   </Card>
