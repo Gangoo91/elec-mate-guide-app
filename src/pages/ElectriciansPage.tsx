@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Award, Handshake, Lightbulb, Briefcase, Heart, Wrench } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -41,13 +40,13 @@ const ElectriciansPage = () => {
       fullCardLink: "#"
     },
     {
-      title: "Professional Development",
+      title: "Courses",
       description: "Advanced training courses.",
       icon: <Award className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "#"
     },
     {
-      title: "Job Opportunities",
+      title: "Job Listings",
       description: "Find projects and positions.",
       icon: <Briefcase className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "#"
