@@ -52,7 +52,8 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="/dashboard" element={<Navigate to="/" replace />} />
                 <Route path="/apprentices" element={<ApprenticesPage />} />
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
                 <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
@@ -61,9 +62,9 @@ const App = () => (
                 <Route path="/apprentices/certifications" element={<CertificationsPage />} />
                 <Route path="/electricians" element={<ElectriciansPage />} />
                 <Route path="/employers" element={<EmployersPage />} />
-                <Route path="/training" element={<Dashboard />} />
-                <Route path="/certification" element={<Dashboard />} />
-                <Route path="/tools" element={<Dashboard />} />
+                <Route path="/training" element={<Navigate to="/" replace />} />
+                <Route path="/certification" element={<Navigate to="/" replace />} />
+                <Route path="/tools" element={<Navigate to="/" replace />} />
                 <Route path="/mental-health" element={<MentalHealth />} />
                 <Route path="/mentorship" element={<Mentorship />} />
                 <Route path="/faq" element={<FAQ />} />
@@ -76,7 +77,6 @@ const App = () => (
                 <Route path="/manage-subscription" element={<ManageSubscription />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-                <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
