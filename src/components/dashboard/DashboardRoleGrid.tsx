@@ -17,13 +17,13 @@ type DashboardRoleGridProps = {
 
 const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {filteredRoles.length === 0 ? (
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="bg-[#151812] p-7 rounded-xl text-[#FFC900] text-center text-lg font-bold border border-[#FFC900]/20"
+          className="col-span-full bg-[#151812] p-7 rounded-xl text-[#FFC900] text-center text-lg font-bold border border-[#FFC900]/20"
         >
           No results found.
         </motion.div>
