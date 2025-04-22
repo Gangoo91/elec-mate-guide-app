@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 import IndustryResources from "@/components/IndustryResources";
+import CommunityCounter from "@/components/dashboard/CommunityCounter";
 
 const ElectriciansPage = () => {
   const electricianResources = [
@@ -114,8 +115,8 @@ const ElectriciansPage = () => {
             <TabsList className="bg-[#151812] border border-[#FFC900]/10 mb-6">
               <TabsTrigger value="topics" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Safety Topics</TabsTrigger>
               <TabsTrigger value="community" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Community Discussions</TabsTrigger>
+              <TabsTrigger value="stats" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Community Stats</TabsTrigger>
               <TabsTrigger value="industry" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Industry News</TabsTrigger>
-              <TabsTrigger value="stats" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">Community</TabsTrigger>
             </TabsList>
             
             <TabsContent value="topics">
@@ -172,10 +173,6 @@ const ElectriciansPage = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="industry">
-              <IndustryResources />
-            </TabsContent>
-            
             <TabsContent value="stats">
               <div className="bg-[#151812] rounded-lg p-5 border border-[#FFC900]/10">
                 <h3 className="text-[#FFC900] font-semibold mb-4">Community Overview</h3>
@@ -183,8 +180,8 @@ const ElectriciansPage = () => {
                   <div className="flex items-center gap-3 bg-[#22251e] p-4 rounded-lg">
                     <Users className="h-8 w-8 text-[#FFC900]" />
                     <div>
-                      <p className="text-[#FFC900] font-semibold">Active Members</p>
-                      <p className="text-[#FFC900]/70">Growing community of professionals</p>
+                      <p className="text-[#FFC900] font-semibold">Community Size</p>
+                      <CommunityCounter />
                     </div>
                   </div>
                   <div className="flex items-center gap-3 bg-[#22251e] p-4 rounded-lg">
@@ -196,6 +193,10 @@ const ElectriciansPage = () => {
                   </div>
                 </div>
               </div>
+            </TabsContent>
+            
+            <TabsContent value="industry">
+              <IndustryResources />
             </TabsContent>
           </Tabs>
         </div>

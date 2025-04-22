@@ -3,7 +3,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import CommunityCounter from "./CommunityCounter";
 
 const DashboardHeroSection = ({ hideLogoOverride = false }) => {
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const DashboardHeroSection = ({ hideLogoOverride = false }) => {
           Sign In
         </Button>
       </div>
-      <CommunityCounter />
     </div>
   );
 };
