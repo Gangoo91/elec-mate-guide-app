@@ -133,7 +133,11 @@ const ApprenticesPage = () => {
       title: "Mental Health Hub",
       description: "Support, community, and resources for apprentice mental health & well-being.",
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Learn more", onClick: () => setMhModalOpen(true) },
+      action: { 
+        label: "Visit Hub", 
+        href: "/apprentices/mental-health",
+        onClick: () => navigate("/apprentices/mental-health")
+      },
       fullCardLink: "/apprentices/mental-health"
     }
   ];
