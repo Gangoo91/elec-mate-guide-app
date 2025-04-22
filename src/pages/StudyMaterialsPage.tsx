@@ -1,4 +1,6 @@
+
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -7,6 +9,8 @@ import BackButton from "@/components/navigation/BackButton";
 import StudyUnitContent from "@/components/study/StudyUnitContent";
 
 const StudyMaterialsPage = () => {
+  const { studyType } = useParams();
+
   const level2Content = {
     title: "NVQ Level 2 Core Units",
     description: "Essential knowledge broken down into easy-to-understand sections",
@@ -96,6 +100,100 @@ const StudyMaterialsPage = () => {
     ]
   };
 
+  const hncContent = {
+    title: "HNC Electrical Engineering",
+    description: "Higher level concepts explained in simple terms",
+    units: [
+      {
+        title: "Electrical Power Systems",
+        content: [
+          "Power generation simplified - from fuel to electricity",
+          "Transmission systems explained without the complex math",
+          "Distribution networks - getting power to where it's needed",
+          "Renewable energy integration in everyday terms",
+          "Smart grid technology explained simply"
+        ],
+        learningOutcomes: [
+          "Understand how electricity is generated and delivered",
+          "Know how different generation methods work",
+          "Grasp the basics of grid management and distribution"
+        ]
+      },
+      {
+        title: "Engineering Mathematics",
+        content: [
+          "Algebra made simple with practical examples",
+          "Trigonometry explained with real-world applications",
+          "Calculus basics - what you need to know without the complexity",
+          "Statistical methods for engineering problems",
+          "Problem-solving techniques that actually work"
+        ],
+        learningOutcomes: [
+          "Apply basic mathematical concepts to electrical problems",
+          "Use formulas confidently in your work",
+          "Calculate solutions to common engineering challenges"
+        ]
+      }
+    ]
+  };
+
+  // Display different content based on URL parameter
+  const renderContent = () => {
+    switch(studyType) {
+      case 'nvq2':
+        return <StudyUnitContent {...level2Content} />;
+      case 'nvq3':
+        return <StudyUnitContent {...level3Content} />;
+      case 'hnc':
+        return <StudyUnitContent {...hncContent} />;
+      default:
+        // Show all options on the main study materials page
+        return (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+              <ResourceCard
+                title="NVQ Level 2 Electrical Installation"
+                description="Core units include: Health & Safety, Scientific Principles, Installation Methods, Inspection & Testing, Environmental Protection, and Electrical Systems & Components."
+                icon={<Book className="h-7 w-7 text-[#FFC900]" />}
+                fullCardLink="/apprentices/study-materials/nvq2"
+                action={{
+                  label: "View Level 2 Resources",
+                  href: "/apprentices/study-materials/nvq2"
+                }}
+              />
+              
+              <ResourceCard
+                title="NVQ Level 3 & AM2"
+                description="Advanced topics: Complex Installations, Fault Diagnosis, Electrical Principles, BS7671 Wiring Regulations, Inspection & Testing, and AM2 Assessment Preparation."
+                icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
+                fullCardLink="/apprentices/study-materials/nvq3"
+                action={{
+                  label: "Access Level 3 & AM2",
+                  href: "/apprentices/study-materials/nvq3"
+                }}
+              />
+              
+              <ResourceCard
+                title="HNC Electrical Engineering"
+                description="Higher-level topics including: Electrical Power Systems, Engineering Mathematics, Project Management, Circuit Theory, Power Electronics, and Control Systems."
+                icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
+                fullCardLink="/apprentices/study-materials/hnc"
+                action={{
+                  label: "Explore HNC Materials",
+                  href: "/apprentices/study-materials/hnc"
+                }}
+              />
+            </div>
+
+            <div className="mt-8 space-y-8">
+              <StudyUnitContent {...level2Content} />
+              <StudyUnitContent {...level3Content} />
+            </div>
+          </>
+        );
+    }
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
@@ -103,50 +201,12 @@ const StudyMaterialsPage = () => {
           <BackButton />
         </div>
         <PageHeader 
-          title="Study Materials"
+          title={studyType ? `${studyType.toUpperCase()} Study Materials` : "Study Materials"}
           description="Easy-to-understand guides and resources for electrical qualifications. Everything is explained in simple terms with real-world examples."
           hideBackButton={true}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          <ResourceCard
-            title="NVQ Level 2 Electrical Installation"
-            description="Core units include: Health & Safety, Scientific Principles, Installation Methods, Inspection & Testing, Environmental Protection, and Electrical Systems & Components."
-            icon={<Book className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/nvq2"
-            action={{
-              label: "View Level 2 Resources",
-              href: "/apprentices/study-materials/nvq2"
-            }}
-          />
-          
-          <ResourceCard
-            title="NVQ Level 3 & AM2"
-            description="Advanced topics: Complex Installations, Fault Diagnosis, Electrical Principles, BS7671 Wiring Regulations, Inspection & Testing, and AM2 Assessment Preparation."
-            icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/nvq3"
-            action={{
-              label: "Access Level 3 & AM2",
-              href: "/apprentices/study-materials/nvq3"
-            }}
-          />
-          
-          <ResourceCard
-            title="HNC Electrical Engineering"
-            description="Higher-level topics including: Electrical Power Systems, Engineering Mathematics, Project Management, Circuit Theory, Power Electronics, and Control Systems."
-            icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/hnc"
-            action={{
-              label: "Explore HNC Materials",
-              href: "/apprentices/study-materials/hnc"
-            }}
-          />
-        </div>
-
-        <div className="mt-8 space-y-8">
-          <StudyUnitContent {...level2Content} />
-          <StudyUnitContent {...level3Content} />
-        </div>
+        {renderContent()}
       </div>
     </MainLayout>
   );

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 interface ResourceCardProps {
   title: string;
   description: string;
-  icon: LucideIcon | React.ReactNode;
+  icon: React.ReactNode;
   action?: {
     label: string;
     onClick?: () => void;

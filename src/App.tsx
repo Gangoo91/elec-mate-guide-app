@@ -85,6 +85,9 @@ const App = () => (
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq3" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/hnc" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
                 <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
@@ -107,8 +110,8 @@ const App = () => (
                 <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
                 <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
                 
-                {/* Catch all - redirect to home page */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                {/* Catch all - redirect to dashboard */}
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>
