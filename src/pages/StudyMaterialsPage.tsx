@@ -1,4 +1,3 @@
-
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -10,8 +9,11 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import CoreUnitsPage from "@/pages/CoreUnitsPage";
+import Unit201Page from '@/pages/study/nvq2/units/Unit201Page';
+import Unit202Page from '@/pages/study/nvq2/units/Unit202Page';
+import Unit203Page from '@/pages/study/nvq2/units/Unit203Page';
+import Unit204Page from '@/pages/study/nvq2/units/Unit204Page';
 
-// Lazy load the NVQ2 specific pages
 const InteractiveLessonsPage = lazy(() => import('./study/nvq2/InteractiveLessonsPage'));
 const QuizzesProgressPage = lazy(() => import('./study/nvq2/QuizzesProgressPage'));
 const VideoContentPage = lazy(() => import('./study/nvq2/VideoContentPage'));
@@ -38,7 +40,6 @@ const StudyMaterialsPage = () => {
     }
   }, [studyType, navigate]);
 
-  // Check if we're on a specific content page (core-units, interactive-lessons, etc.)
   const isOnContentPage = window.location.pathname.includes('/core-units') || 
                            window.location.pathname.includes('/interactive-lessons') ||
                            window.location.pathname.includes('/quizzes') ||
@@ -50,7 +51,6 @@ const StudyMaterialsPage = () => {
     }
 
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
-      // Only show the grid if we're not on a specific content page
       if (!isOnContentPage) {
         return (
           <StudyUnitContent 
@@ -60,13 +60,35 @@ const StudyMaterialsPage = () => {
         );
       }
       
-      // Use the path itself for routing rather than window.location
       return (
         <>
-          {/* Remove the Routes component here as it's causing the issue */}
-          {window.location.pathname.includes('/core-units') && (
+          {window.location.pathname.includes('/core-units') && !window.location.pathname.includes('/core-units/') && (
             <ErrorBoundary>
               <CoreUnitsPage />
+            </ErrorBoundary>
+          )}
+          
+          {window.location.pathname.includes('/core-units/201') && (
+            <ErrorBoundary>
+              <Unit201Page />
+            </ErrorBoundary>
+          )}
+          
+          {window.location.pathname.includes('/core-units/202') && (
+            <ErrorBoundary>
+              <Unit202Page />
+            </ErrorBoundary>
+          )}
+          
+          {window.location.pathname.includes('/core-units/203') && (
+            <ErrorBoundary>
+              <Unit203Page />
+            </ErrorBoundary>
+          )}
+          
+          {window.location.pathname.includes('/core-units/204') && (
+            <ErrorBoundary>
+              <Unit204Page />
             </ErrorBoundary>
           )}
           
