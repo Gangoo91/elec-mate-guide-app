@@ -27,6 +27,11 @@ const StudyMaterialsPage = () => {
 
   // Render appropriate content based on URL
   const renderContent = () => {
+    // Log the current path and studyType for debugging
+    console.log("Current path:", window.location.pathname);
+    console.log("Study type param:", studyType);
+    console.log("Content key:", contentKey);
+
     // If no studyType is specified, show the grid of study material options
     if (!studyType) {
       return <StudyMaterialsGrid />;

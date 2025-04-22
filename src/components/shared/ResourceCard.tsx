@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -45,12 +45,16 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
         {action && (
           <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
             {action.href ? (
-              <Link 
-                to={action.href}
-                className="inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(action.href);
+                }}
               >
                 {action.label} →
-              </Link>
+              </Button>
             ) : (
               <Button 
                 variant="ghost" 
