@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,14 @@ import ProgressSummary from "@/components/apprentices/ProgressSummary";
 
 const ApprenticeHub = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
+  
+  useEffect(() => {
+    // Refresh session to ensure user data is available
+    refreshSession();
+    // Mark this as the preferred role
+    localStorage.setItem('preferredRole', 'apprentice');
+  }, [refreshSession]);
   
   const featuredResources = [
     {
@@ -33,6 +40,17 @@ const ApprenticeHub = () => {
       action: () => navigate("/apprentices/practice-exams")
     }
   ];
+
+  // If no user is found after refresh attempt, redirect to login
+  useEffect(() => {
+    const checkAuth = setTimeout(() => {
+      if (!user) {
+        navigate('/login');
+      }
+    }, 1000); // Give a second for auth to initialize
+    
+    return () => clearTimeout(checkAuth);
+  }, [user, navigate]);
 
   return (
     <MainLayout>

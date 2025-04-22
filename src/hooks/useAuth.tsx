@@ -41,50 +41,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    // Set a flag to track if this is the first authentication check
-    let isFirstAuthCheck = true;
+    console.log("Auth provider initialized");
+    setLoading(true);
 
-    // Listen for changes in auth state
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, s) => {
+    // First check for existing session synchronously to prevent flicker
+    const initialSessionCheck = async () => {
+      const { data } = await supabase.auth.getSession();
+      console.log("Initial session check:", data.session ? "exists" : "none");
+      setSession(data.session);
+      setUser(data.session?.user ?? null);
+      setLoading(false);
+    };
+    
+    initialSessionCheck();
+
+    // Then set up the auth state change listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, currentSession) => {
       console.log("Auth state changed:", event);
-      setSession(s);
-      setUser(s?.user ?? null);
       
-      // Only set loading to false after the first auth check
-      if (isFirstAuthCheck) {
-        isFirstAuthCheck = false;
-      }
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       setLoading(false);
     });
-
-    // Fetch initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Initial session loaded:", session ? "exists" : "none");
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    // Check for network issues and session validity periodically
-    const intervalId = setInterval(() => {
-      if (navigator.onLine) {
-        supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-          // Only update if there's a change in session status
-          if ((!session && currentSession) || (session && !currentSession)) {
-            setSession(currentSession);
-            setUser(currentSession?.user ?? null);
-          }
-        });
-      }
-    }, 60000); // Check every minute
 
     return () => {
       subscription.unsubscribe();
-      clearInterval(intervalId);
     };
   }, []);
+
+  // Add local storage sync for additional resilience
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('userAuthenticated', 'true');
+    } else if (!loading) {
+      localStorage.removeItem('userAuthenticated');
+    }
+  }, [user, loading]);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, refreshSession }}>

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -6,7 +7,7 @@ import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
 import { useAuth } from "@/hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import PageHeader from "@/components/layout/PageHeader";
 
@@ -14,7 +15,7 @@ const roles = [
   {
     label: "Apprentices",
     icon: <Book className="h-7 w-7" />,
-    path: "/apprentices",
+    path: "/apprentice-hub",
     description: "Learning, assessment & mentorship for aspiring electricians.",
   },
   {
@@ -32,8 +33,9 @@ const roles = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { isReady } = useDashboardController();
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const [localLoading, setLocalLoading] = useState(true);
   const {
     query,
@@ -42,6 +44,11 @@ const Dashboard = () => {
     setIsSearchFocused,
     filteredRoles
   } = useRoleFilter(roles);
+
+  // Refresh session when dashboard is loaded
+  useEffect(() => {
+    refreshSession();
+  }, []);
 
   // Improved initialization to ensure we're fully ready to render
   useEffect(() => {
@@ -71,14 +78,21 @@ const Dashboard = () => {
     }
   }, [localLoading]);
 
-  // Persist dashboard loaded state in localStorage instead of sessionStorage
-  // to survive page refreshes better
+  // Persist dashboard loaded state in localStorage
   useEffect(() => {
-    const dashboardLoaded = localStorage.getItem('dashboardLoaded');
-    if (!dashboardLoaded) {
-      localStorage.setItem('dashboardLoaded', 'true');
-    }
+    localStorage.setItem('dashboardLoaded', 'true');
   }, []);
+
+  // Quick navigation for users (remove unnecessary clicks)
+  useEffect(() => {
+    if (user && !loading && !localLoading) {
+      // If there's a stored role preference, navigate there directly
+      const preferredRole = localStorage.getItem('preferredRole');
+      if (preferredRole === 'apprentice') {
+        navigate('/apprentice-hub');
+      }
+    }
+  }, [user, loading, localLoading, navigate]);
 
   // Redirect to login if not authenticated
   if (!loading && !user) {
@@ -109,7 +123,15 @@ const Dashboard = () => {
             />
           </div>
           
-          <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
+          <DashboardRoleGrid 
+            roles={roles} 
+            filteredRoles={filteredRoles}
+            onRoleSelected={(role) => {
+              if (role.label === 'Apprentices') {
+                localStorage.setItem('preferredRole', 'apprentice');
+              }
+            }} 
+          />
         </div>
       </div>
     </MainLayout>

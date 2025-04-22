@@ -2,7 +2,8 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
 import Welcome from "./pages/Welcome";
 import NotFound from "./pages/NotFound";
@@ -48,26 +49,65 @@ const queryClient = new QueryClient({
   },
 });
 
+// Handle page transitions and prevent full reloads
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
+  return null;
+};
+
 // Authentication wrapper for routes that should only be accessible to non-authenticated users
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loading && user) {
+      // If user is already logged in, check their preferred role
+      const preferredRole = localStorage.getItem('preferredRole');
+      if (preferredRole === 'apprentice') {
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
+    }
+  }, [user, loading, navigate]);
   
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
   
-  return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+  return !user ? <>{children}</> : null;
 };
 
 // Authentication wrapper for routes that require authentication
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
+  const navigate = useNavigate();
+  
+  // Try to refresh session when mounting a protected route
+  useEffect(() => {
+    if (!user && !loading) {
+      refreshSession();
+    }
+  }, [user, loading, refreshSession]);
+  
+  useEffect(() => {
+    // If still not authenticated after refresh attempt, redirect to login
+    if (!loading && !user) {
+      navigate('/login', { replace: true });
+    }
+  }, [user, loading, navigate]);
   
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
   
-  return user ? <>{children}</> : <Navigate to="/login" replace />;
+  return user ? <>{children}</> : null;
 };
 
 const App = () => (
@@ -78,6 +118,7 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 {/* Root route - redirect to dashboard if authenticated, welcome if not */}
                 <Route path="/" element={

@@ -5,7 +5,6 @@ import Logo from "@/components/Logo";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -27,8 +26,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const { notifications } = useNotificationContext();
+
+  // Refresh session when navbar is mounted
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
 
   useEffect(() => {
     setMobileMenuOpen(false);
@@ -45,7 +49,18 @@ const Navbar = () => {
   // Handle home navigation based on authentication status
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate(user ? "/dashboard" : "/");
+    
+    if (user) {
+      // Check preferred role
+      const preferredRole = localStorage.getItem('preferredRole');
+      if (preferredRole === 'apprentice') {
+        navigate('/apprentice-hub');
+      } else {
+        navigate('/dashboard');
+      }
+    } else {
+      navigate('/');
+    }
   };
 
   return (
@@ -62,7 +77,7 @@ const Navbar = () => {
               <NavigationMenuList>
                 <NavigationMenuItem>
                   <a href="#" onClick={handleHomeClick}>
-                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/') || isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
+                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/') || isActive('/dashboard') || isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>
                       {user ? 'Dashboard' : 'Home'}
                     </NavigationMenuLink>
                   </a>
@@ -70,61 +85,70 @@ const Navbar = () => {
                 {user && (
                   <>
                     <NavigationMenuItem>
-                      <Link to="/apprentice-hub">
+                      <a onClick={(e) => { 
+                        e.preventDefault(); 
+                        navigate('/apprentice-hub');
+                      }} href="/apprentice-hub">
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>
                           Apprentice Hub
                         </NavigationMenuLink>
-                      </Link>
+                      </a>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <Link to="/electricians">
+                      <a onClick={(e) => { 
+                        e.preventDefault(); 
+                        navigate('/electricians');
+                      }} href="/electricians">
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''}`}>
                           Electricians
                         </NavigationMenuLink>
-                      </Link>
+                      </a>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <Link to="/employers">
+                      <a onClick={(e) => { 
+                        e.preventDefault(); 
+                        navigate('/employers');
+                      }} href="/employers">
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''}`}>
                           Employers
                         </NavigationMenuLink>
-                      </Link>
+                      </a>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
-                          <li>
-                            <Link to="/apprentices/learning-hub" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
+                          <li onClick={() => navigate('/apprentices/learning-hub')}>
+                            <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer">
                               <div className="text-sm font-medium leading-none text-[#FFC900]">Training</div>
                               <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                                 Professional development courses
                               </p>
-                            </Link>
+                            </div>
                           </li>
-                          <li>
-                            <Link to="/apprentices/certifications" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
+                          <li onClick={() => navigate('/apprentices/certifications')}>
+                            <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer">
                               <div className="text-sm font-medium leading-none text-[#FFC900]">Certification</div>
                               <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                                 Industry-recognized certifications
                               </p>
-                            </Link>
+                            </div>
                           </li>
-                          <li>
-                            <Link to="/apprentices/ai-tools" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
+                          <li onClick={() => navigate('/apprentices/ai-tools')}>
+                            <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer">
                               <div className="text-sm font-medium leading-none text-[#FFC900]">Tools</div>
                               <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                                 Professional tools and equipment
                               </p>
-                            </Link>
+                            </div>
                           </li>
-                          <li>
-                            <Link to="/faq" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground">
+                          <li onClick={() => navigate('/faq')}>
+                            <div className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer">
                               <div className="text-sm font-medium leading-none text-[#FFC900]">FAQ</div>
                               <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                                 Frequently asked questions
                               </p>
-                            </Link>
+                            </div>
                           </li>
                         </ul>
                       </NavigationMenuContent>

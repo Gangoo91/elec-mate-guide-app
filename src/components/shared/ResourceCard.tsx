@@ -1,83 +1,80 @@
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-interface ResourceCardProps {
+type ResourceCardAction = {
+  label: string;
+  href?: string;
+  onClick?: () => void;
+};
+
+type ResourceCardProps = {
   title: string;
   description: string;
   icon: React.ReactNode;
-  action?: {
-    label: string;
-    onClick?: () => void;
-    href?: string;
-  };
-  fullCardLink?: string; // Prop to enable full card navigation
-}
+  action?: ResourceCardAction;
+  fullCardLink?: string;
+};
 
-const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
+const ResourceCard = ({
+  title,
+  description,
+  icon,
+  action,
+  fullCardLink,
+}: ResourceCardProps) => {
   const navigate = useNavigate();
   
-  // Handle click on the entire card
-  const handleCardClick = () => {
-    if (fullCardLink) {
-      console.log("ResourceCard: Attempting to navigate to:", fullCardLink);
+  const handleClick = (e: React.MouseEvent) => {
+    if (action?.onClick) {
+      e.preventDefault();
+      action.onClick();
+    } else if (fullCardLink) {
+      e.preventDefault();
       navigate(fullCardLink);
     }
   };
 
-  return (
-    <Card 
-      className={`h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 ${fullCardLink ? 'cursor-pointer' : ''}`}
-      onClick={fullCardLink ? handleCardClick : undefined}
-    >
-      <CardHeader className="pb-2">
-        <div className="flex items-center gap-3">
-          {React.isValidElement(icon) ? icon : null}
-          <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
+  const cardContent = (
+    <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/40 transition-all duration-300">
+      <CardHeader className="pb-3">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="text-[#FFC900]">{icon}</div>
+          <h3 className="text-[#FFC900] text-lg font-semibold">{title}</h3>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-col justify-between flex-grow pt-2">
-        <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
-          {description}
-        </CardDescription>
+      <CardContent>
+        <p className="text-[#FFC900]/70 mb-4 text-sm">{description}</p>
         
         {action && (
-          <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
-            {action.href ? (
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (action.href) {
-                    console.log("Action button: Navigating to:", action.href);
-                    navigate(action.href);
-                  }
-                }}
-              >
-                {action.label} →
-              </Button>
-            ) : (
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (action.onClick) {
-                    console.log("Action button: Executing onClick handler");
-                    action.onClick();
-                  }
-                }}
-              >
-                {action.label} →
-              </Button>
-            )}
-          </div>
+          <Button
+            variant="link"
+            onClick={action.onClick}
+            className="text-[#FFC900] px-0 hover:text-[#FFC900] hover:no-underline flex items-center gap-1 group"
+          >
+            {action.label}
+            <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+          </Button>
         )}
       </CardContent>
     </Card>
+  );
+
+  if (fullCardLink && !action?.onClick) {
+    return (
+      <Link to={fullCardLink} className="block h-full">
+        {cardContent}
+      </Link>
+    );
+  }
+
+  return (
+    <div onClick={handleClick} className="cursor-pointer h-full">
+      {cardContent}
+    </div>
   );
 };
 
