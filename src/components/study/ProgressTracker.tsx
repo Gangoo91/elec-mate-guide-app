@@ -97,7 +97,6 @@ const ProgressTracker: React.FC<ProgressTrackerProps> = ({ courseId }) => {
               <Progress 
                 value={percentComplete} 
                 className="h-2 bg-[#FFC900]/20" 
-                indicatorClassName="bg-[#FFC900]"
               />
               <div className="text-xs text-[#FFC900]/60">
                 {completedCount} of {totalCount} units completed

@@ -1,26 +1,17 @@
-
 import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, MessageSquare, Calendar, Clock, Send, Inbox } from "lucide-react";
+import { Users, MessageSquare, Calendar, Clock, Inbox } from "lucide-react";
 import { useDataCaching } from "@/hooks/useDataCaching";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
 import MentorshipInbox from "@/components/mentorship/MentorshipInbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import MentorRequestDialog from "@/components/mentorship/MentorRequestDialog";
 
 interface Mentor {
   id: string;
@@ -45,7 +36,6 @@ const Mentorship = () => {
   const { toast } = useToast();
   const { user } = useAuth();
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
-  const [requestMessage, setRequestMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [mentorships, setMentorships] = useState<Mentorship[]>([]);
   const [activeTab, setActiveTab] = useState("browse");
@@ -73,58 +63,12 @@ const Mentorship = () => {
     setDialogOpen(true);
   };
 
-  const handleMentorshipRequest = async () => {
-    if (!selectedMentor || !user) return;
-
-    try {
-      // Create mentorship request
-      const { data: mentorshipData, error: mentorshipError } = await supabase
-        .from("mentorships")
-        .insert({
-          mentee_id: user.id,
-          mentor_id: selectedMentor.user_id,
-          status: "pending"
-        })
-        .select()
-        .single();
-        
-      if (mentorshipError) throw mentorshipError;
-      
-      // Send initial message
-      const { error: messageError } = await supabase
-        .from("messages")
-        .insert({
-          sender_id: user.id,
-          receiver_id: selectedMentor.user_id,
-          content: requestMessage,
-          read: false
-        });
-        
-      if (messageError) throw messageError;
-      
-      toast({
-        title: "Request Sent",
-        description: `Your mentorship request has been submitted to ${selectedMentor.name}. You'll be notified when they respond.`,
-      });
-
-      // Add the new mentorship to state
-      setMentorships(prev => [...prev, mentorshipData]);
-
-      // Reset state
-      setDialogOpen(false);
-      setRequestMessage("");
-      setSelectedMentor(null);
-      
-      // Switch to inbox tab
-      setActiveTab("inbox");
-    } catch (error) {
-      console.error("Error sending mentorship request:", error);
-      toast({
-        title: "Error",
-        description: "Failed to send mentorship request. Please try again.",
-        variant: "destructive"
-      });
-    }
+  const handleMentorshipRequestSent = (mentorshipData: any) => {
+    // Add the new mentorship to state
+    setMentorships(prev => [...prev, mentorshipData]);
+    
+    // Switch to inbox tab
+    setActiveTab("inbox");
   };
 
   const isMentorRequested = (mentorId: string) => {
@@ -260,7 +204,7 @@ const Mentorship = () => {
           <TabsContent value="browse" className="focus-visible:outline-none focus-visible:ring-0">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {displayMentors.map((mentor) => (
-                <Card key={mentor.id} className="border-[#FFC900]/20 transition-all hover:border-[#FFC900]/40">
+                <Card key={mentor.id} className="border-[#FFC900]/20 transition-all hover:border-[#FFC900]/40 flex flex-col">
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <CardTitle className="text-[#FFC900]">{mentor.name}</CardTitle>
@@ -281,7 +225,7 @@ const Mentorship = () => {
                       <span>{mentor.experience} experience</span>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex-grow">
                     <p className="text-sm mb-2">Specialties:</p>
                     <div className="flex flex-wrap gap-2">
                       {mentor.specialties.map((specialty) => (
@@ -291,7 +235,7 @@ const Mentorship = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter className="flex gap-2">
+                  <CardFooter className="pt-2">
                     {isMentorRequested(mentor.user_id) ? (
                       <Button 
                         variant="secondary" 
@@ -431,46 +375,12 @@ const Mentorship = () => {
           </TabsContent>
         </Tabs>
 
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Request Mentorship</DialogTitle>
-              <DialogDescription className="text-[#FFC900]/80">
-                Send a message to {selectedMentor?.name} explaining why you'd like to connect and what you hope to learn.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-2">
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-[#FFC900]">Your message</p>
-                <Textarea
-                  placeholder="Hello! I'm interested in learning more about your expertise in..."
-                  className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50 resize-none"
-                  rows={5}
-                  value={requestMessage}
-                  onChange={(e) => setRequestMessage(e.target.value)}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button 
-                variant="outline" 
-                onClick={() => setDialogOpen(false)} 
-                className="border-[#FFC900]/20 text-[#FFC900]"
-              >
-                Cancel
-              </Button>
-              <Button 
-                variant="default" 
-                onClick={handleMentorshipRequest} 
-                disabled={!requestMessage.trim()}
-                className="bg-[#FFC900] text-black hover:bg-[#FFC900]/80"
-              >
-                <Send className="h-4 w-4 mr-2" />
-                Send Request
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <MentorRequestDialog 
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          selectedMentor={selectedMentor}
+          onRequestSent={handleMentorshipRequestSent}
+        />
       </div>
     </MainLayout>
   );
