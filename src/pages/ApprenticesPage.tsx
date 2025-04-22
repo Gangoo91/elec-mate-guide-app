@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -106,9 +105,9 @@ const ApprenticesPage = () => {
     },
     {
       title: "Mentor Connect Hub",
-      description: "Connect with experienced electricians",
+      description: "Connect with experienced electricians for guidance and support in your journey.",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Learn more", href: "#mentor-connect" }
+      action: { label: "Find a Mentor", href: "/mentorship" }
     },
     {
       title: "Mental Health Hub",
@@ -120,7 +119,7 @@ const ApprenticesPage = () => {
       title: "Toolbox Talk Hub",
       description: "Explore discussions, safety topics, and community conversation all in one space.",
       icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Learn more", href: "#toolbox-talk" }
+      action: { label: "Join Discussion", href: "/toolbox-talk" }
     }
   ];
 
@@ -140,7 +139,7 @@ const ApprenticesPage = () => {
               description={resource.description}
               icon={resource.icon}
               action={resource.action}
-              fullCardLink={resource.fullCardLink} // Pass the new prop
+              fullCardLink={resource.fullCardLink}
             />
           ))}
         </div>
@@ -150,17 +149,6 @@ const ApprenticesPage = () => {
         ) : (
           <MentalHealthHubDialog open={mhModalOpen} onOpenChange={setMhModalOpen} />
         )}
-
-        <div id="toolbox-talk" className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
-          <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Toolbox Talk Hub</h2>
-          <p className="text-[#FFC900]/80 mb-4 text-sm md:text-base">
-            Stay informed and connected with community discussions, safety topics, and industry updates.
-            This is your one-stop resource for important electrical industry news and information.
-          </p>
-          
-          {/* Industry Resources moved here */}
-          <IndustryResources />
-        </div>
 
         <div className="mt-8 bg-[#22251e] rounded-xl p-4 md:p-8 border border-[#FFC900]/20">
           <h2 className="text-xl md:text-2xl font-bold text-[#FFC900] mb-3">Getting Started as an Apprentice</h2>

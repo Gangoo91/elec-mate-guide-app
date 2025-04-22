@@ -6,11 +6,65 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users } from "lucide-react";
+import { useDataCaching } from "@/hooks/useDataCaching";
+import { useToast } from "@/hooks/use-toast";
+
+interface Mentor {
+  id: string;
+  user_id: string;
+  name: string;
+  title: string;
+  experience: string;
+  specialties: string[];
+  availability: "High" | "Medium" | "Low";
+}
 
 const Mentorship = () => {
-  const mentors = [
+  const { data: mentors, isLoading, error } = useDataCaching<Mentor>("mentors", "mentorships");
+  const { toast } = useToast();
+
+  const handleMentorshipRequest = (mentorId: string) => {
+    toast({
+      title: "Request Sent",
+      description: "Your mentorship request has been submitted. The mentor will review it soon.",
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="container py-8">
+          <div className="animate-pulse space-y-4">
+            <div className="h-12 bg-[#FFC900]/10 rounded-lg w-1/3" />
+            <div className="h-6 bg-[#FFC900]/10 rounded-lg w-2/3" />
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-64 bg-[#FFC900]/10 rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <MainLayout>
+        <div className="container py-8">
+          <div className="text-center text-[#FFC900]">
+            <h2 className="text-xl">Unable to load mentors</h2>
+            <p className="text-[#FFC900]/80">Please try again later</p>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  const displayMentors = mentors || [
     {
-      id: 1,
+      id: "1",
+      user_id: "1",
       name: "Sarah Johnson",
       title: "Master Electrician",
       experience: "15+ years",
@@ -18,7 +72,8 @@ const Mentorship = () => {
       availability: "High",
     },
     {
-      id: 2,
+      id: "2",
+      user_id: "2",
       name: "David Miller",
       title: "Electrical Engineer",
       experience: "12 years",
@@ -26,7 +81,8 @@ const Mentorship = () => {
       availability: "Medium",
     },
     {
-      id: 3,
+      id: "3",
+      user_id: "3",
       name: "Michael Chen",
       title: "Project Manager",
       experience: "8 years",
@@ -49,7 +105,7 @@ const Mentorship = () => {
         </div>
         
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {mentors.map((mentor) => (
+          {displayMentors.map((mentor) => (
             <Card key={mentor.id} className="border-[#FFC900]/20">
               <CardHeader>
                 <div className="flex justify-between items-start">
@@ -79,7 +135,11 @@ const Mentorship = () => {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" className="w-full border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10">
+                <Button 
+                  variant="outline" 
+                  className="w-full border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
+                  onClick={() => handleMentorshipRequest(mentor.id)}
+                >
                   Request Mentorship
                 </Button>
               </CardFooter>
