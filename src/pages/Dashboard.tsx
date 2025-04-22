@@ -106,7 +106,7 @@ const Dashboard = () => {
           hideBackButton={true}
         />
 
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20">
+        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-8">
           <div className="mb-8">
             <DashboardSearchBar
               query={query}
