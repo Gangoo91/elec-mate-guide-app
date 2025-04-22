@@ -1,4 +1,7 @@
 
+// THIS FILE IS NO LONGER USED
+// The application now uses Dashboard.tsx as the main landing page
+
 import React, { useState } from "react";
 import { Book, Lightbulb, Briefcase, Search } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -24,7 +27,7 @@ const roles = [
   },
 ];
 
-const Index = () => {
+const OldIndex = () => {
   const [query, setQuery] = useState("");
   const filteredRoles = roles.filter((role) =>
     role.label.toLowerCase().includes(query.toLowerCase())
@@ -108,4 +111,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default OldIndex;
