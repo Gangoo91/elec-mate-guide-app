@@ -1,6 +1,6 @@
 
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { Routes, Route, useParams, useNavigate, Outlet } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
@@ -32,11 +32,14 @@ const StudyMaterialsPage = () => {
   
   const contentKey = getContentKey();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (studyType && !validStudyTypes.includes(studyType)) {
       navigate('/apprentices/study-materials');
     }
   }, [studyType, navigate]);
+
+  // Check if we're on a specific content page (core-units, interactive-lessons, etc.)
+  const isOnContentPage = window.location.pathname.split('/').length > 4;
 
   const renderContent = () => {
     if (!studyType) {
@@ -44,47 +47,51 @@ const StudyMaterialsPage = () => {
     }
 
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
-      return (
-        <>
+      // Only show the grid if we're not on a specific content page
+      if (!isOnContentPage) {
+        return (
           <StudyUnitContent 
             {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} 
             basePath={`/apprentices/study-materials/${studyType}`}
           />
-          <Routes>
-            <Route path="/core-units" element={
+        );
+      }
+      
+      return (
+        <Routes>
+          <Route path="/core-units" element={
+            <ErrorBoundary>
+              <CoreUnitsPage />
+            </ErrorBoundary>
+          } />
+          <Route path="/interactive-lessons" element={
+            studyType === 'nvq2' ? (
               <ErrorBoundary>
-                <CoreUnitsPage />
+                <Suspense fallback={<LoadingSpinner message="Loading Interactive Lessons..." />}>
+                  <InteractiveLessonsPage />
+                </Suspense>
               </ErrorBoundary>
-            } />
-            <Route path="/interactive-lessons" element={
-              studyType === 'nvq2' ? (
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSpinner message="Loading Interactive Lessons..." />}>
-                    <InteractiveLessonsPage />
-                  </Suspense>
-                </ErrorBoundary>
-              ) : <CoreUnitsPage />
-            } />
-            <Route path="/quizzes" element={
-              studyType === 'nvq2' ? (
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSpinner message="Loading Quizzes & Progress..." />}>
-                    <QuizzesProgressPage />
-                  </Suspense>
-                </ErrorBoundary>
-              ) : <CoreUnitsPage />
-            } />
-            <Route path="/videos" element={
-              studyType === 'nvq2' ? (
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSpinner message="Loading Video Content..." />}>
-                    <VideoContentPage />
-                  </Suspense>
-                </ErrorBoundary>
-              ) : <CoreUnitsPage />
-            } />
-          </Routes>
-        </>
+            ) : <CoreUnitsPage />
+          } />
+          <Route path="/quizzes" element={
+            studyType === 'nvq2' ? (
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner message="Loading Quizzes & Progress..." />}>
+                  <QuizzesProgressPage />
+                </Suspense>
+              </ErrorBoundary>
+            ) : <CoreUnitsPage />
+          } />
+          <Route path="/videos" element={
+            studyType === 'nvq2' ? (
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner message="Loading Video Content..." />}>
+                  <VideoContentPage />
+                </Suspense>
+              </ErrorBoundary>
+            ) : <CoreUnitsPage />
+          } />
+        </Routes>
       );
     }
     

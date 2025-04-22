@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookText, FileVideo, Award, Play } from "lucide-react";
 
@@ -17,6 +17,7 @@ interface StudyUnitContentProps {
 
 const StudyUnitContent = ({ title, description, units, basePath }: StudyUnitContentProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const studyOptions = [
     {
@@ -46,13 +47,9 @@ const StudyUnitContent = ({ title, description, units, basePath }: StudyUnitCont
   ];
 
   const handleCardClick = (path: string) => {
-    if (basePath) {
-      console.log(`Navigating to: ${basePath}/${path}`);
-      navigate(`${basePath}/${path}`);
-    } else {
-      console.log(`Navigating to: ${path}`);
-      navigate(path);
-    }
+    const targetPath = basePath ? `${basePath}/${path}` : path;
+    console.log(`Navigating to: ${targetPath}`);
+    navigate(targetPath, { replace: false });
   };
 
   return (
