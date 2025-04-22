@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -14,19 +13,19 @@ import PageHeader from "@/components/layout/PageHeader";
 const roles = [
   {
     label: "Apprentices",
-    icon: <Book className="h-7 w-7 text-[#FFC900]" />,
+    icon: <Book className="h-7 w-7" />,
     path: "/apprentices",
     description: "Learning, assessment & mentorship for aspiring electricians.",
   },
   {
     label: "Electricians",
-    icon: <Lightbulb className="h-7 w-7 text-[#FFC900]" />,
+    icon: <Lightbulb className="h-7 w-7" />,
     path: "/electricians",
     description: "Professional resources for licensed electricians.",
   },
   {
     label: "Employers",
-    icon: <Briefcase className="h-7 w-7 text-[#FFC900]" />,
+    icon: <Briefcase className="h-7 w-7" />,
     path: "/employers",
     description: "Talent recruitment and workforce management tools.",
   },
@@ -99,14 +98,8 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-6 md:py-12">
-        <PageHeader 
-          title="Electrical Industry Hub"
-          description="Your all-in-one platform for apprentices, electricians, and employers to connect, learn, and thrive."
-          hideBackButton={true}
-        />
-
-        <div className="bg-[#22251e] rounded-xl p-8 border border-[#FFC900]/20 mb-8">
+      <div className="min-h-screen bg-[#22251e]">
+        <div className="container px-4 py-6">
           <div className="mb-8">
             <DashboardSearchBar
               query={query}

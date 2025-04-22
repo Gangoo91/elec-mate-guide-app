@@ -1,34 +1,37 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 type DashboardRoleCardProps = {
   label: string;
   icon: React.ReactNode;
   path: string;
+  description: string;
 };
 
-const DashboardRoleCard = ({ label, icon, path }: DashboardRoleCardProps) => {
+const DashboardRoleCard = ({ label, icon, path, description }: DashboardRoleCardProps) => {
   const navigate = useNavigate();
   
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate(path, { replace: true });
-  };
-
   return (
-    <button
-      className="bg-[#151812] hover:bg-[#1a1d15] border border-[#FFC900]/20 rounded-xl p-6 transition-all duration-300 hover:scale-105 w-full flex flex-col items-center gap-4 focus:outline-none focus:ring-2 focus:ring-[#FFC900]/50"
-      onClick={handleClick}
-      type="button"
-    >
-      <div className="p-4 rounded-lg bg-[#FFC900]/10">
-        {icon}
+    <div className="bg-[#151812]/80 rounded-2xl border border-[#FFC900]/20 p-6 hover:border-[#FFC900]/40 transition-all duration-300">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="text-[#FFC900]">
+          {icon}
+        </div>
+        <h2 className="text-[#FFC900] text-2xl font-semibold">{label}</h2>
       </div>
-      <span className="text-xl font-semibold text-[#FFC900]">
-        {label}
-      </span>
-    </button>
+      
+      <p className="text-[#FFC900]/70 text-lg mb-6">{description}</p>
+      
+      <button
+        onClick={() => navigate(path)}
+        className="flex items-center justify-between w-full text-[#FFC900] hover:text-[#FFC900] transition-colors duration-200 text-lg font-medium group"
+      >
+        Go to {label}
+        <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
+      </button>
+    </div>
   );
 };
 
