@@ -1,12 +1,101 @@
-
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 import { Book, GraduationCap, BookOpen } from "lucide-react";
 import BackButton from "@/components/navigation/BackButton";
+import StudyUnitContent from "@/components/study/StudyUnitContent";
 
 const StudyMaterialsPage = () => {
+  const level2Content = {
+    title: "NVQ Level 2 Core Units",
+    description: "Essential knowledge broken down into easy-to-understand sections",
+    units: [
+      {
+        title: "Unit 201: Health & Safety Basics",
+        content: [
+          "Your safety comes first! Learn about protective equipment (PPE) - like your safety boots and gloves",
+          "Understanding hazards - what could hurt you and how to stay safe",
+          "Simple guide to risk assessments - spotting dangers before they cause problems",
+          "Basic first aid knowledge - what to do if someone gets hurt",
+          "Fire safety made easy - know your fire extinguishers and escape routes"
+        ],
+        learningOutcomes: [
+          "You'll be able to spot dangerous situations before they cause harm",
+          "Know exactly what safety gear to wear and when to wear it",
+          "Understand how to keep yourself and others safe on site"
+        ]
+      },
+      {
+        title: "Unit 202: Electrical Science Made Simple",
+        content: [
+          "Voltage explained simply - think of it like water pressure in a pipe",
+          "Current - how electricity flows, like water flowing through pipes",
+          "Resistance - what slows electricity down (like narrow pipes slow water)",
+          "Basic calculations made easy with real-world examples",
+          "Simple circuit diagrams - learning to read them like a map"
+        ],
+        learningOutcomes: [
+          "Understand the basics of how electricity works without the complex math",
+          "Know how to use a multimeter to measure voltage and current",
+          "Be able to explain electrical concepts in simple terms"
+        ]
+      },
+      {
+        title: "Unit 203: Installation Basics",
+        content: [
+          "Step-by-step guide to basic wiring - starting with simple circuits",
+          "Tools of the trade - what each tool does and how to use it safely",
+          "Cable types made simple - which ones to use and why",
+          "Common mistakes and how to avoid them",
+          "Real-world examples with pictures and diagrams"
+        ],
+        learningOutcomes: [
+          "Confidently identify different types of cables and their uses",
+          "Know how to use basic tools correctly and safely",
+          "Complete simple installations following proper procedures"
+        ]
+      }
+    ]
+  };
+
+  const level3Content = {
+    title: "NVQ Level 3 Advanced Topics",
+    description: "Building on the basics with more detailed but clear explanations",
+    units: [
+      {
+        title: "Advanced Circuit Design",
+        content: [
+          "Breaking down complex circuits into simple parts",
+          "Understanding three-phase power in everyday terms",
+          "Practical fault-finding techniques - where to start looking",
+          "Testing and certification explained clearly",
+          "Real examples from construction sites"
+        ],
+        learningOutcomes: [
+          "Design more complex circuits with confidence",
+          "Troubleshoot problems systematically",
+          "Understand three-phase systems and their applications"
+        ]
+      },
+      {
+        title: "Regulations Made Clear",
+        content: [
+          "BS7671 broken down into bite-size chunks",
+          "Key regulations explained in plain English",
+          "Common regulation questions answered",
+          "Real-world examples of applying regulations",
+          "Simple memory tricks for important rules"
+        ],
+        learningOutcomes: [
+          "Navigate the wiring regulations with confidence",
+          "Apply regulations correctly to your work",
+          "Understand why regulations exist and their importance"
+        ]
+      }
+    ]
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
@@ -15,7 +104,7 @@ const StudyMaterialsPage = () => {
         </div>
         <PageHeader 
           title="Study Materials"
-          description="Comprehensive study resources for UK electrical qualifications, including NVQ Level 2, Level 3, and HNC materials."
+          description="Easy-to-understand guides and resources for electrical qualifications. Everything is explained in simple terms with real-world examples."
           hideBackButton={true}
         />
         
@@ -54,53 +143,9 @@ const StudyMaterialsPage = () => {
           />
         </div>
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ResourceCard
-            title="Core Units Breakdown - Level 2"
-            description="• Unit 201: Health & Safety
-• Unit 202: Principles of Electrical Science
-• Unit 203: Electrical Installations Technology
-• Unit 204: Installation Methods & Planning
-• Unit 205: Electrical Systems & Components"
-            icon={<Book className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/nvq2/core-units"
-            action={{
-              label: "View Core Units",
-              href: "/apprentices/study-materials/nvq2/core-units"
-            }}
-          />
-
-          <ResourceCard
-            title="AM2 Assessment Guide"
-            description="• Installation Project (Full Duration: 16.5 hours)
-• Composite Installation (8.5 hours)
-• Practical Problem Solving (3 hours)
-• Online Assessment (2 hours)
-• Safety Critical Tasks
-• Inspection & Testing"
-            icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/am2-guide"
-            action={{
-              label: "Access AM2 Guide",
-              href: "/apprentices/study-materials/am2-guide"
-            }}
-          />
-
-          <ResourceCard
-            title="Level 3 Performance Units"
-            description="• Electrical Installation Design
-• Inspection, Testing & Commissioning
-• Fault Diagnosis & Rectification
-• BS7671 Requirements
-• Electrical System Planning
-• Advanced Circuit Applications"
-            icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
-            fullCardLink="/apprentices/study-materials/nvq3/performance-units"
-            action={{
-              label: "View Performance Units",
-              href: "/apprentices/study-materials/nvq3/performance-units"
-            }}
-          />
+        <div className="mt-8 space-y-8">
+          <StudyUnitContent {...level2Content} />
+          <StudyUnitContent {...level3Content} />
         </div>
       </div>
     </MainLayout>
