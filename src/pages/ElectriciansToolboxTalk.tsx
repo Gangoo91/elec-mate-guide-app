@@ -3,36 +3,39 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Wrench, Shield, Users } from "lucide-react";
+import GlassCard from "@/components/shared/GlassCard";
 
 const ElectriciansToolboxTalk = () => (
   <MainLayout>
-    <div className="container py-8">
+    <div className="container py-6">
       <PageHeader
         title="Toolbox Talk"
-        description="Focused safety, practical tips, and electrician community conversations."
+        description="Safety discussions and community conversations."
       />
-      <div className="mt-10 flex flex-col md:flex-row gap-6">
-        <div className="bg-[#151812] border border-[#FFC900]/20 p-6 rounded-xl flex-1 flex flex-col items-center text-center text-[#FFC900]">
-          <Shield className="h-9 w-9 mb-2" />
-          <div className="font-bold text-lg mb-2">Safety Topics</div>
-          <div className="text-[#FFC900]/80 text-base">
-            Explore the latest in electrical site safety, from PPE to hazard recognition and emergency protocols.
-          </div>
-        </div>
-        <div className="bg-[#151812] border border-[#FFC900]/20 p-6 rounded-xl flex-1 flex flex-col items-center text-center text-[#FFC900]">
-          <Wrench className="h-9 w-9 mb-2" />
-          <div className="font-bold text-lg mb-2">Best Practices</div>
-          <div className="text-[#FFC900]/80 text-base">
-            Share, learn, and discuss the newest methods and workflows making jobs safer and more efficient.
-          </div>
-        </div>
-        <div className="bg-[#151812] border border-[#FFC900]/20 p-6 rounded-xl flex-1 flex flex-col items-center text-center text-[#FFC900]">
-          <Users className="h-9 w-9 mb-2" />
-          <div className="font-bold text-lg mb-2">Join the Conversation</div>
-          <div className="text-[#FFC900]/80 text-base">
-            Engage with the community: toolbox talks, live Q&A events, and upcoming peer-led discussions.
-          </div>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <GlassCard className="p-4">
+          <Shield className="h-8 w-8 mb-2 text-[#FFC900]" />
+          <h2 className="font-bold text-[#FFC900] text-lg mb-1">Safety Topics</h2>
+          <p className="text-[#FFC900]/80 text-sm">
+            Latest in electrical site safety, PPE, and hazard recognition.
+          </p>
+        </GlassCard>
+        
+        <GlassCard className="p-4">
+          <Wrench className="h-8 w-8 mb-2 text-[#FFC900]" />
+          <h2 className="font-bold text-[#FFC900] text-lg mb-1">Best Practices</h2>
+          <p className="text-[#FFC900]/80 text-sm">
+            Share efficient methods and workflows for safer jobs.
+          </p>
+        </GlassCard>
+        
+        <GlassCard className="p-4">
+          <Users className="h-8 w-8 mb-2 text-[#FFC900]" />
+          <h2 className="font-bold text-[#FFC900] text-lg mb-1">Join the Conversation</h2>
+          <p className="text-[#FFC900]/80 text-sm">
+            Engage in toolbox talks, Q&A events, and peer discussions.
+          </p>
+        </GlassCard>
       </div>
     </div>
   </MainLayout>
