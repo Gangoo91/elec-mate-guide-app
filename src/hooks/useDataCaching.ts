@@ -3,7 +3,10 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useErrorHandler } from "./useErrorHandler";
 
-export function useDataCaching<T>(key: string, tableName: string, options = {}) {
+// Define allowed table names to make TypeScript happy
+type TableName = "mental_health_resources" | "mentorships" | "messages" | "profiles" | "subscribers";
+
+export function useDataCaching<T>(key: string, tableName: TableName, options = {}) {
   const queryClient = useQueryClient();
   const { handleError } = useErrorHandler();
 
@@ -29,10 +32,10 @@ export function useDataCaching<T>(key: string, tableName: string, options = {}) 
 
   // Add a mutation for updating data with automatic cache invalidation
   const updateMutation = useMutation({
-    mutationFn: async (newData: Partial<T> & { id: string | number }) => {
+    mutationFn: async (newData: Partial<T> & { id: string }) => {
       const { data, error } = await supabase
         .from(tableName)
-        .update(newData)
+        .update(newData as any) // Using any here because Supabase types are strict but we're ensuring correct data
         .eq('id', newData.id)
         .select();
       

@@ -6,11 +6,16 @@ type ValidationRule = {
   message: string;
 };
 
+interface PatternOption {
+  value: RegExp;
+  message: string;
+}
+
 type ValidationOptions = {
   required?: boolean | { message: string };
   minLength?: number | { value: number; message: string };
   maxLength?: number | { value: number; message: string };
-  pattern?: RegExp | { value: RegExp; message: string };
+  pattern?: RegExp | PatternOption;
   custom?: ValidationRule[];
 };
 
@@ -78,11 +83,11 @@ export function useInputValidation() {
     // Pattern validation
     if (options.pattern && value) {
       const pattern = typeof options.pattern === 'object' 
-        ? options.pattern.value 
+        ? (options.pattern as PatternOption).value 
         : options.pattern;
         
       const message = typeof options.pattern === 'object'
-        ? options.pattern.message
+        ? (options.pattern as PatternOption).message
         : `${name} format is invalid`;
         
       if (!pattern.test(value)) {
