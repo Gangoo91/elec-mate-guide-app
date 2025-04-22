@@ -93,6 +93,7 @@ const AIDiagnosticAssistant: React.FC = () => {
           <CircuitBoard className="h-4 w-4 mr-2" />
           {isLoading ? 'Getting Assistance...' : 'Get Diagnostic Help'}
         </Button>
+        
         {response && (
           <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
             <h4 className="font-semibold mb-2 text-[#FFC900]">Diagnostic Response:</h4>

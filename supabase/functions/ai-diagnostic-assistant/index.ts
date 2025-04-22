@@ -18,12 +18,10 @@ serve(async (req) => {
 
     console.log(`Processing query: "${query}", useApiKey: ${useApiKey}`);
     
-    // If API key is not configured or the user chose not to use it
+    // Check if API key is available and the user wants to use it
     if (!openAIApiKey || !useApiKey) {
       console.log('Using mock response (no API key or user chose not to use it)');
-      
       const mockResponse = generateMockResponse(query);
-      
       return new Response(JSON.stringify({ response: mockResponse }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -56,7 +54,7 @@ serve(async (req) => {
     if (!response.ok) {
       const error = await response.json();
       console.error('OpenAI API error:', error);
-      throw new Error('Failed to get response from OpenAI');
+      throw new Error(`Failed to get response from OpenAI: ${JSON.stringify(error)}`);
     }
 
     const data = await response.json();
@@ -84,6 +82,7 @@ Please try again later or contact support if the issue persists.`;
       error: error.message 
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500
     });
   }
 });
