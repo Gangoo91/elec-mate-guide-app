@@ -19,17 +19,18 @@ interface ResourceCardProps {
 const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
   const navigate = useNavigate();
   
-  // If fullCardLink is provided, we'll handle the click on the card
+  // Handle click on the entire card
   const handleCardClick = () => {
     if (fullCardLink) {
+      console.log("Navigating to:", fullCardLink);
       navigate(fullCardLink);
     }
   };
 
   return (
     <Card 
-      className={`h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 cursor-pointer`}
-      onClick={handleCardClick}
+      className={`h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 ${fullCardLink ? 'cursor-pointer' : ''}`}
+      onClick={fullCardLink ? handleCardClick : undefined}
     >
       <CardHeader className="pb-2">
         <div className="flex items-center gap-3">

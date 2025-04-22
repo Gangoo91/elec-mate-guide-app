@@ -14,12 +14,23 @@ const StudyMaterialsPage = () => {
 
   // Define valid study types and map URL parameters to content keys
   const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];
-  const contentKey = studyType === 'nvq2' ? 'level2' : 
-                    studyType === 'nvq3' ? 'level3' : 
-                    studyType === 'hnc' ? 'hnc' : null;
+  
+  // Get content key based on studyType
+  const getContentKey = () => {
+    if (studyType === 'nvq2') return 'level2';
+    if (studyType === 'nvq3') return 'level3';
+    if (studyType === 'hnc') return 'hnc';
+    return null;
+  };
+  
+  const contentKey = getContentKey();
 
   // If studyType exists but isn't valid, redirect to the main materials page
   React.useEffect(() => {
+    console.log("Current path:", window.location.pathname);
+    console.log("Study type param:", studyType);
+    console.log("Content key:", contentKey);
+    
     if (studyType && !validStudyTypes.includes(studyType)) {
       navigate('/apprentices/study-materials');
     }
@@ -27,11 +38,6 @@ const StudyMaterialsPage = () => {
 
   // Render appropriate content based on URL
   const renderContent = () => {
-    // Log the current path and studyType for debugging
-    console.log("Current path:", window.location.pathname);
-    console.log("Study type param:", studyType);
-    console.log("Content key:", contentKey);
-
     // If no studyType is specified, show the grid of study material options
     if (!studyType) {
       return <StudyMaterialsGrid />;
@@ -46,6 +52,17 @@ const StudyMaterialsPage = () => {
     return <StudyMaterialsGrid />;
   };
 
+  // Generate title based on study type
+  const getPageTitle = () => {
+    if (!studyType) return "Study Materials";
+    
+    if (studyType === 'nvq2') return "NVQ Level 2 Study Materials";
+    if (studyType === 'nvq3') return "NVQ Level 3 & AM2 Study Materials";
+    if (studyType === 'hnc') return "HNC Electrical Engineering Materials";
+    
+    return "Study Materials";
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
@@ -53,7 +70,7 @@ const StudyMaterialsPage = () => {
           <BackButton />
         </div>
         <PageHeader 
-          title={studyType ? `${studyType.toUpperCase()} Study Materials` : "Study Materials"}
+          title={getPageTitle()}
           description="Easy-to-understand guides and resources for electrical qualifications. Everything is explained in simple terms with real-world examples."
           hideBackButton={true}
         />
