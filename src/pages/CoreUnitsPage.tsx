@@ -1,8 +1,6 @@
 
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
-import PageHeader from "@/components/layout/PageHeader";
-import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
@@ -39,17 +37,9 @@ const CoreUnitsPage = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
-        <div className="mb-4">
-          <BackButton />
-        </div>
+      <div className="container px-4 py-6 md:py-8 pt-16 md:pt-16">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#FFC900] mb-6 text-center">NVQ Level 2 Core Units</h1>
         
-        <PageHeader 
-          title="NVQ Level 2 Core Units"
-          description="Select a unit to begin your learning journey"
-          hideBackButton={true}
-        />
-
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
           {units.map((unit) => (
             <Card 
