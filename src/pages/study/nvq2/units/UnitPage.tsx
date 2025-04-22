@@ -54,4 +54,3 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
 };
 
 export default UnitPage;
-
