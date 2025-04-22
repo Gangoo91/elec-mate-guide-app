@@ -64,8 +64,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     });
 
+    // Add a safety timeout in case the auth check gets stuck
+    const safetyTimer = setTimeout(() => {
+      if (loading) {
+        console.log("Auth loading timeout triggered");
+        setLoading(false);
+      }
+    }, 3000);
+
     return () => {
       subscription.unsubscribe();
+      clearTimeout(safetyTimer);
     };
   }, []);
 

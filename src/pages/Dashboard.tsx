@@ -50,32 +50,29 @@ const Dashboard = () => {
     refreshSession();
   }, []);
 
-  // Improved initialization to ensure we're fully ready to render
+  // Reset loading state when auth state or page is ready
   useEffect(() => {
     if (!loading && isReady) {
-      // Short delay to ensure all child components are ready
+      // Set a shorter timeout to prevent long loading states
       const timer = setTimeout(() => {
         setLocalLoading(false);
-      }, 300);
+        console.log("Dashboard loading completed");
+      }, 100); // Reduced from 300ms
       
       return () => clearTimeout(timer);
     }
   }, [loading, isReady]);
 
+  // Force exit loading state after a maximum time to prevent stuck loading
   useEffect(() => {
-    // Apply animations after component is fully loaded
-    if (!localLoading) {
-      const timer = setTimeout(() => {
-        const elements = document.querySelectorAll('.animate-on-load');
-        elements.forEach((el, i) => {
-          setTimeout(() => {
-            el.classList.add('animate-fade-in');
-          }, i * 100);
-        });
-      }, 100);
-  
-      return () => clearTimeout(timer);
-    }
+    const maxLoadingTimer = setTimeout(() => {
+      if (localLoading) {
+        console.log("Force exiting dashboard loading state");
+        setLocalLoading(false);
+      }
+    }, 2000);
+    
+    return () => clearTimeout(maxLoadingTimer);
   }, [localLoading]);
 
   // Persist dashboard loaded state in localStorage
@@ -100,11 +97,11 @@ const Dashboard = () => {
   }
   
   // Improved loading state with a proper loading component
-  if (loading || localLoading || !isReady) {
+  if (loading || (localLoading && isReady)) {
     return (
       <MainLayout>
         <div className="container h-screen flex items-center justify-center">
-          <LoadingSpinner size="lg" />
+          <LoadingSpinner size="lg" message="Loading dashboard..." />
         </div>
       </MainLayout>
     );

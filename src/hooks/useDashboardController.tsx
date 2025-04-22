@@ -16,10 +16,23 @@ export function useDashboardController() {
     // Small timeout to ensure DOM is ready
     const timer = setTimeout(() => {
       setIsReady(true);
+      console.log("Dashboard controller is ready");
     }, 10);
     
     return () => clearTimeout(timer);
   }, [location.pathname]);
+  
+  // Force ready state after a maximum timeout to prevent stuck loading
+  useEffect(() => {
+    if (!isReady) {
+      const forceReadyTimer = setTimeout(() => {
+        console.log("Force ready dashboard controller");
+        setIsReady(true);
+      }, 1000); // Safety timeout
+      
+      return () => clearTimeout(forceReadyTimer);
+    }
+  }, [isReady]);
   
   return { isReady };
 }
