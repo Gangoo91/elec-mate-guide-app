@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import MarketProjections from "@/components/subscription/MarketProjections";
 import { motion } from "framer-motion";
 
 const pricingData = [
@@ -105,6 +105,8 @@ const Welcome = () => {
         </div>
         {/* End Pricing Section */}
         
+        <MarketProjections />
+        
         <div className="space-y-4 w-full max-w-xs">
           <Button
             onClick={handleGetStarted}
@@ -127,4 +129,3 @@ const Welcome = () => {
 };
 
 export default Welcome;
-
