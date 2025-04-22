@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -41,7 +40,6 @@ import Unit204Page from "./pages/study/nvq2/units/Unit204Page";
 import ApprenticeHub from "./pages/ApprenticeHub";
 import ApprenticeMentalHealth from "./pages/ApprenticeMentalHealth";
 
-// Create QueryClient with optimized settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -52,7 +50,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Handle page transitions and prevent full reloads
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   
@@ -63,15 +60,16 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Authentication wrapper for routes that should only be accessible to non-authenticated users
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
+  const { preferences } = useUserPreferences();
   
   useEffect(() => {
+    refreshSession();
+    
     if (!loading && user) {
-      // If user is already logged in, navigate based on their preferred role if set
-      const preferredRole = localStorage.getItem('preferredRole');
+      const preferredRole = preferences.preferredRole;
       console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
       
       if (preferredRole === 'apprentice') {
@@ -80,7 +78,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
         navigate('/dashboard', { replace: true });
       }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
   
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -89,12 +87,10 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return !user ? <>{children}</> : null;
 };
 
-// Authentication wrapper for routes that require authentication
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   
-  // Try to refresh session when mounting a protected route
   useEffect(() => {
     const checkAuth = async () => {
       if (!user && !loading) {
@@ -106,7 +102,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   }, [user, loading, refreshSession]);
   
   useEffect(() => {
-    // If still not authenticated after refresh attempt, redirect to login
     if (!loading && !user) {
       navigate('/login', { replace: true });
     }
@@ -119,16 +114,17 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
-// Special redirect component for root route that respects saved preferences
 const RootRedirect = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
+  const { preferences } = useUserPreferences();
   
   useEffect(() => {
+    refreshSession();
+    
     if (!loading) {
       if (user) {
-        // Check for preferred role in localStorage
-        const preferredRole = localStorage.getItem('preferredRole');
+        const preferredRole = preferences.preferredRole;
         console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
         
         if (preferredRole === 'apprentice') {
@@ -142,7 +138,7 @@ const RootRedirect = () => {
         navigate('/welcome', { replace: true });
       }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };
@@ -157,16 +153,11 @@ const App = () => (
             <BrowserRouter>
               <ScrollToTop />
               <Routes>
-                {/* Root route - use special handler */}
                 <Route path="/" element={<RootRedirect />} />
                 <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
-                
-                {/* Public routes - redirect to dashboard if authenticated */}
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                
-                {/* Routes that require authentication */}
                 <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/apprentices" element={<PrivateRoute><ApprenticesPage /></PrivateRoute>} />
                 <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />
@@ -174,15 +165,12 @@ const App = () => (
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                
-                {/* Study materials routes */}
                 <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units" element={<PrivateRoute><CoreUnitsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/201" element={<PrivateRoute><Unit201Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/202" element={<PrivateRoute><Unit202Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/203" element={<PrivateRoute><Unit203Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/204" element={<PrivateRoute><Unit204Page /></PrivateRoute>} />
-                
                 <Route path="/apprentices/study-materials/:studyType/*" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
@@ -197,18 +185,12 @@ const App = () => (
                 <Route path="/manage-subscription" element={<PrivateRoute><ManageSubscription /></PrivateRoute>} />
                 <Route path="/subscription" element={<PrivateRoute><Subscription /></PrivateRoute>} />
                 <Route path="/subscription/success" element={<PrivateRoute><SubscriptionSuccess /></PrivateRoute>} />
-                
-                {/* Public pages */}
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
-                
-                {/* Legacy routes - redirect to new routes */}
                 <Route path="/index" element={<Navigate to="/" replace />} />
                 <Route path="/training" element={<Navigate to="/apprentices/learning-hub" replace />} />
                 <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
                 <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
-                
-                {/* Catch all - redirect to 404 or dashboard if signed in */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

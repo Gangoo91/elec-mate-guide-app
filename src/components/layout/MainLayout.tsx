@@ -4,6 +4,7 @@ import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -11,11 +12,13 @@ type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const { refreshSession } = useAuth();
+  const { preferences } = useUserPreferences();
   
   // Ensure auth session is refreshed on layout mount
   useEffect(() => {
+    console.log("MainLayout - Refreshing session, current preferred role:", preferences.preferredRole);
     refreshSession();
-  }, [refreshSession]);
+  }, [refreshSession, preferences.preferredRole]);
   
   return (
     <div className="flex flex-col min-h-screen bg-background">

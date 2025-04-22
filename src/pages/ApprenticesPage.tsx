@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
 import IndustryResources from "@/components/IndustryResources";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const MentalHealthHubContent = () => (
   <>
@@ -94,16 +94,16 @@ const MentalHealthHubDrawer = ({ open, onOpenChange }: { open: boolean; onOpenCh
 
 const ApprenticesPage = () => {
   const { user, refreshSession } = useAuth();
+  const { setPreferredRole } = useUserPreferences();
   const navigate = useNavigate();
   const [mhModalOpen, setMhModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
-  // Ensure we're setting the role preference and refreshing the session
   useEffect(() => {
     console.log("ApprenticesPage - Setting preferredRole to apprentice");
-    localStorage.setItem('preferredRole', 'apprentice');
+    setPreferredRole('apprentice');
     refreshSession();
-  }, [refreshSession]);
+  }, [refreshSession, setPreferredRole]);
 
   const apprenticeResources = [
     {
@@ -145,8 +145,7 @@ const ApprenticesPage = () => {
   const handleResourceCardClick = (resource: any) => {
     console.log("Resource card clicked:", resource.title);
     
-    // Ensure we maintain the apprentice role preference when clicking cards
-    localStorage.setItem('preferredRole', 'apprentice');
+    setPreferredRole('apprentice');
     
     if (resource.fullCardLink) {
       navigate(resource.fullCardLink);

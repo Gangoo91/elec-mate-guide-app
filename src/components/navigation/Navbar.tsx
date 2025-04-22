@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -19,6 +20,7 @@ import UserMenu from "./UserMenu";
 import NotificationBell from "../notifications/NotificationBell";
 import { useNotificationContext } from "@/contexts/NotificationContext";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,6 +29,7 @@ const Navbar = () => {
   const { toast } = useToast();
   const { user, loading, refreshSession } = useAuth();
   const { notifications } = useNotificationContext();
+  const { setPreferredRole, preferences } = useUserPreferences();
 
   // Refresh session when navbar is mounted
   useEffect(() => {
@@ -50,14 +53,14 @@ const Navbar = () => {
     e.preventDefault();
     
     if (user) {
-      const preferredRole = localStorage.getItem('preferredRole');
-      console.log("Logo clicked, preferredRole:", preferredRole);
+      const preferredRole = preferences.preferredRole;
+      console.log("Navbar: Logo clicked, preferredRole:", preferredRole);
       
       if (preferredRole === 'apprentice') {
-        console.log("Navigating to apprentice-hub based on preferredRole");
+        console.log("Navbar: Navigating to apprentice-hub based on preferredRole");
         navigate('/apprentice-hub');
       } else {
-        console.log("Navigating to dashboard (no specific role preference)");
+        console.log("Navbar: Navigating to dashboard (no specific role preference)");
         navigate('/dashboard');
       }
     } else {
@@ -69,7 +72,7 @@ const Navbar = () => {
   const handleApprenticeHubClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("Apprentice hub clicked, setting role and navigating");
-    localStorage.setItem('preferredRole', 'apprentice');
+    setPreferredRole('apprentice');
     navigate('/apprentice-hub');
   };
 
@@ -88,7 +91,7 @@ const Navbar = () => {
                 <NavigationMenuItem>
                   <div onClick={() => {
                     console.log("Dashboard menu item clicked - clearing preferredRole");
-                    localStorage.removeItem('preferredRole');
+                    setPreferredRole(null);
                     navigate('/dashboard', { replace: true });
                   }} className="cursor-pointer">
                     <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
@@ -111,7 +114,7 @@ const Navbar = () => {
                     <NavigationMenuItem>
                       <div 
                         onClick={() => {
-                          localStorage.removeItem('preferredRole');
+                          setPreferredRole(null);
                           navigate('/electricians', { replace: true });
                         }}
                         className="cursor-pointer"
@@ -124,7 +127,7 @@ const Navbar = () => {
                     <NavigationMenuItem>
                       <div 
                         onClick={() => {
-                          localStorage.removeItem('preferredRole');
+                          setPreferredRole(null);
                           navigate('/employers', { replace: true });
                         }}
                         className="cursor-pointer"

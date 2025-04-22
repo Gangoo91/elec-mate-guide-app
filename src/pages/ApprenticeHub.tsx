@@ -4,30 +4,42 @@ import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Memoize the component to prevent unnecessary re-renders
 const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
   const { refreshSession, user, loading } = useAuth();
+  const { setPreferredRole } = useUserPreferences();
   
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
   useEffect(() => {
-    console.log("ApprenticeHub - Setting preferredRole to apprentice");
-    localStorage.setItem('preferredRole', 'apprentice');
-    
     // Refresh auth session to ensure we have latest data
     refreshSession();
+    
+    // Safely set preferred role in localStorage with fallback
+    try {
+      console.log("ApprenticeHub - Setting preferredRole to apprentice");
+      setPreferredRole('apprentice');
+    } catch (error) {
+      console.error("Failed to set preferred role:", error);
+    }
     
     // Additional check to ensure navigation works after reload
     if (!loading && !user) {
       console.log("ApprenticeHub - No user found, redirecting to login");
       navigate("/login", { replace: true });
     }
-  }, [refreshSession, user, loading, navigate]);
+  }, [refreshSession, user, loading, navigate, setPreferredRole]);
   
   // Show loading state if auth is still being checked
   if (loading) {
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <LoadingSpinner size="lg" message="Loading Apprentice Hub..." />
+      </div>
+    );
   }
   
   // Only render the page if we have a user

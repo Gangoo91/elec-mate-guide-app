@@ -8,6 +8,7 @@ import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate, useNavigate } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const roles = [
   {
@@ -33,6 +34,7 @@ const roles = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, loading, refreshSession } = useAuth();
+  const { setPreferredRole } = useUserPreferences();
   const {
     query,
     setQuery,
@@ -49,21 +51,21 @@ const Dashboard = () => {
     const currentPath = window.location.pathname;
     if (currentPath === '/dashboard') {
       console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
-      localStorage.removeItem('preferredRole');
+      setPreferredRole(null);
     }
-  }, [refreshSession]);
+  }, [refreshSession, setPreferredRole]);
 
   // Handle role selection with direct navigation
   const handleRoleSelected = (role: any) => {
     console.log("Role selected:", role.label);
     if (role.label === 'Apprentices') {
       console.log("Setting preferredRole to apprentice");
-      localStorage.setItem('preferredRole', 'apprentice');
+      setPreferredRole('apprentice');
       navigate(role.path, { replace: true });
     } else {
       // For other roles, clear the preference
       console.log("Clearing preferredRole for non-apprentice role");
-      localStorage.removeItem('preferredRole');
+      setPreferredRole(null);
       navigate(role.path, { replace: true });
     }
   };

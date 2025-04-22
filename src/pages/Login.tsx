@@ -7,17 +7,19 @@ import MainLayout from "@/components/layout/MainLayout";
 import GlassCard from "@/components/shared/GlassCard";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2 } from "lucide-react";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Login = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
+  const { preferences } = useUserPreferences();
   
   // Redirect authenticated users based on preferred role
   useEffect(() => {
     if (!loading && user) {
       setIsRedirecting(true);
-      const preferredRole = localStorage.getItem('preferredRole');
+      const preferredRole = preferences.preferredRole;
       console.log("Login - User authenticated, preferred role:", preferredRole);
       
       // Add a small delay to show loading state and prevent jarring transitions
@@ -33,7 +35,7 @@ const Login = () => {
       
       return () => clearTimeout(redirectTimeout);
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, preferences.preferredRole]);
 
   // Memoize the logo component to prevent unnecessary re-renders
   const MemoizedLogo = memo(() => (

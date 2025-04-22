@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 type MobileMenuProps = {
   isActive: (path: string) => boolean;
@@ -10,12 +11,13 @@ type MobileMenuProps = {
 
 const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
   const { user } = useAuth();
+  const { setPreferredRole, preferences } = useUserPreferences();
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
     if (user) {
-      const preferredRole = localStorage.getItem('preferredRole');
+      const preferredRole = preferences.preferredRole;
       console.log("Mobile menu: Home clicked, preferredRole:", preferredRole);
       
       if (preferredRole === 'apprentice') {
@@ -33,21 +35,21 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
   const handleApprenticeHubClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("Mobile menu: Apprentice Hub clicked");
-    localStorage.setItem('preferredRole', 'apprentice');
+    setPreferredRole('apprentice');
     navigate('/apprentice-hub', { replace: true });
   };
 
   const handleElectriciansClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("Mobile menu: Electricians clicked");
-    localStorage.removeItem('preferredRole'); 
+    setPreferredRole(null);
     navigate('/electricians', { replace: true });
   };
 
   const handleEmployersClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("Mobile menu: Employers clicked");
-    localStorage.removeItem('preferredRole');
+    setPreferredRole(null);
     navigate('/employers', { replace: true });
   };
 
@@ -59,7 +61,7 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
           onClick={(e) => {
             e.preventDefault();
             console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
-            localStorage.removeItem('preferredRole');
+            setPreferredRole(null);
             navigate('/dashboard', { replace: true });
           }} 
           className={`text-lg py-2 px-4 rounded-lg font-medium ${
