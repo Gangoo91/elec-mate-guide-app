@@ -8,21 +8,27 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const { query } = await req.json();
+    
+    // Debugging: log all environment variables
+    console.log("All environment variables:", Deno.env.toObject());
+    
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    console.log("OpenAI API Key retrieval:", openAIApiKey ? "Key found" : "Key not found");
 
     if (!openAIApiKey) {
-      console.error("OpenAI API key not configured");
+      console.error("OpenAI API key is not configured");
       return new Response(JSON.stringify({ 
         error: "API key not configured", 
-        response: "The OpenAI API key is not properly configured. Please check the edge function configuration."
+        response: "The OpenAI API key is not properly configured. Please check the Supabase secrets."
       }), {
-        status: 200, // Return 200 to allow the frontend to handle this gracefully
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -82,7 +88,7 @@ serve(async (req) => {
       error: error.message,
       response: "An error occurred while generating the diagnostic response. Please try again with a different query."
     }), {
-      status: 200, // Return 200 to allow the frontend to handle this gracefully
+      status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
