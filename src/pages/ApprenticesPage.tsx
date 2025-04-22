@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -140,6 +141,7 @@ const ApprenticesPage = () => {
   ];
 
   const handleResourceCardClick = (resource: any) => {
+    console.log("Resource card clicked:", resource.title);
     if (resource.fullCardLink) {
       navigate(resource.fullCardLink);
     } else if (resource.action?.onClick) {
@@ -160,7 +162,7 @@ const ApprenticesPage = () => {
             <div 
               key={index}
               onClick={() => handleResourceCardClick(resource)}
-              className="cursor-pointer"
+              className="cursor-pointer z-10 relative" // Added z-index and relative positioning
             >
               <ResourceCard 
                 title={resource.title}

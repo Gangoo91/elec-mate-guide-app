@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -13,10 +12,11 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log("Mobile menu: Dashboard clicked");
     
     if (user) {
       // Always navigate to dashboard when clicking home
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } else {
       navigate('/');
     }
@@ -24,8 +24,9 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
 
   const handleApprenticeHubClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log("Mobile menu: Apprentice Hub clicked");
     localStorage.setItem('preferredRole', 'apprentice');
-    navigate('/apprentice-hub');
+    navigate('/apprentice-hub', { replace: true });
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -46,23 +45,25 @@ const Navbar = () => {
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
   const isHiddenUserMenuPath = hideUserMenuPaths.includes(location.pathname);
   
-  // Handle logo click - now should always go to dashboard when logged in
+  // Handle logo click - ALWAYS navigate to dashboard when logged in
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log("Logo clicked, navigating to dashboard");
     
     if (user) {
       // Always navigate to dashboard when clicking the logo
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     } else {
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
   };
 
-  // Handle apprentice hub click to ensure role is properly set
+  // Handle apprentice hub click with proper event prevention
   const handleApprenticeHubClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    console.log("Apprentice hub clicked, setting role and navigating");
     localStorage.setItem('preferredRole', 'apprentice');
-    navigate('/apprentice-hub');
+    navigate('/apprentice-hub', { replace: true });
   };
 
   return (

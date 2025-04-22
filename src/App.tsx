@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -70,13 +69,8 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && user) {
-      // If user is already logged in, check their preferred role
-      const preferredRole = localStorage.getItem('preferredRole');
-      if (preferredRole === 'apprentice') {
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        navigate('/dashboard', { replace: true });
-      }
+      // If user is already logged in, always navigate to dashboard regardless of preferred role
+      navigate('/dashboard', { replace: true });
     }
   }, [user, loading, navigate]);
   
@@ -124,15 +118,9 @@ const RootRedirect = () => {
   
   useEffect(() => {
     if (!loading) {
-      // Check auth status
       if (user) {
-        // Check preferred role in localStorage
-        const preferredRole = localStorage.getItem('preferredRole');
-        if (preferredRole === 'apprentice') {
-          navigate('/apprentice-hub', { replace: true });
-        } else {
-          navigate('/dashboard', { replace: true });
-        }
+        // Always navigate to dashboard when at root path
+        navigate('/dashboard', { replace: true });
       } else {
         navigate('/welcome', { replace: true });
       }
