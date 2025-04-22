@@ -28,8 +28,8 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
 
   return (
     <Card 
-      className={`h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 ${fullCardLink ? 'cursor-pointer' : ''}`}
-      onClick={fullCardLink ? handleCardClick : undefined}
+      className={`h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 cursor-pointer`}
+      onClick={handleCardClick}
     >
       <CardHeader className="pb-2">
         <div className="flex items-center gap-3">
@@ -43,13 +43,12 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
         </CardDescription>
         
         {action && (
-          <div className="mt-auto">
+          <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
             {action.href ? (
               <Button 
                 variant="ghost" 
                 className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
                 onClick={(e) => {
-                  e.preventDefault();
                   e.stopPropagation();
                   navigate(action.href);
                 }}
@@ -61,7 +60,6 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
                 variant="ghost" 
                 className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
                 onClick={(e) => {
-                  e.preventDefault();
                   e.stopPropagation();
                   action.onClick && action.onClick();
                 }}
