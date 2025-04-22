@@ -3,10 +3,8 @@ import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, GraduationCap, Award } from "lucide-react";
+import ResourceCard from "@/components/shared/ResourceCard";
+import { Book, GraduationCap, BookOpen } from "lucide-react";
 
 const StudyMaterialsPage = () => {
   return (
@@ -18,169 +16,88 @@ const StudyMaterialsPage = () => {
           description="Comprehensive study resources for UK electrical qualifications, including NVQ Level 2, Level 3, and HNC materials."
         />
         
-        <Tabs defaultValue="nvq2" className="space-y-6">
-          <TabsList className="bg-[#22251e] border-[#FFC900]/20">
-            <TabsTrigger value="nvq2" className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black">
-              NVQ Level 2
-            </TabsTrigger>
-            <TabsTrigger value="nvq3" className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black">
-              NVQ Level 3
-            </TabsTrigger>
-            <TabsTrigger value="hnc" className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black">
-              HNC
-            </TabsTrigger>
-          </TabsList>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          <ResourceCard
+            title="NVQ Level 2 Electrical Installation"
+            description="Essential resources covering core units, practical assessments, and fundamental electrical concepts for Level 2 qualification."
+            icon={<Book className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "View Level 2 Resources",
+              href: "#nvq2-content"
+            }}
+          />
+          
+          <ResourceCard
+            title="NVQ Level 3 & AM2"
+            description="Advanced electrical training materials, including AM2 preparation resources and complex installation techniques."
+            icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "Access Level 3 & AM2",
+              href: "#nvq3-content"
+            }}
+          />
+          
+          <ResourceCard
+            title="HNC Electrical Engineering"
+            description="Higher-level study materials covering electrical principles, power systems, and engineering mathematics."
+            icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "Explore HNC Materials",
+              href: "#hnc-content"
+            }}
+          />
+        </div>
 
-          {/* NVQ Level 2 Content */}
-          <TabsContent value="nvq2" className="space-y-4">
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                  <Award className="h-5 w-5" />
-                  NVQ Level 2 Electrical Installation
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Accordion type="single" collapsible className="text-[#FFC900]">
-                  <AccordionItem value="core-units">
-                    <AccordionTrigger>Core Units</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Health and Safety in Electrical Installation</li>
-                        <li>Environmental Protection Measures</li>
-                        <li>Installation of Wiring Systems and Enclosures</li>
-                        <li>BS 7671 Requirements - Essential Regulations</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="practical">
-                    <AccordionTrigger>Practical Assessments</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Circuit Installation Techniques</li>
-                        <li>Cable Selection and Sizing</li>
-                        <li>Earthing and Bonding Requirements</li>
-                        <li>Testing and Verification Methods</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardContent>
-            </Card>
-          </TabsContent>
+        {/* NVQ Level 2 Content Section */}
+        <div id="nvq2-content" className="mt-12 pt-8">
+          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">NVQ Level 2 Electrical Installation</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResourceCard
+              title="Core Units"
+              description="Health & Safety, Environmental Protection, Installation of Wiring Systems, and BS 7671 Requirements."
+              icon={<Book className="h-6 w-6 text-[#FFC900]" />}
+            />
+            <ResourceCard
+              title="Practical Assessments"
+              description="Circuit Installation, Cable Selection, Earthing and Bonding, Testing and Verification."
+              icon={<Book className="h-6 w-6 text-[#FFC900]" />}
+            />
+          </div>
+        </div>
 
-          {/* NVQ Level 3 Content with AM2 */}
-          <TabsContent value="nvq3" className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5" />
-                  NVQ Level 3 Advanced Electrical
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Accordion type="single" collapsible className="text-[#FFC900]">
-                  <AccordionItem value="advanced-units">
-                    <AccordionTrigger>Advanced Units</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Complex Circuit Designs</li>
-                        <li>Electrical Science and Principles</li>
-                        <li>Inspection and Testing Procedures</li>
-                        <li>Fault Diagnosis and Rectification</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="regulations">
-                    <AccordionTrigger>Regulations and Standards</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Advanced BS 7671 Applications</li>
-                        <li>Special Locations Requirements</li>
-                        <li>Design Considerations</li>
-                        <li>Documentation and Certification</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardContent>
-            </Card>
+        {/* NVQ Level 3 & AM2 Content Section */}
+        <div id="nvq3-content" className="mt-12 pt-8">
+          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">NVQ Level 3 & AM2</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResourceCard
+              title="Advanced Units"
+              description="Complex Circuits, Electrical Science, Inspection & Testing, Fault Diagnosis."
+              icon={<GraduationCap className="h-6 w-6 text-[#FFC900]" />}
+            />
+            <ResourceCard
+              title="AM2 Assessment Preparation"
+              description="Installation Tasks, Safe Isolation, Testing Procedures, and Fault Finding."
+              icon={<GraduationCap className="h-6 w-6 text-[#FFC900]" />}
+            />
+          </div>
+        </div>
 
-            {/* AM2 Card */}
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                  <Award className="h-5 w-5" />
-                  AM2 Assessment Preparation
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Accordion type="single" collapsible className="text-[#FFC900]">
-                  <AccordionItem value="practical-tasks">
-                    <AccordionTrigger>Assessment Tasks</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Installation of Electrical Systems</li>
-                        <li>Safe Isolation Procedures</li>
-                        <li>Inspection and Testing</li>
-                        <li>Fault Finding Exercises</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="prep-resources">
-                    <AccordionTrigger>Study Resources</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Practice Test Questions</li>
-                        <li>Assessment Centre Guidelines</li>
-                        <li>Common Pitfalls and Tips</li>
-                        <li>Time Management Strategies</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* HNC Content */}
-          <TabsContent value="hnc" className="space-y-4">
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
-                  Higher National Certificate in Electrical Engineering
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Accordion type="single" collapsible className="text-[#FFC900]">
-                  <AccordionItem value="core-modules">
-                    <AccordionTrigger>Core Modules</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Electrical and Electronic Principles</li>
-                        <li>Mathematics for Engineering</li>
-                        <li>Project Design and Implementation</li>
-                        <li>Engineering Science</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="specialist-units">
-                    <AccordionTrigger>Specialist Units</AccordionTrigger>
-                    <AccordionContent className="text-[#FFC900]/80">
-                      <ul className="list-disc list-inside space-y-2">
-                        <li>Power Systems and Transmission</li>
-                        <li>Industrial Automation</li>
-                        <li>Renewable Energy Systems</li>
-                        <li>Electrical Installation Design</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+        {/* HNC Content Section */}
+        <div id="hnc-content" className="mt-12 pt-8 mb-12">
+          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">HNC Electrical Engineering</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ResourceCard
+              title="Core Modules"
+              description="Electrical Principles, Mathematics, Project Design, Engineering Science."
+              icon={<BookOpen className="h-6 w-6 text-[#FFC900]" />}
+            />
+            <ResourceCard
+              title="Specialist Units"
+              description="Power Systems, Industrial Automation, Renewable Energy, Installation Design."
+              icon={<BookOpen className="h-6 w-6 text-[#FFC900]" />}
+            />
+          </div>
+        </div>
       </div>
     </MainLayout>
   );
