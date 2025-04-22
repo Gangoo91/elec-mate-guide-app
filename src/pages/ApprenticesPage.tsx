@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -98,10 +97,8 @@ const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
-  // Ensure authenticated state is refreshed when page loads
   useEffect(() => {
     refreshSession();
-    // Set apprentice as preferred role
     localStorage.setItem('preferredRole', 'apprentice');
   }, [refreshSession]);
 
@@ -142,7 +139,6 @@ const ApprenticesPage = () => {
     }
   ];
 
-  // Handle card click manually to ensure navigation works
   const handleResourceCardClick = (resource: any) => {
     if (resource.fullCardLink) {
       navigate(resource.fullCardLink);

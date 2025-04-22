@@ -1,5 +1,10 @@
 
+import React from "react";
 import ApprenticesPage from "./ApprenticesPage";
 
-// Purely renders ApprenticesPage for route parity.
-export default ApprenticesPage;
+// Ensures the /apprentice-hub route renders the full ApprenticesPage component
+const ApprenticeHub = () => {
+  return <ApprenticesPage />;
+};
+
+export default ApprenticeHub;
