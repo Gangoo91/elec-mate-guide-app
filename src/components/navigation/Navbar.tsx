@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -51,13 +50,8 @@ const Navbar = () => {
     e.preventDefault();
     
     if (user) {
-      // Check preferred role
-      const preferredRole = localStorage.getItem('preferredRole');
-      if (preferredRole === 'apprentice') {
-        navigate('/apprentice-hub');
-      } else {
-        navigate('/dashboard');
-      }
+      // Always go to dashboard when clicking the logo
+      navigate('/dashboard');
     } else {
       navigate('/welcome');
     }

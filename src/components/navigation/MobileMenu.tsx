@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -15,13 +14,8 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
     e.preventDefault();
     
     if (user) {
-      // Check preferred role
-      const preferredRole = localStorage.getItem('preferredRole');
-      if (preferredRole === 'apprentice') {
-        navigate('/apprentice-hub');
-      } else {
-        navigate('/dashboard');
-      }
+      // Always navigate to dashboard when clicking home
+      navigate('/dashboard');
     } else {
       navigate('/');
     }
