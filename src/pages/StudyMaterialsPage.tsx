@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
@@ -10,6 +10,13 @@ import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 
 const StudyMaterialsPage = () => {
   const { studyType } = useParams();
+  const navigate = useNavigate();
+
+  // Handle valid study types
+  const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];
+  const contentKey = studyType === 'nvq2' ? 'level2' : 
+                    studyType === 'nvq3' ? 'level3' : 
+                    studyType === 'hnc' ? 'hnc' : null;
 
   const renderContent = () => {
     if (!studyType) {
@@ -17,8 +24,12 @@ const StudyMaterialsPage = () => {
     }
 
     // Display specific content based on URL parameter
-    const content = studyMaterialsContent[studyType as keyof typeof studyMaterialsContent];
-    return content ? <StudyUnitContent {...content} /> : null;
+    if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
+      return <StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />;
+    }
+    
+    // If invalid study type, show the grid
+    return <StudyMaterialsGrid />;
   };
 
   return (

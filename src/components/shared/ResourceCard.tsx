@@ -17,61 +17,62 @@ interface ResourceCardProps {
 }
 
 const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
-  // If fullCardLink is provided, wrap the entire card content in a Link
-  const CardWrapper = fullCardLink ? Link : React.Fragment;
-  const wrapperProps = fullCardLink ? { 
-    to: fullCardLink,
-    className: "block h-full" // Ensure the link takes full height
-  } : {};
+  // If fullCardLink is provided, we'll handle the click on the card
+  const handleCardClick = () => {
+    if (fullCardLink) {
+      window.location.href = fullCardLink;
+    }
+  };
 
   return (
-    <CardWrapper {...wrapperProps}>
-      <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
-        <CardHeader className="pb-2">
-          <div className="flex items-center gap-3">
-            {React.isValidElement(icon) ? icon : null}
-            <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="flex flex-col justify-between flex-grow pt-2">
-          <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
-            {description}
-          </CardDescription>
-          {action && (
-            action.href ? (
-              action.href.startsWith("#") ? (
-                <a 
-                  href={action.href}
-                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                  onClick={(e) => e.stopPropagation()} // Prevent triggering parent card click
-                >
-                  {action.label} →
-                </a>
-              ) : (
-                <Link 
-                  to={action.href}
-                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                  onClick={(e) => e.stopPropagation()} // Prevent triggering parent card click
-                >
-                  {action.label} →
-                </Link>
-              )
-            ) : (
-              <Button 
-                variant="ghost" 
-                className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering parent card click
-                  action.onClick && action.onClick();
-                }}
+    <Card 
+      className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10 cursor-pointer"
+      onClick={handleCardClick}
+    >
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-3">
+          {React.isValidElement(icon) ? icon : null}
+          <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col justify-between flex-grow pt-2">
+        <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
+          {description}
+        </CardDescription>
+        {action && (
+          action.href ? (
+            action.href.startsWith("#") ? (
+              <a 
+                href={action.href}
+                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                onClick={(e) => e.stopPropagation()}
               >
                 {action.label} →
-              </Button>
+              </a>
+            ) : (
+              <Link 
+                to={action.href}
+                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {action.label} →
+              </Link>
             )
-          )}
-        </CardContent>
-      </Card>
-    </CardWrapper>
+          ) : (
+            <Button 
+              variant="ghost" 
+              className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
+              onClick={(e) => {
+                e.stopPropagation();
+                action.onClick && action.onClick();
+              }}
+            >
+              {action.label} →
+            </Button>
+          )
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
