@@ -16,17 +16,26 @@ serve(async (req) => {
   try {
     const { query } = await req.json();
     
-    // Debugging: log all environment variables
-    console.log("All environment variables:", Deno.env.toObject());
+    // More detailed environment variable logging
+    console.log("Environment Variables:", JSON.stringify(Deno.env.toObject(), null, 2));
     
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    console.log("OpenAI API Key retrieval:", openAIApiKey ? "Key found" : "Key not found");
+    // Try multiple ways to retrieve the OpenAI API key
+    const openAIApiKey = 
+      Deno.env.get('OPENAI_API_KEY') || 
+      Deno.env.get('OpenAI API') || 
+      Deno.env.get('OPENAI_KEY');
+    
+    console.log("OpenAI API Key Retrieval Methods:", {
+      directKey: !!Deno.env.get('OPENAI_API_KEY'),
+      alternateKey: !!Deno.env.get('OpenAI API'),
+      fallbackKey: !!Deno.env.get('OPENAI_KEY')
+    });
 
     if (!openAIApiKey) {
-      console.error("OpenAI API key is not configured");
+      console.error("No OpenAI API key found through any retrieval method");
       return new Response(JSON.stringify({ 
         error: "API key not configured", 
-        response: "The OpenAI API key is not properly configured. Please check the Supabase secrets."
+        response: "The OpenAI API key is not properly configured. Please check the Supabase secrets and ensure the key is set correctly."
       }), {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -70,7 +79,7 @@ serve(async (req) => {
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('OpenAI API error:', error);
+      console.error('OpenAI API error:', JSON.stringify(error, null, 2));
       throw new Error(`Failed to get response from OpenAI: ${JSON.stringify(error)}`);
     }
 
@@ -93,3 +102,4 @@ serve(async (req) => {
     });
   }
 });
+
