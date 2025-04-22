@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Award, Clock } from "lucide-react";
 import { Progress as ProgressType } from "@/types/study";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ProgressSummary = () => {
   const { user } = useAuth();
@@ -76,10 +77,10 @@ const ProgressSummary = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {isLoading ? (
-          <div className="space-y-2 animate-pulse">
-            <div className="h-4 bg-[#FFC900]/20 rounded"></div>
-            <div className="h-2 bg-[#FFC900]/10 rounded"></div>
-            <div className="h-4 bg-[#FFC900]/20 rounded"></div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 bg-[#FFC900]/20 rounded" />
+            <Skeleton className="h-2 bg-[#FFC900]/10 rounded" />
+            <Skeleton className="h-4 bg-[#FFC900]/20 rounded" />
           </div>
         ) : (
           <>
@@ -91,6 +92,7 @@ const ProgressSummary = () => {
               <Progress
                 value={percentComplete}
                 className="h-2 bg-[#FFC900]/20"
+                indicatorClassName="bg-[#FFC900]"
               />
               <div className="text-xs text-[#FFC900]/60">
                 {completedCount} of {totalCount} units completed
