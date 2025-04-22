@@ -1,213 +1,176 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import UnitPage from './UnitPage';
-import CourseContentSection from '@/components/study/CourseContentSection';
-import UnitQuiz from '@/components/study/UnitQuiz';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BookText, FileQuestion } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/button';
+import { Download, FileText } from 'lucide-react';
+import { CourseContent } from '@/types/study';
 
 const Unit202Page = () => {
-  const [activeTab, setActiveTab] = useState('content');
-  const { toast } = useToast();
-  const { user } = useAuth();
+  // Unit content
+  const unitNumber = "202";
+  const title = "Electrical Scientific Principles";
+  const description = "Understanding the fundamental scientific principles of electricity and electrical systems";
+  
+  const content = [
+    "Basic electrical principles",
+    "Circuit theory and calculations",
+    "Magnetism and electromagnetism",
+    "AC and DC theory",
+    "Electrical materials and their properties"
+  ];
+  
+  const learningOutcomes = [
+    "Understand the basic principles of electrical science",
+    "Be able to apply Ohm's Law and power calculations",
+    "Understand the principles of magnetism and electromagnetism",
+    "Know the difference between AC and DC systems and their applications",
+    "Be able to select appropriate materials based on their electrical properties"
+  ];
 
-  const electricalPrinciplesContent = {
+  // Detailed course content for the unit
+  const courseContent: CourseContent = {
     key_points: [
-      "Ohm's Law defines the relationship between voltage, current and resistance",
-      "Understanding AC and DC theory is fundamental to electrical work",
-      "Series and parallel circuits behave differently in terms of voltage and current distribution",
-      "Power calculation is essential for cable sizing and circuit protection",
-      "Impedance in AC circuits includes both resistance and reactance components"
+      "Ohm's Law is the foundation of electrical calculations",
+      "Understanding the relationship between voltage, current, and resistance is essential",
+      "Series and parallel circuits behave differently and require different calculation methods",
+      "Electromagnetism is the principle behind motors, generators, and transformers",
+      "The selection of appropriate materials affects the efficiency and safety of electrical installations"
     ],
     main_content: [
       {
-        type: "text",
-        content: "Electrical scientific principles form the foundation of all electrical work. Understanding these principles allows electricians to safely design, install, and maintain electrical systems."
+        type: "paragraph",
+        content: "Electrical scientific principles form the foundation of all electrical work. Understanding these principles is essential for designing, installing, and maintaining electrical systems safely and efficiently."
       },
       {
-        type: "regulation",
-        content: "Ohm's Law states that the current flowing through a conductor is directly proportional to the voltage and inversely proportional to the resistance. Mathematically, this is expressed as I = V/R, where I is current (amps), V is voltage (volts), and R is resistance (ohms)."
+        type: "heading",
+        content: "Basic Electrical Principles"
       },
       {
-        type: "text",
-        content: "Direct Current (DC) flows in one direction only, while Alternating Current (AC) periodically reverses direction. In the UK, the mains supply is 230V AC at 50Hz, meaning the current completes 50 complete cycles per second."
+        type: "paragraph",
+        content: "Electricity is the flow of electric charge. The most basic principles in electricity are voltage (the potential difference that causes electrons to flow), current (the rate at which charge flows), and resistance (opposition to current flow)."
       },
       {
-        type: "text",
-        content: "Resistance is the opposition to current flow in a circuit. Materials with high resistance are insulators, while those with low resistance are conductors. Resistance is measured in ohms (Ω) and is affected by four key factors: material type, length, cross-sectional area, and temperature."
+        type: "paragraph",
+        content: "Ohm's Law states that the current flowing through a conductor is directly proportional to the voltage across it and inversely proportional to its resistance. This is expressed by the formula: I = V/R, where I is current in amperes, V is voltage in volts, and R is resistance in ohms."
       },
       {
-        type: "checklist",
+        type: "list",
+        content: "Key electrical formulas:",
         items: [
-          "Circuit calculations always need to use appropriate units (volts, amps, ohms)",
-          "Power (watts) = Voltage (volts) × Current (amps)",
-          "In series circuits, the current is the same throughout the circuit",
-          "In parallel circuits, the voltage is the same across each branch",
-          "Total resistance in series: R_total = R₁ + R₂ + R₃ + ...",
-          "Total resistance in parallel: 1/R_total = 1/R₁ + 1/R₂ + 1/R₃ + ..."
+          "Ohm's Law: V = IR",
+          "Power: P = VI",
+          "Resistance in series: Rtotal = R1 + R2 + R3 + ...",
+          "Resistance in parallel: 1/Rtotal = 1/R1 + 1/R2 + 1/R3 + ...",
+          "Energy: E = Pt (Power × time)"
         ]
       },
       {
-        type: "text",
-        content: "Impedance (Z) is the total opposition to current flow in AC circuits, combining resistance and reactance. Reactance is the opposition to current flow due to inductors and capacitors. Impedance is measured in ohms, just like resistance, but accounts for phase differences in AC circuits."
+        type: "heading",
+        content: "Circuit Theory"
       },
       {
-        type: "important_note",
-        content: "Always remember that power loss in a circuit is proportional to the square of the current (P = I²R). This is why transmitting electricity at high voltage and low current reduces energy losses in transmission lines."
+        type: "paragraph",
+        content: "Electrical circuits can be arranged in series, parallel, or a combination of both. In a series circuit, components are connected end-to-end, and the same current flows through each component. In a parallel circuit, components are connected across the same voltage source, and the current divides among the various paths."
+      },
+      {
+        type: "paragraph",
+        content: "Kirchhoff's laws are fundamental for analyzing circuits:"
+      },
+      {
+        type: "list",
+        content: "Kirchhoff's laws:",
+        items: [
+          "Kirchhoff's Current Law (KCL): The sum of currents entering a node equals the sum of currents leaving that node",
+          "Kirchhoff's Voltage Law (KVL): The sum of all voltage drops around any closed loop in a circuit equals zero"
+        ]
+      },
+      {
+        type: "heading",
+        content: "Magnetism and Electromagnetism"
+      },
+      {
+        type: "paragraph",
+        content: "Electromagnetism is the relationship between electricity and magnetism. When current flows through a conductor, a magnetic field is created around it. This principle is used in devices such as motors, generators, transformers, and relays."
       }
     ],
     practical_tips: [
-      "When troubleshooting, measure voltage first, then current, and finally resistance (with the power off)",
-      "Use a multimeter to test continuity before energizing new circuits",
-      "Remember that actual resistance of conductors increases with temperature",
-      "For precise calculations, always use exact values rather than rounded figures",
-      "When calculating power, be aware of the power factor in AC circuits"
+      "Use Ohm's Law to troubleshoot circuit problems",
+      "Always check polarity when working with DC circuits",
+      "Remember that power factor affects calculations in AC circuits",
+      "Use the right instruments for different types of measurements",
+      "Consider temperature effects on resistance when designing circuits"
     ]
-  };
-
-  const electricalPrinciplesQuizQuestions = [
-    {
-      id: 1,
-      text: "What is the formula for Ohm's Law?",
-      options: [
-        { id: "a", text: "V = IR", isCorrect: true },
-        { id: "b", text: "I = VR", isCorrect: false },
-        { id: "c", text: "R = I/V", isCorrect: false },
-        { id: "d", text: "V = I/R", isCorrect: false }
-      ],
-      explanation: "Ohm's Law states that voltage (V) equals current (I) multiplied by resistance (R), which can be written as V = IR. This formula is fundamental to electrical calculations."
-    },
-    {
-      id: 2,
-      text: "What happens to the total resistance in a series circuit when more resistors are added?",
-      options: [
-        { id: "a", text: "It decreases", isCorrect: false },
-        { id: "b", text: "It increases", isCorrect: true },
-        { id: "c", text: "It remains the same", isCorrect: false },
-        { id: "d", text: "It becomes zero", isCorrect: false }
-      ],
-      explanation: "In a series circuit, resistances are additive. The total resistance increases when more resistors are added to the circuit."
-    },
-    {
-      id: 3,
-      text: "What is the formula for calculating electrical power?",
-      options: [
-        { id: "a", text: "P = I/V", isCorrect: false },
-        { id: "b", text: "P = I²R", isCorrect: false },
-        { id: "c", text: "P = V²/R", isCorrect: false },
-        { id: "d", text: "All of the above are valid power formulas", isCorrect: true }
-      ],
-      explanation: "Power can be calculated using multiple formulas: P = VI, P = I²R, and P = V²/R. All are valid and can be derived from each other using Ohm's Law."
-    },
-    {
-      id: 4,
-      text: "In a parallel circuit, what remains constant across all branches?",
-      options: [
-        { id: "a", text: "Current", isCorrect: false },
-        { id: "b", text: "Resistance", isCorrect: false },
-        { id: "c", text: "Voltage", isCorrect: true },
-        { id: "d", text: "Power", isCorrect: false }
-      ],
-      explanation: "In a parallel circuit, the voltage remains constant across all branches. The current divides between the branches according to the resistance in each path."
-    },
-    {
-      id: 5,
-      text: "What is the difference between impedance and resistance?",
-      options: [
-        { id: "a", text: "There is no difference; they are identical", isCorrect: false },
-        { id: "b", text: "Resistance applies to DC circuits only, while impedance applies to both AC and DC", isCorrect: false },
-        { id: "c", text: "Impedance includes reactance effects in AC circuits, while resistance does not", isCorrect: true },
-        { id: "d", text: "Impedance is measured in watts, while resistance is measured in ohms", isCorrect: false }
-      ],
-      explanation: "Impedance is the total opposition to current flow in an AC circuit, combining both resistance and reactance (from inductors and capacitors). Resistance only accounts for the opposition that results in energy dissipation as heat."
-    }
-  ];
-
-  const handleQuizComplete = async (score: number, totalQuestions: number) => {
-    const percentage = (score / totalQuestions) * 100;
-    
-    toast({
-      title: percentage >= 70 ? "Quiz Passed!" : "Quiz Results",
-      description: `You scored ${score} out of ${totalQuestions} questions (${percentage}%)`,
-      variant: percentage >= 70 ? "default" : "destructive",
-    });
-
-    if (user) {
-      try {
-        // Record the quiz result to track user progress
-        const { error } = await supabase
-          .from('user_progress')
-          .upsert({
-            user_id: user.id,
-            content_id: '202-quiz', // Identifier for this quiz
-            progress: {
-              score: percentage,
-              completed: percentage >= 70,
-              date_completed: new Date().toISOString()
-            }
-          });
-          
-        if (error) throw error;
-      } catch (error) {
-        console.error("Error saving quiz results:", error);
-      }
-    }
   };
 
   return (
     <UnitPage
-      unitNumber="202"
-      title="Electrical Scientific Principles"
-      description="Master the essential scientific principles that underpin electrical engineering"
-      content={[
-        "Basic electrical units and quantities",
-        "Ohm's law and basic circuit calculations",
-        "AC and DC theory and applications",
-        "Series and parallel circuit principles",
-        "Resistance, reactance, and impedance",
-        "Power calculations and efficiency",
-        "Magnetism and electromagnetic principles"
-      ]}
-      learningOutcomes={[
-        "Apply Ohm's Law to solve electrical problems",
-        "Calculate power in AC and DC circuits",
-        "Understand the difference between series and parallel circuits",
-        "Explain resistance, reactance and impedance in electrical systems",
-        "Apply scientific principles to practical electrical applications"
-      ]}
+      unitNumber={unitNumber}
+      title={title}
+      description={description}
+      content={content}
+      learningOutcomes={learningOutcomes}
     >
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-[#151812]">
-          <TabsTrigger 
-            value="content" 
-            className="flex items-center gap-2 data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]"
-          >
-            <BookText className="h-4 w-4" />
-            Learning Content
-          </TabsTrigger>
-          <TabsTrigger 
-            value="quiz" 
-            className="flex items-center gap-2 data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]"
-          >
-            <FileQuestion className="h-4 w-4" />
-            Unit Quiz
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="content" className="mt-4">
-          <CourseContentSection content={electricalPrinciplesContent} />
-        </TabsContent>
-        <TabsContent value="quiz" className="mt-4">
-          <UnitQuiz 
-            unitNumber="202" 
-            unitTitle="Electrical Scientific Principles" 
-            questions={electricalPrinciplesQuizQuestions} 
-            onComplete={handleQuizComplete}
-          />
-        </TabsContent>
-      </Tabs>
+      <div className="space-y-6 text-[#FFC900]/80">
+        {/* Key Points */}
+        <section>
+          <h3 className="text-xl font-medium text-[#FFC900] mb-3">Key Points</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {courseContent.key_points.map((point, index) => (
+              <li key={index}>{point}</li>
+            ))}
+          </ul>
+        </section>
+        
+        {/* Main Content */}
+        <section className="space-y-4">
+          {courseContent.main_content.map((block, index) => {
+            if (block.type === "paragraph") {
+              return <p key={index}>{block.content}</p>;
+            } else if (block.type === "heading") {
+              return <h4 key={index} className="text-lg font-medium text-[#FFC900] mt-4">{block.content}</h4>;
+            } else if (block.type === "list" && block.items) {
+              return (
+                <div key={index}>
+                  <p>{block.content}</p>
+                  <ul className="list-disc pl-5 space-y-1 mt-2">
+                    {block.items.map((item, itemIndex) => (
+                      <li key={itemIndex}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </section>
+        
+        {/* Practical Tips */}
+        <section className="bg-[#151812] p-4 rounded-md border border-[#FFC900]/20">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-3">Practical Tips</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            {courseContent.practical_tips.map((tip, index) => (
+              <li key={index}>{tip}</li>
+            ))}
+          </ul>
+        </section>
+        
+        {/* Downloads and Resources */}
+        <section className="pt-4">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-3">Resources</h3>
+          <div className="space-y-2">
+            <Button variant="outline" className="w-full sm:w-auto flex items-center gap-2 border-[#FFC900]/40 text-[#FFC900] hover:bg-[#FFC900]/10">
+              <FileText className="h-4 w-4" />
+              <span>Electrical Formulas Cheat Sheet</span>
+              <Download className="h-4 w-4 ml-auto" />
+            </Button>
+            <Button variant="outline" className="w-full sm:w-auto flex items-center gap-2 border-[#FFC900]/40 text-[#FFC900] hover:bg-[#FFC900]/10">
+              <FileText className="h-4 w-4" />
+              <span>Circuit Calculation Practice Problems</span>
+              <Download className="h-4 w-4 ml-auto" />
+            </Button>
+          </div>
+        </section>
+      </div>
     </UnitPage>
   );
 };
