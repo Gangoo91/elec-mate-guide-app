@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -10,6 +10,7 @@ import StudyUnitContent from "@/components/study/StudyUnitContent";
 
 const StudyMaterialsPage = () => {
   const { studyType } = useParams();
+  const navigate = useNavigate();
 
   const level2Content = {
     title: "NVQ Level 2 Core Units",

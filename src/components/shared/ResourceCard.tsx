@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { LucideIcon } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -14,13 +13,16 @@ interface ResourceCardProps {
     onClick?: () => void;
     href?: string;
   };
-  fullCardLink?: string; // New prop to enable full card navigation
+  fullCardLink?: string; // Prop to enable full card navigation
 }
 
 const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
   // If fullCardLink is provided, wrap the entire card content in a Link
   const CardWrapper = fullCardLink ? Link : React.Fragment;
-  const wrapperProps = fullCardLink ? { to: fullCardLink } : {};
+  const wrapperProps = fullCardLink ? { 
+    to: fullCardLink,
+    className: "block h-full" // Ensure the link takes full height
+  } : {};
 
   return (
     <CardWrapper {...wrapperProps}>
@@ -48,6 +50,7 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
                 <Link 
                   to={action.href}
                   className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                  onClick={(e) => e.stopPropagation()} // Prevent triggering parent card click
                 >
                   {action.label} →
                 </Link>
@@ -56,7 +59,10 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
               <Button 
                 variant="ghost" 
                 className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-                onClick={action.onClick}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering parent card click
+                  action.onClick && action.onClick();
+                }}
               >
                 {action.label} →
               </Button>
