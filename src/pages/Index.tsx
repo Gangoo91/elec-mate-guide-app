@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import Dashboard from "./Dashboard";
 
 /**
@@ -8,10 +8,6 @@ import Dashboard from "./Dashboard";
  * and exists only for backward compatibility
  */
 const Index = () => {
-  useEffect(() => {
-    console.log("Index component rendered, redirecting to Dashboard");
-  }, []);
-
   // Simply render the Dashboard directly
   return <Dashboard />;
 };
