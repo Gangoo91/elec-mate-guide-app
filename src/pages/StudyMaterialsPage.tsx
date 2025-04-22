@@ -23,7 +23,7 @@ const StudyMaterialsPage = () => {
             icon={<Book className="h-7 w-7 text-[#FFC900]" />}
             action={{
               label: "View Level 2 Resources",
-              href: "#nvq2-content"
+              href: "/apprentices/study-materials/nvq2"
             }}
           />
           
@@ -33,7 +33,7 @@ const StudyMaterialsPage = () => {
             icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
             action={{
               label: "Access Level 3 & AM2",
-              href: "#nvq3-content"
+              href: "/apprentices/study-materials/nvq3"
             }}
           />
           
@@ -43,60 +43,9 @@ const StudyMaterialsPage = () => {
             icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
             action={{
               label: "Explore HNC Materials",
-              href: "#hnc-content"
+              href: "/apprentices/study-materials/hnc"
             }}
           />
-        </div>
-
-        {/* NVQ Level 2 Content Section */}
-        <div id="nvq2-content" className="mt-12 pt-8">
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">NVQ Level 2 Electrical Installation</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ResourceCard
-              title="Core Units"
-              description="Health & Safety, Environmental Protection, Installation of Wiring Systems, and BS 7671 Requirements."
-              icon={<Book className="h-6 w-6 text-[#FFC900]" />}
-            />
-            <ResourceCard
-              title="Practical Assessments"
-              description="Circuit Installation, Cable Selection, Earthing and Bonding, Testing and Verification."
-              icon={<Book className="h-6 w-6 text-[#FFC900]" />}
-            />
-          </div>
-        </div>
-
-        {/* NVQ Level 3 & AM2 Content Section */}
-        <div id="nvq3-content" className="mt-12 pt-8">
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">NVQ Level 3 & AM2</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ResourceCard
-              title="Advanced Units"
-              description="Complex Circuits, Electrical Science, Inspection & Testing, Fault Diagnosis."
-              icon={<GraduationCap className="h-6 w-6 text-[#FFC900]" />}
-            />
-            <ResourceCard
-              title="AM2 Assessment Preparation"
-              description="Installation Tasks, Safe Isolation, Testing Procedures, and Fault Finding."
-              icon={<GraduationCap className="h-6 w-6 text-[#FFC900]" />}
-            />
-          </div>
-        </div>
-
-        {/* HNC Content Section */}
-        <div id="hnc-content" className="mt-12 pt-8 mb-12">
-          <h2 className="text-2xl font-bold text-[#FFC900] mb-6">HNC Electrical Engineering</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ResourceCard
-              title="Core Modules"
-              description="Electrical Principles, Mathematics, Project Design, Engineering Science."
-              icon={<BookOpen className="h-6 w-6 text-[#FFC900]" />}
-            />
-            <ResourceCard
-              title="Specialist Units"
-              description="Power Systems, Industrial Automation, Renewable Energy, Installation Design."
-              icon={<BookOpen className="h-6 w-6 text-[#FFC900]" />}
-            />
-          </div>
         </div>
       </div>
     </MainLayout>
