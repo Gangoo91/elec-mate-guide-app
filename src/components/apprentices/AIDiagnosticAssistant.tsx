@@ -6,11 +6,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { CircuitBoard, AlertCircle } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const AIDiagnosticAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [useApiKey, setUseApiKey] = useState(true);
   const { handleError } = useErrorHandler();
 
   const handleDiagnosticQuery = async () => {
@@ -22,7 +25,10 @@ const AIDiagnosticAssistant: React.FC = () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('ai-diagnostic-assistant', {
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ 
+          query,
+          useApiKey
+        })
       });
 
       if (error) {
@@ -56,12 +62,29 @@ const AIDiagnosticAssistant: React.FC = () => {
       </div>
       
       <div className="space-y-4">
+        <p className="text-[#FFC900]/70">
+          Describe your electrical issue or technical challenge, and our AI will provide diagnostic guidance and potential solutions.
+        </p>
+
         <Textarea 
           placeholder="Describe your technical challenge or electrical issue..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
         />
+        
+        <div className="flex items-center space-x-2 mb-2">
+          <Switch 
+            id="use-api" 
+            checked={useApiKey} 
+            onCheckedChange={setUseApiKey} 
+            className="data-[state=checked]:bg-[#FFC900]" 
+          />
+          <Label htmlFor="use-api" className="text-[#FFC900]/70">
+            Use OpenAI API (turn off if no API key configured)
+          </Label>
+        </div>
+
         <Button 
           onClick={handleDiagnosticQuery} 
           disabled={isLoading}
