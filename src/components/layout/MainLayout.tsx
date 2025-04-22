@@ -11,13 +11,18 @@ type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const { refreshSession } = useAuth();
+  const { refreshSession, user } = useAuth();
   const { preferences } = useUserPreferences();
   
   // Ensure auth session is refreshed on layout mount
   useEffect(() => {
     console.log("MainLayout - Refreshing session, current preferred role:", preferences.preferredRole);
-    refreshSession();
+    // Add a short delay to ensure auth state is stable
+    const refreshTimer = setTimeout(() => {
+      refreshSession();
+    }, 50);
+    
+    return () => clearTimeout(refreshTimer);
   }, [refreshSession, preferences.preferredRole]);
   
   return (

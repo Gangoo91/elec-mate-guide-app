@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -33,6 +31,7 @@ const Navbar = () => {
 
   // Refresh session when navbar is mounted
   useEffect(() => {
+    console.log("Navbar - Component mounted, refreshing session");
     refreshSession();
   }, [refreshSession]);
 
@@ -58,13 +57,15 @@ const Navbar = () => {
       
       if (preferredRole === 'apprentice') {
         console.log("Navbar: Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub');
+        setPreferredRole('apprentice'); // Reinforce preference
+        navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Navbar: Navigating to dashboard (no specific role preference)");
-        navigate('/dashboard');
+        setPreferredRole(null); // Clear preference
+        navigate('/dashboard', { replace: true });
       }
     } else {
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
   };
 
@@ -73,7 +74,15 @@ const Navbar = () => {
     e.preventDefault();
     console.log("Apprentice hub clicked, setting role and navigating");
     setPreferredRole('apprentice');
-    navigate('/apprentice-hub');
+    navigate('/apprentice-hub', { replace: true });
+  };
+  
+  // Handle dashboard click
+  const handleDashboardClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Dashboard clicked, clearing role and navigating");
+    setPreferredRole(null);
+    navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -89,11 +98,7 @@ const Navbar = () => {
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <div onClick={() => {
-                    console.log("Dashboard menu item clicked - clearing preferredRole");
-                    setPreferredRole(null);
-                    navigate('/dashboard', { replace: true });
-                  }} className="cursor-pointer">
+                  <div onClick={handleDashboardClick} className="cursor-pointer">
                     <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
                       Dashboard
                     </NavigationMenuLink>
@@ -106,7 +111,7 @@ const Navbar = () => {
                         onClick={handleApprenticeHubClick}
                         className="cursor-pointer"
                       >
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') ? 'bg-[#FFC900]/10' : ''}`}>
+                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') || location.pathname.includes('/apprentices/') ? 'bg-[#FFC900]/10' : ''}`}>
                           Apprentice Hub
                         </NavigationMenuLink>
                       </div>
@@ -119,7 +124,7 @@ const Navbar = () => {
                         }}
                         className="cursor-pointer"
                       >
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''}`}>
+                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') || location.pathname.includes('/electricians/') ? 'bg-[#FFC900]/10' : ''}`}>
                           Electricians
                         </NavigationMenuLink>
                       </div>

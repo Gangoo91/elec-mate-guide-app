@@ -22,9 +22,11 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
       
       if (preferredRole === 'apprentice') {
         console.log("Mobile menu: Navigating to apprentice-hub based on preferredRole");
+        setPreferredRole('apprentice'); // Reinforce preference
         navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Mobile menu: Navigating to dashboard (no specific role preference)");
+        setPreferredRole(null); // Clear preference
         navigate('/dashboard', { replace: true });
       }
     } else {
@@ -39,18 +41,11 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
     navigate('/apprentice-hub', { replace: true });
   };
 
-  const handleElectriciansClick = (e: React.MouseEvent) => {
+  const handleDashboardClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log("Mobile menu: Electricians clicked");
+    console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
     setPreferredRole(null);
-    navigate('/electricians', { replace: true });
-  };
-
-  const handleEmployersClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Mobile menu: Employers clicked");
-    setPreferredRole(null);
-    navigate('/employers', { replace: true });
+    navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -58,12 +53,7 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
       <nav className="flex flex-col space-y-3">
         <a 
           href="#" 
-          onClick={(e) => {
-            e.preventDefault();
-            console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
-            setPreferredRole(null);
-            navigate('/dashboard', { replace: true });
-          }} 
+          onClick={handleDashboardClick}
           className={`text-lg py-2 px-4 rounded-lg font-medium ${
             isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
           }`}
@@ -77,23 +67,31 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
               href="#"
               onClick={handleApprenticeHubClick}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/apprentice-hub") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+                isActive("/apprentice-hub") || location.pathname.includes('/apprentices/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Apprentice Hub
             </a>
             <a
               href="#"
-              onClick={handleElectriciansClick}
+              onClick={(e) => {
+                e.preventDefault();
+                setPreferredRole(null);
+                navigate('/electricians', { replace: true });
+              }}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/electricians") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+                isActive("/electricians") || location.pathname.includes('/electricians/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Electricians
             </a>
             <a
               href="#"
-              onClick={handleEmployersClick}
+              onClick={(e) => {
+                e.preventDefault();
+                setPreferredRole(null);
+                navigate('/employers', { replace: true });
+              }}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/employers") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}

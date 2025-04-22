@@ -15,49 +15,57 @@ export const useUserPreferences = () => {
 
   // Load preferences from localStorage on mount
   useEffect(() => {
-    try {
-      const storedPreferredRole = localStorage.getItem('preferredRole');
-      setPreferences({
-        preferredRole: storedPreferredRole,
-      });
-      
-      // Listen for localStorage changes from other components
-      const handleStorageChange = (e: StorageEvent) => {
-        if (e.key === 'preferredRole') {
-          setPreferences(prev => ({
-            ...prev,
-            preferredRole: e.newValue,
-          }));
-        }
-      };
-      
-      // Also create a custom event listener for same-window updates
-      const handleCustomStorageChange = () => {
-        const updatedRole = localStorage.getItem('preferredRole');
+    const loadPreferences = () => {
+      try {
+        const storedPreferredRole = localStorage.getItem('preferredRole');
+        console.log("Loading preferences from localStorage:", storedPreferredRole);
+        setPreferences({
+          preferredRole: storedPreferredRole,
+        });
+      } catch (error) {
+        console.error("Error accessing localStorage:", error);
+      }
+    };
+    
+    loadPreferences();
+    
+    // Listen for localStorage changes from other components
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'preferredRole') {
+        console.log("Storage event detected for preferredRole:", e.newValue);
         setPreferences(prev => ({
           ...prev,
-          preferredRole: updatedRole,
+          preferredRole: e.newValue,
         }));
-      };
-      
-      // Add event listeners
-      window.addEventListener('storage', handleStorageChange);
-      window.addEventListener('preferredRoleChange', handleCustomStorageChange);
-      
-      // Return cleanup function
-      return () => {
-        window.removeEventListener('storage', handleStorageChange);
-        window.removeEventListener('preferredRoleChange', handleCustomStorageChange);
-      };
-    } catch (error) {
-      console.error("Error accessing localStorage:", error);
-      // Don't return anything here, just log the error
-    }
+      }
+    };
+    
+    // Also create a custom event listener for same-window updates
+    const handleCustomStorageChange = () => {
+      const updatedRole = localStorage.getItem('preferredRole');
+      console.log("Custom storage event detected for preferredRole:", updatedRole);
+      setPreferences(prev => ({
+        ...prev,
+        preferredRole: updatedRole,
+      }));
+    };
+    
+    // Add event listeners
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('preferredRoleChange', handleCustomStorageChange);
+    
+    // Return cleanup function
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('preferredRoleChange', handleCustomStorageChange);
+    };
   }, []);
 
   // Update preferredRole and persist to localStorage
   const setPreferredRole = (role: string | null) => {
     try {
+      console.log("Setting preferredRole:", role);
+      
       if (role) {
         localStorage.setItem('preferredRole', role);
       } else {

@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
@@ -12,8 +12,13 @@ type LogoProps = {
 
 const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
   const { preferences } = useUserPreferences();
+  
+  useEffect(() => {
+    // Ensure session is fresh when component mounts
+    refreshSession();
+  }, [refreshSession]);
   
   const handleLogoClick = (e: React.MouseEvent<HTMLImageElement>) => {
     if (onClick) {

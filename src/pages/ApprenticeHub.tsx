@@ -16,14 +16,13 @@ const ApprenticeHub = memo(() => {
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
   useEffect(() => {
     // Refresh auth session to ensure we have latest data
+    console.log("ApprenticeHub - Component mounted, refreshing session");
     refreshSession();
     
-    // Safely set preferred role in localStorage with fallback
-    try {
+    // Set preferred role in localStorage with fallback
+    if (!loading) {
       console.log("ApprenticeHub - Setting preferredRole to apprentice");
       setPreferredRole('apprentice');
-    } catch (error) {
-      console.error("Failed to set preferred role:", error);
     }
     
     // Additional check to ensure navigation works after reload

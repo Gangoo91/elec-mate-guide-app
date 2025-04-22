@@ -68,17 +68,22 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { preferences } = useUserPreferences();
   
   useEffect(() => {
+    console.log("PublicRoute - Component mounted");
     refreshSession();
     
     if (!loading && user) {
       const preferredRole = preferences.preferredRole;
       console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
       
-      if (preferredRole === 'apprentice') {
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        navigate('/dashboard', { replace: true });
-      }
+      setTimeout(() => {
+        if (preferredRole === 'apprentice') {
+          console.log("PublicRoute - Redirecting to apprentice hub");
+          navigate('/apprentice-hub', { replace: true });
+        } else {
+          console.log("PublicRoute - Redirecting to dashboard");
+          navigate('/dashboard', { replace: true });
+        }
+      }, 100);
     }
   }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
   
@@ -94,8 +99,10 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   
   useEffect(() => {
+    console.log("PrivateRoute - Component mounted");
     const checkAuth = async () => {
       if (!user && !loading) {
+        console.log("PrivateRoute - No user found, refreshing session");
         await refreshSession();
       }
     };
@@ -105,6 +112,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && !user) {
+      console.log("PrivateRoute - Still no user after refresh, redirecting to login");
       navigate('/login', { replace: true });
     }
   }, [user, loading, navigate]);
@@ -122,6 +130,7 @@ const RootRedirect = () => {
   const { preferences } = useUserPreferences();
   
   useEffect(() => {
+    console.log("RootRedirect - Component mounted");
     refreshSession();
     
     if (!loading) {
@@ -129,13 +138,15 @@ const RootRedirect = () => {
         const preferredRole = preferences.preferredRole;
         console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
         
-        if (preferredRole === 'apprentice') {
-          console.log("RootRedirect - Navigating to apprentice hub");
-          navigate('/apprentice-hub', { replace: true });
-        } else {
-          console.log("RootRedirect - Navigating to dashboard");
-          navigate('/dashboard', { replace: true });
-        }
+        setTimeout(() => {
+          if (preferredRole === 'apprentice') {
+            console.log("RootRedirect - Navigating to apprentice hub");
+            navigate('/apprentice-hub', { replace: true });
+          } else {
+            console.log("RootRedirect - Navigating to dashboard");
+            navigate('/dashboard', { replace: true });
+          }
+        }, 100);
       } else {
         navigate('/welcome', { replace: true });
       }
