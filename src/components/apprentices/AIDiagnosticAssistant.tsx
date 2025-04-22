@@ -4,12 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { CircuitBoard } from "lucide-react";
+import { CircuitBoard, AlertCircle } from "lucide-react";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const AIDiagnosticAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { handleError } = useErrorHandler();
 
   const handleDiagnosticQuery = async () => {
     if (!query.trim()) {
@@ -30,10 +32,17 @@ const AIDiagnosticAssistant: React.FC = () => {
 
       console.log("Response from function:", data);
       setResponse(data.response || "No response from the AI assistant. Please try again.");
-      toast.success("Diagnostic assistance retrieved");
+      
+      // Only show success toast if we got an actual response
+      if (data.response) {
+        toast.success("Diagnostic assistance retrieved");
+      }
     } catch (err) {
       console.error("Caught error:", err);
-      toast.error("Failed to get diagnostic assistance. Please try again.");
+      handleError(err, "Failed to get diagnostic assistance. Please try again.");
+      
+      // Set a user-friendly response even when there's an error
+      setResponse("I'm sorry, but I couldn't process your request at the moment. This might be due to API configuration or network issues. Please try again later.");
     } finally {
       setIsLoading(false);
     }

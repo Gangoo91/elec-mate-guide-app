@@ -2,18 +2,18 @@
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { FileCheck, FileSearch } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const RegulationsFinderChecker: React.FC = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'find' | 'check'>('find');
+  const { handleError } = useErrorHandler();
 
   const handleQuery = async () => {
     if (!query.trim()) {
@@ -35,8 +35,11 @@ const RegulationsFinderChecker: React.FC = () => {
       setResponse(data.response);
       toast.success(mode === 'find' ? "Regulations found" : "Regulations checked");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to process your request");
+      console.error("Error in RegulationsFinderChecker:", err);
+      handleError(err, "Failed to process your regulations request");
+      
+      // Set a user-friendly response even when there's an error
+      setResponse("I'm sorry, but I couldn't process your regulations query at the moment. This might be due to API configuration or network issues. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +54,10 @@ const RegulationsFinderChecker: React.FC = () => {
 
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <FileSearch className="h-5 w-5 text-[#FFC900]" />
+          {mode === 'find' ? 
+            <FileSearch className="h-5 w-5 text-[#FFC900]" /> : 
+            <FileCheck className="h-5 w-5 text-[#FFC900]" />
+          }
           <span className="text-[#FFC900]/80">
             {mode === 'find' ? 'Find Regulations' : 'Check Compliance'}
           </span>

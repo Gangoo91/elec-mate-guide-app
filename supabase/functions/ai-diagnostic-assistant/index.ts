@@ -17,7 +17,22 @@ serve(async (req) => {
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+      // For development/testing purposes, provide a mock response if API key is not available
+      console.log('WARNING: OpenAI API key not configured, using mock response');
+      const mockResponse = `This is a mock response since the OpenAI API key is not configured.
+      
+For your query about "${query}":
+
+1. Start by checking the power supply to ensure it's properly connected.
+2. Inspect the circuit components for any visible damage or loose connections.
+3. Test the device with a multimeter to verify voltage readings.
+4. Consider consulting with a licensed electrician for further diagnostics.
+
+PLEASE NOTE: This is a mock response. For real assistance, please configure the OpenAI API key.`;
+
+      return new Response(JSON.stringify({ response: mockResponse }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Received query:', query);
@@ -59,8 +74,21 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in AI Diagnostic Assistant:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+    
+    // Provide a fallback response for errors
+    const errorResponse = `Sorry, I encountered an issue while processing your request. 
+    
+This could be due to:
+1. API configuration issues
+2. Network connectivity problems
+3. Server limitations
+
+Please try again later or contact support if the issue persists.`;
+    
+    return new Response(JSON.stringify({ 
+      response: errorResponse,
+      error: error.message 
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }

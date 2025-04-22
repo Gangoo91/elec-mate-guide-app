@@ -17,7 +17,37 @@ serve(async (req) => {
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+      // For development/testing purposes, provide a mock response if API key is not available
+      console.log('WARNING: OpenAI API key not configured, using mock response');
+      
+      const mockResponse = mode === 'find' 
+        ? `This is a mock regulations finder response for: "${query}"
+        
+BS 7671 Regulation 411.3.2 states that for all circuits, a protective device must disconnect the circuit within the required time.
+
+Regulation 522.6.201 requires that all electrical installations near water must have additional protection with an RCD.
+
+For more specific guidance, please consult a current copy of BS 7671.
+
+NOTE: This is a mock response. Please configure the OpenAI API key for actual regulatory information.`
+        : `This is a mock compliance check response for: "${query}"
+
+Evaluation:
+Based on standard UK regulations, the described installation would need to comply with several key areas.
+
+Compliance Issues:
+- Consumer units must be metal construction in domestic premises (Amendment 3 BS 7671:2008)
+- RCD protection required for all socket outlets (Reg 411.3.3)
+
+Recommendations:
+1. Verify the installation meets current 18th Edition requirements
+2. Ensure proper documentation is maintained
+
+NOTE: This is a mock response. Please configure the OpenAI API key for actual compliance checks.`;
+
+      return new Response(JSON.stringify({ response: mockResponse }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Received query:', query, 'Mode:', mode);
@@ -69,8 +99,21 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in Regulations Assistant:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+    
+    // Provide a fallback response for errors
+    const errorResponse = `Sorry, I encountered an issue while processing your request. 
+    
+This could be due to:
+1. API configuration issues
+2. Network connectivity problems
+3. Server limitations
+
+Please try again later or contact support if the issue persists.`;
+    
+    return new Response(JSON.stringify({ 
+      response: errorResponse,
+      error: error.message 
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }

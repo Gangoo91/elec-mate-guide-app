@@ -17,7 +17,38 @@ serve(async (req) => {
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+      // For development/testing purposes, provide a mock response if API key is not available
+      console.log('WARNING: OpenAI API key not configured, using mock response');
+      const mockChecklist = `# Safety Checklist for ${installationType.toUpperCase()} Installation
+      
+## Pre-Installation Checks
+- [ ] 1. Verify power is isolated and locked off
+- [ ] 2. Test for absence of voltage
+- [ ] 3. Check all tools and equipment for damage
+- [ ] 4. Review installation plans and specifications
+- [ ] 5. Ensure appropriate PPE is available and worn
+
+## During Installation
+- [ ] 6. Follow manufacturer's installation instructions
+- [ ] 7. Use correct cable sizes according to BS 7671
+- [ ] 8. Maintain proper segregation of circuits
+- [ ] 9. Label all circuits clearly
+- [ ] 10. Ensure proper mechanical protection for cables
+
+## Post-Installation Testing
+- [ ] 11. Complete continuity testing of protective conductors
+- [ ] 12. Perform insulation resistance tests
+- [ ] 13. Verify polarity throughout installation
+- [ ] 14. Check operation of RCDs where installed
+- [ ] 15. Complete required certification documentation
+
+${additionalContext ? `\n## Additional Considerations for ${additionalContext}\n- [ ] Special provisions have been made for the specified requirements` : ''}
+
+NOTE: This is a mock checklist. Please configure the OpenAI API key for actual safety checklists.`;
+
+      return new Response(JSON.stringify({ checklist: mockChecklist }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const systemPrompt = `You are an expert electrical safety inspector who creates detailed safety checklists for electrical installations.
@@ -60,8 +91,30 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in safety checklist generator:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+    
+    // Provide a fallback response for errors
+    const errorChecklist = `# Error Generating Safety Checklist
+    
+Sorry, we encountered a technical issue while generating your safety checklist.
+
+This could be due to:
+1. API configuration issues
+2. Network connectivity problems
+3. Server limitations
+
+In the meantime, please ensure you follow these basic safety procedures:
+- [ ] Isolate power before working on any electrical installation
+- [ ] Test for absence of voltage before proceeding
+- [ ] Use appropriate PPE at all times
+- [ ] Follow all relevant BS 7671 regulations
+- [ ] Complete proper testing and certification
+
+Please try again later or contact support if the issue persists.`;
+    
+    return new Response(JSON.stringify({ 
+      checklist: errorChecklist,
+      error: error.message 
+    }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
