@@ -1,6 +1,6 @@
 
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
@@ -9,7 +9,7 @@ import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import CoreUnitsPage from "@/pages/CoreUnitsPage";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
-import LoadingSpinner from "@/components/LoadingSpinner"; // Assuming this exists
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Lazy load the NVQ2 specific pages
 const InteractiveLessonsPage = lazy(() => import('./study/nvq2/InteractiveLessonsPage'));
@@ -45,41 +45,46 @@ const StudyMaterialsPage = () => {
 
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
       return (
-        <Routes>
-          <Route path="/*" element={
-            <ErrorBoundary>
-              <StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />
-            </ErrorBoundary>
-          } />
-          <Route path="/core-units" element={<CoreUnitsPage />} />
-          <Route path="/interactive-lessons" element={
-            studyType === 'nvq2' ? (
+        <>
+          <StudyUnitContent 
+            {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} 
+            basePath={`/apprentices/study-materials/${studyType}`}
+          />
+          <Routes>
+            <Route path="/core-units" element={
               <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner message="Loading Interactive Lessons..." />}>
-                  <InteractiveLessonsPage />
-                </Suspense>
+                <CoreUnitsPage />
               </ErrorBoundary>
-            ) : <CoreUnitsPage />
-          } />
-          <Route path="/quizzes" element={
-            studyType === 'nvq2' ? (
-              <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner message="Loading Quizzes & Progress..." />}>
-                  <QuizzesProgressPage />
-                </Suspense>
-              </ErrorBoundary>
-            ) : <CoreUnitsPage />
-          } />
-          <Route path="/videos" element={
-            studyType === 'nvq2' ? (
-              <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner message="Loading Video Content..." />}>
-                  <VideoContentPage />
-                </Suspense>
-              </ErrorBoundary>
-            ) : <CoreUnitsPage />
-          } />
-        </Routes>
+            } />
+            <Route path="/interactive-lessons" element={
+              studyType === 'nvq2' ? (
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSpinner message="Loading Interactive Lessons..." />}>
+                    <InteractiveLessonsPage />
+                  </Suspense>
+                </ErrorBoundary>
+              ) : <CoreUnitsPage />
+            } />
+            <Route path="/quizzes" element={
+              studyType === 'nvq2' ? (
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSpinner message="Loading Quizzes & Progress..." />}>
+                    <QuizzesProgressPage />
+                  </Suspense>
+                </ErrorBoundary>
+              ) : <CoreUnitsPage />
+            } />
+            <Route path="/videos" element={
+              studyType === 'nvq2' ? (
+                <ErrorBoundary>
+                  <Suspense fallback={<LoadingSpinner message="Loading Video Content..." />}>
+                    <VideoContentPage />
+                  </Suspense>
+                </ErrorBoundary>
+              ) : <CoreUnitsPage />
+            } />
+          </Routes>
+        </>
       );
     }
     
@@ -116,4 +121,3 @@ const StudyMaterialsPage = () => {
 };
 
 export default StudyMaterialsPage;
-

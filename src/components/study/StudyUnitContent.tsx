@@ -12,9 +12,10 @@ interface StudyUnitContentProps {
     content: string[];
     learningOutcomes?: string[];
   }[];
+  basePath?: string;
 }
 
-const StudyUnitContent = ({ title, description, units }: StudyUnitContentProps) => {
+const StudyUnitContent = ({ title, description, units, basePath }: StudyUnitContentProps) => {
   const navigate = useNavigate();
 
   const studyOptions = [
@@ -44,12 +45,22 @@ const StudyUnitContent = ({ title, description, units }: StudyUnitContentProps) 
     }
   ];
 
+  const handleCardClick = (path: string) => {
+    if (basePath) {
+      console.log(`Navigating to: ${basePath}/${path}`);
+      navigate(`${basePath}/${path}`);
+    } else {
+      console.log(`Navigating to: ${path}`);
+      navigate(path);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {studyOptions.map((option, index) => (
         <Card 
           key={index}
-          onClick={() => navigate(option.path)}
+          onClick={() => handleCardClick(option.path)}
           className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
         >
           <CardHeader>
