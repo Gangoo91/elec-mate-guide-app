@@ -1,12 +1,21 @@
 
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
 import StudyUnitContent from "@/components/study/StudyUnitContent";
 import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Home } from "lucide-react";
 
 const StudyMaterialsPage = () => {
   // Fix parameter extraction - specify the exact type
@@ -68,12 +77,55 @@ const StudyMaterialsPage = () => {
     return "Study Materials";
   };
 
+  // Get breadcrumb label based on study type
+  const getBreadcrumbLabel = () => {
+    if (studyType === 'nvq2') return "NVQ Level 2";
+    if (studyType === 'nvq3') return "NVQ Level 3 & AM2";
+    if (studyType === 'hnc') return "HNC Electrical Engineering";
+    return "Study Materials";
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <div className="mb-4">
           <BackButton />
         </div>
+        
+        {/* Breadcrumb Navigation */}
+        <div className="mb-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink as={Link} to="/dashboard">
+                  <Home className="h-4 w-4" />
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink as={Link} to="/apprentices">
+                  Apprentices
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink as={Link} to="/apprentices/study-materials">
+                  Study Materials
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              
+              {studyType && (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>{getBreadcrumbLabel()}</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </>
+              )}
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+        
         <PageHeader 
           title={getPageTitle()}
           description="Easy-to-understand guides and resources for electrical qualifications. Everything is explained in simple terms with real-world examples."
