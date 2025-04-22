@@ -50,10 +50,10 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                {/* Direct Dashboard rendering for all homepage routes to prevent caching issues */}
+                {/* Homepage routes - all direct to Dashboard */}
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/index" element={<Dashboard />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/index" element={<Navigate to="/" replace />} />
+                <Route path="/dashboard" element={<Navigate to="/" replace />} />
                 
                 {/* All other routes */}
                 <Route path="/apprentices" element={<ApprenticesPage />} />

@@ -24,9 +24,15 @@ if (typeof window !== 'undefined') {
       );
     });
   }
+  
+  // Add localStorage clear for any stored routes
+  localStorage.removeItem('lastRoute');
+  sessionStorage.clear();
 }
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
+  // Force clear any existing content
+  rootElement.innerHTML = '';
   createRoot(rootElement).render(<App />);
 }
