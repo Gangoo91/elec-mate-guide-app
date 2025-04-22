@@ -14,13 +14,10 @@ import { LogOut, Settings, User as UserIcon, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
-type UserMenuProps = {
-  user: any;
-  bypassAuth: boolean;
-};
-
-const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
+const UserMenu = () => {
+  const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -44,7 +41,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
     }
   };
 
-  if (user || bypassAuth) {
+  if (user) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -77,7 +74,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
     );
   }
 
-  // Display login/signup buttons for unauthenticated users (rare on desktop)
+  // Display login/signup buttons for unauthenticated users
   return (
     <div className="hidden md:flex items-center gap-2">
       <Button variant="ghost" onClick={() => navigate("/login")} className="text-[#FFC900] hover:bg-[#FFC900]/10">

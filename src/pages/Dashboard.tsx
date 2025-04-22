@@ -7,7 +7,8 @@ import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
-import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 const roles = [
   {
@@ -31,8 +32,8 @@ const roles = [
 ];
 
 const Dashboard = () => {
-  const { toast } = useToast();
   const { isReady } = useDashboardController();
+  const { user, loading } = useAuth();
   const {
     query,
     setQuery,
@@ -55,8 +56,13 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Redirect to login if not authenticated
+  if (!loading && !user) {
+    return <Navigate to="/login" replace />;
+  }
+  
   // If not ready yet, show a minimal loading state
-  if (!isReady) {
+  if (!isReady || loading) {
     return (
       <MainLayout>
         <div className="container px-4 py-10 md:py-16">

@@ -42,8 +42,8 @@ const queryClient = new QueryClient({
   },
 });
 
-// Authentication wrapper for routes
-const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
+// Authentication wrapper for routes that should only be accessible to non-authenticated users
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   
   if (loading) {
@@ -51,6 +51,17 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   }
   
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+};
+
+// Authentication wrapper for routes that require authentication
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
+  
+  return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 const App = () => (
@@ -62,35 +73,41 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                {/* Homepage routes - wrap Welcome in AuthWrapper to redirect authenticated users */}
-                <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/index" element={<Navigate to="/" replace />} />
-                
-                {/* All other routes */}
-                <Route path="/apprentices" element={<ApprenticesPage />} />
-                <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
-                <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
-                <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
-                <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
-                <Route path="/apprentices/certifications" element={<CertificationsPage />} />
-                <Route path="/electricians" element={<ElectriciansPage />} />
-                <Route path="/employers" element={<EmployersPage />} />
-                <Route path="/training" element={<Navigate to="/" replace />} />
-                <Route path="/certification" element={<Navigate to="/" replace />} />
-                <Route path="/tools" element={<Navigate to="/" replace />} />
-                <Route path="/mental-health" element={<MentalHealth />} />
-                <Route path="/mentorship" element={<Mentorship />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
-                <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
+                {/* Public routes - redirect to dashboard if authenticated */}
+                <Route path="/" element={<PublicRoute><Welcome /></PublicRoute>} />
+                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+                <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                
+                {/* Routes that require authentication */}
+                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                <Route path="/apprentices" element={<PrivateRoute><ApprenticesPage /></PrivateRoute>} />
+                <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
+                <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
+                <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
+                <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
+                <Route path="/employers" element={<PrivateRoute><EmployersPage /></PrivateRoute>} />
+                <Route path="/mental-health" element={<PrivateRoute><MentalHealth /></PrivateRoute>} />
+                <Route path="/mentorship" element={<PrivateRoute><Mentorship /></PrivateRoute>} />
+                <Route path="/faq" element={<PrivateRoute><FAQ /></PrivateRoute>} />
+                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                <Route path="/manage-subscription" element={<PrivateRoute><ManageSubscription /></PrivateRoute>} />
+                <Route path="/subscription" element={<PrivateRoute><Subscription /></PrivateRoute>} />
+                <Route path="/subscription/success" element={<PrivateRoute><SubscriptionSuccess /></PrivateRoute>} />
+                
+                {/* Public pages */}
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/manage-subscription" element={<ManageSubscription />} />
-                <Route path="/subscription" element={<Subscription />} />
-                <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                
+                {/* Legacy routes - redirect to new routes */}
+                <Route path="/index" element={<Navigate to="/" replace />} />
+                <Route path="/training" element={<Navigate to="/apprentices/learning-hub" replace />} />
+                <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
+                <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
+                
+                {/* Catch all - redirect to home page */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>

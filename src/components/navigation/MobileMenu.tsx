@@ -1,46 +1,83 @@
 
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 type MobileMenuProps = {
   isActive: (path: string) => boolean;
-  user: any;
-  bypassAuth: boolean;
-  navigate: (path: string) => void;
+  navigate: ReturnType<typeof useNavigate>;
 };
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, navigate }) => {
+const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
+  const { user } = useAuth();
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(user ? "/dashboard" : "/");
+  };
+
   return (
-    <div className="md:hidden py-4 px-4 bg-[#151812] border-b border-[#FFC900]/20">
-      <div className="text-center mb-4">
-        <p className="text-[#FFC900]/80 text-sm">Quick Access</p>
-      </div>
-      
+    <div className="md:hidden border-t border-[#FFC900]/20 bg-[#151812] px-4 py-2 pb-4">
       <nav className="flex flex-col space-y-3">
-        <Link to="/" className={`px-3 py-2 rounded-md ${isActive('/') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Home
-        </Link>
-        <Link to="/apprentices" className={`px-3 py-2 rounded-md ${isActive('/apprentices') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Apprentices
-        </Link>
-        <Link to="/electricians" className={`px-3 py-2 rounded-md ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Electricians
-        </Link>
-        <Link to="/employers" className={`px-3 py-2 rounded-md ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Employers
-        </Link>
-        <Link to="/faq" className={`px-3 py-2 rounded-md ${isActive('/faq') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          FAQ
-        </Link>
-        
-        {/* Authentication buttons only for non-logged in users */}
-        {!user && !bypassAuth && (
-          <div className="flex flex-col space-y-2 pt-3 border-t border-[#FFC900]/20">
-            <Button variant="outline" onClick={() => navigate("/login")} className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 justify-start">
+        <a 
+          href="#" 
+          onClick={handleHomeClick} 
+          className={`text-lg py-2 px-4 rounded-lg font-medium ${
+            isActive("/") || isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+          }`}
+        >
+          {user ? "Dashboard" : "Home"}
+        </a>
+
+        {user ? (
+          <>
+            <Link
+              to="/apprentices"
+              className={`text-lg py-2 px-4 rounded-lg font-medium ${
+                isActive("/apprentices") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+              }`}
+            >
+              Apprentices
+            </Link>
+            <Link
+              to="/electricians"
+              className={`text-lg py-2 px-4 rounded-lg font-medium ${
+                isActive("/electricians") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+              }`}
+            >
+              Electricians
+            </Link>
+            <Link
+              to="/employers"
+              className={`text-lg py-2 px-4 rounded-lg font-medium ${
+                isActive("/employers") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+              }`}
+            >
+              Employers
+            </Link>
+            <Link
+              to="/faq"
+              className={`text-lg py-2 px-4 rounded-lg font-medium ${
+                isActive("/faq") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+              }`}
+            >
+              FAQs
+            </Link>
+            <Link
+              to="/profile"
+              className={`text-lg py-2 px-4 rounded-lg font-medium ${
+                isActive("/profile") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+              }`}
+            >
+              Profile
+            </Link>
+          </>
+        ) : (
+          <div className="flex flex-col space-y-2 pt-2">
+            <Button onClick={() => navigate("/login")} variant="outline" className="w-full border-[#FFC900]/50 text-[#FFC900]">
               Login
             </Button>
-            <Button onClick={() => navigate("/signup")} className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] justify-start">
+            <Button onClick={() => navigate("/signup")} className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]">
               Sign Up
             </Button>
           </div>
