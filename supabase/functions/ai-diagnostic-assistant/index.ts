@@ -17,7 +17,14 @@ serve(async (req) => {
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
     if (!openAIApiKey) {
-      throw new Error("OpenAI API key not configured");
+      console.error("OpenAI API key not configured");
+      return new Response(JSON.stringify({ 
+        error: "API key not configured", 
+        response: "The OpenAI API key is not properly configured. Please check the edge function configuration."
+      }), {
+        status: 200, // Return 200 to allow the frontend to handle this gracefully
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log("Processing technical query:", query);
@@ -72,9 +79,10 @@ serve(async (req) => {
   } catch (error) {
     console.error('Error in AI Diagnostic Assistant:', error);
     return new Response(JSON.stringify({ 
-      error: error.message 
+      error: error.message,
+      response: "An error occurred while generating the diagnostic response. Please try again with a different query."
     }), {
-      status: 500,
+      status: 200, // Return 200 to allow the frontend to handle this gracefully
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }

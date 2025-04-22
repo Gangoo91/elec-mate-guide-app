@@ -26,9 +26,17 @@ const AIDiagnosticAssistant: React.FC = () => {
       });
 
       if (error) throw error;
+      
+      if (data.error) {
+        console.error("API response error:", data.error);
+        toast.error("Error from AI service: " + data.error);
+      }
 
-      setResponse(data.response);
-      toast.success("Diagnostic analysis complete");
+      // Even if there's an error message, we still show the response if available
+      if (data.response) {
+        setResponse(data.response);
+        toast.success("Diagnostic analysis complete");
+      }
     } catch (err) {
       console.error("Error:", err);
       handleError(err, "Unable to process diagnostic query. Please try again.");
