@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -41,69 +40,66 @@ const RegulationsFinderChecker: React.FC = () => {
   };
 
   return (
-    <Card className="bg-[#22251e] border-[#FFC900]/20">
-      <CardHeader>
-        <CardTitle className="text-[#FFC900] flex items-center gap-2">
-          <FileCheck className="h-6 w-6" />
-          Regulations Finder & Checker
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="find" className="w-full">
-          <TabsList className="bg-[#151812] border border-[#FFC900]/10 mb-4 grid w-full grid-cols-2">
-            <TabsTrigger value="find" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">
-              <FileSearch className="h-4 w-4 mr-2" />
-              Find Regulations
-            </TabsTrigger>
-            <TabsTrigger value="check" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">
-              <FileCheck className="h-4 w-4 mr-2" />
-              Check Compliance
-            </TabsTrigger>
-          </TabsList>
+    <div className="p-6">
+      <div className="flex items-center gap-2 mb-6">
+        <FileCheck className="h-6 w-6 text-[#FFC900]" />
+        <h2 className="text-xl font-semibold text-[#FFC900]">Regulations Finder & Checker</h2>
+      </div>
 
-          <TabsContent value="find" className="space-y-4">
-            <Textarea 
-              placeholder="Search for specific UK electrical regulations..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
-            />
-            <Button 
-              onClick={() => handleQuery('find')} 
-              disabled={isLoading}
-              className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
-            >
-              <FileSearch className="h-4 w-4 mr-2" />
-              {isLoading ? 'Searching...' : 'Find Regulations'}
-            </Button>
-          </TabsContent>
+      <Tabs defaultValue="find" className="w-full">
+        <TabsList className="bg-[#151812] border border-[#FFC900]/10 mb-4 grid w-full grid-cols-2">
+          <TabsTrigger value="find" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">
+            <FileSearch className="h-4 w-4 mr-2" />
+            Find Regulations
+          </TabsTrigger>
+          <TabsTrigger value="check" className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-[#151812]">
+            <FileCheck className="h-4 w-4 mr-2" />
+            Check Compliance
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value="check" className="space-y-4">
-            <Textarea 
-              placeholder="Describe your installation to check compliance..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
-            />
-            <Button 
-              onClick={() => handleQuery('check')} 
-              disabled={isLoading}
-              className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
-            >
-              <FileCheck className="h-4 w-4 mr-2" />
-              {isLoading ? 'Checking...' : 'Check Compliance'}
-            </Button>
-          </TabsContent>
+        <TabsContent value="find" className="space-y-4">
+          <Textarea 
+            placeholder="Search for specific UK electrical regulations..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
+          />
+          <Button 
+            onClick={() => handleQuery('find')} 
+            disabled={isLoading}
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
+          >
+            <FileSearch className="h-4 w-4 mr-2" />
+            {isLoading ? 'Searching...' : 'Find Regulations'}
+          </Button>
+        </TabsContent>
 
-          {response && (
-            <div className="mt-4 p-3 bg-[#2C2F24] rounded text-[#FFC900]/80">
-              <h4 className="font-semibold mb-2">Results:</h4>
-              <p className="whitespace-pre-wrap">{response}</p>
-            </div>
-          )}
-        </Tabs>
-      </CardContent>
-    </Card>
+        <TabsContent value="check" className="space-y-4">
+          <Textarea 
+            placeholder="Describe your installation to check compliance..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
+          />
+          <Button 
+            onClick={() => handleQuery('check')} 
+            disabled={isLoading}
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
+          >
+            <FileCheck className="h-4 w-4 mr-2" />
+            {isLoading ? 'Checking...' : 'Check Compliance'}
+          </Button>
+        </TabsContent>
+
+        {response && (
+          <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
+            <h4 className="font-semibold mb-2 text-[#FFC900]">Results:</h4>
+            <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+          </div>
+        )}
+      </Tabs>
+    </div>
   );
 };
 
