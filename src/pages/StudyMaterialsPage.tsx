@@ -43,8 +43,11 @@ const StudyMaterialsPage = () => {
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
       return (
         <Routes>
-          <Route path="/" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
-          <Route path="core-units" element={<CoreUnitsPage />} />
+          <Route path="/*" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
+          <Route path="/core-units" element={<CoreUnitsPage />} />
+          <Route path="/interactive-lessons" element={<CoreUnitsPage />} />
+          <Route path="/quizzes" element={<CoreUnitsPage />} />
+          <Route path="/videos" element={<CoreUnitsPage />} />
         </Routes>
       );
     }
