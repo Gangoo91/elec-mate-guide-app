@@ -15,9 +15,15 @@ const BackButton = () => {
     location.pathname === "/apprentice-hub";
 
   const handleGoBack = () => {
-    // Special handling for Electricians route to go back to dashboard
+    // Special handling for specific routes
     if (location.pathname === "/electricians") {
       navigate("/dashboard");
+      return;
+    }
+    
+    // Specific handling for apprentices mental health route
+    if (location.pathname === "/apprentices/mental-health") {
+      navigate("/apprentices");
       return;
     }
     
