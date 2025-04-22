@@ -42,16 +42,7 @@ const Dashboard = () => {
   } = useRoleFilter(roles);
 
   useEffect(() => {
-    // Clear any browser caches that might be affecting rendering
-    if ('caches' in window) {
-      caches.keys().then(cacheNames => {
-        cacheNames.forEach(cacheName => {
-          caches.delete(cacheName);
-        });
-      });
-    }
-
-    // Apply animations after component mounts
+    // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
       elements.forEach((el, i) => {
