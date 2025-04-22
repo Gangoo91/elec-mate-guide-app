@@ -14,17 +14,10 @@ serve(async (req) => {
   }
 
   try {
-    const { query } = await req.json();
+    const { query, isConnectionTest } = await req.json();
     
-    // Comprehensive environment variable logging
-    console.log("All Environment Variables:", JSON.stringify(
-      Object.fromEntries(
-        Object.entries(Deno.env.toObject()).filter(([key]) => 
-          key.includes('OPENAI') || key.includes('API')
-        )
-      ), 
-      null, 2
-    ));
+    // Log environment info for debugging
+    console.log("Checking for OpenAI API key...");
     
     // Enhanced key retrieval with detailed logging
     const keyVariants = [
@@ -55,17 +48,50 @@ serve(async (req) => {
       });
     }
 
-    // Validate key format (basic check)
-    if (!openAIApiKey.startsWith('sk-')) {
-      console.error("VALIDATION: API key does not start with expected 'sk-' prefix");
-      return new Response(JSON.stringify({ 
-        response: "The OpenAI API key appears to be incorrectly formatted. Please regenerate your key."
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+    // If this is just a connection test, we'll do a lightweight API call
+    if (isConnectionTest) {
+      console.log("Performing API connection test...");
+      
+      try {
+        // Make a minimal API call to verify connectivity
+        const response = await fetch('https://api.openai.com/v1/models', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${openAIApiKey}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('OpenAI API connection test failed:', JSON.stringify(errorData, null, 2));
+          
+          if (errorData.error?.type === "insufficient_quota") {
+            return new Response(JSON.stringify({ 
+              error: "API quota exceeded",
+              details: "Your OpenAI API account has insufficient quota."
+            }), {
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            });
+          }
+          
+          throw new Error(`Failed to connect to OpenAI API: ${errorData.error?.message || 'Unknown error'}`);
+        }
+
+        // Connection successful
+        return new Response(JSON.stringify({ 
+          status: "connected",
+          message: "Successfully connected to OpenAI API"
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      } catch (apiError) {
+        console.error('OpenAI API connection test error:', apiError);
+        throw apiError;
+      }
     }
 
+    // Regular diagnostic query processing
     console.log("Processing diagnostic query:", query);
 
     try {
@@ -177,6 +203,7 @@ Always ensure power is disconnected before performing any diagnostic work or rep
   } catch (error) {
     console.error('Error in AI Diagnostic Assistant:', error);
     return new Response(JSON.stringify({ 
+      error: error.message,
       response: "An error occurred while generating the diagnostic response. Please try again with a different query."
     }), {
       status: 200,
