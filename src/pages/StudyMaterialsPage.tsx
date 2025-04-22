@@ -7,7 +7,9 @@ import BackButton from "@/components/navigation/BackButton";
 import StudyUnitContent from "@/components/study/StudyUnitContent";
 import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import CoreUnitsPage from "@/pages/CoreUnitsPage";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
+import LoadingSpinner from "@/components/LoadingSpinner"; // Assuming this exists
 
 // Lazy load the NVQ2 specific pages
 const InteractiveLessonsPage = lazy(() => import('./study/nvq2/InteractiveLessonsPage'));
@@ -44,27 +46,37 @@ const StudyMaterialsPage = () => {
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
       return (
         <Routes>
-          <Route path="/*" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
+          <Route path="/*" element={
+            <ErrorBoundary>
+              <StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />
+            </ErrorBoundary>
+          } />
           <Route path="/core-units" element={<CoreUnitsPage />} />
           <Route path="/interactive-lessons" element={
             studyType === 'nvq2' ? (
-              <Suspense fallback={<div>Loading...</div>}>
-                <InteractiveLessonsPage />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner message="Loading Interactive Lessons..." />}>
+                  <InteractiveLessonsPage />
+                </Suspense>
+              </ErrorBoundary>
             ) : <CoreUnitsPage />
           } />
           <Route path="/quizzes" element={
             studyType === 'nvq2' ? (
-              <Suspense fallback={<div>Loading...</div>}>
-                <QuizzesProgressPage />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner message="Loading Quizzes & Progress..." />}>
+                  <QuizzesProgressPage />
+                </Suspense>
+              </ErrorBoundary>
             ) : <CoreUnitsPage />
           } />
           <Route path="/videos" element={
             studyType === 'nvq2' ? (
-              <Suspense fallback={<div>Loading...</div>}>
-                <VideoContentPage />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner message="Loading Video Content..." />}>
+                  <VideoContentPage />
+                </Suspense>
+              </ErrorBoundary>
             ) : <CoreUnitsPage />
           } />
         </Routes>
@@ -104,3 +116,4 @@ const StudyMaterialsPage = () => {
 };
 
 export default StudyMaterialsPage;
+
