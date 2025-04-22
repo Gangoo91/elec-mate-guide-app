@@ -10,6 +10,8 @@ import { useDashboardController } from "@/hooks/useDashboardController";
 import { useAuth } from "@/hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import PageHeader from "@/components/layout/PageHeader";
+import GlassCard from "@/components/shared/GlassCard";
 
 const roles = [
   {
@@ -99,15 +101,23 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-10 md:py-16">
-        <DashboardHeroSection hideLogoOverride={true} />
-        <DashboardSearchBar
-          query={query}
-          setQuery={setQuery}
-          isFocused={isSearchFocused}
-          setIsFocused={setIsSearchFocused}
+      <div className="container max-w-6xl mx-auto px-4 py-8">
+        <PageHeader 
+          title="Electrical Industry Hub"
+          description="Your all-in-one platform for apprentices, electricians, and employers to connect, learn, and thrive."
+          hideBackButton={true}
         />
-        <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
+        
+        <GlassCard>
+          <DashboardSearchBar
+            query={query}
+            setQuery={setQuery}
+            isFocused={isSearchFocused}
+            setIsFocused={setIsSearchFocused}
+          />
+          
+          <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
+        </GlassCard>
       </div>
     </MainLayout>
   );
