@@ -18,7 +18,7 @@ import EmployersPage from "./pages/EmployersPage";
 import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionGuard from "./components/guards/SubscriptionGuard";
-import { AuthProvider } from "@/hooks/useAuth";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import ManageSubscription from "./pages/ManageSubscription";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import FAQ from "./pages/FAQ";
@@ -42,6 +42,17 @@ const queryClient = new QueryClient({
   },
 });
 
+// Authentication wrapper for routes
+const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
+  
+  return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+};
+
 const App = () => (
   <ErrorBoundary>
     <AuthProvider>
@@ -51,8 +62,8 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                {/* Homepage routes */}
-                <Route path="/" element={<Welcome />} />
+                {/* Homepage routes - wrap Welcome in AuthWrapper to redirect authenticated users */}
+                <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
                 
@@ -71,8 +82,8 @@ const App = () => (
                 <Route path="/mental-health" element={<MentalHealth />} />
                 <Route path="/mentorship" element={<Mentorship />} />
                 <Route path="/faq" element={<FAQ />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
+                <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
