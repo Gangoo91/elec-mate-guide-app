@@ -2,8 +2,8 @@
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import AILearningTools from "@/components/apprentices/AILearningTools";
 import BackButton from "@/components/navigation/BackButton";
+import AIToolsGrid from "@/components/apprentices/AIToolsGrid";
 
 const AIToolsPage = () => {
   return (
@@ -12,11 +12,11 @@ const AIToolsPage = () => {
         <BackButton />
         <PageHeader 
           title="AI Learning Tools"
-          description="Access our AI-powered assistants to help with technical diagnostics and regulatory compliance."
+          description="Access our suite of AI-powered assistants to help with electrical diagnostics, regulatory compliance, and technical planning."
           hideBackButton={true} // Add this prop to hide the built-in back button
         />
         <div className="space-y-6">
-          <AILearningTools />
+          <AIToolsGrid />
         </div>
       </div>
     </MainLayout>
