@@ -2,7 +2,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import Welcome from "./pages/Welcome";
 import Profile from "./pages/Profile";
 import ApprenticesPage from "./pages/ApprenticesPage";
 import ElectriciansPage from "./pages/ElectriciansPage";
@@ -52,6 +51,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/index" element={<Navigate to="/" replace />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/apprentices" element={<ApprenticesPage />} />
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
