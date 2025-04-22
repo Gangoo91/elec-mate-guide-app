@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import BackButton from "@/components/navigation/BackButton";
 import MainLayout from "@/components/layout/MainLayout";
 
@@ -24,34 +25,42 @@ const UnitPage = ({ unitNumber, title, description, content, learningOutcomes }:
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="pt-6">
               <div className="space-y-6">
-                <div>
-                  <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Unit {unitNumber}: {title}</h3>
-                  <p className="text-[#FFC900]/70 mb-4">{description}</p>
+                <h3 className="text-xl font-semibold text-[#FFC900] mb-4">{title}</h3>
+                <p className="text-[#FFC900]/70 mb-6">{description}</p>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Course Content</h3>
-                    <ul className="space-y-2">
-                      {content.map((item, index) => (
-                        <li key={index} className="text-[#FFC900]/70 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70"></span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                  <AccordionItem value="course-content" className="border-[#FFC900]/20">
+                    <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
+                      Course Content
+                    </AccordionTrigger>
+                    <AccordionContent className="text-[#FFC900]/70 pt-4">
+                      <ul className="space-y-4">
+                        {content.map((item, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70 mt-2"></span>
+                            <span className="flex-1">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
 
-                  <div className="mt-6">
-                    <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Learning Outcomes</h3>
-                    <ul className="space-y-2">
-                      {learningOutcomes.map((outcome, index) => (
-                        <li key={index} className="text-[#FFC900]/70 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70"></span>
-                          {outcome}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                  <AccordionItem value="learning-outcomes" className="border-[#FFC900]/20">
+                    <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/90">
+                      Learning Outcomes
+                    </AccordionTrigger>
+                    <AccordionContent className="text-[#FFC900]/70 pt-4">
+                      <ul className="space-y-4">
+                        {learningOutcomes.map((outcome, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFC900]/70 mt-2"></span>
+                            <span className="flex-1">{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </CardContent>
           </Card>
