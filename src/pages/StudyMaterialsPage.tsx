@@ -1,198 +1,32 @@
 
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import ResourceCard from "@/components/shared/ResourceCard";
-import { Book, GraduationCap, BookOpen } from "lucide-react";
 import BackButton from "@/components/navigation/BackButton";
 import StudyUnitContent from "@/components/study/StudyUnitContent";
+import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
+import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 
 const StudyMaterialsPage = () => {
   const { studyType } = useParams();
-  const navigate = useNavigate();
 
-  const level2Content = {
-    title: "NVQ Level 2 Core Units",
-    description: "Essential knowledge broken down into easy-to-understand sections",
-    units: [
-      {
-        title: "Unit 201: Health & Safety Basics",
-        content: [
-          "Your safety comes first! Learn about protective equipment (PPE) - like your safety boots and gloves",
-          "Understanding hazards - what could hurt you and how to stay safe",
-          "Simple guide to risk assessments - spotting dangers before they cause problems",
-          "Basic first aid knowledge - what to do if someone gets hurt",
-          "Fire safety made easy - know your fire extinguishers and escape routes"
-        ],
-        learningOutcomes: [
-          "You'll be able to spot dangerous situations before they cause harm",
-          "Know exactly what safety gear to wear and when to wear it",
-          "Understand how to keep yourself and others safe on site"
-        ]
-      },
-      {
-        title: "Unit 202: Electrical Science Made Simple",
-        content: [
-          "Voltage explained simply - think of it like water pressure in a pipe",
-          "Current - how electricity flows, like water flowing through pipes",
-          "Resistance - what slows electricity down (like narrow pipes slow water)",
-          "Basic calculations made easy with real-world examples",
-          "Simple circuit diagrams - learning to read them like a map"
-        ],
-        learningOutcomes: [
-          "Understand the basics of how electricity works without the complex math",
-          "Know how to use a multimeter to measure voltage and current",
-          "Be able to explain electrical concepts in simple terms"
-        ]
-      },
-      {
-        title: "Unit 203: Installation Basics",
-        content: [
-          "Step-by-step guide to basic wiring - starting with simple circuits",
-          "Tools of the trade - what each tool does and how to use it safely",
-          "Cable types made simple - which ones to use and why",
-          "Common mistakes and how to avoid them",
-          "Real-world examples with pictures and diagrams"
-        ],
-        learningOutcomes: [
-          "Confidently identify different types of cables and their uses",
-          "Know how to use basic tools correctly and safely",
-          "Complete simple installations following proper procedures"
-        ]
-      }
-    ]
-  };
-
-  const level3Content = {
-    title: "NVQ Level 3 Advanced Topics",
-    description: "Building on the basics with more detailed but clear explanations",
-    units: [
-      {
-        title: "Advanced Circuit Design",
-        content: [
-          "Breaking down complex circuits into simple parts",
-          "Understanding three-phase power in everyday terms",
-          "Practical fault-finding techniques - where to start looking",
-          "Testing and certification explained clearly",
-          "Real examples from construction sites"
-        ],
-        learningOutcomes: [
-          "Design more complex circuits with confidence",
-          "Troubleshoot problems systematically",
-          "Understand three-phase systems and their applications"
-        ]
-      },
-      {
-        title: "Regulations Made Clear",
-        content: [
-          "BS7671 broken down into bite-size chunks",
-          "Key regulations explained in plain English",
-          "Common regulation questions answered",
-          "Real-world examples of applying regulations",
-          "Simple memory tricks for important rules"
-        ],
-        learningOutcomes: [
-          "Navigate the wiring regulations with confidence",
-          "Apply regulations correctly to your work",
-          "Understand why regulations exist and their importance"
-        ]
-      }
-    ]
-  };
-
-  const hncContent = {
-    title: "HNC Electrical Engineering",
-    description: "Higher level concepts explained in simple terms",
-    units: [
-      {
-        title: "Electrical Power Systems",
-        content: [
-          "Power generation simplified - from fuel to electricity",
-          "Transmission systems explained without the complex math",
-          "Distribution networks - getting power to where it's needed",
-          "Renewable energy integration in everyday terms",
-          "Smart grid technology explained simply"
-        ],
-        learningOutcomes: [
-          "Understand how electricity is generated and delivered",
-          "Know how different generation methods work",
-          "Grasp the basics of grid management and distribution"
-        ]
-      },
-      {
-        title: "Engineering Mathematics",
-        content: [
-          "Algebra made simple with practical examples",
-          "Trigonometry explained with real-world applications",
-          "Calculus basics - what you need to know without the complexity",
-          "Statistical methods for engineering problems",
-          "Problem-solving techniques that actually work"
-        ],
-        learningOutcomes: [
-          "Apply basic mathematical concepts to electrical problems",
-          "Use formulas confidently in your work",
-          "Calculate solutions to common engineering challenges"
-        ]
-      }
-    ]
-  };
-
-  // Display different content based on URL parameter
   const renderContent = () => {
-    switch(studyType) {
-      case 'nvq2':
-        return <StudyUnitContent {...level2Content} />;
-      case 'nvq3':
-        return <StudyUnitContent {...level3Content} />;
-      case 'hnc':
-        return <StudyUnitContent {...hncContent} />;
-      default:
-        // Show all options on the main study materials page
-        return (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-              <ResourceCard
-                title="NVQ Level 2 Electrical Installation"
-                description="Core units include: Health & Safety, Scientific Principles, Installation Methods, Inspection & Testing, Environmental Protection, and Electrical Systems & Components."
-                icon={<Book className="h-7 w-7 text-[#FFC900]" />}
-                fullCardLink="/apprentices/study-materials/nvq2"
-                action={{
-                  label: "View Level 2 Resources",
-                  href: "/apprentices/study-materials/nvq2"
-                }}
-              />
-              
-              <ResourceCard
-                title="NVQ Level 3 & AM2"
-                description="Advanced topics: Complex Installations, Fault Diagnosis, Electrical Principles, BS7671 Wiring Regulations, Inspection & Testing, and AM2 Assessment Preparation."
-                icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
-                fullCardLink="/apprentices/study-materials/nvq3"
-                action={{
-                  label: "Access Level 3 & AM2",
-                  href: "/apprentices/study-materials/nvq3"
-                }}
-              />
-              
-              <ResourceCard
-                title="HNC Electrical Engineering"
-                description="Higher-level topics including: Electrical Power Systems, Engineering Mathematics, Project Management, Circuit Theory, Power Electronics, and Control Systems."
-                icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
-                fullCardLink="/apprentices/study-materials/hnc"
-                action={{
-                  label: "Explore HNC Materials",
-                  href: "/apprentices/study-materials/hnc"
-                }}
-              />
-            </div>
-
-            <div className="mt-8 space-y-8">
-              <StudyUnitContent {...level2Content} />
-              <StudyUnitContent {...level3Content} />
-            </div>
-          </>
-        );
+    if (!studyType) {
+      return (
+        <>
+          <StudyMaterialsGrid />
+          <div className="mt-8 space-y-8">
+            <StudyUnitContent {...studyMaterialsContent.level2} />
+            <StudyUnitContent {...studyMaterialsContent.level3} />
+          </div>
+        </>
+      );
     }
+
+    // Display specific content based on URL parameter
+    const content = studyMaterialsContent[studyType as keyof typeof studyMaterialsContent];
+    return content ? <StudyUnitContent {...content} /> : null;
   };
 
   return (
