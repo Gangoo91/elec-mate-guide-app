@@ -9,8 +9,13 @@ import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 
 const StudyMaterialsPage = () => {
-  const { studyType } = useParams<{ studyType: string }>();
+  // Fix parameter extraction - specify the exact type
+  const params = useParams();
+  const studyType = params.studyType; // Extract as string
   const navigate = useNavigate();
+
+  console.log("Raw params:", params);
+  console.log("Study type extracted:", studyType);
 
   // Define valid study types and map URL parameters to content keys
   const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];

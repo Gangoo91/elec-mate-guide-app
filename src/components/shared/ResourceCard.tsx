@@ -22,7 +22,7 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
   // Handle click on the entire card
   const handleCardClick = () => {
     if (fullCardLink) {
-      console.log("Navigating to:", fullCardLink);
+      console.log("ResourceCard: Attempting to navigate to:", fullCardLink);
       navigate(fullCardLink);
     }
   };
@@ -51,7 +51,10 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
                 className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(action.href);
+                  if (action.href) {
+                    console.log("Action button: Navigating to:", action.href);
+                    navigate(action.href);
+                  }
                 }}
               >
                 {action.label} →
@@ -62,7 +65,10 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
                 className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
                 onClick={(e) => {
                   e.stopPropagation();
-                  action.onClick && action.onClick();
+                  if (action.onClick) {
+                    console.log("Action button: Executing onClick handler");
+                    action.onClick();
+                  }
                 }}
               >
                 {action.label} →

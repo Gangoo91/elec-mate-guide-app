@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -85,9 +84,7 @@ const App = () => (
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq3" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/hnc" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
                 <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
