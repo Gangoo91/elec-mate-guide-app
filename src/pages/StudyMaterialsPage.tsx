@@ -1,11 +1,12 @@
 
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
 import StudyUnitContent from "@/components/study/StudyUnitContent";
 import StudyMaterialsGrid from "@/components/study/StudyMaterialsGrid";
+import CoreUnitsPage from "@/pages/CoreUnitsPage";
 import { studyMaterialsContent } from "@/data/studyMaterialsContent";
 
 const StudyMaterialsPage = () => {
@@ -40,7 +41,12 @@ const StudyMaterialsPage = () => {
     }
 
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
-      return <StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />;
+      return (
+        <Routes>
+          <Route path="/" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
+          <Route path="core-units" element={<CoreUnitsPage />} />
+        </Routes>
+      );
     }
     
     return <StudyMaterialsGrid />;
