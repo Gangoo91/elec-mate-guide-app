@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -14,10 +13,8 @@ const StudyMaterialsPage = () => {
   const studyType = params.studyType;
   const navigate = useNavigate();
 
-  // Define valid study types and map URL parameters to content keys
   const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];
   
-  // Get content key based on studyType
   const getContentKey = () => {
     if (studyType === 'nvq2') return 'level2';
     if (studyType === 'nvq3') return 'level3';
@@ -27,14 +24,12 @@ const StudyMaterialsPage = () => {
   
   const contentKey = getContentKey();
 
-  // If studyType exists but isn't valid, redirect to the main materials page
   React.useEffect(() => {
     if (studyType && !validStudyTypes.includes(studyType)) {
       navigate('/apprentices/study-materials');
     }
   }, [studyType, navigate]);
 
-  // Render appropriate content based on URL
   const renderContent = () => {
     if (!studyType) {
       return <StudyMaterialsGrid />;
@@ -45,9 +40,15 @@ const StudyMaterialsPage = () => {
         <Routes>
           <Route path="/*" element={<StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />} />
           <Route path="/core-units" element={<CoreUnitsPage />} />
-          <Route path="/interactive-lessons" element={<CoreUnitsPage />} />
-          <Route path="/quizzes" element={<CoreUnitsPage />} />
-          <Route path="/videos" element={<CoreUnitsPage />} />
+          <Route path="/interactive-lessons" element={
+            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/InteractiveLessonsPage')) : <CoreUnitsPage />
+          } />
+          <Route path="/quizzes" element={
+            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/QuizzesProgressPage')) : <CoreUnitsPage />
+          } />
+          <Route path="/videos" element={
+            studyType === 'nvq2' ? React.lazy(() => import('./study/nvq2/VideoContentPage')) : <CoreUnitsPage />
+          } />
         </Routes>
       );
     }
@@ -55,7 +56,6 @@ const StudyMaterialsPage = () => {
     return <StudyMaterialsGrid />;
   };
 
-  // Generate title based on study type
   const getPageTitle = () => {
     if (!studyType) return "Study Materials";
     
