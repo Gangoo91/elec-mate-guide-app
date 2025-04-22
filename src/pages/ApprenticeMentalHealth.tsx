@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -18,7 +17,7 @@ const ApprenticeMentalHealth = () => {
           description="Support, community, and resources for your wellbeing as an electrical apprentice."
         />
 
-        {/* Buddy card at the top */}
+        {/* Mental Health Buddy card */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <GlassCard className="p-4 md:col-span-3 flex-col flex items-center justify-center">
             <User className="h-8 w-8 mb-2 text-[#FFC900]" />
@@ -46,21 +45,34 @@ const ApprenticeMentalHealth = () => {
           </GlassCard>
         </div>
 
-        {/* The three info cards, visually compact and consistent */}
+        {/* Community Support Card - Now placed right after Buddy card */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <GlassCard className="p-4 md:col-span-3">
+            <Users className="h-8 w-8 mb-2 text-[#FFC900]" />
+            <h2 className="font-bold text-[#FFC900] text-lg mb-1">Community Support</h2>
+            <p className="text-[#FFC900]/80 text-sm mb-3">
+              Connect with peers, join group discussions, and find support through private or open chats.
+            </p>
+            <div className="bg-[#FFC900]/10 border border-[#FFC900]/30 rounded-lg p-3">
+              <p className="text-[#FFC900] text-sm">
+                Chat features coming soon! You'll be able to:
+                <ul className="list-disc list-inside ml-2 mt-1">
+                  <li>Start private conversations</li>
+                  <li>Join open support group chats</li>
+                  <li>Connect with Mental Health Buddies</li>
+                </ul>
+              </p>
+            </div>
+          </GlassCard>
+        </div>
+
+        {/* Existing info cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <GlassCard className="p-4">
             <Heart className="h-8 w-8 mb-2 text-[#FFC900]" />
             <h2 className="font-bold text-[#FFC900] text-lg mb-1">Wellbeing Resources</h2>
             <p className="text-[#FFC900]/80 text-sm">
               Tools for mental resilience and support for apprentices.
-            </p>
-          </GlassCard>
-          
-          <GlassCard className="p-4">
-            <Users className="h-8 w-8 mb-2 text-[#FFC900]" />
-            <h2 className="font-bold text-[#FFC900] text-lg mb-1">Community Support</h2>
-            <p className="text-[#FFC900]/80 text-sm">
-              Join discussion groups and check-in sessions with other apprentices.
             </p>
           </GlassCard>
           
