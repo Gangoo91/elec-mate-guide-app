@@ -12,23 +12,32 @@ const StudyMaterialsPage = () => {
   const { studyType } = useParams();
   const navigate = useNavigate();
 
-  // Handle valid study types
+  // Define valid study types and map URL parameters to content keys
   const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];
   const contentKey = studyType === 'nvq2' ? 'level2' : 
                     studyType === 'nvq3' ? 'level3' : 
                     studyType === 'hnc' ? 'hnc' : null;
 
+  // If studyType exists but isn't valid, redirect to the main materials page
+  React.useEffect(() => {
+    if (studyType && !validStudyTypes.includes(studyType)) {
+      navigate('/apprentices/study-materials');
+    }
+  }, [studyType, navigate]);
+
+  // Render appropriate content based on URL
   const renderContent = () => {
+    // If no studyType is specified, show the grid of study material options
     if (!studyType) {
       return <StudyMaterialsGrid />;
     }
 
-    // Display specific content based on URL parameter
+    // If we have a valid content key, show the specific content
     if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
       return <StudyUnitContent {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} />;
     }
     
-    // If invalid study type, show the grid
+    // Fallback to showing the grid
     return <StudyMaterialsGrid />;
   };
 

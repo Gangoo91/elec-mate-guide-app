@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -17,10 +17,12 @@ interface ResourceCardProps {
 }
 
 const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
+  const navigate = useNavigate();
+  
   // If fullCardLink is provided, we'll handle the click on the card
   const handleCardClick = () => {
     if (fullCardLink) {
-      window.location.href = fullCardLink;
+      navigate(fullCardLink);
     }
   };
 
@@ -39,37 +41,29 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
         <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
           {description}
         </CardDescription>
+        
         {action && (
-          action.href ? (
-            action.href.startsWith("#") ? (
-              <a 
-                href={action.href}
-                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {action.label} →
-              </a>
-            ) : (
+          <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
+            {action.href ? (
               <Link 
                 to={action.href}
-                className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                onClick={(e) => e.stopPropagation()}
+                className="inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
               >
                 {action.label} →
               </Link>
-            )
-          ) : (
-            <Button 
-              variant="ghost" 
-              className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-              onClick={(e) => {
-                e.stopPropagation();
-                action.onClick && action.onClick();
-              }}
-            >
-              {action.label} →
-            </Button>
-          )
+            ) : (
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  action.onClick && action.onClick();
+                }}
+              >
+                {action.label} →
+              </Button>
+            )}
+          </div>
         )}
       </CardContent>
     </Card>
