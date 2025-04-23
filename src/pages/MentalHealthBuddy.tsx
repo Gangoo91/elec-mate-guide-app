@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MateSignupForm } from "@/components/mental-health/MateSignupForm";
+import { BecomeMate } from "@/components/mental-health/BecomeMate";
 import { MatesList } from "@/components/mental-health/MatesList";
 import { useAuth } from "@/hooks/useAuth";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -65,10 +65,10 @@ const MentalHealthBuddy = () => {
                   Become a Mental Health Mate
                 </h3>
                 <p className="text-[#FFC900]/70 mb-6">
-                  Share your experience and support others in the electrical industry.
-                  Your insights and understanding can make a real difference.
+                  By becoming a Mental Health Mate, you're offering to be a supportive listener for others in our community. 
+                  This means being open to receiving messages from fellow professionals who need someone to talk to.
                 </p>
-                <MateSignupForm />
+                <BecomeMate />
               </div>
             </div>
           </TabsContent>
