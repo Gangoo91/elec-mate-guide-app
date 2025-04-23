@@ -12,8 +12,8 @@ const MentalHealth = () => {
     <MainLayout>
       <div className="container py-8">
         <PageHeader
-          title="Mental Health Hub"
-          description="Support and resources tailored for electrical professionals"
+          title="Mental Health Mates"
+          description="Supportive resources and community for electrical professionals"
         />
 
         {/* Mental Health Buddy Section */}
