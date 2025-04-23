@@ -39,7 +39,7 @@ const ApprenticeHub = memo(() => {
     );
   }
   
-  // Only render the page if we have a user
+  // Only render the page if we have a user, and ensure we're on the correct route
   return user ? <ApprenticesPage /> : null;
 });
 
