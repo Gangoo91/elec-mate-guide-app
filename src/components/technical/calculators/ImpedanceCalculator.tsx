@@ -12,9 +12,9 @@ const ImpedanceCalculator = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="space-y-1">
           <Label htmlFor="ze" className="text-[#FFC900]">External Impedance (Ze)</Label>
           <Input 
             id="ze" 
@@ -23,7 +23,7 @@ const ImpedanceCalculator = () => {
             placeholder="Enter Ze value"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1">
           <Label htmlFor="r1" className="text-[#FFC900]">Phase Conductor (R1)</Label>
           <Input 
             id="r1" 
@@ -32,7 +32,7 @@ const ImpedanceCalculator = () => {
             placeholder="Enter R1 value"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1">
           <Label htmlFor="r2" className="text-[#FFC900]">Circuit Protective Conductor (R2)</Label>
           <Input 
             id="r2" 
@@ -41,7 +41,7 @@ const ImpedanceCalculator = () => {
             placeholder="Enter R2 value"
           />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-1">
           <Label htmlFor="xL" className="text-[#FFC900]">Circuit Reactance (XL)</Label>
           <Input 
             id="xL" 
@@ -60,7 +60,7 @@ const ImpedanceCalculator = () => {
       </Button>
 
       {result && (
-        <div className="mt-4 p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+        <div className="mt-2 p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
           <p className="text-[#FFC900]">{result}</p>
         </div>
       )}
