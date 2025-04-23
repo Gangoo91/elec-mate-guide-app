@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calculator, Zap, Circuit, Ruler } from "lucide-react";
+import { Calculator, Zap, CircuitBoard, Ruler } from "lucide-react";
 
 const CalculatorTools = () => {
   const [result, setResult] = useState<string | null>(null);
@@ -39,7 +40,7 @@ const CalculatorTools = () => {
             value="impedance"
             className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
           >
-            <Circuit className="h-4 w-4" />
+            <CircuitBoard className="h-4 w-4" />
             Impedance (Zs)
           </TabsTrigger>
           <TabsTrigger 
