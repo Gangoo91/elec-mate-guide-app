@@ -26,36 +26,32 @@ const CalculatorTools = () => {
 
   return (
     <Card className="w-full max-w-lg mx-auto bg-[#22251e] border-[#FFC900]/20">
-      <CardContent className="p-4">
-        <div className="space-y-4">
-          {/* Header section with title and dropdown */}
-          <div className="flex flex-col gap-2">
-            <h2 className="text-xl font-bold text-[#FFC900]">Calculator Tools</h2>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10">
-                  <Calculator className="mr-2 h-4 w-4" />
-                  {calculators[selectedCalculator].title}
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-full bg-[#22251e] border-[#FFC900]/20">
-                {Object.entries(calculators).map(([key, { title }]) => (
-                  <DropdownMenuItem
-                    key={key}
-                    onClick={() => setSelectedCalculator(key)}
-                    className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
-                  >
-                    {title}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+      <CardContent className="p-4 space-y-2">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-[#FFC900]">Calculator Tools</h2>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="w-auto bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10">
+                <Calculator className="mr-2 h-4 w-4" />
+                {calculators[selectedCalculator].title}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-full bg-[#22251e] border-[#FFC900]/20">
+              {Object.entries(calculators).map(([key, { title }]) => (
+                <DropdownMenuItem
+                  key={key}
+                  onClick={() => setSelectedCalculator(key)}
+                  className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
+                >
+                  {title}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
 
-          {/* Calculator content section */}
-          <div className="animate-fade-in">
-            {calculators[selectedCalculator].component}
-          </div>
+        <div className="animate-fade-in">
+          {calculators[selectedCalculator].component}
         </div>
       </CardContent>
     </Card>
