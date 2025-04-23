@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calculator } from "lucide-react";
 import {
@@ -11,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 import PowerCalculator from './calculators/PowerCalculator';
-import ResistanceInSeriesCalculator from './calculators/ResistanceInSeriesCalculator';
 import ResistanceInParallelCalculator from './calculators/ResistanceInParallelCalculator';
 import VoltageDropCalculator from './calculators/VoltageDropCalculator';
 
@@ -21,7 +19,6 @@ const CalculatorTools = () => {
   const calculators = {
     'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator /> },
     'power': { title: "Power Equations", component: <PowerCalculator /> },
-    'series-resistance': { title: "Series Resistance", component: <ResistanceInSeriesCalculator /> },
     'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator /> },
     'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator /> }
   };

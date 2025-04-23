@@ -47,40 +47,42 @@ const ResistanceInParallelCalculator = () => {
 
       <div className="space-y-4">
         {resistances.map((resistance, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div key={index} className="flex items-center gap-4">
             <div className="flex-1">
               <label className="block text-[#FFC900] mb-2 text-sm">R{index + 1} (Ω)</label>
-              <Input
-                type="number"
-                value={resistance}
-                onChange={(e) => handleResistanceChange(index, e.target.value)}
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] h-10 rounded-md"
-                placeholder={`Enter R${index + 1}`}
-              />
+              <div className="flex gap-4">
+                <Input
+                  type="number"
+                  value={resistance}
+                  onChange={(e) => handleResistanceChange(index, e.target.value)}
+                  className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] h-10 rounded-md flex-1"
+                  placeholder={`Enter R${index + 1}`}
+                />
+                {resistances.length > 2 && (
+                  <Button
+                    onClick={() => removeResistor(index)}
+                    variant="outline"
+                    className="bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20 whitespace-nowrap px-4"
+                  >
+                    Remove
+                  </Button>
+                )}
+              </div>
             </div>
-            {resistances.length > 2 && (
-              <Button
-                onClick={() => removeResistor(index)}
-                variant="outline"
-                className="mt-8 bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20"
-              >
-                Remove
-              </Button>
-            )}
           </div>
         ))}
 
-        <div className="flex gap-2">
+        <div className="flex gap-4 pt-2">
           <Button
             onClick={addResistor}
             variant="outline"
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10 flex-1"
           >
             Add Resistor
           </Button>
           <Button
             onClick={calculateTotalResistance}
-            className="flex-1 bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
+            className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium flex-1"
           >
             Calculate Total
           </Button>
