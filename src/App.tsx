@@ -161,12 +161,12 @@ const App = () => (
               <ScrollToTop />
               <Routes>
                 <Route path="/" element={<RootRedirect />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 
-                <Route path="/dashboard" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/dashboard/*" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />
                 

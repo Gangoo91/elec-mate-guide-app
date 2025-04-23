@@ -10,15 +10,14 @@ const RootRedirect = () => {
   const [redirected, setRedirected] = useState(false);
   
   useEffect(() => {
-    if (loading) return; // Wait until auth state is determined
+    if (loading) return;
     
     if (!redirected) {
-      setRedirected(true); // Prevent multiple redirects
+      setRedirected(true);
       
       if (user) {
-        console.log("RootRedirect - User authenticated, redirecting to apprentice-hub");
-        localStorage.setItem('preferredRole', 'apprentice');
-        navigate('/apprentice-hub', { replace: true });
+        console.log("RootRedirect - User authenticated, redirecting to dashboard");
+        navigate('/dashboard', { replace: true });
       } else {
         console.log("RootRedirect - No authenticated user, redirecting to welcome");
         navigate('/welcome', { replace: true });
