@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -32,9 +31,11 @@ import NVQ3StudyMaterialsPage from "./pages/NVQ3StudyMaterialsPage";
 import HNCStudyMaterialsPage from "./pages/HNCStudyMaterialsPage";
 import PracticeExamsPage from "./pages/PracticeExamsPage";
 import CertificationsPage from "./pages/CertificationsPage";
+import StressManagement from "./pages/StressManagement";
+import SupportGroups from "./pages/SupportGroups";
+import ProfessionalResources from "./pages/ProfessionalResources";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-// Create QueryClient with optimized settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -45,7 +46,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Authentication wrapper for routes
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   
@@ -65,12 +65,10 @@ const App = () => (
             <Toaster />
             <BrowserRouter>
               <Routes>
-                {/* Homepage routes - wrap Welcome in AuthWrapper to redirect authenticated users */}
                 <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/index" element={<Navigate to="/" replace />} />
                 
-                {/* All other routes */}
                 <Route path="/apprentices" element={<ApprenticesPage />} />
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
                 <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
@@ -81,24 +79,24 @@ const App = () => (
                 <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
                 <Route path="/apprentices/certifications" element={<CertificationsPage />} />
 
-                {/* Electricians routes */}
                 <Route path="/electricians" element={<ElectriciansPage />} />
                 <Route path="/electricians/technical-tools" element={<NotFound />} />
                 <Route path="/electricians/toolbox-talk" element={<NotFound />} />
                 <Route path="/electricians/development" element={<NotFound />} />
                 
-                {/* Employers routes */}
                 <Route path="/employers" element={<EmployersPage />} />
                 
-                {/* Shared routes */}
                 <Route path="/training" element={<Navigate to="/" replace />} />
                 <Route path="/certification" element={<Navigate to="/" replace />} />
                 <Route path="/tools" element={<Navigate to="/" replace />} />
                 <Route path="/mental-health" element={<MentalHealth />} />
-                <Route path="/mentorship" element={<Mentorship />} />
+                <Route path="/mental-health/stress-management" element={<StressManagement />} />
+                <Route path="/mental-health/support-groups" element={<SupportGroups />} />
+                <Route path="/mental-health/professional-resources" element={<ProfessionalResources />} />
+                <Route path="/mental-health/buddy" element={<NotFound />} />
+                
                 <Route path="/faq" element={<FAQ />} />
                 
-                {/* Auth and account routes */}
                 <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
                 <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

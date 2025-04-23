@@ -21,7 +21,10 @@ interface ResourceCardProps {
 const ResourceCard = ({ title, description, icon, children, action, fullCardLink }: ResourceCardProps) => {
   // If fullCardLink is provided, wrap the entire card content in a Link
   const CardWrapper = fullCardLink ? Link : React.Fragment;
-  const wrapperProps = fullCardLink ? { to: fullCardLink, className: "block h-full" } : {};
+  const wrapperProps = fullCardLink ? { 
+    to: fullCardLink, 
+    className: "block h-full cursor-pointer no-underline" 
+  } : {};
 
   return (
     <CardWrapper {...wrapperProps}>
@@ -38,7 +41,7 @@ const ResourceCard = ({ title, description, icon, children, action, fullCardLink
         <CardContent className="flex flex-col justify-between flex-grow pt-2">
           {children && <div className="mb-4">{children}</div>}
           
-          {action && (
+          {action && !fullCardLink && (
             action.href ? (
               action.href.startsWith("#") ? (
                 <a 
