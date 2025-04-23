@@ -19,27 +19,26 @@ const MentalHealth = () => {
 
         {/* Mental Health Mate Section */}
         <div className="mb-12">
-          <Card className="border-[#FFC900]/20 bg-[#22251e] hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-3 text-[#FFC900]">
-                <MessageSquare className="h-7 w-7 text-[#FFC900]" />
-                Mental Health Mate
-              </CardTitle>
-              <CardDescription className="text-[#FFC900]/70">
-                Connect with a supportive colleague who's ready to listen and provide peer support
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-4">
-              <Button 
-                className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90"
-                asChild
-              >
-                <Link to="/mental-health/buddy">
+          <Link to="/mental-health/buddy" className="block w-full">
+            <Card className="border-[#FFC900]/20 bg-[#22251e] hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer">
+              <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-3 text-[#FFC900]">
+                  <MessageSquare className="h-7 w-7 text-[#FFC900]" />
+                  Mental Health Mate
+                </CardTitle>
+                <CardDescription className="text-[#FFC900]/70">
+                  Connect with a supportive colleague who's ready to listen and provide peer support
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <Button 
+                  className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90"
+                >
                   Find a Mental Health Mate
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+                </Button>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
         {/* Resource Cards Grid */}
