@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [setupComplete, setSetupComplete] = useState(false);
 
   // Function to refresh the session manually
   const refreshSession = useCallback(async () => {
@@ -54,12 +55,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    console.log("Auth provider initializing");
+    if (setupComplete) return;
     
-    // Set loading state initially
+    console.log("Auth provider initializing");
     setLoading(true);
     
-    // Set up the auth state change listener first for future changes
+    // Set up auth state change listener - more reliable order
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, currentSession) => {
       console.log("Auth state changed:", event);
       
@@ -76,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     });
 
-    // Check for existing session
+    // Check for existing session - happens after listener setup
     const initialSessionCheck = async () => {
       try {
         const { data } = await supabase.auth.getSession();
@@ -103,6 +104,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         sessionStorage.removeItem('userAuthenticated');
       } finally {
         setLoading(false);
+        setSetupComplete(true);
       }
     };
     
@@ -113,6 +115,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (loading) {
         console.log("Auth loading timeout triggered");
         setLoading(false);
+        setSetupComplete(true);
       }
     }, 2000);
 
@@ -120,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       subscription.unsubscribe();
       clearTimeout(safetyTimer);
     };
-  }, []);
+  }, [setupComplete]);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, refreshSession }}>

@@ -10,18 +10,26 @@ import { Loader2 } from "lucide-react";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Login = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const { setPreferredRole } = useUserPreferences();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
   const [redirectAttempted, setRedirectAttempted] = useState(false);
 
-  // Redirect authenticated users to apprentice hub
+  // Refresh session on mount to ensure we have the latest auth state
+  useEffect(() => {
+    refreshSession();
+  }, [refreshSession]);
+
+  // Redirect authenticated users to apprentice hub - with improved reliability
   useEffect(() => {
     if (!loading && user && !redirectAttempted) {
       setRedirectAttempted(true);
       setIsRedirecting(true);
       console.log("Login - User authenticated, redirecting to apprentice hub");
+      
+      // Refresh preferences to ensure we have the latest
+      refreshPreferences();
       
       // Set preferred role to apprentice
       localStorage.setItem('preferredRole', 'apprentice');
@@ -34,7 +42,7 @@ const Login = () => {
       
       return () => clearTimeout(redirectTimeout);
     }
-  }, [user, loading, navigate, setPreferredRole, redirectAttempted]);
+  }, [user, loading, navigate, setPreferredRole, redirectAttempted, refreshPreferences]);
 
   // Memoize the logo component 
   const MemoizedLogo = memo(() => (

@@ -73,6 +73,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && user && isLoaded && !redirectAttempted) {
+      console.log("PublicRoute - User authenticated, redirecting to apprentice-hub");
       setRedirectAttempted(true);
       navigate('/apprentice-hub', { replace: true });
     }
@@ -95,15 +96,14 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const [authChecked, setAuthChecked] = useState(false);
   
   useEffect(() => {
-    setAuthChecked(true);
-  }, []);
-  
-  useEffect(() => {
-    if (authChecked && !loading && !user) {
-      console.log("PrivateRoute - No user found, redirecting to login");
-      navigate('/login', { replace: true });
+    if (!loading) {
+      setAuthChecked(true);
+      if (!user) {
+        console.log("PrivateRoute - No user found, redirecting to login");
+        navigate('/login', { replace: true });
+      }
     }
-  }, [user, loading, navigate, authChecked]);
+  }, [user, loading, navigate]);
   
   if (loading || !authChecked) {
     return (
@@ -119,7 +119,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 const RootRedirect = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const { setPreferredRole } = useUserPreferences();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
   const [redirectHandled, setRedirectHandled] = useState(false);
   
   useEffect(() => {
@@ -127,16 +127,19 @@ const RootRedirect = () => {
       setRedirectHandled(true);
       
       if (user) {
+        console.log("RootRedirect - User authenticated, redirecting to apprentice-hub");
+        refreshPreferences();
         localStorage.setItem('preferredRole', 'apprentice');
         setPreferredRole('apprentice');
-        console.log("RootRedirect - User authenticated, redirecting to apprentice-hub");
-        navigate('/apprentice-hub', { replace: true });
+        setTimeout(() => {
+          navigate('/apprentice-hub', { replace: true });
+        }, 100);
       } else {
         console.log("RootRedirect - No authenticated user, redirecting to welcome");
         navigate('/welcome', { replace: true });
       }
     }
-  }, [loading, user, navigate, setPreferredRole, redirectHandled]);
+  }, [loading, user, navigate, setPreferredRole, redirectHandled, refreshPreferences]);
   
   return (
     <div className="flex items-center justify-center h-screen bg-[#151812]">

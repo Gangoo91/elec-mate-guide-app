@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
 import { useNavigate } from "react-router-dom";
@@ -12,20 +12,23 @@ const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
   const { setPreferredRole } = useUserPreferences();
+  const [initialized, setInitialized] = useState(false);
   
-  // Set apprentice role on component mount
+  // Set apprentice role on component mount - only once
   useEffect(() => {
     console.log("ApprenticeHub - Component mounted");
-    
-    // Set role to apprentice
-    localStorage.setItem('preferredRole', 'apprentice');
-    setPreferredRole('apprentice');
-    
-    // Update document title
-    document.title = "Apprentice Hub";
-  }, [setPreferredRole]);
+    if (!initialized) {
+      // Set role to apprentice
+      localStorage.setItem('preferredRole', 'apprentice');
+      setPreferredRole('apprentice');
+      
+      // Update document title
+      document.title = "Apprentice Hub";
+      setInitialized(true);
+    }
+  }, [setPreferredRole, initialized]);
   
-  // Redirect if not authenticated
+  // Simplified auth check to prevent loops
   useEffect(() => {
     if (!loading && !user) {
       console.log("ApprenticeHub - No user found, redirecting to login");
@@ -33,7 +36,7 @@ const ApprenticeHub = memo(() => {
     }
   }, [user, loading, navigate]);
   
-  // Show loading state
+  // Show loading state only when actually loading auth
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
