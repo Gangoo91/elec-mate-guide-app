@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -41,6 +40,8 @@ import Unit203Page from "./pages/study/nvq2/units/Unit203Page";
 import Unit204Page from "./pages/study/nvq2/units/Unit204Page";
 import ApprenticeHub from "./pages/ApprenticeHub";
 import ApprenticeMentalHealth from "./pages/ApprenticeMentalHealth";
+import InteractiveLessonsPage from "./pages/study/nvq2/InteractiveLessonsPage";
+import InteractiveLessonDetailPage from "./pages/study/nvq2/InteractiveLessonDetailPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -207,6 +208,8 @@ const App = () => (
                 <Route path="/training" element={<Navigate to="/apprentices/learning-hub" replace />} />
                 <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
                 <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
+                <Route path="/apprentices/study-materials/nvq2/interactive-lessons" element={<PrivateRoute><InteractiveLessonsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/interactive-lessons/:lessonId" element={<PrivateRoute><InteractiveLessonDetailPage /></PrivateRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
