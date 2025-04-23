@@ -8,13 +8,15 @@ import { toast } from "sonner";
 import { CircuitBoard } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const WiringDiagramGenerator: React.FC = () => {
   const [prompt, setPrompt] = useState('');
-  const [diagramType, setDiagramType] = useState('residential');
+  const [diagramType, setDiagramType] = useState('domestic');
   const [response, setResponse] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { handleError } = useErrorHandler();
 
   const handleGenerateDiagram = async () => {
     if (!prompt.trim()) {
@@ -23,7 +25,11 @@ const WiringDiagramGenerator: React.FC = () => {
     }
 
     setIsLoading(true);
+    setResponse('');
+    setImageUrl('');
+    
     try {
+      console.log("Sending request to wiring-diagram-generator with prompt:", prompt);
       const { data, error } = await supabase.functions.invoke('wiring-diagram-generator', {
         body: JSON.stringify({ 
           prompt, 
@@ -31,14 +37,22 @@ const WiringDiagramGenerator: React.FC = () => {
         })
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
+
+      if (!data || (!data.response && !data.imageUrl)) {
+        console.error("Invalid response format:", data);
+        throw new Error("Invalid response received from diagram generator");
+      }
 
       setResponse(data.response);
       setImageUrl(data.imageUrl || '');
-      toast.success("Wiring diagram generated");
+      toast.success("Wiring diagram generated successfully");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to generate wiring diagram");
+      console.error("Error in WiringDiagramGenerator:", err);
+      handleError(err, "Failed to generate wiring diagram");
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +76,7 @@ const WiringDiagramGenerator: React.FC = () => {
                 <SelectValue placeholder="Select diagram type" />
               </SelectTrigger>
               <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-                <SelectItem value="residential" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Residential Wiring</SelectItem>
+                <SelectItem value="domestic" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Domestic Wiring</SelectItem>
                 <SelectItem value="commercial" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Commercial Wiring</SelectItem>
                 <SelectItem value="industrial" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Industrial Wiring</SelectItem>
                 <SelectItem value="circuit" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Circuit Diagram</SelectItem>
