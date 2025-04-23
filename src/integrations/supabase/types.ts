@@ -74,28 +74,40 @@ export type Database = {
       }
       mental_health_resources: {
         Row: {
+          benefits: string | null
           created_at: string | null
           description: string
           id: string
+          reference_url: string | null
           resource_type: string
+          steps: Json | null
+          tips: string | null
           title: string
           updated_at: string | null
           url: string | null
         }
         Insert: {
+          benefits?: string | null
           created_at?: string | null
           description: string
           id?: string
+          reference_url?: string | null
           resource_type: string
+          steps?: Json | null
+          tips?: string | null
           title: string
           updated_at?: string | null
           url?: string | null
         }
         Update: {
+          benefits?: string | null
           created_at?: string | null
           description?: string
           id?: string
+          reference_url?: string | null
           resource_type?: string
+          steps?: Json | null
+          tips?: string | null
           title?: string
           updated_at?: string | null
           url?: string | null
