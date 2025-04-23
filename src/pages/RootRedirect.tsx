@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const RootRedirect = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
   const [redirected, setRedirected] = useState(false);
   
   useEffect(() => {
@@ -17,13 +19,16 @@ const RootRedirect = () => {
       
       if (user) {
         console.log("RootRedirect - User authenticated, redirecting to dashboard");
+        refreshPreferences();
+        localStorage.setItem('preferredRole', 'apprentice');
+        setPreferredRole('apprentice');
         navigate('/dashboard', { replace: true });
       } else {
         console.log("RootRedirect - No authenticated user, redirecting to welcome");
         navigate('/welcome', { replace: true });
       }
     }
-  }, [user, loading, navigate, redirected]);
+  }, [user, loading, navigate, redirected, setPreferredRole, refreshPreferences]);
   
   return (
     <div className="flex items-center justify-center h-screen bg-[#151812]">
