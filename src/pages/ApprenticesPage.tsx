@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -99,10 +100,15 @@ const ApprenticesPage = () => {
   const [mhModalOpen, setMhModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  // Ensure we set the role on component mount and refresh the session
   useEffect(() => {
-    console.log("ApprenticesPage - Setting preferredRole to apprentice");
-    setPreferredRole('apprentice');
-    refreshSession();
+    const initPage = async () => {
+      console.log("ApprenticesPage - Setting preferredRole to apprentice");
+      setPreferredRole('apprentice');
+      await refreshSession();
+    };
+    
+    initPage();
   }, [refreshSession, setPreferredRole]);
 
   const apprenticeResources = [
@@ -145,10 +151,11 @@ const ApprenticesPage = () => {
   const handleResourceCardClick = (resource: any) => {
     console.log("Resource card clicked:", resource.title);
     
+    // Always ensure the role is set when navigating
     setPreferredRole('apprentice');
     
     if (resource.fullCardLink) {
-      navigate(resource.fullCardLink, { replace: true });
+      navigate(resource.fullCardLink);
     } else if (resource.action?.onClick) {
       resource.action.onClick();
     }

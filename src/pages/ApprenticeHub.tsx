@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
   const { refreshSession, user, loading } = useAuth();
-  const { setPreferredRole } = useUserPreferences();
+  const { setPreferredRole, preferences } = useUserPreferences();
+  const [isInitialized, setIsInitialized] = useState(false);
   
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
   useEffect(() => {
@@ -22,6 +23,7 @@ const ApprenticeHub = memo(() => {
       // IMPORTANT: Always set role to apprentice when on this page, even after reloads
       console.log("ApprenticeHub - Setting preferredRole to apprentice");
       setPreferredRole('apprentice');
+      setIsInitialized(true);
     };
     
     initApprenticeHub();
@@ -29,14 +31,14 @@ const ApprenticeHub = memo(() => {
   
   // Additional check for user authentication
   useEffect(() => {
-    if (!loading && !user) {
+    if (isInitialized && !loading && !user) {
       console.log("ApprenticeHub - No user found, redirecting to login");
       navigate("/login", { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, isInitialized]);
   
   // Show loading state if auth is still being checked
-  if (loading) {
+  if (loading || !isInitialized) {
     return (
       <div className="flex items-center justify-center h-screen">
         <LoadingSpinner size="lg" message="Loading Apprentice Hub..." />

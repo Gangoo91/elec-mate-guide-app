@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
@@ -20,7 +20,8 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
     refreshSession();
   }, [refreshSession]);
   
-  const handleLogoClick = (e: React.MouseEvent<HTMLImageElement>) => {
+  // Memoize the navigation logic to prevent unnecessary re-renders
+  const handleLogoClick = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
     if (onClick) {
       // Use the provided onClick handler if available
       onClick(e);
@@ -36,16 +37,16 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
       
       if (preferredRole === 'apprentice') {
         console.log("Logo - Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub');
+        navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("Logo - Navigating to dashboard (no specific role preference)");
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       }
     } else {
       console.log("Logo - Not authenticated, navigating to welcome");
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
-  };
+  }, [navigate, user, preferences.preferredRole, onClick]);
 
   return (
     <img

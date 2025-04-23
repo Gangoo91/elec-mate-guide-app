@@ -12,6 +12,7 @@ export const useUserPreferences = () => {
   const [preferences, setPreferences] = useState<UserPreferences>({
     preferredRole: null,
   });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load preferences from localStorage on mount
   useEffect(() => {
@@ -20,13 +21,14 @@ export const useUserPreferences = () => {
         const storedPreferredRole = localStorage.getItem('preferredRole');
         console.log("Loading preferences from localStorage:", storedPreferredRole);
         
-        if (storedPreferredRole) {
-          setPreferences({
-            preferredRole: storedPreferredRole,
-          });
-        }
+        setPreferences({
+          preferredRole: storedPreferredRole,
+        });
+        
+        setIsLoaded(true);
       } catch (error) {
         console.error("Error accessing localStorage:", error);
+        setIsLoaded(true);
       }
     };
     
@@ -43,12 +45,24 @@ export const useUserPreferences = () => {
       }
     };
     
-    // Add event listener for cross-tab changes
+    // Listen for custom events for same-window updates
+    const handlePreferredRoleChange = () => {
+      const newRole = localStorage.getItem('preferredRole');
+      console.log("Custom event detected for preferredRole:", newRole);
+      setPreferences(prev => ({
+        ...prev,
+        preferredRole: newRole,
+      }));
+    };
+    
+    // Add event listeners
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('preferredRoleChange', handlePreferredRoleChange);
     
     // Return cleanup function
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('preferredRoleChange', handlePreferredRoleChange);
     };
   }, []);
 
@@ -79,5 +93,6 @@ export const useUserPreferences = () => {
   return {
     preferences,
     setPreferredRole,
+    isLoaded,
   };
 };
