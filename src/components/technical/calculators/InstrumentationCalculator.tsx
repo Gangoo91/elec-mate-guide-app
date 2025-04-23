@@ -1,14 +1,84 @@
+
 import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 const InstrumentationCalculator = () => {
+  const { toast } = useToast();
+  const [instrumentType, setInstrumentType] = useState<string>('');
+  const [inputRange, setInputRange] = useState<string>('');
+  const [measuredValue, setMeasuredValue] = useState<string>('');
+  const [scaleMin, setScaleMin] = useState<string>('');
+  const [scaleMax, setScaleMax] = useState<string>('');
   const [result, setResult] = useState<string | null>(null);
 
   const calculateResult = () => {
-    setResult("Calculation completed successfully!");
+    // Validate inputs
+    if (!instrumentType || !inputRange || !measuredValue || !scaleMin || !scaleMax) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all fields to perform the calculation.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const measured = parseFloat(measuredValue);
+    const min = parseFloat(scaleMin);
+    const max = parseFloat(scaleMax);
+
+    if (isNaN(measured) || isNaN(min) || isNaN(max)) {
+      toast({
+        title: "Invalid Input",
+        description: "Please enter valid numbers for measured value, scale minimum and maximum.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Calculate based on input range
+    let calculatedValue: number;
+    let unit = '';
+
+    switch (instrumentType) {
+      case 'pressure':
+        unit = 'bar';
+        break;
+      case 'temperature':
+        unit = '°C';
+        break;
+      case 'flow':
+        unit = 'L/min';
+        break;
+      case 'level':
+        unit = 'm';
+        break;
+      default:
+        unit = 'units';
+    }
+
+    if (inputRange === '4-20') {
+      // 4-20mA calculation
+      calculatedValue = ((measured - 4) / 16) * (max - min) + min;
+    } else if (inputRange === '0-20') {
+      // 0-20mA calculation
+      calculatedValue = (measured / 20) * (max - min) + min;
+    } else if (inputRange === '0-10') {
+      // 0-10V calculation
+      calculatedValue = (measured / 10) * (max - min) + min;
+    } else {
+      toast({
+        title: "Calculation Error",
+        description: "Invalid input range selected.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setResult(`Calculated ${instrumentType} value: ${calculatedValue.toFixed(2)} ${unit}`);
   };
 
   return (
@@ -16,7 +86,7 @@ const InstrumentationCalculator = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="instrument-type" className="text-[#FFC900]">Instrument Type</Label>
-          <Select>
+          <Select onValueChange={setInstrumentType} value={instrumentType}>
             <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
@@ -30,7 +100,7 @@ const InstrumentationCalculator = () => {
         </div>
         <div className="space-y-2">
           <Label htmlFor="input-range" className="text-[#FFC900]">Input Range (mA)</Label>
-          <Select>
+          <Select onValueChange={setInputRange} value={inputRange}>
             <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
               <SelectValue placeholder="Select range" />
             </SelectTrigger>
@@ -48,6 +118,8 @@ const InstrumentationCalculator = () => {
             type="number" 
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
             placeholder="Enter value"
+            value={measuredValue}
+            onChange={(e) => setMeasuredValue(e.target.value)}
           />
         </div>
         <div className="space-y-2">
@@ -57,6 +129,8 @@ const InstrumentationCalculator = () => {
             type="number" 
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
             placeholder="Enter minimum"
+            value={scaleMin}
+            onChange={(e) => setScaleMin(e.target.value)}
           />
         </div>
         <div className="space-y-2">
@@ -66,6 +140,8 @@ const InstrumentationCalculator = () => {
             type="number" 
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
             placeholder="Enter maximum"
+            value={scaleMax}
+            onChange={(e) => setScaleMax(e.target.value)}
           />
         </div>
       </div>
