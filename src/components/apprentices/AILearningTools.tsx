@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lightbulb } from "lucide-react";
 import AIDiagnosticAssistant from "./AIDiagnosticAssistant";
 import RegulationsAssistant from "./RegulationsAssistant";
+import CalculatorTools from "@/components/technical/CalculatorTools";
 
 const AILearningTools = () => {
   return (
@@ -15,6 +16,11 @@ const AILearningTools = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        <Card className="bg-[#22251e] border-[#FFC900]/20">
+          <CardContent>
+            <CalculatorTools />
+          </CardContent>
+        </Card>
         <AIDiagnosticAssistant />
         <RegulationsAssistant />
       </CardContent>
