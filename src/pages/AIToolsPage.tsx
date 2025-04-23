@@ -6,7 +6,7 @@ import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 import AIDiagnosticAssistant from "@/components/apprentices/AIDiagnosticAssistant";
 import RegulationsFinderChecker from "@/components/apprentices/RegulationsFinderChecker";
-import WiringDiagramGenerator from "@/components/apprentices/WiringDiagramGenerator";
+import HowToGenerator from "@/components/apprentices/HowToGenerator";
 import SafetyChecklistGenerator from "@/components/apprentices/SafetyChecklistGenerator";
 import TechnicalSpecsAnalyzer from "@/components/apprentices/TechnicalSpecsAnalyzer";
 
@@ -17,7 +17,7 @@ const AIToolsPage = () => {
         <BackButton />
         <PageHeader 
           title="AI Learning Tools"
-          description="Access our suite of AI-powered assistants to help with electrical diagnostics, regulatory compliance, and technical planning."
+          description="Access our suite of AI-powered assistants to help with job guidance, technical planning, and professional insights."
           hideBackButton={true}
         />
         
@@ -36,7 +36,7 @@ const AIToolsPage = () => {
 
           <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
             <CardContent className="p-0">
-              <WiringDiagramGenerator />
+              <HowToGenerator />
             </CardContent>
           </Card>
 

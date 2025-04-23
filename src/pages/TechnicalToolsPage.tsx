@@ -1,11 +1,10 @@
-
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RegulationsFinderChecker from "@/components/apprentices/RegulationsFinderChecker";
 import TechnicalSpecsAnalyzer from "@/components/apprentices/TechnicalSpecsAnalyzer";
-import WiringDiagramGenerator from "@/components/apprentices/WiringDiagramGenerator";
-import { Calculator, Ruler, CircuitBoard } from "lucide-react";
+import HowToGenerator from "@/components/apprentices/HowToGenerator";
+import { Calculator, Ruler, BookOpen } from "lucide-react";
 import CalculatorTools from "@/components/technical/CalculatorTools";
 
 const TechnicalToolsPage = () => {
@@ -16,7 +15,7 @@ const TechnicalToolsPage = () => {
           Technical Tools
         </h1>
         <p className="text-[#FFC900]/80 mb-8 max-w-3xl">
-          Professional tools and AI-powered features to support your electrical work. From calculations to regulations checking, access everything you need for efficient and compliant installations.
+          Professional tools and AI-powered features to support your technical work. From calculations to job guides, access everything you need for efficient and informed tasks.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -36,9 +35,9 @@ const TechnicalToolsPage = () => {
             <RegulationsFinderChecker />
           </Card>
 
-          {/* Wiring Diagram Generator */}
+          {/* How to Generator */}
           <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <WiringDiagramGenerator />
+            <HowToGenerator />
           </Card>
 
           {/* Technical Specifications Analyser */}
