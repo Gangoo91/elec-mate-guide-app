@@ -11,25 +11,18 @@ type MobileMenuProps = {
 
 const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
   const { user } = useAuth();
-  const { setPreferredRole, preferences } = useUserPreferences();
+  const { setPreferredRole } = useUserPreferences();
 
+  // Updated to always use apprentice-hub instead of dashboard
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
     if (user) {
-      const preferredRole = preferences.preferredRole;
-      console.log("Mobile menu: Home clicked, preferredRole:", preferredRole);
-      
-      if (preferredRole === 'apprentice') {
-        console.log("Mobile menu: Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub');
-      } else {
-        console.log("Mobile menu: Navigating to dashboard (no specific role preference)");
-        setPreferredRole(null); // Ensure preference is cleared
-        navigate('/dashboard');
-      }
+      console.log("Mobile menu: Home clicked, navigating to apprentice-hub");
+      setPreferredRole('apprentice');
+      navigate('/apprentice-hub', { replace: true });
     } else {
-      navigate('/welcome');
+      navigate('/welcome', { replace: true });
     }
   };
 
@@ -37,40 +30,27 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
     e.preventDefault();
     console.log("Mobile menu: Apprentice Hub clicked, setting role");
     setPreferredRole('apprentice');
-    navigate('/apprentice-hub');
-  };
-
-  const handleDashboardClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
-    setPreferredRole(null);
-    navigate('/dashboard');
+    navigate('/apprentice-hub', { replace: true });
   };
 
   return (
     <div className="md:hidden border-t border-[#FFC900]/20 bg-[#151812] px-4 py-2 pb-4">
       <nav className="flex flex-col space-y-3">
-        <a 
-          href="#" 
-          onClick={handleDashboardClick}
-          className={`text-lg py-2 px-4 rounded-lg font-medium ${
-            isActive("/dashboard") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
-          }`}
-        >
-          Dashboard
-        </a>
+        {/* Remove dashboard link and replace with apprentice hub */}
+        {user && (
+          <a
+            href="#"
+            onClick={handleApprenticeHubClick}
+            className={`text-lg py-2 px-4 rounded-lg font-medium ${
+              isActive("/apprentice-hub") || location.pathname.includes('/apprentices/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+            }`}
+          >
+            Apprentice Hub
+          </a>
+        )}
 
         {user ? (
           <>
-            <a
-              href="#"
-              onClick={handleApprenticeHubClick}
-              className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/apprentice-hub") || location.pathname.includes('/apprentices/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
-              }`}
-            >
-              Apprentice Hub
-            </a>
             <a
               href="#"
               onClick={(e) => {

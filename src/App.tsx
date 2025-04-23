@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -129,22 +128,25 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
-// Simplified RootRedirect component that immediately redirects to appropriate page
 const RootRedirect = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false);
   
   useEffect(() => {
-    if (!loading) {
+    // Only attempt redirect once when loading completes
+    if (!loading && !redirected) {
+      setRedirected(true);
+      
       if (user) {
-        // User is logged in, redirect to apprentice hub
+        console.log("RootRedirect - User found, redirecting to apprentice-hub");
         navigate('/apprentice-hub', { replace: true });
       } else {
-        // User is not logged in, redirect to welcome page
+        console.log("RootRedirect - No user, redirecting to welcome");
         navigate('/welcome', { replace: true });
       }
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, redirected]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };

@@ -10,7 +10,7 @@ type UserPreferences = {
  */
 export const useUserPreferences = () => {
   const [preferences, setPreferences] = useState<UserPreferences>({
-    preferredRole: null,
+    preferredRole: 'apprentice', // Default to apprentice role
   });
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -18,16 +18,25 @@ export const useUserPreferences = () => {
   useEffect(() => {
     const loadPreferences = () => {
       try {
-        const storedPreferredRole = localStorage.getItem('preferredRole');
+        const storedPreferredRole = localStorage.getItem('preferredRole') || 'apprentice'; // Default to apprentice if not set
         console.log("Loading preferences from localStorage:", storedPreferredRole);
         
         setPreferences({
           preferredRole: storedPreferredRole,
         });
         
+        // Ensure there's always at least a default role
+        if (!storedPreferredRole) {
+          localStorage.setItem('preferredRole', 'apprentice');
+        }
+        
         setIsLoaded(true);
       } catch (error) {
         console.error("Error accessing localStorage:", error);
+        // Set default preferences if localStorage fails
+        setPreferences({
+          preferredRole: 'apprentice',
+        });
         setIsLoaded(true);
       }
     };
@@ -40,7 +49,7 @@ export const useUserPreferences = () => {
         console.log("Storage event detected for preferredRole:", e.newValue);
         setPreferences(prev => ({
           ...prev,
-          preferredRole: e.newValue,
+          preferredRole: e.newValue || 'apprentice',
         }));
       }
     };
@@ -48,7 +57,7 @@ export const useUserPreferences = () => {
     // Listen for custom events for same-window updates
     const handlePreferredRoleChange = () => {
       try {
-        const newRole = localStorage.getItem('preferredRole');
+        const newRole = localStorage.getItem('preferredRole') || 'apprentice';
         console.log("Custom event detected for preferredRole:", newRole);
         setPreferences(prev => ({
           ...prev,
@@ -88,19 +97,16 @@ export const useUserPreferences = () => {
     try {
       console.log("Setting preferredRole:", role);
       
-      if (role) {
-        localStorage.setItem('preferredRole', role);
-        
-        // Set a backup cookie as well
-        document.cookie = `preferredRole=${role || ''}; path=/; max-age=3600; SameSite=Strict`;
-      } else {
-        localStorage.removeItem('preferredRole');
-        document.cookie = `preferredRole=; path=/; max-age=0; SameSite=Strict`;
-      }
+      const finalRole = role || 'apprentice'; // Default to apprentice if null is passed
+      
+      localStorage.setItem('preferredRole', finalRole);
+      
+      // Set a backup cookie as well
+      document.cookie = `preferredRole=${finalRole}; path=/; max-age=3600; SameSite=Strict`;
       
       setPreferences(prev => ({
         ...prev,
-        preferredRole: role,
+        preferredRole: finalRole,
       }));
       
       // Broadcast a custom event for same-window updates
@@ -114,7 +120,7 @@ export const useUserPreferences = () => {
   // Additional method to force refresh preferences from localStorage
   const refreshPreferences = useCallback(() => {
     try {
-      const storedPreferredRole = localStorage.getItem('preferredRole');
+      const storedPreferredRole = localStorage.getItem('preferredRole') || 'apprentice';
       console.log("Refreshing preferences from localStorage:", storedPreferredRole);
       
       setPreferences({
@@ -128,17 +134,25 @@ export const useUserPreferences = () => {
         const cookies = document.cookie.split(';');
         const roleCookie = cookies.find(c => c.trim().startsWith('preferredRole='));
         if (roleCookie) {
-          const roleValue = roleCookie.split('=')[1].trim();
-          if (roleValue) {
-            console.log("Recovering preferredRole from cookie:", roleValue);
-            localStorage.setItem('preferredRole', roleValue);
-            setPreferences({
-              preferredRole: roleValue,
-            });
-          }
+          const roleValue = roleCookie.split('=')[1].trim() || 'apprentice';
+          console.log("Recovering preferredRole from cookie:", roleValue);
+          localStorage.setItem('preferredRole', roleValue);
+          setPreferences({
+            preferredRole: roleValue,
+          });
+        } else {
+          // If no cookie, set to default
+          localStorage.setItem('preferredRole', 'apprentice');
+          setPreferences({
+            preferredRole: 'apprentice',
+          });
         }
       } catch (e) {
         console.error("Error recovering from cookie:", e);
+        // Final fallback
+        setPreferences({
+          preferredRole: 'apprentice',
+        });
       }
     }
   }, []);

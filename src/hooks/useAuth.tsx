@@ -43,6 +43,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Error refreshing session:", error);
+      // Clear user data on error to ensure we don't have stale data
+      setUser(null);
+      setSession(null);
+      sessionStorage.removeItem('userAuthData');
+      sessionStorage.removeItem('userAuthenticated');
     } finally {
       setLoading(false);
     }
@@ -103,6 +108,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       } catch (e) {
         console.error("Session check error:", e);
+        // Clear user data on error to ensure we don't have stale data
+        setUser(null);
+        setSession(null);
+        sessionStorage.removeItem('userAuthData');
+        sessionStorage.removeItem('userAuthenticated');
       } finally {
         setLoading(false);
       }
