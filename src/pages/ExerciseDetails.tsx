@@ -9,6 +9,27 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import ExerciseSteps from "@/components/stress/ExerciseSteps";
 import ExerciseInfo from "@/components/stress/ExerciseInfo";
 
+// Define the Step interface to match what we expect from the database
+interface Step {
+  step: number;
+  instruction: string;
+}
+
+interface Exercise {
+  id: string;
+  title: string;
+  description: string;
+  resource_type: string;
+  steps: Step[];
+  benefits: string;
+  tips: string;
+  duration_minutes: number;
+  reference_url?: string;
+  created_at: string;
+  updated_at: string;
+  url?: string;
+}
+
 const ExerciseDetails = () => {
   const { id } = useParams();
 
@@ -22,7 +43,18 @@ const ExerciseDetails = () => {
         .single();
 
       if (error) throw error;
-      return data;
+      
+      // Parse the steps JSON if it's a string
+      if (data && typeof data.steps === 'string') {
+        data.steps = JSON.parse(data.steps);
+      }
+      
+      // Add a fallback for duration_minutes if it doesn't exist
+      if (data && !data.duration_minutes) {
+        data.duration_minutes = 5; // Default to 5 minutes
+      }
+      
+      return data as Exercise;
     },
   });
 

@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-interface Step {
+export interface Step {
   step: number;
   instruction: string;
 }
@@ -19,18 +19,22 @@ const ExerciseSteps = ({ steps }: ExerciseStepsProps) => {
         <CardTitle className="text-[#FFC900]">Step by Step Guide</CardTitle>
       </CardHeader>
       <CardContent>
-        <Accordion type="single" collapsible className="w-full">
-          {steps?.map((step) => (
-            <AccordionItem key={step.step} value={`step-${step.step}`}>
-              <AccordionTrigger className="text-[#FFC900]">
-                Step {step.step}
-              </AccordionTrigger>
-              <AccordionContent className="text-[#FFC900]/70">
-                {step.instruction}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        {steps && steps.length > 0 ? (
+          <Accordion type="single" collapsible className="w-full">
+            {steps.map((step) => (
+              <AccordionItem key={step.step} value={`step-${step.step}`}>
+                <AccordionTrigger className="text-[#FFC900]">
+                  Step {step.step}
+                </AccordionTrigger>
+                <AccordionContent className="text-[#FFC900]/70">
+                  {step.instruction}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          <p className="text-[#FFC900]/70">No steps available for this exercise.</p>
+        )}
       </CardContent>
     </Card>
   );

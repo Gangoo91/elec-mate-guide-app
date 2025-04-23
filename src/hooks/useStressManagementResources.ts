@@ -3,6 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useErrorHandler } from "./useErrorHandler";
 
+export interface Step {
+  step: number;
+  instruction: string;
+}
+
 export interface StressManagementResource {
   id: string;
   title: string;
@@ -12,6 +17,10 @@ export interface StressManagementResource {
   duration_minutes: number;
   created_at: string;
   is_featured: boolean;
+  steps?: Step[];
+  benefits?: string;
+  tips?: string;
+  reference_url?: string;
 }
 
 // Mock data as fallback when database table is not available
@@ -95,9 +104,13 @@ export function useStressManagementResources() {
             description: item.description,
             category: item.resource_type || "general",
             difficulty_level: "beginner",
-            duration_minutes: 5,
+            duration_minutes: item.duration_minutes || 5,
             created_at: item.created_at,
-            is_featured: false
+            is_featured: false,
+            steps: typeof item.steps === 'string' ? JSON.parse(item.steps) : item.steps,
+            benefits: item.benefits,
+            tips: item.tips,
+            reference_url: item.reference_url
           })) as StressManagementResource[];
         }
         
