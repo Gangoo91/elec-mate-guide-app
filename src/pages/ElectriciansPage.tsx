@@ -23,13 +23,13 @@ const ElectriciansPage = () => {
       title: "Mental Health Hub",
       description: "Resources and support for mental wellbeing tailored to the unique challenges faced by electrical professionals.",
       icon: <Heart className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/mental-health"
+      fullCardLink: "/mental-health"
     },
     {
       title: "Mentor Connect",
       description: "Guide apprentices, share your expertise, and earn recognition while helping shape the next generation of electricians.",
       icon: <Handshake className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/mentor-connect"
+      fullCardLink: "/mentorship"
     },
     {
       title: "Professional Development",

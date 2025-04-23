@@ -80,14 +80,25 @@ const App = () => (
                 <Route path="/apprentices/study-materials/hnc" element={<HNCStudyMaterialsPage />} />
                 <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
                 <Route path="/apprentices/certifications" element={<CertificationsPage />} />
+
+                {/* Electricians routes */}
                 <Route path="/electricians" element={<ElectriciansPage />} />
+                <Route path="/electricians/technical-tools" element={<NotFound />} />
+                <Route path="/electricians/toolbox-talk" element={<NotFound />} />
+                <Route path="/electricians/development" element={<NotFound />} />
+                
+                {/* Employers routes */}
                 <Route path="/employers" element={<EmployersPage />} />
+                
+                {/* Shared routes */}
                 <Route path="/training" element={<Navigate to="/" replace />} />
                 <Route path="/certification" element={<Navigate to="/" replace />} />
                 <Route path="/tools" element={<Navigate to="/" replace />} />
                 <Route path="/mental-health" element={<MentalHealth />} />
                 <Route path="/mentorship" element={<Mentorship />} />
                 <Route path="/faq" element={<FAQ />} />
+                
+                {/* Auth and account routes */}
                 <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
                 <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
