@@ -6,11 +6,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { BookOpen } from "lucide-react";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const RegulationsAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { handleError } = useErrorHandler();
 
   const handleRegulationQuery = async () => {
     if (!query.trim()) {
@@ -19,18 +21,29 @@ const RegulationsAssistant: React.FC = () => {
     }
 
     setIsLoading(true);
+    setResponse(''); // Clear previous response
+    
     try {
+      console.log("Sending request to regulations-assistant");
       const { data, error } = await supabase.functions.invoke('regulations-assistant', {
         body: JSON.stringify({ query })
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
+
+      if (!data || !data.response) {
+        console.error("Invalid response format:", data);
+        throw new Error("Invalid response received from regulations assistant");
+      }
 
       setResponse(data.response);
       toast.success("Regulation guidance retrieved");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to get regulation guidance");
+      console.error("Error in RegulationsAssistant:", err);
+      handleError(err, "Failed to get regulation guidance");
     } finally {
       setIsLoading(false);
     }
@@ -48,7 +61,7 @@ const RegulationsAssistant: React.FC = () => {
             placeholder="Ask about UK electrical regulations, BS 7671, or compliance requirements..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[100px]"
           />
           <Button 
             onClick={handleRegulationQuery} 
@@ -58,8 +71,8 @@ const RegulationsAssistant: React.FC = () => {
             {isLoading ? 'Getting Guidance...' : 'Get Regulation Help'}
           </Button>
           {response && (
-            <div className="mt-4 p-3 bg-[#2C2F24] rounded text-[#FFC900]/80">
-              <h4 className="font-semibold mb-2">Regulation Guidance:</h4>
+            <div className="mt-4 p-3 bg-[#2C2F24] rounded text-[#FFC900]/80 max-h-[300px] overflow-y-auto">
+              <h4 className="font-semibold mb-2 text-[#FFC900]">Regulation Guidance:</h4>
               <p className="whitespace-pre-wrap">{response}</p>
             </div>
           )}

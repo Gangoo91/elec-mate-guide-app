@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,10 @@ const RegulationsFinderChecker: React.FC = () => {
     }
 
     setIsLoading(true);
+    setResponse(''); // Clear previous response
+    
     try {
+      console.log("Sending request to regulations-assistant with mode:", mode);
       const { data, error } = await supabase.functions.invoke('regulations-assistant', {
         body: JSON.stringify({ 
           query,
@@ -31,10 +35,19 @@ const RegulationsFinderChecker: React.FC = () => {
         })
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
+
+      if (!data || !data.response) {
+        console.error("Invalid response format:", data);
+        throw new Error("Invalid response received from regulations assistant");
+      }
 
       setResponse(data.response);
       toast.success(mode === 'find' ? "Regulations found" : "Regulations checked");
+      
     } catch (err) {
       console.error("Error in RegulationsFinderChecker:", err);
       handleError(err, "Failed to process your regulations request");
