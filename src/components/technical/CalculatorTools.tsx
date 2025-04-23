@@ -25,8 +25,7 @@ const CalculatorTools = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-[#FFC900]">Calculator Tools</h2>
+      <div className="flex justify-center mb-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10">
