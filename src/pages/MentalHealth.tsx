@@ -4,7 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { HeartPulse, Users, Check, MessageSquare } from "lucide-react";
+import { MessageSquare, HeartPulse, Users, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const MentalHealth = () => {
@@ -16,13 +16,13 @@ const MentalHealth = () => {
           description="Support and resources tailored for electrical professionals"
         />
 
-        {/* Mental Health Mates Section */}
+        {/* Mental Health Mate Section */}
         <div className="mb-12">
           <Card className="border-[#FFC900]/20 bg-[#22251e] hover:border-[#FFC900]/50 transition-all duration-300">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-3 text-[#FFC900]">
                 <MessageSquare className="h-7 w-7 text-[#FFC900]" />
-                Mental Health Mates
+                Mental Health Mate
               </CardTitle>
               <CardDescription className="text-[#FFC900]/70">
                 Connect with our AI-powered Mental Health Mate for confidential support and guidance
@@ -34,7 +34,7 @@ const MentalHealth = () => {
                 asChild
               >
                 <Link to="/mental-health/buddy">
-                  Talk to Mental Health Mates
+                  Talk to Mental Health Mate
                 </Link>
               </Button>
             </CardContent>
