@@ -54,10 +54,6 @@ const InspectionTestingGuide: React.FC = () => {
       </CardHeader>
       
       <CardContent className="space-y-4">
-        <p className="text-[#FFC900]/70">
-          Generate comprehensive inspection and testing procedures for electrical installations, ensuring compliance with BS 7671 requirements.
-        </p>
-
         <div className="relative">
           <Textarea 
             placeholder="Enter the type of installation (e.g., domestic rewire, commercial installation, industrial three-phase)"
@@ -108,3 +104,4 @@ const InspectionTestingGuide: React.FC = () => {
 };
 
 export default InspectionTestingGuide;
+
