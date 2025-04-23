@@ -14,6 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { setPreferredRole } = useUserPreferences();
+  const [redirectAttempted, setRedirectAttempted] = useState(false);
 
   // On component mount, ensure we have the latest session
   useEffect(() => {
@@ -22,11 +23,13 @@ const Login = () => {
   
   // Redirect authenticated users to apprentice hub
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && !redirectAttempted) {
+      setRedirectAttempted(true);
       setIsRedirecting(true);
       console.log("Login - User authenticated, redirecting to apprentice hub");
       
       // Set preferred role to apprentice
+      localStorage.setItem('preferredRole', 'apprentice');
       setPreferredRole('apprentice');
       
       // Add a small delay to show loading state and prevent jarring transitions
@@ -36,7 +39,7 @@ const Login = () => {
       
       return () => clearTimeout(redirectTimeout);
     }
-  }, [user, loading, navigate, setPreferredRole]);
+  }, [user, loading, navigate, setPreferredRole, redirectAttempted]);
 
   // Memoize the logo component to prevent unnecessary re-renders
   const MemoizedLogo = memo(() => (

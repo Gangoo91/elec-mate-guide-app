@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [initialized, setInitialized] = useState(false);
 
   // Function to refresh the session manually - improved with better error handling
+  // Fixed to return void to match the type definition
   const refreshSession = useCallback(async () => {
     try {
       console.log("Manually refreshing auth session");
@@ -45,7 +46,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         sessionStorage.removeItem('userAuthenticated');
         console.log("Session refreshed - no authenticated user");
       }
-      return data;
+      // No return value needed to match Promise<void> type
     } catch (error) {
       console.error("Error refreshing session:", error);
       // Clear user data on error to ensure we don't have stale data

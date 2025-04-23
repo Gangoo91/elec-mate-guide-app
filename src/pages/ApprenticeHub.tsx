@@ -19,6 +19,7 @@ const ApprenticeHub = memo(() => {
     const initApprenticeHub = async () => {
       console.log("ApprenticeHub - Component mounted, refreshing session");
       try {
+        // First refresh the auth session to ensure we have the latest user data
         await refreshSession();
         
         // Force apprentice role setting in localStorage to ensure persistence across reloads
@@ -28,6 +29,9 @@ const ApprenticeHub = memo(() => {
         
         // Force an immediate preferences refresh to ensure consistency
         refreshPreferences();
+        
+        // Add a reload detection flag to help with debugging
+        sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
       } catch (error) {
         console.error("Error initializing apprentice hub:", error);
       } finally {
@@ -36,6 +40,20 @@ const ApprenticeHub = memo(() => {
     };
     
     initApprenticeHub();
+    
+    // Add a window load event listener to handle page reloads specifically
+    const handlePageReload = () => {
+      console.log("ApprenticeHub - Page reload detected");
+      // This ensures that even on reload, the role is set correctly
+      localStorage.setItem('preferredRole', 'apprentice');
+      setPreferredRole('apprentice');
+    };
+    
+    window.addEventListener('load', handlePageReload);
+    
+    return () => {
+      window.removeEventListener('load', handlePageReload);
+    };
   }, [refreshSession, setPreferredRole, refreshPreferences]);
   
   // Additional check for user authentication

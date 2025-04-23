@@ -68,21 +68,30 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const { preferences, isLoaded, refreshPreferences } = useUserPreferences();
+  const [redirectAttempted, setRedirectAttempted] = useState(false);
   
   useEffect(() => {
     console.log("PublicRoute - Component mounted");
-    refreshSession();
-    // Ensure preferences are fresh when checking routes
-    refreshPreferences();
+    const initRoute = async () => {
+      await refreshSession();
+      // Ensure preferences are fresh when checking routes
+      refreshPreferences();
+    };
+    
+    initRoute();
   }, [refreshSession, refreshPreferences]);
   
   useEffect(() => {
-    if (!loading && user && isLoaded) {
+    // Only attempt redirect once to prevent loops
+    if (!loading && user && isLoaded && !redirectAttempted) {
+      setRedirectAttempted(true);
       // Always go to apprentice-hub after login
       console.log("PublicRoute - Redirecting to apprentice hub");
+      // Set role before navigating
+      localStorage.setItem('preferredRole', 'apprentice');
       navigate('/apprentice-hub', { replace: true });
     }
-  }, [user, loading, navigate, isLoaded]);
+  }, [user, loading, navigate, isLoaded, redirectAttempted]);
   
   if (loading || !isLoaded) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -132,6 +141,7 @@ const RootRedirect = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [redirected, setRedirected] = useState(false);
+  const { setPreferredRole } = useUserPreferences();
   
   useEffect(() => {
     // Only attempt redirect once when loading completes
@@ -140,13 +150,16 @@ const RootRedirect = () => {
       
       if (user) {
         console.log("RootRedirect - User found, redirecting to apprentice-hub");
+        // Set role before navigating
+        setPreferredRole('apprentice');
+        localStorage.setItem('preferredRole', 'apprentice');
         navigate('/apprentice-hub', { replace: true });
       } else {
         console.log("RootRedirect - No user, redirecting to welcome");
         navigate('/welcome', { replace: true });
       }
     }
-  }, [user, loading, navigate, redirected]);
+  }, [user, loading, navigate, redirected, setPreferredRole]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };
