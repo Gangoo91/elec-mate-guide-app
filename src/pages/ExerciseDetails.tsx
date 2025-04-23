@@ -71,7 +71,6 @@ const ExerciseDetails = () => {
         description: data.description,
         resource_type: data.resource_type,
         steps: processedSteps,
-        duration_minutes: data.duration_minutes as number | undefined,
         benefits: data.benefits || '',
         tips: data.tips || '',
         reference_url: data.reference_url,
@@ -79,6 +78,11 @@ const ExerciseDetails = () => {
         updated_at: data.updated_at,
         url: data.url
       };
+      
+      // Only add duration_minutes if it exists in the data
+      if ('duration_minutes' in data && data.duration_minutes !== null) {
+        processedData.duration_minutes = Number(data.duration_minutes);
+      }
       
       return processedData;
     },
