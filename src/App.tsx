@@ -27,6 +27,9 @@ import Mentorship from "./pages/Mentorship";
 import LearningHubPage from "./pages/LearningHubPage";
 import AIToolsPage from "./pages/AIToolsPage";
 import StudyMaterialsPage from "./pages/StudyMaterialsPage";
+import NVQ2StudyMaterialsPage from "./pages/NVQ2StudyMaterialsPage";
+import NVQ3StudyMaterialsPage from "./pages/NVQ3StudyMaterialsPage";
+import HNCStudyMaterialsPage from "./pages/HNCStudyMaterialsPage";
 import PracticeExamsPage from "./pages/PracticeExamsPage";
 import CertificationsPage from "./pages/CertificationsPage";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -72,6 +75,9 @@ const App = () => (
                 <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
                 <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
                 <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
+                <Route path="/apprentices/study-materials/nvq2" element={<NVQ2StudyMaterialsPage />} />
+                <Route path="/apprentices/study-materials/nvq3" element={<NVQ3StudyMaterialsPage />} />
+                <Route path="/apprentices/study-materials/hnc" element={<HNCStudyMaterialsPage />} />
                 <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
                 <Route path="/apprentices/certifications" element={<CertificationsPage />} />
                 <Route path="/electricians" element={<ElectriciansPage />} />
