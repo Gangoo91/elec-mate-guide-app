@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -46,7 +46,7 @@ export const useMatesList = () => {
     },
   });
 
-  const allSpecialties = React.useMemo(() => {
+  const allSpecialties = useMemo(() => {
     if (!mates) return [];
     const specialtiesSet = new Set<string>();
     mates.forEach(mate => {
@@ -57,7 +57,7 @@ export const useMatesList = () => {
     return Array.from(specialtiesSet);
   }, [mates]);
 
-  const filteredMates = React.useMemo(() => {
+  const filteredMates = useMemo(() => {
     if (!mates) return [];
     
     return mates.filter(mate => {
