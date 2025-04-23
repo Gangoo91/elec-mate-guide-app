@@ -1,14 +1,13 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { LucideIcon } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface ResourceCardProps {
   title: string;
   description: string;
-  icon: LucideIcon | React.ReactNode;
+  icon: React.ReactNode;
   children?: React.ReactNode;
   action?: {
     label: string;
@@ -31,7 +30,7 @@ const ResourceCard = ({ title, description, icon, children, action, fullCardLink
       <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-3">
-            {React.isValidElement(icon) ? icon : null}
+            {icon}
             <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
           </div>
           <CardDescription className="text-[#FFC900]/70 text-sm">

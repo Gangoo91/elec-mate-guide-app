@@ -4,13 +4,14 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import { Handshake, Users, PhoneCall, BadgeHelp, Brain } from "lucide-react";
+import { Handshake, Users, PhoneCall, BadgeHelp, Brain, ExternalLink } from "lucide-react";
 import { 
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger
 } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const ProfessionalResources = () => {
@@ -78,19 +79,49 @@ const ProfessionalResources = () => {
               <AccordionItem value="amclub" className="border-[#FFC900]/20">
                 <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/80 hover:no-underline py-2">
                   Andy's Man Club
+                  <Badge variant="outline" className="ml-2 border-green-500/30 text-green-400 text-xs">
+                    Recommended
+                  </Badge>
+                </AccordionTrigger>
+                <AccordionContent className="text-[#FFC900]/80">
+                  <div className="space-y-3">
+                    <p>
+                      A men's mental health group that meets every Monday at 7pm (except bank holidays).
+                      Open to any man over 18 who wants to talk about their mental health in a supportive environment.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <Badge className="bg-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/30">Free</Badge>
+                      <Badge className="bg-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/30">No Referral Needed</Badge>
+                      <Badge className="bg-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/30">Weekly Sessions</Badge>
+                    </div>
+                    <a 
+                      href="https://andysmanclub.co.uk/find-your-nearest-group/" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-[#FFC900] hover:underline inline-flex items-center gap-1 mt-2"
+                    >
+                      Find your nearest Andy's Man Club <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="menssheds" className="border-[#FFC900]/20">
+                <AccordionTrigger className="text-[#FFC900] hover:text-[#FFC900]/80 hover:no-underline py-2">
+                  Men's Sheds
                 </AccordionTrigger>
                 <AccordionContent className="text-[#FFC900]/80">
                   <p className="mb-3">
-                    A men's mental health group that meets every Monday at 7pm (except bank holidays).
-                    Open to any man over 18 who wants to talk about their mental health.
+                    Community spaces for men to connect, converse and create. Activities are often focused around 
+                    woodwork, metalwork, and other practical skills in a relaxed environment.
                   </p>
                   <a 
-                    href="https://andysmanclub.co.uk/find-your-nearest-group/" 
+                    href="https://menssheds.org.uk/find-a-shed/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-[#FFC900] hover:underline inline-flex items-center gap-1"
                   >
-                    Find your nearest Andy's Man Club <BadgeHelp className="h-4 w-4" />
+                    Find your local Men's Shed <ExternalLink className="h-3 w-3" />
                   </a>
                 </AccordionContent>
               </AccordionItem>
