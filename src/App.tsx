@@ -129,46 +129,22 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
+// Simplified RootRedirect component that immediately redirects to appropriate page
 const RootRedirect = () => {
-  const { user, loading, refreshSession } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const [redirectChecked, setRedirectChecked] = useState(false);
   
-  // Always refresh session and set up auto-redirect to apprentice-hub
   useEffect(() => {
-    console.log("RootRedirect - Component mounted, current path:", location.pathname);
-    
-    const initializeApp = async () => {
-      try {
-        await refreshSession();
-        setRedirectChecked(true);
-      } catch (error) {
-        console.error("Error in RootRedirect initialization:", error);
-        setRedirectChecked(true);
+    if (!loading) {
+      if (user) {
+        // User is logged in, redirect to apprentice hub
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        // User is not logged in, redirect to welcome page
+        navigate('/welcome', { replace: true });
       }
-    };
-    
-    initializeApp();
-  }, [refreshSession, location.pathname]);
-  
-  // Second effect: handle redirection logic once we have latest data
-  useEffect(() => {
-    if (!redirectChecked || loading) {
-      return;
     }
-    
-    console.log("RootRedirect - Ready to redirect, user:", user ? "authenticated" : "unauthenticated");
-    
-    if (user) {
-      // Always go to apprentice-hub when logged in
-      console.log("RootRedirect - Navigating to apprentice hub");
-      navigate('/apprentice-hub', { replace: true });
-    } else {
-      console.log("RootRedirect - No user, navigating to welcome");
-      navigate('/welcome', { replace: true });
-    }
-  }, [user, loading, navigate, redirectChecked]);
+  }, [user, loading, navigate]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };
@@ -183,14 +159,16 @@ const App = () => (
             <BrowserRouter>
               <ScrollToTop />
               <Routes>
+                {/* Root path redirects based on authentication */}
                 <Route path="/" element={<RootRedirect />} />
                 <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 
-                {/* Remove all dashboard routes and redirect to apprentice-hub */}
+                {/* Redirect all dashboard routes to apprentice-hub */}
                 <Route path="/dashboard" element={<Navigate to="/apprentice-hub" replace />} />
+                <Route path="/dashboard/*" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />
                 
                 <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -10,7 +10,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 // Memoize the component to prevent unnecessary re-renders
 const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { refreshSession, user, loading } = useAuth();
   const { setPreferredRole, preferences, isLoaded, refreshPreferences } = useUserPreferences();
   const [isInitialized, setIsInitialized] = useState(false);
@@ -32,49 +31,12 @@ const ApprenticeHub = memo(() => {
         setIsInitialized(true);
       } catch (error) {
         console.error("Error setting preferredRole:", error);
-        // Try one more time with a timeout
-        setTimeout(() => {
-          try {
-            localStorage.setItem('preferredRole', 'apprentice');
-            setPreferredRole('apprentice');
-            refreshPreferences();
-            setIsInitialized(true);
-          } catch (e) {
-            console.error("Second attempt to set preferredRole failed:", e);
-            setIsInitialized(true);
-          }
-        }, 500);
+        setIsInitialized(true);
       }
     };
     
     initApprenticeHub();
-    
-    // Add a manual localStorage check/refresh on page load
-    window.addEventListener('load', () => {
-      try {
-        localStorage.setItem('preferredRole', 'apprentice');
-        setPreferredRole('apprentice');
-        refreshPreferences();
-      } catch (e) {
-        console.error("Error in load event handler:", e);
-      }
-    });
-    
   }, [refreshSession, setPreferredRole, refreshPreferences]);
-  
-  // Additional check for role consistency any time the path changes
-  useEffect(() => {
-    if (isInitialized && isLoaded && preferences.preferredRole !== 'apprentice') {
-      console.log("ApprenticeHub - Role inconsistency detected, fixing...");
-      try {
-        localStorage.setItem('preferredRole', 'apprentice');
-        setPreferredRole('apprentice');
-        refreshPreferences();
-      } catch (e) {
-        console.error("Error fixing role inconsistency:", e);
-      }
-    }
-  }, [location.pathname, isInitialized, isLoaded, preferences.preferredRole, setPreferredRole, refreshPreferences]);
   
   // Additional check for user authentication
   useEffect(() => {
@@ -91,18 +53,6 @@ const ApprenticeHub = memo(() => {
         <LoadingSpinner size="lg" message="Loading Apprentice Hub..." />
       </div>
     );
-  }
-  
-  // Double-check role before rendering
-  try {
-    localStorage.setItem('preferredRole', 'apprentice');
-    if (preferences.preferredRole !== 'apprentice') {
-      console.log("ApprenticeHub - Role not set correctly, fixing...");
-      setPreferredRole('apprentice');
-      refreshPreferences();
-    }
-  } catch (e) {
-    console.error("Error in final role check:", e);
   }
   
   // Only render the page if we have a user

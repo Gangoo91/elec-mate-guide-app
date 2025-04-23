@@ -1,7 +1,8 @@
 
-import React, { useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 type LogoProps = {
   size?: number;
@@ -11,13 +12,8 @@ type LogoProps = {
 
 const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { user, refreshSession } = useAuth();
-  
-  useEffect(() => {
-    // Ensure session is fresh when component mounts
-    refreshSession();
-  }, [refreshSession]);
+  const { user } = useAuth();
+  const { setPreferredRole } = useUserPreferences();
   
   // Memoize the navigation logic to prevent unnecessary re-renders
   const handleLogoClick = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
@@ -33,12 +29,13 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
     if (user) {
       // Always navigate to apprentice-hub when authenticated
       console.log("Logo - Navigating to apprentice-hub");
+      setPreferredRole('apprentice');
       navigate('/apprentice-hub', { replace: true });
     } else {
       console.log("Logo - Not authenticated, navigating to welcome");
       navigate('/welcome', { replace: true });
     }
-  }, [navigate, user, onClick]);
+  }, [navigate, user, onClick, setPreferredRole]);
 
   return (
     <img
