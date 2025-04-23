@@ -12,20 +12,20 @@ const MentalHealth = () => {
     <MainLayout>
       <div className="container py-8">
         <PageHeader
-          title="Mental Health Mates"
-          description="Supportive resources and community for electrical professionals"
+          title="Mental Health Hub"
+          description="Support and resources tailored for electrical professionals"
         />
 
-        {/* Mental Health Buddy Section */}
+        {/* Mental Health Mates Section */}
         <div className="mb-12">
           <Card className="border-[#FFC900]/20 bg-[#22251e] hover:border-[#FFC900]/50 transition-all duration-300">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-3 text-[#FFC900]">
                 <MessageSquare className="h-7 w-7 text-[#FFC900]" />
-                Mental Health Buddy
+                Mental Health Mates
               </CardTitle>
               <CardDescription className="text-[#FFC900]/70">
-                Connect with our AI-powered Mental Health Buddy for confidential support and guidance
+                Connect with our AI-powered Mental Health Mate for confidential support and guidance
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
@@ -34,7 +34,7 @@ const MentalHealth = () => {
                 asChild
               >
                 <Link to="/mental-health/buddy">
-                  Talk to Mental Health Buddy
+                  Talk to Mental Health Mates
                 </Link>
               </Button>
             </CardContent>
