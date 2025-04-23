@@ -12,10 +12,6 @@ import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 import PowerCalculator from './calculators/PowerCalculator';
 import ResistanceInSeriesCalculator from './calculators/ResistanceInSeriesCalculator';
 import ResistanceInParallelCalculator from './calculators/ResistanceInParallelCalculator';
-import CapacitanceCalculator from './calculators/CapacitanceCalculator';
-import InductanceCalculator from './calculators/InductanceCalculator';
-import TransformerCalculator from './calculators/TransformerCalculator';
-import PowerFactorCalculator from './calculators/PowerFactorCalculator';
 
 const CalculatorTools = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string>('ohms-law');
@@ -24,11 +20,7 @@ const CalculatorTools = () => {
     'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator /> },
     'power': { title: "Power Equations", component: <PowerCalculator /> },
     'series-resistance': { title: "Series Resistance", component: <ResistanceInSeriesCalculator /> },
-    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator /> },
-    'capacitance': { title: "Capacitance", component: <CapacitanceCalculator /> },
-    'inductance': { title: "Inductance", component: <InductanceCalculator /> },
-    'transformer': { title: "Transformer Ratios", component: <TransformerCalculator /> },
-    'power-factor': { title: "Power Factor", component: <PowerFactorCalculator /> }
+    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator /> }
   };
 
   return (
