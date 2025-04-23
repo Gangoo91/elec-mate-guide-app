@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { ClipboardList, Search } from "lucide-react";
+import { ClipboardList, Search, CheckCircle, AlertCircle, InfoIcon } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -45,6 +45,43 @@ const InspectionTestingGuide: React.FC = () => {
     }
   };
 
+  const formatChecklist = (checklist: string) => {
+    return checklist
+      .split('\n')
+      .map((line, index) => {
+        if (line.startsWith('## ')) {
+          return `<h2 class="text-xl font-bold mt-4 mb-2 text-[#FFC900] flex items-center">
+            <InfoIcon className="mr-2 text-[#FFC900]" /> ${line.replace('## ', '')}
+          </h2>`;
+        }
+        
+        if (/^\d+\./.test(line.trim())) {
+          return `<li class="flex items-start mb-2">
+            <CheckCircle className="mr-2 mt-1 text-green-500 flex-shrink-0" /> 
+            <span>${line.replace(/^\d+\.\s*/, '')}</span>
+          </li>`;
+        }
+        
+        if (line.toLowerCase().includes('pass/fail')) {
+          return `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-2 flex items-center">
+            <AlertCircle className="mr-2 text-yellow-500" /> 
+            <span class="text-[#FFC900]/90">${line}</span>
+          </div>`;
+        }
+        
+        if (line.includes('BS 7671')) {
+          return `<div class="text-sm text-[#FFC900]/70 italic my-2 flex items-center">
+            <InfoIcon className="mr-2 text-[#FFC900]/50" /> 
+            ${line}
+          </div>`;
+        }
+        
+        return line ? `<p class="mb-2 text-[#FFC900]/90">${line}</p>` : '';
+      })
+      .filter(line => line.trim() !== '')
+      .join('');
+  };
+
   return (
     <div>
       <CardHeader className="flex flex-row items-center gap-2">
@@ -84,16 +121,12 @@ const InspectionTestingGuide: React.FC = () => {
         {checklist && (
           <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">
             <CardContent className="pt-6">
-              <div className="prose prose-invert max-w-none">
-                <div 
-                  className="text-[#FFC900]/90 space-y-4"
-                  dangerouslySetInnerHTML={{ 
-                    __html: checklist.replace(/#{2,3} /g, match => 
-                      `<h${match.length}>`
-                    ).replace(/\n/g, '<br/>') 
-                  }} 
-                />
-              </div>
+              <div 
+                className="prose prose-invert max-w-none text-[#FFC900]/90 space-y-4"
+                dangerouslySetInnerHTML={{ 
+                  __html: formatChecklist(checklist)
+                }} 
+              />
             </CardContent>
           </Card>
         )}
