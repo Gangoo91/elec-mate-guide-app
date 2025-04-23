@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,12 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calculator, Zap, Circuit, Ruler } from "lucide-react";
 
 const CalculatorTools = () => {
-  const [calculationType, setCalculationType] = useState('voltage-drop');
   const [result, setResult] = useState<string | null>(null);
   
-  // Example calculation function
   const calculateResult = (event: React.FormEvent) => {
     event.preventDefault();
     // Placeholder for actual calculation logic
@@ -21,30 +19,111 @@ const CalculatorTools = () => {
 
   return (
     <div className="space-y-4">
-      <Tabs defaultValue="voltage-drop" className="w-full">
-        <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20">
+      <Tabs defaultValue="ohms-law" className="w-full">
+        <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20 flex flex-wrap">
+          <TabsTrigger 
+            value="ohms-law"
+            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
+          >
+            <Calculator className="h-4 w-4" />
+            Ohm's Law
+          </TabsTrigger>
           <TabsTrigger 
             value="voltage-drop"
-            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black"
+            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
           >
+            <Zap className="h-4 w-4" />
             Voltage Drop
           </TabsTrigger>
           <TabsTrigger 
-            value="instrumentation"
-            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black"
+            value="impedance"
+            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
           >
-            Instrumentation
+            <Circuit className="h-4 w-4" />
+            Impedance (Zs)
           </TabsTrigger>
           <TabsTrigger 
-            value="cable-sizing"
-            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black"
+            value="instrumentation"
+            className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
           >
-            Cable Sizing
+            <Ruler className="h-4 w-4" />
+            Instrumentation
           </TabsTrigger>
         </TabsList>
 
+        <TabsContent value="ohms-law" className="space-y-4 mt-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="calculate-type" className="text-[#FFC900]">Calculate</Label>
+              <Select>
+                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+                  <SelectValue placeholder="Select calculation" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                  <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
+                  <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (I)</SelectItem>
+                  <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (R)</SelectItem>
+                  <SelectItem value="power" className="text-[#FFC900] focus:bg-[#FFC900]/10">Power (P)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="voltage" className="text-[#FFC900]">Voltage (V)</Label>
+              <Input 
+                id="voltage" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter voltage"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="current" className="text-[#FFC900]">Current (A)</Label>
+              <Input 
+                id="current" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter current"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="resistance" className="text-[#FFC900]">Resistance (Ω)</Label>
+              <Input 
+                id="resistance" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter resistance"
+              />
+            </div>
+          </div>
+        </TabsContent>
+
         <TabsContent value="voltage-drop" className="space-y-4 mt-4">
           <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="cable-type" className="text-[#FFC900]">Cable Type</Label>
+              <Select>
+                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+                  <SelectValue placeholder="Select cable type" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                  <SelectItem value="single-core" className="text-[#FFC900] focus:bg-[#FFC900]/10">Single Core</SelectItem>
+                  <SelectItem value="twin-earth" className="text-[#FFC900] focus:bg-[#FFC900]/10">Twin and Earth</SelectItem>
+                  <SelectItem value="armoured" className="text-[#FFC900] focus:bg-[#FFC900]/10">SWA (Armoured)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="conductor-material" className="text-[#FFC900]">Conductor Material</Label>
+              <Select>
+                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+                  <SelectValue placeholder="Select material" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                  <SelectItem value="copper" className="text-[#FFC900] focus:bg-[#FFC900]/10">Copper</SelectItem>
+                  <SelectItem value="aluminium" className="text-[#FFC900] focus:bg-[#FFC900]/10">Aluminium</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="current" className="text-[#FFC900]">Current (A)</Label>
               <Input 
@@ -84,8 +163,63 @@ const CalculatorTools = () => {
           </div>
         </TabsContent>
 
+        <TabsContent value="impedance" className="space-y-4 mt-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ze" className="text-[#FFC900]">External Impedance (Ze)</Label>
+              <Input 
+                id="ze" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter Ze value"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="r1" className="text-[#FFC900]">Phase Conductor (R1)</Label>
+              <Input 
+                id="r1" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter R1 value"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="r2" className="text-[#FFC900]">Circuit Protective Conductor (R2)</Label>
+              <Input 
+                id="r2" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter R2 value"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="xL" className="text-[#FFC900]">Circuit Reactance (XL)</Label>
+              <Input 
+                id="xL" 
+                type="number" 
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
+                placeholder="Enter XL value"
+              />
+            </div>
+          </div>
+        </TabsContent>
+
         <TabsContent value="instrumentation" className="space-y-4 mt-4">
           <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="instrument-type" className="text-[#FFC900]">Instrument Type</Label>
+              <Select>
+                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                  <SelectItem value="pressure" className="text-[#FFC900] focus:bg-[#FFC900]/10">Pressure Transmitter</SelectItem>
+                  <SelectItem value="temperature" className="text-[#FFC900] focus:bg-[#FFC900]/10">Temperature Sensor</SelectItem>
+                  <SelectItem value="flow" className="text-[#FFC900] focus:bg-[#FFC900]/10">Flow Meter</SelectItem>
+                  <SelectItem value="level" className="text-[#FFC900] focus:bg-[#FFC900]/10">Level Sensor</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="input-range" className="text-[#FFC900]">Input Range (mA)</Label>
               <Select>
@@ -128,34 +262,6 @@ const CalculatorTools = () => {
             </div>
           </div>
         </TabsContent>
-
-        <TabsContent value="cable-sizing" className="space-y-4 mt-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="load-current" className="text-[#FFC900]">Load Current (A)</Label>
-              <Input 
-                id="load-current" 
-                type="number" 
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
-                placeholder="Enter current"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="installation-method" className="text-[#FFC900]">Installation Method</Label>
-              <Select>
-                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
-                  <SelectValue placeholder="Select method" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-                  <SelectItem value="A" className="text-[#FFC900] focus:bg-[#FFC900]/10">Method A (Enclosed)</SelectItem>
-                  <SelectItem value="B" className="text-[#FFC900] focus:bg-[#FFC900]/10">Method B (Conduit)</SelectItem>
-                  <SelectItem value="C" className="text-[#FFC900] focus:bg-[#FFC900]/10">Method C (Surface)</SelectItem>
-                  <SelectItem value="D" className="text-[#FFC900] focus:bg-[#FFC900]/10">Method D (Ground)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </TabsContent>
       </Tabs>
 
       <Button 
@@ -176,4 +282,3 @@ const CalculatorTools = () => {
 };
 
 export default CalculatorTools;
-
