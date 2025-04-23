@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth, AuthProvider } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import ErrorBoundary from "@/components/ErrorBoundary";
@@ -74,22 +74,22 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log("PublicRoute - Component mounted");
     refreshSession();
-    
+  }, [refreshSession]);
+  
+  useEffect(() => {
     if (!loading && user) {
       const preferredRole = preferences.preferredRole;
       console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
       
-      setTimeout(() => {
-        if (preferredRole === 'apprentice') {
-          console.log("PublicRoute - Redirecting to apprentice hub");
-          navigate('/apprentice-hub', { replace: true });
-        } else {
-          console.log("PublicRoute - Redirecting to dashboard");
-          navigate('/dashboard', { replace: true });
-        }
-      }, 100);
+      if (preferredRole === 'apprentice') {
+        console.log("PublicRoute - Redirecting to apprentice hub");
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        console.log("PublicRoute - Redirecting to dashboard");
+        navigate('/dashboard', { replace: true });
+      }
     }
-  }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
+  }, [user, loading, navigate, preferences.preferredRole]);
   
   if (loading) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -101,27 +101,31 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
+  const [authChecked, setAuthChecked] = useState(false);
   
   useEffect(() => {
     console.log("PrivateRoute - Component mounted");
     const checkAuth = async () => {
-      if (!user && !loading) {
-        console.log("PrivateRoute - No user found, refreshing session");
+      try {
         await refreshSession();
+        setAuthChecked(true);
+      } catch (error) {
+        console.error("Error refreshing session:", error);
+        setAuthChecked(true);
       }
     };
     
     checkAuth();
-  }, [user, loading, refreshSession]);
+  }, [refreshSession]);
   
   useEffect(() => {
-    if (!loading && !user) {
-      console.log("PrivateRoute - Still no user after refresh, redirecting to login");
+    if (authChecked && !loading && !user) {
+      console.log("PrivateRoute - No user found after refresh, redirecting to login");
       navigate('/login', { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, authChecked]);
   
-  if (loading) {
+  if (loading || !authChecked) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
   
@@ -132,33 +136,44 @@ const RootRedirect = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const { preferences } = useUserPreferences();
+  const [redirectChecked, setRedirectChecked] = useState(false);
   
   useEffect(() => {
     console.log("RootRedirect - Component mounted");
-    refreshSession();
-    
-    const redirectWithDelay = () => {
-      if (user) {
-        const preferredRole = preferences.preferredRole;
-        console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
-        
-        if (preferredRole === 'apprentice') {
-          console.log("RootRedirect - Navigating to apprentice hub");
-          navigate('/apprentice-hub', { replace: true });
-        } else {
-          console.log("RootRedirect - Navigating to dashboard");
-          navigate('/dashboard', { replace: true });
-        }
-      } else {
-        navigate('/welcome', { replace: true });
+    const checkSession = async () => {
+      try {
+        await refreshSession();
+        setRedirectChecked(true);
+      } catch (error) {
+        console.error("Error in RootRedirect:", error);
+        setRedirectChecked(true);
       }
     };
-
-    // Only redirect if not loading
-    if (!loading) {
-      redirectWithDelay();
+    
+    checkSession();
+  }, [refreshSession]);
+  
+  useEffect(() => {
+    if (!redirectChecked || loading) return;
+    
+    console.log("RootRedirect - Ready to redirect, user:", user ? "authenticated" : "unauthenticated");
+    
+    if (user) {
+      const preferredRole = preferences.preferredRole;
+      console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
+      
+      if (preferredRole === 'apprentice') {
+        console.log("RootRedirect - Navigating to apprentice hub");
+        navigate('/apprentice-hub', { replace: true });
+      } else {
+        console.log("RootRedirect - Navigating to dashboard");
+        navigate('/dashboard', { replace: true });
+      }
+    } else {
+      console.log("RootRedirect - No user, navigating to welcome");
+      navigate('/welcome', { replace: true });
     }
-  }, [user, loading, navigate, preferences.preferredRole, refreshSession]);
+  }, [user, loading, navigate, preferences.preferredRole, redirectChecked]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };

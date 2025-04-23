@@ -19,9 +19,12 @@ export const useUserPreferences = () => {
       try {
         const storedPreferredRole = localStorage.getItem('preferredRole');
         console.log("Loading preferences from localStorage:", storedPreferredRole);
-        setPreferences({
-          preferredRole: storedPreferredRole,
-        });
+        
+        if (storedPreferredRole) {
+          setPreferences({
+            preferredRole: storedPreferredRole,
+          });
+        }
       } catch (error) {
         console.error("Error accessing localStorage:", error);
       }
@@ -29,7 +32,7 @@ export const useUserPreferences = () => {
     
     loadPreferences();
     
-    // Listen for localStorage changes from other components
+    // Listen for localStorage changes from other tabs
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'preferredRole') {
         console.log("Storage event detected for preferredRole:", e.newValue);
@@ -40,24 +43,12 @@ export const useUserPreferences = () => {
       }
     };
     
-    // Also create a custom event listener for same-window updates
-    const handleCustomStorageChange = () => {
-      const updatedRole = localStorage.getItem('preferredRole');
-      console.log("Custom storage event detected for preferredRole:", updatedRole);
-      setPreferences(prev => ({
-        ...prev,
-        preferredRole: updatedRole,
-      }));
-    };
-    
-    // Add event listeners
+    // Add event listener for cross-tab changes
     window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('preferredRoleChange', handleCustomStorageChange);
     
     // Return cleanup function
     return () => {
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('preferredRoleChange', handleCustomStorageChange);
     };
   }, []);
 
@@ -77,8 +68,9 @@ export const useUserPreferences = () => {
         preferredRole: role,
       }));
       
-      // Dispatch custom event to notify other components in the same window
-      window.dispatchEvent(new Event('preferredRoleChange'));
+      // Broadcast a custom event for same-window updates
+      const event = new Event('preferredRoleChange');
+      window.dispatchEvent(event);
     } catch (error) {
       console.error("Error updating localStorage:", error);
     }

@@ -32,16 +32,17 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
     
     if (user) {
       const preferredRole = preferences.preferredRole;
-      console.log("Logo clicked, preferredRole:", preferredRole);
+      console.log("Logo clicked, user authenticated, preferredRole:", preferredRole);
       
       if (preferredRole === 'apprentice') {
-        console.log("Navigating to apprentice-hub based on preferredRole");
+        console.log("Logo - Navigating to apprentice-hub based on preferredRole");
         navigate('/apprentice-hub');
       } else {
-        console.log("Navigating to dashboard (no specific role preference)");
+        console.log("Logo - Navigating to dashboard (no specific role preference)");
         navigate('/dashboard');
       }
     } else {
+      console.log("Logo - Not authenticated, navigating to welcome");
       navigate('/welcome');
     }
   };

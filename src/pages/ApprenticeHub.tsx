@@ -15,20 +15,25 @@ const ApprenticeHub = memo(() => {
   
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
   useEffect(() => {
-    // Refresh auth session to ensure we have latest data
-    console.log("ApprenticeHub - Component mounted, refreshing session");
-    refreshSession();
+    const initApprenticeHub = async () => {
+      console.log("ApprenticeHub - Component mounted, refreshing session");
+      await refreshSession();
+      
+      // IMPORTANT: Always set role to apprentice when on this page, even after reloads
+      console.log("ApprenticeHub - Setting preferredRole to apprentice");
+      setPreferredRole('apprentice');
+    };
     
-    // IMPORTANT: Always set role to apprentice when on this page, even after reloads
-    console.log("ApprenticeHub - Setting preferredRole to apprentice");
-    setPreferredRole('apprentice');
-    
-    // Additional check to ensure navigation works after reload
+    initApprenticeHub();
+  }, [refreshSession, setPreferredRole]);
+  
+  // Additional check for user authentication
+  useEffect(() => {
     if (!loading && !user) {
       console.log("ApprenticeHub - No user found, redirecting to login");
       navigate("/login", { replace: true });
     }
-  }, [refreshSession, user, loading, navigate, setPreferredRole]);
+  }, [user, loading, navigate]);
   
   // Show loading state if auth is still being checked
   if (loading) {
@@ -39,7 +44,7 @@ const ApprenticeHub = memo(() => {
     );
   }
   
-  // Only render the page if we have a user, and ensure we're on the correct route
+  // Only render the page if we have a user
   return user ? <ApprenticesPage /> : null;
 });
 
