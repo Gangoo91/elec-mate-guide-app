@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +13,7 @@ interface ExerciseCardProps {
 const ExerciseCard = ({ exercise, isFeatured }: ExerciseCardProps) => {
   return (
     <Link to={`/mental-health/stress-management/${exercise.id}`} className="block">
-      <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all">
+      <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-[#FFC900]/10">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between gap-2">
             <CardTitle className="text-lg text-[#FFC900]">{exercise.title}</CardTitle>

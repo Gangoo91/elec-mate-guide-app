@@ -74,6 +74,46 @@ const mockResources: StressManagementResource[] = [
     duration_minutes: 3,
     created_at: new Date().toISOString(),
     is_featured: false
+  },
+  {
+    id: "6",
+    title: "Body Scan Meditation",
+    description: "A focused attention practice that helps develop awareness of physical sensations.",
+    category: "mindfulness",
+    difficulty_level: "intermediate",
+    duration_minutes: 8,
+    created_at: new Date().toISOString(),
+    is_featured: false
+  },
+  {
+    id: "7",
+    title: "4-7-8 Breathing",
+    description: "Inhale for 4 counts, hold for 7, exhale for 8. Great for anxiety relief.",
+    category: "breathing",
+    difficulty_level: "beginner",
+    duration_minutes: 4,
+    created_at: new Date().toISOString(),
+    is_featured: false
+  },
+  {
+    id: "8",
+    title: "Alternate Nostril Breathing",
+    description: "Balance energy and calm the nervous system with this yogic breathing technique.",
+    category: "breathing",
+    difficulty_level: "intermediate",
+    duration_minutes: 6,
+    created_at: new Date().toISOString(),
+    is_featured: false
+  },
+  {
+    id: "9",
+    title: "3-Minute Reset",
+    description: "A quick mental reset technique for when you're feeling overwhelmed.",
+    category: "mindfulness",
+    difficulty_level: "beginner",
+    duration_minutes: 3,
+    created_at: new Date().toISOString(),
+    is_featured: false
   }
 ];
 
@@ -150,7 +190,7 @@ export function useDailyFeaturedExercise() {
   return useQuery({
     queryKey: ["daily-featured-exercise"],
     queryFn: async () => {
-      // Simply select a "random" exercise from the resources (based on day)
+      // Select a "random" exercise from the resources (based on day)
       if (!resources || resources.length === 0) return null;
       
       // Use the day of the month to pick a consistent daily exercise
