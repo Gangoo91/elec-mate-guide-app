@@ -98,20 +98,34 @@ export function useStressManagementResources() {
 
         // If we have real data, transform it to match our interface
         if (data && data.length > 0) {
-          return data.map(item => ({
-            id: item.id,
-            title: item.title,
-            description: item.description,
-            category: item.resource_type || "general",
-            difficulty_level: "beginner",
-            duration_minutes: item.duration_minutes || 5, // Set default duration
-            created_at: item.created_at,
-            is_featured: false,
-            steps: typeof item.steps === 'string' ? JSON.parse(item.steps) : item.steps,
-            benefits: item.benefits,
-            tips: item.tips,
-            reference_url: item.reference_url
-          })) as StressManagementResource[];
+          return data.map(item => {
+            // Process steps data to ensure correct typing
+            let processedSteps: Step[] = [];
+            if (item.steps) {
+              const stepsData = typeof item.steps === 'string' ? JSON.parse(item.steps) : item.steps;
+              if (Array.isArray(stepsData)) {
+                processedSteps = stepsData.map(step => ({
+                  step: Number(step.step) || 0,
+                  instruction: String(step.instruction || '')
+                }));
+              }
+            }
+            
+            return {
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              category: item.resource_type || "general",
+              difficulty_level: "beginner",
+              duration_minutes: typeof item.duration_minutes === 'number' ? item.duration_minutes : 5,
+              created_at: item.created_at,
+              is_featured: false,
+              steps: processedSteps,
+              benefits: item.benefits || "",
+              tips: item.tips || "",
+              reference_url: item.reference_url
+            };
+          }) as StressManagementResource[];
         }
         
         // Fall back to mock data if no database results

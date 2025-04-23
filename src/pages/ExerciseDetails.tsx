@@ -49,13 +49,30 @@ const ExerciseDetails = () => {
         data.steps = JSON.parse(data.steps);
       }
       
-      // Add a fallback for duration_minutes if it doesn't exist
-      const processedData = {
+      // Process data to ensure step data is properly structured
+      const processedSteps = Array.isArray(data.steps) 
+        ? data.steps.map(step => {
+            // Ensure each step has the correct structure
+            if (typeof step === 'object' && step !== null) {
+              return {
+                step: Number(step.step) || 0,
+                instruction: String(step.instruction || '')
+              };
+            }
+            return { step: 0, instruction: '' };
+          })
+        : [];
+      
+      // Create a properly typed Exercise object
+      const processedData: Exercise = {
         ...data,
-        duration_minutes: data.duration_minutes || 5 // Default to 5 minutes
+        steps: processedSteps,
+        duration_minutes: typeof data.duration_minutes === 'number' ? data.duration_minutes : 5, // Default to 5 minutes
+        benefits: data.benefits || '',
+        tips: data.tips || ''
       };
       
-      return processedData as Exercise;
+      return processedData;
     },
   });
 
