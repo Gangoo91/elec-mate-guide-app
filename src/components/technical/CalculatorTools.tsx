@@ -1,23 +1,9 @@
-
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "sonner";
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Zap, CircuitBoard, Ruler } from "lucide-react";
+import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 
 const CalculatorTools = () => {
-  const [result, setResult] = useState<string | null>(null);
-  
-  const calculateResult = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Placeholder for actual calculation logic
-    toast.success("Calculation completed");
-    setResult("Result would be shown here based on the selected calculation type");
-  };
-
   return (
     <div className="space-y-4">
       <Tabs defaultValue="ohms-law" className="w-full">
@@ -27,7 +13,7 @@ const CalculatorTools = () => {
             className="text-[#FFC900] data-[state=active]:bg-[#FFC900] data-[state=active]:text-black flex gap-2 items-center"
           >
             <Calculator className="h-4 w-4" />
-            Ohm's Law
+            Equation Solver
           </TabsTrigger>
           <TabsTrigger 
             value="voltage-drop"
@@ -52,50 +38,8 @@ const CalculatorTools = () => {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="ohms-law" className="space-y-4 mt-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="calculate-type" className="text-[#FFC900]">Calculate</Label>
-              <Select>
-                <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
-                  <SelectValue placeholder="Select calculation" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-                  <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
-                  <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (I)</SelectItem>
-                  <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (R)</SelectItem>
-                  <SelectItem value="power" className="text-[#FFC900] focus:bg-[#FFC900]/10">Power (P)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="voltage" className="text-[#FFC900]">Voltage (V)</Label>
-              <Input 
-                id="voltage" 
-                type="number" 
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
-                placeholder="Enter voltage"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="current" className="text-[#FFC900]">Current (A)</Label>
-              <Input 
-                id="current" 
-                type="number" 
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
-                placeholder="Enter current"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="resistance" className="text-[#FFC900]">Resistance (Ω)</Label>
-              <Input 
-                id="resistance" 
-                type="number" 
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]" 
-                placeholder="Enter resistance"
-              />
-            </div>
-          </div>
+        <TabsContent value="ohms-law" className="mt-4">
+          <OhmsLawCalculator />
         </TabsContent>
 
         <TabsContent value="voltage-drop" className="space-y-4 mt-4">
