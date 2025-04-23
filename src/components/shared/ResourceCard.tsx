@@ -9,18 +9,19 @@ interface ResourceCardProps {
   title: string;
   description: string;
   icon: LucideIcon | React.ReactNode;
+  children?: React.ReactNode;
   action?: {
     label: string;
     onClick?: () => void;
     href?: string;
   };
-  fullCardLink?: string; // New prop to enable full card navigation
+  fullCardLink?: string; // Prop to enable full card navigation
 }
 
-const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
+const ResourceCard = ({ title, description, icon, children, action, fullCardLink }: ResourceCardProps) => {
   // If fullCardLink is provided, wrap the entire card content in a Link
   const CardWrapper = fullCardLink ? Link : React.Fragment;
-  const wrapperProps = fullCardLink ? { to: fullCardLink } : {};
+  const wrapperProps = fullCardLink ? { to: fullCardLink, className: "block h-full" } : {};
 
   return (
     <CardWrapper {...wrapperProps}>
@@ -30,11 +31,13 @@ const ResourceCard = ({ title, description, icon, action, fullCardLink }: Resour
             {React.isValidElement(icon) ? icon : null}
             <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
           </div>
-        </CardHeader>
-        <CardContent className="flex flex-col justify-between flex-grow pt-2">
-          <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
+          <CardDescription className="text-[#FFC900]/70 text-sm">
             {description}
           </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col justify-between flex-grow pt-2">
+          {children && <div className="mb-4">{children}</div>}
+          
           {action && (
             action.href ? (
               action.href.startsWith("#") ? (
