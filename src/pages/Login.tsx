@@ -10,21 +10,12 @@ import { Loader2 } from "lucide-react";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const Login = () => {
-  const { user, loading, refreshSession } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const { setPreferredRole } = useUserPreferences();
   const [redirectAttempted, setRedirectAttempted] = useState(false);
 
-  // On component mount, ensure we have the latest session
-  useEffect(() => {
-    console.log("Login - Component mounted, refreshing session");
-    refreshSession();
-    
-    // Clear any stale redirect flags
-    sessionStorage.removeItem('redirected_from_root');
-  }, [refreshSession]);
-  
   // Redirect authenticated users to apprentice hub
   useEffect(() => {
     if (!loading && user && !redirectAttempted) {
