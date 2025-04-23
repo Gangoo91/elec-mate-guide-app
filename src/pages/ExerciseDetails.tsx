@@ -50,26 +50,34 @@ const ExerciseDetails = () => {
       }
       
       // Process data to ensure step data is properly structured
-      const processedSteps = Array.isArray(data.steps) 
-        ? data.steps.map(step => {
-            // Ensure each step has the correct structure
-            if (typeof step === 'object' && step !== null) {
-              return {
-                step: Number(step.step) || 0,
-                instruction: String(step.instruction || '')
-              };
-            }
-            return { step: 0, instruction: '' };
-          })
-        : [];
+      const processedSteps: Step[] = [];
       
-      // Create a properly typed Exercise object
+      // Safely process steps data
+      if (data.steps && Array.isArray(data.steps)) {
+        data.steps.forEach((stepData: any) => {
+          if (typeof stepData === 'object' && stepData !== null) {
+            processedSteps.push({
+              step: Number(stepData.step || 0),
+              instruction: String(stepData.instruction || '')
+            });
+          }
+        });
+      }
+      
+      // Create a properly typed Exercise object with all required fields
       const processedData: Exercise = {
-        ...data,
+        id: data.id,
+        title: data.title,
+        description: data.description,
+        resource_type: data.resource_type,
         steps: processedSteps,
-        duration_minutes: typeof data.duration_minutes === 'number' ? data.duration_minutes : 5, // Default to 5 minutes
+        duration_minutes: data.duration_minutes as number | undefined,
         benefits: data.benefits || '',
-        tips: data.tips || ''
+        tips: data.tips || '',
+        reference_url: data.reference_url,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+        url: data.url
       };
       
       return processedData;

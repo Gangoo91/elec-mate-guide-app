@@ -104,11 +104,17 @@ export function useStressManagementResources() {
             if (item.steps) {
               const stepsData = typeof item.steps === 'string' ? JSON.parse(item.steps) : item.steps;
               if (Array.isArray(stepsData)) {
-                processedSteps = stepsData.map(step => ({
-                  step: Number(step.step) || 0,
+                processedSteps = stepsData.map((step: any) => ({
+                  step: Number(step.step || 0),
                   instruction: String(step.instruction || '')
                 }));
               }
+            }
+            
+            // Calculate duration_minutes safely
+            let duration = 5; // Default value
+            if ('duration_minutes' in item && typeof item.duration_minutes === 'number') {
+              duration = item.duration_minutes;
             }
             
             return {
@@ -117,7 +123,7 @@ export function useStressManagementResources() {
               description: item.description,
               category: item.resource_type || "general",
               difficulty_level: "beginner",
-              duration_minutes: typeof item.duration_minutes === 'number' ? item.duration_minutes : 5,
+              duration_minutes: duration,
               created_at: item.created_at,
               is_featured: false,
               steps: processedSteps,
