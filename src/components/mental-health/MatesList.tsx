@@ -15,13 +15,39 @@ export const MatesList = () => {
   const { data: mates, isLoading } = useQuery({
     queryKey: ["mental-health-mates"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // We need to get profiles separately since Supabase can't automatically join between tables
+      const { data: matesData, error: matesError } = await supabase
         .from("mental_health_mates")
-        .select("*, profiles(first_name, last_name)")
+        .select("*")
         .eq("is_available", true);
         
-      if (error) throw error;
-      return data;
+      if (matesError) throw matesError;
+      
+      // Get the profile data for each mate
+      const matesWithProfiles = await Promise.all(
+        matesData.map(async (mate) => {
+          const { data: profileData, error: profileError } = await supabase
+            .from("profiles")
+            .select("first_name, last_name")
+            .eq("id", mate.user_id)
+            .single();
+            
+          if (profileError) {
+            console.error("Error fetching profile:", profileError);
+            return {
+              ...mate,
+              profiles: { first_name: "Anonymous", last_name: "User" }
+            };
+          }
+          
+          return {
+            ...mate,
+            profiles: profileData
+          };
+        })
+      );
+      
+      return matesWithProfiles;
     },
   });
 
@@ -37,7 +63,7 @@ export const MatesList = () => {
       }
 
       const { error } = await supabase.from("mate_notifications").insert({
-        sender_id: user.id,  // Add the sender ID from authentication
+        sender_id: user.id,
         recipient_id: recipientId,
         message: "Hi! I would like to connect with you as a Mental Health Mate.",
       });
