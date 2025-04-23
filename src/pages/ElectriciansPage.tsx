@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Wrench, Heart, Book, Handshake, Users, MessageSquare } from "lucide-react";
+import { MessageSquare, Heart, Book, Handshake, Users } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import BackButton from "@/components/navigation/BackButton";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -9,10 +9,10 @@ const ElectriciansPage = () => {
   const resources = [
     {
       title: "Toolbox Talk",
-      description: "Short, focused safety discussions to promote workplace safety awareness and foster a culture of safety excellence.",
-      icon: <Wrench className="h-7 w-7 text-[#FFC900]" />,
+      description: "Join our community forum to discuss best practices, share experiences, and connect with fellow electricians.",
+      icon: <MessageSquare className="h-7 w-7 text-[#FFC900]" />,
       action: {
-        label: "Access Toolbox Talk",
+        label: "Join Discussion",
         href: "/electricians/toolbox-talk"
       }
     },
@@ -44,18 +44,9 @@ const ElectriciansPage = () => {
       }
     },
     {
-      title: "Community Hub",
-      description: "Connect with fellow electricians, share experiences, and participate in industry discussions.",
-      icon: <Users className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Join Community",
-        href: "/electricians/community"
-      }
-    },
-    {
       title: "Professional Development",
       description: "Advanced training courses, certifications, and specialization opportunities to enhance your career.",
-      icon: <MessageSquare className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Users className="h-7 w-7 text-[#FFC900]" />,
       action: {
         label: "Explore Development",
         href: "/electricians/development"
