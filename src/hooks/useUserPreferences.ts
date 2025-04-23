@@ -47,12 +47,16 @@ export const useUserPreferences = () => {
     
     // Listen for custom events for same-window updates
     const handlePreferredRoleChange = () => {
-      const newRole = localStorage.getItem('preferredRole');
-      console.log("Custom event detected for preferredRole:", newRole);
-      setPreferences(prev => ({
-        ...prev,
-        preferredRole: newRole,
-      }));
+      try {
+        const newRole = localStorage.getItem('preferredRole');
+        console.log("Custom event detected for preferredRole:", newRole);
+        setPreferences(prev => ({
+          ...prev,
+          preferredRole: newRole,
+        }));
+      } catch (error) {
+        console.error("Error handling preferredRole change:", error);
+      }
     };
     
     // Add event listeners
@@ -81,6 +85,9 @@ export const useUserPreferences = () => {
         ...prev,
         preferredRole: role,
       }));
+      
+      // Force-sync state immediately
+      document.cookie = `preferredRole=${role || ''}; path=/; max-age=3600; SameSite=Strict`;
       
       // Broadcast a custom event for same-window updates
       const event = new Event('preferredRoleChange');

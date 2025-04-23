@@ -44,18 +44,41 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
-  // Ensure the session is fresh when visiting dashboard
+  // Ensure the session is fresh when visiting dashboard and clear role preference
   useEffect(() => {
-    console.log("Dashboard - Component mounted, at path:", location.pathname);
-    refreshSession();
+    const initDashboard = async () => {
+      console.log("Dashboard - Component mounted, at path:", location.pathname);
+      await refreshSession();
+      
+      // Clear preferred role *immediately* when viewing the dashboard
+      console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
+      setPreferredRole(null);
+      
+      // Force a preferences refresh to ensure consistency
+      refreshPreferences();
+    };
     
-    // Always clear preferred role when viewing the dashboard
-    console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
-    setPreferredRole(null);
-    
-    // Force a preferences refresh to ensure consistency
-    refreshPreferences();
+    initDashboard();
   }, [refreshSession, setPreferredRole, location.pathname, refreshPreferences]);
+
+  // Prevent navigation back to dashboard when role is set
+  useEffect(() => {
+    const checkPath = async () => {
+      await refreshPreferences();
+      // If we're on dashboard but have a role set, navigate to that role's hub
+      if (location.pathname === '/dashboard') {
+        const storedRole = localStorage.getItem('preferredRole');
+        if (storedRole === 'apprentice') {
+          console.log("Dashboard - Detected apprentice role, redirecting to apprentice-hub");
+          navigate('/apprentice-hub', { replace: true });
+        }
+      }
+    };
+    
+    if (!loading && user) {
+      checkPath();
+    }
+  }, [location.pathname, navigate, loading, user, refreshPreferences]);
 
   // Handle role selection with direct navigation
   const handleRoleSelected = (role: any) => {

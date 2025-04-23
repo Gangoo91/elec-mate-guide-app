@@ -24,18 +24,23 @@ const ApprenticeHub = memo(() => {
       // IMPORTANT: Always set role to apprentice when on this page, even after reloads
       console.log("ApprenticeHub - Setting preferredRole to apprentice");
       setPreferredRole('apprentice');
-      setIsInitialized(true);
       
       // Force an immediate preferences refresh to ensure consistency
       refreshPreferences();
+      setIsInitialized(true);
     };
     
     initApprenticeHub();
-    
-    // Add a path change detection to ensure role is maintained
-    console.log("ApprenticeHub - Current path:", location.pathname);
-    
-  }, [refreshSession, setPreferredRole, location.pathname, refreshPreferences]);
+  }, [refreshSession, setPreferredRole, refreshPreferences]);
+  
+  // Additional check for role consistency any time the path changes
+  useEffect(() => {
+    if (isInitialized && isLoaded && preferences.preferredRole !== 'apprentice') {
+      console.log("ApprenticeHub - Role inconsistency detected, fixing...");
+      setPreferredRole('apprentice');
+      refreshPreferences();
+    }
+  }, [location.pathname, isInitialized, isLoaded, preferences.preferredRole, setPreferredRole, refreshPreferences]);
   
   // Additional check for user authentication
   useEffect(() => {
@@ -58,6 +63,7 @@ const ApprenticeHub = memo(() => {
   if (preferences.preferredRole !== 'apprentice') {
     console.log("ApprenticeHub - Role not set correctly, fixing...");
     setPreferredRole('apprentice');
+    refreshPreferences();
   }
   
   // Only render the page if we have a user

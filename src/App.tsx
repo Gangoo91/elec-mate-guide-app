@@ -70,12 +70,14 @@ const ScrollToTop = () => {
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
-  const { preferences, isLoaded } = useUserPreferences();
+  const { preferences, isLoaded, refreshPreferences } = useUserPreferences();
   
   useEffect(() => {
     console.log("PublicRoute - Component mounted");
     refreshSession();
-  }, [refreshSession]);
+    // Ensure preferences are fresh when checking routes
+    refreshPreferences();
+  }, [refreshSession, refreshPreferences]);
   
   useEffect(() => {
     if (!loading && user && isLoaded) {
@@ -102,6 +104,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
+  const { refreshPreferences } = useUserPreferences();
   const [authChecked, setAuthChecked] = useState(false);
   
   useEffect(() => {
@@ -109,6 +112,8 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
       try {
         await refreshSession();
+        // Also refresh preferences to ensure consistent state
+        refreshPreferences();
         setAuthChecked(true);
       } catch (error) {
         console.error("Error refreshing session:", error);
@@ -117,7 +122,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     };
     
     checkAuth();
-  }, [refreshSession]);
+  }, [refreshSession, refreshPreferences]);
   
   useEffect(() => {
     if (authChecked && !loading && !user) {
@@ -136,38 +141,35 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 const RootRedirect = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
-  const { preferences, isLoaded } = useUserPreferences();
+  const { preferences, isLoaded, refreshPreferences } = useUserPreferences();
   const location = useLocation();
   const [redirectChecked, setRedirectChecked] = useState(false);
   
+  // First effect: refresh session and preferences when component mounts
   useEffect(() => {
     console.log("RootRedirect - Component mounted, current path:", location.pathname);
-    // Only refresh if we're actually at the root path '/'
-    if (location.pathname === '/') {
-      const checkSession = async () => {
-        try {
-          await refreshSession();
-          setRedirectChecked(true);
-        } catch (error) {
-          console.error("Error in RootRedirect:", error);
-          setRedirectChecked(true);
-        }
-      };
-      
-      checkSession();
-    } else {
-      // We're not at the root, so no need to redirect
-      setRedirectChecked(true);
-    }
-  }, [refreshSession, location.pathname]);
+    
+    const initializeApp = async () => {
+      try {
+        // Always refresh both session and preferences on initial load
+        await refreshSession();
+        refreshPreferences();
+        setRedirectChecked(true);
+        console.log("RootRedirect - Session and preferences refreshed");
+      } catch (error) {
+        console.error("Error in RootRedirect initialization:", error);
+        setRedirectChecked(true);
+      }
+    };
+    
+    initializeApp();
+  }, [refreshSession, refreshPreferences]);
   
+  // Second effect: handle redirection logic once we have latest data
   useEffect(() => {
-    // Only redirect if we're at the root path '/'
-    if (location.pathname !== '/') {
+    if (!redirectChecked || loading || !isLoaded) {
       return;
     }
-    
-    if (!redirectChecked || loading || !isLoaded) return;
     
     console.log("RootRedirect - Ready to redirect, user:", user ? "authenticated" : "unauthenticated");
     
@@ -186,7 +188,7 @@ const RootRedirect = () => {
       console.log("RootRedirect - No user, navigating to welcome");
       navigate('/welcome', { replace: true });
     }
-  }, [user, loading, navigate, preferences.preferredRole, redirectChecked, location.pathname, isLoaded]);
+  }, [user, loading, navigate, preferences.preferredRole, redirectChecked, isLoaded]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };

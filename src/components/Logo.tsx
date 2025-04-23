@@ -40,7 +40,7 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
       const preferredRole = preferences.preferredRole;
       console.log("Logo clicked, user authenticated, preferredRole:", preferredRole);
       
-      // If we're already on the apprentice hub, stay there
+      // Force navigation based on current path and role
       if (location.pathname.includes('/apprentice') || preferredRole === 'apprentice') {
         console.log("Logo - Navigating to apprentice-hub based on current path or preferredRole");
         navigate('/apprentice-hub', { replace: true });
