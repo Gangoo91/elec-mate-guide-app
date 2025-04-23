@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -70,7 +71,11 @@ const Dashboard = () => {
     <MainLayout>
       <div className="container px-4 py-10 md:py-16">
         <DashboardHeroSection hideLogoOverride={true} hideButtons={true} />
-        <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
+        <DashboardRoleGrid 
+          roles={roles} 
+          filteredRoles={filteredRoles} 
+          className="mt-4" // Reduced top margin
+        />
       </div>
     </MainLayout>
   );

@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 type Role = {
   label: string;
@@ -14,13 +15,14 @@ type Role = {
 type DashboardRoleGridProps = {
   roles: Role[];
   filteredRoles: Role[];
+  className?: string;
 };
 
-const DashboardRoleGrid = ({ roles, filteredRoles }: DashboardRoleGridProps) => {
+const DashboardRoleGrid = ({ roles, filteredRoles, className }: DashboardRoleGridProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16">
+    <div className={cn("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16", className)}>
       <AnimatePresence>
         {filteredRoles.length === 0 && (
           <motion.div 
