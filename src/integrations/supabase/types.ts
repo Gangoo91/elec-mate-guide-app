@@ -72,6 +72,66 @@ export type Database = {
         }
         Relationships: []
       }
+      mate_notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          read: boolean | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          read?: boolean | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string
+          read?: boolean | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      mental_health_mates: {
+        Row: {
+          about_me: string | null
+          created_at: string | null
+          experience: string | null
+          id: string
+          is_available: boolean | null
+          specialties: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          about_me?: string | null
+          created_at?: string | null
+          experience?: string | null
+          id?: string
+          is_available?: boolean | null
+          specialties?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          about_me?: string | null
+          created_at?: string | null
+          experience?: string | null
+          id?: string
+          is_available?: boolean | null
+          specialties?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       mental_health_resources: {
         Row: {
           benefits: string | null

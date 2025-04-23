@@ -35,6 +35,7 @@ import StressManagement from "./pages/StressManagement";
 import SupportGroups from "./pages/SupportGroups";
 import ProfessionalResources from "./pages/ProfessionalResources";
 import ErrorBoundary from "./components/ErrorBoundary";
+import MentalHealthBuddy from "./pages/MentalHealthBuddy";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -93,7 +94,7 @@ const App = () => (
                 <Route path="/mental-health/stress-management" element={<StressManagement />} />
                 <Route path="/mental-health/support-groups" element={<SupportGroups />} />
                 <Route path="/mental-health/professional-resources" element={<ProfessionalResources />} />
-                <Route path="/mental-health/buddy" element={<NotFound />} />
+                <Route path="/mental-health/buddy" element={<MentalHealthBuddy />} />
                 
                 <Route path="/faq" element={<FAQ />} />
                 
