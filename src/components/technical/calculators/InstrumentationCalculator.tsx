@@ -79,6 +79,12 @@ const InstrumentationCalculator = () => {
     }
 
     setResult(`Calculated ${instrumentType} value: ${calculatedValue.toFixed(2)} ${unit}`);
+    
+    // Show success toast
+    toast({
+      title: "Calculation Complete",
+      description: `${instrumentType} value calculated successfully!`,
+    });
   };
 
   return (
