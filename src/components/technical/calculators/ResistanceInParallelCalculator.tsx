@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Power } from "lucide-react";
+import { Power, Trash2 } from "lucide-react";
 
 const ResistanceInParallelCalculator = () => {
   const [resistances, setResistances] = useState(['', '', '']);
@@ -47,24 +47,25 @@ const ResistanceInParallelCalculator = () => {
 
       <div className="space-y-4">
         {resistances.map((resistance, index) => (
-          <div key={index} className="flex items-center gap-4">
-            <div className="flex-1">
+          <div key={index} className="flex items-center space-x-2">
+            <div className="flex-grow">
               <label className="block text-[#FFC900] mb-2 text-sm">R{index + 1} (Ω)</label>
-              <div className="flex gap-4">
+              <div className="flex items-center space-x-2">
                 <Input
                   type="number"
                   value={resistance}
                   onChange={(e) => handleResistanceChange(index, e.target.value)}
-                  className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] h-10 rounded-md flex-1"
+                  className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] h-10 flex-grow"
                   placeholder={`Enter R${index + 1}`}
                 />
                 {resistances.length > 2 && (
                   <Button
                     onClick={() => removeResistor(index)}
-                    variant="outline"
-                    className="bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20 whitespace-nowrap px-4"
+                    variant="ghost"
+                    size="icon"
+                    className="text-red-500 hover:bg-red-500/10 w-8 h-8"
                   >
-                    Remove
+                    <Trash2 className="h-4 w-4" />
                   </Button>
                 )}
               </div>
@@ -72,17 +73,17 @@ const ResistanceInParallelCalculator = () => {
           </div>
         ))}
 
-        <div className="flex gap-4 pt-2">
+        <div className="flex justify-between items-center mt-4 space-x-2">
           <Button
             onClick={addResistor}
             variant="outline"
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10 flex-1"
+            className="flex-grow bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
           >
             Add Resistor
           </Button>
           <Button
             onClick={calculateTotalResistance}
-            className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium flex-1"
+            className="flex-grow bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
           >
             Calculate Total
           </Button>
