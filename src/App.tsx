@@ -3,6 +3,48 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth, AuthProvider } from "@/hooks/useAuth";
+import { useUserPreferences } from "@/hooks/useUserPreferences";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import { NotificationProvider } from "@/contexts/NotificationContext";
+
+import Welcome from "@/pages/Welcome";
+import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
+import ForgotPassword from "@/pages/ForgotPassword";
+import Dashboard from "@/pages/Dashboard";
+import ApprenticesPage from "@/pages/ApprenticesPage";
+import ApprenticeHub from "@/pages/ApprenticeHub";
+import ApprenticeMentalHealth from "@/pages/ApprenticeMentalHealth";
+import LearningHubPage from "@/pages/LearningHubPage";
+import AIToolsPage from "@/pages/AIToolsPage";
+import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
+import CoreUnitsPage from "@/pages/CoreUnitsPage";
+import PracticeExamsPage from "@/pages/PracticeExamsPage";
+import CertificationsPage from "@/pages/CertificationsPage";
+import ElectriciansPage from "@/pages/ElectriciansPage";
+import ElectriciansMentalHealth from "@/pages/ElectriciansMentalHealth";
+import ElectriciansToolboxTalk from "@/pages/ElectriciansToolboxTalk";
+import EmployersPage from "@/pages/EmployersPage";
+import MentalHealth from "@/pages/MentalHealth";
+import Mentorship from "@/pages/Mentorship";
+import FAQ from "@/pages/FAQ";
+import Profile from "@/pages/Profile";
+import ManageSubscription from "@/pages/ManageSubscription";
+import Subscription from "@/pages/Subscription";
+import SubscriptionSuccess from "@/pages/SubscriptionSuccess";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
+import NotFound from "@/pages/NotFound";
+
+import Unit201Page from "@/pages/study/nvq2/units/Unit201Page";
+import Unit202Page from "@/pages/study/nvq2/units/Unit202Page";
+import Unit203Page from "@/pages/study/nvq2/units/Unit203Page";
+import Unit204Page from "@/pages/study/nvq2/units/Unit204Page";
+import InteractiveLessonsPage from "@/pages/study/nvq2/InteractiveLessonsPage";
+import InteractiveLessonDetailPage from "@/pages/study/nvq2/InteractiveLessonDetailPage";
+import VideoContentPage from "@/pages/study/nvq2/VideoContentPage";
+import QuizzesProgressPage from "@/pages/study/nvq2/QuizzesProgressPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
