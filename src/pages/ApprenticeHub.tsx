@@ -11,38 +11,35 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
   const { refreshSession, user, loading } = useAuth();
-  const { setPreferredRole, preferences, isLoaded, refreshPreferences } = useUserPreferences();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
   const [isInitialized, setIsInitialized] = useState(false);
   
-  // Track page loads to detect reloads
+  // Track that we're on the apprentice hub page
   useEffect(() => {
+    console.log("ApprenticeHub - Component mounted");
     // Record that we've reached the apprentice hub
-    console.log("ApprenticeHub - Page loaded, recording page in sessionStorage");
     sessionStorage.setItem('currentPage', 'apprentice-hub');
-    sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
+    document.title = "Apprentice Hub"; // Update page title
     
-    // Clear any redirect flags that might interfere with navigation
+    // Clear any redirect flags
     sessionStorage.removeItem('redirected_from_root');
   }, []);
   
-  // Set apprentice role flag when visiting this page AND ensure the session is fresh
+  // Set apprentice role and ensure session is fresh
   useEffect(() => {
     const initApprenticeHub = async () => {
-      console.log("ApprenticeHub - Component mounted, refreshing session");
+      console.log("ApprenticeHub - Initializing, refreshing session");
       try {
-        // First refresh the auth session to ensure we have the latest user data
+        // First refresh the auth session
         await refreshSession();
         
-        // Force apprentice role setting in localStorage to ensure persistence across reloads
+        // Set apprentice role in localStorage for persistence
         console.log("ApprenticeHub - Setting preferredRole to apprentice");
         localStorage.setItem('preferredRole', 'apprentice');
         setPreferredRole('apprentice');
         
-        // Force an immediate preferences refresh to ensure consistency
+        // Force preference refresh
         refreshPreferences();
-        
-        // Add a reload detection flag to help with debugging
-        sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
       } catch (error) {
         console.error("Error initializing apprentice hub:", error);
       } finally {
@@ -50,38 +47,27 @@ const ApprenticeHub = memo(() => {
       }
     };
     
+    // Run initialization
     initApprenticeHub();
     
-    // Add a window load event listener to handle page reloads specifically
-    const handlePageReload = () => {
-      console.log("ApprenticeHub - Page reload detected");
-      // This ensures that even on reload, the role is set correctly
-      localStorage.setItem('preferredRole', 'apprentice');
-      setPreferredRole('apprentice');
-      
-      // Ensure we record the current page
-      sessionStorage.setItem('currentPage', 'apprentice-hub');
-      sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
+    // Add a special event listener just for this page to handle navigation events
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        // Page is being restored from cache (back/forward navigation)
+        console.log("ApprenticeHub - Page restored from cache");
+        localStorage.setItem('preferredRole', 'apprentice');
+        setPreferredRole('apprentice');
+      }
     };
     
-    window.addEventListener('load', handlePageReload);
-    
-    // Safety check - verify that we're on the right page after a short delay
-    const safetyCheck = setTimeout(() => {
-      const currentPage = sessionStorage.getItem('currentPage');
-      if (currentPage !== 'apprentice-hub') {
-        console.log("ApprenticeHub - Safety check detected wrong page, setting to apprentice-hub");
-        sessionStorage.setItem('currentPage', 'apprentice-hub');
-      }
-    }, 500);
+    window.addEventListener('pageshow', handlePageShow);
     
     return () => {
-      window.removeEventListener('load', handlePageReload);
-      clearTimeout(safetyCheck);
+      window.removeEventListener('pageshow', handlePageShow);
     };
   }, [refreshSession, setPreferredRole, refreshPreferences]);
   
-  // Additional check for user authentication
+  // Redirect if not authenticated
   useEffect(() => {
     if (isInitialized && !loading && !user) {
       console.log("ApprenticeHub - No user found, redirecting to login");
@@ -89,8 +75,8 @@ const ApprenticeHub = memo(() => {
     }
   }, [user, loading, navigate, isInitialized]);
   
-  // Show loading state if auth is still being checked
-  if (loading || !isInitialized || !isLoaded) {
+  // Show loading state
+  if (loading || !isInitialized) {
     return (
       <div className="flex items-center justify-center h-screen">
         <LoadingSpinner size="lg" message="Loading Apprentice Hub..." />
@@ -98,7 +84,7 @@ const ApprenticeHub = memo(() => {
     );
   }
   
-  // Only render the page if we have a user
+  // Only render if authenticated
   return user ? <ApprenticesPage /> : null;
 });
 

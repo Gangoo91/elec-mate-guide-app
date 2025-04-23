@@ -18,7 +18,11 @@ const Login = () => {
 
   // On component mount, ensure we have the latest session
   useEffect(() => {
+    console.log("Login - Component mounted, refreshing session");
     refreshSession();
+    
+    // Clear any stale redirect flags
+    sessionStorage.removeItem('redirected_from_root');
   }, [refreshSession]);
   
   // Redirect authenticated users to apprentice hub
@@ -41,7 +45,7 @@ const Login = () => {
     }
   }, [user, loading, navigate, setPreferredRole, redirectAttempted]);
 
-  // Memoize the logo component to prevent unnecessary re-renders
+  // Memoize the logo component 
   const MemoizedLogo = memo(() => (
     <Logo 
       size={70} 

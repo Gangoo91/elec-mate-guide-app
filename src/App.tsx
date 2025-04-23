@@ -7,6 +7,7 @@ import { useAuth, AuthProvider } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { NotificationProvider } from "@/contexts/NotificationContext";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 import Welcome from "@/pages/Welcome";
 import Login from "@/pages/Login";
@@ -135,39 +136,30 @@ const RootRedirect = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [redirected, setRedirected] = useState(false);
-  const { setPreferredRole, refreshPreferences } = useUserPreferences();
-  
-  const redirectKey = 'root_redirect_attempted';
-  const pageLoadKey = 'last_page_load_timestamp';
+  const { setPreferredRole } = useUserPreferences();
   
   useEffect(() => {
-    console.log("RootRedirect - Component mounted, refreshing session and preferences");
+    console.log("RootRedirect - Initial render, checking session");
     
-    const now = Date.now();
-    sessionStorage.setItem(pageLoadKey, now.toString());
+    sessionStorage.removeItem('redirected_from_root');
+    sessionStorage.removeItem('root_redirect_attempted');
     
-    const initRedirect = async () => {
+    const checkAuthAndRedirect = async () => {
       try {
         await refreshSession();
-        refreshPreferences();
         
-        if (!redirected) {
-          setRedirected(true);
+        if (user) {
+          console.log("RootRedirect - User authenticated, redirecting to apprentice-hub");
           
-          if (user) {
-            console.log("RootRedirect - User authenticated, setting role and redirecting to apprentice-hub");
-            localStorage.setItem('preferredRole', 'apprentice');
-            setPreferredRole('apprentice');
-            
-            setTimeout(() => {
-              sessionStorage.setItem(redirectKey, 'true');
-              navigate('/apprentice-hub', { replace: true });
-            }, 50);
-          } else {
-            console.log("RootRedirect - No user, redirecting to welcome");
-            sessionStorage.setItem(redirectKey, 'true');
-            navigate('/welcome', { replace: true });
-          }
+          localStorage.setItem('preferredRole', 'apprentice');
+          setPreferredRole('apprentice');
+          
+          sessionStorage.setItem('redirected_from_root', 'true');
+          navigate('/apprentice-hub', { replace: true });
+        } else {
+          console.log("RootRedirect - No authenticated user, redirecting to welcome");
+          sessionStorage.setItem('redirected_from_root', 'true');
+          navigate('/welcome', { replace: true });
         }
       } catch (error) {
         console.error("Error in RootRedirect:", error);
@@ -175,27 +167,16 @@ const RootRedirect = () => {
       }
     };
     
-    const clearRedirectFlag = () => {
-      const lastRedirect = sessionStorage.getItem(redirectKey);
-      if (lastRedirect) {
-        setTimeout(() => {
-          sessionStorage.removeItem(redirectKey);
-        }, 2000);
-      }
-    };
-    
-    clearRedirectFlag();
-    initRedirect();
-    
-    return () => {
-    };
-  }, [user, loading, navigate, redirected, refreshSession, refreshPreferences, setPreferredRole]);
+    if (!redirected) {
+      setRedirected(true);
+      checkAuthAndRedirect();
+    }
+  }, []);
   
   return (
     <div className="flex items-center justify-center h-screen bg-[#151812]">
       <div className="text-[#FFC900] flex flex-col items-center">
-        <div className="h-8 w-8 border-4 border-[#FFC900] border-t-transparent rounded-full animate-spin mb-3"></div>
-        <p>Redirecting...</p>
+        <LoadingSpinner size="md" message="Redirecting..." />
       </div>
     </div>
   );
