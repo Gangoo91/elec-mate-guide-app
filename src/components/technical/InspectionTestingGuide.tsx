@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -49,34 +50,43 @@ const InspectionTestingGuide: React.FC = () => {
     return checklist
       .split('\n')
       .map((line, index) => {
+        // Section headers
         if (line.startsWith('## ')) {
-          return `<h2 class="text-xl font-bold mt-4 mb-2 text-[#FFC900] flex items-center">
-            <InfoIcon className="mr-2 text-[#FFC900]" /> ${line.replace('## ', '')}
-          </h2>`;
+          return `<div class="bg-[#2C2F24]/80 border-l-4 border-[#FFC900] pl-3 py-2 rounded-sm mt-6 mb-3">
+            <h2 class="text-xl font-bold text-[#FFC900] flex items-center">
+              <InfoIcon class="mr-2 h-5 w-5 text-[#FFC900]" /> ${line.replace('## ', '')}
+            </h2>
+          </div>`;
         }
         
+        // Numbered list items
         if (/^\d+\./.test(line.trim())) {
-          return `<li class="flex items-start mb-2">
-            <CheckCircle className="mr-2 mt-1 text-green-500 flex-shrink-0" /> 
-            <span>${line.replace(/^\d+\.\s*/, '')}</span>
-          </li>`;
+          return `<div class="flex items-start mb-3 ml-2">
+            <CheckCircle class="mr-2 mt-1 h-5 w-5 text-green-500 flex-shrink-0" /> 
+            <span class="text-[#FFC900]/90">${line.replace(/^\d+\.\s*/, '')}</span>
+          </div>`;
         }
         
+        // Pass/fail criteria
         if (line.toLowerCase().includes('pass/fail')) {
-          return `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-2 flex items-center">
-            <AlertCircle className="mr-2 text-yellow-500" /> 
+          return `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-3 flex items-center">
+            <AlertCircle class="mr-2 h-5 w-5 text-yellow-500 flex-shrink-0" /> 
             <span class="text-[#FFC900]/90">${line}</span>
           </div>`;
         }
         
+        // Regulatory references
         if (line.includes('BS 7671')) {
-          return `<div class="text-sm text-[#FFC900]/70 italic my-2 flex items-center">
-            <InfoIcon className="mr-2 text-[#FFC900]/50" /> 
+          return `<div class="text-sm text-[#FFC900]/70 italic my-2 flex items-center bg-[#2C2F24]/50 border-l-2 border-[#FFC900]/30 pl-2 py-1 rounded-sm">
+            <InfoIcon class="mr-2 h-4 w-4 text-[#FFC900]/50 flex-shrink-0" /> 
             ${line}
           </div>`;
         }
         
-        return line ? `<p class="mb-2 text-[#FFC900]/90">${line}</p>` : '';
+        // Regular paragraphs
+        return line.trim() ? 
+          `<p class="mb-3 text-[#FFC900]/90 ml-2">${line}</p>` : 
+          '<div class="h-2"></div>';
       })
       .filter(line => line.trim() !== '')
       .join('');
@@ -108,7 +118,7 @@ const InspectionTestingGuide: React.FC = () => {
           {isLoading ? (
             <>
               <LoadingSpinner size="sm" className="mr-2" />
-              Generating Guide...
+              Generating...
             </>
           ) : (
             <>
@@ -122,7 +132,7 @@ const InspectionTestingGuide: React.FC = () => {
           <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">
             <CardContent className="pt-6">
               <div 
-                className="prose prose-invert max-w-none text-[#FFC900]/90 space-y-4"
+                className="checklist-content text-[#FFC900]/90 space-y-1"
                 dangerouslySetInnerHTML={{ 
                   __html: formatChecklist(checklist)
                 }} 
