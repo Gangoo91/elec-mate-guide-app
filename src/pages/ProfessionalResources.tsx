@@ -4,7 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import { handshake, users } from "lucide-react";
+import { Handshake, Users } from "lucide-react";
 
 const ProfessionalResources = () => {
   return (
@@ -20,7 +20,7 @@ const ProfessionalResources = () => {
           <Card className="border-[#FFC900]/20 bg-[#22251e]">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4">
-                <users className="h-5 w-5 text-[#FFC900]" />
+                <Users className="h-5 w-5 text-[#FFC900]" />
                 <h3 className="text-xl font-semibold text-[#FFC900]">Crisis Support Hotlines</h3>
               </div>
               <p className="text-[#FFC900]/90 mb-4">
@@ -59,7 +59,7 @@ const ProfessionalResources = () => {
           <Card className="border-[#FFC900]/20 bg-[#22251e]">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4">
-                <handshake className="h-5 w-5 text-[#FFC900]" />
+                <Handshake className="h-5 w-5 text-[#FFC900]" />
                 <h3 className="text-xl font-semibold text-[#FFC900]">Support Groups</h3>
               </div>
               <div className="space-y-4">
@@ -86,7 +86,7 @@ const ProfessionalResources = () => {
           <Card className="border-[#FFC900]/20 bg-[#22251e]">
             <CardContent className="p-6">
               <div className="flex items-center gap-2 mb-4">
-                <handshake className="h-5 w-5 text-[#FFC900]" />
+                <Handshake className="h-5 w-5 text-[#FFC900]" />
                 <h3 className="text-xl font-semibold text-[#FFC900]">Find a Professional</h3>
               </div>
               <p className="text-[#FFC900]/90 mb-4">
