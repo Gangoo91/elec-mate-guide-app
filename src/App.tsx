@@ -13,6 +13,7 @@ import Welcome from "@/pages/Welcome";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import ForgotPassword from "@/pages/ForgotPassword";
+import Dashboard from "@/pages/Dashboard";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/ApprenticeMentalHealth";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -35,6 +36,7 @@ import SubscriptionSuccess from "@/pages/SubscriptionSuccess";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import NotFound from "@/pages/NotFound";
+import RootRedirect from "@/pages/RootRedirect";
 
 import Unit201Page from "@/pages/study/nvq2/units/Unit201Page";
 import Unit202Page from "@/pages/study/nvq2/units/Unit202Page";
@@ -73,9 +75,9 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && user && isLoaded && !redirectAttempted) {
-      console.log("PublicRoute - User authenticated, redirecting to apprentice-hub");
+      console.log("PublicRoute - User authenticated, redirecting to dashboard");
       setRedirectAttempted(true);
-      navigate('/apprentice-hub', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   }, [user, loading, navigate, isLoaded, redirectAttempted]);
   
@@ -116,40 +118,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return user ? <>{children}</> : null;
 };
 
-const RootRedirect = () => {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  const { setPreferredRole, refreshPreferences } = useUserPreferences();
-  const [redirectHandled, setRedirectHandled] = useState(false);
-  
-  useEffect(() => {
-    if (!loading && !redirectHandled) {
-      setRedirectHandled(true);
-      
-      if (user) {
-        console.log("RootRedirect - User authenticated, redirecting to apprentice-hub");
-        refreshPreferences();
-        localStorage.setItem('preferredRole', 'apprentice');
-        setPreferredRole('apprentice');
-        setTimeout(() => {
-          navigate('/apprentice-hub', { replace: true });
-        }, 100);
-      } else {
-        console.log("RootRedirect - No authenticated user, redirecting to welcome");
-        navigate('/welcome', { replace: true });
-      }
-    }
-  }, [loading, user, navigate, setPreferredRole, redirectHandled, refreshPreferences]);
-  
-  return (
-    <div className="flex items-center justify-center h-screen bg-[#151812]">
-      <div className="text-[#FFC900] flex flex-col items-center">
-        <LoadingSpinner size="md" message="Redirecting..." />
-      </div>
-    </div>
-  );
-};
-
 const App = () => (
   <ErrorBoundary>
     <AuthProvider>
@@ -161,13 +129,13 @@ const App = () => (
               <ScrollToTop />
               <Routes>
                 <Route path="/" element={<RootRedirect />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                 <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 
-                <Route path="/dashboard/*" element={<Navigate to="/apprentice-hub" replace />} />
+                <Route path="/dashboard/*" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />
                 
                 <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />
