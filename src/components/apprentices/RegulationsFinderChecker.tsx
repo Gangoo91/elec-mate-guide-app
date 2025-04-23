@@ -118,3 +118,6 @@ const RegulationsFinderChecker: React.FC = () => {
       </CardContent>
     </Card>
   );
+};
+
+export default RegulationsFinderChecker;
