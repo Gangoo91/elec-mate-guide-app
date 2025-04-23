@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,7 +14,6 @@ export const MatesList = () => {
   const { data: mates, isLoading } = useQuery({
     queryKey: ["mental-health-mates"],
     queryFn: async () => {
-      // We need to get profiles separately since Supabase can't automatically join between tables
       const { data: matesData, error: matesError } = await supabase
         .from("mental_health_mates")
         .select("*")
@@ -23,7 +21,6 @@ export const MatesList = () => {
         
       if (matesError) throw matesError;
       
-      // Get the profile data for each mate
       const matesWithProfiles = await Promise.all(
         matesData.map(async (mate) => {
           const { data: profileData, error: profileError } = await supabase
@@ -95,7 +92,9 @@ export const MatesList = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <UserCheck className="h-5 w-5 text-[#FFC900]" />
-              {mate.profiles?.first_name || 'Anonymous'} {mate.profiles?.last_name || 'User'}
+              <span className="text-[#FFC900]">
+                {mate.profiles?.first_name || 'Anonymous'} {mate.profiles?.last_name || 'User'}
+              </span>
             </CardTitle>
             <CardDescription className="line-clamp-2">{mate.about_me}</CardDescription>
           </CardHeader>
