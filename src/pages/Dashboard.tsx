@@ -2,11 +2,9 @@
 import React, { useEffect } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
-import { useToast } from "@/hooks/use-toast";
 
 const roles = [
   {
@@ -30,7 +28,6 @@ const roles = [
 ];
 
 const Dashboard = () => {
-  const { toast } = useToast();
   const { isReady } = useDashboardController();
   const {
     query,
@@ -54,11 +51,10 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // If not ready yet, show a minimal loading state
   if (!isReady) {
     return (
       <MainLayout>
-        <div className="container px-4 py-10 md:py-16">
+        <div className="container px-4 py-4">
           <div className="flex items-center justify-center h-screen">
             <div className="animate-pulse">Loading dashboard...</div>
           </div>
@@ -69,12 +65,10 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-10 md:py-16">
-        <DashboardHeroSection hideLogoOverride={true} hideButtons={true} />
+      <div className="container px-4 py-4">
         <DashboardRoleGrid 
           roles={roles} 
-          filteredRoles={filteredRoles} 
-          className="mt-4" // Reduced top margin
+          filteredRoles={filteredRoles}
         />
       </div>
     </MainLayout>
