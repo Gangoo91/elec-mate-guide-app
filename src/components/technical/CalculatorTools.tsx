@@ -18,10 +18,10 @@ const CalculatorTools = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string>('ohms-law');
 
   const calculators = {
-    'ohms-law': { title: "Ohm's Law Calculator", component: <OhmsLawCalculator /> },
-    'voltage-drop': { title: "Voltage Drop Calculator", component: <VoltageDropCalculator /> },
-    'impedance': { title: "Earth Loop Impedance Calculator", component: <ImpedanceCalculator /> },
-    'instrumentation': { title: "Instrumentation Calculator", component: <InstrumentationCalculator /> }
+    'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator /> },
+    'voltage-drop': { title: "Voltage Drop", component: <VoltageDropCalculator /> },
+    'impedance': { title: "Loop Impedance", component: <ImpedanceCalculator /> },
+    'instrumentation': { title: "Instrumentation", component: <InstrumentationCalculator /> }
   };
 
   return (
@@ -63,4 +63,3 @@ const CalculatorTools = () => {
 };
 
 export default CalculatorTools;
-
