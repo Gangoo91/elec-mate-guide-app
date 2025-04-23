@@ -1,3 +1,4 @@
+
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -15,14 +16,6 @@ const MentalHealth = () => {
           title="Mental Health Hub"
           description="Support and resources tailored for electrical professionals"
         />
-
-        {/* New section for Electricians Hub context */}
-        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6 mb-8 text-center">
-          <p className="text-[#FFC900]/80 mb-4">
-            As part of our commitment to electrical professionals, this Mental Health Hub is integrated 
-            with the Electricians Hub to provide comprehensive support for your well-being and career growth.
-          </p>
-        </div>
 
         {/* Mental Health Mate Section */}
         <div className="mb-12">
