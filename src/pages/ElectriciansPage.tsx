@@ -11,46 +11,31 @@ const ElectriciansPage = () => {
       title: "Technical Tools",
       description: "Access the latest technical resources, code updates, and specialized tools for electrical installations.",
       icon: <Book className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "View Technical Tools",
-        href: "/electricians/technical-tools"
-      }
+      fullCardLink: "/electricians/technical-tools"
     },
     {
       title: "Toolbox Talk",
       description: "Join our community forum to discuss best practices, share experiences, and connect with fellow electricians.",
       icon: <MessageSquare className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Join Discussion",
-        href: "/electricians/toolbox-talk"
-      }
+      fullCardLink: "/electricians/toolbox-talk"
     },
     {
       title: "Mental Health Hub",
       description: "Resources and support for mental wellbeing tailored to the unique challenges faced by electrical professionals.",
       icon: <Heart className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Visit Mental Health Hub",
-        href: "/electricians/mental-health"
-      }
+      fullCardLink: "/electricians/mental-health"
     },
     {
       title: "Mentor Connect",
       description: "Guide apprentices, share your expertise, and earn recognition while helping shape the next generation of electricians.",
       icon: <Handshake className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Join Mentor Connect",
-        href: "/electricians/mentor-connect"
-      }
+      fullCardLink: "/electricians/mentor-connect"
     },
     {
       title: "Professional Development",
       description: "Advanced training courses, certifications, and specialization opportunities to enhance your career.",
       icon: <Users className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Explore Development",
-        href: "/electricians/development"
-      }
+      fullCardLink: "/electricians/development"
     }
   ];
 
@@ -64,6 +49,9 @@ const ElectriciansPage = () => {
             <ResourceCard
               key={index}
               {...resource}
+              title={resource.title}
+              description={resource.description}
+              icon={resource.icon}
             />
           ))}
         </div>
