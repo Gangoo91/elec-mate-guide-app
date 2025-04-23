@@ -18,19 +18,19 @@ const ApprenticeHub = memo(() => {
   useEffect(() => {
     const initApprenticeHub = async () => {
       console.log("ApprenticeHub - Component mounted, refreshing session");
-      await refreshSession();
-      
-      // Force apprentice role setting in localStorage to ensure persistence across reloads
       try {
+        await refreshSession();
+        
+        // Force apprentice role setting in localStorage to ensure persistence across reloads
         console.log("ApprenticeHub - Setting preferredRole to apprentice");
         localStorage.setItem('preferredRole', 'apprentice');
         setPreferredRole('apprentice');
         
         // Force an immediate preferences refresh to ensure consistency
         refreshPreferences();
-        setIsInitialized(true);
       } catch (error) {
-        console.error("Error setting preferredRole:", error);
+        console.error("Error initializing apprentice hub:", error);
+      } finally {
         setIsInitialized(true);
       }
     };

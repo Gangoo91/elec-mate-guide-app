@@ -18,14 +18,17 @@ export const useUserPreferences = () => {
   useEffect(() => {
     const loadPreferences = () => {
       try {
-        const storedPreferredRole = localStorage.getItem('preferredRole') || 'apprentice'; // Default to apprentice if not set
+        const storedPreferredRole = localStorage.getItem('preferredRole');
         console.log("Loading preferences from localStorage:", storedPreferredRole);
         
+        // Always default to 'apprentice' if no role is set or if it's null
+        const finalRole = storedPreferredRole || 'apprentice';
+        
         setPreferences({
-          preferredRole: storedPreferredRole,
+          preferredRole: finalRole,
         });
         
-        // Ensure there's always at least a default role
+        // Ensure there's always the default role
         if (!storedPreferredRole) {
           localStorage.setItem('preferredRole', 'apprentice');
         }
@@ -37,6 +40,14 @@ export const useUserPreferences = () => {
         setPreferences({
           preferredRole: 'apprentice',
         });
+        
+        // Try to set the default in localStorage
+        try {
+          localStorage.setItem('preferredRole', 'apprentice');
+        } catch (e) {
+          console.error("Failed to write to localStorage:", e);
+        }
+        
         setIsLoaded(true);
       }
     };
@@ -97,7 +108,8 @@ export const useUserPreferences = () => {
     try {
       console.log("Setting preferredRole:", role);
       
-      const finalRole = role || 'apprentice'; // Default to apprentice if null is passed
+      // Always default to 'apprentice' if null is passed
+      const finalRole = role || 'apprentice';
       
       localStorage.setItem('preferredRole', finalRole);
       
@@ -120,12 +132,20 @@ export const useUserPreferences = () => {
   // Additional method to force refresh preferences from localStorage
   const refreshPreferences = useCallback(() => {
     try {
-      const storedPreferredRole = localStorage.getItem('preferredRole') || 'apprentice';
+      const storedPreferredRole = localStorage.getItem('preferredRole');
       console.log("Refreshing preferences from localStorage:", storedPreferredRole);
       
+      // Always default to 'apprentice' if no role is set or if it's null
+      const finalRole = storedPreferredRole || 'apprentice';
+      
       setPreferences({
-        preferredRole: storedPreferredRole,
+        preferredRole: finalRole,
       });
+      
+      // Ensure the default is set in localStorage
+      if (!storedPreferredRole) {
+        localStorage.setItem('preferredRole', 'apprentice');
+      }
     } catch (error) {
       console.error("Error refreshing preferences:", error);
       

@@ -23,10 +23,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initialized, setInitialized] = useState(false);
 
-  // Function to refresh the session manually
+  // Function to refresh the session manually - improved with better error handling
   const refreshSession = useCallback(async () => {
     try {
+      console.log("Manually refreshing auth session");
       const { data, error } = await supabase.auth.getSession();
       if (error) throw error;
       
@@ -37,10 +39,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (data.session?.user) {
         sessionStorage.setItem('userAuthData', JSON.stringify(data.session.user));
         sessionStorage.setItem('userAuthenticated', 'true');
+        console.log("Session refreshed - user is authenticated");
       } else {
         sessionStorage.removeItem('userAuthData');
         sessionStorage.removeItem('userAuthenticated');
+        console.log("Session refreshed - no authenticated user");
       }
+      return data;
     } catch (error) {
       console.error("Error refreshing session:", error);
       // Clear user data on error to ensure we don't have stale data
@@ -48,13 +53,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(null);
       sessionStorage.removeItem('userAuthData');
       sessionStorage.removeItem('userAuthenticated');
+      throw error;
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    console.log("Auth provider initialized");
+    if (initialized) return;
+    console.log("Auth provider initializing");
     
     // Check sessionStorage first for a faster initial state
     const hasAuthenticated = sessionStorage.getItem('userAuthenticated') === 'true';
@@ -64,9 +71,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
-          setLoading(false); // Reduce flicker while waiting for the auth check
+          console.log("Retrieved user from sessionStorage");
         } catch (e) {
-          // Invalid stored data, will be fixed by the auth check
+          console.error("Error parsing stored user data:", e);
+          sessionStorage.removeItem('userAuthData');
+          sessionStorage.removeItem('userAuthenticated');
         }
       }
     }
@@ -115,6 +124,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         sessionStorage.removeItem('userAuthenticated');
       } finally {
         setLoading(false);
+        setInitialized(true);
       }
     };
     
@@ -125,6 +135,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (loading) {
         console.log("Auth loading timeout triggered");
         setLoading(false);
+        setInitialized(true);
       }
     }, 2000);
 
@@ -132,7 +143,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       subscription.unsubscribe();
       clearTimeout(safetyTimer);
     };
-  }, []);
+  }, [initialized]);
 
   return (
     <AuthContext.Provider value={{ session, user, loading, refreshSession }}>

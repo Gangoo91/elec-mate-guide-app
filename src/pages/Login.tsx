@@ -13,34 +13,30 @@ const Login = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const { preferences } = useUserPreferences();
+  const { setPreferredRole } = useUserPreferences();
 
   // On component mount, ensure we have the latest session
   useEffect(() => {
     refreshSession();
   }, [refreshSession]);
   
-  // Redirect authenticated users based on preferred role
+  // Redirect authenticated users to apprentice hub
   useEffect(() => {
     if (!loading && user) {
       setIsRedirecting(true);
-      const preferredRole = preferences.preferredRole;
-      console.log("Login - User authenticated, preferred role:", preferredRole);
+      console.log("Login - User authenticated, redirecting to apprentice hub");
+      
+      // Set preferred role to apprentice
+      setPreferredRole('apprentice');
       
       // Add a small delay to show loading state and prevent jarring transitions
       const redirectTimeout = setTimeout(() => {
-        if (preferredRole === 'apprentice') {
-          console.log("Login - Redirecting to apprentice hub");
-          navigate("/apprentice-hub", { replace: true });
-        } else {
-          console.log("Login - Redirecting to dashboard");
-          navigate("/dashboard", { replace: true });
-        }
+        navigate("/apprentice-hub", { replace: true });
       }, 300);
       
       return () => clearTimeout(redirectTimeout);
     }
-  }, [user, loading, navigate, preferences.preferredRole]);
+  }, [user, loading, navigate, setPreferredRole]);
 
   // Memoize the logo component to prevent unnecessary re-renders
   const MemoizedLogo = memo(() => (
@@ -69,7 +65,7 @@ const Login = () => {
             {isRedirecting ? (
               <div className="flex flex-col items-center justify-center py-4">
                 <Loader2 className="h-8 w-8 animate-spin text-[#FFC900] mb-3" />
-                <p className="text-[#FFC900]/70">Redirecting to your dashboard...</p>
+                <p className="text-[#FFC900]/70">Redirecting to Apprentice Hub...</p>
               </div>
             ) : (
               <LoginForm />
