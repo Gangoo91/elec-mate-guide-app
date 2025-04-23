@@ -8,6 +8,15 @@ import ResourceCard from "@/components/shared/ResourceCard";
 const ElectriciansPage = () => {
   const resources = [
     {
+      title: "Technical Tools",
+      description: "Access the latest technical resources, code updates, and specialized tools for electrical installations.",
+      icon: <Book className="h-7 w-7 text-[#FFC900]" />,
+      action: {
+        label: "View Technical Tools",
+        href: "/electricians/technical-tools"
+      }
+    },
+    {
       title: "Toolbox Talk",
       description: "Join our community forum to discuss best practices, share experiences, and connect with fellow electricians.",
       icon: <MessageSquare className="h-7 w-7 text-[#FFC900]" />,
@@ -23,15 +32,6 @@ const ElectriciansPage = () => {
       action: {
         label: "Visit Mental Health Hub",
         href: "/electricians/mental-health"
-      }
-    },
-    {
-      title: "Technical Tools",
-      description: "Access the latest technical resources, code updates, and specialized tools for electrical installations.",
-      icon: <Book className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "View Technical Tools",
-        href: "/electricians/technical-tools"
       }
     },
     {
