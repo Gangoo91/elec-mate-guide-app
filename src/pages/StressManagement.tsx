@@ -2,9 +2,14 @@
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card, CardContent } from "@/components/ui/card";
+import { useStressManagementResources, useDailyFeaturedExercise } from "@/hooks/useStressManagementResources";
+import ExerciseCard from "@/components/stress/ExerciseCard";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const StressManagement = () => {
+  const { data: resources, isLoading } = useStressManagementResources();
+  const { data: dailyExercise, isLoading: isDailyLoading } = useDailyFeaturedExercise();
+
   return (
     <MainLayout>
       <div className="container py-8">
@@ -12,36 +17,32 @@ const StressManagement = () => {
           title="Stress Management"
           description="Tools and techniques for managing work-related stress"
         />
-        
-        <div className="grid gap-6 md:grid-cols-2">
-          <Card className="border-[#FFC900]/20 bg-[#22251e]">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4 text-[#FFC900]">Breathing Exercises</h3>
-              <p className="text-[#FFC900]/90 mb-6">
-                Simple breathing techniques you can use anywhere to help manage stress and anxiety during work.
-              </p>
-              <ul className="space-y-4 text-[#FFC900]/80">
-                <li>• Box Breathing (4-4-4-4 method)</li>
-                <li>• Deep Diaphragmatic Breathing</li>
-                <li>• Alternate Nostril Breathing</li>
-              </ul>
-            </CardContent>
-          </Card>
 
-          <Card className="border-[#FFC900]/20 bg-[#22251e]">
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-4 text-[#FFC900]">Mindfulness Practices</h3>
-              <p className="text-[#FFC900]/90 mb-6">
-                Quick mindfulness exercises you can practice during breaks or after work.
-              </p>
-              <ul className="space-y-4 text-[#FFC900]/80">
-                <li>• 5-Minute Body Scan</li>
-                <li>• Mindful Walking</li>
-                <li>• Grounding Techniques</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
+        {(isLoading || isDailyLoading) ? (
+          <div className="flex justify-center items-center h-40">
+            <LoadingSpinner size="lg" />
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {/* Daily Featured Exercise */}
+            {dailyExercise && (
+              <section>
+                <h2 className="text-xl font-semibold mb-4 text-[#FFC900]">Today's Featured Exercise</h2>
+                <ExerciseCard exercise={dailyExercise} isFeatured />
+              </section>
+            )}
+
+            {/* All Exercises Grid */}
+            <section>
+              <h2 className="text-xl font-semibold mb-4 text-[#FFC900]">All Techniques</h2>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {resources?.map((exercise) => (
+                  <ExerciseCard key={exercise.id} exercise={exercise} />
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
       </div>
     </MainLayout>
   );
