@@ -56,9 +56,7 @@ const OhmsLawCalculator = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-2xl font-bold text-[#FFC900] mb-4">Ohm's Law Solver</div>
-      
+    <div className="space-y-4">
       <div className="mb-4">
         <Label className="text-[#FFC900] mb-2 block">Solve for</Label>
         <Select value={solveFor} onValueChange={handleSolveForChange}>
@@ -121,7 +119,7 @@ const OhmsLawCalculator = () => {
         </Button>
 
         {result && Object.keys(result).length > 0 && (
-          <div className="mt-4 p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+          <div className="mt-2 p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
             {result.voltage && (
               <div className="text-[#FFC900]">Voltage = {result.voltage.toFixed(2)} V</div>
             )}
