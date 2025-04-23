@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -70,14 +69,23 @@ const Navbar = () => {
     navigate('/apprentice-hub', { replace: true });
   };
 
+  const handleElectriciansClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setPreferredRole(null);
+    navigate('/electricians', { replace: true });
+  };
+
+  const handleEmployersClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setPreferredRole(null);
+    navigate('/employers', { replace: true });
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b border-[#FFC900]/20 bg-[#151812]/95 backdrop-blur supports-[backdrop-filter]:bg-[#151812]/60">
-      <div className={`container flex h-16 items-center justify-between ${isHiddenUserMenuPath ? 'justify-center' : 'justify-between'}`}>
+      <div className={`container flex h-16 items-center ${isHiddenUserMenuPath ? 'justify-center' : 'justify-between'}`}>
         <div className={`flex items-center gap-6 ${isHiddenUserMenuPath ? 'justify-center w-full' : 'justify-start w-auto'}`}>
-          <div onClick={handleHomeClick} className="flex items-center space-x-2 cursor-pointer">
-            <Logo size={36} />
-            <span className="text-xl font-bold text-[#FFC900]">Elec-Mate</span>
-          </div>
+          <Logo size={36} />
 
           {!isHiddenUserMenuPath && (
             <NavigationMenu className="hidden md:flex">
@@ -85,69 +93,76 @@ const Navbar = () => {
                 {user && (
                   <>
                     <NavigationMenuItem>
-                      <div 
+                      <Button
+                        variant="ghost"
                         onClick={handleApprenticeHubClick}
-                        className="cursor-pointer"
+                        className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') || location.pathname.includes('/apprentices/') ? 'bg-[#FFC900]/10' : ''}`}
                       >
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/apprentice-hub') || location.pathname.includes('/apprentices/') ? 'bg-[#FFC900]/10' : ''}`}>
-                          Apprentice Hub
-                        </NavigationMenuLink>
-                      </div>
+                        Apprentice Hub
+                      </Button>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <div 
-                        onClick={() => {
-                          setPreferredRole(null);
-                          navigate('/electricians', { replace: true });
-                        }}
-                        className="cursor-pointer"
+                      <Button
+                        variant="ghost"
+                        onClick={handleElectriciansClick}
+                        className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') || location.pathname.includes('/electricians/') ? 'bg-[#FFC900]/10' : ''}`}
                       >
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') || location.pathname.includes('/electricians/') ? 'bg-[#FFC900]/10' : ''}`}>
-                          Electricians
-                        </NavigationMenuLink>
-                      </div>
+                        Electricians
+                      </Button>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <div 
-                        onClick={() => {
-                          setPreferredRole(null);
-                          navigate('/employers', { replace: true });
-                        }}
-                        className="cursor-pointer"
+                      <Button
+                        variant="ghost"
+                        onClick={handleEmployersClick}
+                        className={`${navigationMenuTriggerStyle()} ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''}`}
                       >
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''}`}>
-                          Employers
-                        </NavigationMenuLink>
-                      </div>
+                        Employers
+                      </Button>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                       <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
                       <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[600px] lg:grid-cols-2">
-                          <li className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer" onClick={() => navigate('/apprentices/learning-hub')}>
+                          <Button
+                            variant="ghost"
+                            onClick={() => navigate('/apprentices/learning-hub')}
+                            className="justify-start block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground"
+                          >
                             <div className="text-sm font-medium leading-none text-[#FFC900]">Training</div>
                             <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                               Professional development courses
                             </p>
-                          </li>
-                          <li className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer" onClick={() => navigate('/apprentices/certifications')}>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={() => navigate('/apprentices/certifications')}
+                            className="justify-start block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground"
+                          >
                             <div className="text-sm font-medium leading-none text-[#FFC900]">Certification</div>
                             <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                               Industry-recognized certifications
                             </p>
-                          </li>
-                          <li className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer" onClick={() => navigate('/apprentices/ai-tools')}>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={() => navigate('/apprentices/ai-tools')}
+                            className="justify-start block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground"
+                          >
                             <div className="text-sm font-medium leading-none text-[#FFC900]">Tools</div>
                             <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                               Professional tools and equipment
                             </p>
-                          </li>
-                          <li className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground cursor-pointer" onClick={() => navigate('/faq')}>
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={() => navigate('/faq')}
+                            className="justify-start block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-[#FFC900]/10 hover:text-accent-foreground focus:bg-[#FFC900]/10 focus:text-accent-foreground"
+                          >
                             <div className="text-sm font-medium leading-none text-[#FFC900]">FAQ</div>
                             <p className="line-clamp-2 text-sm leading-snug text-[#FFC900]/70">
                               Frequently asked questions
                             </p>
-                          </li>
+                          </Button>
                         </ul>
                       </NavigationMenuContent>
                     </NavigationMenuItem>

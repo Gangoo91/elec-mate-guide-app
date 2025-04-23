@@ -1,82 +1,75 @@
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 type MobileMenuProps = {
   isActive: (path: string) => boolean;
-  navigate: ReturnType<typeof useNavigate>;
+  navigate: (path: string, options?: { replace?: boolean }) => void;
 };
 
 const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
   const { user } = useAuth();
   const { setPreferredRole } = useUserPreferences();
 
-  // Updated to always use apprentice-hub instead of dashboard
-  const handleHomeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    
-    if (user) {
-      console.log("Mobile menu: Home clicked, navigating to apprentice-hub");
-      setPreferredRole('apprentice');
-      navigate('/apprentice-hub', { replace: true });
-    } else {
-      navigate('/welcome', { replace: true });
-    }
-  };
-
-  const handleApprenticeHubClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleApprenticeHubClick = () => {
     console.log("Mobile menu: Apprentice Hub clicked, setting role");
     setPreferredRole('apprentice');
     navigate('/apprentice-hub', { replace: true });
   };
 
+  const handleElectriciansClick = () => {
+    setPreferredRole(null);
+    navigate('/electricians', { replace: true });
+  };
+
+  const handleEmployersClick = () => {
+    setPreferredRole(null);
+    navigate('/employers', { replace: true });
+  };
+
   return (
     <div className="md:hidden border-t border-[#FFC900]/20 bg-[#151812] px-4 py-2 pb-4">
       <nav className="flex flex-col space-y-3">
-        {/* Remove dashboard link and replace with apprentice hub */}
         {user && (
-          <a
-            href="#"
+          <Button
+            variant="ghost"
             onClick={handleApprenticeHubClick}
-            className={`text-lg py-2 px-4 rounded-lg font-medium ${
-              isActive("/apprentice-hub") || location.pathname.includes('/apprentices/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+            className={`justify-start text-lg py-6 px-4 h-auto font-medium ${
+              isActive("/apprentice-hub") || location.pathname.includes('/apprentices/') 
+                ? "bg-[#FFC900]/10 text-[#FFC900]" 
+                : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
             }`}
           >
             Apprentice Hub
-          </a>
+          </Button>
         )}
 
         {user ? (
           <>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setPreferredRole(null);
-                navigate('/electricians');
-              }}
-              className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/electricians") || location.pathname.includes('/electricians/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+            <Button
+              variant="ghost"
+              onClick={handleElectriciansClick}
+              className={`justify-start text-lg py-6 px-4 h-auto font-medium ${
+                isActive("/electricians") || location.pathname.includes('/electricians/') 
+                  ? "bg-[#FFC900]/10 text-[#FFC900]" 
+                  : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Electricians
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setPreferredRole(null);
-                navigate('/employers');
-              }}
-              className={`text-lg py-2 px-4 rounded-lg font-medium ${
-                isActive("/employers") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={handleEmployersClick}
+              className={`justify-start text-lg py-6 px-4 h-auto font-medium ${
+                isActive("/employers") 
+                  ? "bg-[#FFC900]/10 text-[#FFC900]" 
+                  : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
               }`}
             >
               Employers
-            </a>
+            </Button>
             <Link
               to="/faq"
               className={`text-lg py-2 px-4 rounded-lg font-medium ${

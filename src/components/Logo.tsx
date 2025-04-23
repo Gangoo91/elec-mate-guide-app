@@ -15,19 +15,15 @@ const Logo = ({ size = 120, className = "", onClick }: LogoProps) => {
   const { user } = useAuth();
   const { setPreferredRole } = useUserPreferences();
   
-  // Memoize the navigation logic to prevent unnecessary re-renders
   const handleLogoClick = useCallback((e: React.MouseEvent<HTMLImageElement>) => {
+    e.preventDefault();
+    
     if (onClick) {
-      // Use the provided onClick handler if available
       onClick(e);
       return;
     }
     
-    // Default navigation behavior
-    e.preventDefault();
-    
     if (user) {
-      // Always navigate to apprentice-hub when authenticated
       console.log("Logo - Navigating to apprentice-hub");
       setPreferredRole('apprentice');
       navigate('/apprentice-hub', { replace: true });
