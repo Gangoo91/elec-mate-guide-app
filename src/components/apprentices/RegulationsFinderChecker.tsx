@@ -6,7 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { FileCheck, FileSearch } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const RegulationsFinderChecker: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -26,7 +28,7 @@ const RegulationsFinderChecker: React.FC = () => {
       const { data, error } = await supabase.functions.invoke('regulations-assistant', {
         body: JSON.stringify({ 
           query,
-          mode // Pass the mode to the backend
+          mode
         })
       });
 
@@ -37,73 +39,75 @@ const RegulationsFinderChecker: React.FC = () => {
     } catch (err) {
       console.error("Error in RegulationsFinderChecker:", err);
       handleError(err, "Failed to process your regulations request");
-      
-      // Set a user-friendly response even when there's an error
-      setResponse("I'm sorry, but I couldn't process your regulations query at the moment. This might be due to API configuration or network issues. Please try again later.");
+      setResponse("I apologize, but I couldn't process your regulations query at the moment. Please try again later.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="p-6">
-      <div className="flex items-center gap-2 mb-6">
-        <FileCheck className="h-6 w-6 text-[#FFC900]" />
-        <h2 className="text-xl font-semibold text-[#FFC900]">Regulations Finder & Checker</h2>
-      </div>
-
-      <div className="flex items-center justify-between mb-4">
+    <Card className="bg-[#22251e] border-[#FFC900]/20">
+      <CardHeader>
         <div className="flex items-center gap-2">
-          {mode === 'find' ? 
-            <FileSearch className="h-5 w-5 text-[#FFC900]" /> : 
-            <FileCheck className="h-5 w-5 text-[#FFC900]" />
-          }
-          <span className="text-[#FFC900]/80">
-            {mode === 'find' ? 'Find Regulations' : 'Check Compliance'}
-          </span>
+          <FileCheck className="h-6 w-6 text-[#FFC900]" />
+          <CardTitle className="text-[#FFC900]">BS 7671 Regulations Assistant</CardTitle>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-[#FFC900]/80">Find</span>
-          <Switch 
-            checked={mode === 'check'}
-            onCheckedChange={(checked) => setMode(checked ? 'check' : 'find')}
-            className="data-[state=checked]:bg-[#FFC900]"
-          />
-          <span className="text-sm text-[#FFC900]/80">Check</span>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <Textarea 
-          placeholder={
-            mode === 'find' 
-              ? "Search for specific UK electrical regulations..." 
-              : "Describe your installation to check compliance..."
-          }
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
-        />
-        <Button 
-          onClick={handleQuery} 
-          disabled={isLoading}
-          className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
-        >
-          {mode === 'find' ? <FileSearch className="h-4 w-4 mr-2" /> : <FileCheck className="h-4 w-4 mr-2" />}
-          {isLoading 
-            ? (mode === 'find' ? 'Searching...' : 'Checking...') 
-            : (mode === 'find' ? 'Find Regulations' : 'Check Compliance')
-          }
-        </Button>
-
-        {response && (
-          <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
-            <h4 className="font-semibold mb-2 text-[#FFC900]">Results:</h4>
-            <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center gap-2">
+            {mode === 'find' ? 
+              <FileSearch className="h-5 w-5 text-[#FFC900]" /> : 
+              <FileCheck className="h-5 w-5 text-[#FFC900]" />
+            }
+            <span className="text-[#FFC900]/80">
+              {mode === 'find' ? 'Find Regulations' : 'Check Compliance'}
+            </span>
           </div>
-        )}
-      </div>
-    </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-[#FFC900]/80">Find</span>
+            <Switch 
+              checked={mode === 'check'}
+              onCheckedChange={(checked) => setMode(checked ? 'check' : 'find')}
+              className="data-[state=checked]:bg-[#FFC900]"
+            />
+            <span className="text-sm text-[#FFC900]/80">Check</span>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <Textarea 
+            placeholder={
+              mode === 'find' 
+                ? "Search for specific BS 7671 regulations (e.g., 'What are the requirements for RCD protection in domestic installations?')" 
+                : "Describe your installation to check compliance with BS 7671 (e.g., 'I have a consumer unit installation with...')"
+            }
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
+          />
+          <Button 
+            onClick={handleQuery} 
+            disabled={isLoading}
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
+          >
+            {mode === 'find' ? <FileSearch className="h-4 w-4 mr-2" /> : <FileCheck className="h-4 w-4 mr-2" />}
+            {isLoading 
+              ? (mode === 'find' ? 'Searching...' : 'Checking...') 
+              : (mode === 'find' ? 'Find Regulations' : 'Check Compliance')
+            }
+          </Button>
+
+          {response && (
+            <ScrollArea className="mt-4 h-[300px] rounded-lg border border-[#FFC900]/20 p-4 bg-[#2C2F24]">
+              <div className="pr-4">
+                <h4 className="font-semibold mb-2 text-[#FFC900]">Results:</h4>
+                <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+              </div>
+            </ScrollArea>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
