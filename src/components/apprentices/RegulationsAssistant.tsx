@@ -71,15 +71,16 @@ const RegulationsAssistant: React.FC = () => {
             {isLoading ? 'Getting Guidance...' : 'Get Regulation Help'}
           </Button>
           {response && (
-            <div className="mt-4 p-3 bg-[#2C2F24] rounded text-[#FFC900]/80 max-h-[300px] overflow-y-auto">
-              <h4 className="font-semibold mb-2 text-[#FFC900]">Regulation Guidance:</h4>
-              <p className="whitespace-pre-wrap">{response}</p>
+            <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg border border-[#FFC900]/10">
+              <h4 className="font-semibold mb-3 text-[#FFC900] text-lg">Regulation Guidance</h4>
+              <div className="prose prose-invert max-w-none">
+                <p className="text-[#FFC900]/90 leading-relaxed whitespace-pre-line text-base">
+                  {response}
+                </p>
+              </div>
             </div>
           )}
         </div>
       </CardContent>
     </Card>
   );
-};
-
-export default RegulationsAssistant;

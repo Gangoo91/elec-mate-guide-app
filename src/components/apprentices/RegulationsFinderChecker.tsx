@@ -101,10 +101,16 @@ const RegulationsFinderChecker: React.FC = () => {
           </Button>
 
           {response && (
-            <ScrollArea className="mt-4 h-[300px] rounded-lg border border-[#FFC900]/20 p-4 bg-[#2C2F24]">
-              <div className="pr-4">
-                <h4 className="font-semibold mb-2 text-[#FFC900]">Results:</h4>
-                <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+            <ScrollArea className="mt-4 h-[300px] rounded-lg border border-[#FFC900]/10">
+              <div className="p-4 bg-[#2C2F24]">
+                <h4 className="font-semibold mb-3 text-[#FFC900] text-lg">
+                  {mode === 'find' ? 'Regulation Details' : 'Compliance Assessment'}
+                </h4>
+                <div className="prose prose-invert max-w-none">
+                  <p className="text-[#FFC900]/90 leading-relaxed whitespace-pre-line text-base">
+                    {response}
+                  </p>
+                </div>
               </div>
             </ScrollArea>
           )}
@@ -112,6 +118,3 @@ const RegulationsFinderChecker: React.FC = () => {
       </CardContent>
     </Card>
   );
-};
-
-export default RegulationsFinderChecker;
