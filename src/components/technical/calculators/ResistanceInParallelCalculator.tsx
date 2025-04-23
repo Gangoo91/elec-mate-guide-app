@@ -73,17 +73,17 @@ const ResistanceInParallelCalculator = () => {
           </div>
         ))}
 
-        <div className="flex justify-between items-center mt-4 space-x-2">
+        <div className="grid grid-cols-2 gap-2 mt-4">
           <Button
             onClick={addResistor}
             variant="outline"
-            className="flex-grow bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
           >
             Add Resistor
           </Button>
           <Button
             onClick={calculateTotalResistance}
-            className="flex-grow bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
+            className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
           >
             Calculate Total
           </Button>
