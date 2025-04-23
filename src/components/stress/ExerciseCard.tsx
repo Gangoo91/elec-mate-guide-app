@@ -4,6 +4,7 @@ import { Clock, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { StressManagementResource } from "@/hooks/useStressManagementResources";
 import { Button } from "@/components/ui/button";
+import ExerciseTimer from "./ExerciseTimer";
 
 interface ExerciseCardProps {
   exercise: StressManagementResource;
@@ -12,6 +13,7 @@ interface ExerciseCardProps {
   onComplete: () => void;
   isInProgress: boolean;
   hasEarnedKudos: boolean;
+  onExpire: () => void;
 }
 
 const ExerciseCard = ({ 
@@ -20,7 +22,8 @@ const ExerciseCard = ({
   onStart,
   onComplete,
   isInProgress,
-  hasEarnedKudos
+  hasEarnedKudos,
+  onExpire
 }: ExerciseCardProps) => {
   const getDifficultyColor = () => {
     switch (exercise.difficulty_level?.toLowerCase()) {
@@ -37,7 +40,7 @@ const ExerciseCard = ({
 
   return (
     <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-      <CardHeader className="pb-2 flex-1">
+      <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-lg text-[#FFC900]">{exercise.title}</CardTitle>
           {isFeatured && (
@@ -57,24 +60,43 @@ const ExerciseCard = ({
           {exercise.description}
         </CardDescription>
       </CardHeader>
-      <CardContent className="pt-2">
-        <div className="flex items-center justify-between gap-4">
-          <Badge variant="outline" className={`${getDifficultyColor()}`}>
-            {exercise.difficulty_level || "Beginner"}
-          </Badge>
-          {hasEarnedKudos ? (
-            <Badge variant="outline" className="bg-[#FFC900]/20 text-[#FFC900]">
-              Completed
-            </Badge>
-          ) : isInProgress ? (
-            <Button onClick={onComplete} size="sm" className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90">
-              Complete Exercise
-            </Button>
-          ) : (
-            <Button onClick={onStart} size="sm" variant="outline" className="text-[#FFC900] border-[#FFC900]/30 hover:bg-[#FFC900]/10">
-              Start Exercise
-            </Button>
+      <CardContent className="pt-2 mt-auto">
+        <div className="space-y-4">
+          {isInProgress && (
+            <ExerciseTimer 
+              durationMinutes={exercise.duration_minutes}
+              isActive={isInProgress}
+              onComplete={onComplete}
+              onExpire={onExpire}
+            />
           )}
+          <div className="flex items-center justify-between gap-4">
+            <Badge variant="outline" className={`${getDifficultyColor()}`}>
+              {exercise.difficulty_level || "Beginner"}
+            </Badge>
+            {hasEarnedKudos ? (
+              <Badge variant="outline" className="bg-[#FFC900]/20 text-[#FFC900]">
+                Completed
+              </Badge>
+            ) : isInProgress ? (
+              <Button 
+                disabled={true}
+                size="sm" 
+                className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90"
+              >
+                Exercise in Progress
+              </Button>
+            ) : (
+              <Button 
+                onClick={onStart} 
+                size="sm" 
+                variant="outline" 
+                className="text-[#FFC900] border-[#FFC900]/30 hover:bg-[#FFC900]/10"
+              >
+                Start Exercise
+              </Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

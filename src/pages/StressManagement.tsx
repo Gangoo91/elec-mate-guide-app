@@ -19,6 +19,19 @@ const StressManagement = () => {
   const { addKudos, userKudos, hasGivenKudos, isLoading: isKudosLoading } = useExerciseKudos();
   const [exerciseInProgress, setExerciseInProgress] = useState<string | null>(null);
 
+  const handleExerciseStart = (exerciseId: string) => {
+    setExerciseInProgress(exerciseId);
+  };
+
+  const handleExerciseExpire = () => {
+    setExerciseInProgress(null);
+    toast({
+      title: "Exercise expired",
+      description: "You didn't complete the exercise in time. Try again!",
+      variant: "destructive"
+    });
+  };
+
   const handleExerciseComplete = async (exerciseId: string) => {
     if (!user) {
       toast({
@@ -74,8 +87,9 @@ const StressManagement = () => {
       <ExerciseCard 
         exercise={exercise} 
         isFeatured={isFeatured}
-        onStart={() => setExerciseInProgress(exercise.id)}
+        onStart={() => handleExerciseStart(exercise.id)}
         onComplete={() => handleExerciseComplete(exercise.id)}
+        onExpire={handleExerciseExpire}
         isInProgress={exerciseInProgress === exercise.id}
         hasEarnedKudos={hasGivenKudos(exercise.id)}
       />
