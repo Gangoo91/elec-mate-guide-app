@@ -25,20 +25,20 @@ const CalculatorTools = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-[#22251e] border-[#FFC900]/20">
-      <CardContent className="p-6">
-        <div className="space-y-6">
+    <Card className="w-full max-w-lg mx-auto bg-[#22251e] border-[#FFC900]/20">
+      <CardContent className="p-4">
+        <div className="space-y-4">
           {/* Header section with title and dropdown */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <h2 className="text-2xl font-bold text-[#FFC900]">Calculator Tools</h2>
+          <div className="flex flex-col gap-2">
+            <h2 className="text-xl font-bold text-[#FFC900]">Calculator Tools</h2>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full sm:w-auto bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10">
+                <Button variant="outline" className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10">
                   <Calculator className="mr-2 h-4 w-4" />
-                  Select Calculator
+                  {calculators[selectedCalculator].title}
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-[#22251e] border-[#FFC900]/20">
+              <DropdownMenuContent className="w-full bg-[#22251e] border-[#FFC900]/20">
                 {Object.entries(calculators).map(([key, { title }]) => (
                   <DropdownMenuItem
                     key={key}
@@ -53,15 +53,8 @@ const CalculatorTools = () => {
           </div>
 
           {/* Calculator content section */}
-          <div className="mt-8">
-            <div className="mb-6 pb-4 border-b border-[#FFC900]/10">
-              <h3 className="text-xl font-semibold text-[#FFC900]">
-                {calculators[selectedCalculator].title}
-              </h3>
-            </div>
-            <div className="animate-fade-in">
-              {calculators[selectedCalculator].component}
-            </div>
+          <div className="animate-fade-in">
+            {calculators[selectedCalculator].component}
           </div>
         </div>
       </CardContent>
@@ -70,3 +63,4 @@ const CalculatorTools = () => {
 };
 
 export default CalculatorTools;
+
