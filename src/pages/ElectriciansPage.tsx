@@ -9,7 +9,7 @@ const ElectriciansPage = () => {
   const resources = [
     {
       title: "Technical Tools",
-      description: "Access the latest technical resources, code updates, and specialized tools for electrical installations.",
+      description: "Access the latest technical resources, code updates, and specialised tools for electrical installations.",
       icon: <Book className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools"
     },
@@ -33,7 +33,7 @@ const ElectriciansPage = () => {
     },
     {
       title: "Professional Development",
-      description: "Advanced training courses, certifications, and specialization opportunities to enhance your career.",
+      description: "Advanced training courses, certifications, and specialisation opportunities to enhance your career.",
       icon: <Users className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development"
     }
@@ -44,12 +44,12 @@ const ElectriciansPage = () => {
       <div className="container px-4 py-2 md:py-4">
         <BackButton />
         
-        <div className="text-center mb-8">
+        <div className="text-centre mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-[#FFC900] mb-4">
             Electricians Hub
           </h1>
           <p className="text-[#FFC900]/80 max-w-2xl mx-auto">
-            Your central resource for professional growth, technical support, and community connection in the electrical industry.
+            Your central resource for professional growth, technical support, and community connection within the electrical industry.
           </p>
         </div>
         
@@ -70,4 +70,3 @@ const ElectriciansPage = () => {
 };
 
 export default ElectriciansPage;
-
