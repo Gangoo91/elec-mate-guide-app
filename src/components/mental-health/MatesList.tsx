@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -103,7 +102,6 @@ export const MatesList = () => {
     }
   };
 
-  // Get all unique specialties for filter dropdown
   const allSpecialties = React.useMemo(() => {
     if (!mates) return [];
     const specialtiesSet = new Set<string>();
@@ -115,7 +113,6 @@ export const MatesList = () => {
     return Array.from(specialtiesSet);
   }, [mates]);
 
-  // Filter mates based on search term and specialty
   const filteredMates = React.useMemo(() => {
     if (!mates) return [];
     
@@ -137,56 +134,45 @@ export const MatesList = () => {
     });
   }, [mates, searchTerm, specialty]);
 
-  // Pagination logic
   const totalPages = Math.ceil((filteredMates?.length || 0) / itemsPerPage);
   const paginatedMates = filteredMates.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Generate page numbers for pagination
   const pageNumbers = [];
   const maxVisiblePages = 5;
   
   if (totalPages <= maxVisiblePages) {
-    // If we have less pages than max visible, show all
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
     }
   } else {
-    // Always show first page
     pageNumbers.push(1);
     
-    // Determine start and end of the middle section
     let startPage = Math.max(2, currentPage - 1);
     let endPage = Math.min(totalPages - 1, currentPage + 1);
     
-    // Adjust if we're too close to the beginning
     if (currentPage <= 3) {
       endPage = Math.min(maxVisiblePages - 1, totalPages - 1);
     }
     
-    // Adjust if we're too close to the end
     if (currentPage >= totalPages - 2) {
       startPage = Math.max(2, totalPages - maxVisiblePages + 2);
     }
     
-    // Add ellipsis after first page if needed
     if (startPage > 2) {
       pageNumbers.push('ellipsis1');
     }
     
-    // Add the middle pages
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(i);
     }
     
-    // Add ellipsis before last page if needed
     if (endPage < totalPages - 1) {
       pageNumbers.push('ellipsis2');
     }
     
-    // Always show last page
     pageNumbers.push(totalPages);
   }
 
@@ -196,7 +182,6 @@ export const MatesList = () => {
 
   return (
     <div className="space-y-6">
-      {/* Search and Filter Section */}
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="relative flex-1">
           <Input
@@ -213,7 +198,7 @@ export const MatesList = () => {
             <SelectValue placeholder="Filter by specialty" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All specialties</SelectItem>
+            <SelectItem value="all">All specialties</SelectItem>
             {allSpecialties.map((spec) => (
               <SelectItem key={spec} value={spec}>
                 {spec}
@@ -223,12 +208,10 @@ export const MatesList = () => {
         </Select>
       </div>
 
-      {/* Results count */}
       <div className="text-[#FFC900]/70 text-sm">
         Showing {paginatedMates.length} of {filteredMates.length} mates
       </div>
       
-      {/* Mates Grid */}
       {paginatedMates.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {paginatedMates?.map((mate) => (
@@ -275,7 +258,6 @@ export const MatesList = () => {
         </div>
       )}
       
-      {/* Pagination */}
       {totalPages > 1 && (
         <Pagination className="mt-8">
           <PaginationContent>
