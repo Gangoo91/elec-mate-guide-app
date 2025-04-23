@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { FileCheck, FileSearch } from "lucide-react";
+import { FileCheck, FileSearch, ChevronDown, ChevronUp } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
@@ -15,7 +15,16 @@ const RegulationsFinderChecker: React.FC = () => {
   const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'find' | 'check'>('find');
+  const [showResponse, setShowResponse] = useState(true);
   const { handleError } = useErrorHandler();
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    if (!newQuery.trim()) {
+      setResponse('');
+    }
+  };
 
   const handleQuery = async () => {
     if (!query.trim()) {
@@ -24,7 +33,8 @@ const RegulationsFinderChecker: React.FC = () => {
     }
 
     setIsLoading(true);
-    setResponse(''); // Clear previous response
+    setResponse('');
+    setShowResponse(true);
     
     try {
       console.log("Sending request to regulations-assistant with mode:", mode);
@@ -85,7 +95,7 @@ const RegulationsFinderChecker: React.FC = () => {
                 : "Describe your installation to check compliance with BS 7671 (e.g., 'I have a consumer unit installation with...')"
             }
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleQueryChange}
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
           />
           <Button 
@@ -101,18 +111,38 @@ const RegulationsFinderChecker: React.FC = () => {
           </Button>
 
           {response && (
-            <ScrollArea className="mt-4 h-[300px] rounded-lg border border-[#FFC900]/10">
-              <div className="p-4 bg-[#2C2F24]">
-                <h4 className="font-semibold mb-3 text-[#FFC900] text-lg">
-                  {mode === 'find' ? 'Regulation Details' : 'Compliance Assessment'}
-                </h4>
-                <div className="prose prose-invert max-w-none">
-                  <p className="text-[#FFC900]/90 leading-relaxed whitespace-pre-line text-base">
-                    {response}
-                  </p>
-                </div>
-              </div>
-            </ScrollArea>
+            <div className="mt-4">
+              <Button
+                variant="outline"
+                onClick={() => setShowResponse(!showResponse)}
+                className="w-full mb-2 bg-[#2C2F24] border-[#FFC900]/10 text-[#FFC900] hover:bg-[#FFC900]/10"
+              >
+                {showResponse ? (
+                  <>
+                    Hide Response <ChevronUp className="ml-2 h-4 w-4" />
+                  </>
+                ) : (
+                  <>
+                    Show Response <ChevronDown className="ml-2 h-4 w-4" />
+                  </>
+                )}
+              </Button>
+              
+              {showResponse && (
+                <ScrollArea className="h-[300px] rounded-lg border border-[#FFC900]/10">
+                  <div className="p-4 bg-[#2C2F24]">
+                    <h4 className="font-semibold mb-3 text-[#FFC900] text-lg">
+                      {mode === 'find' ? 'Regulation Details' : 'Compliance Assessment'}
+                    </h4>
+                    <div className="prose prose-invert max-w-none">
+                      <p className="text-[#FFC900]/90 leading-relaxed whitespace-pre-line text-base">
+                        {response}
+                      </p>
+                    </div>
+                  </div>
+                </ScrollArea>
+              )}
+            </div>
           )}
         </div>
       </CardContent>
