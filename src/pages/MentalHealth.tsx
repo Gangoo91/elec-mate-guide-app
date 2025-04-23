@@ -1,7 +1,9 @@
+
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { MessageSquare, HeartPulse, Users, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import ResourceCard from "@/components/shared/ResourceCard";
