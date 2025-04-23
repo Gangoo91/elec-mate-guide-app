@@ -18,6 +18,25 @@ const WiringDiagramGenerator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { handleError } = useErrorHandler();
 
+  const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setPrompt(newValue);
+    
+    // Clear response and image when input is cleared
+    if (!newValue.trim()) {
+      setResponse('');
+      setImageUrl('');
+    }
+  };
+
+  const handleDiagramTypeChange = (value: string) => {
+    setDiagramType(value);
+    
+    // Clear response and image when type is changed
+    setResponse('');
+    setImageUrl('');
+  };
+
   const handleGenerateDiagram = async () => {
     if (!prompt.trim()) {
       toast.error("Please describe the wiring setup you need diagrammed");
@@ -70,7 +89,7 @@ const WiringDiagramGenerator: React.FC = () => {
             <Label htmlFor="diagram-type" className="text-[#FFC900]">Diagram Type</Label>
             <Select 
               value={diagramType} 
-              onValueChange={setDiagramType}
+              onValueChange={handleDiagramTypeChange}
             >
               <SelectTrigger id="diagram-type" className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
                 <SelectValue placeholder="Select diagram type" />
@@ -88,7 +107,7 @@ const WiringDiagramGenerator: React.FC = () => {
           <Textarea 
             placeholder="Describe the wiring setup you need diagrammed (e.g., 'Two-way lighting circuit with power at switch', 'Consumer unit layout for 3-bedroom house')..."
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={handlePromptChange}
             className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
           />
           <Button 
