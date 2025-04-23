@@ -36,9 +36,10 @@ const StressManagement = () => {
             <section>
               <h2 className="text-xl font-semibold mb-4 text-[#FFC900]">All Techniques</h2>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {resources?.map((exercise) => (
-                  <ExerciseCard key={exercise.id} exercise={exercise} />
-                ))}
+                {resources?.filter(exercise => !dailyExercise || exercise.id !== dailyExercise.id)
+                  .map((exercise) => (
+                    <ExerciseCard key={exercise.id} exercise={exercise} />
+                  ))}
               </div>
             </section>
           </div>
