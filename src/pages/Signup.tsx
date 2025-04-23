@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import SignupFormFields from "@/components/signup/SignupFormFields";
 import { useSignupForm } from "@/hooks/useSignupForm";
 import MainLayout from "@/components/layout/MainLayout";
-import { useAuth } from "@/hooks/useAuth";
 
 const Signup = () => {
   const {
@@ -26,14 +24,6 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { user } = useAuth();
-
-  // Redirect authenticated users
-  useEffect(() => {
-    if (user) {
-      navigate("/dashboard");
-    }
-  }, [user, navigate]);
 
   const onPlanChange = (value: string) => handlePlanChange(value);
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(e.target.value);

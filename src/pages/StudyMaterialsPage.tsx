@@ -1,106 +1,59 @@
 
-import React, { Suspense, lazy, useEffect } from 'react';
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
+import ResourceCard from "@/components/shared/ResourceCard";
+import { Book, GraduationCap, BookOpen } from "lucide-react";
 import BackButton from "@/components/navigation/BackButton";
-import ErrorBoundary from "@/components/ErrorBoundary";
-import { studyMaterialsContent } from "@/data/studyMaterialsContent";
-import LoadingSpinner from "@/components/LoadingSpinner";
-
-// Lazy load components to improve initial page load
-const StudyUnitContent = lazy(() => import("@/components/study/StudyUnitContent"));
-const StudyMaterialsGrid = lazy(() => import("@/components/study/StudyMaterialsGrid"));
 
 const StudyMaterialsPage = () => {
-  const params = useParams();
-  const studyType = params.studyType;
-  const navigate = useNavigate();
-
-  const validStudyTypes = ['nvq2', 'nvq3', 'hnc'];
-  
-  const getContentKey = () => {
-    if (studyType === 'nvq2') return 'level2';
-    if (studyType === 'nvq3') return 'level3';
-    if (studyType === 'hnc') return 'hnc';
-    return null;
-  };
-  
-  const contentKey = getContentKey();
-
-  useEffect(() => {
-    if (studyType && !validStudyTypes.includes(studyType)) {
-      navigate('/apprentices/study-materials');
-    }
-    
-    // Preload other content if needed
-    if (studyType) {
-      // Prefetch related content based on current study type
-      const prefetchTimeout = setTimeout(() => {
-        // This will run after the main content is loaded
-        import("@/components/study/UnitQuiz");
-      }, 2000);
-      
-      return () => clearTimeout(prefetchTimeout);
-    }
-  }, [studyType, navigate]);
-
-  const renderContent = () => {
-    if (!studyType) {
-      return (
-        <Suspense fallback={<LoadingSpinner size="lg" message="Loading study materials..." />}>
-          <StudyMaterialsGrid />
-        </Suspense>
-      );
-    }
-
-    if (contentKey && studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]) {
-      return (
-        <Suspense fallback={<LoadingSpinner size="lg" message="Loading study content..." />}>
-          <StudyUnitContent 
-            {...studyMaterialsContent[contentKey as keyof typeof studyMaterialsContent]} 
-            basePath={`/apprentices/study-materials/${studyType}`}
-          />
-        </Suspense>
-      );
-    }
-    
-    return (
-      <Suspense fallback={<LoadingSpinner size="lg" message="Loading study materials..." />}>
-        <StudyMaterialsGrid />
-      </Suspense>
-    );
-  };
-
-  const getPageTitle = () => {
-    if (!studyType) return "Study Materials";
-    
-    if (studyType === 'nvq2') return "NVQ Level 2 Study Materials";
-    if (studyType === 'nvq3') return "NVQ Level 3 & AM2 Study Materials";
-    if (studyType === 'hnc') return "HNC Electrical Engineering Materials";
-    
-    return "Study Materials";
-  };
-
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <div className="mb-4">
           <BackButton />
         </div>
-        
         <PageHeader 
-          title={getPageTitle()}
-          description="Easy-to-understand guides and resources for electrical qualifications. Everything is explained in simple terms with real-world examples."
+          title="Study Materials"
+          description="Comprehensive study resources for UK electrical qualifications, including NVQ Level 2, Level 3, and HNC materials."
           hideBackButton={true}
         />
         
-        <ErrorBoundary>
-          {renderContent()}
-        </ErrorBoundary>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <ResourceCard
+            title="NVQ Level 2 Electrical Installation"
+            description="Essential resources covering core units, practical assessments, and fundamental electrical concepts for Level 2 qualification."
+            icon={<Book className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "View Level 2 Resources",
+              href: "/apprentices/study-materials/nvq2"
+            }}
+          />
+          
+          <ResourceCard
+            title="NVQ Level 3 & AM2"
+            description="Advanced electrical training materials, including AM2 preparation resources and complex installation techniques."
+            icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "Access Level 3 & AM2",
+              href: "/apprentices/study-materials/nvq3"
+            }}
+          />
+          
+          <ResourceCard
+            title="HNC Electrical Engineering"
+            description="Higher-level study materials covering electrical principles, power systems, and engineering mathematics."
+            icon={<BookOpen className="h-7 w-7 text-[#FFC900]" />}
+            action={{
+              label: "Explore HNC Materials",
+              href: "/apprentices/study-materials/hnc"
+            }}
+          />
+        </div>
       </div>
     </MainLayout>
   );
 };
 
 export default StudyMaterialsPage;
+

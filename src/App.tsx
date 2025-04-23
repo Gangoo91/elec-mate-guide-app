@@ -1,52 +1,37 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useAuth, AuthProvider } from "@/hooks/useAuth";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
-import ErrorBoundary from "@/components/ErrorBoundary";
-import { NotificationProvider } from "@/contexts/NotificationContext";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Welcome from "./pages/Welcome";
+import NotFound from "./pages/NotFound";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Profile from "./pages/Profile";
+import ApprenticesPage from "./pages/ApprenticesPage";
+import ElectriciansPage from "./pages/ElectriciansPage";
+import EmployersPage from "./pages/EmployersPage";
+import Subscription from "./pages/Subscription";
+import SubscriptionSuccess from "./pages/SubscriptionSuccess";
+import SubscriptionGuard from "./components/guards/SubscriptionGuard";
+import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import ManageSubscription from "./pages/ManageSubscription";
+import { NotificationProvider } from "./contexts/NotificationContext";
+import FAQ from "./pages/FAQ";
+import MentalHealth from "./pages/MentalHealth";
+import Mentorship from "./pages/Mentorship";
+import LearningHubPage from "./pages/LearningHubPage";
+import AIToolsPage from "./pages/AIToolsPage";
+import StudyMaterialsPage from "./pages/StudyMaterialsPage";
+import PracticeExamsPage from "./pages/PracticeExamsPage";
+import CertificationsPage from "./pages/CertificationsPage";
+import ErrorBoundary from "./components/ErrorBoundary";
 
-import Welcome from "@/pages/Welcome";
-import Login from "@/pages/Login";
-import Signup from "@/pages/Signup";
-import ForgotPassword from "@/pages/ForgotPassword";
-import Dashboard from "@/pages/Dashboard";
-import ApprenticeHub from "@/pages/ApprenticeHub";
-import ApprenticeMentalHealth from "@/pages/ApprenticeMentalHealth";
-import LearningHubPage from "@/pages/LearningHubPage";
-import AIToolsPage from "@/pages/AIToolsPage";
-import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
-import CoreUnitsPage from "@/pages/CoreUnitsPage";
-import PracticeExamsPage from "@/pages/PracticeExamsPage";
-import CertificationsPage from "@/pages/CertificationsPage";
-import ElectriciansPage from "@/pages/ElectriciansPage";
-import ElectriciansMentalHealth from "@/pages/ElectriciansMentalHealth";
-import ElectriciansToolboxTalk from "@/pages/ElectriciansToolboxTalk";
-import EmployersPage from "@/pages/EmployersPage";
-import MentalHealth from "@/pages/MentalHealth";
-import Mentorship from "@/pages/Mentorship";
-import FAQ from "@/pages/FAQ";
-import Profile from "@/pages/Profile";
-import ManageSubscription from "@/pages/ManageSubscription";
-import Subscription from "@/pages/Subscription";
-import SubscriptionSuccess from "@/pages/SubscriptionSuccess";
-import Privacy from "@/pages/Privacy";
-import Terms from "@/pages/Terms";
-import NotFound from "@/pages/NotFound";
-import RootRedirect from "@/pages/RootRedirect";
-
-import Unit201Page from "@/pages/study/nvq2/units/Unit201Page";
-import Unit202Page from "@/pages/study/nvq2/units/Unit202Page";
-import Unit203Page from "@/pages/study/nvq2/units/Unit203Page";
-import Unit204Page from "@/pages/study/nvq2/units/Unit204Page";
-import InteractiveLessonsPage from "@/pages/study/nvq2/InteractiveLessonsPage";
-import InteractiveLessonDetailPage from "@/pages/study/nvq2/InteractiveLessonDetailPage";
-import VideoContentPage from "@/pages/study/nvq2/VideoContentPage";
-import QuizzesProgressPage from "@/pages/study/nvq2/QuizzesProgressPage";
-
+// Create QueryClient with optimized settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -57,65 +42,15 @@ const queryClient = new QueryClient({
   },
 });
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  
-  return null;
-};
-
-const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+// Authentication wrapper for routes
+const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  const { isLoaded } = useUserPreferences();
-  const [redirectAttempted, setRedirectAttempted] = useState(false);
   
-  useEffect(() => {
-    if (!loading && user && isLoaded && !redirectAttempted) {
-      console.log("PublicRoute - User authenticated, redirecting to dashboard");
-      setRedirectAttempted(true);
-      navigate('/dashboard', { replace: true });
-    }
-  }, [user, loading, navigate, isLoaded, redirectAttempted]);
-  
-  if (loading || !isLoaded) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-[#151812]">
-        <LoadingSpinner size="md" message="Loading..." />
-      </div>
-    );
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
   
-  return !user ? <>{children}</> : null;
-};
-
-const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
-  const navigate = useNavigate();
-  const [authChecked, setAuthChecked] = useState(false);
-  
-  useEffect(() => {
-    if (!loading) {
-      setAuthChecked(true);
-      if (!user) {
-        console.log("PrivateRoute - No user found, redirecting to login");
-        navigate('/login', { replace: true });
-      }
-    }
-  }, [user, loading, navigate]);
-  
-  if (loading || !authChecked) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-[#151812]">
-        <LoadingSpinner size="md" message="Loading..." />
-      </div>
-    );
-  }
-  
-  return user ? <>{children}</> : null;
+  return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
 const App = () => (
@@ -126,56 +61,37 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <BrowserRouter>
-              <ScrollToTop />
               <Routes>
-                <Route path="/" element={<RootRedirect />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
-                <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-                <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+                {/* Homepage routes - wrap Welcome in AuthWrapper to redirect authenticated users */}
+                <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/index" element={<Navigate to="/" replace />} />
+                
+                {/* All other routes */}
+                <Route path="/apprentices" element={<ApprenticesPage />} />
+                <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
+                <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
+                <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
+                <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
+                <Route path="/apprentices/certifications" element={<CertificationsPage />} />
+                <Route path="/electricians" element={<ElectriciansPage />} />
+                <Route path="/employers" element={<EmployersPage />} />
+                <Route path="/training" element={<Navigate to="/" replace />} />
+                <Route path="/certification" element={<Navigate to="/" replace />} />
+                <Route path="/tools" element={<Navigate to="/" replace />} />
+                <Route path="/mental-health" element={<MentalHealth />} />
+                <Route path="/mentorship" element={<Mentorship />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
+                <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                
-                <Route path="/dashboard/*" element={<Navigate to="/dashboard" replace />} />
-                <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />
-                
-                <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />
-                <Route path="/apprentices/mental-health" element={<PrivateRoute><ApprenticeMentalHealth /></PrivateRoute>} />
-                <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />
-                <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                
-                <Route path="/apprentices/study-materials/nvq2/core-units" element={<PrivateRoute><CoreUnitsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/core-units/201" element={<PrivateRoute><Unit201Page /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/core-units/202" element={<PrivateRoute><Unit202Page /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/core-units/203" element={<PrivateRoute><Unit203Page /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/core-units/204" element={<PrivateRoute><Unit204Page /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/interactive-lessons" element={<PrivateRoute><InteractiveLessonsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/interactive-lessons/:lessonId" element={<PrivateRoute><InteractiveLessonDetailPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/video-content" element={<PrivateRoute><VideoContentPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/quizzes-progress" element={<PrivateRoute><QuizzesProgressPage /></PrivateRoute>} />
-                
-                <Route path="/apprentices/study-materials/:studyType/*" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
-                <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
-                <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
-                <Route path="/electricians" element={<PrivateRoute><ElectriciansPage /></PrivateRoute>} />
-                <Route path="/electricians/mental-health" element={<PrivateRoute><ElectriciansMentalHealth /></PrivateRoute>} />
-                <Route path="/electricians/toolbox-talk" element={<PrivateRoute><ElectriciansToolboxTalk /></PrivateRoute>} />
-                <Route path="/employers" element={<PrivateRoute><EmployersPage /></PrivateRoute>} />
-                <Route path="/mental-health" element={<PrivateRoute><MentalHealth /></PrivateRoute>} />
-                <Route path="/mentorship" element={<PrivateRoute><Mentorship /></PrivateRoute>} />
-                <Route path="/faq" element={<PrivateRoute><FAQ /></PrivateRoute>} />
-                <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                <Route path="/manage-subscription" element={<PrivateRoute><ManageSubscription /></PrivateRoute>} />
-                <Route path="/subscription" element={<PrivateRoute><Subscription /></PrivateRoute>} />
-                <Route path="/subscription/success" element={<PrivateRoute><SubscriptionSuccess /></PrivateRoute>} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/terms" element={<Terms />} />
-                <Route path="/index" element={<Navigate to="/" replace />} />
-                <Route path="/training" element={<Navigate to="/apprentices/learning-hub" replace />} />
-                <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
-                <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
-                <Route path="*" element={<NotFound />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/manage-subscription" element={<ManageSubscription />} />
+                <Route path="/subscription" element={<Subscription />} />
+                <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>
           </TooltipProvider>

@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -9,8 +9,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
 import IndustryResources from "@/components/IndustryResources";
-import { useAuth } from "@/hooks/useAuth";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 const MentalHealthHubContent = () => (
   <>
@@ -94,22 +92,8 @@ const MentalHealthHubDrawer = ({ open, onOpenChange }: { open: boolean; onOpenCh
 );
 
 const ApprenticesPage = () => {
-  const { user, refreshSession } = useAuth();
-  const { setPreferredRole } = useUserPreferences();
-  const navigate = useNavigate();
   const [mhModalOpen, setMhModalOpen] = useState(false);
   const isMobile = useIsMobile();
-
-  // Ensure we set the role on component mount and refresh the session
-  useEffect(() => {
-    const initPage = async () => {
-      console.log("ApprenticesPage - Setting preferredRole to apprentice");
-      setPreferredRole('apprentice');
-      await refreshSession();
-    };
-    
-    initPage();
-  }, [refreshSession, setPreferredRole]);
 
   const apprenticeResources = [
     {
@@ -118,48 +102,22 @@ const ApprenticesPage = () => {
         "Access our comprehensive learning tools, AI assistants, and training events all in one place. Get instant help and grow your skills.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       fullCardLink: "/apprentices/learning-hub",
-      action: { 
-        label: "Start Learning", 
-        href: "/apprentices/learning-hub",
-        onClick: () => navigate("/apprentices/learning-hub")
-      }
+      action: { label: "Start Learning", href: "/apprentices/learning-hub" }
     },
     {
       title: "Mentor Connect",
       description: "Connect with experienced electricians for guidance, support, and career advice on your professional journey.",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
-      action: { 
-        label: "Find a Mentor", 
-        href: "/mentorship",
-        onClick: () => navigate("/mentorship")
-      },
+      action: { label: "Find a Mentor", href: "/mentorship" },
       fullCardLink: "/mentorship"
     },
     {
       title: "Mental Health Hub",
       description: "Support, community, and resources for apprentice mental health & well-being.",
       icon: <Heart className="h-6 w-6 text-[#FFC900]" />,
-      action: { 
-        label: "Visit Hub", 
-        href: "/apprentices/mental-health",
-        onClick: () => navigate("/apprentices/mental-health")
-      },
-      fullCardLink: "/apprentices/mental-health"
+      action: { label: "Learn more", onClick: () => setMhModalOpen(true) }
     }
   ];
-
-  const handleResourceCardClick = (resource: any) => {
-    console.log("Resource card clicked:", resource.title);
-    
-    // Always ensure the role is set when navigating
-    setPreferredRole('apprentice');
-    
-    if (resource.fullCardLink) {
-      navigate(resource.fullCardLink);
-    } else if (resource.action?.onClick) {
-      resource.action.onClick();
-    }
-  };
 
   return (
     <MainLayout>
@@ -171,19 +129,14 @@ const ApprenticesPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {apprenticeResources.map((resource, index) => (
-            <div 
+            <ResourceCard 
               key={index}
-              onClick={() => handleResourceCardClick(resource)}
-              className="cursor-pointer z-10 relative" 
-            >
-              <ResourceCard 
-                title={resource.title}
-                description={resource.description}
-                icon={resource.icon}
-                action={resource.action}
-                fullCardLink={resource.fullCardLink}
-              />
-            </div>
+              title={resource.title}
+              description={resource.description}
+              icon={resource.icon}
+              action={resource.action}
+              fullCardLink={resource.fullCardLink}
+            />
           ))}
         </div>
 

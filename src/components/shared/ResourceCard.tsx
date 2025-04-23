@@ -1,96 +1,70 @@
 
 import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
+import { LucideIcon } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-type ResourceCardAction = {
-  label: string;
-  href?: string;
-  onClick?: () => void;
-};
-
-type ResourceCardProps = {
+interface ResourceCardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
-  action?: ResourceCardAction;
-  fullCardLink?: string;
-};
-
-const ResourceCard = ({
-  title,
-  description,
-  icon,
-  action,
-  fullCardLink,
-}: ResourceCardProps) => {
-  const navigate = useNavigate();
-  const isMobile = useIsMobile();
-
-  const handleCardClick = (e: React.MouseEvent) => {
-    if (fullCardLink) {
-      e.preventDefault();
-      navigate(fullCardLink);
-    }
-    if (action?.onClick) {
-      e.preventDefault();
-      action.onClick();
-    }
+  icon: LucideIcon | React.ReactNode;
+  action?: {
+    label: string;
+    onClick?: () => void;
+    href?: string;
   };
+  fullCardLink?: string; // New prop to enable full card navigation
+}
 
-  return fullCardLink ? (
-    <Link
-      to={fullCardLink}
-      className="block h-full focus:outline-none focus:ring-2 focus:ring-[#FFC900]"
-      tabIndex={0}
-    >
-      <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/40 transition-all duration-300 group cursor-pointer">
-        <CardHeader className="pb-1 p-3 md:p-4">
-          <div className="flex items-center gap-2">
-            <div className="text-[#FFC900]">{icon}</div>
-            <h3 className="text-[#FFC900] text-base md:text-lg font-semibold">{title}</h3>
+const ResourceCard = ({ title, description, icon, action, fullCardLink }: ResourceCardProps) => {
+  // If fullCardLink is provided, wrap the entire card content in a Link
+  const CardWrapper = fullCardLink ? Link : React.Fragment;
+  const wrapperProps = fullCardLink ? { to: fullCardLink } : {};
+
+  return (
+    <CardWrapper {...wrapperProps}>
+      <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-3">
+            {React.isValidElement(icon) ? icon : null}
+            <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="p-3 pt-0 md:p-4 md:pt-0">
-          <p className="text-[#FFC900]/70 mb-2 text-xs md:text-sm">{description}</p>
-          <div className="flex items-center gap-1 text-[#FFC900] text-xs md:text-sm font-medium group-hover:underline">
-            <span>Open</span>
-            <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
-  ) : (
-    <div
-      className="h-full cursor-pointer group"
-      tabIndex={0}
-      onClick={handleCardClick}
-      onKeyDown={e => {
-        if (e.key === "Enter" || e.key === " ") handleCardClick(e as any);
-      }}
-      role="button"
-      aria-pressed="false"
-    >
-      <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/40 transition-all duration-300">
-        <CardHeader className="pb-1 p-3 md:p-4">
-          <div className="flex items-center gap-2">
-            <div className="text-[#FFC900]">{icon}</div>
-            <h3 className="text-[#FFC900] text-base md:text-lg font-semibold">{title}</h3>
-          </div>
-        </CardHeader>
-        <CardContent className="p-3 pt-0 md:p-4 md:pt-0">
-          <p className="text-[#FFC900]/70 mb-2 text-xs md:text-sm">{description}</p>
+        <CardContent className="flex flex-col justify-between flex-grow pt-2">
+          <CardDescription className="text-[#FFC900]/70 text-sm mb-3">
+            {description}
+          </CardDescription>
           {action && (
-            <span className="flex items-center gap-1 text-[#FFC900] text-xs md:text-sm">
-              {action.label}
-              <ArrowRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-1 transition-transform" />
-            </span>
+            action.href ? (
+              action.href.startsWith("#") ? (
+                <a 
+                  href={action.href}
+                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                >
+                  {action.label} →
+                </a>
+              ) : (
+                <Link 
+                  to={action.href}
+                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
+                >
+                  {action.label} →
+                </Link>
+              )
+            ) : (
+              <Button 
+                variant="ghost" 
+                className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
+                onClick={action.onClick}
+              >
+                {action.label} →
+              </Button>
+            )
           )}
         </CardContent>
       </Card>
-    </div>
+    </CardWrapper>
   );
 };
 

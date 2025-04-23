@@ -1,26 +1,13 @@
 
-import React, { Suspense, lazy, useState, useEffect } from "react";
+import React, { Suspense } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Loader2 } from "lucide-react";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
 
-// Lazy load the SubscriptionContent component with prefetching
-const SubscriptionContent = lazy(() => {
-  // Start a timeout to show loading state for a minimum time to prevent flashing
-  const displayPromise = new Promise(resolve => setTimeout(resolve, 300));
-  // Load the actual component
-  const componentPromise = import("@/components/subscription/SubscriptionContent");
-  // Wait for both the display delay and the component to load
-  return Promise.all([displayPromise, componentPromise]).then(([_, module]) => module);
-});
-
-// Prefetch subscription-related components when idle
-if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-  window.requestIdleCallback(() => {
-    import("@/components/subscription/SubscriptionPlanCard");
-    import("@/components/subscription/BillingCycleSelector");
-  });
-}
+// Lazy load the SubscriptionContent component to improve initial page load
+const SubscriptionContent = React.lazy(() => 
+  import("@/components/subscription/SubscriptionContent")
+);
 
 // Error boundary component to catch rendering errors
 class ErrorBoundary extends React.Component<
@@ -60,32 +47,18 @@ class ErrorBoundary extends React.Component<
   }
 }
 
-// Loading spinner component with delayed appearance to prevent flashing
-const DelayedLoadingSpinner = () => {
-  const [showSpinner, setShowSpinner] = useState(false);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => setShowSpinner(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
-  
-  if (!showSpinner) return null;
-  
-  return (
-    <div className="flex flex-col items-center justify-center h-64">
-      <Loader2 className="h-12 w-12 text-[#FFC900] animate-spin mb-4" />
-      <p className="text-[#FFC900]/70">Loading subscription options...</p>
-    </div>
-  );
-};
-
 const Subscription = () => {
   return (
     <MainLayout>
       <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-[#151812] px-1 py-6 sm:px-3 md:px-2">
         <ErrorBoundary>
           <SubscriptionProvider>
-            <Suspense fallback={<DelayedLoadingSpinner />}>
+            <Suspense fallback={
+              <div className="flex flex-col items-center justify-center h-64">
+                <Loader2 className="h-12 w-12 text-[#FFC900] animate-spin mb-4" />
+                <p className="text-[#FFC900]/70">Loading subscription options...</p>
+              </div>
+            }>
               <SubscriptionContent />
             </Suspense>
           </SubscriptionProvider>

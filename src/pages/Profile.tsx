@@ -1,6 +1,7 @@
 
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
+import { ProfileForm } from "@/components/profile/ProfileForm";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -8,11 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { CreditCard, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-
-// Lazy load the ProfileForm component
-const ProfileForm = lazy(() => import("@/components/profile/ProfileForm").then(module => ({ 
-  default: module.ProfileForm 
-})));
 
 const Profile = () => {
   const { user } = useAuth();
@@ -24,87 +20,49 @@ const Profile = () => {
     queryFn: async () => {
       if (!user?.id) return null;
       
-      try {
-        // First try to retrieve from localStorage for instant load
-        const cachedProfile = localStorage.getItem(`profile_${user.id}`);
-        let existingProfile = null;
-        
-        if (cachedProfile) {
-          try {
-            existingProfile = JSON.parse(cachedProfile);
-            // If we have a cache hit, we'll still fetch in background but return cached data immediately
-            fetchFreshProfile(user.id);
-            return existingProfile;
-          } catch (e) {
-            console.warn("Failed to parse cached profile:", e);
-          }
-        }
-        
-        return await fetchFreshProfile(user.id);
-      } catch (e) {
-        console.error('Error in profile query:', e);
-        throw e;
+      // Try to fetch existing profile
+      const { data: existingProfile, error: fetchError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+      
+      if (fetchError) {
+        console.error('Error fetching profile:', fetchError);
+        throw new Error('Failed to fetch profile');
       }
+      
+      // If profile exists, return it
+      if (existingProfile) {
+        return existingProfile;
+      }
+      
+      // If profile doesn't exist, create it
+      const { data: newProfile, error: createError } = await supabase
+        .from('profiles')
+        .insert([{ 
+          id: user.id,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }])
+        .select()
+        .single();
+      
+      if (createError) {
+        console.error('Error creating profile:', createError);
+        toast({
+          title: "Profile Creation Failed",
+          description: "We couldn't create your profile. Please try again later.",
+          variant: "destructive",
+        });
+        throw new Error('Failed to create profile');
+      }
+      
+      return newProfile;
     },
     enabled: !!user?.id,
-    staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1
   });
-  
-  // Helper function to fetch the latest profile and update cache
-  const fetchFreshProfile = async (userId: string) => {
-    // Try to fetch existing profile
-    const { data: existingProfile, error: fetchError } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .maybeSingle();
-    
-    if (fetchError) {
-      console.error('Error fetching profile:', fetchError);
-      throw new Error('Failed to fetch profile');
-    }
-    
-    // If profile exists, cache it and return
-    if (existingProfile) {
-      try {
-        localStorage.setItem(`profile_${userId}`, JSON.stringify(existingProfile));
-      } catch (e) {
-        console.warn("Failed to cache profile:", e);
-      }
-      return existingProfile;
-    }
-    
-    // If profile doesn't exist, create it
-    const { data: newProfile, error: createError } = await supabase
-      .from('profiles')
-      .insert([{ 
-        id: userId,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      }])
-      .select()
-      .single();
-    
-    if (createError) {
-      console.error('Error creating profile:', createError);
-      toast({
-        title: "Profile Creation Failed",
-        description: "We couldn't create your profile. Please try again later.",
-        variant: "destructive",
-      });
-      throw new Error('Failed to create profile');
-    }
-    
-    // Cache the newly created profile
-    try {
-      localStorage.setItem(`profile_${userId}`, JSON.stringify(newProfile));
-    } catch (e) {
-      console.warn("Failed to cache new profile:", e);
-    }
-    
-    return newProfile;
-  };
 
   // Handle retry on error
   const handleRetry = () => {
@@ -133,14 +91,7 @@ const Profile = () => {
             </Button>
           </div>
         ) : (
-          <Suspense fallback={
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-[#FFC900] mr-2" />
-              <span className="text-[#FFC900]/70">Loading form...</span>
-            </div>
-          }>
-            <ProfileForm initialData={profile} />
-          </Suspense>
+          <ProfileForm initialData={profile} />
         )}
         
         <div className="mt-8 flex justify-center">

@@ -1,29 +1,14 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import { useAuth } from "@/hooks/useAuth";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
 
 type MainLayoutProps = {
   children: React.ReactNode;
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const { refreshSession } = useAuth();
-  
-  // Ensure auth session is refreshed on layout mount - simplified to reduce unnecessary rerenders
-  useEffect(() => {
-    console.log("MainLayout - Refreshing session");
-    // Use a very small delay to ensure auth state is stable and prevent race conditions
-    const refreshTimer = setTimeout(() => {
-      refreshSession();
-    }, 50);
-    
-    return () => clearTimeout(refreshTimer);
-  }, [refreshSession]);
-  
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
