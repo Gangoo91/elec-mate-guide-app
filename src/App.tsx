@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Welcome from "./pages/Welcome";
 import NotFound from "./pages/NotFound";
@@ -57,64 +57,66 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   return user ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
-const App = () => (
-  <ErrorBoundary>
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <NotificationProvider>
-          <TooltipProvider>
-            <Toaster />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/index" element={<Navigate to="/" replace />} />
-                
-                <Route path="/apprentices" element={<ApprenticesPage />} />
-                <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
-                <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
-                <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
-                <Route path="/apprentices/study-materials/nvq2" element={<NVQ2StudyMaterialsPage />} />
-                <Route path="/apprentices/study-materials/nvq3" element={<NVQ3StudyMaterialsPage />} />
-                <Route path="/apprentices/study-materials/hnc" element={<HNCStudyMaterialsPage />} />
-                <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
-                <Route path="/apprentices/certifications" element={<CertificationsPage />} />
+function App() {
+  return (
+    <Router>
+      <ErrorBoundary>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <NotificationProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Routes>
+                  <Route path="/" element={<AuthWrapper><Welcome /></AuthWrapper>} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/index" element={<Navigate to="/" replace />} />
+                  
+                  <Route path="/apprentices" element={<ApprenticesPage />} />
+                  <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
+                  <Route path="/apprentices/ai-tools" element={<AIToolsPage />} />
+                  <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
+                  <Route path="/apprentices/study-materials/nvq2" element={<NVQ2StudyMaterialsPage />} />
+                  <Route path="/apprentices/study-materials/nvq3" element={<NVQ3StudyMaterialsPage />} />
+                  <Route path="/apprentices/study-materials/hnc" element={<HNCStudyMaterialsPage />} />
+                  <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
+                  <Route path="/apprentices/certifications" element={<CertificationsPage />} />
 
-                <Route path="/electricians" element={<ElectriciansPage />} />
-                <Route path="/electricians/technical-tools" element={<NotFound />} />
-                <Route path="/electricians/toolbox-talk" element={<NotFound />} />
-                <Route path="/electricians/development" element={<NotFound />} />
-                
-                <Route path="/employers" element={<EmployersPage />} />
-                
-                <Route path="/training" element={<Navigate to="/" replace />} />
-                <Route path="/certification" element={<Navigate to="/" replace />} />
-                <Route path="/tools" element={<Navigate to="/" replace />} />
-                <Route path="/mental-health" element={<MentalHealth />} />
-                <Route path="/mental-health/stress-management" element={<StressManagement />} />
-                <Route path="/mental-health/support-groups" element={<SupportGroups />} />
-                <Route path="/mental-health/professional-resources" element={<ProfessionalResources />} />
-                <Route path="/mental-health/buddy" element={<MentalHealthBuddy />} />
-                
-                <Route path="/faq" element={<FAQ />} />
-                
-                <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
-                <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/manage-subscription" element={<ManageSubscription />} />
-                <Route path="/subscription" element={<Subscription />} />
-                <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </NotificationProvider>
-      </QueryClientProvider>
-    </AuthProvider>
-  </ErrorBoundary>
-);
+                  <Route path="/electricians" element={<ElectriciansPage />} />
+                  <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
+                  <Route path="/electricians/toolbox-talk" element={<NotFound />} />
+                  <Route path="/electricians/development" element={<NotFound />} />
+                  
+                  <Route path="/employers" element={<EmployersPage />} />
+                  
+                  <Route path="/training" element={<Navigate to="/" replace />} />
+                  <Route path="/certification" element={<Navigate to="/" replace />} />
+                  <Route path="/tools" element={<Navigate to="/" replace />} />
+                  <Route path="/mental-health" element={<MentalHealth />} />
+                  <Route path="/mental-health/stress-management" element={<StressManagement />} />
+                  <Route path="/mental-health/support-groups" element={<SupportGroups />} />
+                  <Route path="/mental-health/professional-resources" element={<ProfessionalResources />} />
+                  <Route path="/mental-health/buddy" element={<MentalHealthBuddy />} />
+                  
+                  <Route path="/faq" element={<FAQ />} />
+                  
+                  <Route path="/signup" element={<AuthWrapper><Signup /></AuthWrapper>} />
+                  <Route path="/login" element={<AuthWrapper><Login /></AuthWrapper>} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/manage-subscription" element={<ManageSubscription />} />
+                  <Route path="/subscription" element={<Subscription />} />
+                  <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </TooltipProvider>
+            </NotificationProvider>
+          </QueryClientProvider>
+        </AuthProvider>
+      </ErrorBoundary>
+    </Router>
+  );
+}
 
 export default App;
