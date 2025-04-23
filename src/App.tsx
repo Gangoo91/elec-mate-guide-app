@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -69,7 +70,7 @@ const ScrollToTop = () => {
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
-  const { preferences } = useUserPreferences();
+  const { preferences, isLoaded } = useUserPreferences();
   
   useEffect(() => {
     console.log("PublicRoute - Component mounted");
@@ -77,7 +78,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }, [refreshSession]);
   
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && isLoaded) {
       const preferredRole = preferences.preferredRole;
       console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
       
@@ -89,9 +90,9 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
         navigate('/dashboard', { replace: true });
       }
     }
-  }, [user, loading, navigate, preferences.preferredRole]);
+  }, [user, loading, navigate, preferences.preferredRole, isLoaded]);
   
-  if (loading) {
+  if (loading || !isLoaded) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
   }
   
@@ -135,26 +136,38 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 const RootRedirect = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
-  const { preferences } = useUserPreferences();
+  const { preferences, isLoaded } = useUserPreferences();
+  const location = useLocation();
   const [redirectChecked, setRedirectChecked] = useState(false);
   
   useEffect(() => {
-    console.log("RootRedirect - Component mounted");
-    const checkSession = async () => {
-      try {
-        await refreshSession();
-        setRedirectChecked(true);
-      } catch (error) {
-        console.error("Error in RootRedirect:", error);
-        setRedirectChecked(true);
-      }
-    };
-    
-    checkSession();
-  }, [refreshSession]);
+    console.log("RootRedirect - Component mounted, current path:", location.pathname);
+    // Only refresh if we're actually at the root path '/'
+    if (location.pathname === '/') {
+      const checkSession = async () => {
+        try {
+          await refreshSession();
+          setRedirectChecked(true);
+        } catch (error) {
+          console.error("Error in RootRedirect:", error);
+          setRedirectChecked(true);
+        }
+      };
+      
+      checkSession();
+    } else {
+      // We're not at the root, so no need to redirect
+      setRedirectChecked(true);
+    }
+  }, [refreshSession, location.pathname]);
   
   useEffect(() => {
-    if (!redirectChecked || loading) return;
+    // Only redirect if we're at the root path '/'
+    if (location.pathname !== '/') {
+      return;
+    }
+    
+    if (!redirectChecked || loading || !isLoaded) return;
     
     console.log("RootRedirect - Ready to redirect, user:", user ? "authenticated" : "unauthenticated");
     
@@ -173,7 +186,7 @@ const RootRedirect = () => {
       console.log("RootRedirect - No user, navigating to welcome");
       navigate('/welcome', { replace: true });
     }
-  }, [user, loading, navigate, preferences.preferredRole, redirectChecked]);
+  }, [user, loading, navigate, preferences.preferredRole, redirectChecked, location.pathname, isLoaded]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };

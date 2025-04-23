@@ -90,9 +90,24 @@ export const useUserPreferences = () => {
     }
   }, []);
 
+  // Additional method to force refresh preferences from localStorage
+  const refreshPreferences = useCallback(() => {
+    try {
+      const storedPreferredRole = localStorage.getItem('preferredRole');
+      console.log("Refreshing preferences from localStorage:", storedPreferredRole);
+      
+      setPreferences({
+        preferredRole: storedPreferredRole,
+      });
+    } catch (error) {
+      console.error("Error refreshing preferences:", error);
+    }
+  }, []);
+
   return {
     preferences,
     setPreferredRole,
     isLoaded,
+    refreshPreferences
   };
 };

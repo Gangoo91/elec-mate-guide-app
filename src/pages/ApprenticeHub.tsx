@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import ApprenticesPage from "./ApprenticesPage";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -10,8 +10,9 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 // Memoize the component to prevent unnecessary re-renders
 const ApprenticeHub = memo(() => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { refreshSession, user, loading } = useAuth();
-  const { setPreferredRole, preferences } = useUserPreferences();
+  const { setPreferredRole, preferences, isLoaded, refreshPreferences } = useUserPreferences();
   const [isInitialized, setIsInitialized] = useState(false);
   
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
@@ -24,10 +25,17 @@ const ApprenticeHub = memo(() => {
       console.log("ApprenticeHub - Setting preferredRole to apprentice");
       setPreferredRole('apprentice');
       setIsInitialized(true);
+      
+      // Force an immediate preferences refresh to ensure consistency
+      refreshPreferences();
     };
     
     initApprenticeHub();
-  }, [refreshSession, setPreferredRole]);
+    
+    // Add a path change detection to ensure role is maintained
+    console.log("ApprenticeHub - Current path:", location.pathname);
+    
+  }, [refreshSession, setPreferredRole, location.pathname, refreshPreferences]);
   
   // Additional check for user authentication
   useEffect(() => {
@@ -38,12 +46,18 @@ const ApprenticeHub = memo(() => {
   }, [user, loading, navigate, isInitialized]);
   
   // Show loading state if auth is still being checked
-  if (loading || !isInitialized) {
+  if (loading || !isInitialized || !isLoaded) {
     return (
       <div className="flex items-center justify-center h-screen">
         <LoadingSpinner size="lg" message="Loading Apprentice Hub..." />
       </div>
     );
+  }
+  
+  // Double-check role before rendering
+  if (preferences.preferredRole !== 'apprentice') {
+    console.log("ApprenticeHub - Role not set correctly, fixing...");
+    setPreferredRole('apprentice');
   }
   
   // Only render the page if we have a user

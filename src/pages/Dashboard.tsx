@@ -6,7 +6,7 @@ import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useAuth } from "@/hooks/useAuth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useUserPreferences } from "@/hooks/useUserPreferences";
 
@@ -33,8 +33,9 @@ const roles = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, loading, refreshSession } = useAuth();
-  const { setPreferredRole } = useUserPreferences();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
   const {
     query,
     setQuery,
@@ -45,12 +46,16 @@ const Dashboard = () => {
 
   // Ensure the session is fresh when visiting dashboard
   useEffect(() => {
+    console.log("Dashboard - Component mounted, at path:", location.pathname);
     refreshSession();
     
     // Always clear preferred role when viewing the dashboard
     console.log("Dashboard - Clearing preferredRole since we're on the main dashboard");
     setPreferredRole(null);
-  }, [refreshSession, setPreferredRole]);
+    
+    // Force a preferences refresh to ensure consistency
+    refreshPreferences();
+  }, [refreshSession, setPreferredRole, location.pathname, refreshPreferences]);
 
   // Handle role selection with direct navigation
   const handleRoleSelected = (role: any) => {
