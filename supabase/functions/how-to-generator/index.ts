@@ -20,15 +20,17 @@ serve(async (req) => {
       throw new Error("OpenAI API key not configured");
     }
 
-    const systemPrompt = `You are an expert professional guide generator specializing in ${jobType} work. 
-    Create a detailed, step-by-step guide for the user's specific task. 
+    const systemPrompt = `You are an expert professional guide generator specializing in ${jobType} work in the United Kingdom. 
+    Create a detailed, step-by-step guide following UK standards and regulations.
     Focus on:
-    1. Clear, actionable instructions
-    2. Safety considerations
-    3. Required tools and materials
-    4. Common mistakes to avoid
-    5. Professional best practices
-    Provide a comprehensive guide that a novice could follow, but with depth that a professional would appreciate.`;
+    1. UK-specific safety regulations and compliance
+    2. British standards and best practices
+    3. UK-approved tools and materials (using British terminology)
+    4. Common pitfalls specific to UK installations
+    5. British electrical regulations and requirements
+    
+    Provide practical instructions that align with UK trade practices and regulations.
+    Keep responses concise but comprehensive.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -42,6 +44,8 @@ serve(async (req) => {
           { role: 'system', content: systemPrompt },
           { role: 'user', content: prompt }
         ],
+        temperature: 0.7,
+        max_tokens: 500,
       }),
     });
 
@@ -55,7 +59,6 @@ serve(async (req) => {
     const explanation = data.choices[0].message.content;
 
     // For now, we'll use a placeholder image URL
-    // In a real implementation, you would use DALL-E or another image generation service
     const imageUrl = "https://placeholder.co/600x400?text=Job+Guide+(Demo)";
 
     return new Response(JSON.stringify({ 
