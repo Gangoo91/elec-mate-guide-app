@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
@@ -67,21 +66,56 @@ async function processOpenAIRequest(apiKey, query, mode, corsHeaders) {
 
   let systemPrompt;
   if (mode === 'find') {
-    systemPrompt = `You are an expert on UK electrical regulations, particularly BS 7671 (IET Wiring Regulations).
-      Provide comprehensive and detailed information about electrical regulations.
-      Format your response with:
-      - Specific regulation numbers
-      - Direct quotes from BS 7671
-      - Practical explanations
-      - Context for apprentice electricians`;
+    systemPrompt = `You are an expert on BS7671 (IET Wiring Regulations) in the United Kingdom.
+      Structure your responses in this format:
+
+      📘 REGULATION REFERENCE
+      • Specific BS7671 regulation numbers
+      • Edition and amendment details
+
+      📝 REGULATION DETAILS
+      • Direct quotes from BS7671
+      • Key requirements explained
+
+      💡 PRACTICAL APPLICATION
+      • How to implement in real-world scenarios
+      • Common compliance approaches
+
+      🔍 RELATED REGULATIONS
+      • Cross-references to other relevant sections
+      • Supporting guidance documents
+
+      ⚠️ IMPORTANT NOTES
+      • Critical compliance points
+      • Common misunderstandings
+      • Recent changes or updates
+
+      Use proper UK electrical terminology and be specific with regulation references.`;
   } else {
-    systemPrompt = `You are a professional electrical inspector specializing in BS 7671 compliance.
-      Evaluate electrical installations against current UK regulations.
-      Provide:
-      - Detailed compliance assessment
-      - Specific regulation references
-      - Potential improvements or corrections
-      - Safety recommendations`;
+    systemPrompt = `You are a professional electrical inspector specialising in BS7671 compliance checks.
+      Structure your assessment in this format:
+
+      📋 INSTALLATION OVERVIEW
+      • Summary of described setup
+      • Applicable regulations
+
+      ✅ COMPLIANCE ANALYSIS
+      • Point-by-point regulation check
+      • Specific BS7671 references
+
+      ❌ NON-COMPLIANCE ISSUES
+      • Identified problems
+      • Required corrections
+
+      🔄 RECOMMENDED ACTIONS
+      • Steps to achieve compliance
+      • Testing requirements
+
+      📢 ADDITIONAL GUIDANCE
+      • Best practice recommendations
+      • Documentation requirements
+
+      Use proper UK electrical terminology and specific regulation references.`;
   }
 
   try {

@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
@@ -106,22 +105,33 @@ serve(async (req) => {
           messages: [
             { 
               role: 'system', 
-              content: `You are an advanced electrical diagnostic AI assistant for professional electricians and skilled apprentices.
-                       Provide detailed technical analysis considering:
-                       - Circuit analysis and load calculations
-                       - Relevant electrical codes and standards
-                       - Specific component specifications
-                       - Testing procedures and required measurements
-                       - Safety considerations and potential hazards
+              content: `You are an advanced electrical diagnostic AI assistant for UK professional electricians.
+                       Format your responses clearly using this structure:
                        
-                       Use professional electrical terminology and assume the user has technical knowledge.
-                       Format responses with clear sections for:
-                       1. Initial Analysis
-                       2. Technical Recommendations
-                       3. Required Tests/Measurements
-                       4. Safety Considerations
+                       📋 INITIAL ASSESSMENT
+                       • Brief overview of the issue
+                       • Potential root causes
                        
-                       Keep responses focused and under 300 words.`
+                       🔍 DETAILED ANALYSIS
+                       • Technical breakdown of the fault
+                       • UK regulations and standards relevant to this issue
+                       
+                       📊 RECOMMENDED TESTS
+                       • Required measurements and readings
+                       • Specific test procedures (following UK standards)
+                       
+                       🛠️ SOLUTION STEPS
+                       1. Step-by-step troubleshooting guide
+                       2. Required tools and equipment
+                       3. Safety measures (BS7671 compliant)
+                       
+                       ⚠️ SAFETY NOTES
+                       • Critical safety considerations
+                       • PPE requirements
+                       • UK-specific compliance notes
+                       
+                       Use proper UK terminology and reference relevant BS7671 regulations.
+                       Keep responses professional and concise.`
             },
             { role: 'user', content: query }
           ],
@@ -131,36 +141,7 @@ serve(async (req) => {
       if (!response.ok) {
         const error = await response.json();
         console.error('OpenAI API error:', JSON.stringify(error, null, 2));
-        
-        // Check for quota exceeded error
-        if (error.error?.code === "insufficient_quota") {
-          return new Response(JSON.stringify({ 
-            response: `# Electrical Diagnostic Analysis
-
-### Initial Analysis
-This appears to be an issue related to ${query}. Such electrical problems typically stem from circuit overloads, faulty components, or improper wiring.
-
-### Technical Recommendations
-1. Perform a full circuit inspection
-2. Check for any signs of overheating or damage
-3. Verify all connections are properly secured
-4. Consider replacing components that show signs of wear
-
-### Required Tests/Measurements
-- Continuity testing across the circuit
-- Voltage measurements at key points
-- Resistance readings of suspected components
-
-### Safety Considerations
-Always disconnect power before conducting any tests or repairs.
-
-*Note: This is an offline response. Our AI service is currently experiencing high demand. For critical issues, please consult with a qualified electrician.*`
-          }), {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          });
-        }
-        
-        throw new Error(`Failed to get response from OpenAI: ${JSON.stringify(error)}`);
+        throw new Error(`Failed to get response from OpenAI: ${error.error?.message || 'Unknown error'}`);
       }
 
       const data = await response.json();
@@ -173,32 +154,7 @@ Always disconnect power before conducting any tests or repairs.
       });
     } catch (apiError) {
       console.error('OpenAI API call failed:', apiError);
-      
-      // Provide a useful fallback response
-      return new Response(JSON.stringify({ 
-        response: `# Electrical Diagnostic Analysis
-
-### Initial Analysis
-Based on your query about "${query}", this could involve several possible causes including circuit overloads, faulty components, or wiring issues.
-
-### Technical Recommendations
-1. Inspect the affected circuit thoroughly
-2. Test all components with a multimeter
-3. Look for signs of overheating or physical damage
-4. Verify proper installation according to regulations
-
-### Required Tests/Measurements
-- Voltage and current measurements
-- Continuity testing
-- Insulation resistance testing where appropriate
-
-### Safety Considerations
-Always ensure power is disconnected before performing any diagnostic work or repairs.
-
-*Note: This is a fallback response while our AI service is temporarily unavailable. For critical issues, please consult with a qualified electrician.*`
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      throw apiError;
     }
   } catch (error) {
     console.error('Error in AI Diagnostic Assistant:', error);
