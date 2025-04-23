@@ -6,19 +6,18 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { MessageCircle, UserCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export const MatesList = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const { data: mates, isLoading } = useQuery({
     queryKey: ["mental-health-mates"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("mental_health_mates")
-        .select(`
-          *,
-          profiles:profiles(first_name, last_name)
-        `)
+        .select("*, profiles(first_name, last_name)")
         .eq("is_available", true);
         
       if (error) throw error;
@@ -28,7 +27,17 @@ export const MatesList = () => {
 
   const sendMessage = async (recipientId: string) => {
     try {
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to send a message",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase.from("mate_notifications").insert({
+        sender_id: user.id,  // Add the sender ID from authentication
         recipient_id: recipientId,
         message: "Hi! I would like to connect with you as a Mental Health Mate.",
       });
@@ -45,6 +54,7 @@ export const MatesList = () => {
         description: "Failed to send message",
         variant: "destructive",
       });
+      console.error("Error sending message:", error);
     }
   };
 
@@ -59,7 +69,7 @@ export const MatesList = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <UserCheck className="h-5 w-5 text-[#FFC900]" />
-              {mate.profiles?.first_name} {mate.profiles?.last_name}
+              {mate.profiles?.first_name || 'Anonymous'} {mate.profiles?.last_name || 'User'}
             </CardTitle>
             <CardDescription className="line-clamp-2">{mate.about_me}</CardDescription>
           </CardHeader>
@@ -68,7 +78,7 @@ export const MatesList = () => {
               <div>
                 <h4 className="text-sm font-medium text-[#FFC900]">Specialties</h4>
                 <div className="flex flex-wrap gap-2 mt-1">
-                  {mate.specialties?.map((specialty, i) => (
+                  {mate.specialties?.map((specialty: string, i: number) => (
                     <span
                       key={i}
                       className="text-xs bg-[#FFC900]/10 text-[#FFC900] px-2 py-1 rounded"

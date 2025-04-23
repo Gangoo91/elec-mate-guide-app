@@ -1,12 +1,45 @@
 
-import React, { useState } from "react";
+import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MateSignupForm } from "@/components/mental-health/MateSignupForm";
 import { MatesList } from "@/components/mental-health/MatesList";
+import { useAuth } from "@/hooks/useAuth";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { UserCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const MentalHealthBuddy = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <MainLayout>
+        <div className="container py-8">
+          <PageHeader
+            title="Mental Health Mate"
+            description="Connect with fellow professionals who understand the unique challenges of the electrical industry."
+          />
+          
+          <Alert className="bg-[#22251e] border-[#FFC900]/20 mt-4">
+            <UserCheck className="h-5 w-5 text-[#FFC900]" />
+            <AlertTitle className="text-[#FFC900]">Authentication Required</AlertTitle>
+            <AlertDescription className="text-[#FFC900]/70">
+              You need to be logged in to use the Mental Health Mate feature.
+              <div className="mt-4">
+                <Button asChild className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90">
+                  <Link to="/login">Login</Link>
+                </Button>
+              </div>
+            </AlertDescription>
+          </Alert>
+        </div>
+      </MainLayout>
+    );
+  }
+
   return (
     <MainLayout>
       <div className="container py-8">
