@@ -1,9 +1,21 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calculator, Zap, CircuitBoard, Ruler } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
 import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 
 const CalculatorTools = () => {
+  const [result, setResult] = useState<string | null>(null);
+
+  const calculateResult = () => {
+    // This is a placeholder for the calculation logic
+    setResult("Calculation completed successfully!");
+  };
+
   return (
     <div className="space-y-4">
       <Tabs defaultValue="ohms-law" className="w-full">
