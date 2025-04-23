@@ -1,9 +1,7 @@
-
 import React, { useEffect } from "react";
 import { Book, Lightbulb, Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
-import DashboardSearchBar from "@/components/dashboard/DashboardSearchBar";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
@@ -71,13 +69,7 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-10 md:py-16">
-        <DashboardHeroSection hideLogoOverride={true} />
-        <DashboardSearchBar
-          query={query}
-          setQuery={setQuery}
-          isFocused={isSearchFocused}
-          setIsFocused={setIsSearchFocused}
-        />
+        <DashboardHeroSection hideLogoOverride={true} hideButtons={true} />
         <DashboardRoleGrid roles={roles} filteredRoles={filteredRoles} />
       </div>
     </MainLayout>
