@@ -16,18 +16,29 @@ serve(async (req) => {
   try {
     const { query, mode = 'find' } = await req.json();
     
-    // Access the OpenAI API key - using uppercase OPENAI_API_KEY
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+    // Try to get API key from multiple possible environment variable names
+    const getOpenAIKey = () => {
+      const possibleKeys = ['OPENAI_API_KEY', 'openai_api_key', 'OpenAI API'];
+      
+      for (const keyName of possibleKeys) {
+        const key = Deno.env.get(keyName);
+        if (key) {
+          console.log(`Found API key using name: ${keyName}`);
+          return key;
+        }
+      }
+      
+      return null;
+    };
+    
+    const openAIApiKey = getOpenAIKey();
     
     if (!openAIApiKey) {
-      console.error('OpenAI API key not configured. Checking alternative formats...');
-      // Try alternative key format
-      const altKey = Deno.env.get('openai_api_key');
-      if (altKey) {
-        console.log('Found API key in alternative format');
-        // Use the alternative key
-        return await processOpenAIRequest(altKey, query, mode, corsHeaders);
-      }
+      console.error('OpenAI API key not found under any expected names');
+      
+      // Log all available environment variables (keys only, not values)
+      const envVars = Deno.env.toObject();
+      console.log('Available environment variables:', Object.keys(envVars));
       
       return new Response(JSON.stringify({ 
         response: "OpenAI API key is not configured. Please contact support." 
@@ -74,6 +85,7 @@ async function processOpenAIRequest(apiKey, query, mode, corsHeaders) {
   }
 
   try {
+    console.log('Making request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -92,11 +104,12 @@ async function processOpenAIRequest(apiKey, query, mode, corsHeaders) {
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('OpenAI API error:', error);
-      throw new Error('Failed to get response from OpenAI');
+      console.error('OpenAI API error response:', error);
+      throw new Error(`OpenAI API returned an error: ${JSON.stringify(error)}`);
     }
 
     const data = await response.json();
+    console.log('Successfully received response from OpenAI');
     const assistantResponse = data.choices[0].message.content;
 
     return new Response(JSON.stringify({ response: assistantResponse }), {
