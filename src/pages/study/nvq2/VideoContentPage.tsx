@@ -1,67 +1,75 @@
 
 import React from 'react';
-import MainLayout from "@/components/layout/MainLayout";
+import { useNavigate } from 'react-router-dom';
 import PageHeader from "@/components/layout/PageHeader";
-import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { FileVideo, Clock } from "lucide-react";
+import { Video } from "lucide-react";
+import BackButton from "@/components/navigation/BackButton";
+import MainLayout from "@/components/layout/MainLayout";
+
+const videos = [
+  {
+    id: "electrical-safety",
+    title: "Electrical Safety Fundamentals",
+    description: "Comprehensive guide to electrical safety on site.",
+    duration: "32 minutes",
+    progress: 100,
+  },
+  {
+    id: "circuit-basics",
+    title: "Understanding Circuit Basics",
+    description: "Simple explanations of how electrical circuits work.",
+    duration: "45 minutes",
+    progress: 60,
+  },
+  {
+    id: "testing-procedures",
+    title: "Testing Procedures",
+    description: "Step-by-step guide to testing electrical installations safely.",
+    duration: "50 minutes",
+    progress: 0,
+  }
+];
 
 const VideoContentPage = () => {
-  const videos = [
-    {
-      title: "Health & Safety on Site",
-      description: "Essential safety practices for electrical installations",
-      duration: "15:30",
-      progress: 100,
-    },
-    {
-      title: "Understanding Circuit Diagrams",
-      description: "Step-by-step guide to reading and interpreting circuit diagrams",
-      duration: "22:45",
-      progress: 60,
-    },
-    {
-      title: "Installation Best Practices",
-      description: "Proper techniques for electrical installations",
-      duration: "18:20",
-      progress: 0,
-    }
-  ];
+  const navigate = useNavigate();
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
+      <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <div className="mb-4">
           <BackButton />
         </div>
-        
+
         <PageHeader 
-          title="Video Content - NVQ Level 2"
-          description="Watch detailed video tutorials and demonstrations"
+          title="Video Tutorials - NVQ Level 2"
+          description="Watch step-by-step instructional videos on key electrical topics"
           hideBackButton={true}
         />
 
-        <div className="grid gap-6">
-          {videos.map((video, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 cursor-pointer hover:border-[#FFC900]/50 transition-all">
+        <div className="grid gap-6 mt-6">
+          {videos.map((video) => (
+            <Card
+              key={video.id}
+              className="bg-[#22251e] border-[#FFC900]/20 cursor-pointer hover:scale-105 hover:border-[#FFC900]/50 transition-all"
+              tabIndex={0}
+              role="button"
+            >
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <FileVideo className="text-[#FFC900] h-6 w-6" />
+                    <Video className="text-[#FFC900] h-6 w-6" />
                     <CardTitle className="text-[#FFC900]">{video.title}</CardTitle>
                   </div>
-                  <div className="flex items-center gap-2 text-[#FFC900]/70">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-sm">{video.duration}</span>
-                  </div>
+                  <span className="text-[#FFC900]/70 text-sm">{video.duration}</span>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-[#FFC900]/70 mb-4">{video.description}</p>
                 <div className="flex items-center gap-4">
                   <Progress value={video.progress} className="h-2" />
-                  <span className="text-[#FFC900]/70 text-sm">{video.progress}% Complete</span>
+                  <span className="text-[#FFC900]/70 text-sm">{video.progress}%</span>
                 </div>
               </CardContent>
             </Card>

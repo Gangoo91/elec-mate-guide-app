@@ -3,45 +3,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import Dashboard from "./pages/Dashboard";
-import Welcome from "./pages/Welcome";
-import NotFound from "./pages/NotFound";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import ForgotPassword from "./pages/ForgotPassword";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Profile from "./pages/Profile";
-import ApprenticesPage from "./pages/ApprenticesPage";
-import ElectriciansPage from "./pages/ElectriciansPage";
-import ElectriciansMentalHealth from "./pages/ElectriciansMentalHealth";
-import ElectriciansToolboxTalk from "./pages/ElectriciansToolboxTalk";
-import EmployersPage from "./pages/EmployersPage";
-import Subscription from "./pages/Subscription";
-import SubscriptionSuccess from "./pages/SubscriptionSuccess";
-import SubscriptionGuard from "./components/guards/SubscriptionGuard";
-import { AuthProvider, useAuth } from "@/hooks/useAuth";
-import { useUserPreferences } from "@/hooks/useUserPreferences";
-import ManageSubscription from "./pages/ManageSubscription";
-import { NotificationProvider } from "./contexts/NotificationContext";
-import FAQ from "./pages/FAQ";
-import MentalHealth from "./pages/MentalHealth";
-import Mentorship from "./pages/Mentorship";
-import LearningHubPage from "./pages/LearningHubPage";
-import AIToolsPage from "./pages/AIToolsPage";
-import StudyMaterialsPage from "./pages/StudyMaterialsPage";
-import PracticeExamsPage from "./pages/PracticeExamsPage";
-import CertificationsPage from "./pages/CertificationsPage";
-import ErrorBoundary from "./components/ErrorBoundary";
-import CoreUnitsPage from "./pages/CoreUnitsPage";
-import Unit201Page from "./pages/study/nvq2/units/Unit201Page";
-import Unit202Page from "./pages/study/nvq2/units/Unit202Page";
-import Unit203Page from "./pages/study/nvq2/units/Unit203Page";
-import Unit204Page from "./pages/study/nvq2/units/Unit204Page";
-import ApprenticeHub from "./pages/ApprenticeHub";
-import ApprenticeMentalHealth from "./pages/ApprenticeMentalHealth";
-import InteractiveLessonsPage from "./pages/study/nvq2/InteractiveLessonsPage";
-import InteractiveLessonDetailPage from "./pages/study/nvq2/InteractiveLessonDetailPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -183,11 +144,17 @@ const App = () => (
                 <Route path="/apprentices/ai-tools" element={<PrivateRoute><AIToolsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/:studyType" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
+                
                 <Route path="/apprentices/study-materials/nvq2/core-units" element={<PrivateRoute><CoreUnitsPage /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/201" element={<PrivateRoute><Unit201Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/202" element={<PrivateRoute><Unit202Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/203" element={<PrivateRoute><Unit203Page /></PrivateRoute>} />
                 <Route path="/apprentices/study-materials/nvq2/core-units/204" element={<PrivateRoute><Unit204Page /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/interactive-lessons" element={<PrivateRoute><InteractiveLessonsPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/interactive-lessons/:lessonId" element={<PrivateRoute><InteractiveLessonDetailPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/video-content" element={<PrivateRoute><VideoContentPage /></PrivateRoute>} />
+                <Route path="/apprentices/study-materials/nvq2/quizzes-progress" element={<PrivateRoute><QuizzesProgressPage /></PrivateRoute>} />
+                
                 <Route path="/apprentices/study-materials/:studyType/*" element={<PrivateRoute><StudyMaterialsPage /></PrivateRoute>} />
                 <Route path="/apprentices/practice-exams" element={<PrivateRoute><PracticeExamsPage /></PrivateRoute>} />
                 <Route path="/apprentices/certifications" element={<PrivateRoute><CertificationsPage /></PrivateRoute>} />
@@ -208,8 +175,6 @@ const App = () => (
                 <Route path="/training" element={<Navigate to="/apprentices/learning-hub" replace />} />
                 <Route path="/certification" element={<Navigate to="/apprentices/certifications" replace />} />
                 <Route path="/tools" element={<Navigate to="/apprentices/ai-tools" replace />} />
-                <Route path="/apprentices/study-materials/nvq2/interactive-lessons" element={<PrivateRoute><InteractiveLessonsPage /></PrivateRoute>} />
-                <Route path="/apprentices/study-materials/nvq2/interactive-lessons/:lessonId" element={<PrivateRoute><InteractiveLessonDetailPage /></PrivateRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>

@@ -5,6 +5,8 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Play } from "lucide-react";
+import BackButton from "@/components/navigation/BackButton";
+import MainLayout from "@/components/layout/MainLayout";
 
 const lessons = [
   {
@@ -38,46 +40,52 @@ const InteractiveLessonsPage = () => {
   };
 
   return (
-    <div className="mt-8">
-      <PageHeader 
-        title="Interactive Lessons - NVQ Level 2"
-        description="Learn through hands-on exercises and interactive simulations"
-        hideBackButton={true}
-      />
+    <MainLayout>
+      <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
+        <div className="mb-4">
+          <BackButton />
+        </div>
 
-      <div className="grid gap-6 mt-6">
-        {lessons.map((lesson) => (
-          <Card
-            key={lesson.id}
-            className="bg-[#22251e] border-[#FFC900]/20 cursor-pointer hover:scale-105 hover:border-[#FFC900]/50 transition-all"
-            onClick={() => handleLessonClick(lesson.id)}
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === "Enter" || e.key === " ") handleLessonClick(lesson.id);
-            }}
-            aria-label={`Go to lesson: ${lesson.title}`}
-            role="button"
-          >
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Play className="text-[#FFC900] h-6 w-6" />
-                  <CardTitle className="text-[#FFC900]">{lesson.title}</CardTitle>
+        <PageHeader 
+          title="Interactive Lessons - NVQ Level 2"
+          description="Learn through hands-on exercises and interactive simulations"
+          hideBackButton={true}
+        />
+
+        <div className="grid gap-6 mt-6">
+          {lessons.map((lesson) => (
+            <Card
+              key={lesson.id}
+              className="bg-[#22251e] border-[#FFC900]/20 cursor-pointer hover:scale-105 hover:border-[#FFC900]/50 transition-all"
+              onClick={() => handleLessonClick(lesson.id)}
+              tabIndex={0}
+              onKeyDown={e => {
+                if (e.key === "Enter" || e.key === " ") handleLessonClick(lesson.id);
+              }}
+              aria-label={`Go to lesson: ${lesson.title}`}
+              role="button"
+            >
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Play className="text-[#FFC900] h-6 w-6" />
+                    <CardTitle className="text-[#FFC900]">{lesson.title}</CardTitle>
+                  </div>
+                  <span className="text-[#FFC900]/70 text-sm">{lesson.duration}</span>
                 </div>
-                <span className="text-[#FFC900]/70 text-sm">{lesson.duration}</span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-[#FFC900]/70 mb-4">{lesson.description}</p>
-              <div className="flex items-center gap-4">
-                <Progress value={lesson.progress} className="h-2" />
-                <span className="text-[#FFC900]/70 text-sm">{lesson.progress}%</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardHeader>
+              <CardContent>
+                <p className="text-[#FFC900]/70 mb-4">{lesson.description}</p>
+                <div className="flex items-center gap-4">
+                  <Progress value={lesson.progress} className="h-2" />
+                  <span className="text-[#FFC900]/70 text-sm">{lesson.progress}%</span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

@@ -1,53 +1,38 @@
 
 export const studyMaterialsContent = {
   level2: {
-    title: "NVQ Level 2 Core Units",
+    title: "NVQ Level 2 Study Materials",
     description: "Essential knowledge broken down into easy-to-understand sections",
     units: [
       {
-        title: "Unit 201: Health & Safety Basics",
+        id: "core-units",
+        title: "Core Units",
+        description: "Essential units required for your NVQ Level 2 qualification",
+        icon: null,
         content: [
-          "Your safety comes first! Learn about protective equipment (PPE) - like your safety boots and gloves",
-          "Understanding hazards - what could hurt you and how to stay safe",
-          "Simple guide to risk assessments - spotting dangers before they cause problems",
-          "Basic first aid knowledge - what to do if someone gets hurt",
-          "Fire safety made easy - know your fire extinguishers and escape routes"
+          "Unit 201: Health & Safety Basics",
+          "Unit 202: Electrical Science Made Simple",
+          "Unit 203: Installation Basics",
+          "Unit 204: Installation of Wiring Systems"
         ],
-        learningOutcomes: [
-          "You'll be able to spot dangerous situations before they cause harm",
-          "Know exactly what safety gear to wear and when to wear it",
-          "Understand how to keep yourself and others safe on site"
-        ]
       },
       {
-        title: "Unit 202: Electrical Science Made Simple",
-        content: [
-          "Voltage explained simply - think of it like water pressure in a pipe",
-          "Current - how electricity flows, like water flowing through pipes",
-          "Resistance - what slows electricity down (like narrow pipes slow water)",
-          "Basic calculations made easy with real-world examples",
-          "Simple circuit diagrams - learning to read them like a map"
-        ],
-        learningOutcomes: [
-          "Understand the basics of how electricity works without the complex math",
-          "Know how to use a multimeter to measure voltage and current",
-          "Be able to explain electrical concepts in simple terms"
-        ]
+        id: "interactive-lessons",
+        title: "Interactive Lessons",
+        description: "Learn through hands-on exercises and interactive simulations",
+        icon: null,
       },
       {
-        title: "Unit 203: Installation Basics",
-        content: [
-          "Step-by-step guide to basic wiring - starting with simple circuits",
-          "Tools of the trade - what each tool does and how to use it safely",
-          "Cable types made simple - which ones to use and why",
-          "Common mistakes and how to avoid them",
-          "Real-world examples with pictures and diagrams"
-        ],
-        learningOutcomes: [
-          "Confidently identify different types of cables and their uses",
-          "Know how to use basic tools correctly and safely",
-          "Complete simple installations following proper procedures"
-        ]
+        id: "video-tutorials",
+        title: "Video Tutorials",
+        description: "Watch step-by-step instructional videos on key electrical topics",
+        icon: null,
+      },
+      {
+        id: "practice-quizzes",
+        title: "Practice Quizzes",
+        description: "Test your knowledge with interactive quizzes on each topic",
+        icon: null,
       }
     ]
   },
@@ -56,9 +41,10 @@ export const studyMaterialsContent = {
     description: "Building on the basics with more detailed but clear explanations",
     units: [
       {
+        id: "advanced-circuit-design",
         title: "Advanced Circuit Design",
+        description: "Breaking down complex circuits into simple parts",
         content: [
-          "Breaking down complex circuits into simple parts",
           "Understanding three-phase power in everyday terms",
           "Practical fault-finding techniques - where to start looking",
           "Testing and certification explained clearly",
@@ -71,9 +57,10 @@ export const studyMaterialsContent = {
         ]
       },
       {
+        id: "regulations-made-clear",
         title: "Regulations Made Clear",
+        description: "BS7671 broken down into bite-size chunks",
         content: [
-          "BS7671 broken down into bite-size chunks",
           "Key regulations explained in plain English",
           "Common regulation questions answered",
           "Real-world examples of applying regulations",
@@ -92,9 +79,10 @@ export const studyMaterialsContent = {
     description: "Higher level concepts explained in simple terms",
     units: [
       {
+        id: "electrical-power-systems",
         title: "Electrical Power Systems",
+        description: "Power generation simplified - from fuel to electricity",
         content: [
-          "Power generation simplified - from fuel to electricity",
           "Transmission systems explained without the complex math",
           "Distribution networks - getting power to where it's needed",
           "Renewable energy integration in everyday terms",
@@ -107,9 +95,10 @@ export const studyMaterialsContent = {
         ]
       },
       {
+        id: "engineering-mathematics",
         title: "Engineering Mathematics",
+        description: "Algebra made simple with practical examples",
         content: [
-          "Algebra made simple with practical examples",
           "Trigonometry explained with real-world applications",
           "Calculus basics - what you need to know without the complexity",
           "Statistical methods for engineering problems",

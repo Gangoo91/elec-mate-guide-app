@@ -3,14 +3,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Book, Video, MessageSquare, FileCheck, Play } from "lucide-react";
+import { Book, Video, MessageSquare, FileCheck, Play, BookOpen, FileText } from "lucide-react";
 
-interface StudyUnit {
+export interface StudyUnit {
   id: string;
   title: string;
   description: string;
   icon?: React.ReactNode;
   href?: string;
+  content?: string[];
+  learningOutcomes?: string[];
 }
 
 interface StudyUnitContentProps {
@@ -21,8 +23,15 @@ interface StudyUnitContentProps {
 }
 
 const StudyUnitContent = ({ title, description, units = [], basePath }: StudyUnitContentProps) => {
-  // Define additional learning resources for NVQ Level 2
-  const additionalResources = [
+  // Define the main study categories for NVQ Level 2
+  const mainCategories = [
+    {
+      id: "core-units",
+      title: "Core Units",
+      description: "Essential units required for your NVQ Level 2 qualification",
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
+      href: `${basePath}/core-units`
+    },
     {
       id: "interactive-lessons",
       title: "Interactive Lessons",
@@ -46,6 +55,9 @@ const StudyUnitContent = ({ title, description, units = [], basePath }: StudyUni
     },
   ];
 
+  // If this is the main NVQ level 2 page, show the main categories
+  const isMainNVQPage = basePath.endsWith('nvq2');
+
   return (
     <div className="mt-8 animate-fade-in">
       {title && (
@@ -55,46 +67,47 @@ const StudyUnitContent = ({ title, description, units = [], basePath }: StudyUni
         </div>
       )}
 
-      {/* Main units grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-        {units.map((unit) => (
-          <Link to={`${unit.href || basePath + '/' + unit.id}`} key={unit.id}>
-            <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:scale-105 transition-all hover:border-[#FFC900]/50 cursor-pointer">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  {unit.icon || <Book className="text-[#FFC900] h-5 w-5" />}
-                  <CardTitle className="text-[#FFC900] text-lg">{unit.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-[#FFC900]/70 text-sm">{unit.description}</p>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
-
-      {/* Additional resources section */}
-      <div className="mt-10">
-        <h3 className="text-xl font-bold text-[#FFC900] mb-4">Additional Learning Resources</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {additionalResources.map((resource) => (
-            <Link to={resource.href} key={resource.id}>
+      {/* Main categories grid for NVQ level 2 main page */}
+      {isMainNVQPage && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {mainCategories.map((category) => (
+            <Link to={category.href} key={category.id}>
               <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:scale-105 transition-all hover:border-[#FFC900]/50 cursor-pointer">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    {resource.icon}
-                    <CardTitle className="text-[#FFC900] text-lg">{resource.title}</CardTitle>
+                    {category.icon || <Book className="text-[#FFC900] h-5 w-5" />}
+                    <CardTitle className="text-[#FFC900] text-lg">{category.title}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-[#FFC900]/70 text-sm">{resource.description}</p>
+                  <p className="text-[#FFC900]/70 text-sm">{category.description}</p>
                 </CardContent>
               </Card>
             </Link>
           ))}
         </div>
-      </div>
+      )}
+
+      {/* Units grid for other pages */}
+      {!isMainNVQPage && units.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          {units.map((unit) => (
+            <Link to={`${unit.href || basePath + '/' + unit.id}`} key={unit.id}>
+              <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:scale-105 transition-all hover:border-[#FFC900]/50 cursor-pointer">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    {unit.icon || <Book className="text-[#FFC900] h-5 w-5" />}
+                    <CardTitle className="text-[#FFC900] text-lg">{unit.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#FFC900]/70 text-sm">{unit.description}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
