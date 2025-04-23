@@ -1,14 +1,27 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, createContext, useContext } from 'react';
 
 type UserPreferences = {
   preferredRole: string | null;
 };
 
-/**
- * Hook for managing persistent user preferences
- */
-export const useUserPreferences = () => {
+type UserPreferencesContextType = {
+  preferences: UserPreferences;
+  setPreferredRole: (role: string | null) => void;
+  isLoaded: boolean;
+  refreshPreferences: () => void;
+};
+
+const UserPreferencesContext = createContext<UserPreferencesContextType>({
+  preferences: { preferredRole: 'apprentice' },
+  setPreferredRole: () => {},
+  isLoaded: false,
+  refreshPreferences: () => {}
+});
+
+export const useUserPreferences = () => useContext(UserPreferencesContext);
+
+export const UserPreferencesProvider = ({ children }: { children: React.ReactNode }) => {
   const [preferences, setPreferences] = useState<UserPreferences>({
     preferredRole: 'apprentice', // Default to apprentice role
   });
@@ -177,10 +190,16 @@ export const useUserPreferences = () => {
     }
   }, []);
 
-  return {
+  const contextValue = {
     preferences,
     setPreferredRole,
     isLoaded,
     refreshPreferences
   };
+
+  return (
+    <UserPreferencesContext.Provider value={contextValue}>
+      {children}
+    </UserPreferencesContext.Provider>
+  );
 };

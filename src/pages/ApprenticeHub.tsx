@@ -20,11 +20,14 @@ const ApprenticeHub = memo(() => {
     if (!initialized) {
       // Set role to apprentice
       localStorage.setItem('preferredRole', 'apprentice');
-      setPreferredRole('apprentice');
+      setTimeout(() => {
+        // Use setTimeout to prevent state update conflicts
+        setPreferredRole('apprentice');
+        setInitialized(true);
+      }, 0);
       
       // Update document title
       document.title = "Apprentice Hub";
-      setInitialized(true);
     }
   }, [setPreferredRole, initialized]);
   
