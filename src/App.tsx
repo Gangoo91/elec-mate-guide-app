@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -81,18 +80,11 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   
   useEffect(() => {
     if (!loading && user && isLoaded) {
-      const preferredRole = preferences.preferredRole;
-      console.log("PublicRoute detected user is logged in, preferred role:", preferredRole);
-      
-      if (preferredRole === 'apprentice') {
-        console.log("PublicRoute - Redirecting to apprentice hub");
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        console.log("PublicRoute - Redirecting to dashboard");
-        navigate('/dashboard', { replace: true });
-      }
+      // Always go to apprentice-hub after login
+      console.log("PublicRoute - Redirecting to apprentice hub");
+      navigate('/apprentice-hub', { replace: true });
     }
-  }, [user, loading, navigate, preferences.preferredRole, isLoaded]);
+  }, [user, loading, navigate, isLoaded]);
   
   if (loading || !isLoaded) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>;
@@ -141,21 +133,17 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 const RootRedirect = () => {
   const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
-  const { preferences, isLoaded, refreshPreferences } = useUserPreferences();
   const location = useLocation();
   const [redirectChecked, setRedirectChecked] = useState(false);
   
-  // First effect: refresh session and preferences when component mounts
+  // Always refresh session and set up auto-redirect to apprentice-hub
   useEffect(() => {
     console.log("RootRedirect - Component mounted, current path:", location.pathname);
     
     const initializeApp = async () => {
       try {
-        // Always refresh both session and preferences on initial load
         await refreshSession();
-        refreshPreferences();
         setRedirectChecked(true);
-        console.log("RootRedirect - Session and preferences refreshed");
       } catch (error) {
         console.error("Error in RootRedirect initialization:", error);
         setRedirectChecked(true);
@@ -163,32 +151,25 @@ const RootRedirect = () => {
     };
     
     initializeApp();
-  }, [refreshSession, refreshPreferences]);
+  }, [refreshSession, location.pathname]);
   
   // Second effect: handle redirection logic once we have latest data
   useEffect(() => {
-    if (!redirectChecked || loading || !isLoaded) {
+    if (!redirectChecked || loading) {
       return;
     }
     
     console.log("RootRedirect - Ready to redirect, user:", user ? "authenticated" : "unauthenticated");
     
     if (user) {
-      const preferredRole = preferences.preferredRole;
-      console.log("RootRedirect - User authenticated, preferred role:", preferredRole);
-      
-      if (preferredRole === 'apprentice') {
-        console.log("RootRedirect - Navigating to apprentice hub");
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        console.log("RootRedirect - Navigating to dashboard");
-        navigate('/dashboard', { replace: true });
-      }
+      // Always go to apprentice-hub when logged in
+      console.log("RootRedirect - Navigating to apprentice hub");
+      navigate('/apprentice-hub', { replace: true });
     } else {
       console.log("RootRedirect - No user, navigating to welcome");
       navigate('/welcome', { replace: true });
     }
-  }, [user, loading, navigate, preferences.preferredRole, redirectChecked, isLoaded]);
+  }, [user, loading, navigate, redirectChecked]);
   
   return <div className="flex items-center justify-center h-screen">Loading...</div>;
 };
@@ -208,8 +189,8 @@ const App = () => (
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/apprentices" element={<PrivateRoute><ApprenticesPage /></PrivateRoute>} />
+                <Route path="/dashboard" element={<Navigate to="/apprentice-hub" replace />} />
+                <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/apprentice-hub" element={<PrivateRoute><ApprenticeHub /></PrivateRoute>} />
                 <Route path="/apprentices/mental-health" element={<PrivateRoute><ApprenticeMentalHealth /></PrivateRoute>} />
                 <Route path="/apprentices/learning-hub" element={<PrivateRoute><LearningHubPage /></PrivateRoute>} />

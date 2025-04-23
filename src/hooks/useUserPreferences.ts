@@ -63,10 +63,23 @@ export const useUserPreferences = () => {
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('preferredRoleChange', handlePreferredRoleChange);
     
+    // Also listen for page load events to refresh preferences
+    const handlePageLoad = () => {
+      loadPreferences();
+    };
+    
+    window.addEventListener('load', handlePageLoad);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        loadPreferences();
+      }
+    });
+    
     // Return cleanup function
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('preferredRoleChange', handlePreferredRoleChange);
+      window.removeEventListener('load', handlePageLoad);
     };
   }, []);
 
@@ -77,17 +90,18 @@ export const useUserPreferences = () => {
       
       if (role) {
         localStorage.setItem('preferredRole', role);
+        
+        // Set a backup cookie as well
+        document.cookie = `preferredRole=${role || ''}; path=/; max-age=3600; SameSite=Strict`;
       } else {
         localStorage.removeItem('preferredRole');
+        document.cookie = `preferredRole=; path=/; max-age=0; SameSite=Strict`;
       }
       
       setPreferences(prev => ({
         ...prev,
         preferredRole: role,
       }));
-      
-      // Force-sync state immediately
-      document.cookie = `preferredRole=${role || ''}; path=/; max-age=3600; SameSite=Strict`;
       
       // Broadcast a custom event for same-window updates
       const event = new Event('preferredRoleChange');
@@ -108,6 +122,24 @@ export const useUserPreferences = () => {
       });
     } catch (error) {
       console.error("Error refreshing preferences:", error);
+      
+      // Try to recover from cookie backup
+      try {
+        const cookies = document.cookie.split(';');
+        const roleCookie = cookies.find(c => c.trim().startsWith('preferredRole='));
+        if (roleCookie) {
+          const roleValue = roleCookie.split('=')[1].trim();
+          if (roleValue) {
+            console.log("Recovering preferredRole from cookie:", roleValue);
+            localStorage.setItem('preferredRole', roleValue);
+            setPreferences({
+              preferredRole: roleValue,
+            });
+          }
+        }
+      } catch (e) {
+        console.error("Error recovering from cookie:", e);
+      }
     }
   }, []);
 

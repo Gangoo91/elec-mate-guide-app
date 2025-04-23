@@ -21,24 +21,58 @@ const ApprenticeHub = memo(() => {
       console.log("ApprenticeHub - Component mounted, refreshing session");
       await refreshSession();
       
-      // IMPORTANT: Always set role to apprentice when on this page, even after reloads
-      console.log("ApprenticeHub - Setting preferredRole to apprentice");
-      setPreferredRole('apprentice');
-      
-      // Force an immediate preferences refresh to ensure consistency
-      refreshPreferences();
-      setIsInitialized(true);
+      // Force apprentice role setting in localStorage to ensure persistence across reloads
+      try {
+        console.log("ApprenticeHub - Setting preferredRole to apprentice");
+        localStorage.setItem('preferredRole', 'apprentice');
+        setPreferredRole('apprentice');
+        
+        // Force an immediate preferences refresh to ensure consistency
+        refreshPreferences();
+        setIsInitialized(true);
+      } catch (error) {
+        console.error("Error setting preferredRole:", error);
+        // Try one more time with a timeout
+        setTimeout(() => {
+          try {
+            localStorage.setItem('preferredRole', 'apprentice');
+            setPreferredRole('apprentice');
+            refreshPreferences();
+            setIsInitialized(true);
+          } catch (e) {
+            console.error("Second attempt to set preferredRole failed:", e);
+            setIsInitialized(true);
+          }
+        }, 500);
+      }
     };
     
     initApprenticeHub();
+    
+    // Add a manual localStorage check/refresh on page load
+    window.addEventListener('load', () => {
+      try {
+        localStorage.setItem('preferredRole', 'apprentice');
+        setPreferredRole('apprentice');
+        refreshPreferences();
+      } catch (e) {
+        console.error("Error in load event handler:", e);
+      }
+    });
+    
   }, [refreshSession, setPreferredRole, refreshPreferences]);
   
   // Additional check for role consistency any time the path changes
   useEffect(() => {
     if (isInitialized && isLoaded && preferences.preferredRole !== 'apprentice') {
       console.log("ApprenticeHub - Role inconsistency detected, fixing...");
-      setPreferredRole('apprentice');
-      refreshPreferences();
+      try {
+        localStorage.setItem('preferredRole', 'apprentice');
+        setPreferredRole('apprentice');
+        refreshPreferences();
+      } catch (e) {
+        console.error("Error fixing role inconsistency:", e);
+      }
     }
   }, [location.pathname, isInitialized, isLoaded, preferences.preferredRole, setPreferredRole, refreshPreferences]);
   
@@ -60,10 +94,15 @@ const ApprenticeHub = memo(() => {
   }
   
   // Double-check role before rendering
-  if (preferences.preferredRole !== 'apprentice') {
-    console.log("ApprenticeHub - Role not set correctly, fixing...");
-    setPreferredRole('apprentice');
-    refreshPreferences();
+  try {
+    localStorage.setItem('preferredRole', 'apprentice');
+    if (preferences.preferredRole !== 'apprentice') {
+      console.log("ApprenticeHub - Role not set correctly, fixing...");
+      setPreferredRole('apprentice');
+      refreshPreferences();
+    }
+  } catch (e) {
+    console.error("Error in final role check:", e);
   }
   
   // Only render the page if we have a user
