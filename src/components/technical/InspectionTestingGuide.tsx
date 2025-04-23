@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -77,7 +76,7 @@ const InspectionTestingGuide: React.FC = () => {
           ) : (
             <>
               <ClipboardList className="h-5 w-5 mr-2" />
-              Generate Inspection Guide
+              Generate
             </>
           )}
         </Button>
@@ -104,4 +103,3 @@ const InspectionTestingGuide: React.FC = () => {
 };
 
 export default InspectionTestingGuide;
-
