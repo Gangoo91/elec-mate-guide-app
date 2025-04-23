@@ -12,6 +12,17 @@ const BackButton = () => {
   const isEntry =
     location.pathname === "/" || location.pathname === "/dashboard";
 
+  // Determine if we need a specific fallback path
+  const handleBackNavigation = () => {
+    // For mental health subpages, go back to mental health hub
+    if (location.pathname.startsWith("/mental-health/") && location.pathname !== "/mental-health") {
+      navigate("/mental-health");
+    } else {
+      // Default behavior - go back one step in history
+      navigate(-1);
+    }
+  };
+
   if (isEntry) return null;
 
   return (
@@ -19,7 +30,7 @@ const BackButton = () => {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => navigate(-1)}
+        onClick={handleBackNavigation}
         className="flex items-center gap-2 text-[#FFC900] hover:bg-[#FFC900]/10 transition"
         aria-label="Go back"
       >
