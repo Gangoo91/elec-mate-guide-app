@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Calculator } from "lucide-react";
 import {
@@ -5,6 +6,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,15 +14,21 @@ import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 import PowerCalculator from './calculators/PowerCalculator';
 import ResistanceInParallelCalculator from './calculators/ResistanceInParallelCalculator';
 import VoltageDropCalculator from './calculators/VoltageDropCalculator';
+import ImpedanceCalculator from './calculators/ImpedanceCalculator';
+import InstrumentationCalculator from './calculators/InstrumentationCalculator';
 
 const CalculatorTools = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string>('ohms-law');
 
   const calculators = {
-    'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator /> },
-    'power': { title: "Power Equations", component: <PowerCalculator /> },
-    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator /> },
-    'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator /> }
+    // Electrical Calculators
+    'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator />, type: 'electrical' },
+    'power': { title: "Power Equations", component: <PowerCalculator />, type: 'electrical' },
+    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator />, type: 'electrical' },
+    'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator />, type: 'electrical' },
+    'impedance': { title: "Circuit Impedance", component: <ImpedanceCalculator />, type: 'electrical' },
+    // Instrumentation Calculators
+    'instrumentation': { title: "Instrumentation Scaling", component: <InstrumentationCalculator />, type: 'instrumentation' },
   };
 
   return (
@@ -34,16 +42,36 @@ const CalculatorTools = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-[#22251e] border-[#FFC900]/20">
-            <ScrollArea className="h-[200px]">
-              {Object.entries(calculators).map(([key, { title }]) => (
-                <DropdownMenuItem
-                  key={key}
-                  onClick={() => setSelectedCalculator(key)}
-                  className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
-                >
-                  {title}
-                </DropdownMenuItem>
-              ))}
+            <ScrollArea className="h-[300px]">
+              <div className="p-2">
+                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Electrical Calculators</div>
+                {Object.entries(calculators)
+                  .filter(([_, calc]) => calc.type === 'electrical')
+                  .map(([key, { title }]) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setSelectedCalculator(key)}
+                      className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
+                    >
+                      {title}
+                    </DropdownMenuItem>
+                  ))}
+
+                <DropdownMenuSeparator className="my-2 bg-[#FFC900]/20" />
+                
+                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Instrumentation Calculators</div>
+                {Object.entries(calculators)
+                  .filter(([_, calc]) => calc.type === 'instrumentation')
+                  .map(([key, { title }]) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setSelectedCalculator(key)}
+                      className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
+                    >
+                      {title}
+                    </DropdownMenuItem>
+                  ))}
+              </div>
             </ScrollArea>
           </DropdownMenuContent>
         </DropdownMenu>

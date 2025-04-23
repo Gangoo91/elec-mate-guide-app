@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Power, Trash2, Info } from "lucide-react";
+import { Power, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -51,33 +50,6 @@ const ResistanceInParallelCalculator = () => {
         <h2 className="text-xl font-semibold text-[#FFC900]">Parallel Resistance Calculator</h2>
       </div>
 
-      <div className="space-y-2 mb-4">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-2 text-[#FFC900]/80 text-sm cursor-help">
-                <Info className="h-4 w-4" />
-                Formula and Help
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-[300px] p-4 bg-[#22251e] border-[#FFC900]/20">
-              <div className="space-y-2 text-[#FFC900]">
-                <p className="font-medium">Parallel Resistance Formula:</p>
-                <p className="font-mono">1/Rₜ = 1/R₁ + 1/R₂ + 1/R₃ + ...</p>
-                <p className="text-sm mt-2">Where:</p>
-                <ul className="text-sm list-disc list-inside">
-                  <li>Rₜ = Total Resistance</li>
-                  <li>R₁, R₂, R₃... = Individual resistances</li>
-                </ul>
-                <p className="text-sm mt-2">Example: For two 100Ω resistors in parallel:</p>
-                <p className="text-sm">1/Rₜ = 1/100 + 1/100 = 2/100</p>
-                <p className="text-sm">Rₜ = 50Ω</p>
-              </div>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
-
       <div className="space-y-4">
         {resistances.map((resistance, index) => (
           <div key={index} className="flex items-center space-x-2">
@@ -106,7 +78,7 @@ const ResistanceInParallelCalculator = () => {
           </div>
         ))}
 
-        <div className="space-y-2 mt-4">
+        <div className="space-y-2">
           <Button
             onClick={addResistor}
             variant="outline"
