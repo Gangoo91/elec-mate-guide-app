@@ -19,7 +19,7 @@ const ApprenticeHub = memo(() => {
     console.log("ApprenticeHub - Component mounted, refreshing session");
     refreshSession();
     
-    // Always set role to apprentice when on this page, even after reloads
+    // IMPORTANT: Always set role to apprentice when on this page, even after reloads
     console.log("ApprenticeHub - Setting preferredRole to apprentice");
     setPreferredRole('apprentice');
     

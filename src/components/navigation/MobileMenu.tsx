@@ -22,14 +22,14 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
       
       if (preferredRole === 'apprentice') {
         console.log("Mobile menu: Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub', { replace: true });
+        navigate('/apprentice-hub');
       } else {
         console.log("Mobile menu: Navigating to dashboard (no specific role preference)");
         setPreferredRole(null); // Ensure preference is cleared
-        navigate('/dashboard', { replace: true });
+        navigate('/dashboard');
       }
     } else {
-      navigate('/welcome', { replace: true });
+      navigate('/welcome');
     }
   };
 
@@ -37,14 +37,14 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
     e.preventDefault();
     console.log("Mobile menu: Apprentice Hub clicked, setting role");
     setPreferredRole('apprentice');
-    navigate('/apprentice-hub', { replace: true });
+    navigate('/apprentice-hub');
   };
 
   const handleDashboardClick = (e: React.MouseEvent) => {
     e.preventDefault();
     console.log("Mobile menu: Dashboard clicked - clearing preferredRole");
     setPreferredRole(null);
-    navigate('/dashboard', { replace: true });
+    navigate('/dashboard');
   };
 
   return (
@@ -76,7 +76,7 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 setPreferredRole(null);
-                navigate('/electricians', { replace: true });
+                navigate('/electricians');
               }}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/electricians") || location.pathname.includes('/electricians/') ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"
@@ -89,7 +89,7 @@ const MobileMenu = ({ isActive, navigate }: MobileMenuProps) => {
               onClick={(e) => {
                 e.preventDefault();
                 setPreferredRole(null);
-                navigate('/employers', { replace: true });
+                navigate('/employers');
               }}
               className={`text-lg py-2 px-4 rounded-lg font-medium ${
                 isActive("/employers") ? "bg-[#FFC900]/10 text-[#FFC900]" : "text-[#FFC900]/80 hover:bg-[#FFC900]/5"

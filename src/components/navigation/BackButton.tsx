@@ -15,15 +15,15 @@ const BackButton = () => {
     location.pathname === "/apprentice-hub";
 
   const handleGoBack = () => {
-    // Special handling for specific routes
-    if (location.pathname === "/electricians") {
-      navigate("/dashboard");
+    // When in any apprentice section, go back to apprentice-hub
+    if (location.pathname.includes('/apprentices/')) {
+      navigate("/apprentice-hub");
       return;
     }
     
-    // Specific handling for apprentices routes to go back to apprentice-hub
-    if (location.pathname.startsWith("/apprentices/")) {
-      navigate("/apprentice-hub");
+    // Special handling for specific routes
+    if (location.pathname === "/electricians") {
+      navigate("/dashboard");
       return;
     }
     
