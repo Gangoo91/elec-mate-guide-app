@@ -56,93 +56,95 @@ const OhmsLawCalculator = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="mb-4">
-        <Label className="text-[#FFC900] mb-2 block">Solve for</Label>
-        <Select value={solveFor} onValueChange={handleSolveForChange}>
-          <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
-            <SelectValue placeholder="Select what to solve for" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-            <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
-            <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
-            <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <div className="space-y-4">
-        {solveFor !== 'current' && (
-          <div>
-            <Label className="text-[#FFC900]">Current (A)</Label>
-            <Input
-              type="number"
-              value={values.current}
-              onChange={(e) => setValues({ ...values, current: e.target.value })}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
-              placeholder="Enter current"
-            />
-          </div>
-        )}
+    <div className="p-6 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+      <div className="space-y-6">
+        <div>
+          <Label className="text-[#FFC900] mb-2 block text-lg">Solve for</Label>
+          <Select value={solveFor} onValueChange={handleSolveForChange}>
+            <SelectTrigger className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
+              <SelectValue placeholder="Select what to solve for" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+              <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
+              <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
+              <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         
-        {solveFor !== 'resistance' && (
-          <div>
-            <Label className="text-[#FFC900]">Resistance (Ω)</Label>
-            <Input
-              type="number"
-              value={values.resistance}
-              onChange={(e) => setValues({ ...values, resistance: e.target.value })}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
-              placeholder="Enter resistance"
-            />
-          </div>
-        )}
-        
-        {solveFor !== 'voltage' && (
-          <div>
-            <Label className="text-[#FFC900]">Voltage (V)</Label>
-            <Input
-              type="number"
-              value={values.voltage}
-              onChange={(e) => setValues({ ...values, voltage: e.target.value })}
-              className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
-              placeholder="Enter voltage"
-            />
-          </div>
-        )}
+        <div className="space-y-4">
+          {solveFor !== 'current' && (
+            <div>
+              <Label className="text-[#FFC900]">Current (A)</Label>
+              <Input
+                type="number"
+                value={values.current}
+                onChange={(e) => setValues({ ...values, current: e.target.value })}
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
+                placeholder="Enter current"
+              />
+            </div>
+          )}
+          
+          {solveFor !== 'resistance' && (
+            <div>
+              <Label className="text-[#FFC900]">Resistance (Ω)</Label>
+              <Input
+                type="number"
+                value={values.resistance}
+                onChange={(e) => setValues({ ...values, resistance: e.target.value })}
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
+                placeholder="Enter resistance"
+              />
+            </div>
+          )}
+          
+          {solveFor !== 'voltage' && (
+            <div>
+              <Label className="text-[#FFC900]">Voltage (V)</Label>
+              <Input
+                type="number"
+                value={values.voltage}
+                onChange={(e) => setValues({ ...values, voltage: e.target.value })}
+                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]"
+                placeholder="Enter voltage"
+              />
+            </div>
+          )}
 
-        <Button 
-          onClick={handleCalculate}
-          className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
-        >
-          Calculate
-        </Button>
+          <Button 
+            onClick={handleCalculate}
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200]"
+          >
+            Calculate
+          </Button>
 
-        {result && Object.keys(result).length > 0 && (
-          <div className="mt-2 p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
-            {result.voltage && (
-              <div className="text-[#FFC900]">Voltage = {result.voltage.toFixed(2)} V</div>
-            )}
-            {result.current && (
-              <div className="text-[#FFC900]">Current = {result.current.toFixed(2)} A</div>
-            )}
-            {result.resistance && (
-              <div className="text-[#FFC900]">Resistance = {result.resistance.toFixed(2)} Ω</div>
-            )}
-            {result.power && (
-              <div className="text-[#FFC900]">Power = {result.power.toFixed(2)} W</div>
-            )}
-          </div>
-        )}
+          {result && Object.keys(result).length > 0 && (
+            <div className="mt-2 p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+              {result.voltage && (
+                <div className="text-[#FFC900]">Voltage = {result.voltage.toFixed(2)} V</div>
+              )}
+              {result.current && (
+                <div className="text-[#FFC900]">Current = {result.current.toFixed(2)} A</div>
+              )}
+              {result.resistance && (
+                <div className="text-[#FFC900]">Resistance = {result.resistance.toFixed(2)} Ω</div>
+              )}
+              {result.power && (
+                <div className="text-[#FFC900]">Power = {result.power.toFixed(2)} W</div>
+              )}
+            </div>
+          )}
 
-        <div className="grid grid-cols-2 gap-4 mt-6">
-          <div className="p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
-            <div className="text-[#FFC900] text-sm">Ohm's Law</div>
-            <div className="text-[#FFC900]/80">V = I × R</div>
-          </div>
-          <div className="p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
-            <div className="text-[#FFC900] text-sm">Power</div>
-            <div className="text-[#FFC900]/80">P = V × I</div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+              <div className="text-[#FFC900] text-sm">Ohm's Law</div>
+              <div className="text-[#FFC900]/80">V = I × R</div>
+            </div>
+            <div className="p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
+              <div className="text-[#FFC900] text-sm">Power</div>
+              <div className="text-[#FFC900]/80">P = V × I</div>
+            </div>
           </div>
         </div>
       </div>
