@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 import PowerCalculator from './calculators/PowerCalculator';
 import ResistanceInSeriesCalculator from './calculators/ResistanceInSeriesCalculator';
@@ -36,15 +37,17 @@ const CalculatorTools = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-[#22251e] border-[#FFC900]/20">
-            {Object.entries(calculators).map(([key, { title }]) => (
-              <DropdownMenuItem
-                key={key}
-                onClick={() => setSelectedCalculator(key)}
-                className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
-              >
-                {title}
-              </DropdownMenuItem>
-            ))}
+            <ScrollArea className="h-[200px]">
+              {Object.entries(calculators).map(([key, { title }]) => (
+                <DropdownMenuItem
+                  key={key}
+                  onClick={() => setSelectedCalculator(key)}
+                  className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
+                >
+                  {title}
+                </DropdownMenuItem>
+              ))}
+            </ScrollArea>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
