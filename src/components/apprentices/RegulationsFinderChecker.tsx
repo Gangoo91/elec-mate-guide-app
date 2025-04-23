@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -47,21 +46,12 @@ const RegulationsFinderChecker: React.FC = () => {
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20">
-      <CardHeader>
-        <div className="flex items-center gap-2">
+      <CardHeader className="flex flex-col items-center">
+        <div className="flex items-center gap-2 mb-4">
           <FileCheck className="h-6 w-6 text-[#FFC900]" />
           <CardTitle className="text-[#FFC900]">BS 7671 Regulations Assistant</CardTitle>
         </div>
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center gap-2">
-            {mode === 'find' ? 
-              <FileSearch className="h-5 w-5 text-[#FFC900]" /> : 
-              <FileCheck className="h-5 w-5 text-[#FFC900]" />
-            }
-            <span className="text-[#FFC900]/80">
-              {mode === 'find' ? 'Find Regulations' : 'Check Compliance'}
-            </span>
-          </div>
+        <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-sm text-[#FFC900]/80">Find</span>
             <Switch 
