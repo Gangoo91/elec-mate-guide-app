@@ -74,7 +74,6 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     console.log("PublicRoute - Component mounted");
     const initRoute = async () => {
       await refreshSession();
-      // Ensure preferences are fresh when checking routes
       refreshPreferences();
     };
     
@@ -82,12 +81,8 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   }, [refreshSession, refreshPreferences]);
   
   useEffect(() => {
-    // Only attempt redirect once to prevent loops
     if (!loading && user && isLoaded && !redirectAttempted) {
       setRedirectAttempted(true);
-      // Always go to apprentice-hub after login
-      console.log("PublicRoute - Redirecting to apprentice hub");
-      // Set role before navigating
       localStorage.setItem('preferredRole', 'apprentice');
       navigate('/apprentice-hub', { replace: true });
     }
@@ -111,7 +106,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
       try {
         await refreshSession();
-        // Also refresh preferences to ensure consistent state
         refreshPreferences();
         setAuthChecked(true);
       } catch (error) {
@@ -138,30 +132,73 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const RootRedirect = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, refreshSession } = useAuth();
   const navigate = useNavigate();
   const [redirected, setRedirected] = useState(false);
-  const { setPreferredRole } = useUserPreferences();
+  const { setPreferredRole, refreshPreferences } = useUserPreferences();
+  
+  const redirectKey = 'root_redirect_attempted';
+  const pageLoadKey = 'last_page_load_timestamp';
   
   useEffect(() => {
-    // Only attempt redirect once when loading completes
-    if (!loading && !redirected) {
-      setRedirected(true);
-      
-      if (user) {
-        console.log("RootRedirect - User found, redirecting to apprentice-hub");
-        // Set role before navigating
-        setPreferredRole('apprentice');
-        localStorage.setItem('preferredRole', 'apprentice');
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        console.log("RootRedirect - No user, redirecting to welcome");
+    console.log("RootRedirect - Component mounted, refreshing session and preferences");
+    
+    const now = Date.now();
+    sessionStorage.setItem(pageLoadKey, now.toString());
+    
+    const initRedirect = async () => {
+      try {
+        await refreshSession();
+        refreshPreferences();
+        
+        if (!redirected) {
+          setRedirected(true);
+          
+          if (user) {
+            console.log("RootRedirect - User authenticated, setting role and redirecting to apprentice-hub");
+            localStorage.setItem('preferredRole', 'apprentice');
+            setPreferredRole('apprentice');
+            
+            setTimeout(() => {
+              sessionStorage.setItem(redirectKey, 'true');
+              navigate('/apprentice-hub', { replace: true });
+            }, 50);
+          } else {
+            console.log("RootRedirect - No user, redirecting to welcome");
+            sessionStorage.setItem(redirectKey, 'true');
+            navigate('/welcome', { replace: true });
+          }
+        }
+      } catch (error) {
+        console.error("Error in RootRedirect:", error);
         navigate('/welcome', { replace: true });
       }
-    }
-  }, [user, loading, navigate, redirected, setPreferredRole]);
+    };
+    
+    const clearRedirectFlag = () => {
+      const lastRedirect = sessionStorage.getItem(redirectKey);
+      if (lastRedirect) {
+        setTimeout(() => {
+          sessionStorage.removeItem(redirectKey);
+        }, 2000);
+      }
+    };
+    
+    clearRedirectFlag();
+    initRedirect();
+    
+    return () => {
+    };
+  }, [user, loading, navigate, redirected, refreshSession, refreshPreferences, setPreferredRole]);
   
-  return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  return (
+    <div className="flex items-center justify-center h-screen bg-[#151812]">
+      <div className="text-[#FFC900] flex flex-col items-center">
+        <div className="h-8 w-8 border-4 border-[#FFC900] border-t-transparent rounded-full animate-spin mb-3"></div>
+        <p>Redirecting...</p>
+      </div>
+    </div>
+  );
 };
 
 const App = () => (
@@ -174,14 +211,12 @@ const App = () => (
             <BrowserRouter>
               <ScrollToTop />
               <Routes>
-                {/* Root path redirects based on authentication */}
                 <Route path="/" element={<RootRedirect />} />
                 <Route path="/welcome" element={<PublicRoute><Welcome /></PublicRoute>} />
                 <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
                 <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 
-                {/* Redirect all dashboard routes to apprentice-hub */}
                 <Route path="/dashboard" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/dashboard/*" element={<Navigate to="/apprentice-hub" replace />} />
                 <Route path="/apprentices" element={<Navigate to="/apprentice-hub" replace />} />

@@ -14,6 +14,17 @@ const ApprenticeHub = memo(() => {
   const { setPreferredRole, preferences, isLoaded, refreshPreferences } = useUserPreferences();
   const [isInitialized, setIsInitialized] = useState(false);
   
+  // Track page loads to detect reloads
+  useEffect(() => {
+    // Record that we've reached the apprentice hub
+    console.log("ApprenticeHub - Page loaded, recording page in sessionStorage");
+    sessionStorage.setItem('currentPage', 'apprentice-hub');
+    sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
+    
+    // Clear any redirect flags that might interfere with navigation
+    sessionStorage.removeItem('redirected_from_root');
+  }, []);
+  
   // Set apprentice role flag when visiting this page AND ensure the session is fresh
   useEffect(() => {
     const initApprenticeHub = async () => {
@@ -47,12 +58,26 @@ const ApprenticeHub = memo(() => {
       // This ensures that even on reload, the role is set correctly
       localStorage.setItem('preferredRole', 'apprentice');
       setPreferredRole('apprentice');
+      
+      // Ensure we record the current page
+      sessionStorage.setItem('currentPage', 'apprentice-hub');
+      sessionStorage.setItem('lastLoadedPage', 'apprentice-hub');
     };
     
     window.addEventListener('load', handlePageReload);
     
+    // Safety check - verify that we're on the right page after a short delay
+    const safetyCheck = setTimeout(() => {
+      const currentPage = sessionStorage.getItem('currentPage');
+      if (currentPage !== 'apprentice-hub') {
+        console.log("ApprenticeHub - Safety check detected wrong page, setting to apprentice-hub");
+        sessionStorage.setItem('currentPage', 'apprentice-hub');
+      }
+    }, 500);
+    
     return () => {
       window.removeEventListener('load', handlePageReload);
+      clearTimeout(safetyCheck);
     };
   }, [refreshSession, setPreferredRole, refreshPreferences]);
   

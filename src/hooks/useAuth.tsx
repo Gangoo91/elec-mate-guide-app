@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [initialized, setInitialized] = useState(false);
 
   // Function to refresh the session manually - improved with better error handling
-  // Fixed to return void to match the type definition
   const refreshSession = useCallback(async () => {
     try {
       console.log("Manually refreshing auth session");
@@ -40,10 +39,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (data.session?.user) {
         sessionStorage.setItem('userAuthData', JSON.stringify(data.session.user));
         sessionStorage.setItem('userAuthenticated', 'true');
+        sessionStorage.setItem('lastAuthRefresh', Date.now().toString());
         console.log("Session refreshed - user is authenticated");
       } else {
         sessionStorage.removeItem('userAuthData');
         sessionStorage.removeItem('userAuthenticated');
+        sessionStorage.removeItem('lastAuthRefresh');
         console.log("Session refreshed - no authenticated user");
       }
       // No return value needed to match Promise<void> type
@@ -54,6 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSession(null);
       sessionStorage.removeItem('userAuthData');
       sessionStorage.removeItem('userAuthenticated');
+      sessionStorage.removeItem('lastAuthRefresh');
       throw error;
     } finally {
       setLoading(false);
@@ -62,7 +64,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (initialized) return;
+    
     console.log("Auth provider initializing");
+    
+    // Force a clean start by checking if we're on the root path
+    const isRootPath = window.location.pathname === '/';
+    if (isRootPath) {
+      console.log("Auth provider - detected root path, preparing for fresh start");
+      // This helps prevent old redirects from interfering
+      sessionStorage.setItem('onRootPath', 'true');
+    } else {
+      sessionStorage.removeItem('onRootPath');
+    }
     
     // Check sessionStorage first for a faster initial state
     const hasAuthenticated = sessionStorage.getItem('userAuthenticated') === 'true';
@@ -92,9 +105,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (currentSession?.user) {
         sessionStorage.setItem('userAuthData', JSON.stringify(currentSession.user));
         sessionStorage.setItem('userAuthenticated', 'true');
+        sessionStorage.setItem('lastAuthRefresh', Date.now().toString());
+        
+        // Record that auth has been verified to help with redirects
+        sessionStorage.setItem('authVerified', 'true');
+        
+        // Ensure preferred role is set when auth changes
+        if (!localStorage.getItem('preferredRole')) {
+          localStorage.setItem('preferredRole', 'apprentice');
+        }
       } else {
         sessionStorage.removeItem('userAuthData');
         sessionStorage.removeItem('userAuthenticated');
+        sessionStorage.removeItem('lastAuthRefresh');
+        sessionStorage.removeItem('authVerified');
       }
       
       setLoading(false);
@@ -112,9 +136,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (data.session?.user) {
           sessionStorage.setItem('userAuthData', JSON.stringify(data.session.user));
           sessionStorage.setItem('userAuthenticated', 'true');
+          sessionStorage.setItem('lastAuthRefresh', Date.now().toString());
+          
+          // Record that auth has been verified to help with redirects
+          sessionStorage.setItem('authVerified', 'true');
+          
+          // Ensure preferred role is set when auth is verified
+          if (!localStorage.getItem('preferredRole')) {
+            localStorage.setItem('preferredRole', 'apprentice');
+          }
         } else {
           sessionStorage.removeItem('userAuthData');
           sessionStorage.removeItem('userAuthenticated');
+          sessionStorage.removeItem('lastAuthRefresh');
+          sessionStorage.removeItem('authVerified');
         }
       } catch (e) {
         console.error("Session check error:", e);
@@ -123,6 +158,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setSession(null);
         sessionStorage.removeItem('userAuthData');
         sessionStorage.removeItem('userAuthenticated');
+        sessionStorage.removeItem('lastAuthRefresh');
+        sessionStorage.removeItem('authVerified');
       } finally {
         setLoading(false);
         setInitialized(true);
