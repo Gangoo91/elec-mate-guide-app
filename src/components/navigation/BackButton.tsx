@@ -14,8 +14,12 @@ const BackButton = () => {
 
   // Determine if we need a specific fallback path
   const handleBackNavigation = () => {
+    // For mental health main page, go back to electricians hub
+    if (location.pathname === "/mental-health") {
+      navigate("/electricians");
+    }
     // For mental health subpages, go back to mental health hub
-    if (location.pathname.startsWith("/mental-health/") && location.pathname !== "/mental-health") {
+    else if (location.pathname.startsWith("/mental-health/") && location.pathname !== "/mental-health") {
       navigate("/mental-health");
     } else {
       // Default behavior - go back one step in history
