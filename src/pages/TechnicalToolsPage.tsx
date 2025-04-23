@@ -1,9 +1,11 @@
+
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RegulationsFinderChecker from "@/components/apprentices/RegulationsFinderChecker";
 import TechnicalSpecsAnalyzer from "@/components/apprentices/TechnicalSpecsAnalyzer";
 import HowToGenerator from "@/components/apprentices/HowToGenerator";
+import AIDiagnosticAssistant from "@/components/technical/AIDiagnosticAssistant";
 import { Calculator, Ruler, BookOpen } from "lucide-react";
 import CalculatorTools from "@/components/technical/CalculatorTools";
 
@@ -27,6 +29,13 @@ const TechnicalToolsPage = () => {
             </CardHeader>
             <CardContent>
               <CalculatorTools />
+            </CardContent>
+          </Card>
+
+          {/* Fault Finding Tool */}
+          <Card className="bg-[#22251e] border-[#FFC900]/20">
+            <CardContent>
+              <AIDiagnosticAssistant />
             </CardContent>
           </Card>
 
