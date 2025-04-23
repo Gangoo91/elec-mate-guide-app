@@ -1,4 +1,3 @@
-
 import { useExerciseKudos } from "@/hooks/useExerciseKudos";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, Star, Trophy } from "lucide-react";
@@ -11,7 +10,6 @@ const KudosDisplay = () => {
     return <div>Loading kudos...</div>;
   }
   
-  // No kudos info yet
   if (!userKudos || userKudos.totalPoints === 0) {
     return (
       <Card className="bg-[#22251e] border-[#FFC900]/20 mb-6">
@@ -29,7 +27,6 @@ const KudosDisplay = () => {
     );
   }
   
-  // Calculate level based on points
   const level = Math.floor(userKudos.totalPoints / 50) + 1;
   const nextLevelPoints = level * 50;
   const progress = (userKudos.totalPoints / nextLevelPoints) * 100;
@@ -64,7 +61,7 @@ const KudosDisplay = () => {
             <span className="text-[#FFC900]/70">Progress to level {level + 1}</span>
             <span className="text-[#FFC900]/70">{userKudos.totalPoints} / {nextLevelPoints} points</span>
           </div>
-          <Progress value={progress} className="h-2 bg-[#FFC900]/20" indicatorClassName="bg-[#FFC900]" />
+          <Progress value={progress} className="h-2 bg-[#FFC900]/20" />
         </div>
         
         <div className="text-center mt-2 text-sm text-[#FFC900]/70">

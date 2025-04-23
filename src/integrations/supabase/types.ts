@@ -39,6 +39,30 @@ export type Database = {
         }
         Relationships: []
       }
+      exercise_kudos: {
+        Row: {
+          created_at: string
+          exercise_id: string
+          id: string
+          points: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          exercise_id: string
+          id?: string
+          points?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          exercise_id?: string
+          id?: string
+          points?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       interactive_content: {
         Row: {
           content: Json
@@ -358,7 +382,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_kudos_leaderboard: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          user_id: string
+          first_name: string
+          last_name: string
+          total_points: number
+          exercises_completed: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
