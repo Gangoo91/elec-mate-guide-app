@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
-import { Calculator } from "lucide-react";
 
 interface CalculationResult {
   voltage?: number;
@@ -29,7 +27,6 @@ const OhmsLawCalculator = () => {
     
     const newResult: CalculationResult = {};
     
-    // Calculate missing value based on provided inputs and what user wants to solve for
     if (solveFor === 'voltage' && !isNaN(i) && !isNaN(r)) {
       newResult.voltage = i * r;
     } else if (solveFor === 'current' && !isNaN(v) && !isNaN(r)) {
@@ -38,7 +35,6 @@ const OhmsLawCalculator = () => {
       newResult.resistance = v / i;
     }
     
-    // Calculate power if possible
     if ((solveFor === 'voltage' && !isNaN(newResult.voltage) && !isNaN(i)) || 
         (solveFor === 'current' && !isNaN(newResult.current) && !isNaN(v)) ||
         (!isNaN(v) && !isNaN(i))) {
@@ -52,28 +48,24 @@ const OhmsLawCalculator = () => {
 
   const handleSolveForChange = (value: 'voltage' | 'current' | 'resistance') => {
     setSolveFor(value);
-    // Clear the related field when changing what to solve for
     setValues(prev => ({ ...prev, [value]: '' }));
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2 text-xl font-semibold text-[#FFC900]">
-        <Calculator className="w-6 h-6" />
-        <span>Calculator Tools</span>
-      </div>
-      
-      <div className="w-full max-w-md mx-auto rounded-lg bg-[#22251e]/95 border border-[#FFC900]/20 p-6 space-y-6">
-        <Select value={solveFor} onValueChange={handleSolveForChange}>
-          <SelectTrigger className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/5">
-            <SelectValue placeholder="Select value to solve for" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-            <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
-            <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
-            <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
-          </SelectContent>
-        </Select>
+    <div className="w-full max-w-md mx-auto">
+      <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6 space-y-6">
+        <div className="w-full max-w-xs mx-auto">
+          <Select value={solveFor} onValueChange={handleSolveForChange}>
+            <SelectTrigger className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/5">
+              <SelectValue placeholder="Select value to solve for" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+              <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
+              <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
+              <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
         <div className="space-y-4">
           {solveFor !== 'current' && (
@@ -84,7 +76,7 @@ const OhmsLawCalculator = () => {
                 value={values.current}
                 onChange={(e) => setValues({ ...values, current: e.target.value })}
                 className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter current"
+                placeholder="Enter current in amperes"
               />
             </div>
           )}
@@ -97,7 +89,7 @@ const OhmsLawCalculator = () => {
                 value={values.resistance}
                 onChange={(e) => setValues({ ...values, resistance: e.target.value })}
                 className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter resistance"
+                placeholder="Enter resistance in ohms"
               />
             </div>
           )}
@@ -110,7 +102,7 @@ const OhmsLawCalculator = () => {
                 value={values.voltage}
                 onChange={(e) => setValues({ ...values, voltage: e.target.value })}
                 className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter voltage"
+                placeholder="Enter voltage in volts"
               />
             </div>
           )}
