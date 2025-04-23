@@ -25,31 +25,32 @@ serve(async (req) => {
     
     Structure your response in this format:
     
-    📋 OVERVIEW:
-    - Brief description of the job
-    - Skill level required
-    - Estimated time
+    📋 OVERVIEW
+    • Brief description of the job
+    • Skill level required
+    • Estimated time
     
-    🛠️ TOOLS & MATERIALS:
-    - List all required tools (use UK terminology)
-    - List all materials needed
+    🛠️ TOOLS & MATERIALS
+    • Required tools (use UK terminology)
+    • Required materials
     
-    ⚠️ SAFETY REQUIREMENTS:
-    - List essential safety equipment
-    - Key UK safety regulations to follow
+    ⚠️ SAFETY REQUIREMENTS
+    • Essential safety equipment
+    • Key UK safety regulations
     
-    📝 STEP-BY-STEP GUIDE:
-    1. Number each step clearly
-    2. Keep steps concise but detailed
-    3. Highlight critical points
+    📝 STEP-BY-STEP GUIDE
+    1. First step
+    2. Second step
+    3. Next step...
     
-    💡 PRO TIPS:
-    - Common mistakes to avoid
-    - Time-saving techniques
-    - UK-specific best practices
+    💡 PRO TIPS
+    • Common mistakes to avoid
+    • Time-saving techniques
+    • UK-specific best practices
     
-    Format the response with clear headings, bullet points, and numbers for easy reading.
-    Keep the total response concise but comprehensive.`;
+    Use bullet points (•) for lists and numbers (1, 2, 3) for steps.
+    Keep descriptions clear and concise.
+    Do not use asterisks or other special characters for formatting.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',

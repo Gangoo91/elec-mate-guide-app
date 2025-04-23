@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,6 @@ const HowToGenerator: React.FC = () => {
     const newValue = e.target.value;
     setPrompt(newValue);
     
-    // Clear response and image when input is cleared
     if (!newValue.trim()) {
       setResponse('');
       setImageUrl('');
@@ -32,7 +30,6 @@ const HowToGenerator: React.FC = () => {
   const handleJobTypeChange = (value: string) => {
     setJobType(value);
     
-    // Clear response and image when type is changed
     setResponse('');
     setImageUrl('');
   };
@@ -96,7 +93,6 @@ const HowToGenerator: React.FC = () => {
               </SelectTrigger>
               <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
                 <SelectItem value="electrical" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Electrical</SelectItem>
-                <SelectItem value="plumbing" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Plumbing</SelectItem>
                 <SelectItem value="construction" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Construction</SelectItem>
                 <SelectItem value="maintenance" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Maintenance</SelectItem>
                 <SelectItem value="other" className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]">Other</SelectItem>
