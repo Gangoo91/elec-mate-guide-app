@@ -21,16 +21,35 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are an expert professional guide generator specializing in ${jobType} work in the United Kingdom. 
-    Create a detailed, step-by-step guide following UK standards and regulations.
-    Focus on:
-    1. UK-specific safety regulations and compliance
-    2. British standards and best practices
-    3. UK-approved tools and materials (using British terminology)
-    4. Common pitfalls specific to UK installations
-    5. British electrical regulations and requirements
+    Create a clear, well-formatted guide following UK standards and regulations.
     
-    Provide practical instructions that align with UK trade practices and regulations.
-    Keep responses concise but comprehensive.`;
+    Structure your response in this format:
+    
+    📋 OVERVIEW:
+    - Brief description of the job
+    - Skill level required
+    - Estimated time
+    
+    🛠️ TOOLS & MATERIALS:
+    - List all required tools (use UK terminology)
+    - List all materials needed
+    
+    ⚠️ SAFETY REQUIREMENTS:
+    - List essential safety equipment
+    - Key UK safety regulations to follow
+    
+    📝 STEP-BY-STEP GUIDE:
+    1. Number each step clearly
+    2. Keep steps concise but detailed
+    3. Highlight critical points
+    
+    💡 PRO TIPS:
+    - Common mistakes to avoid
+    - Time-saving techniques
+    - UK-specific best practices
+    
+    Format the response with clear headings, bullet points, and numbers for easy reading.
+    Keep the total response concise but comprehensive.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
