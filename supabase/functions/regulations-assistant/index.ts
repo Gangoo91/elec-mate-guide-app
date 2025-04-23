@@ -15,10 +15,20 @@ serve(async (req) => {
 
   try {
     const { query, mode = 'find' } = await req.json();
+    
+    // Access the OpenAI API key - using uppercase OPENAI_API_KEY
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-
+    
     if (!openAIApiKey) {
-      console.error('OpenAI API key not configured');
+      console.error('OpenAI API key not configured. Checking alternative formats...');
+      // Try alternative key format
+      const altKey = Deno.env.get('openai_api_key');
+      if (altKey) {
+        console.log('Found API key in alternative format');
+        // Use the alternative key
+        return await processOpenAIRequest(altKey, query, mode, corsHeaders);
+      }
+      
       return new Response(JSON.stringify({ 
         response: "OpenAI API key is not configured. Please contact support." 
       }), {
@@ -27,31 +37,47 @@ serve(async (req) => {
       });
     }
 
-    console.log('Received query:', query, 'Mode:', mode);
+    return await processOpenAIRequest(openAIApiKey, query, mode, corsHeaders);
+  } catch (error) {
+    console.error('Error in Regulations Assistant:', error);
+    
+    return new Response(JSON.stringify({ 
+      response: "I apologize, but I encountered an issue processing your request. Please try again later.",
+      error: error.message 
+    }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500
+    });
+  }
+});
 
-    let systemPrompt;
-    if (mode === 'find') {
-      systemPrompt = `You are an expert on UK electrical regulations, particularly BS 7671 (IET Wiring Regulations).
-        Provide comprehensive and detailed information about electrical regulations.
-        Format your response with:
-        - Specific regulation numbers
-        - Direct quotes from BS 7671
-        - Practical explanations
-        - Context for apprentice electricians`;
-    } else {
-      systemPrompt = `You are a professional electrical inspector specializing in BS 7671 compliance.
-        Evaluate electrical installations against current UK regulations.
-        Provide:
-        - Detailed compliance assessment
-        - Specific regulation references
-        - Potential improvements or corrections
-        - Safety recommendations`;
-    }
+async function processOpenAIRequest(apiKey, query, mode, corsHeaders) {
+  console.log('Processing query:', query, 'Mode:', mode);
 
+  let systemPrompt;
+  if (mode === 'find') {
+    systemPrompt = `You are an expert on UK electrical regulations, particularly BS 7671 (IET Wiring Regulations).
+      Provide comprehensive and detailed information about electrical regulations.
+      Format your response with:
+      - Specific regulation numbers
+      - Direct quotes from BS 7671
+      - Practical explanations
+      - Context for apprentice electricians`;
+  } else {
+    systemPrompt = `You are a professional electrical inspector specializing in BS 7671 compliance.
+      Evaluate electrical installations against current UK regulations.
+      Provide:
+      - Detailed compliance assessment
+      - Specific regulation references
+      - Potential improvements or corrections
+      - Safety recommendations`;
+  }
+
+  try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -77,14 +103,7 @@ serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error('Error in Regulations Assistant:', error);
-    
-    return new Response(JSON.stringify({ 
-      response: "I apologize, but I encountered an issue processing your request. Please try again later.",
-      error: error.message 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 500
-    });
+    console.error('OpenAI API request failed:', error);
+    throw error;
   }
-});
+}
