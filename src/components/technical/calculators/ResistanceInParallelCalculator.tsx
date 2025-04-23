@@ -73,17 +73,17 @@ const ResistanceInParallelCalculator = () => {
           </div>
         ))}
 
-        <div className="grid grid-cols-2 gap-2 mt-4">
+        <div className="space-y-2 mt-4">
           <Button
             onClick={addResistor}
             variant="outline"
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
+            className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
           >
             Add Resistor
           </Button>
           <Button
             onClick={calculateTotalResistance}
-            className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90 font-medium"
           >
             Calculate Total
           </Button>
@@ -103,3 +103,4 @@ const ResistanceInParallelCalculator = () => {
 };
 
 export default ResistanceInParallelCalculator;
+
