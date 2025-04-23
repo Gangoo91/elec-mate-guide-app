@@ -104,7 +104,7 @@ export function useStressManagementResources() {
             description: item.description,
             category: item.resource_type || "general",
             difficulty_level: "beginner",
-            duration_minutes: item.duration_minutes || 5,
+            duration_minutes: item.duration_minutes || 5, // Set default duration
             created_at: item.created_at,
             is_featured: false,
             steps: typeof item.steps === 'string' ? JSON.parse(item.steps) : item.steps,

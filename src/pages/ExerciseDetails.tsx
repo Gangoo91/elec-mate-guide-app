@@ -23,7 +23,7 @@ interface Exercise {
   steps: Step[];
   benefits: string;
   tips: string;
-  duration_minutes: number;
+  duration_minutes?: number; // Make this optional
   reference_url?: string;
   created_at: string;
   updated_at: string;
@@ -50,11 +50,12 @@ const ExerciseDetails = () => {
       }
       
       // Add a fallback for duration_minutes if it doesn't exist
-      if (data && !data.duration_minutes) {
-        data.duration_minutes = 5; // Default to 5 minutes
-      }
+      const processedData = {
+        ...data,
+        duration_minutes: data.duration_minutes || 5 // Default to 5 minutes
+      };
       
-      return data as Exercise;
+      return processedData as Exercise;
     },
   });
 
@@ -91,7 +92,7 @@ const ExerciseDetails = () => {
           <ExerciseInfo 
             benefits={exercise.benefits}
             tips={exercise.tips}
-            duration={exercise.duration_minutes}
+            duration={exercise.duration_minutes || 5}
             referenceUrl={exercise.reference_url}
           />
         </div>
