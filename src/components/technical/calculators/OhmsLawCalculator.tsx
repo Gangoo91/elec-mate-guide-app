@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "@/components/ui/select";
+import { Calculator } from "lucide-react";
 
 interface CalculationResult {
   voltage?: number;
@@ -52,71 +52,74 @@ const OhmsLawCalculator = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6 space-y-6">
-        <div className="w-full max-w-xs mx-auto">
-          <Select value={solveFor} onValueChange={handleSolveForChange}>
-            <SelectTrigger className="w-full bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/5">
-              <SelectValue placeholder="Select value to solve for" />
-            </SelectTrigger>
-            <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-              <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
-              <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
-              <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+    <div className="w-full max-w-lg mx-auto p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <Calculator className="h-8 w-8 text-[#FFC900]" />
+        <h2 className="text-2xl font-semibold text-[#FFC900]">Ohm's Law</h2>
+      </div>
 
-        <div className="space-y-4">
+      <div className="space-y-6 bg-[#1A1F1C] rounded-xl p-6 border border-[#FFC900]/10">
+        <Select value={solveFor} onValueChange={handleSolveForChange}>
+          <SelectTrigger className="w-full bg-[#1A1F1C] border border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/5 rounded-lg h-12">
+            <SelectValue placeholder="Voltage (V)" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#1A1F1C] border-[#FFC900]/20">
+            <SelectItem value="voltage" className="text-[#FFC900] focus:bg-[#FFC900]/10">Voltage (V)</SelectItem>
+            <SelectItem value="current" className="text-[#FFC900] focus:bg-[#FFC900]/10">Current (A)</SelectItem>
+            <SelectItem value="resistance" className="text-[#FFC900] focus:bg-[#FFC900]/10">Resistance (Ω)</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <div className="space-y-5">
           {solveFor !== 'current' && (
             <div>
-              <Label className="text-[#FFC900]">Current (A)</Label>
+              <div className="text-[#FFC900] mb-2 text-lg">Current (A)</div>
               <Input
                 type="number"
                 value={values.current}
                 onChange={(e) => setValues({ ...values, current: e.target.value })}
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter current in amperes"
+                className="bg-[#1A1F1C] border-[#FFC900]/20 text-[#FFC900] h-12 text-lg rounded-lg focus:ring-[#FFC900]/30 placeholder:text-[#FFC900]/30"
+                placeholder="Enter current"
               />
             </div>
           )}
           
           {solveFor !== 'resistance' && (
             <div>
-              <Label className="text-[#FFC900]">Resistance (Ω)</Label>
+              <div className="text-[#FFC900] mb-2 text-lg">Resistance (Ω)</div>
               <Input
                 type="number"
                 value={values.resistance}
                 onChange={(e) => setValues({ ...values, resistance: e.target.value })}
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter resistance in ohms"
+                className="bg-[#1A1F1C] border-[#FFC900]/20 text-[#FFC900] h-12 text-lg rounded-lg focus:ring-[#FFC900]/30 placeholder:text-[#FFC900]/30"
+                placeholder="Enter resistance"
               />
             </div>
           )}
           
           {solveFor !== 'voltage' && (
             <div>
-              <Label className="text-[#FFC900]">Voltage (V)</Label>
+              <div className="text-[#FFC900] mb-2 text-lg">Voltage (V)</div>
               <Input
                 type="number"
                 value={values.voltage}
                 onChange={(e) => setValues({ ...values, voltage: e.target.value })}
-                className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50"
-                placeholder="Enter voltage in volts"
+                className="bg-[#1A1F1C] border-[#FFC900]/20 text-[#FFC900] h-12 text-lg rounded-lg focus:ring-[#FFC900]/30 placeholder:text-[#FFC900]/30"
+                placeholder="Enter voltage"
               />
             </div>
           )}
 
           <Button 
             onClick={handleCalculate}
-            className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+            className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90 h-12 text-lg font-medium rounded-lg mt-4"
           >
             Calculate
           </Button>
         </div>
 
         {result && Object.keys(result).length > 0 && (
-          <div className="p-4 rounded-lg bg-[#22251e] border border-[#FFC900]/20 space-y-2">
+          <div className="space-y-2 pt-4 border-t border-[#FFC900]/10">
             {result.voltage && (
               <div className="text-[#FFC900]">Voltage = {result.voltage.toFixed(2)} V</div>
             )}
@@ -131,17 +134,6 @@ const OhmsLawCalculator = () => {
             )}
           </div>
         )}
-
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
-            <div className="text-[#FFC900] text-sm">Ohm's Law</div>
-            <div className="text-[#FFC900]/80">V = I × R</div>
-          </div>
-          <div className="p-3 rounded-lg bg-[#22251e] border border-[#FFC900]/20">
-            <div className="text-[#FFC900] text-sm">Power</div>
-            <div className="text-[#FFC900]/80">P = V × I</div>
-          </div>
-        </div>
       </div>
     </div>
   );
