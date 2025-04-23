@@ -36,6 +36,7 @@ import SupportGroups from "./pages/SupportGroups";
 import ProfessionalResources from "./pages/ProfessionalResources";
 import ErrorBoundary from "./components/ErrorBoundary";
 import MentalHealthBuddy from "./pages/MentalHealthBuddy";
+import TechnicalToolsPage from "./pages/TechnicalToolsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
