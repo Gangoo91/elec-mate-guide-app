@@ -25,7 +25,7 @@ const MentalHealth = () => {
                 Mental Health Mate
               </CardTitle>
               <CardDescription className="text-[#FFC900]/70">
-                Connect with our AI-powered Mental Health Mate for confidential support and guidance
+                Connect with a supportive colleague who's ready to listen and provide peer support
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
@@ -34,7 +34,7 @@ const MentalHealth = () => {
                 asChild
               >
                 <Link to="/mental-health/buddy">
-                  Talk to Mental Health Mate
+                  Find a Mental Health Mate
                 </Link>
               </Button>
             </CardContent>
