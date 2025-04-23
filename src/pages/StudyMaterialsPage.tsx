@@ -1,23 +1,15 @@
 
 import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
-import PageHeader from "@/components/layout/PageHeader";
-import ResourceCard from "@/components/shared/ResourceCard";
-import { Book, GraduationCap, BookOpen } from "lucide-react";
 import BackButton from "@/components/navigation/BackButton";
+import { Book, GraduationCap, BookOpen } from "lucide-react";
+import ResourceCard from "@/components/shared/ResourceCard";
 
 const StudyMaterialsPage = () => {
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
-        <div className="mb-4">
-          <BackButton />
-        </div>
-        <PageHeader 
-          title="Study Materials"
-          description="Comprehensive study resources for UK electrical qualifications, including NVQ Level 2, Level 3, and HNC materials."
-          hideBackButton={true}
-        />
+      <div className="container px-4 py-2 md:py-4">
+        <BackButton />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           <ResourceCard
@@ -56,4 +48,3 @@ const StudyMaterialsPage = () => {
 };
 
 export default StudyMaterialsPage;
-
