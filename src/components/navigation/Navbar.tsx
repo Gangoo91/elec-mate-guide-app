@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -48,22 +49,14 @@ const Navbar = () => {
   const hideUserMenuPaths = ["/login", "/signup", "/forgot-password"];
   const isHiddenUserMenuPath = hideUserMenuPaths.includes(location.pathname);
   
-  // Handle logo click - navigate based on preferences
+  // Handle logo click - always navigate to apprentice hub if authenticated
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
     
     if (user) {
-      const preferredRole = preferences.preferredRole;
-      console.log("Navbar: Logo clicked, preferredRole:", preferredRole);
-      
-      if (preferredRole === 'apprentice') {
-        console.log("Navbar: Navigating to apprentice-hub based on preferredRole");
-        navigate('/apprentice-hub', { replace: true });
-      } else {
-        console.log("Navbar: Navigating to dashboard (no specific role preference)");
-        setPreferredRole(null); // Ensure preference is cleared when going to dashboard
-        navigate('/dashboard', { replace: true });
-      }
+      console.log("Navbar: Logo clicked, navigating to apprentice-hub");
+      setPreferredRole('apprentice');
+      navigate('/apprentice-hub', { replace: true });
     } else {
       navigate('/welcome', { replace: true });
     }
@@ -75,14 +68,6 @@ const Navbar = () => {
     console.log("Apprentice hub clicked, setting role and navigating");
     setPreferredRole('apprentice');
     navigate('/apprentice-hub', { replace: true });
-  };
-  
-  // Handle dashboard click
-  const handleDashboardClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log("Dashboard clicked, clearing role and navigating");
-    setPreferredRole(null);
-    navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -97,13 +82,6 @@ const Navbar = () => {
           {!isHiddenUserMenuPath && (
             <NavigationMenu className="hidden md:flex">
               <NavigationMenuList>
-                <NavigationMenuItem>
-                  <div onClick={handleDashboardClick} className="cursor-pointer">
-                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/dashboard') ? 'bg-[#FFC900]/10' : ''}`}>
-                      Dashboard
-                    </NavigationMenuLink>
-                  </div>
-                </NavigationMenuItem>
                 {user && (
                   <>
                     <NavigationMenuItem>
