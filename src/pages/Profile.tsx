@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { ProfileForm } from "@/components/profile/ProfileForm";
@@ -9,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { CreditCard, Loader2 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import KudosDisplay from "@/components/profile/KudosDisplay";
+import PageHeader from "@/components/layout/PageHeader";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -20,7 +21,6 @@ const Profile = () => {
     queryFn: async () => {
       if (!user?.id) return null;
       
-      // Try to fetch existing profile
       const { data: existingProfile, error: fetchError } = await supabase
         .from('profiles')
         .select('*')
@@ -32,12 +32,10 @@ const Profile = () => {
         throw new Error('Failed to fetch profile');
       }
       
-      // If profile exists, return it
       if (existingProfile) {
         return existingProfile;
       }
       
-      // If profile doesn't exist, create it
       const { data: newProfile, error: createError } = await supabase
         .from('profiles')
         .insert([{ 
@@ -64,15 +62,19 @@ const Profile = () => {
     retry: 1
   });
 
-  // Handle retry on error
   const handleRetry = () => {
     refetch();
   };
 
   return (
     <MainLayout>
-      <div className="container max-w-4xl px-4 py-12">
-        <h1 className="text-3xl font-bold text-[#FFC900] mb-8">Profile Settings</h1>
+      <div className="container py-8">
+        <PageHeader
+          title="Your Profile"
+          description="Manage your account settings and view your progress"
+        />
+        
+        {user && <KudosDisplay />}
         
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
