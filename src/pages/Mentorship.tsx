@@ -3,36 +3,17 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { useLocation } from "react-router-dom";
 import BecomeMentorToggle from "@/components/mentorship/BecomeMentorToggle";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Users, MessageSquare, Calendar, Clock } from "lucide-react";
 import { useDataCaching } from "@/hooks/useDataCaching";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-
-interface Mentor {
-  id: string;
-  user_id: string;
-  name: string;
-  title: string;
-  experience: string;
-  specialties: string[];
-  availability: "High" | "Medium" | "Low";
-}
+import { Mentor } from "@/types/mentor";
+import { MentorshipHero } from "@/components/mentorship/MentorshipHero";
+import { MentorList } from "@/components/mentorship/MentorList";
+import { MentorshipGuide } from "@/components/mentorship/MentorshipGuide";
+import { MentorshipRequestDialog } from "@/components/mentorship/MentorshipRequestDialog";
 
 const Mentorship = () => {
   const location = useLocation();
   const isElectriciansSection = location.pathname.startsWith('/electricians');
-
   const { data: mentors, isLoading, error } = useDataCaching<Mentor>("mentors", "mentorships");
   const { toast } = useToast();
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
@@ -53,7 +34,6 @@ const Mentorship = () => {
       description: `Your mentorship request has been submitted to ${selectedMentor.name}. You'll be notified when they respond.`,
     });
 
-    // Reset state
     setDialogOpen(false);
     setRequestMessage("");
     setSelectedMentor(null);
@@ -170,149 +150,26 @@ const Mentorship = () => {
           </div>
         )}
         
-        <div className="flex items-center justify-between gap-2 mt-6 mb-4">
-          <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-[#FFC900]" />
-            <h2 className="text-xl font-semibold text-[#FFC900]">Available Mentors</h2>
-          </div>
-          <Badge variant="outline" className="border-[#FFC900]/20 text-[#FFC900]">
-            {displayMentors.length} Mentors
-          </Badge>
-        </div>
+        <MentorshipHero 
+          isElectriciansSection={isElectriciansSection} 
+          mentorsCount={displayMentors.length}
+        />
         
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {displayMentors.map((mentor) => (
-            <Card key={mentor.id} className="border-[#FFC900]/20 transition-all hover:border-[#FFC900]/40">
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <CardTitle className="text-[#FFC900]">{mentor.name}</CardTitle>
-                  <Badge 
-                    variant="outline" 
-                    className={`
-                      ${mentor.availability === 'High' ? 'border-green-500 text-green-500' : ''} 
-                      ${mentor.availability === 'Medium' ? 'border-yellow-500 text-yellow-500' : ''} 
-                      ${mentor.availability === 'Low' ? 'border-red-500 text-red-500' : ''}
-                    `}
-                  >
-                    {mentor.availability} Availability
-                  </Badge>
-                </div>
-                <p className="font-medium text-gray-400">{mentor.title}</p>
-                <div className="flex items-center gap-1 text-sm text-gray-500">
-                  <Clock className="h-3.5 w-3.5" />
-                  <span>{mentor.experience} experience</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm mb-2">Specialties:</p>
-                <div className="flex flex-wrap gap-2">
-                  {mentor.specialties.map((specialty) => (
-                    <Badge key={specialty} variant="secondary" className="bg-[#FFC900]/10 text-[#FFC900]">
-                      {specialty}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-              <CardFooter className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  className="w-full border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10"
-                  onClick={() => handleOpenRequestDialog(mentor)}
-                >
-                  <MessageSquare className="h-4 w-4 mr-2" />
-                  Request Mentorship
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+        <MentorList 
+          mentors={displayMentors}
+          onRequestMentorship={handleOpenRequestDialog}
+        />
 
-        <div className="mt-12 bg-[#22251e] rounded-xl p-6 border border-[#FFC900]/20">
-          <h3 className="text-xl font-bold text-[#FFC900] mb-3">How Mentorship Works</h3>
-          <div className="grid gap-6 md:grid-cols-3 mt-6">
-            <Card className="border-[#FFC900]/20 bg-[#151812]">
-              <CardHeader>
-                <div className="rounded-full bg-[#FFC900]/10 p-3 w-12 h-12 flex items-center justify-center mb-2">
-                  <MessageSquare className="h-6 w-6 text-[#FFC900]" />
-                </div>
-                <CardTitle className="text-base text-[#FFC900]">1. Send a Request</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-[#FFC900]/80">
-                  Select a mentor who matches your interests and send them a request with your goals and questions.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-[#FFC900]/20 bg-[#151812]">
-              <CardHeader>
-                <div className="rounded-full bg-[#FFC900]/10 p-3 w-12 h-12 flex items-center justify-center mb-2">
-                  <Calendar className="h-6 w-6 text-[#FFC900]" />
-                </div>
-                <CardTitle className="text-base text-[#FFC900]">2. Schedule Sessions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-[#FFC900]/80">
-                  Once accepted, arrange meetings that work for both of you - online, phone call, or in person.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-[#FFC900]/20 bg-[#151812]">
-              <CardHeader>
-                <div className="rounded-full bg-[#FFC900]/10 p-3 w-12 h-12 flex items-center justify-center mb-2">
-                  <Users className="h-6 w-6 text-[#FFC900]" />
-                </div>
-                <CardTitle className="text-base text-[#FFC900]">3. Grow Together</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-[#FFC900]/80">
-                  Build a valuable professional relationship and gain insights that will help advance your career.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        <MentorshipGuide />
 
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Request Mentorship</DialogTitle>
-              <DialogDescription className="text-[#FFC900]/80">
-                Send a message to {selectedMentor?.name} explaining why you'd like to connect and what you hope to learn.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-2">
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-[#FFC900]">Your message</p>
-                <Textarea
-                  placeholder="Hello! I'm interested in learning more about your expertise in..."
-                  className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900] placeholder:text-[#FFC900]/50 resize-none"
-                  rows={5}
-                  value={requestMessage}
-                  onChange={(e) => setRequestMessage(e.target.value)}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button 
-                variant="outline" 
-                onClick={() => setDialogOpen(false)} 
-                className="border-[#FFC900]/20 text-[#FFC900]"
-              >
-                Cancel
-              </Button>
-              <Button 
-                variant="default" 
-                onClick={handleMentorshipRequest} 
-                disabled={!requestMessage.trim()}
-                className="bg-[#FFC900] text-black hover:bg-[#FFC900]/80"
-              >
-                Send Request
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <MentorshipRequestDialog
+          mentor={selectedMentor}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          requestMessage={requestMessage}
+          onMessageChange={setRequestMessage}
+          onSubmit={handleMentorshipRequest}
+        />
       </div>
     </MainLayout>
   );
