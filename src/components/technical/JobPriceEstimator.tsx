@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,10 +22,8 @@ const JobPriceEstimator = () => {
 
     setIsLoading(true);
     try {
-      // Fix the function invoke call by not using the 'options' property, but passing the timeout directly
       const { data, error } = await supabase.functions.invoke('job-price-estimator', {
-        body: JSON.stringify({ jobDescription }),
-        timeout: 20000 // Pass timeout directly as a property at the top level
+        body: JSON.stringify({ jobDescription })
       });
 
       if (error) throw error;
@@ -46,24 +43,19 @@ const JobPriceEstimator = () => {
   };
 
   const formatEstimate = (text: string) => {
-    // Process headers
     let formattedText = text
       .replace(/^(SUMMARY|MATERIALS BREAKDOWN|LABOUR ESTIMATE|TOTAL COST|NOTES):/gm, 
         match => `<h2 class="text-xl font-bold text-[#FFC900] mt-6 mb-3 flex items-center"><Calculator class="mr-2 h-5 w-5 text-[#FFC900]" />${match}</h2>`);
     
-    // Process lists
     formattedText = formattedText.replace(/^[-•]\s+(.*)/gm, 
       match => `<li class="mb-2 text-[#FFC900]/90 ml-5 list-disc">${match.substring(2)}</li>`);
     
-    // Wrap lists in ul tags
     formattedText = formattedText.replace(/<li class="mb-2 text-\[#FFC900\]\/90 ml-5 list-disc">(.*?)(<\/li>[\r\n]+)(?!<li)/gs, 
       match => `<ul class="my-3">${match}</ul>`);
     
-    // Highlight GBP amounts
     formattedText = formattedText.replace(/£(\d+(\.\d{1,2})?)/g, 
       match => `<span class="text-[#FFC900] font-semibold">${match}</span>`);
     
-    // Process paragraphs
     formattedText = formattedText.split('\n')
       .map(line => {
         if (line.trim() === '') return '<div class="h-2"></div>';
@@ -72,7 +64,6 @@ const JobPriceEstimator = () => {
       })
       .join('');
     
-    // Special formatting for total cost section
     formattedText = formattedText.replace(/<h2 class="text-xl font-bold text-\[#FFC900\] mt-6 mb-3 flex items-center"><Calculator class="mr-2 h-5 w-5 text-\[#FFC900\]" \/>TOTAL COST:<\/h2>/g, 
       match => `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-4">${match}`);
     
