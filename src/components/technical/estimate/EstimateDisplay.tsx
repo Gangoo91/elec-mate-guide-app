@@ -33,7 +33,7 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
         jsPDF: { 
           unit: 'mm', 
           format: 'a4', 
-          orientation: 'portrait' 
+          orientation: 'portrait' as 'portrait' | 'p' | 'landscape' | 'l'
         }
       };
       
