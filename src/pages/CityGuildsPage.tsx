@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Book, BookOpen } from "lucide-react";
@@ -7,11 +7,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 const CityGuildsPage = () => {
+  const navigate = useNavigate();
+  
   const materials = [
     {
       title: "Level 2 Electrical Installation",
       description: "Essential materials for Level 2 qualification including practical tasks, theory modules, and assessment preparation.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/level-2')
     },
     {
       title: "Level 3 Electrical Installation",
@@ -49,6 +52,7 @@ const CityGuildsPage = () => {
                     <p className="text-[#FFC900]/70 text-sm mb-4">{material.description}</p>
                     <Button 
                       className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"
+                      onClick={material.onClick}
                     >
                       Access Materials
                     </Button>

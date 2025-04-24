@@ -43,6 +43,7 @@ import InspectionTestingGuide from "./pages/InspectionTestingGuide";
 import TemplatesPage from "./pages/TemplatesPage";
 import SignDocumentPage from "./pages/SignDocumentPage";
 import CityGuildsPage from "./pages/CityGuildsPage";
+import Level2ElectricalPage from "./pages/Level2ElectricalPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -88,6 +89,7 @@ function App() {
                   <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
                   <Route path="/apprentices/certifications" element={<CertificationsPage />} />
                   <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
 
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
