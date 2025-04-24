@@ -40,7 +40,7 @@ export const EstimateForm: React.FC<EstimateFormProps> = ({
             placeholder="Enter client name"
             value={clientName}
             onChange={(e) => onClientNameChange(e.target.value)}
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40 font-medium"
           />
         </div>
         <div>
@@ -50,7 +50,7 @@ export const EstimateForm: React.FC<EstimateFormProps> = ({
             placeholder="Enter job reference"
             value={jobReference}
             onChange={(e) => onJobReferenceChange(e.target.value)}
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40 font-medium"
           />
         </div>
       </div>
@@ -62,7 +62,7 @@ export const EstimateForm: React.FC<EstimateFormProps> = ({
           placeholder={placeholderText}
           value={jobDescription}
           onChange={(e) => onJobDescriptionChange(e.target.value)}
-          className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40 min-h-[280px] text-base leading-relaxed"
+          className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40 min-h-[280px] text-base leading-relaxed font-medium"
         />
       </div>
     </>

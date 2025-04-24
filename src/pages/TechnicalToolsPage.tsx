@@ -9,19 +9,19 @@ const TechnicalToolsPage = () => {
     {
       title: "Job Price Estimator",
       description: "Generate detailed cost estimates for electrical jobs with AI assistance.",
-      icon: <Calculator className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Calculator className="h-8 w-8 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/estimator"
     },
     {
       title: "Calculator Tools",
       description: "Essential electrical calculations including Ohm's Law, voltage drop, and more.",
-      icon: <Ruler className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Ruler className="h-8 w-8 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/calculators"
     },
     {
       title: "Inspection & Testing Guide",
       description: "Comprehensive guide for electrical inspection and testing procedures.",
-      icon: <BookOpen className="h-7 w-7 text-[#FFC900]" />,
+      icon: <BookOpen className="h-8 w-8 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/inspection-guide"
     }
   ];
