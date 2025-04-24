@@ -25,7 +25,8 @@ const CityGuildsPage = () => {
     {
       title: "MOET Level 3",
       description: "Maintenance and Operations Engineering Technician (Electrical) qualification materials, covering industrial maintenance and operations.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet')
     },
     {
       title: "AM2 Assessment Materials",

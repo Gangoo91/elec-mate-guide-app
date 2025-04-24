@@ -47,6 +47,7 @@ import Level2ElectricalPage from "./pages/Level2ElectricalPage";
 import Level2CourseContent from "./pages/Level2CourseContent";
 import UnitContentPage from "./pages/UnitContentPage";
 import Level3ElectricalPage from "./pages/Level3ElectricalPage";
+import MOETPage from "./pages/MOETPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -97,6 +98,7 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content" element={<Level2CourseContent />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-:unitId" element={<UnitContentPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-3/course-content/unit-:unitId" element={<UnitContentPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
