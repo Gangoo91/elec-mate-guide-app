@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import html2pdf from 'jspdf-html2canvas';
+import { toast } from "@/hooks/use-toast";
 
 interface EstimateDisplayProps {
   estimate: string;
@@ -12,25 +13,49 @@ interface EstimateDisplayProps {
 }
 
 export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clientName, jobReference }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  
   const handleDownloadPDF = async () => {
-    const element = document.getElementById('estimate-content');
-    if (!element) return;
+    const element = contentRef.current;
+    if (!element) {
+      toast({
+        title: "Error",
+        description: "Could not find content to download",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       const options = {
         margin: { top: 15, right: 15, bottom: 15, left: 15 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { 
-          unit: 'mm' as 'mm', 
-          format: 'a4' as 'a4', 
-          orientation: 'portrait' as 'portrait' 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait' 
         }
       };
       
+      toast({
+        title: "Generating PDF",
+        description: "Please wait while we prepare your estimate...",
+      });
+      
       const pdf = await html2pdf(element, options);
       pdf.save(`estimate-${jobReference || 'job'}.pdf`);
+      
+      toast({
+        title: "Success",
+        description: "PDF downloaded successfully",
+      });
     } catch (error) {
       console.error('Error generating PDF:', error);
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -60,7 +85,8 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
         
         <div 
           id="estimate-content"
-          className="estimate-content text-[#FFC900]/90 space-y-1"
+          ref={contentRef}
+          className="estimate-content text-[#FFC900]/90 space-y-1 p-4 bg-[#2C2F24] rounded-md"
           dangerouslySetInnerHTML={{ 
             __html: formatEstimate(estimate)
           }} 
