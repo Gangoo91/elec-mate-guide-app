@@ -66,7 +66,7 @@ const UnitContentPage = () => {
             <span className="text-sm text-[#FFC900]/70">Your progress</span>
             <span className="text-sm font-medium text-[#FFC900]">{Math.round(progress)}%</span>
           </div>
-          <Progress value={progress} className="h-2 bg-[#2a2d24]" indicatorClassName="bg-[#FFC900]" />
+          <Progress value={progress} className="h-2 bg-[#2a2d24]" />
         </div>
         
         <div className="mt-8">
