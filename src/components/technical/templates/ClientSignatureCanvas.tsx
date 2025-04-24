@@ -2,18 +2,26 @@
 import React, { useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Pen, FileCheck } from "lucide-react";
+import { Pen, FileCheck, Send, Signature } from "lucide-react";
 import { toast } from "sonner";
 
 interface ClientSignatureCanvasProps {
   onSave: (signatureData: string) => void;
   clientName: string;
+  signer?: "client" | "electrician";
+  email?: string;
 }
 
-const ClientSignatureCanvas: React.FC<ClientSignatureCanvasProps> = ({ onSave, clientName }) => {
+const ClientSignatureCanvas: React.FC<ClientSignatureCanvasProps> = ({ 
+  onSave, 
+  clientName, 
+  signer = "client",
+  email
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
+  const [emailTo, setEmailTo] = useState(email || "");
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
@@ -81,7 +89,20 @@ const ClientSignatureCanvas: React.FC<ClientSignatureCanvasProps> = ({ onSave, c
     if (canvasRef.current) {
       const signatureData = canvasRef.current.toDataURL();
       onSave(signatureData);
-      toast.success("Signature saved successfully");
+      toast.success(`${signer === "client" ? "Client" : "Electrician"} signature saved successfully`);
+    }
+  };
+
+  const sendToClient = () => {
+    if (emailTo && emailTo.includes('@')) {
+      if (canvasRef.current) {
+        const signatureData = canvasRef.current.toDataURL();
+        onSave(signatureData);
+        // In production, this would connect to a backend service to send emails
+        toast.success(`Document sent to ${emailTo} for signature`);
+      }
+    } else {
+      toast.error("Please enter a valid email address");
     }
   };
 
@@ -89,11 +110,29 @@ const ClientSignatureCanvas: React.FC<ClientSignatureCanvasProps> = ({ onSave, c
     <Card className="max-w-xl mx-auto bg-[#2C2F24] border-[#FFC900]/20">
       <CardHeader className="pb-4">
         <div className="flex items-center gap-2">
-          <Pen className="h-5 w-5 text-[#FFC900]" />
-          <CardTitle className="text-[#FFC900] text-lg">Client Signature: {clientName}</CardTitle>
+          {signer === "client" ? (
+            <Signature className="h-5 w-5 text-[#FFC900]" />
+          ) : (
+            <Pen className="h-5 w-5 text-[#FFC900]" />
+          )}
+          <CardTitle className="text-[#FFC900] text-lg">
+            {signer === "client" ? "Client Signature" : "Electrician Signature"}: {clientName}
+          </CardTitle>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
+        {signer === "client" && (
+          <div className="flex items-center space-x-3">
+            <input
+              type="email"
+              placeholder="Client's email address"
+              value={emailTo}
+              onChange={(e) => setEmailTo(e.target.value)}
+              className="flex-1 px-3 py-2 bg-[#1a1c15] border border-[#FFC900]/20 rounded text-white"
+            />
+          </div>
+        )}
+
         <div className="border-2 border-dashed border-[#FFC900]/20 rounded-lg p-4 mb-4">
           <canvas
             ref={canvasRef}
@@ -124,6 +163,15 @@ const ClientSignatureCanvas: React.FC<ClientSignatureCanvasProps> = ({ onSave, c
             <FileCheck className="w-4 h-4 mr-2" />
             Sign Document
           </Button>
+          {signer === "electrician" && (
+            <Button
+              onClick={sendToClient}
+              className="bg-[#FFC900] text-black hover:bg-[#FFF200]"
+            >
+              <Send className="w-4 h-4 mr-2" />
+              Send to Client
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
