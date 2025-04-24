@@ -324,6 +324,66 @@ export type Database = {
         }
         Relationships: []
       }
+      quiz_attempts: {
+        Row: {
+          completed_at: string
+          id: string
+          score: number
+          time_taken: number
+          total_questions: number
+          unit_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          score?: number
+          time_taken: number
+          total_questions: number
+          unit_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          score?: number
+          time_taken?: number
+          total_questions?: number
+          unit_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      safety_quiz_questions: {
+        Row: {
+          category: string
+          correct_answer: string
+          created_at: string
+          difficulty_level: string | null
+          id: string
+          options: Json
+          question: string
+        }
+        Insert: {
+          category: string
+          correct_answer: string
+          created_at?: string
+          difficulty_level?: string | null
+          id?: string
+          options: Json
+          question: string
+        }
+        Update: {
+          category?: string
+          correct_answer?: string
+          created_at?: string
+          difficulty_level?: string | null
+          id?: string
+          options?: Json
+          question?: string
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           billing_period: string | null

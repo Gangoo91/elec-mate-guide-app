@@ -5,24 +5,65 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Timer, AlertTriangle } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface SafetyQuizProps {
   unitId: string;
   timeLimit: number; // in seconds
 }
 
+interface QuizQuestion {
+  id: string;
+  question: string;
+  options: string[];
+  category: string;
+}
+
 export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
-  
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
+  const fetchQuestions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('safety_quiz_questions')
+        .select('id, question, options, category')
+        .limit(5)
+        .order('RANDOM()');
+
+      if (error) throw error;
+
+      setQuestions(data.map(q => ({
+        ...q,
+        options: q.options as string[]
+      })));
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+      toast({
+        title: "Error loading quiz",
+        description: "Failed to load quiz questions. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   // Format time remaining into minutes and seconds
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
-  
+
   // Countdown timer effect
   useEffect(() => {
     if (timeRemaining > 0 && !quizSubmitted) {
@@ -35,37 +76,47 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
       handleSubmit();
     }
   }, [timeRemaining, quizSubmitted]);
-  
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
     setQuizSubmitted(true);
-    // Here you would typically send the results to your backend
-    console.log('Quiz submitted with answers:', selectedAnswers);
+    
+    try {
+      const timeTaken = timeLimit - timeRemaining;
+      const totalQuestions = questions.length;
+      const answeredQuestions = Object.keys(selectedAnswers).length;
+
+      const { error } = await supabase
+        .from('quiz_attempts')
+        .insert({
+          unit_id: unitId,
+          score: answeredQuestions,
+          total_questions: totalQuestions,
+          time_taken: timeTaken
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Quiz Submitted",
+        description: `You answered ${answeredQuestions} out of ${totalQuestions} questions in ${formatTime(timeTaken)}.`,
+      });
+    } catch (error) {
+      console.error('Error submitting quiz:', error);
+      toast({
+        title: "Error submitting quiz",
+        description: "Failed to save your results. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
-  
-  // Temporary questions - in practice these would come from your backend
-  const questions = [
-    {
-      id: 1,
-      question: "What is the first step before starting any electrical work?",
-      options: [
-        "Put on safety boots",
-        "Check for live circuits",
-        "Conduct a risk assessment",
-        "Call your supervisor"
-      ]
-    },
-    {
-      id: 2,
-      question: "When should you replace your safety equipment?",
-      options: [
-        "Every year",
-        "When it shows signs of wear or damage",
-        "Every 6 months",
-        "When your supervisor tells you to"
-      ]
-    },
-    // Add more questions as needed
-  ];
+
+  if (loading) {
+    return (
+      <div className="text-center p-4">
+        <p className="text-[#FFC900]">Loading quiz questions...</p>
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-6">
