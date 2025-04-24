@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -8,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mentor } from "@/types/mentor";
 import { MentorshipHero } from "@/components/mentorship/MentorshipHero";
 import { MentorList } from "@/components/mentorship/MentorList";
+import { MentorshipRequestList } from "@/components/mentorship/MentorshipRequestList";
 import { MentorshipGuide } from "@/components/mentorship/MentorshipGuide";
 import { MentorshipRequestDialog } from "@/components/mentorship/MentorshipRequestDialog";
 import { Button } from "@/components/ui/button";
@@ -21,6 +23,39 @@ const Mentorship = () => {
   const [requestMessage, setRequestMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  // Demo mentorship requests data for electricians view
+  const demoMentorshipRequests = [
+    {
+      id: "1",
+      apprenticeName: "Thomas Johnson",
+      apprenticeId: "user-123",
+      message: "I'm currently in my second year of apprenticeship and struggling with three-phase systems. I'd love some guidance on practical applications and common troubleshooting techniques.",
+      requestDate: "2025-04-15T14:30:00Z",
+      status: "pending",
+      expertise: ["Three-Phase Systems", "Troubleshooting"]
+    },
+    {
+      id: "2",
+      apprenticeName: "Sarah Williams",
+      apprenticeId: "user-456",
+      message: "I'm preparing for my NVQ Level 3 assessment and would appreciate some mentoring on motor control circuits and industrial installations. I have my practical exam in 6 weeks.",
+      requestDate: "2025-04-18T09:15:00Z",
+      status: "pending",
+      expertise: ["Industrial", "Motor Control"]
+    },
+    {
+      id: "3",
+      apprenticeName: "Michael Chen",
+      apprenticeId: "user-789",
+      message: "I've been working on residential installations but want to transition to commercial projects. Could you share insights on the main differences and what additional skills I should focus on?",
+      requestDate: "2025-04-10T11:45:00Z",
+      status: "accepted",
+      expertise: ["Commercial", "Career Development"]
+    },
+  ];
+
+  const [mentorshipRequests, setMentorshipRequests] = useState(demoMentorshipRequests);
+  
   const handleOpenRequestDialog = (mentor: Mentor) => {
     setSelectedMentor(mentor);
     setDialogOpen(true);
@@ -39,6 +74,36 @@ const Mentorship = () => {
     setDialogOpen(false);
     setRequestMessage("");
     setSelectedMentor(null);
+  };
+
+  const handleAcceptRequest = (request: any) => {
+    setMentorshipRequests(prev => 
+      prev.map(r => r.id === request.id ? {...r, status: "accepted"} : r)
+    );
+    
+    toast({
+      title: "Request Accepted",
+      description: `You have accepted the mentorship request from ${request.apprenticeName}. They have been notified.`,
+    });
+  };
+
+  const handleRejectRequest = (request: any) => {
+    setMentorshipRequests(prev => 
+      prev.map(r => r.id === request.id ? {...r, status: "rejected"} : r)
+    );
+    
+    toast({
+      title: "Request Declined",
+      description: `You have declined the mentorship request from ${request.apprenticeName}.`,
+    });
+  };
+
+  const handleScheduleSession = (request: any) => {
+    toast({
+      title: "Schedule a Session",
+      description: `Opening calendar to schedule a session with ${request.apprenticeName}.`,
+    });
+    // Here you would integrate with a calendar or scheduling system
   };
 
   if (isLoading) {
@@ -136,6 +201,8 @@ const Mentorship = () => {
     },
   ];
 
+  const pendingRequestsCount = mentorshipRequests.filter(r => r.status === "pending").length;
+
   return (
     <MainLayout>
       <div className="container py-8">
@@ -155,24 +222,36 @@ const Mentorship = () => {
         <MentorshipHero 
           isElectriciansSection={isElectriciansSection} 
           mentorsCount={displayMentors.length}
+          requestsCount={isElectriciansSection ? pendingRequestsCount : undefined}
         />
         
-        <MentorList 
-          mentors={displayMentors}
-          isLoading={isLoading}
-          onRequestMentorship={handleOpenRequestDialog}
-        />
+        {isElectriciansSection ? (
+          <MentorshipRequestList 
+            requests={mentorshipRequests}
+            onAcceptRequest={handleAcceptRequest}
+            onRejectRequest={handleRejectRequest}
+            onScheduleSession={handleScheduleSession}
+          />
+        ) : (
+          <MentorList 
+            mentors={displayMentors}
+            isLoading={isLoading}
+            onRequestMentorship={handleOpenRequestDialog}
+          />
+        )}
 
-        <MentorshipGuide />
+        <MentorshipGuide isElectriciansSection={isElectriciansSection} />
 
-        <MentorshipRequestDialog
-          mentor={selectedMentor}
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-          requestMessage={requestMessage}
-          onMessageChange={setRequestMessage}
-          onSubmit={handleMentorshipRequest}
-        />
+        {!isElectriciansSection && (
+          <MentorshipRequestDialog
+            mentor={selectedMentor}
+            open={dialogOpen}
+            onOpenChange={setDialogOpen}
+            requestMessage={requestMessage}
+            onMessageChange={setRequestMessage}
+            onSubmit={handleMentorshipRequest}
+          />
+        )}
       </div>
     </MainLayout>
   );
