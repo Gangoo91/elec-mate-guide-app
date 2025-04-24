@@ -92,10 +92,11 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content" element={<Level2CourseContent />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-201" element={<Level2CourseContent />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-202" element={<Level2CourseContent />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-203" element={<Level2CourseContent />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-204" element={<Level2CourseContent />} />
-                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-206" element={<Level2CourseContent />} />
-                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-207" element={<Level2CourseContent />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-210" element={<Level2CourseContent />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
