@@ -31,7 +31,8 @@ const CityGuildsPage = () => {
     {
       title: "AM2 Assessment Materials",
       description: "Comprehensive preparation materials for the AM2 assessment, including practical scenarios and mock tests.",
-      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/am2')
     }
   ];
 
