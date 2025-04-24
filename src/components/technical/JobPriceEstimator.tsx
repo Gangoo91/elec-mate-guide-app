@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Calculator, PoundSterling, InfoIcon } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const JobPriceEstimator = () => {
@@ -23,14 +23,17 @@ const JobPriceEstimator = () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('job-price-estimator', {
-        body: JSON.stringify({ jobDescription })
+        body: JSON.stringify({ jobDescription }),
+        options: {
+          timeout: 12000
+        }
       });
 
       if (error) throw error;
       
       if (data.estimate) {
         setEstimate(data.estimate);
-        toast.success("Price estimate generated");
+        toast.success("Estimate generated");
       } else {
         throw new Error("No estimate received");
       }
@@ -93,10 +96,6 @@ Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Prop
             <CardTitle className="text-2xl font-bold text-[#FFC900] mb-2">
               Job Price Estimator
             </CardTitle>
-            <CardDescription className="text-[#FFC900]/80">
-              Get detailed cost breakdowns for electrical jobs. Our AI estimator considers materials, 
-              labor, complexity, and regional variations to provide comprehensive quotes.
-            </CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -127,13 +126,10 @@ Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Prop
           {isLoading ? (
             <>
               <LoadingSpinner size="sm" className="mr-2" />
-              Calculating Estimate...
+              Generating...
             </>
           ) : (
-            <>
-              <Calculator className="h-5 w-5 mr-2" />
-              Generate Price Estimate
-            </>
+            'Generate'
           )}
         </Button>
         
