@@ -56,7 +56,13 @@ const Level2CoreUnitsPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {units.map((unit) => (
-            <UnitCard key={unit.unitNumber} {...unit} />
+            <UnitCard 
+              key={unit.unitNumber} 
+              unitNumber={unit.unitNumber}
+              title={unit.title}
+              description={unit.description}
+              path={unit.path}
+            />
           ))}
         </div>
       </div>

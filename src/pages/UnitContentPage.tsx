@@ -12,7 +12,11 @@ const UnitContentPage = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const [progress, setProgress] = useState(0);
   
+  console.log("UnitContentPage - unitId:", unitId);
+  console.log("Available units:", Object.keys(unitContent));
+  
   const currentUnit = unitContent[unitId || ""];
+  console.log("Current unit found:", !!currentUnit);
   
   // Simulate progress tracking
   useEffect(() => {
@@ -38,6 +42,7 @@ const UnitContentPage = () => {
   };
 
   if (!currentUnit) {
+    console.log("Unit not found, navigating back");
     return (
       <MainLayout>
         <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">

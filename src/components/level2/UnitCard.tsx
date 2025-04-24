@@ -16,9 +16,8 @@ const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    const unitPath = `/apprentices/study-materials/city-guilds/level-2/course-content/unit-${unitNumber}`;
-    console.log("Navigating to:", unitPath);
-    navigate(unitPath);
+    console.log("Navigating to:", path);
+    navigate(path);
   };
   
   return (
