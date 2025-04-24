@@ -1,15 +1,19 @@
+
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Calculator, PoundSterling, InfoIcon } from "lucide-react";
+import { Calculator, PoundSterling, Save, FileText, Trash } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const JobPriceEstimator = () => {
   const [jobDescription, setJobDescription] = useState('');
+  const [clientName, setClientName] = useState('');
+  const [jobReference, setJobReference] = useState('');
   const [estimate, setEstimate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { handleError } = useErrorHandler();
@@ -30,13 +34,41 @@ const JobPriceEstimator = () => {
       
       if (data.estimate) {
         setEstimate(data.estimate);
-        toast.success("Estimate generated");
+        toast.success("Estimate generated successfully");
       } else {
         throw new Error("No estimate received");
       }
     } catch (err) {
       console.error("Error:", err);
       handleError(err, "Unable to generate estimate. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const saveEstimate = async () => {
+    if (!estimate || !jobDescription) {
+      toast.error("Please generate an estimate first");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase
+        .from('job_estimates')
+        .insert({
+          job_description: jobDescription,
+          estimate_response: estimate,
+          client_name: clientName,
+          job_reference: jobReference
+        });
+
+      if (error) throw error;
+      
+      toast.success("Estimate saved successfully");
+    } catch (err) {
+      console.error("Error:", err);
+      handleError(err, "Unable to save estimate. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -99,6 +131,21 @@ Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Prop
       </CardHeader>
       
       <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input
+            placeholder="Client Name (optional)"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40"
+          />
+          <Input
+            placeholder="Job Reference (optional)"
+            value={jobReference}
+            onChange={(e) => setJobReference(e.target.value)}
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40"
+          />
+        </div>
+
         <div className="relative">
           <Textarea 
             placeholder={placeholderText}
@@ -108,20 +155,34 @@ Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Prop
           />
         </div>
 
-        <Button 
-          onClick={generateEstimate} 
-          disabled={isLoading}
-          className="w-full bg-[#FFC900] text-black hover:bg-[#FFF200] h-12 text-base font-medium"
-        >
-          {isLoading ? (
-            <>
-              <LoadingSpinner size="sm" className="mr-2" />
-              Generating...
-            </>
-          ) : (
-            'Generate'
+        <div className="flex gap-4">
+          <Button 
+            onClick={generateEstimate} 
+            disabled={isLoading}
+            className="flex-1 bg-[#FFC900] text-black hover:bg-[#FFF200] h-12 text-base font-medium"
+          >
+            {isLoading ? (
+              <>
+                <LoadingSpinner size="sm" className="mr-2" />
+                Generating...
+              </>
+            ) : (
+              'Generate Estimate'
+            )}
+          </Button>
+
+          {estimate && (
+            <Button
+              onClick={saveEstimate}
+              disabled={isLoading}
+              variant="outline"
+              className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              Save Estimate
+            </Button>
           )}
-        </Button>
+        </div>
         
         {estimate && (
           <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">

@@ -96,6 +96,39 @@ export type Database = {
         }
         Relationships: []
       }
+      job_estimates: {
+        Row: {
+          client_name: string | null
+          created_at: string
+          estimate_response: string
+          id: string
+          job_description: string
+          job_reference: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          client_name?: string | null
+          created_at?: string
+          estimate_response: string
+          id?: string
+          job_description: string
+          job_reference?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          client_name?: string | null
+          created_at?: string
+          estimate_response?: string
+          id?: string
+          job_description?: string
+          job_reference?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       mate_notifications: {
         Row: {
           created_at: string | null
