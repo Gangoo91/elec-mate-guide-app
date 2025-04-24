@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { CircuitBoard } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 const AIDiagnosticAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
@@ -14,30 +18,20 @@ const AIDiagnosticAssistant: React.FC = () => {
   const { handleError } = useErrorHandler();
 
   const formatResponse = (rawResponse: string) => {
-    // Break down the response into more readable sections
     const sections = [
-      { 
-        title: "Problem Analysis", 
-        key: "problem" 
-      },
-      { 
-        title: "Possible Causes", 
-        key: "causes" 
-      },
-      { 
-        title: "Recommended Solutions", 
-        key: "solutions" 
-      },
-      { 
-        title: "Safety Precautions", 
-        key: "safety" 
-      }
+      { title: "Problem Analysis", key: "problem", icon: "🔍" },
+      { title: "Possible Causes", key: "causes", icon: "⚡" },
+      { title: "Recommended Solutions", key: "solutions", icon: "🛠" },
+      { title: "Safety Precautions", key: "safety", icon: "⚠️" }
     ];
 
     return sections.map(section => {
       const sectionContent = rawResponse.split(`[${section.key}]`)[1]?.split('[')[0]?.trim();
-      return sectionContent ? `🔍 ${section.title}:\n${sectionContent}\n` : '';
-    }).filter(Boolean).join('\n');
+      return sectionContent ? {
+        title: `${section.icon} ${section.title}`,
+        content: sectionContent
+      } : null;
+    }).filter(Boolean);
   };
 
   const handleDiagnosticQuery = async () => {
@@ -80,7 +74,7 @@ const AIDiagnosticAssistant: React.FC = () => {
       
       <div className="space-y-4">
         <p className="text-[#FFC900]/70">
-          Provide a detailed description of the electrical issue you're facing. Our AI will help you diagnose the problem, suggest potential causes, and recommend solutions.
+          Provide a detailed description of the electrical issue you're facing for AI-powered diagnosis.
         </p>
 
         <Textarea 
@@ -100,11 +94,22 @@ const AIDiagnosticAssistant: React.FC = () => {
         </Button>
         
         {response && (
-          <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
-            <h4 className="font-semibold mb-2 text-[#FFC900]">Diagnostic Insights:</h4>
-            <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
-            <div className="mt-4 text-sm text-[#FFC900]/50">
-              ℹ️ Note: This is an AI-generated analysis. Always consult a professional for complex electrical issues.
+          <div className="mt-4 space-y-2">
+            {formatResponse(response).map((section, index) => (
+              <Collapsible key={index} className="bg-[#2C2F24] rounded-lg overflow-hidden">
+                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-[#FFC900] hover:bg-[#353824] transition-colors">
+                  <span className="font-semibold">{section.title}</span>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="p-4 pt-0 text-[#FFC900]/80">
+                  <p className="whitespace-pre-wrap">{section.content}</p>
+                </CollapsibleContent>
+              </Collapsible>
+            ))}
+            
+            <div className="mt-4 p-3 bg-[#2C2F24] rounded-lg border border-[#FFC900]/20">
+              <p className="text-sm text-[#FFC900]/50">
+                ℹ️ Note: This is an AI-generated analysis. Always consult a qualified electrician for complex electrical issues.
+              </p>
             </div>
           </div>
         )}
