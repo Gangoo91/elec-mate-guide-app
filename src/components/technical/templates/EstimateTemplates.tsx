@@ -2,9 +2,10 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Eye } from "lucide-react";
+import { FileText, Eye, Printer, Pen } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "sonner";
 
 const EstimateTemplates = () => {
   const navigate = useNavigate();
@@ -23,6 +24,11 @@ const EstimateTemplates = () => {
       thumbnail: "/placeholder.svg"
     }
   ];
+
+  const handlePrint = () => {
+    window.print();
+    toast.success("Preparing document for printing...");
+  };
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -43,10 +49,28 @@ const EstimateTemplates = () => {
                 variant="outline" 
                 size="sm"
                 onClick={() => navigate('/electricians/technical-tools/estimator')}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black flex-1"
+                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
               >
                 <Eye className="h-4 w-4 mr-2" />
-                Use Template
+                Preview
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={handlePrint}
+                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Print
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => navigate(`/electricians/technical-tools/templates/${template.id}/sign`)}
+                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+              >
+                <Pen className="h-4 w-4 mr-2" />
+                Sign
               </Button>
             </div>
           </CardContent>
