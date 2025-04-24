@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Calculator, PoundSterling, Save, FileText, Trash } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useAuth } from "@/hooks/useAuth";
 
 const JobPriceEstimator = () => {
   const [jobDescription, setJobDescription] = useState('');
@@ -17,6 +17,7 @@ const JobPriceEstimator = () => {
   const [estimate, setEstimate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { handleError } = useErrorHandler();
+  const { user } = useAuth();
 
   const generateEstimate = async () => {
     if (!jobDescription.trim()) {
@@ -52,6 +53,11 @@ const JobPriceEstimator = () => {
       return;
     }
 
+    if (!user) {
+      toast.error("Please sign in to save estimates");
+      return;
+    }
+
     setIsLoading(true);
     try {
       const { error } = await supabase
@@ -60,7 +66,8 @@ const JobPriceEstimator = () => {
           job_description: jobDescription,
           estimate_response: estimate,
           client_name: clientName,
-          job_reference: jobReference
+          job_reference: jobReference,
+          user_id: user.id
         });
 
       if (error) throw error;
