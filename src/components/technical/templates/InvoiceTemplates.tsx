@@ -43,8 +43,7 @@ const InvoiceTemplates = () => {
               </div>
             </AspectRatio>
             
-            <h3 className="font-medium text-[#FFC900] text-lg">{template.name}</h3>
-            <p className="text-sm text-[#FFC900]/70 mt-1 mb-3">{template.description}</p>
+            <h3 className="font-medium text-[#FFC900] text-lg mb-4">{template.name}</h3>
             
             {template.comingSoon ? (
               <Button 
@@ -59,30 +58,27 @@ const InvoiceTemplates = () => {
               <div className="grid grid-cols-3 gap-2">
                 <Button 
                   variant="outline" 
-                  size="sm"
+                  size="icon"
                   onClick={() => navigate('/electricians/technical-tools/estimator')}
-                  className="w-full bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
                 >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Preview
+                  <Eye className="h-4 w-4" />
                 </Button>
                 <Button 
                   variant="outline" 
-                  size="sm"
+                  size="icon"
                   onClick={handlePrint}
-                  className="w-full bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
                 >
-                  <Printer className="h-4 w-4 mr-2" />
-                  Print
+                  <Printer className="h-4 w-4" />
                 </Button>
                 <Button 
                   variant="outline" 
-                  size="sm"
+                  size="icon"
                   onClick={() => navigate(`/electricians/technical-tools/templates/${template.id}/sign`)}
-                  className="w-full bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
                 >
-                  <Pen className="h-4 w-4 mr-2" />
-                  Sign
+                  <Pen className="h-4 w-4" />
                 </Button>
               </div>
             )}

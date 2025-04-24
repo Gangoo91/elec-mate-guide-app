@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
@@ -18,33 +17,28 @@ const TemplatesSection = () => {
   return (
     <Card className="bg-[#1a1c15] border-[#FFC900]/20">
       <CardHeader className="pb-4 border-b border-[#FFC900]/10">
-        <div className="flex items-start gap-4">
-          <FileText className="h-8 w-8 text-[#FFC900] flex-shrink-0 mt-1" />
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-2">
-              <CardTitle className="text-2xl font-bold text-[#FFC900]">
-                Templates & Documents
-              </CardTitle>
-              <Select 
-                value={selectedType} 
-                onValueChange={(value: 'estimates' | 'invoices' | 'certificates') => setSelectedType(value)}
-              >
-                <SelectTrigger 
-                  className="w-[180px] bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900]"
-                >
-                  <SelectValue placeholder="Select document type" />
-                </SelectTrigger>
-                <SelectContent className="bg-[#2C2F24] border-[#FFC900]/20">
-                  <SelectItem value="estimates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Estimates</SelectItem>
-                  <SelectItem value="invoices" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Invoices</SelectItem>
-                  <SelectItem value="certificates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Certificates</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <p className="text-[#FFC900]/80 text-sm">
-              Professional document templates for your electrical business. Generate, customize, and download as PDFs.
-            </p>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <FileText className="h-8 w-8 text-[#FFC900] flex-shrink-0" />
+            <CardTitle className="text-2xl font-bold text-[#FFC900]">
+              Templates & Documents
+            </CardTitle>
           </div>
+          <Select 
+            value={selectedType} 
+            onValueChange={(value: 'estimates' | 'invoices' | 'certificates') => setSelectedType(value)}
+          >
+            <SelectTrigger 
+              className="w-[180px] bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900]"
+            >
+              <SelectValue placeholder="Select document type" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#2C2F24] border-[#FFC900]/20">
+              <SelectItem value="estimates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Estimates</SelectItem>
+              <SelectItem value="invoices" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Invoices</SelectItem>
+              <SelectItem value="certificates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Certificates</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </CardHeader>
       
