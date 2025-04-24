@@ -13,9 +13,36 @@ const AIDiagnosticAssistant: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { handleError } = useErrorHandler();
 
+  const formatResponse = (rawResponse: string) => {
+    // Break down the response into more readable sections
+    const sections = [
+      { 
+        title: "Problem Analysis", 
+        key: "problem" 
+      },
+      { 
+        title: "Possible Causes", 
+        key: "causes" 
+      },
+      { 
+        title: "Recommended Solutions", 
+        key: "solutions" 
+      },
+      { 
+        title: "Safety Precautions", 
+        key: "safety" 
+      }
+    ];
+
+    return sections.map(section => {
+      const sectionContent = rawResponse.split(`[${section.key}]`)[1]?.split('[')[0]?.trim();
+      return sectionContent ? `🔍 ${section.title}:\n${sectionContent}\n` : '';
+    }).filter(Boolean).join('\n');
+  };
+
   const handleDiagnosticQuery = async () => {
     if (!query.trim()) {
-      toast.error("Please enter your diagnostic query");
+      toast.error("Please describe the electrical issue you're experiencing");
       return;
     }
 
@@ -28,8 +55,11 @@ const AIDiagnosticAssistant: React.FC = () => {
       if (error) throw error;
       
       if (data.response) {
-        setResponse(data.response);
-        toast.success("Diagnostic analysis complete");
+        const formattedResponse = formatResponse(data.response);
+        setResponse(formattedResponse);
+        toast.success("Diagnostic analysis complete", {
+          description: "Detailed insights are now available"
+        });
       } else {
         throw new Error("No response received from server");
       }
@@ -45,16 +75,16 @@ const AIDiagnosticAssistant: React.FC = () => {
     <div className="p-6">
       <div className="flex items-center gap-2 mb-6">
         <CircuitBoard className="h-6 w-6 text-[#FFC900]" />
-        <h2 className="text-xl font-semibold text-[#FFC900]">Fault Finding Tool</h2>
+        <h2 className="text-xl font-semibold text-[#FFC900]">Electrical Fault Finder</h2>
       </div>
       
       <div className="space-y-4">
         <p className="text-[#FFC900]/70">
-          Describe the technical issue or fault you're encountering, and receive professional-level electrical analysis and solutions.
+          Provide a detailed description of the electrical issue you're facing. Our AI will help you diagnose the problem, suggest potential causes, and recommend solutions.
         </p>
 
         <Textarea 
-          placeholder="Detail the fault symptoms, measurements, and any relevant observations..."
+          placeholder="Describe symptoms, measurements, unusual behaviors, specific circuit or equipment details..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
@@ -71,8 +101,11 @@ const AIDiagnosticAssistant: React.FC = () => {
         
         {response && (
           <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
-            <h4 className="font-semibold mb-2 text-[#FFC900]">Technical Analysis:</h4>
+            <h4 className="font-semibold mb-2 text-[#FFC900]">Diagnostic Insights:</h4>
             <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+            <div className="mt-4 text-sm text-[#FFC900]/50">
+              ℹ️ Note: This is an AI-generated analysis. Always consult a professional for complex electrical issues.
+            </div>
           </div>
         )}
       </div>
