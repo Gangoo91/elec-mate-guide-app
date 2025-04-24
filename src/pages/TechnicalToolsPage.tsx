@@ -2,6 +2,7 @@
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ResourceCard from "@/components/shared/ResourceCard";
+import BackButton from "@/components/navigation/BackButton";
 import { Calculator, Ruler, BookOpen, FileText } from "lucide-react";
 
 const TechnicalToolsPage = () => {
@@ -35,6 +36,7 @@ const TechnicalToolsPage = () => {
   return (
     <MainLayout>
       <div className="container py-8">
+        <BackButton />
         <h1 className="text-3xl md:text-4xl font-bold text-[#FFC900] mb-4">
           Technical Tools
         </h1>
