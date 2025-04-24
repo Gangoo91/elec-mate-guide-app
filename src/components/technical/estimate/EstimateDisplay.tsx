@@ -20,7 +20,11 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
       const options = {
         margin: { top: 15, right: 15, bottom: 15, left: 15 },
         html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as 'portrait' }
+        jsPDF: { 
+          unit: 'mm' as 'mm', 
+          format: 'a4' as 'a4', 
+          orientation: 'portrait' as 'portrait' 
+        }
       };
       
       const pdf = await html2pdf(element, options);
