@@ -7,6 +7,8 @@ import { Timer, AlertTriangle } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface SafetyQuizProps {
   unitId: string;
@@ -27,6 +29,8 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const { handleError } = useErrorHandler();
 
   useEffect(() => {
     fetchQuestions();
@@ -37,8 +41,7 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
       const { data, error } = await supabase
         .from('safety_quiz_questions')
         .select('id, question, options, category')
-        .limit(5)
-        .order('RANDOM()');
+        .limit(5);
 
       if (error) throw error;
 
@@ -49,11 +52,7 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching questions:', error);
-      toast({
-        title: "Error loading quiz",
-        description: "Failed to load quiz questions. Please try again.",
-        variant: "destructive"
-      });
+      handleError(error, "Failed to load quiz questions. Please try again.");
     }
   };
 
@@ -78,6 +77,15 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
   }, [timeRemaining, quizSubmitted]);
 
   const handleSubmit = async () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "You need to be logged in to submit quiz results.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setQuizSubmitted(true);
     
     try {
@@ -89,6 +97,7 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
         .from('quiz_attempts')
         .insert({
           unit_id: unitId,
+          user_id: user.id,
           score: answeredQuestions,
           total_questions: totalQuestions,
           time_taken: timeTaken
@@ -101,12 +110,7 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
         description: `You answered ${answeredQuestions} out of ${totalQuestions} questions in ${formatTime(timeTaken)}.`,
       });
     } catch (error) {
-      console.error('Error submitting quiz:', error);
-      toast({
-        title: "Error submitting quiz",
-        description: "Failed to save your results. Please try again.",
-        variant: "destructive"
-      });
+      handleError(error, "Failed to save your results. Please try again.");
     }
   };
 
