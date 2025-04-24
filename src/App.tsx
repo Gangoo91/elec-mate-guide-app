@@ -49,6 +49,7 @@ import Level3ElectricalPage from "./pages/Level3ElectricalPage";
 import MOETPage from "./pages/MOETPage";
 import AM2Page from "./pages/AM2Page";
 import Level2CoreUnitsPage from "./pages/Level2CoreUnitsPage";
+import MOETContentPage from "./pages/MOETContentPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
