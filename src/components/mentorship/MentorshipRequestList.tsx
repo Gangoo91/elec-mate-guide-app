@@ -1,11 +1,16 @@
 
 import React, { useState } from "react";
-import { Filter, Calendar, CheckCircle, XCircle } from "lucide-react";
+import { Filter, Calendar, CheckCircle, XCircle, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface MentorshipRequest {
   id: string;
@@ -51,32 +56,44 @@ export const MentorshipRequestList = ({
 
   return (
     <div>
-      <div className="mb-6">
-        <Tabs defaultValue="pending" className="w-full">
-          <TabsList className="bg-[#22251e] border border-[#FFC900]/20">
-            <TabsTrigger 
-              value="pending" 
-              className="data-[state=active]:bg-[#FFC900]/10 data-[state=active]:text-[#FFC900]"
+      <div className="mb-6 flex justify-end">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              variant="outline" 
+              className="border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
+            >
+              <Filter className="mr-2 h-4 w-4" />
+              {filter === "pending" 
+                ? "Pending Requests" 
+                : filter === "accepted" 
+                  ? "Accepted Requests" 
+                  : "All Requests"
+              }
+              <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-[#22251e] border border-[#FFC900]/20">
+            <DropdownMenuItem 
+              className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]"
               onClick={() => setFilter("pending")}
             >
               Pending Requests
-            </TabsTrigger>
-            <TabsTrigger 
-              value="accepted" 
-              className="data-[state=active]:bg-[#FFC900]/10 data-[state=active]:text-[#FFC900]"
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]"
               onClick={() => setFilter("accepted")}
             >
               Accepted Requests
-            </TabsTrigger>
-            <TabsTrigger 
-              value="all" 
-              className="data-[state=active]:bg-[#FFC900]/10 data-[state=active]:text-[#FFC900]"
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="text-[#FFC900] focus:bg-[#FFC900]/10 focus:text-[#FFC900]"
               onClick={() => setFilter("all")}
             >
               All Requests
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       
       {filteredRequests.length === 0 ? (
