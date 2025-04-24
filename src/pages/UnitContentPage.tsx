@@ -6,18 +6,30 @@ import PageHeader from "@/components/layout/PageHeader";
 import { ContentSection } from "@/components/units/ContentSection";
 import { unitContent } from "@/data/unitContent";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/components/ui/use-toast";
 
 const UnitContentPage = () => {
   const navigate = useNavigate();
   const { unitId } = useParams<{ unitId: string }>();
   const [progress, setProgress] = useState(0);
+  const { toast } = useToast();
   
   console.log("UnitContentPage - unitId:", unitId);
   console.log("Available units:", Object.keys(unitContent));
   
   // Get the current unit content
-  const currentUnit = unitId ? unitContent[unitId] : null;
+  const currentUnit = unitId && unitContent[unitId] ? unitContent[unitId] : null;
   console.log("Current unit found:", !!currentUnit);
+  
+  useEffect(() => {
+    // Show toast when unit content is loaded
+    if (currentUnit) {
+      toast({
+        title: `Unit ${unitId} Loaded`,
+        description: "Study materials are now ready for you to review.",
+      });
+    }
+  }, [currentUnit, unitId, toast]);
   
   // Simulate progress tracking
   useEffect(() => {
@@ -39,11 +51,12 @@ const UnitContentPage = () => {
   }, [currentUnit]);
   
   const handleBackClick = () => {
+    console.log("Handling back click, navigating to core units page");
     navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
   };
 
-  if (!currentUnit) {
-    console.log("Unit not found, navigating back");
+  if (!unitId || !currentUnit) {
+    console.log("Unit not found or unitId is undefined, navigating back");
     return (
       <MainLayout>
         <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
