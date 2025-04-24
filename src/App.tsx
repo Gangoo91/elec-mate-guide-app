@@ -92,8 +92,10 @@ const App = () => {
                   <Route path="/apprentices/certifications" element={<CertificationsPage />} />
                   <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content" element={<Level2CourseContent />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-:unitId" element={<UnitContentPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-3/course-content/unit-:unitId" element={<UnitContentPage />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />

@@ -19,7 +19,8 @@ const CityGuildsPage = () => {
     {
       title: "Level 3 Electrical Installation",
       description: "Advanced materials covering complex installations, fault finding, and inspection & testing preparations.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/level-3')
     },
     {
       title: "MOET Level 3",
