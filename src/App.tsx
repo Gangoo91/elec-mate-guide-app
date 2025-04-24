@@ -37,6 +37,9 @@ import ProfessionalResources from "./pages/ProfessionalResources";
 import ErrorBoundary from "./components/ErrorBoundary";
 import MentalHealthBuddy from "./pages/MentalHealthBuddy";
 import TechnicalToolsPage from "./pages/TechnicalToolsPage";
+import JobPriceEstimatorPage from "./pages/JobPriceEstimatorPage";
+import CalculatorTools from "./pages/CalculatorTools";
+import InspectionTestingGuide from "./pages/InspectionTestingGuide";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,8 +87,9 @@ function App() {
 
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
-                  <Route path="/electricians/toolbox-talk" element={<NotFound />} />
-                  <Route path="/electricians/development" element={<NotFound />} />
+                  <Route path="/electricians/technical-tools/estimator" element={<JobPriceEstimatorPage />} />
+                  <Route path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />
+                  <Route path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   

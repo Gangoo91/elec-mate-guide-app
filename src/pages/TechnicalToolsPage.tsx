@@ -1,16 +1,31 @@
+
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import RegulationsFinderChecker from "@/components/apprentices/RegulationsFinderChecker";
-import TechnicalSpecsAnalyzer from "@/components/apprentices/TechnicalSpecsAnalyzer";
-import HowToGenerator from "@/components/apprentices/HowToGenerator";
-import AIDiagnosticAssistant from "@/components/technical/AIDiagnosticAssistant";
-import JobPriceEstimator from "@/components/technical/JobPriceEstimator";
+import ResourceCard from "@/components/shared/ResourceCard";
 import { Calculator, Ruler, BookOpen } from "lucide-react";
-import CalculatorTools from "@/components/technical/CalculatorTools";
-import InspectionTestingGuide from "@/components/technical/InspectionTestingGuide";
 
 const TechnicalToolsPage = () => {
+  const tools = [
+    {
+      title: "Job Price Estimator",
+      description: "Generate detailed cost estimates for electrical jobs with AI assistance.",
+      icon: <Calculator className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/estimator"
+    },
+    {
+      title: "Calculator Tools",
+      description: "Essential electrical calculations including Ohm's Law, voltage drop, and more.",
+      icon: <Ruler className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/calculators"
+    },
+    {
+      title: "Inspection & Testing Guide",
+      description: "Comprehensive guide for electrical inspection and testing procedures.",
+      icon: <BookOpen className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/inspection-guide"
+    }
+  ];
+
   return (
     <MainLayout>
       <div className="container py-8">
@@ -21,53 +36,13 @@ const TechnicalToolsPage = () => {
           Professional tools and AI-powered features to support your technical work. From calculations to job guides, access everything you need for efficient and informed tasks.
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Job Price Estimator - Add this card first */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent>
-              <JobPriceEstimator />
-            </CardContent>
-          </Card>
-
-          {/* Calculator Tools Section */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardHeader className="flex flex-row items-center gap-2">
-              <Calculator className="h-6 w-6 text-[#FFC900]" />
-              <CardTitle className="text-[#FFC900]">Calculation Tools</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CalculatorTools />
-            </CardContent>
-          </Card>
-
-          {/* Inspection & Testing Guide */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent>
-              <InspectionTestingGuide />
-            </CardContent>
-          </Card>
-
-          {/* Fault Finding Tool */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent>
-              <AIDiagnosticAssistant />
-            </CardContent>
-          </Card>
-
-          {/* Regulations Finder/Checker */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <RegulationsFinderChecker />
-          </Card>
-
-          {/* How to Generator */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <HowToGenerator />
-          </Card>
-
-          {/* Technical Specifications Analyser */}
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <TechnicalSpecsAnalyzer />
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tools.map((tool, index) => (
+            <ResourceCard
+              key={index}
+              {...tool}
+            />
+          ))}
         </div>
       </div>
     </MainLayout>
