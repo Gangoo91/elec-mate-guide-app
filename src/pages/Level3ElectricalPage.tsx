@@ -8,6 +8,10 @@ import UnitCard from "@/components/level2/UnitCard";
 const Level3ElectricalPage = () => {
   const navigate = useNavigate();
   
+  const handleBackToCityGuilds = () => {
+    navigate('/apprentices/study-materials/city-guilds');
+  };
+
   const units = [
     {
       unitNumber: "201",
@@ -59,6 +63,7 @@ const Level3ElectricalPage = () => {
         <PageHeader 
           title="Level 3 Electrical Installation (2365-05)"
           description="Advanced study materials for your Level 3 electrical qualification, designed to build on your Level 2 knowledge."
+          customBackAction={handleBackToCityGuilds}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
