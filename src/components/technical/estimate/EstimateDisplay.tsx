@@ -17,7 +17,7 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
 
     try {
       await html2pdf(element, {
-        margin: [15, 15, 15, 15],
+        margin: { top: 15, right: 15, bottom: 15, left: 15 },
         filename: `estimate-${jobReference || 'job'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
