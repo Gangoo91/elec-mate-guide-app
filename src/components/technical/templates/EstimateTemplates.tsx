@@ -61,17 +61,19 @@ const EstimateTemplates = () => {
           return;
         }
 
-        const { data, error } = await supabase.from('documents').insert({
-          electrician_id: user.id,
+        // Store in job_estimates table with signatures in the estimate_response field
+        const { data, error } = await supabase.from('job_estimates').insert({
+          user_id: user.id,
           client_name: clientName,
-          client_email: clientEmail,
-          document_type: 'estimate',
-          content: {
+          job_reference: `EST-${Date.now().toString().slice(-6)}`,
+          job_description: `Template: ${selectedTemplateId}`,
+          estimate_response: JSON.stringify({
             template_id: selectedTemplateId,
+            client_email: clientEmail,
+            electrician_signature: signatureData,
+            status: 'sent',
             ...estimateData
-          },
-          electrician_signature: signatureData,
-          status: 'sent'
+          })
         }).select();
 
         if (error) {
@@ -88,16 +90,34 @@ const EstimateTemplates = () => {
           return;
         }
 
-        const { error } = await supabase
-          .from('documents')
-          .update({
-            client_signature: signatureData,
-            status: 'signed'
-          })
-          .eq('id', selectedTemplateId);
+        // Find the estimate and update it with client signature
+        const { data, error } = await supabase
+          .from('job_estimates')
+          .select()
+          .eq('job_reference', selectedTemplateId)
+          .single();
 
         if (error) {
-          console.error("Error updating document:", error);
+          console.error("Error finding document:", error);
+          toast.error("Failed to find document");
+          return;
+        }
+
+        // Parse the existing response, add client signature, and update
+        const existingData = JSON.parse(data.estimate_response);
+        existingData.client_signature = signatureData;
+        existingData.status = 'signed';
+
+        const { error: updateError } = await supabase
+          .from('job_estimates')
+          .update({ 
+            estimate_response: JSON.stringify(existingData),
+            status: 'signed' 
+          })
+          .eq('job_reference', selectedTemplateId);
+
+        if (updateError) {
+          console.error("Error updating document:", updateError);
           toast.error("Failed to update document with client signature");
         } else {
           toast.success("Document signed successfully");
