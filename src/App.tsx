@@ -44,6 +44,7 @@ import TemplatesPage from "./pages/TemplatesPage";
 import SignDocumentPage from "./pages/SignDocumentPage";
 import CityGuildsPage from "./pages/CityGuildsPage";
 import Level2ElectricalPage from "./pages/Level2ElectricalPage";
+import Level2CourseContent from "./pages/Level2CourseContent";
 
 const queryClient = new QueryClient({
   defaultOptions: {
