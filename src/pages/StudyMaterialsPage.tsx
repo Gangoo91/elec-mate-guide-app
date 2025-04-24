@@ -1,22 +1,27 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
-import BackButton from "@/components/navigation/BackButton";
 import { Book, GraduationCap, School, TestTube } from "lucide-react";
 import ResourceCard from "@/components/shared/ResourceCard";
 import PageHeader from "@/components/layout/PageHeader";
 
 const StudyMaterialsPage = () => {
+  const navigate = useNavigate();
+  
+  // Add custom back navigation function
+  const handleBackClick = () => {
+    navigate('/apprentices');
+  };
+  
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
-        <div className="mb-4">
-          <BackButton />
-        </div>
         <PageHeader 
           title="UK Electrical Qualification Materials"
           description="Study resources for electrical qualifications and professional development."
-          hideBackButton={false} // Change this to false to show back button
+          hideBackButton={false}
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
