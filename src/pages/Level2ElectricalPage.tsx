@@ -28,12 +28,18 @@ const Level2ElectricalPage = () => {
     }
   ];
 
+  // Add custom back navigation function
+  const handleBackClick = () => {
+    navigate('/apprentices/study-materials/city-guilds');
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Level 2 Electrical Installation (2365-02)"
           description="Essential study materials for your Level 2 electrical qualification, presented in an easy-to-understand way."
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
