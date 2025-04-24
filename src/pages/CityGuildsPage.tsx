@@ -19,6 +19,11 @@ const CityGuildsPage = () => {
       icon: <Book className="h-6 w-6 text-[#FFC900]" />
     },
     {
+      title: "MOET Level 3",
+      description: "Maintenance and Operations Engineering Technician (Electrical) qualification materials, covering industrial maintenance and operations.",
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+    },
+    {
       title: "AM2 Assessment Materials",
       description: "Comprehensive preparation materials for the AM2 assessment, including practical scenarios and mock tests.",
       icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
