@@ -25,25 +25,26 @@ const TemplatesSection = () => {
               Templates & Documents
             </CardTitle>
           </div>
-          <div className="flex justify-center w-full absolute left-0 right-0">
-            <Select 
-              value={selectedType} 
-              onValueChange={(value: 'estimates' | 'invoices' | 'certificates') => setSelectedType(value)}
-            >
-              <SelectTrigger 
-                className="w-[180px] bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900]"
-              >
-                <SelectValue placeholder="Select document type" />
-              </SelectTrigger>
-              <SelectContent className="bg-[#2C2F24] border-[#FFC900]/20">
-                <SelectItem value="estimates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Estimates</SelectItem>
-                <SelectItem value="invoices" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Invoices</SelectItem>
-                <SelectItem value="certificates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Certificates</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
         </div>
       </CardHeader>
+      
+      <div className="flex justify-center w-full px-6 pb-4">
+        <Select 
+          value={selectedType} 
+          onValueChange={(value: 'estimates' | 'invoices' | 'certificates') => setSelectedType(value)}
+        >
+          <SelectTrigger 
+            className="w-[180px] bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900]"
+          >
+            <SelectValue placeholder="Select document type" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#2C2F24] border-[#FFC900]/20">
+            <SelectItem value="estimates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Estimates</SelectItem>
+            <SelectItem value="invoices" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Invoices</SelectItem>
+            <SelectItem value="certificates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Certificates</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
       
       <CardContent className="pt-6">
         {selectedType === 'estimates' && <EstimateTemplates />}
@@ -63,4 +64,3 @@ const TemplatesSection = () => {
 };
 
 export default TemplatesSection;
-
