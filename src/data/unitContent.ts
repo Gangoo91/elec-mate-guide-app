@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export interface UnitContent {
@@ -45,7 +44,6 @@ export const unitContent: Record<string, UnitContent> = {
                 <li>Your legal responsibilities as an electrical worker</li>
               </ul>
             </div>
-            
             <div>
               <h4 className="text-[#FFC900] font-medium text-lg mb-2">2. Identifying and Preventing Hazards</h4>
               <ul className="list-disc pl-5 space-y-2">
@@ -54,28 +52,6 @@ export const unitContent: Record<string, UnitContent> = {
                 <li>Safe working practices</li>
                 <li>Preventing accidents and injuries</li>
                 <li>Environmental hazards and controls</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-[#FFC900] font-medium text-lg mb-2">3. Personal Protective Equipment (PPE)</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Types of PPE for electrical work</li>
-                <li>Proper use and maintenance of PPE</li>
-                <li>When and where to use specific PPE</li>
-                <li>Inspection and replacement schedules</li>
-                <li>Storage and care of equipment</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="text-[#FFC900] font-medium text-lg mb-2">4. Emergency Procedures</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Emergency response planning</li>
-                <li>First aid basics for electrical incidents</li>
-                <li>Fire safety and prevention</li>
-                <li>Evacuation procedures</li>
-                <li>Reporting incidents and near-misses</li>
               </ul>
             </div>
           </div>
@@ -92,21 +68,6 @@ export const unitContent: Record<string, UnitContent> = {
               <li>Knowledge of proper PPE usage and maintenance</li>
               <li>Understanding of emergency procedures</li>
               <li>Practical application of safe working practices</li>
-            </ul>
-          </>
-        )
-      },
-      {
-        title: "Study Resources",
-        content: (
-          <>
-            <p className="mb-4">To help you succeed in this unit, use these resources:</p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Health and Safety Executive (HSE) website</li>
-              <li>City & Guilds Unit 201 workbook</li>
-              <li>Online practice questions and quizzes</li>
-              <li>Video demonstrations of safety procedures</li>
-              <li>Interactive risk assessment exercises</li>
             </ul>
           </>
         )

@@ -11,7 +11,6 @@ interface ContentSectionProps {
 }
 
 export const ContentSection = ({ title, content, className }: ContentSectionProps) => {
-  // Helper function to check if the title might be a learning objective
   const isLearningObjective = (title: string) => {
     return title.toLowerCase().includes("learning") || 
            title.toLowerCase().includes("objective") ||
@@ -35,3 +34,4 @@ export const ContentSection = ({ title, content, className }: ContentSectionProp
     </Card>
   );
 };
+
