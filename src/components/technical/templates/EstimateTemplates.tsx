@@ -1,14 +1,23 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, Eye, Printer, Pen } from "lucide-react";
+import { FileText, Eye, Printer, FileCheck } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import ClientSignatureCanvas from './ClientSignatureCanvas';
 
 const EstimateTemplates = () => {
   const navigate = useNavigate();
+  const [isSignatureModalOpen, setIsSignatureModalOpen] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
   
   const templates = [
     {
@@ -29,50 +38,76 @@ const EstimateTemplates = () => {
     window.print();
     toast.success("Preparing document for printing...");
   };
+
+  const handleSignatureComplete = (signatureData: string) => {
+    // Here you would typically save the signature data and associate it with the document
+    console.log('Signature saved:', signatureData);
+    setIsSignatureModalOpen(false);
+    toast.success("Document signed successfully");
+  };
+
+  const openSignatureModal = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+    setIsSignatureModalOpen(true);
+  };
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {templates.map((template) => (
-        <Card key={template.id} className="overflow-hidden border-[#FFC900]/20 bg-[#2C2F24] hover:bg-[#363A2B] transition-colors">
-          <div className="p-4">
-            <AspectRatio ratio={16/9} className="bg-[#1a1c15] rounded-lg overflow-hidden mb-3">
-              <div className="w-full h-full flex items-center justify-center">
-                <FileText className="h-16 w-16 text-[#FFC900]/30" />
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {templates.map((template) => (
+          <Card key={template.id} className="overflow-hidden border-[#FFC900]/20 bg-[#2C2F24] hover:bg-[#363A2B] transition-colors">
+            <div className="p-4">
+              <AspectRatio ratio={16/9} className="bg-[#1a1c15] rounded-lg overflow-hidden mb-3">
+                <div className="w-full h-full flex items-center justify-center">
+                  <FileText className="h-16 w-16 text-[#FFC900]/30" />
+                </div>
+              </AspectRatio>
+              
+              <h3 className="font-medium text-[#FFC900] text-lg mb-4">{template.name}</h3>
+              
+              <div className="grid grid-cols-3 gap-2">
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={() => navigate('/electricians/technical-tools/estimator')}
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={handlePrint}
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                >
+                  <Printer className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="icon"
+                  onClick={() => openSignatureModal(template.id)}
+                  className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                >
+                  <FileCheck className="h-4 w-4" />
+                </Button>
               </div>
-            </AspectRatio>
-            
-            <h3 className="font-medium text-[#FFC900] text-lg mb-4">{template.name}</h3>
-            
-            <div className="grid grid-cols-3 gap-2">
-              <Button 
-                variant="outline" 
-                size="icon"
-                onClick={() => navigate('/electricians/technical-tools/estimator')}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
-              >
-                <Eye className="h-4 w-4" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="icon"
-                onClick={handlePrint}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
-              >
-                <Printer className="h-4 w-4" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="icon"
-                onClick={() => navigate(`/electricians/technical-tools/templates/${template.id}/sign`)}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
-              >
-                <Pen className="h-4 w-4" />
-              </Button>
             </div>
-          </div>
-        </Card>
-      ))}
-    </div>
+          </Card>
+        ))}
+      </div>
+
+      <Dialog open={isSignatureModalOpen} onOpenChange={setIsSignatureModalOpen}>
+        <DialogContent className="bg-[#1a1c15] border-[#FFC900]/20">
+          <DialogHeader>
+            <DialogTitle className="text-[#FFC900]">Sign Document</DialogTitle>
+          </DialogHeader>
+          <ClientSignatureCanvas
+            onSave={handleSignatureComplete}
+            clientName="Client Name" // This would typically come from your form or document data
+          />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
