@@ -1,7 +1,8 @@
-
 import React, { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
+import { useLocation } from "react-router-dom";
+import BecomeMentorToggle from "@/components/mentorship/BecomeMentorToggle";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +30,9 @@ interface Mentor {
 }
 
 const Mentorship = () => {
+  const location = useLocation();
+  const isElectriciansSection = location.pathname.startsWith('/electricians');
+
   const { data: mentors, isLoading, error } = useDataCaching<Mentor>("mentors", "mentorships");
   const { toast } = useToast();
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
@@ -155,8 +159,16 @@ const Mentorship = () => {
       <div className="container py-8">
         <PageHeader
           title="Mentor Connect"
-          description="Connect with experienced professionals in the electrical industry for guidance, support, and career advice"
+          description={isElectriciansSection 
+            ? "Share your expertise and guide the next generation of electrical professionals"
+            : "Connect with experienced professionals in the electrical industry for guidance, support, and career advice"}
         />
+        
+        {isElectriciansSection && (
+          <div className="mb-8">
+            <BecomeMentorToggle />
+          </div>
+        )}
         
         <div className="flex items-center justify-between gap-2 mt-6 mb-4">
           <div className="flex items-center gap-2">
