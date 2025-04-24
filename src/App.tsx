@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -40,6 +41,7 @@ import TechnicalToolsPage from "./pages/TechnicalToolsPage";
 import JobPriceEstimatorPage from "./pages/JobPriceEstimatorPage";
 import CalculatorTools from "./pages/CalculatorTools";
 import InspectionTestingGuide from "./pages/InspectionTestingGuide";
+import TemplatesPage from "./pages/TemplatesPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,6 +92,7 @@ function App() {
                   <Route path="/electricians/technical-tools/estimator" element={<JobPriceEstimatorPage />} />
                   <Route path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />
                   <Route path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />
+                  <Route path="/electricians/technical-tools/templates" element={<TemplatesPage />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   

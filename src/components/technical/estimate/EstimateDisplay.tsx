@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
@@ -31,9 +30,9 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
         margin: { top: 15, right: 15, bottom: 15, left: 15 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { 
-          unit: 'mm' as 'mm', 
-          format: 'a4' as 'a4', 
-          orientation: 'portrait' as 'portrait' | 'p' | 'landscape' | 'l'
+          unit: 'mm' as const, 
+          format: 'a4' as const, 
+          orientation: 'portrait' as const
         }
       };
       
