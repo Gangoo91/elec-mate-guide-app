@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -36,12 +37,18 @@ const CityGuildsPage = () => {
     }
   ];
 
+  // Add custom back navigation function
+  const handleBackClick = () => {
+    navigate('/apprentices/study-materials');
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="City & Guilds Study Materials"
           description="Access comprehensive study materials for City & Guilds electrical qualifications."
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
