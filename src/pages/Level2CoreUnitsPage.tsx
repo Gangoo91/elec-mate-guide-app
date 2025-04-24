@@ -12,31 +12,31 @@ const Level2CoreUnitsPage = () => {
     {
       unitNumber: "201",
       title: "Health and Safety in Building Services Engineering",
-      description: "Learn about staying safe at work, spotting dangers, and following important safety rules when working with electricity.",
+      description: "Learn essential safety practices for electrical work including:\n• Understanding workplace hazards and risks\n• Using personal protective equipment (PPE)\n• Following safety regulations and procedures\n• Emergency response and first aid basics\n• Safe handling of electrical equipment",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-201"
     },
     {
       unitNumber: "202",
       title: "Principles of Electrical Science",
-      description: "Get to know the basics of electricity - how it works, what voltage and current mean, and how to measure them.",
+      description: "Master the fundamentals of electricity through:\n• Understanding voltage, current, and resistance\n• Learning Ohm's Law and power calculations\n• Exploring AC and DC circuits\n• Using multimeters and test equipment\n• Practical applications of electrical theory",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-202"
     },
     {
       unitNumber: "203",
       title: "Electrical Installations Technology",
-      description: "Learn about the different parts used in electrical installations, like switches and sockets, and how to put them together safely.",
+      description: "Discover installation techniques including:\n• Types of wiring systems and circuits\n• Installing switches, sockets, and lighting\n• Understanding circuit protection devices\n• Cable selection and installation methods\n• Testing and certification procedures",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-203"
     },
     {
       unitNumber: "204",
       title: "Installation of Wiring Systems and Enclosures",
-      description: "Get hands-on experience with installing electrical wiring, setting up electrical boxes, and connecting everything properly.",
+      description: "Learn practical wiring skills through:\n• Cable installation techniques\n• Working with different conduit types\n• Installing trunking and cable trays\n• Proper cable termination methods\n• Following building regulations",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-204"
     },
     {
       unitNumber: "210",
       title: "Understand How to Communicate with Others",
-      description: "Learn how to talk to customers and work well with your team to become a better professional.",
+      description: "Develop essential communication skills including:\n• Professional customer service techniques\n• Effective team collaboration\n• Writing clear technical reports\n• Managing client expectations\n• Handling challenging situations",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-210"
     }
   ];
@@ -50,7 +50,7 @@ const Level2CoreUnitsPage = () => {
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Level 2 Core Units"
-          description="Essential core units for your Level 2 electrical qualification."
+          description="Essential core units for your Level 2 electrical qualification. Click on each unit to access detailed learning materials and guides."
           customBackAction={handleBackClick}
         />
         
