@@ -103,6 +103,7 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/moet/content" element={<MOETContentPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/am2" element={<AM2Page />} />
+                  <Route path="/apprentices/mentorship" element={<Mentorship />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />

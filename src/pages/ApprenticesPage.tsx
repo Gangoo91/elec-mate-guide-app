@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -108,8 +107,8 @@ const ApprenticesPage = () => {
       title: "Mentor Connect",
       description: "Connect with experienced electricians for guidance, support, and career advice on your professional journey.",
       icon: <Handshake className="h-6 w-6 text-[#FFC900]" />,
-      action: { label: "Find a Mentor", href: "/mentorship" },
-      fullCardLink: "/mentorship"
+      action: { label: "Find a Mentor", href: "/apprentices/mentorship" },
+      fullCardLink: "/apprentices/mentorship"
     },
     {
       title: "Mental Health Hub",
