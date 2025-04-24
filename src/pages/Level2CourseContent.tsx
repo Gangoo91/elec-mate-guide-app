@@ -9,31 +9,31 @@ const Level2CourseContent = () => {
     {
       unitNumber: "201",
       title: "Health and Safety in Building Services Engineering",
-      description: "Understanding workplace safety, risk assessment, PPE requirements, and safe working practices in electrical installations.",
+      description: "Learn how to stay safe at work, spot dangers, use safety equipment, and follow the right safety rules when working with electrical equipment.",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-201"
     },
     {
       unitNumber: "202",
       title: "Principles of Electrical Science",
-      description: "Learn about electrical principles including current, voltage, resistance, power, and energy in DC circuits.",
+      description: "Get to know the basics of electricity - how it works, what voltage and current mean, and how to measure them. Think of it as learning the ABC's of electrical work!",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-202"
     },
     {
       unitNumber: "203",
       title: "Electrical Installations Technology",
-      description: "Study fundamental electrical installation principles, components, and systems used in domestic and commercial settings.",
+      description: "Learn about the different parts used in electrical installations, like switches and sockets. You'll discover how to put them together safely in homes and buildings.",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-203"
     },
     {
       unitNumber: "204",
       title: "Installation of Wiring Systems and Enclosures",
-      description: "Master the installation of wiring systems, including containment systems, cables, and terminations.",
+      description: "Get hands-on experience with installing electrical wiring. You'll learn how to run cables, set up electrical boxes, and connect everything properly.",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-204"
     },
     {
       unitNumber: "210",
-      title: "Understand How to Communicate with Others within Building Services Engineering",
-      description: "Develop effective communication skills and learn to work professionally with colleagues and customers.",
+      title: "Understand How to Communicate with Others",
+      description: "Learn how to talk to customers and work well with your team. This helps you explain your work clearly and become a better professional.",
       path: "/apprentices/study-materials/city-guilds/level-2/course-content/unit-210"
     }
   ];
@@ -43,7 +43,7 @@ const Level2CourseContent = () => {
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Level 2 Course Content"
-          description="City & Guilds 2365-02 Diploma in Electrical Installation"
+          description="Your guide to becoming a qualified electrician - broken down into simple, easy-to-follow units"
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
