@@ -23,11 +23,10 @@ const JobPriceEstimator = () => {
 
     setIsLoading(true);
     try {
+      // Fix the function invoke call by not using the 'options' property, but passing the timeout directly
       const { data, error } = await supabase.functions.invoke('job-price-estimator', {
         body: JSON.stringify({ jobDescription }),
-        options: {
-          timeout: 20000 // Increase timeout to 20 seconds for more thorough analysis
-        }
+        timeout: 20000 // Pass timeout directly as a property at the top level
       });
 
       if (error) throw error;
@@ -110,14 +109,6 @@ Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Prop
       
       <CardContent className="space-y-6">
         <div className="relative">
-          <div className="mb-3 flex items-start gap-2">
-            <InfoIcon className="h-5 w-5 text-[#FFC900] flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-[#FFC900]/90">
-              Providing detailed information helps generate more accurate estimates. Include property type, 
-              location, and specific requirements.
-            </p>
-          </div>
-          
           <Textarea 
             placeholder={placeholderText}
             value={jobDescription}
