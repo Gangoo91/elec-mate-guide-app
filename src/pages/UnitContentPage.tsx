@@ -1,17 +1,20 @@
-
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SectionProps {
   title: string;
   content: React.ReactNode;
+  className?: string;
 }
 
-const ContentSection = ({ title, content }: SectionProps) => (
-  <Card className="mb-6 bg-[#22251e] border-[#FFC900]/20">
+const ContentSection = ({ title, content, className }: SectionProps) => (
+  <Card className={cn("mb-6 bg-[#22251e] border-[#FFC900]/20", className)}>
     <CardContent className="pt-6">
       <h3 className="text-[#FFC900] font-medium text-xl mb-4">{title}</h3>
       <div className="text-[#FFC900]/80 space-y-3">
@@ -21,11 +24,24 @@ const ContentSection = ({ title, content }: SectionProps) => (
   </Card>
 );
 
+const LearningObjective = ({ title, children }: { title: string, children: React.ReactNode }) => (
+  <Collapsible className="mb-4">
+    <CollapsibleTrigger className="flex items-center gap-2 w-full text-left p-4 rounded-lg bg-[#2a2d24] hover:bg-[#32362b] transition-colors">
+      <ChevronDown className="h-5 w-5 text-[#FFC900] shrink-0 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+      <span className="text-[#FFC900]">{title}</span>
+    </CollapsibleTrigger>
+    <CollapsibleContent className="p-4">
+      <div className="text-[#FFC900]/80 space-y-2">
+        {children}
+      </div>
+    </CollapsibleContent>
+  </Collapsible>
+);
+
 const UnitContentPage = () => {
   const navigate = useNavigate();
   const { unitId } = useParams<{ unitId: string }>();
   
-  // Unit content mapping
   const unitContent: Record<string, {
     title: string;
     description: string;
@@ -33,63 +49,97 @@ const UnitContentPage = () => {
   }> = {
     "201": {
       title: "Health and Safety in Building Services Engineering",
-      description: "Learn how to stay safe at work, spot dangers, use safety equipment, and follow the right safety rules when working with electrical equipment.",
+      description: "Master essential workplace safety practices and regulations for electrical installations. Learn to identify hazards, use protective equipment, and follow proper safety procedures.",
       sections: [
         {
-          title: "Why Safety Matters",
+          title: "Unit Overview",
           content: (
             <>
-              <p>Safety is super important when working with electricity. One mistake can lead to serious injuries or even death.</p>
-              <p className="mt-2">In this unit, you'll learn how to:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Spot dangers before they cause harm</li>
-                <li>Use safety gear properly</li>
-                <li>Follow the right steps to keep yourself and others safe</li>
-                <li>Know what to do in an emergency</li>
+              <p className="mb-4">This unit is fundamental to your development as an electrical professional. You'll learn how to:</p>
+              <ul className="list-disc pl-5 space-y-2 mb-4">
+                <li>Identify and prevent workplace hazards</li>
+                <li>Use personal protective equipment (PPE) correctly</li>
+                <li>Follow essential safety procedures</li>
+                <li>Respond to emergencies effectively</li>
+                <li>Handle electrical equipment safely</li>
+              </ul>
+              <p>By the end of this unit, you'll be confident in maintaining a safe working environment.</p>
+            </>
+          )
+        },
+        {
+          title: "Key Learning Objectives",
+          content: (
+            <div className="space-y-4">
+              <LearningObjective title="1. Understanding Health and Safety Legislation">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Health and Safety at Work Act 1974</li>
+                  <li>Electricity at Work Regulations 1989</li>
+                  <li>Personal Protective Equipment Regulations</li>
+                  <li>Manual Handling Operations Regulations</li>
+                  <li>Your legal responsibilities as an electrical worker</li>
+                </ul>
+              </LearningObjective>
+              
+              <LearningObjective title="2. Identifying and Preventing Hazards">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Common workplace hazards in electrical work</li>
+                  <li>Risk assessment procedures</li>
+                  <li>Safe working practices</li>
+                  <li>Preventing accidents and injuries</li>
+                  <li>Environmental hazards and controls</li>
+                </ul>
+              </LearningObjective>
+              
+              <LearningObjective title="3. Personal Protective Equipment (PPE)">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Types of PPE for electrical work</li>
+                  <li>Proper use and maintenance of PPE</li>
+                  <li>When and where to use specific PPE</li>
+                  <li>Inspection and replacement schedules</li>
+                  <li>Storage and care of equipment</li>
+                </ul>
+              </LearningObjective>
+              
+              <LearningObjective title="4. Emergency Procedures">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Emergency response planning</li>
+                  <li>First aid basics for electrical incidents</li>
+                  <li>Fire safety and prevention</li>
+                  <li>Evacuation procedures</li>
+                  <li>Reporting incidents and near-misses</li>
+                </ul>
+              </LearningObjective>
+            </div>
+          )
+        },
+        {
+          title: "Assessment Criteria",
+          content: (
+            <>
+              <p className="mb-4">To pass this unit, you'll need to demonstrate:</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Understanding of relevant health and safety legislation</li>
+                <li>Ability to identify and assess workplace hazards</li>
+                <li>Knowledge of proper PPE usage and maintenance</li>
+                <li>Understanding of emergency procedures</li>
+                <li>Practical application of safe working practices</li>
               </ul>
             </>
           )
         },
         {
-          title: "Safety Laws and Rules",
+          title: "Study Resources",
           content: (
             <>
-              <p>There are important laws that protect workers:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Health and Safety at Work Act - The main law that keeps workers safe</li>
-                <li>Electricity at Work Regulations - Special rules for electrical work</li>
-                <li>Personal Protective Equipment (PPE) Regulations - Rules about safety gear</li>
+              <p className="mb-4">To help you succeed in this unit, use these resources:</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Health and Safety Executive (HSE) website</li>
+                <li>City & Guilds Unit 201 workbook</li>
+                <li>Online practice questions and quizzes</li>
+                <li>Video demonstrations of safety procedures</li>
+                <li>Interactive risk assessment exercises</li>
               </ul>
-              <p className="mt-2">These aren't just boring rules - they're there to save lives and prevent accidents!</p>
-            </>
-          )
-        },
-        {
-          title: "Staying Safe on Site",
-          content: (
-            <>
-              <p>When you're working on a building site or in someone's home, you need to:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Always wear your safety gear (hard hat, boots, hi-vis vest)</li>
-                <li>Keep your work area clean and tidy to prevent trips and falls</li>
-                <li>Use the right tools for the job and check they're in good condition</li>
-                <li>Know where fire exits are and what to do in an emergency</li>
-              </ul>
-            </>
-          )
-        },
-        {
-          title: "Working Safely with Electricity",
-          content: (
-            <>
-              <p>Electricity can be dangerous if not handled properly:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Always turn off power before working on circuits</li>
-                <li>Use proper testing equipment to check if wires are live</li>
-                <li>Never take shortcuts with electrical safety</li>
-                <li>Use insulated tools when working with electricity</li>
-              </ul>
-              <p className="mt-2">Remember: It's better to take extra time to be safe than to rush and have an accident!</p>
             </>
           )
         }
@@ -353,12 +403,10 @@ const UnitContentPage = () => {
     }
   };
 
-  // Get content for current unit or show not found
   const currentUnit = unitContent[unitId || ""];
   
-  // Handle back navigation
   const handleBackClick = () => {
-    navigate('/apprentices/study-materials/city-guilds/level-2/course-content');
+    navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
   };
 
   if (!currentUnit) {
