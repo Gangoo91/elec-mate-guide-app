@@ -98,8 +98,7 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-2/core-units" element={<Level2CoreUnitsPage />} />
-                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content" element={<Level2CourseContent />} />
-                  <Route path="/apprentices/study-materials/city-guilds/level-2/course-content/unit-:unitId" element={<UnitContentPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/level-3/course-content/unit-:unitId" element={<UnitContentPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/am2" element={<AM2Page />} />

@@ -12,16 +12,13 @@ interface UnitCardProps {
   path: string;
 }
 
-const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
+const UnitCard = ({ unitNumber, title, description }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    console.log("UnitCard - Attempting to navigate to:", path);
-    try {
-      navigate(path);
-    } catch (e) {
-      console.error("Navigation error:", e);
-    }
+    const unitPath = `/apprentices/study-materials/city-guilds/level-2/core-units/${unitNumber}`;
+    console.log("UnitCard - Attempting to navigate to:", unitPath);
+    navigate(unitPath);
   };
   
   return (
