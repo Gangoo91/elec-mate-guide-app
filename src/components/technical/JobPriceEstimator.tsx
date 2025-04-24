@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,10 @@ const JobPriceEstimator = () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('job-price-estimator', {
-        body: JSON.stringify({ jobDescription })
+        body: JSON.stringify({ jobDescription }),
+        options: {
+          timeout: 20000 // Increase timeout to 20 seconds for more thorough analysis
+        }
       });
 
       if (error) throw error;
@@ -43,33 +47,40 @@ const JobPriceEstimator = () => {
   };
 
   const formatEstimate = (text: string) => {
-    return text
-      .split('\n')
-      .map((line, index) => {
-        if (line.toLowerCase().includes('summary')) {
-          return `<div class="bg-[#2C2F24]/80 border-l-4 border-[#FFC900] pl-3 py-2 rounded-sm mt-6 mb-3">
-            <h2 class="text-xl font-bold text-[#FFC900] flex items-center">
-              <Calculator class="mr-2 h-5 w-5 text-[#FFC900]" /> ${line}
-            </h2>
-          </div>`;
-        }
-        
-        if (line.toLowerCase().includes('total cost')) {
-          return `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-3 flex items-center">
-            <PoundSterling class="mr-2 h-5 w-5 text-[#FFC900] flex-shrink-0" />
-            <span class="text-[#FFC900] font-bold">${line}</span>
-          </div>`;
-        }
-        
-        if (line.match(/^[A-Z][\w\s]+:/)) {
-          return `<div class="text-[#FFC900] font-semibold mt-4 mb-2">${line}</div>`;
-        }
-
-        return line.trim() ? 
-          `<p class="mb-2 text-[#FFC900]/90 ml-2">${line}</p>` : 
-          '<div class="h-2"></div>';
+    // Process headers
+    let formattedText = text
+      .replace(/^(SUMMARY|MATERIALS BREAKDOWN|LABOUR ESTIMATE|TOTAL COST|NOTES):/gm, 
+        match => `<h2 class="text-xl font-bold text-[#FFC900] mt-6 mb-3 flex items-center"><Calculator class="mr-2 h-5 w-5 text-[#FFC900]" />${match}</h2>`);
+    
+    // Process lists
+    formattedText = formattedText.replace(/^[-•]\s+(.*)/gm, 
+      match => `<li class="mb-2 text-[#FFC900]/90 ml-5 list-disc">${match.substring(2)}</li>`);
+    
+    // Wrap lists in ul tags
+    formattedText = formattedText.replace(/<li class="mb-2 text-\[#FFC900\]\/90 ml-5 list-disc">(.*?)(<\/li>[\r\n]+)(?!<li)/gs, 
+      match => `<ul class="my-3">${match}</ul>`);
+    
+    // Highlight GBP amounts
+    formattedText = formattedText.replace(/£(\d+(\.\d{1,2})?)/g, 
+      match => `<span class="text-[#FFC900] font-semibold">${match}</span>`);
+    
+    // Process paragraphs
+    formattedText = formattedText.split('\n')
+      .map(line => {
+        if (line.trim() === '') return '<div class="h-2"></div>';
+        if (line.match(/^<h2|^<li|^<ul|^<\/ul>/)) return line;
+        return `<p class="mb-2 text-[#FFC900]/90">${line}</p>`;
       })
       .join('');
+    
+    // Special formatting for total cost section
+    formattedText = formattedText.replace(/<h2 class="text-xl font-bold text-\[#FFC900\] mt-6 mb-3 flex items-center"><Calculator class="mr-2 h-5 w-5 text-\[#FFC900\]" \/>TOTAL COST:<\/h2>/g, 
+      match => `<div class="bg-[#2C2F24] border border-[#FFC900]/20 p-3 rounded-md my-4">${match}`);
+    
+    formattedText = formattedText.replace(/(?<=TOTAL COST:<\/h2>)(.*?)(?=<h2|$)/gs, 
+      match => `${match}</div>`);
+    
+    return formattedText;
   };
 
   const placeholderText = `Please provide detailed information about the job:
