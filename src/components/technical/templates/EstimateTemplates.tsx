@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Eye, Printer, Pen } from "lucide-react";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -31,19 +31,19 @@ const EstimateTemplates = () => {
   };
   
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {templates.map((template) => (
-        <Card key={template.id} className="group overflow-hidden border-[#FFC900]/20 bg-[#2C2F24] hover:bg-[#363A2B] transition-colors">
-          <div className="p-4 border-b border-[#FFC900]/10">
-            <h3 className="font-medium text-[#FFC900] text-lg">{template.name}</h3>
-            <p className="text-sm text-[#FFC900]/70 mt-1">{template.description}</p>
-          </div>
+        <Card key={template.id} className="overflow-hidden border-[#FFC900]/20 bg-[#2C2F24] hover:bg-[#363A2B] transition-colors">
           <div className="p-4">
-            <AspectRatio ratio={16/9} className="bg-[#1a1c15] rounded-lg overflow-hidden mb-4">
-              <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+            <AspectRatio ratio={16/9} className="bg-[#1a1c15] rounded-lg overflow-hidden mb-3">
+              <div className="w-full h-full flex items-center justify-center">
                 <FileText className="h-16 w-16 text-[#FFC900]/30" />
               </div>
             </AspectRatio>
+            
+            <h3 className="font-medium text-[#FFC900] text-lg">{template.name}</h3>
+            <p className="text-sm text-[#FFC900]/70 mt-1 mb-3">{template.description}</p>
+            
             <div className="grid grid-cols-3 gap-2">
               <Button 
                 variant="outline" 

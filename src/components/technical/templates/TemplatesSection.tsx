@@ -3,30 +3,17 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import EstimateTemplates from "./EstimateTemplates";
 import InvoiceTemplates from "./InvoiceTemplates";
 
 const TemplatesSection = () => {
   const [selectedType, setSelectedType] = useState<'estimates' | 'invoices' | 'certificates'>('estimates');
-
-  const getDocumentTitle = () => {
-    switch (selectedType) {
-      case 'estimates':
-        return 'Estimates';
-      case 'invoices':
-        return 'Invoices';
-      case 'certificates':
-        return 'Certificates';
-      default:
-        return 'Estimates';
-    }
-  };
 
   return (
     <Card className="bg-[#1a1c15] border-[#FFC900]/20">
@@ -38,36 +25,21 @@ const TemplatesSection = () => {
               <CardTitle className="text-2xl font-bold text-[#FFC900]">
                 Templates & Documents
               </CardTitle>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900] hover:bg-[#363A2B] hover:text-[#FFC900]"
-                  >
-                    {getDocumentTitle()}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-[#2C2F24] border-[#FFC900]/20">
-                  <DropdownMenuItem 
-                    className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]"
-                    onClick={() => setSelectedType('estimates')}
-                  >
-                    Estimates
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]"
-                    onClick={() => setSelectedType('invoices')}
-                  >
-                    Invoices
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]"
-                    onClick={() => setSelectedType('certificates')}
-                  >
-                    Certificates
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Select 
+                value={selectedType} 
+                onValueChange={(value: 'estimates' | 'invoices' | 'certificates') => setSelectedType(value)}
+              >
+                <SelectTrigger 
+                  className="w-[180px] bg-[#2C2F24] border-[#FFC900]/20 text-[#FFC900]"
+                >
+                  <SelectValue placeholder="Select document type" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#2C2F24] border-[#FFC900]/20">
+                  <SelectItem value="estimates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Estimates</SelectItem>
+                  <SelectItem value="invoices" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Invoices</SelectItem>
+                  <SelectItem value="certificates" className="text-[#FFC900] focus:bg-[#363A2B] focus:text-[#FFC900]">Certificates</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <p className="text-[#FFC900]/80 text-sm">
               Professional document templates for your electrical business. Generate, customize, and download as PDFs.
