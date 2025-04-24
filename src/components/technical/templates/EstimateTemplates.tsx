@@ -33,23 +33,23 @@ const EstimateTemplates = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {templates.map((template) => (
-        <Card key={template.id} className="overflow-hidden border-[#FFC900]/20 bg-[#2C2F24]">
+        <Card key={template.id} className="group overflow-hidden border-[#FFC900]/20 bg-[#2C2F24] hover:bg-[#363A2B] transition-colors">
           <div className="p-2">
-            <AspectRatio ratio={16/9} className="bg-[#222]">
-              <div className="w-full h-full flex items-center justify-center">
+            <AspectRatio ratio={16/9} className="bg-[#222] overflow-hidden rounded-md">
+              <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                 <FileText className="h-16 w-16 text-[#FFC900]/30" />
               </div>
             </AspectRatio>
           </div>
           <CardContent className="p-4">
-            <h3 className="font-medium text-[#FFC900]">{template.name}</h3>
-            <p className="text-sm text-[#FFC900]/70 mt-1 mb-4">{template.description}</p>
-            <div className="flex space-x-2">
+            <h3 className="font-medium text-[#FFC900] mb-1">{template.name}</h3>
+            <p className="text-sm text-[#FFC900]/70 mb-4 line-clamp-2">{template.description}</p>
+            <div className="flex gap-2">
               <Button 
                 variant="outline" 
                 size="sm"
                 onClick={() => navigate('/electricians/technical-tools/estimator')}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                className="flex-1 bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
               >
                 <Eye className="h-4 w-4 mr-2" />
                 Preview
@@ -58,7 +58,7 @@ const EstimateTemplates = () => {
                 variant="outline" 
                 size="sm"
                 onClick={handlePrint}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                className="flex-1 bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
               >
                 <Printer className="h-4 w-4 mr-2" />
                 Print
@@ -67,7 +67,7 @@ const EstimateTemplates = () => {
                 variant="outline" 
                 size="sm"
                 onClick={() => navigate(`/electricians/technical-tools/templates/${template.id}/sign`)}
-                className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+                className="flex-1 bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
               >
                 <Pen className="h-4 w-4 mr-2" />
                 Sign

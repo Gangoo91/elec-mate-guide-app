@@ -10,8 +10,8 @@ const TemplatesSection = () => {
   const [activeTab, setActiveTab] = useState("estimates");
 
   return (
-    <div className="space-y-6">
-      <CardHeader className="pb-4">
+    <Card className="bg-[#1a1c15] border-[#FFC900]/20">
+      <CardHeader className="pb-4 border-b border-[#FFC900]/10">
         <div className="flex items-start gap-4">
           <FileText className="h-8 w-8 text-[#FFC900] flex-shrink-0 mt-1" />
           <div>
@@ -25,21 +25,43 @@ const TemplatesSection = () => {
         </div>
       </CardHeader>
       
-      <CardContent>
-        <Tabs defaultValue="estimates" onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-3 mb-8">
-            <TabsTrigger value="estimates" className="text-[#FFC900]">Estimates</TabsTrigger>
-            <TabsTrigger value="invoices" className="text-[#FFC900]">Invoices</TabsTrigger>
-            <TabsTrigger value="certificates" className="text-[#FFC900]">Certificates</TabsTrigger>
+      <CardContent className="pt-6">
+        <Tabs 
+          defaultValue="estimates" 
+          onValueChange={setActiveTab}
+          className="w-full"
+        >
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-[#2C2F24]">
+            <TabsTrigger 
+              value="estimates" 
+              className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-black text-[#FFC900]"
+            >
+              Estimates
+            </TabsTrigger>
+            <TabsTrigger 
+              value="invoices" 
+              className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-black text-[#FFC900]"
+            >
+              Invoices
+            </TabsTrigger>
+            <TabsTrigger 
+              value="certificates" 
+              className="data-[state=active]:bg-[#FFC900] data-[state=active]:text-black text-[#FFC900]"
+            >
+              Certificates
+            </TabsTrigger>
           </TabsList>
-          <TabsContent value="estimates">
+
+          <TabsContent value="estimates" className="mt-0">
             <EstimateTemplates />
           </TabsContent>
-          <TabsContent value="invoices">
+
+          <TabsContent value="invoices" className="mt-0">
             <InvoiceTemplates />
           </TabsContent>
-          <TabsContent value="certificates">
-            <div className="flex flex-col items-center justify-center p-8 border border-dashed border-[#FFC900]/20 rounded-md">
+
+          <TabsContent value="certificates" className="mt-0">
+            <div className="flex flex-col items-center justify-center p-8 border border-dashed border-[#FFC900]/20 rounded-lg">
               <FileText className="h-16 w-16 text-[#FFC900]/30 mb-4" />
               <p className="text-[#FFC900]/70 text-lg">Certificate templates coming soon</p>
               <p className="text-[#FFC900]/50 text-sm max-w-md text-center mt-2">
@@ -49,7 +71,7 @@ const TemplatesSection = () => {
           </TabsContent>
         </Tabs>
       </CardContent>
-    </div>
+    </Card>
   );
 };
 
