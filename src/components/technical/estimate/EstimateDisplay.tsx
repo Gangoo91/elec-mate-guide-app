@@ -1,9 +1,15 @@
+
 import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import html2pdf from 'jspdf-html2canvas';
 import { toast } from "@/hooks/use-toast";
+import { 
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger 
+} from "@/components/ui/collapsible";
 
 interface EstimateDisplayProps {
   estimate: string;

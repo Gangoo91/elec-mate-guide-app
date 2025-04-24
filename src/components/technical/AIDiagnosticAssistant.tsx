@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -11,13 +12,18 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 
+interface FormattedSection {
+  title: string;
+  content: string;
+}
+
 const AIDiagnosticAssistant: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState<string | FormattedSection[]>('');
   const [isLoading, setIsLoading] = useState(false);
   const { handleError } = useErrorHandler();
 
-  const formatResponse = (rawResponse: string) => {
+  const formatResponse = (rawResponse: string): FormattedSection[] => {
     const sections = [
       { title: "Problem Analysis", key: "problem", icon: "🔍" },
       { title: "Possible Causes", key: "causes", icon: "⚡" },
@@ -31,7 +37,7 @@ const AIDiagnosticAssistant: React.FC = () => {
         title: `${section.icon} ${section.title}`,
         content: sectionContent
       } : null;
-    }).filter(Boolean);
+    }).filter(Boolean) as FormattedSection[];
   };
 
   const handleDiagnosticQuery = async () => {
@@ -49,8 +55,8 @@ const AIDiagnosticAssistant: React.FC = () => {
       if (error) throw error;
       
       if (data.response) {
-        const formattedResponse = formatResponse(data.response);
-        setResponse(formattedResponse);
+        const formattedSections = formatResponse(data.response);
+        setResponse(formattedSections.length > 0 ? formattedSections : data.response);
         toast.success("Diagnostic analysis complete", {
           description: "Detailed insights are now available"
         });
@@ -63,6 +69,40 @@ const AIDiagnosticAssistant: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const renderFormattedResponse = () => {
+    if (!response) return null;
+    
+    if (typeof response === 'string') {
+      return (
+        <div className="mt-4 p-4 bg-[#2C2F24] rounded-lg">
+          <h4 className="font-semibold mb-2 text-[#FFC900]">Technical Analysis:</h4>
+          <p className="text-[#FFC900]/80 whitespace-pre-wrap">{response}</p>
+        </div>
+      );
+    }
+    
+    return (
+      <div className="mt-4 space-y-2">
+        {(response as FormattedSection[]).map((section, index) => (
+          <Collapsible key={index} className="bg-[#2C2F24] rounded-lg overflow-hidden">
+            <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-[#FFC900] hover:bg-[#353824] transition-colors">
+              <span className="font-semibold">{section.title}</span>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="p-4 pt-0 text-[#FFC900]/80">
+              <p className="whitespace-pre-wrap">{section.content}</p>
+            </CollapsibleContent>
+          </Collapsible>
+        ))}
+        
+        <div className="mt-4 p-3 bg-[#2C2F24] rounded-lg border border-[#FFC900]/20">
+          <p className="text-sm text-[#FFC900]/50">
+            ℹ️ Note: This is an AI-generated analysis. Always consult a qualified electrician for complex electrical issues.
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -93,26 +133,7 @@ const AIDiagnosticAssistant: React.FC = () => {
           {isLoading ? 'Analyzing...' : 'Get Fault Analysis'}
         </Button>
         
-        {response && (
-          <div className="mt-4 space-y-2">
-            {formatResponse(response).map((section, index) => (
-              <Collapsible key={index} className="bg-[#2C2F24] rounded-lg overflow-hidden">
-                <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-[#FFC900] hover:bg-[#353824] transition-colors">
-                  <span className="font-semibold">{section.title}</span>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="p-4 pt-0 text-[#FFC900]/80">
-                  <p className="whitespace-pre-wrap">{section.content}</p>
-                </CollapsibleContent>
-              </Collapsible>
-            ))}
-            
-            <div className="mt-4 p-3 bg-[#2C2F24] rounded-lg border border-[#FFC900]/20">
-              <p className="text-sm text-[#FFC900]/50">
-                ℹ️ Note: This is an AI-generated analysis. Always consult a qualified electrician for complex electrical issues.
-              </p>
-            </div>
-          </div>
-        )}
+        {response && renderFormattedResponse()}
       </div>
     </div>
   );
