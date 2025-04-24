@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
@@ -16,13 +17,14 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
     if (!element) return;
 
     try {
-      await html2pdf(element, {
+      const options = {
         margin: { top: 15, right: 15, bottom: 15, left: 15 },
-        filename: `estimate-${jobReference || 'job'}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      });
+      };
+      
+      const pdf = await html2pdf(element, options);
+      pdf.save(`estimate-${jobReference || 'job'}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
