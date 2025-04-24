@@ -55,8 +55,9 @@ export const MentorshipRequestList = ({
   }
 
   return (
-    <div>
-      <div className="mb-6 flex justify-end">
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-[#FFC900]">Mentorship Requests</h2>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button 
@@ -116,7 +117,7 @@ export const MentorshipRequestList = ({
               className="p-6 border border-[#FFC900]/20 bg-[#22251e] hover:border-[#FFC900]/40 transition-all"
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
+                <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-lg font-medium text-[#FFC900]">{request.apprenticeName}</h3>
                     <Badge 
@@ -189,3 +190,4 @@ export const MentorshipRequestList = ({
     </div>
   );
 };
+
