@@ -20,14 +20,14 @@ const AM2Page = () => {
       icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
     },
     {
-      title: "Mock Exams",
-      description: "Practice assessments to help you prepare for the AM2 examination.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
-    },
-    {
       title: "Simplified Learning",
       description: "Break down of complex topics into easy-to-understand modules with practical examples.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />
+    },
+    {
+      title: "Mock Exams",
+      description: "Practice assessments to help you prepare for the AM2 examination.",
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
     }
   ];
 
@@ -61,3 +61,4 @@ const AM2Page = () => {
 };
 
 export default AM2Page;
+
