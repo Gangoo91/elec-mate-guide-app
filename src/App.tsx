@@ -46,6 +46,7 @@ import CityGuildsPage from "./pages/CityGuildsPage";
 import Level2ElectricalPage from "./pages/Level2ElectricalPage";
 import Level2CourseContent from "./pages/Level2CourseContent";
 import UnitContentPage from "./pages/UnitContentPage";
+import Level3ElectricalPage from "./pages/Level3ElectricalPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
