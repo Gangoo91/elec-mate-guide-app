@@ -29,7 +29,7 @@ const ElectriciansPage = () => {
       title: "Mentor Connect",
       description: "Guide apprentices, share your expertise, and earn recognition while helping shape the next generation of electricians.",
       icon: <Handshake className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/mentorship"
+      fullCardLink: "/electricians/mentorship"
     },
     {
       title: "Professional Development",
