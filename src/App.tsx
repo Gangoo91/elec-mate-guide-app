@@ -42,13 +42,14 @@ import CalculatorTools from "./pages/CalculatorTools";
 import InspectionTestingGuide from "./pages/InspectionTestingGuide";
 import TemplatesPage from "./pages/TemplatesPage";
 import SignDocumentPage from "./pages/SignDocumentPage";
+import CityGuildsPage from "./pages/CityGuildsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
       retry: 1,
-      staleTime: 30000, // 30 seconds
+      staleTime: 30000,
     },
   },
 });
@@ -86,6 +87,7 @@ function App() {
                   <Route path="/apprentices/study-materials/hnc" element={<HNCStudyMaterialsPage />} />
                   <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
                   <Route path="/apprentices/certifications" element={<CertificationsPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
 
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
