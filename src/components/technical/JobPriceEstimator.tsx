@@ -1,12 +1,11 @@
-
 import React, { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { Calculator, PoundSterling } from "lucide-react";
+import { Calculator, PoundSterling, InfoIcon } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const JobPriceEstimator = () => {
@@ -73,20 +72,50 @@ const JobPriceEstimator = () => {
       .join('');
   };
 
+  const placeholderText = `Please provide detailed information about the job:
+
+• Type of work (e.g., rewire, consumer unit replacement, fault finding)
+• Property details (size, age, access considerations)
+• Location (helps account for regional price differences)
+• Specific requirements (brands, specifications)
+• Time constraints or scheduling preferences
+• Current state of existing installations
+• Any known complications or challenges
+
+Example: "Full rewire needed for a 3-bed semi-detached house in Manchester. Property is 1960s with mostly surface mounted wiring. Occupied property, requires minimal disruption. Need premium consumer unit with surge protection. Garden office needs new circuit. Preferred start date in 2 months."`;
+
   return (
-    <div>
-      <CardHeader className="flex flex-row items-center gap-2">
-        <PoundSterling className="h-6 w-6 text-[#FFC900]" />
-        <CardTitle className="text-[#FFC900]">Job Price Estimator</CardTitle>
+    <div className="space-y-6">
+      <CardHeader className="pb-4">
+        <div className="flex items-start gap-4">
+          <PoundSterling className="h-8 w-8 text-[#FFC900] flex-shrink-0 mt-1" />
+          <div>
+            <CardTitle className="text-2xl font-bold text-[#FFC900] mb-2">
+              Job Price Estimator
+            </CardTitle>
+            <CardDescription className="text-[#FFC900]/80">
+              Get detailed cost breakdowns for electrical jobs. Our AI estimator considers materials, 
+              labor, complexity, and regional variations to provide comprehensive quotes.
+            </CardDescription>
+          </div>
+        </div>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="relative">
+          <div className="mb-3 flex items-start gap-2">
+            <InfoIcon className="h-5 w-5 text-[#FFC900] flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-[#FFC900]/90">
+              Providing detailed information helps generate more accurate estimates. Include property type, 
+              location, and specific requirements.
+            </p>
+          </div>
+          
           <Textarea 
-            placeholder="Describe the job in detail (e.g., full rewire of 3-bed house, install new consumer unit, add garden lighting circuit...)"
+            placeholder={placeholderText}
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
-            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/50 min-h-[120px]"
+            className="bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] placeholder-[#FFC900]/40 min-h-[280px] text-base leading-relaxed"
           />
         </div>
 
@@ -98,12 +127,12 @@ const JobPriceEstimator = () => {
           {isLoading ? (
             <>
               <LoadingSpinner size="sm" className="mr-2" />
-              Calculating...
+              Calculating Estimate...
             </>
           ) : (
             <>
               <Calculator className="h-5 w-5 mr-2" />
-              Generate Estimate
+              Generate Price Estimate
             </>
           )}
         </Button>
