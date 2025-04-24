@@ -8,14 +8,14 @@ export const subscriptionPlans = [
   },
   {
     name: "Electrician",
-    monthlyPrice: "£6.99",
-    yearlyPrice: "£69.99",
+    monthlyPrice: "£4.99",
+    yearlyPrice: "£49.99",
     description: "Access to electrician and apprentice resources",
   },
   {
     name: "Employer",
-    monthlyPrice: "£49.99",
-    yearlyPrice: "£499.99",
+    monthlyPrice: "£29.99",
+    yearlyPrice: "£299.99",
     description: "Full access to all platform features and resources",
   },
 ];
