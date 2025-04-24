@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -44,7 +45,6 @@ import TemplatesPage from "./pages/TemplatesPage";
 import SignDocumentPage from "./pages/SignDocumentPage";
 import CityGuildsPage from "./pages/CityGuildsPage";
 import Level2ElectricalPage from "./pages/Level2ElectricalPage";
-import Level2CourseContent from "./pages/Level2CourseContent";
 import UnitContentPage from "./pages/UnitContentPage";
 import Level3ElectricalPage from "./pages/Level3ElectricalPage";
 import MOETPage from "./pages/MOETPage";

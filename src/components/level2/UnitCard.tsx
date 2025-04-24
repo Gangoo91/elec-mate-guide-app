@@ -9,14 +9,14 @@ interface UnitCardProps {
   unitNumber: string;
   title: string;
   description: string;
-  path: string;
+  path?: string; // Make path optional
 }
 
-const UnitCard = ({ unitNumber, title, description }: UnitCardProps) => {
+const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    const unitPath = `/apprentices/study-materials/city-guilds/level-2/core-units/${unitNumber}`;
+    const unitPath = path || `/apprentices/study-materials/city-guilds/level-2/core-units/${unitNumber}`;
     console.log("UnitCard - Attempting to navigate to:", unitPath);
     navigate(unitPath);
   };
