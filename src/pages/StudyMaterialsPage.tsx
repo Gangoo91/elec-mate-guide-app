@@ -51,12 +51,12 @@ const StudyMaterialsPage = () => {
           />
           
           <ResourceCard
-            title="Test & Inspection"
+            title="Inspection and Testing"
             description="Specialized materials for electrical testing and inspection qualifications, including 2391 and 2394/95 courses."
             icon={<TestTube className="h-7 w-7 text-[#FFC900]" />}
             action={{
-              label: "View T&I Resources",
-              href: "/apprentices/study-materials/test-inspection"
+              label: "View I&T Resources",
+              href: "/apprentices/study-materials/inspection-testing"
             }}
           />
         </div>
