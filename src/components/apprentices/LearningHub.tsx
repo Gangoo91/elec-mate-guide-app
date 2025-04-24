@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Book, TestTube, Tool } from "lucide-react";
+import { Book, TestTube, Wrench } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -66,7 +66,7 @@ const LearningHub = () => {
           <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
             <CardHeader>
               <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                <Tool className="h-6 w-6" />
+                <Wrench className="h-6 w-6" />
                 Apprentice Tooling
               </CardTitle>
             </CardHeader>
@@ -84,4 +84,3 @@ const LearningHub = () => {
 };
 
 export default LearningHub;
-
