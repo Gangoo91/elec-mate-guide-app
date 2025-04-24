@@ -1,10 +1,13 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import UnitCard from "@/components/level2/UnitCard";
 
 const Level2CourseContent = () => {
+  const navigate = useNavigate();
+  
   const units = [
     {
       unitNumber: "201",
@@ -38,12 +41,18 @@ const Level2CourseContent = () => {
     }
   ];
 
+  // Handle custom back navigation
+  const handleBackClick = () => {
+    navigate('/apprentices/study-materials/city-guilds/level-2');
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Level 2 Course Content"
           description="Your guide to becoming a qualified electrician - broken down into simple, easy-to-follow units"
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">

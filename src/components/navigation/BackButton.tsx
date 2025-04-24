@@ -4,7 +4,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const BackButton = () => {
+interface BackButtonProps {
+  customAction?: () => void;
+}
+
+const BackButton = ({ customAction }: BackButtonProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -14,6 +18,12 @@ const BackButton = () => {
 
   // Determine if we need a specific fallback path
   const handleBackNavigation = () => {
+    // Use custom action if provided
+    if (customAction) {
+      customAction();
+      return;
+    }
+    
     // For mental health main page, go back to electricians hub
     if (location.pathname === "/mental-health") {
       navigate("/electricians");
