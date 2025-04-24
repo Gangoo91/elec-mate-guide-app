@@ -16,7 +16,7 @@ const StudyMaterialsPage = () => {
         <PageHeader 
           title="UK Electrical Qualification Materials"
           description="Study resources for electrical qualifications and professional development."
-          hideBackButton={true}
+          hideBackButton={false} // Change this to false to show back button
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
