@@ -31,13 +31,15 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are an experienced electrical contractor specializing in job estimation. Provide detailed cost breakdowns for electrical work in GBP, including materials, labor hours, and total costs. Format your response with clear sections: Summary, Materials Breakdown, Labour Estimate, and Total Cost. Include any relevant notes about potential complexities or variables that could affect the price."
+            content: "You are an experienced electrical contractor specializing in job estimation. Provide detailed cost breakdowns for electrical work in GBP, including materials, labor hours, and total costs. Format your response with clear sections: Summary, Materials Breakdown, Labour Estimate, and Total Cost. Include any relevant notes about potential complexities or variables that could affect the price. Respond quickly and efficiently with a focus on being accurate but concise."
           },
           {
             role: "user",
             content: jobDescription
           }
-        ]
+        ],
+        temperature: 0.7,
+        max_tokens: 1000
       })
     })
 

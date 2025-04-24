@@ -23,10 +23,7 @@ const JobPriceEstimator = () => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('job-price-estimator', {
-        body: JSON.stringify({ jobDescription }),
-        options: {
-          timeout: 12000
-        }
+        body: JSON.stringify({ jobDescription })
       });
 
       if (error) throw error;
