@@ -15,7 +15,8 @@ const UnitContentPage = () => {
   console.log("UnitContentPage - unitId:", unitId);
   console.log("Available units:", Object.keys(unitContent));
   
-  const currentUnit = unitContent[unitId || ""];
+  // Get the current unit content
+  const currentUnit = unitId ? unitContent[unitId] : null;
   console.log("Current unit found:", !!currentUnit);
   
   // Simulate progress tracking

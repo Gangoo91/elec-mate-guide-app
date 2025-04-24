@@ -16,7 +16,7 @@ const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    console.log("Navigating to:", path);
+    console.log("UnitCard - Attempting to navigate to:", path);
     navigate(path);
   };
   
