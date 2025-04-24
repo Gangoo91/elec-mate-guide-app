@@ -1,8 +1,9 @@
 
 import React, { useState } from "react";
-import { Filter, ChevronDown } from "lucide-react";
+import { Filter, ChevronDown, Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,6 +37,27 @@ export const MentorshipRequestList = ({
   onScheduleSession
 }: MentorshipRequestListProps) => {
   const [filter, setFilter] = useState<"pending" | "accepted" | "all">("pending");
+  const [copiedRequestId, setCopiedRequestId] = useState<string | null>(null);
+
+  const handleCopyRequest = (request: MentorshipRequest) => {
+    const requestDetails = `
+Apprentice: ${request.apprenticeName}
+Message: ${request.message}
+Expertise: ${request.expertise.join(", ")}
+Request Date: ${new Date(request.requestDate).toLocaleDateString()}
+    `.trim();
+
+    navigator.clipboard.writeText(requestDetails).then(() => {
+      toast.success("Request details copied to clipboard");
+      setCopiedRequestId(request.id);
+      
+      // Reset copied state after 2 seconds
+      setTimeout(() => setCopiedRequestId(null), 2000);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      toast.error("Failed to copy request details");
+    });
+  };
 
   if (isLoading) {
     return (
@@ -85,6 +107,41 @@ export const MentorshipRequestList = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <div className="w-full max-w-2xl space-y-4">
+        {requests
+          .filter(request => 
+            filter === "all" || 
+            (filter === "pending" && request.status === "pending") ||
+            (filter === "accepted" && request.status === "accepted")
+          )
+          .map(request => (
+            <div 
+              key={request.id} 
+              className="bg-[#2C2F24] rounded-lg p-4 border border-[#FFC900]/20 flex items-center justify-between"
+            >
+              <div className="flex-grow pr-4">
+                <h3 className="text-[#FFC900] font-semibold">{request.apprenticeName}</h3>
+                <p className="text-[#FFC900]/80 text-sm">{request.message}</p>
+                <div className="text-[#FFC900]/60 text-xs mt-2">
+                  Expertise: {request.expertise.join(", ")}
+                </div>
+              </div>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => handleCopyRequest(request)}
+                className="text-[#FFC900] hover:bg-[#FFC900]/10"
+              >
+                {copiedRequestId === request.id ? (
+                  <CheckCheck className="h-5 w-5" />
+                ) : (
+                  <Copy className="h-5 w-5" />
+                )}
+              </Button>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
