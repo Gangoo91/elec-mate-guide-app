@@ -31,7 +31,16 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     // For mental health subpages, go back to mental health hub
     else if (location.pathname.startsWith("/mental-health/") && location.pathname !== "/mental-health") {
       navigate("/mental-health");
-    } else {
+    } 
+    // For electricians mentorship page, go back to electricians hub
+    else if (location.pathname === "/electricians/mentorship") {
+      navigate("/electricians");
+    }
+    // For electricians sections, go back to dashboard
+    else if (location.pathname === "/electricians") {
+      navigate("/dashboard");
+    }
+    else {
       // Default behavior - go back one step in history
       navigate(-1);
     }

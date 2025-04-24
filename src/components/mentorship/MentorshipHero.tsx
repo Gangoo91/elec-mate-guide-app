@@ -1,6 +1,7 @@
 
 import React from "react";
-import { Users, Badge } from "lucide-react";
+import { Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface MentorshipHeroProps {
   isElectriciansSection: boolean;
