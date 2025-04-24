@@ -1,28 +1,28 @@
 
 import React from "react";
-import { Star, User, MessageCircle, Calendar, BookOpen } from "lucide-react";
+import { Star, MessageCircle, Calendar, BookOpen } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const MentorshipGuide = () => {
   const steps = [
     {
-      title: "Browse Profiles",
-      description: "View profiles of experienced professionals in the electrical industry",
-      icon: <User className="h-5 w-5 text-[#FFC900]" />
+      title: "Choose Your Mentor",
+      description: "Find the right mentor based on your learning goals and their expertise in electrical work",
+      icon: <Star className="h-5 w-5 text-[#FFC900]" />
     },
     {
-      title: "Send a Request",
-      description: "Reach out with your specific questions or areas where you need guidance",
+      title: "Connect & Discuss",
+      description: "Share your challenges, ask questions about your apprenticeship, and get expert guidance",
       icon: <MessageCircle className="h-5 w-5 text-[#FFC900]" />
     },
     {
-      title: "Schedule Session",
-      description: "Find a mutually convenient time for virtual or in-person mentoring",
+      title: "Schedule Learning",
+      description: "Set up regular mentoring sessions that fit around your apprenticeship schedule",
       icon: <Calendar className="h-5 w-5 text-[#FFC900]" />
     },
     {
-      title: "Learn & Grow",
-      description: "Gain insights, develop skills, and advance your career with expert guidance",
+      title: "Grow Your Skills",
+      description: "Get practical advice, study tips, and insider knowledge to excel in your apprenticeship",
       icon: <BookOpen className="h-5 w-5 text-[#FFC900]" />
     }
   ];
@@ -31,7 +31,7 @@ export const MentorshipGuide = () => {
     <div className="mt-16 mb-6">
       <div className="flex items-center gap-2 mb-6">
         <Star className="h-5 w-5 text-[#FFC900]" />
-        <h3 className="text-xl font-semibold text-[#FFC900]">How Mentorship Works</h3>
+        <h3 className="text-xl font-semibold text-[#FFC900]">Your Mentorship Journey</h3>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
