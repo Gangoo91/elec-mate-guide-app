@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -9,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Mentor } from "@/types/mentor";
 import { MentorshipHero } from "@/components/mentorship/MentorshipHero";
 import { MentorList } from "@/components/mentorship/MentorList";
-import { MentorshipRequestList } from "@/components/mentorship/MentorshipRequestList";
+import { MentorshipRequestList, MentorshipRequest } from "@/components/mentorship/MentorshipRequestList";
 import { MentorshipGuide } from "@/components/mentorship/MentorshipGuide";
 import { MentorshipRequestDialog } from "@/components/mentorship/MentorshipRequestDialog";
 import { Button } from "@/components/ui/button";
@@ -23,8 +22,8 @@ const Mentorship = () => {
   const [requestMessage, setRequestMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Demo mentorship requests data for electricians view
-  const demoMentorshipRequests = [
+  // Demo mentorship requests data for electricians view - with typed status
+  const demoMentorshipRequests: MentorshipRequest[] = [
     {
       id: "1",
       apprenticeName: "Thomas Johnson",

@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-interface MentorshipRequest {
+export interface MentorshipRequest {
   id: string;
   apprenticeName: string;
   apprenticeId: string;
