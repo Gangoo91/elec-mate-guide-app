@@ -31,9 +31,6 @@ const JobPriceEstimator = () => {
             <CardTitle className="text-2xl font-bold text-[#FFC900] mb-2">
               Job Price Estimator
             </CardTitle>
-            <p className="text-[#FFC900]/80 text-sm">
-              Enter your job details below to receive a detailed cost breakdown including materials, labor, and total estimates.
-            </p>
           </div>
         </div>
       </CardHeader>
@@ -88,3 +85,4 @@ const JobPriceEstimator = () => {
 };
 
 export default JobPriceEstimator;
+
