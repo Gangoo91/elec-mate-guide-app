@@ -1,11 +1,72 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { Calculator } from "lucide-react";
+import { Calculator, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import html2pdf from 'jspdf-html2canvas';
 
 interface EstimateDisplayProps {
   estimate: string;
+  clientName: string;
+  jobReference: string;
 }
+
+export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clientName, jobReference }) => {
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('estimate-content');
+    if (!element) return;
+
+    try {
+      const pdf = await html2pdf()
+        .from(element)
+        .set({
+          margin: [15, 15, 15, 15],
+          filename: `estimate-${jobReference || 'job'}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        })
+        .save();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
+  if (!estimate) return null;
+
+  return (
+    <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">
+      <CardContent className="pt-6">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            {clientName && (
+              <p className="text-[#FFC900] text-sm mb-1">Client: {clientName}</p>
+            )}
+            {jobReference && (
+              <p className="text-[#FFC900] text-sm">Reference: {jobReference}</p>
+            )}
+          </div>
+          <Button
+            onClick={handleDownloadPDF}
+            variant="outline"
+            className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Download PDF
+          </Button>
+        </div>
+        
+        <div 
+          id="estimate-content"
+          className="estimate-content text-[#FFC900]/90 space-y-1"
+          dangerouslySetInnerHTML={{ 
+            __html: formatEstimate(estimate)
+          }} 
+        />
+      </CardContent>
+    </Card>
+  );
+};
 
 const formatEstimate = (text: string) => {
   let formattedText = text
@@ -36,21 +97,4 @@ const formatEstimate = (text: string) => {
     match => `${match}</div>`);
   
   return formattedText;
-};
-
-export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate }) => {
-  if (!estimate) return null;
-
-  return (
-    <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">
-      <CardContent className="pt-6">
-        <div 
-          className="estimate-content text-[#FFC900]/90 space-y-1"
-          dangerouslySetInnerHTML={{ 
-            __html: formatEstimate(estimate)
-          }} 
-        />
-      </CardContent>
-    </Card>
-  );
 };

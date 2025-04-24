@@ -23,7 +23,7 @@ const JobPriceEstimator = () => {
   } = useJobEstimate();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       <CardHeader className="pb-4">
         <div className="flex items-start gap-4">
           <PoundSterling className="h-8 w-8 text-[#FFC900] flex-shrink-0 mt-1" />
@@ -31,6 +31,9 @@ const JobPriceEstimator = () => {
             <CardTitle className="text-2xl font-bold text-[#FFC900] mb-2">
               Job Price Estimator
             </CardTitle>
+            <p className="text-[#FFC900]/80 text-sm">
+              Enter your job details below to receive a detailed cost breakdown including materials, labor, and total estimates.
+            </p>
           </div>
         </div>
       </CardHeader>
@@ -74,7 +77,11 @@ const JobPriceEstimator = () => {
           )}
         </div>
         
-        <EstimateDisplay estimate={estimate} />
+        <EstimateDisplay 
+          estimate={estimate}
+          clientName={clientName}
+          jobReference={jobReference}
+        />
       </CardContent>
     </div>
   );
