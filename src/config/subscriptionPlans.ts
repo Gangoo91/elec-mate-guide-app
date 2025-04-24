@@ -1,9 +1,8 @@
-
 export const subscriptionPlans = [
   {
     name: "Apprentice",
-    monthlyPrice: "£2.99",
-    yearlyPrice: "£29.99",
+    monthlyPrice: "£1.99",
+    yearlyPrice: "£19.99",
     description: "Access to all apprentice resources and training tools",
   },
   {
@@ -14,8 +13,8 @@ export const subscriptionPlans = [
   },
   {
     name: "Employer",
-    monthlyPrice: "£29.99",
-    yearlyPrice: "£299.99",
+    monthlyPrice: "£19.99",
+    yearlyPrice: "£199.99",
     description: "Full access to all platform features and resources",
   },
 ];
