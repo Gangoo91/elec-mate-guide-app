@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { useLocation } from "react-router-dom";
@@ -34,6 +33,7 @@ const Mentorship = () => {
     toast({
       title: "Request Sent",
       description: `Your mentorship request has been submitted to ${selectedMentor.name}. You'll be notified when they respond.`,
+      variant: "default",
     });
 
     setDialogOpen(false);
@@ -63,9 +63,9 @@ const Mentorship = () => {
     return (
       <MainLayout>
         <div className="container py-8">
-          <div className="text-center text-[#FFC900]">
+          <div className="text-center text-[#FFC900] p-8 bg-[#22251e] rounded-lg border border-[#FFC900]/20">
             <h2 className="text-xl">Unable to load mentors</h2>
-            <p className="text-[#FFC900]/80">Please try again later</p>
+            <p className="text-[#FFC900]/80 mt-2">Please try again later</p>
             <Button 
               variant="outline" 
               onClick={() => window.location.reload()} 
@@ -159,6 +159,7 @@ const Mentorship = () => {
         
         <MentorList 
           mentors={displayMentors}
+          isLoading={isLoading}
           onRequestMentorship={handleOpenRequestDialog}
         />
 
