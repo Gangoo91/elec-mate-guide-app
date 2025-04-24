@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Search, Lightbulb, CalendarCheck, BookOpen, TestTube, BookCheck, GraduationCap, School, Book } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -132,65 +131,65 @@ const LearningHub = () => {
         
         <TabsContent value="resources" className="mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Link to="/apprentices/ai-tools">
+            <Link to="/apprentices/study-materials/nvq2">
               <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
                 <CardHeader>
                   <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                    <Lightbulb className="h-6 w-6" />
-                    AI Learning Tools
+                    <Book className="h-6 w-6" />
+                    City & Guilds Level 2
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-[#FFC900]/70">
-                    Access our AI-powered assistants for technical diagnostics and regulatory guidance.
+                    Essential resources covering fundamental electrical theory, installation techniques, and health & safety.
                   </p>
                 </CardContent>
               </Card>
             </Link>
 
-            <Link to="/apprentices/study-materials">
+            <Link to="/apprentices/study-materials/nvq3">
+              <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+                <CardHeader>
+                  <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                    <GraduationCap className="h-6 w-6" />
+                    City & Guilds Level 3 & AM2
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#FFC900]/70">
+                    Advanced electrical training materials including AM2 preparation resources.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link to="/apprentices/study-materials/eal-level2">
+              <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
+                <CardHeader>
+                  <CardTitle className="text-[#FFC900] flex items-center gap-2">
+                    <School className="h-6 w-6" />
+                    EAL Level 2
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-[#FFC900]/70">
+                    Comprehensive materials for EAL Level 2 electrical qualification and practical assessments.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link to="/apprentices/study-materials/hnc">
               <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
                 <CardHeader>
                   <CardTitle className="text-[#FFC900] flex items-center gap-2">
                     <BookOpen className="h-6 w-6" />
-                    Study Materials
+                    EAL Level 3 & HNC
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-[#FFC900]/70">
-                    Access comprehensive study guides, video tutorials, and reference materials.
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link to="/apprentices/practice-exams">
-              <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
-                <CardHeader>
-                  <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                    <TestTube className="h-6 w-6" />
-                    Practice Exams
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#FFC900]/70">
-                    Test your knowledge with mock exams and quizzes covering various electrical topics.
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-
-            <Link to="/apprentices/certifications">
-              <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
-                <CardHeader>
-                  <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                    <BookCheck className="h-6 w-6" />
-                    Certification Prep
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#FFC900]/70">
-                    Prepare for your electrical certification with structured learning paths and practice tests.
+                    Higher-level study materials covering EAL Level 3 and HNC in Electrical Engineering.
                   </p>
                 </CardContent>
               </Card>
