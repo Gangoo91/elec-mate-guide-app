@@ -10,10 +10,12 @@ import { sections303 } from "@/data/units/sections/unit303Sections";
 import { sections304 } from "@/data/units/sections/unit304Sections";
 import { sections305 } from "@/data/units/sections/unit305Sections";
 import { sections308 } from "@/data/units/sections/unit308Sections";
+import { useToast } from "@/components/ui/use-toast";
 
 const SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   // Get the appropriate sections based on the unitId
   const getSectionContent = () => {
@@ -38,6 +40,15 @@ const SectionPage = () => {
   };
   
   const sectionContent = getSectionContent();
+  
+  React.useEffect(() => {
+    if (sectionContent) {
+      toast({
+        title: "Content Loaded",
+        description: `Now viewing: ${sectionContent.title}`,
+      });
+    }
+  }, [sectionContent, toast]);
   
   const handleBackClick = () => {
     navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);

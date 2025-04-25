@@ -13,6 +13,7 @@ const SectionContent = ({ title, path }: SectionContentProps) => {
   
   const handleClick = () => {
     if (path) {
+      console.log("Navigating to:", path);
       navigate(path);
     }
   };
