@@ -17,17 +17,20 @@ const MOETCoreKnowledgePage = () => {
     {
       title: "Electrical Principles",
       description: "Understanding fundamental electrical theories, components, and circuit analysis.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles')
     },
     {
       title: "Maintenance Practices",
       description: "Best practices for electrical maintenance, testing procedures, and safety protocols.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices')
     },
     {
       title: "Engineering Operations",
       description: "Core principles of engineering operations in electrical installations and systems.",
-      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations')
     }
   ];
 
@@ -44,7 +47,8 @@ const MOETCoreKnowledgePage = () => {
           {topics.map((topic, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={topic.onClick}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
