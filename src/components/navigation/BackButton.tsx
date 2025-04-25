@@ -16,7 +16,6 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const isEntry =
     location.pathname === "/" || location.pathname === "/dashboard";
 
-  // Determine if we need a specific fallback path
   const handleBackNavigation = () => {
     // Use custom action if provided
     if (customAction) {
@@ -24,6 +23,12 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
+    // For apprentices hub, go back to dashboard
+    if (location.pathname === "/apprentices") {
+      navigate("/dashboard");
+      return;
+    }
+
     // For mental health main page, go back to electricians hub
     if (location.pathname === "/mental-health") {
       navigate("/electricians");
