@@ -1,220 +1,97 @@
+
 import React from 'react';
 
 const TestResults = () => {
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Fundamentals of Test Result Interpretation</h2>
+      <h2 className="text-xl font-semibold">Understanding Electrical Test Results</h2>
       <p>
-        Accurately interpreting test results is a critical skill for effective fault diagnosis. It requires understanding what "normal" results should be and recognizing patterns that indicate specific types of faults.
+        Interpreting test results accurately is crucial for effective fault diagnosis. This requires understanding expected values, recognizing abnormal readings, and relating measurements to circuit behavior.
       </p>
       
-      <h3 className="text-lg font-medium mt-4">Establishing Baselines</h3>
+      <h3 className="text-lg font-medium mt-4">Voltage Measurements</h3>
+      <p>
+        Understanding voltage test results:
+      </p>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Reference documentation:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Manufacturer specifications</li>
-            <li>Installation records</li>
-            <li>Previous test results</li>
-            <li>Industry standards and norms</li>
-          </ul>
-        </li>
-        <li>Taking comparative measurements on known good equipment</li>
-        <li>Understanding normal operating parameters</li>
-        <li>Recognizing acceptable tolerance ranges</li>
+        <li><strong>No voltage:</strong> Open circuit, blown fuse, open switch</li>
+        <li><strong>Low voltage:</strong> High resistance connection, overloaded circuit</li>
+        <li><strong>High voltage:</strong> Improper connections, transformer issues</li>
+        <li><strong>Fluctuating voltage:</strong> Poor connections, intermittent faults</li>
+        <li><strong>Voltage where none expected:</strong> Short circuit, incorrect wiring</li>
       </ul>
       
-      <h3 className="text-lg font-medium mt-4">Common Voltage Test Interpretations</h3>
+      <h3 className="text-lg font-medium mt-4">Current Measurements</h3>
+      <p>
+        Analyzing current readings for fault diagnosis:
+      </p>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>No voltage present:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Open circuit condition</li>
-            <li>Blown fuse or tripped breaker</li>
-            <li>Failed component</li>
-            <li>Incorrect switching</li>
-          </ul>
-        </li>
-        <li>Low voltage:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Voltage drop due to high resistance</li>
-            <li>Overloaded circuit</li>
-            <li>Supply issues</li>
-            <li>High impedance fault</li>
-          </ul>
-        </li>
-        <li>High voltage:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Incorrect supply</li>
-            <li>Regulation problems</li>
-            <li>Interference or harmonics</li>
-          </ul>
-        </li>
+        <li><strong>No current:</strong> Open circuit, disconnected load</li>
+        <li><strong>Low current:</strong> Partial load failure, high resistance</li>
+        <li><strong>High current:</strong> Short circuit, overload, damaged component</li>
+        <li><strong>Fluctuating current:</strong> Loose connections, intermittent fault</li>
+        <li><strong>Unbalanced current in 3-phase:</strong> Phase problems, uneven loading</li>
       </ul>
       
       <h2 className="text-xl font-semibold mt-6">Resistance and Continuity Results</h2>
-      
-      <h3 className="text-lg font-medium mt-4">Circuit Continuity</h3>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Zero or very low resistance (good):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Complete circuit path</li>
-            <li>Good connections</li>
-            <li>Functioning conductor</li>
-          </ul>
-        </li>
-        <li>High resistance (potential issue):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Loose connection</li>
-            <li>Corrosion</li>
-            <li>Partially broken conductor</li>
-            <li>Improper termination</li>
-          </ul>
-        </li>
-        <li>Infinite resistance (definite issue):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Open circuit</li>
-            <li>Broken conductor</li>
-            <li>Failed component</li>
-            <li>Incorrectly wired circuit</li>
-          </ul>
-        </li>
+        <li><strong>Infinite resistance:</strong> Open circuit, disconnected component</li>
+        <li><strong>Zero/very low resistance:</strong> Short circuit, bypassed component</li>
+        <li><strong>Higher than expected:</strong> Deteriorated connections, damaged component</li>
+        <li><strong>Lower than expected:</strong> Parallel paths, incorrect components</li>
+        <li><strong>Unstable readings:</strong> Poor connections, temperature effects</li>
       </ul>
       
-      <h3 className="text-lg font-medium mt-4">Insulation Resistance</h3>
-      <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>High values (good):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Typically &gt;1MΩ (minimum value depends on system voltage)</li>
-            <li>Indicates good insulation integrity</li>
-          </ul>
-        </li>
-        <li>Medium values (caution):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Degrading insulation</li>
-            <li>Moisture ingress</li>
-            <li>Contamination</li>
-            <li>Aging equipment</li>
-          </ul>
-        </li>
-        <li>Low values (fail):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Insulation breakdown</li>
-            <li>Earth fault condition</li>
-            <li>Short circuit between phases</li>
-          </ul>
-        </li>
-        <li>Interpreting time-resistance results:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Increasing over time: Capacitive effect (normal)</li>
-            <li>Decreasing over time: Moisture or contamination</li>
-          </ul>
-        </li>
-      </ul>
-      
-      <h2 className="text-xl font-semibold mt-6">Current Measurements</h2>
-      
-      <h3 className="text-lg font-medium mt-4">Load Current Analysis</h3>
-      <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Normal current:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Within rated values</li>
-            <li>Balanced between phases (three-phase)</li>
-            <li>Appropriate for connected load</li>
-          </ul>
-        </li>
-        <li>High current:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Overloaded circuit</li>
-            <li>Seized mechanical equipment</li>
-            <li>Short circuit condition</li>
-            <li>Earth fault</li>
-          </ul>
-        </li>
-        <li>Low current:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Partially operating equipment</li>
-            <li>Broken components</li>
-            <li>Incorrect supply voltage</li>
-            <li>Control system malfunction</li>
-          </ul>
-        </li>
-      </ul>
-      
-      <h3 className="text-lg font-medium mt-4">Phase Imbalance</h3>
+      <h2 className="text-xl font-semibold mt-6">Insulation Resistance Test Results</h2>
       <p>
-        In three-phase systems, current imbalance can indicate:
+        Interpreting megger test readings:
       </p>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Single-phase fault</li>
-        <li>Uneven load distribution</li>
-        <li>Power supply issues</li>
-        <li>Motor winding problems</li>
-        <li>Connection issues</li>
-        <li>Normal imbalance is typically less than 10%</li>
+        <li><strong>Very high resistance (>100MΩ):</strong> Excellent insulation condition</li>
+        <li><strong>Good resistance (1-100MΩ):</strong> Acceptable insulation integrity</li>
+        <li><strong>Low resistance (&lt;1MΩ):</strong> Deteriorated insulation, potential hazard</li>
+        <li><strong>Zero/near-zero:</strong> Insulation failure, direct short</li>
+        <li><strong>Decreasing over time:</strong> Moisture ingress, tracking pathway developing</li>
       </ul>
       
-      <h2 className="text-xl font-semibold mt-6">Advanced Measurement Interpretation</h2>
-      
-      <h3 className="text-lg font-medium mt-4">Power Factor Results</h3>
+      <h2 className="text-xl font-semibold mt-6">Earth Fault Loop Impedance Results</h2>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Low power factor (below 0.85):
-          <ul className="list-disc pl-6 mt-1">
-            <li>Lightly loaded induction motors</li>
-            <li>Transformers with light loads</li>
-            <li>Fluorescent lighting without PFC</li>
-          </ul>
-        </li>
-        <li>Very low power factor:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Motor problems</li>
-            <li>Failed power factor correction capacitors</li>
-            <li>Phase issues</li>
-          </ul>
-        </li>
+        <li><strong>Within calculated limits:</strong> Circuit complies with regulations</li>
+        <li><strong>Higher than maximum Zs:</strong> Protection will not operate within required time</li>
+        <li><strong>Unstable readings:</strong> Poor connections in the earth path</li>
+        <li><strong>Extremely high readings:</strong> Open circuit in protective conductor</li>
       </ul>
       
-      <h3 className="text-lg font-medium mt-4">Harmonic Analysis</h3>
+      <h2 className="text-xl font-semibold mt-6">RCD Test Results Interpretation</h2>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>High 3rd harmonics:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Single-phase non-linear loads</li>
-            <li>Switch-mode power supplies</li>
-            <li>LED lighting</li>
-          </ul>
-        </li>
-        <li>High 5th and 7th harmonics:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Six-pulse VFDs</li>
-            <li>Three-phase rectifiers</li>
-          </ul>
-        </li>
-        <li>Harmonics causing:
-          <ul className="list-disc pl-6 mt-1">
-            <li>Overheating in neutral conductors</li>
-            <li>Transformer issues</li>
-            <li>Nuisance tripping</li>
-            <li>Electronic equipment malfunction</li>
-          </ul>
-        </li>
+        <li><strong>Trips within time limits:</strong> RCD functioning correctly</li>
+        <li><strong>Slow tripping:</strong> RCD mechanism deteriorating</li>
+        <li><strong>No trip:</strong> Defective RCD, requires replacement</li>
+        <li><strong>Trips at incorrect current:</strong> RCD sensitivity drifting, replace</li>
+        <li><strong>Nuisance tripping:</strong> Possible leakage current in circuit</li>
       </ul>
       
-      <h2 className="text-xl font-semibold mt-6">Documentation and Analysis</h2>
-      
-      <h3 className="text-lg font-medium mt-4">Systematic Recording</h3>
+      <h2 className="text-xl font-semibold mt-6">Documentation of Test Results</h2>
+      <p>
+        Properly documenting test results is crucial:
+      </p>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Document all test points and results</li>
-        <li>Record date, time, and test conditions</li>
-        <li>Note equipment settings and calibration status</li>
-        <li>Take photographs where helpful</li>
-        <li>Use standard formats for consistency</li>
+        <li>Record all measurements with appropriate units</li>
+        <li>Note the test conditions (load state, temperature, etc.)</li>
+        <li>Compare with expected values from specifications</li>
+        <li>Include equipment used and calibration dates</li>
+        <li>Date and time of testing</li>
+        <li>Create a baseline for future comparison</li>
       </ul>
       
-      <h3 className="text-lg font-medium mt-4">Trend Analysis</h3>
+      <h2 className="text-xl font-semibold mt-6">Using Results for Diagnosis</h2>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li>Compare current readings with historical data</li>
-        <li>Identify deteriorating conditions</li>
-        <li>Predict potential failures before they occur</li>
-        <li>Recognize normal variations versus abnormal changes</li>
-        <li>Use condition monitoring principles for predictive maintenance</li>
+        <li>Compare readings to expected values from manuals/schematics</li>
+        <li>Look for patterns across multiple measurements</li>
+        <li>Consider relationship between different readings</li>
+        <li>Follow logical troubleshooting sequence</li>
+        <li>Verify results through secondary measurements</li>
+        <li>Retest after repairs to confirm resolution</li>
       </ul>
     </div>
   );
