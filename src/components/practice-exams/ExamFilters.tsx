@@ -20,10 +20,6 @@ const ExamFilters = ({ qualification, level, onQualificationChange, onLevelChang
           <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
             <SelectItem value="City & Guilds" className="text-[#FFC900]">City & Guilds</SelectItem>
             <SelectItem value="EAL" className="text-[#FFC900]">EAL</SelectItem>
-            <SelectItem value="City & Guilds 2391" className="text-[#FFC900]">City & Guilds 2391</SelectItem>
-            <SelectItem value="HNC" className="text-[#FFC900]">HNC</SelectItem>
-            <SelectItem value="HND" className="text-[#FFC900]">HND</SelectItem>
-            <SelectItem value="MOET" className="text-[#FFC900]">MOET</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -37,8 +33,6 @@ const ExamFilters = ({ qualification, level, onQualificationChange, onLevelChang
             <SelectItem value="Level 2" className="text-[#FFC900]">Level 2</SelectItem>
             <SelectItem value="Level 3" className="text-[#FFC900]">Level 3</SelectItem>
             <SelectItem value="AM2" className="text-[#FFC900]">AM2</SelectItem>
-            <SelectItem value="HNC" className="text-[#FFC900]">HNC</SelectItem>
-            <SelectItem value="HND" className="text-[#FFC900]">HND</SelectItem>
           </SelectContent>
         </Select>
       </div>
