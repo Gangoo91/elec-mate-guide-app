@@ -29,14 +29,14 @@ const ElectriciansLearningHub = () => {
         <ResourceCard
           title="Study Guide"
           description="Access comprehensive study materials for professional qualifications and continuing education."
-          icon={<Book className="h-6 w-6" />}
+          icon={<Book className="h-6 w-6 text-[#FFC900]" />}
           fullCardLink="/electricians/study-guide"
         />
 
         <ResourceCard
           title="Online Mock Exams"
           description="Practice with our comprehensive mock exams designed to prepare you for professional electrical qualifications."
-          icon={<TestTube className="h-6 w-6" />}
+          icon={<TestTube className="h-6 w-6 text-[#FFC900]" />}
           fullCardLink="/electricians/practice-exams"
         />
       </div>

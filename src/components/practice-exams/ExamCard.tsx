@@ -1,56 +1,52 @@
 
 import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book } from "lucide-react";
+import { Clock, FileText } from "lucide-react";
 
 interface ExamCardProps {
   title: string;
   description: string;
-  unitCode?: string;
-  unitTitle?: string;
   numQuestions: number;
   timeLimit: number;
   onStart: () => void;
 }
 
-const ExamCard = ({ 
+const ExamCard: React.FC<ExamCardProps> = ({ 
   title, 
   description, 
-  unitCode, 
-  unitTitle,
   numQuestions, 
   timeLimit, 
   onStart 
-}: ExamCardProps) => {
+}) => {
   return (
-    <Card className="bg-[#22251e] border-[#FFC900]/20 h-full flex flex-col">
-      <CardHeader>
-        <CardTitle className="text-[#FFC900] flex items-center gap-2">
-          <Book className="h-5 w-5" />
-          {title}
-        </CardTitle>
-        {unitTitle && (
-          <p className="text-[#FFC900]/90 text-sm">
-            {unitTitle}
-          </p>
-        )}
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-[#FFC900]/70 mb-4 text-sm">{description}</p>
-        <div className="space-y-1 text-[#FFC900]/70 text-sm">
-          <p>Questions: {numQuestions}</p>
-          <p>Time Limit: {timeLimit} minutes</p>
+    <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+      <CardContent className="pt-6">
+        <div className="flex items-start gap-4">
+          <div className="flex flex-col space-y-2 w-full">
+            <h3 className="text-[#FFC900] font-medium text-lg mb-2">{title}</h3>
+            <p className="text-[#FFC900]/70 text-sm mb-4">{description}</p>
+            
+            <div className="flex items-center space-x-4 text-[#FFC900]/80 text-sm">
+              <div className="flex items-center space-x-2">
+                <FileText className="h-4 w-4 text-[#FFC900]" />
+                <span>{numQuestions} Questions</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="h-4 w-4 text-[#FFC900]" />
+                <span>{timeLimit} Minutes</span>
+              </div>
+            </div>
+
+            <Button 
+              onClick={onStart} 
+              className="mt-4 w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+            >
+              Start Exam
+            </Button>
+          </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button 
-          onClick={onStart}
-          className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
-        >
-          Start Exam
-        </Button>
-      </CardFooter>
     </Card>
   );
 };
