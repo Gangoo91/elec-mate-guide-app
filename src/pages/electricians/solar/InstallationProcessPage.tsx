@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SolarContentLayout from '@/components/solar/SolarContentLayout';
 import ResourceCard from '@/components/shared/ResourceCard';
-import { ClipboardList, Lightbulb, Wrench, CheckSquare } from 'lucide-react';
+import { Wrench, CheckSquare, ClipboardList, Lightbulb } from 'lucide-react';
 
 const InstallationProcessPage = () => {
   const navigate = useNavigate();
@@ -12,25 +12,25 @@ const InstallationProcessPage = () => {
     {
       title: "Site Assessment",
       description: "Learn how to conduct thorough site assessments including structural evaluation, shading analysis, and site surveys.",
-      icon: <ClipboardList className="h-6 w-6" />,
+      icon: <ClipboardList className="h-6 w-6 text-[#FFC900]" />,
       path: "/electricians/solar-pv-installation/installation-process/site-assessment"
     },
     {
       title: "System Design",
       description: "Master the process of designing solar PV systems, from array layout to electrical specifications.",
-      icon: <Lightbulb className="h-6 w-6" />,
+      icon: <Lightbulb className="h-6 w-6 text-[#FFC900]" />,
       path: "/electricians/solar-pv-installation/installation-process/system-design"
     },
     {
       title: "Physical Installation",
       description: "Step-by-step guide to safely installing solar PV systems on various roof types.",
-      icon: <Wrench className="h-6 w-6" />,
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />,
       path: "/electricians/solar-pv-installation/installation-process/physical-installation"
     },
     {
       title: "Commissioning",
       description: "Learn the proper procedures for testing, commissioning, and activating solar PV systems.",
-      icon: <CheckSquare className="h-6 w-6" />,
+      icon: <CheckSquare className="h-6 w-6 text-[#FFC900]" />,
       path: "/electricians/solar-pv-installation/installation-process/commissioning"
     }
   ];
