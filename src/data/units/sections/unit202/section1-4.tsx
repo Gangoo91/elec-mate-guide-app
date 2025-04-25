@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { SectionData } from '../interfaces';
+import { SectionData } from './interfaces';
 
 export const section1_4: SectionData = {
   title: "Measuring Electricity",
