@@ -60,6 +60,12 @@ import InspectionTestingPage from "./pages/InspectionTestingPage";
 import ToolboxTalkPage from "./pages/ToolboxTalkPage";
 import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
 import CareerPathwaysPage from "./pages/CareerPathwaysPage";
+import DesignEngineerPage from "./pages/careers/DesignEngineerPage";
+import CommissioningEngineerPage from "./pages/careers/CommissioningEngineerPage";
+import ProjectManagerPage from "./pages/careers/ProjectManagerPage";
+import ControlSystemsEngineerPage from "./pages/careers/ControlSystemsEngineerPage";
+import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
+import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -132,7 +138,12 @@ const App = () => {
                   <Route path="/electricians/technical-tools/templates" element={<TemplatesPage />} />
                   <Route path="/electricians/technical-tools/templates/:templateId/sign" element={<SignDocumentPage />} />
                   <Route path="/electricians/mentorship" element={<Mentorship />} />
-                  <Route path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />
+                  <Route path="/electricians/development/career-pathways/design" element={<DesignEngineerPage />} />
+                  <Route path="/electricians/development/career-pathways/commissioning" element={<CommissioningEngineerPage />} />
+                  <Route path="/electricians/development/career-pathways/project-management" element={<ProjectManagerPage />} />
+                  <Route path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />
+                  <Route path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />
+                  <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   
