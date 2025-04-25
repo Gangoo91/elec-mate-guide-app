@@ -1,6 +1,6 @@
 
 import React from "react";
-import { MessageSquare, Box, Wrench, Shield, DollarSign } from "lucide-react";
+import { MessageSquare, Box, Wrench, Shield, PoundSterling } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -34,7 +34,7 @@ const ToolboxTalkPage = () => {
     {
       title: "Live Pricing",
       description: "Get real-time updates on material costs and market prices.",
-      icon: <DollarSign className="h-7 w-7 text-[#FFC900]" />,
+      icon: <PoundSterling className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/toolbox-talk/pricing"
     }
   ];
