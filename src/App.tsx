@@ -79,6 +79,7 @@ import EnergyEfficiencyPage from "./pages/electricians/EnergyEfficiencyPage";
 import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
 import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
 import AccessControlPage from "./pages/electricians/AccessControlPage";
+import SystemComponentsPage from "./pages/electricians/SystemComponentsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -145,6 +146,7 @@ const App = () => {
                   <Route path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />
                   <Route path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />
                   <Route path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />
+                  <Route path="/electricians/solar-pv-installation/system-components" element={<SystemComponentsPage />} />
                   <Route path="/electricians/energy-storage-systems" element={<EnergyStorageSystemsPage />} />
                   <Route path="/electricians/building-management-systems" element={<BuildingManagementSystemsPage />} />
                   <Route path="/electricians/smart-home-technologies" element={<SmartHomeTechnologiesPage />} />

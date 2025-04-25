@@ -1,10 +1,10 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Battery, FileText, BookOpen, Book } from "lucide-react";
-import { useNavigate } from 'react-router-dom';
+import { Battery, FileText, Book, BookOpen } from "lucide-react";
 
 const SolarPVInstallationPage = () => {
   const navigate = useNavigate();
@@ -13,32 +13,38 @@ const SolarPVInstallationPage = () => {
     {
       title: "System Components",
       description: "Learn about solar panels, inverters, mounting systems, and electrical components.",
-      icon: <Battery className="h-6 w-6 text-[#FFC900]" />
+      icon: <Battery className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/system-components"
     },
     {
       title: "Installation Process",
       description: "Step-by-step guide to installing solar PV systems safely and efficiently.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/installation-process"
     },
     {
       title: "Electrical Integration",
       description: "Connection to existing electrical systems, grid integration, and earthing requirements.",
-      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/electrical-integration"
     },
     {
       title: "Wiring and Connections",
       description: "DC and AC wiring methods, cable sizing, and connection techniques.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/wiring-connections"
     },
     {
       title: "Safety Procedures",
       description: "Working at height, electrical safety, and risk assessment protocols.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/safety-procedures"
     },
     {
       title: "Documentation",
       description: "System certification, handover documents, and maintenance records.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/documentation"
     }
   ];
 
@@ -57,6 +63,7 @@ const SolarPVInstallationPage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => navigate(module.path)}
             >
               <CardHeader>
                 <div className="flex items-center gap-3">
