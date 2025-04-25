@@ -57,7 +57,8 @@ import MOETEngineeringOperationsPage from "./pages/MOETEngineeringOperationsPage
 import EALQualificationsPage from "./pages/EALQualificationsPage";
 import HigherLearningPage from "./pages/HigherLearningPage";
 import InspectionTestingPage from "./pages/InspectionTestingPage";
-import ToolboxTalkPage from "./pages/ToolboxTalkPage";
+import ToolboxTalkPage from "./pages/ToolboxTalk";
+import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -123,6 +124,7 @@ const App = () => {
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
+                  <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
                   <Route path="/electricians/technical-tools/estimator" element={<JobPriceEstimatorPage />} />
                   <Route path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />
                   <Route path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />
