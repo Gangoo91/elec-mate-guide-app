@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -75,10 +76,10 @@ import BuildingManagementSystemsPage from "./pages/electricians/BuildingManageme
 import SmartHomeTechnologiesPage from "./pages/electricians/SmartHomeTechnologiesPage";
 import EVInfrastructurePage from "./pages/electricians/EVInfrastructurePage";
 import DataNetworksPage from "./pages/electricians/DataNetworksPage";
-import EnergyEfficiencyPage from "./pages/EnergyEfficiencyPage";
-import EmergencyLightingPage from "./pages/EmergencyLightingPage";
-import FireAlarmSystemsPage from "./pages/FireAlarmSystemsPage";
-import AccessControlPage from "./pages/AccessControlPage";
+import EnergyEfficiencyPage from "./pages/electricians/EnergyEfficiencyPage";
+import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
+import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
+import AccessControlPage from "./pages/electricians/AccessControlPage";
 import SystemComponentsPage from "./pages/electricians/solar/SystemComponentsPage";
 import InstallationProcessPage from "./pages/electricians/solar/InstallationProcessPage";
 import ElectricalIntegrationPage from "./pages/electricians/solar/ElectricalIntegrationPage";
