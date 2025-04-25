@@ -47,7 +47,7 @@ const TestResults = () => {
         Interpreting megger test readings:
       </p>
       <ul className="list-disc pl-6 space-y-2 mt-2">
-        <li><strong>Very high resistance (>100MΩ):</strong> Excellent insulation condition</li>
+        <li><strong>Very high resistance (&gt;100MΩ):</strong> Excellent insulation condition</li>
         <li><strong>Good resistance (1-100MΩ):</strong> Acceptable insulation integrity</li>
         <li><strong>Low resistance (&lt;1MΩ):</strong> Deteriorated insulation, potential hazard</li>
         <li><strong>Zero/near-zero:</strong> Insulation failure, direct short</li>
