@@ -82,7 +82,7 @@ export const sections303: Record<string, SectionData> = {
           Using experience and documentation to speed up diagnosis:
         </p>
         <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Reference manufacturer's troubleshooting guides</li>
+          <li>Reference manufacturer&apos;s troubleshooting guides</li>
           <li>Use fault code lookups when available</li>
           <li>Develop and maintain your own symptom-to-cause reference</li>
           <li>Share knowledge with colleagues to build a knowledge base</li>
@@ -348,7 +348,7 @@ export const sections303: Record<string, SectionData> = {
         <ul className="list-disc pl-6 space-y-2 mt-2">
           <li>High values (good):
             <ul className="list-disc pl-6 mt-1">
-              <li>Typically >1MΩ (minimum value depends on system voltage)</li>
+              <li>Typically &gt;1MΩ (minimum value depends on system voltage)</li>
               <li>Indicates good insulation integrity</li>
             </ul>
           </li>
