@@ -23,6 +23,12 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
+    // Special handling for solar installation process pages
+    if (location.pathname.includes('/site-assessment/')) {
+      navigate('/electricians/solar-pv-installation/installation-process/site-assessment');
+      return;
+    }
+    
     // For apprentices hub, go back to dashboard
     if (location.pathname === "/apprentices") {
       navigate("/dashboard");

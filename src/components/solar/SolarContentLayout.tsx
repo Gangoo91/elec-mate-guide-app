@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card, CardContent } from "@/components/ui/card";
 import { ContentSection } from "@/components/units/ContentSection";
 
 interface SolarContentLayoutProps {
@@ -17,6 +16,20 @@ interface SolarContentLayoutProps {
 
 const SolarContentLayout = ({ title, description, sections }: SolarContentLayoutProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleBackNavigation = () => {
+    if (location.pathname.includes('/site-assessment/')) {
+      // If we're in a sub-page of site-assessment, go back to site assessment page
+      navigate('/electricians/solar-pv-installation/installation-process/site-assessment');
+    } else if (location.pathname.includes('/installation-process/')) {
+      // If we're in the site assessment main page or other installation process pages
+      navigate('/electricians/solar-pv-installation/installation-process');
+    } else {
+      // Default fallback
+      navigate('/electricians/solar-pv-installation');
+    }
+  };
 
   return (
     <MainLayout>
@@ -25,7 +38,7 @@ const SolarContentLayout = ({ title, description, sections }: SolarContentLayout
           title={title}
           description={description}
           hideBackButton={false}
-          customBackAction={() => navigate('/electricians/solar-pv-installation')}
+          customBackAction={handleBackNavigation}
         />
         
         <div className="space-y-6 mt-6">
