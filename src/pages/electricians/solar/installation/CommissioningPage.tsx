@@ -5,14 +5,14 @@ import SolarContentLayout from '@/components/solar/SolarContentLayout';
 const CommissioningPage = () => {
   const sections = [
     {
-      title: "System Inspection",
+      title: "Pre-commission Checks",
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Verify all mechanical connections</li>
-            <li>Check electrical terminations</li>
-            <li>Inspect weather sealing</li>
-            <li>Document installation quality</li>
+            <li>Visual inspection requirements</li>
+            <li>Mechanical fixing verification</li>
+            <li>Initial electrical checks</li>
+            <li>Safety system verification</li>
           </ul>
         </div>
       )
@@ -22,10 +22,10 @@ const CommissioningPage = () => {
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Perform insulation resistance tests</li>
-            <li>Measure string voltages and currents</li>
-            <li>Test earth continuity</li>
-            <li>Verify inverter operation</li>
+            <li>String voltage measurements</li>
+            <li>Insulation resistance testing</li>
+            <li>Earth continuity verification</li>
+            <li>Performance ratio calculation</li>
           </ul>
         </div>
       )
@@ -35,10 +35,10 @@ const CommissioningPage = () => {
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Configure inverter settings</li>
-            <li>Test monitoring system</li>
-            <li>Verify system performance</li>
-            <li>Complete commissioning documentation</li>
+            <li>Inverter configuration</li>
+            <li>Grid connection procedures</li>
+            <li>Performance monitoring setup</li>
+            <li>Client handover process</li>
           </ul>
         </div>
       )
@@ -48,7 +48,7 @@ const CommissioningPage = () => {
   return (
     <SolarContentLayout
       title="Commissioning"
-      description="Complete guide to commissioning and testing solar PV installations."
+      description="Complete guide to testing and activating solar PV installations."
       sections={sections}
     />
   );

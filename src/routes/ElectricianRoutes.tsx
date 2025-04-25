@@ -90,4 +90,7 @@ export const ElectricianRoutes = [
   <Route key="structural-assessment" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural" element={<StructuralAssessmentPage />} />,
   <Route key="solar-resource" path="/electricians/solar-pv-installation/installation-process/site-assessment/solar-resource" element={<SolarResourcePage />} />,
   <Route key="site-survey" path="/electricians/solar-pv-installation/installation-process/site-assessment/survey" element={<SiteSurveyPage />} />,
+  <Route key="system-design" path="/electricians/solar-pv-installation/installation-process/system-design" element={<SystemDesignPage />} />,
+  <Route key="physical-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />,
+  <Route key="commissioning" path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />,
 ];

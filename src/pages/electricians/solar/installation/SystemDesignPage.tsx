@@ -5,14 +5,14 @@ import SolarContentLayout from '@/components/solar/SolarContentLayout';
 const SystemDesignPage = () => {
   const sections = [
     {
-      title: "Array Layout Planning",
+      title: "Array Layout",
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Optimize panel placement for maximum efficiency</li>
-            <li>Calculate string sizing and configurations</li>
-            <li>Plan cable routes and penetration points</li>
-            <li>Design mounting system layout</li>
+            <li>Panel string configuration and sizing</li>
+            <li>Mounting system selection and layout</li>
+            <li>Optimizing panel orientation and tilt</li>
+            <li>Inter-row spacing calculations</li>
           </ul>
         </div>
       )
@@ -22,10 +22,10 @@ const SystemDesignPage = () => {
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Size inverters based on array capacity</li>
-            <li>Calculate voltage drop and wire sizes</li>
-            <li>Design earthing and lightning protection</li>
-            <li>Specify overcurrent protection devices</li>
+            <li>Inverter sizing and selection</li>
+            <li>DC circuit design and voltage considerations</li>
+            <li>AC interconnection requirements</li>
+            <li>Protection device specifications</li>
           </ul>
         </div>
       )
@@ -35,10 +35,10 @@ const SystemDesignPage = () => {
       content: (
         <div className="space-y-4">
           <ul className="list-disc pl-6 space-y-2">
-            <li>Estimate annual energy production</li>
-            <li>Model system losses and efficiencies</li>
-            <li>Calculate return on investment</li>
-            <li>Document performance expectations</li>
+            <li>Energy yield calculations</li>
+            <li>Shading analysis impact</li>
+            <li>Temperature derating factors</li>
+            <li>System losses assessment</li>
           </ul>
         </div>
       )
@@ -48,7 +48,7 @@ const SystemDesignPage = () => {
   return (
     <SolarContentLayout
       title="System Design"
-      description="Detailed guide to designing efficient and reliable solar PV systems."
+      description="Comprehensive guide to designing solar PV systems for optimal performance."
       sections={sections}
     />
   );
