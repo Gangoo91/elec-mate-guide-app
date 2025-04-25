@@ -16,9 +16,15 @@ const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    const unitPath = path || `/apprentices/study-materials/city-guilds/level-2/core-units/${unitNumber}`;
-    console.log("UnitCard - Attempting to navigate to:", unitPath);
-    navigate(unitPath);
+    if (path) {
+      console.log("UnitCard - Navigating to:", path);
+      navigate(path);
+    } else {
+      // Fallback for backward compatibility
+      const unitPath = `/apprentices/study-materials/city-guilds/level-2/core-units/${unitNumber}`;
+      console.log("UnitCard - Using fallback path:", unitPath);
+      navigate(unitPath);
+    }
   };
   
   return (

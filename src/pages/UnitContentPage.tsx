@@ -51,8 +51,13 @@ const UnitContentPage = () => {
   }, [currentUnit]);
   
   const handleBackClick = () => {
-    console.log("Handling back click, navigating to core units page");
-    navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
+    // Check if this is a level 3 unit
+    if (unitId && (unitId === "301" || unitId === "302" || unitId === "303" || unitId === "304" || unitId === "305" || unitId === "308")) {
+      navigate('/apprentices/study-materials/city-guilds/level-3');
+    } else {
+      // For level 2 units
+      navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
+    }
   };
 
   if (!unitId || !currentUnit) {
