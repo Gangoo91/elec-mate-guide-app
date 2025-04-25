@@ -1,12 +1,10 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BadgeAlert } from "lucide-react";
+import { BadgeAlert, AlignCenter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Alert } from "@/components/ui/alert";
 
 const pricingData = [
   {
@@ -72,7 +70,6 @@ const Welcome = () => {
           Your ultimate guide to the electrical industry, built for apprentices, electricians, and employers.
         </p>
 
-        {/* Pricing Section */}
         <div className="w-full flex flex-col items-center mb-8">
           <span className="inline-block px-3 py-1 rounded-full bg-[#FFC900]/20 text-[#FFC900] text-xs font-semibold uppercase mb-2 tracking-widest">
             7 days free trial • Free download
@@ -95,9 +92,12 @@ const Welcome = () => {
                     <span className="ml-2 px-2 py-0.5 rounded bg-[#FFC900] text-[#14130A] text-xs font-semibold">MOST VALUE</span>
                   )}
                   {tier.comingSoon && (
-                    <Badge className="bg-amber-500/80 text-black font-semibold border-0 hover:bg-amber-500/90 flex items-center gap-1">
+                    <Badge 
+                      variant="destructive" 
+                      className="bg-amber-500/90 text-black font-semibold border-0 hover:bg-amber-500/100 flex items-center gap-2"
+                    >
                       <BadgeAlert className="h-4 w-4" />
-                      <span>Coming Soon</span>
+                      Coming Soon
                     </Badge>
                   )}
                 </div>
@@ -113,12 +113,28 @@ const Welcome = () => {
                 
                 {tier.comingSoon && (
                   <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/30 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center z-10">
-                      <span className="px-4 py-2 bg-amber-500 text-black font-bold text-lg rounded-full shadow-lg transform -rotate-6 animate-pulse mb-2">Coming Soon</span>
-                      <p className="text-amber-300 text-sm px-4 text-center">Register to be notified when this launches</p>
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center z-10 p-4">
+                      <div className="flex flex-col items-center justify-center space-y-3">
+                        <span 
+                          className="px-4 py-2 bg-amber-500 text-black font-bold text-lg rounded-full shadow-lg transform -rotate-6 animate-pulse"
+                        >
+                          Coming Soon
+                        </span>
+                        <p className="text-amber-200 text-sm text-center max-w-[200px]">
+                          Register to be notified when this tier launches
+                        </p>
+                        <div className="flex items-center justify-center space-x-2">
+                          <AlignCenter className="h-4 w-4 text-amber-300" />
+                          <span className="text-xs text-amber-300">Exclusive Features</span>
+                        </div>
+                      </div>
                     </div>
                     <div className="absolute -top-2 -right-2 w-24 h-24 overflow-hidden z-20">
-                      <div className="bg-amber-500 text-black font-bold text-xs py-1 px-4 rotate-45 origin-bottom-left shadow-md absolute top-0 right-0 transform translate-y-2 translate-x-6">
+                      <div 
+                        className="bg-amber-500 text-black font-bold text-xs py-1 px-4 
+                        rotate-45 origin-bottom-left shadow-md absolute top-0 right-0 
+                        transform translate-y-2 translate-x-6"
+                      >
                         SOON
                       </div>
                     </div>
@@ -128,7 +144,6 @@ const Welcome = () => {
             ))}
           </div>
         </div>
-        {/* End Pricing Section */}
         
         <div className="space-y-4 w-full max-w-xs">
           <Button
