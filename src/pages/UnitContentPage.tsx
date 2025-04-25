@@ -10,6 +10,7 @@ const UnitContentPage = () => {
   const navigate = useNavigate();
   const { unitId } = useParams<{ unitId: string }>();
   const { toast } = useToast();
+  const [hasShownToast, setHasShownToast] = useState(false);
   
   // Extract the unit number from the URL parameter
   // This handles both formats: /unit-301 and /301
@@ -24,16 +25,15 @@ const UnitContentPage = () => {
   console.log("Current unit found:", !!currentUnit);
   
   useEffect(() => {
-    // Show toast when unit content is loaded
-    if (currentUnit) {
+    // Show toast only once per unit load, preventing repeated notifications
+    if (currentUnit && !hasShownToast) {
       toast({
         title: `Unit ${extractedUnitId} Loaded`,
         description: "Study materials are now ready for you to review.",
       });
+      setHasShownToast(true);
     }
-  }, [currentUnit, extractedUnitId, toast]);
-  
-  // Simulate progress tracking
+  }, [currentUnit, extractedUnitId, toast, hasShownToast]);
   
   const handleBackClick = () => {
     // Check if this is a level 3 unit
