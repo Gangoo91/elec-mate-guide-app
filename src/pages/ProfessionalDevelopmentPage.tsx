@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Briefcase, GraduationCap, Award, Industry, Users } from "lucide-react";
+import { Briefcase, GraduationCap, Award, Factory, Users } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -28,7 +28,7 @@ const ProfessionalDevelopmentPage = () => {
     {
       title: "Industry Specialisations",
       description: "Find opportunities in emerging sectors like renewable energy, smart home automation, and industrial controls.",
-      icon: <Industry className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Factory className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development/specialisations"
     },
     {

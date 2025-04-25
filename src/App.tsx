@@ -57,7 +57,7 @@ import MOETEngineeringOperationsPage from "./pages/MOETEngineeringOperationsPage
 import EALQualificationsPage from "./pages/EALQualificationsPage";
 import HigherLearningPage from "./pages/HigherLearningPage";
 import InspectionTestingPage from "./pages/InspectionTestingPage";
-import ToolboxTalkPage from "./pages/ToolboxTalk";
+import ToolboxTalkPage from "./pages/ToolboxTalkPage";
 import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
 
 const queryClient = new QueryClient({
