@@ -179,6 +179,111 @@ export const sections301: Record<string, SectionData> = {
       </div>
     ),
   },
+  "1.3": {
+    title: "Sustainability in Electrical Installations",
+    description: "Implementing sustainable practices in the design and installation of electrical systems",
+    content: (
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Principles of Sustainable Electrical Design</h2>
+        <p>
+          Sustainability in electrical installations involves minimizing environmental impact while maintaining functionality, safety, and reliability. Key principles include:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Energy efficiency throughout the system lifecycle</li>
+          <li>Resource conservation in materials and components</li>
+          <li>Reduction of carbon emissions</li>
+          <li>Minimization of waste during installation and operation</li>
+          <li>Design for longevity and adaptability</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Sustainable Material Selection</h3>
+        <p>
+          Choosing sustainable materials for electrical installations:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Low-smoke zero-halogen (LSZH) cables</li>
+          <li>Recyclable materials for containment systems</li>
+          <li>Components with environmental product declarations (EPDs)</li>
+          <li>Products with reduced embodied carbon</li>
+          <li>Locally sourced materials to reduce transport emissions</li>
+          <li>RoHS compliant components</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Energy Monitoring and Management</h3>
+        <p>
+          Systems that enable ongoing optimization of energy usage:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Smart metering for detailed energy consumption data</li>
+          <li>Sub-metering for individual circuits or equipment</li>
+          <li>Energy management systems with reporting capabilities</li>
+          <li>Data analytics for identifying efficiency opportunities</li>
+          <li>User interfaces that encourage energy-conscious behavior</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Integrating Renewable Technologies</h2>
+        <p>
+          Creating installations that work seamlessly with renewable energy sources:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Future-proofing for renewable integration</li>
+          <li>Demand-side response capability</li>
+          <li>Grid-interactive systems</li>
+          <li>Energy storage integration</li>
+          <li>Microgrids and local energy networks</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Sustainable Installation Practices</h2>
+        <p>
+          Minimizing environmental impact during the installation phase:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Waste reduction and recycling on-site</li>
+          <li>Efficient scheduling to minimize travel</li>
+          <li>Digital tools for documentation to reduce paper usage</li>
+          <li>Careful planning to minimize material waste</li>
+          <li>Protection of building fabric to reduce remedial work</li>
+          <li>Low-impact installation methods</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Lifecycle Considerations</h2>
+        <p>
+          Taking a whole-life approach to electrical installations:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Designing for ease of maintenance and repair</li>
+          <li>Specifying components with longer service lives</li>
+          <li>Planning for end-of-life disassembly and recycling</li>
+          <li>Considering embodied carbon alongside operational carbon</li>
+          <li>Scenario planning for future technological changes</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Certification and Standards</h2>
+        <p>
+          Frameworks for ensuring and demonstrating sustainability:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>BREEAM assessment criteria for electrical installations</li>
+          <li>LEED certification requirements</li>
+          <li>BS 8900 (Managing sustainable development)</li>
+          <li>ISO 14001 (Environmental management systems)</li>
+          <li>WELL Building Standard for electrical systems</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Carbon Reduction Strategies</h3>
+        <p>
+          Specific approaches to minimize carbon impact:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Zero carbon design principles</li>
+          <li>Carbon budgeting for projects</li>
+          <li>Offsetting unavoidable emissions</li>
+          <li>Low carbon alternatives for traditional components</li>
+          <li>Circular economy approaches to materials and equipment</li>
+        </ul>
+      </div>
+    ),
+  },
   "2.1": {
     title: "System Components Overview",
     description: "Understanding the key components of solar photovoltaic systems",
@@ -200,7 +305,94 @@ export const sections301: Record<string, SectionData> = {
           <li>Typically rated between 250W to 450W per panel</li>
           <li>Expected lifespan of 25-30 years with gradual efficiency degradation</li>
         </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Inverters</h3>
+        <p>
+          Inverters convert DC electricity from the panels to AC electricity for use in buildings:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>String inverters: Connect to multiple panels in series</li>
+          <li>Microinverters: Installed on each individual panel</li>
+          <li>Power optimizers: DC-DC converters paired with a central inverter</li>
+          <li>Hybrid inverters: Include battery storage capability</li>
+          <li>Grid-tied inverters vs. off-grid inverters</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Mounting Systems</h3>
+        <p>
+          Structures that secure panels to roofs or ground:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Roof-mounted systems: Pitched roof or flat roof</li>
+          <li>Ground-mounted systems</li>
+          <li>Building-integrated photovoltaics (BIPV)</li>
+          <li>Tracking systems (single or dual-axis)</li>
+          <li>Ballasted systems that don't penetrate the roof membrane</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Electrical Balance of System (BOS) Components</h2>
+        
+        <h3 className="text-lg font-medium mt-4">DC Disconnects and Combiners</h3>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>DC isolators for safe disconnection</li>
+          <li>Combiner boxes for connecting multiple strings</li>
+          <li>DC circuit breakers or fuses for overcurrent protection</li>
+          <li>Surge protection devices (SPDs)</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">AC Components</h3>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>AC isolator switch</li>
+          <li>Generation meter</li>
+          <li>AC circuit breakers</li>
+          <li>Grid connection equipment</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Cables and Connectors</h3>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>PV cable (UV-resistant, dual-insulated)</li>
+          <li>MC4 or similar connectors</li>
+          <li>Earthing/grounding conductors</li>
+          <li>AC cabling from inverter to distribution board</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Monitoring Systems</h2>
+        <p>
+          Systems to track performance and detect issues:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Inverter-integrated monitoring</li>
+          <li>Independent monitoring systems</li>
+          <li>Data loggers</li>
+          <li>Weather stations for performance ratio calculations</li>
+          <li>Mobile apps for system monitoring</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Energy Storage Systems</h2>
+        <p>
+          Optional components for storing excess energy:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Battery technologies (lithium-ion, lead-acid, flow batteries)</li>
+          <li>Battery management systems (BMS)</li>
+          <li>Battery inverters or hybrid inverters</li>
+          <li>Charge controllers</li>
+          <li>Associated safety equipment</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Safety and Protection Systems</h2>
+        <p>
+          Components ensuring safe operation:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Rapid shutdown systems</li>
+          <li>Arc fault circuit interrupters</li>
+          <li>Residual current devices (RCDs)</li>
+          <li>Lightning protection systems</li>
+          <li>Fire safety equipment</li>
+          <li>Anti-islanding protection in inverters</li>
+        </ul>
       </div>
     ),
-  },
+  }
 };

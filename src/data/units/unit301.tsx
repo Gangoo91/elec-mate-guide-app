@@ -18,6 +18,10 @@ export const unit301: UnitContent = {
             title="1.2 Energy Efficiency Measures"
             path="/apprentices/study-materials/city-guilds/level-3/301/1.2"
           />
+          <SectionContent 
+            title="1.3 Sustainability in Electrical Installations"
+            path="/apprentices/study-materials/city-guilds/level-3/301/1.3"
+          />
         </div>
       ),
     },
@@ -51,6 +55,40 @@ export const unit301: UnitContent = {
           <SectionContent 
             title="3.2 Ground Source Heat Pumps (GSHP)"
             path="/apprentices/study-materials/city-guilds/level-3/301/3.2"
+          />
+          <SectionContent 
+            title="3.3 Electrical Requirements for Heat Pumps"
+            path="/apprentices/study-materials/city-guilds/level-3/301/3.3"
+          />
+        </div>
+      ),
+    },
+    {
+      title: "4. Wind Energy Systems",
+      content: (
+        <div className="space-y-6">
+          <SectionContent 
+            title="4.1 Small-Scale Wind Turbine Technologies"
+            path="/apprentices/study-materials/city-guilds/level-3/301/4.1"
+          />
+          <SectionContent 
+            title="4.2 Electrical Integration of Wind Systems"
+            path="/apprentices/study-materials/city-guilds/level-3/301/4.2"
+          />
+        </div>
+      ),
+    },
+    {
+      title: "5. Energy Storage Systems",
+      content: (
+        <div className="space-y-6">
+          <SectionContent 
+            title="5.1 Battery Storage Technologies"
+            path="/apprentices/study-materials/city-guilds/level-3/301/5.1"
+          />
+          <SectionContent 
+            title="5.2 Integration with Renewable Sources"
+            path="/apprentices/study-materials/city-guilds/level-3/301/5.2"
           />
         </div>
       ),
