@@ -29,40 +29,28 @@ const StudyMaterialsPage = () => {
             title="City & Guilds Qualifications"
             description="Essential resources covering all City & Guilds electrical qualifications including Level 2, Level 3, and AM2 preparation materials."
             icon={<Book className="h-7 w-7 text-[#FFC900]" />}
-            action={{
-              label: "View C&G Resources",
-              href: "/apprentices/study-materials/city-guilds"
-            }}
+            fullCardLink="/apprentices/study-materials/city-guilds"
           />
           
           <ResourceCard
             title="EAL Qualifications"
             description="Comprehensive study materials for EAL electrical qualifications, covering both Level 2 and Level 3 courses."
             icon={<School className="h-7 w-7 text-[#FFC900]" />}
-            action={{
-              label: "Access EAL Materials",
-              href: "/apprentices/study-materials/eal"
-            }}
+            fullCardLink="/apprentices/study-materials/eal"
           />
           
           <ResourceCard
             title="Higher Learning"
             description="Advanced electrical engineering resources including HNC, HND, and degree-level materials for career progression."
             icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
-            action={{
-              label: "Explore Higher Education",
-              href: "/apprentices/study-materials/higher-learning"
-            }}
+            fullCardLink="/apprentices/study-materials/higher-learning"
           />
           
           <ResourceCard
             title="Inspection and Testing"
             description="Specialized materials for electrical testing and inspection qualifications, including 2391 and 2394/95 courses."
             icon={<TestTube className="h-7 w-7 text-[#FFC900]" />}
-            action={{
-              label: "View I&T Resources",
-              href: "/apprentices/study-materials/inspection-testing"
-            }}
+            fullCardLink="/apprentices/study-materials/inspection-testing"
           />
         </div>
       </div>
