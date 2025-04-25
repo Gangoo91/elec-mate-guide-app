@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -50,9 +51,9 @@ import MountingSystemsInstallationPage from "@/pages/electricians/solar/installa
 import PanelInstallationPage from "@/pages/electricians/solar/installation/PanelInstallationPage";
 import EquipmentInstallationPage from "@/pages/electricians/solar/installation/EquipmentInstallationPage";
 import SafetyConsiderationsPage from "@/pages/electricians/solar/installation/SafetyConsiderationsPage";
-import RoofEvaluationPage from "@/pages/electricians/solar/installation/roof-evaluation/RoofEvaluationPage";
-import LoadAnalysisPage from "@/pages/electricians/solar/installation/roof-evaluation/LoadAnalysisPage";
-import SupportStructurePage from "@/pages/electricians/solar/installation/roof-evaluation/SupportStructurePage";
+import RoofEvaluationPage from "@/pages/electricians/solar/installation/structural/RoofEvaluationPage";
+import LoadAnalysisPage from "@/pages/electricians/solar/installation/structural/LoadAnalysisPage";
+import SupportStructurePage from "@/pages/electricians/solar/installation/structural/SupportStructurePage";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
