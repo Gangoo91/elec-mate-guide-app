@@ -41,7 +41,7 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-level3" path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />,
   <Route key="apprentices-level2-core" path="/apprentices/study-materials/city-guilds/level-2/core-units" element={<Level2CoreUnitsPage />} />,
   <Route key="apprentices-level2-unit" path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />,
-  <Route key="apprentices-level3-unit" path="/apprentices/study-materials/city-guilds/level-3/course-content/unit-:unitId" element={<UnitContentPage />} />,
+  <Route key="apprentices-level3-unit" path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<UnitContentPage />} />,
   <Route key="apprentices-moet" path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />,
   <Route key="apprentices-moet-content" path="/apprentices/study-materials/city-guilds/moet/content" element={<MOETContentPage />} />,
   <Route key="apprentices-moet-core" path="/apprentices/study-materials/city-guilds/moet/core-knowledge" element={<MOETCoreKnowledgePage />} />,

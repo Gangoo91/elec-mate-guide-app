@@ -14,22 +14,27 @@ const UnitContentPage = () => {
   const [progress, setProgress] = useState(0);
   const { toast } = useToast();
   
+  // Extract the unit number from the URL parameter
+  // This handles both formats: /unit-301 and /301
+  const extractedUnitId = unitId ? unitId.replace('unit-', '') : '';
+  
   console.log("UnitContentPage - unitId:", unitId);
+  console.log("UnitContentPage - extractedUnitId:", extractedUnitId);
   console.log("Available units:", Object.keys(unitContent));
   
   // Get the current unit content
-  const currentUnit = unitId && unitContent[unitId] ? unitContent[unitId] : null;
+  const currentUnit = extractedUnitId && unitContent[extractedUnitId] ? unitContent[extractedUnitId] : null;
   console.log("Current unit found:", !!currentUnit);
   
   useEffect(() => {
     // Show toast when unit content is loaded
     if (currentUnit) {
       toast({
-        title: `Unit ${unitId} Loaded`,
+        title: `Unit ${extractedUnitId} Loaded`,
         description: "Study materials are now ready for you to review.",
       });
     }
-  }, [currentUnit, unitId, toast]);
+  }, [currentUnit, extractedUnitId, toast]);
   
   // Simulate progress tracking
   useEffect(() => {
@@ -52,7 +57,7 @@ const UnitContentPage = () => {
   
   const handleBackClick = () => {
     // Check if this is a level 3 unit
-    if (unitId && (unitId === "301" || unitId === "302" || unitId === "303" || unitId === "304" || unitId === "305" || unitId === "308")) {
+    if (extractedUnitId && (extractedUnitId === "301" || extractedUnitId === "302" || extractedUnitId === "303" || extractedUnitId === "304" || extractedUnitId === "305" || extractedUnitId === "308")) {
       navigate('/apprentices/study-materials/city-guilds/level-3');
     } else {
       // For level 2 units
@@ -60,7 +65,7 @@ const UnitContentPage = () => {
     }
   };
 
-  if (!unitId || !currentUnit) {
+  if (!extractedUnitId || !currentUnit) {
     console.log("Unit not found or unitId is undefined, navigating back");
     return (
       <MainLayout>
@@ -79,7 +84,7 @@ const UnitContentPage = () => {
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
-          title={`Unit ${unitId} - ${currentUnit.title}`}
+          title={`Unit ${extractedUnitId} - ${currentUnit.title}`}
           description={currentUnit.description}
           customBackAction={handleBackClick}
         />
