@@ -1,16 +1,19 @@
-
 import React from 'react';
 import { Book } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from 'react-router-dom';
 
 const ElectriciansStudyGuidePage = () => {
+  const navigate = useNavigate();
+  
   const topics = [
     {
       title: "Solar PV Installation",
       description: "Installation, maintenance and troubleshooting of solar photovoltaic systems.",
-      comingSoon: false
+      comingSoon: false,
+      link: "/electricians/solar-pv-installation"
     },
     {
       title: "Energy Storage Systems",
@@ -69,7 +72,12 @@ const ElectriciansStudyGuidePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {topics.map((topic, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 h-full">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              onClick={() => topic.link && navigate(topic.link)}
+              style={{ cursor: topic.link ? 'pointer' : 'default' }}
+            >
               <CardHeader>
                 <CardTitle className="text-[#FFC900] flex items-center gap-2 text-xl">
                   <Book className="h-5 w-5" />
@@ -84,11 +92,7 @@ const ElectriciansStudyGuidePage = () => {
                   <div className="text-[#FFC900]/50 text-sm italic">
                     Coming soon
                   </div>
-                ) : (
-                  <button className="bg-[#FFC900] text-black px-4 py-2 rounded-md hover:bg-[#FFC900]/90 transition-colors text-sm">
-                    View Materials
-                  </button>
-                )}
+                ) : null}
               </CardContent>
             </Card>
           ))}
