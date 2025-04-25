@@ -132,6 +132,7 @@ const App = () => {
                   <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
                   <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
+                  <Route path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />
                   <Route path="/electricians/technical-tools/estimator" element={<JobPriceEstimatorPage />} />
                   <Route path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />
                   <Route path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />
