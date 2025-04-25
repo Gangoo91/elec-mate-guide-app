@@ -13,7 +13,6 @@ const Level2SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();
   
-  // Get the appropriate sections based on the unitId
   const getSectionContent = () => {
     if (!unitId || !sectionId) return null;
     
@@ -64,9 +63,15 @@ const Level2SectionPage = () => {
           customBackAction={handleBackClick}
         />
         <div className="mt-8">
-          <LessonContent title="Learning Content">
+          <LessonContent title="Overview">
             {sectionContent.content}
           </LessonContent>
+          
+          {sectionContent.detailedContent && (
+            <LessonContent title="Detailed Learning Material">
+              {sectionContent.detailedContent}
+            </LessonContent>
+          )}
         </div>
       </div>
     </MainLayout>
