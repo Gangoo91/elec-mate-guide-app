@@ -11,6 +11,7 @@ import { sections210 } from "@/data/units/sections/unit210Sections";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface SectionData {
   title: string;
@@ -30,6 +31,7 @@ const Level2SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
   const [isLoading, setIsLoading] = useState(true);
   const [dbSectionContent, setDbSectionContent] = useState<DbSectionData | null>(null);
   const [fallbackToLocalData, setFallbackToLocalData] = useState(false);
@@ -49,12 +51,12 @@ const Level2SectionPage = () => {
         // Extract section number from sectionId (e.g., "1.1" -> 1)
         const sectionNumber = parseInt(sectionId.split('.')[0], 10);
         
+        // Get all sections for this unit and filter manually instead of using .single()
         const { data, error } = await supabase
           .from('course_content')
           .select('*')
           .eq('unit_id', unitId)
-          .eq('order_index', sectionNumber - 1) // Adjust for zero-based indexing
-          .single();
+          .eq('order_index', sectionNumber - 1); // Adjust for zero-based indexing
         
         if (error) {
           console.error('Error fetching section from DB:', error);
@@ -63,14 +65,15 @@ const Level2SectionPage = () => {
             title: "Using Local Data",
             description: "Could not load content from database. Using local files instead.",
           });
-        } else if (data) {
-          console.log('Section content loaded from DB:', data);
-          setDbSectionContent(data);
+        } else if (data && data.length > 0) {
+          console.log('Section content loaded from DB:', data[0]);
+          setDbSectionContent(data[0]);
         } else {
+          console.log('No section content found in DB for section', sectionNumber, 'of unit', unitId);
           setFallbackToLocalData(true);
         }
       } catch (error) {
-        console.error('Exception loading section content:', error);
+        handleError(error, 'Exception loading section content');
         setFallbackToLocalData(true);
       } finally {
         setIsLoading(false);
@@ -78,7 +81,7 @@ const Level2SectionPage = () => {
     };
     
     fetchSectionFromDb();
-  }, [unitId, sectionId, toast]);
+  }, [unitId, sectionId, toast, handleError]);
   
   const getSectionContent = () => {
     if (!unitId || !sectionId) return null;

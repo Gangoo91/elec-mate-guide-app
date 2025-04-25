@@ -13,6 +13,7 @@ import { sections308 } from "@/data/units/sections/unit308Sections";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface DbSectionData {
   id: string;
@@ -25,6 +26,7 @@ const SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
   const [isLoading, setIsLoading] = useState(true);
   const [dbSectionContent, setDbSectionContent] = useState<DbSectionData | null>(null);
   const [fallbackToLocalData, setFallbackToLocalData] = useState(false);
@@ -41,24 +43,25 @@ const SectionPage = () => {
         // Extract section number from sectionId (e.g., "1.1" -> 1)
         const sectionNumber = parseInt(sectionId.split('.')[0], 10);
         
+        // Get all sections for this unit and filter manually instead of using .single()
         const { data, error } = await supabase
           .from('course_content')
           .select('*')
           .eq('unit_id', unitId)
-          .eq('order_index', sectionNumber - 1)
-          .single();
+          .eq('order_index', sectionNumber - 1);
         
         if (error) {
           console.error('Error fetching section from DB:', error);
           setFallbackToLocalData(true);
-        } else if (data) {
-          console.log('Section content loaded from DB:', data);
-          setDbSectionContent(data);
+        } else if (data && data.length > 0) {
+          console.log('Section content loaded from DB:', data[0]);
+          setDbSectionContent(data[0]);
         } else {
+          console.log('No section found in DB, falling back to local data');
           setFallbackToLocalData(true);
         }
       } catch (error) {
-        console.error('Exception loading section content:', error);
+        handleError(error, 'Exception loading section content');
         setFallbackToLocalData(true);
       } finally {
         setIsLoading(false);
@@ -66,7 +69,7 @@ const SectionPage = () => {
     };
     
     fetchSectionFromDb();
-  }, [unitId, sectionId]);
+  }, [unitId, sectionId, handleError]);
   
   // Get the appropriate sections based on the unitId
   const getSectionContent = () => {

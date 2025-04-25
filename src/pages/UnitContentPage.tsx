@@ -8,6 +8,7 @@ import SectionCard from "@/components/units/SectionCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface CourseSection {
   id: string;
@@ -20,6 +21,7 @@ const UnitContentPage = () => {
   const navigate = useNavigate();
   const { unitId } = useParams<{ unitId: string }>();
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
   const [isLoading, setIsLoading] = useState(true);
   const [sections, setSections] = useState<CourseSection[]>([]);
   const [fallbackToLocalData, setFallbackToLocalData] = useState(false);
@@ -62,7 +64,7 @@ const UnitContentPage = () => {
           setFallbackToLocalData(true);
         }
       } catch (error) {
-        console.error('Exception while loading course content:', error);
+        handleError(error, 'Exception while loading course content');
         setFallbackToLocalData(true);
       } finally {
         setIsLoading(false);
@@ -70,7 +72,7 @@ const UnitContentPage = () => {
     };
     
     fetchSections();
-  }, [extractedUnitId, toast]);
+  }, [extractedUnitId, toast, handleError]);
   
   const handleBackClick = () => {
     if (extractedUnitId && (extractedUnitId === "301" || extractedUnitId === "302" || extractedUnitId === "303" || extractedUnitId === "304" || extractedUnitId === "305" || extractedUnitId === "308")) {
@@ -122,13 +124,23 @@ const UnitContentPage = () => {
               // Match the section IDs with what's in the sections202 file (1.1, 1.2, etc.)
               const sectionId = `${index + 1}.${index + 1}`;
               
+              // Create a description from the content if it's a React element
+              let description = '';
+              if (typeof section.content === 'object') {
+                // For React elements, we can't easily convert to string, so use a generic description
+                description = `Section ${sectionId}: ${section.title}`;
+              } else {
+                // For string content, truncate it
+                description = section.content.toString().substring(0, 100) + "...";
+              }
+              
               return (
                 <SectionCard
                   key={index}
                   sectionId={sectionId}
                   unitId={extractedUnitId}
                   title={section.title}
-                  description={section.content.toString().substring(0, 100) + "..."} 
+                  description={description} 
                   isLevel3={isLevel3}
                 />
               );
@@ -141,12 +153,22 @@ const UnitContentPage = () => {
               
               let description = '';
               try {
-                if (typeof section.content === 'string') {
+                if (typeof section.content === 'object') {
+                  // Try to extract content and detailedContent from the JSON structure
+                  if (section.content.content) {
+                    if (typeof section.content.content === 'string') {
+                      description = section.content.content.substring(0, 100) + "...";
+                    } else {
+                      description = JSON.stringify(section.content.content).substring(0, 100) + "...";
+                    }
+                  } else {
+                    description = JSON.stringify(section.content).substring(0, 100) + "...";
+                  }
+                } else if (typeof section.content === 'string') {
                   description = section.content.substring(0, 100) + "...";
-                } else if (section.content && typeof section.content === 'object') {
-                  description = JSON.stringify(section.content).substring(0, 100) + "...";
                 }
               } catch (e) {
+                console.error('Error creating description:', e);
                 description = "Content preview not available";
               }
               
