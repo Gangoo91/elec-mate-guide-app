@@ -16,17 +16,24 @@ import ResistanceInParallelCalculator from './calculators/ResistanceInParallelCa
 import VoltageDropCalculator from './calculators/VoltageDropCalculator';
 import ImpedanceCalculator from './calculators/ImpedanceCalculator';
 import InstrumentationCalculator from './calculators/InstrumentationCalculator';
+import VoltageRegulationCalculator from './calculators/VoltageRegulationCalculator';
+import FaultCurrentCalculator from './calculators/FaultCurrentCalculator';
 
 const CalculatorTools = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string>('ohms-law');
 
   const calculators = {
-    // Electrical Calculators
-    'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator />, type: 'electrical' },
-    'power': { title: "Power Equations", component: <PowerCalculator />, type: 'electrical' },
-    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator />, type: 'electrical' },
-    'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator />, type: 'electrical' },
-    'impedance': { title: "Circuit Impedance", component: <ImpedanceCalculator />, type: 'electrical' },
+    // Basic Electrical Calculators
+    'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator />, type: 'basic' },
+    'power': { title: "Power Equations", component: <PowerCalculator />, type: 'basic' },
+    'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator />, type: 'basic' },
+    
+    // Advanced Electrical Calculators
+    'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator />, type: 'advanced' },
+    'impedance': { title: "Circuit Impedance", component: <ImpedanceCalculator />, type: 'advanced' },
+    'voltage-regulation': { title: "Voltage Regulation", component: <VoltageRegulationCalculator />, type: 'advanced' },
+    'fault-current': { title: "Fault Current", component: <FaultCurrentCalculator />, type: 'advanced' },
+    
     // Instrumentation Calculators
     'instrumentation': { title: "Instrumentation Scaling", component: <InstrumentationCalculator />, type: 'instrumentation' },
   };
@@ -44,9 +51,9 @@ const CalculatorTools = () => {
           <DropdownMenuContent className="bg-[#22251e] border-[#FFC900]/20">
             <ScrollArea className="h-[300px]">
               <div className="p-2">
-                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Electrical Calculators</div>
+                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Basic Calculations</div>
                 {Object.entries(calculators)
-                  .filter(([_, calc]) => calc.type === 'electrical')
+                  .filter(([_, calc]) => calc.type === 'basic')
                   .map(([key, { title }]) => (
                     <DropdownMenuItem
                       key={key}
@@ -59,7 +66,22 @@ const CalculatorTools = () => {
 
                 <DropdownMenuSeparator className="my-2 bg-[#FFC900]/20" />
                 
-                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Instrumentation Calculators</div>
+                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Advanced Calculations</div>
+                {Object.entries(calculators)
+                  .filter(([_, calc]) => calc.type === 'advanced')
+                  .map(([key, { title }]) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setSelectedCalculator(key)}
+                      className="text-[#FFC900] focus:bg-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5"
+                    >
+                      {title}
+                    </DropdownMenuItem>
+                  ))}
+
+                <DropdownMenuSeparator className="my-2 bg-[#FFC900]/20" />
+                
+                <div className="text-[#FFC900] text-sm font-semibold mb-2 px-2">Instrumentation</div>
                 {Object.entries(calculators)
                   .filter(([_, calc]) => calc.type === 'instrumentation')
                   .map(([key, { title }]) => (
