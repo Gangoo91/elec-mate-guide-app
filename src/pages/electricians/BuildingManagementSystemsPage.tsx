@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Settings, Book, Tool, Shield } from "lucide-react";
+import { Settings, Book, Wrench, Shield } from "lucide-react";
 
 const BuildingManagementSystemsPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const BuildingManagementSystemsPage = () => {
     {
       title: "Control Systems",
       description: "Programming and configuring BMS control systems and protocols.",
-      icon: <Tool className="h-6 w-6 text-[#FFC900]" />
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Integration",

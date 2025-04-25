@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Battery, Settings, Tool, Shield, Book } from "lucide-react";
+import { Battery, Settings, Wrench, Shield, Book } from "lucide-react";
 
 const EnergyStorageSystemsPage = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const EnergyStorageSystemsPage = () => {
     {
       title: "Installation Practices",
       description: "Best practices for installing battery systems, including safety considerations.",
-      icon: <Tool className="h-6 w-6 text-[#FFC900]" />
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Safety and Standards",
