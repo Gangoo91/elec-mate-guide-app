@@ -21,11 +21,14 @@ const ExamFilters = ({ qualification, level, onQualificationChange, onLevelChang
         { value: '2391', label: '2391 Inspection and Testing' }
       ];
     }
-    return [
-      { value: 'Level 2', label: 'Level 2' },
-      { value: 'Level 3', label: 'Level 3' },
-      { value: 'AM2', label: 'AM2' }
-    ];
+    if (qualification === 'EAL') {
+      return [
+        { value: 'Level 2', label: 'Level 2' },
+        { value: 'Level 3', label: 'Level 3' },
+        { value: 'Inspection', label: 'Inspection and Testing' }
+      ];
+    }
+    return [];
   };
 
   return (
