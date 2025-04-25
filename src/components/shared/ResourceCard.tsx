@@ -29,7 +29,7 @@ const ResourceCard = ({
     return (
       <Link 
         to={fullCardLink}
-        className="block h-full cursor-pointer"
+        className="block h-full w-full cursor-pointer"
       >
         <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
           <CardContent className="pt-6">
@@ -41,11 +41,11 @@ const ResourceCard = ({
                 {children && <div className="mt-4">{children}</div>}
                 {action && (
                   <div className="mt-4">
-                    <Button 
-                      className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"
+                    <span 
+                      className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] px-4 py-2 rounded inline-block"
                     >
                       {action.label}
-                    </Button>
+                    </span>
                   </div>
                 )}
               </div>
