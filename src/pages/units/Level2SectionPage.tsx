@@ -9,6 +9,13 @@ import { sections203 } from "@/data/units/sections/unit203Sections";
 import { sections204 } from "@/data/units/sections/unit204Sections";
 import { sections210 } from "@/data/units/sections/unit210Sections";
 
+interface SectionData {
+  title: string;
+  description: string;
+  content: React.ReactNode;
+  detailedContent?: React.ReactNode;
+}
+
 const Level2SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();

@@ -1,10 +1,10 @@
-
 import React from 'react';
 
 interface SectionData {
   title: string;
   description: string;
   content: React.ReactNode;
+  detailedContent?: React.ReactNode;
 }
 
 export const sections210: Record<string, SectionData> = {
@@ -55,6 +55,101 @@ export const sections210: Record<string, SectionData> = {
           <li>Multi-trade coordination: Working alongside other building professionals</li>
         </ul>
       </>
+    ),
+    detailedContent: (
+      <>
+        <h3 className="text-2xl font-bold mb-6">The Professional Impact of Communication Skills</h3>
+        
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Safety Communication Excellence</h4>
+          <p className="mb-4">
+            Effective communication about safety matters can be the difference between a safe workplace and one where accidents occur:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Critical Safety Communication Scenarios</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Live Working Procedures:</strong> Clear communication about isolation points, test procedures and safety measures</li>
+              <li><strong>Emergency Response:</strong> Precise instruction during incidents to prevent escalation</li>
+              <li><strong>Risk Assessment Sharing:</strong> Communicating identified risks and control measures to all workers</li>
+              <li><strong>Permit-to-Work Systems:</strong> Effective handover and sign-off procedures</li>
+              <li><strong>Toolbox Talks:</strong> Concise delivery of safety information before commencing work</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Client Communication Strategy</h4>
+          <p className="mb-4">
+            Building strong relationships with clients requires effective communication approaches:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Initial Consultation</h5>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Active listening to understand requirements</li>
+                <li>Asking clarifying questions</li>
+                <li>Taking comprehensive notes</li>
+                <li>Providing realistic timeframes</li>
+                <li>Explaining processes in non-technical terms</li>
+              </ul>
+            </div>
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Ongoing Project Communication</h5>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Regular progress updates</li>
+                <li>Early notification of challenges</li>
+                <li>Clear explanation of additional costs</li>
+                <li>Professional management of complaints</li>
+                <li>Comprehensive handover procedures</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4 className="text-xl font-semibold mb-4">Interdisciplinary Collaboration</h4>
+          <p className="mb-4">
+            Modern electrical work rarely happens in isolation. You'll need to communicate effectively with:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Cross-Trade Communication</h5>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[#FFC900]/30">
+                  <th className="text-left py-2 px-2">Trade</th>
+                  <th className="text-left py-2 px-2">Key Communication Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2 font-semibold">Plumbers</td>
+                  <td className="py-2 px-2">Coordination for earthing requirements, avoiding clashes between pipes and cables</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2 font-semibold">Carpenters</td>
+                  <td className="py-2 px-2">Planning cable routes, coordinating notching and drilling in structural timbers</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2 font-semibold">Plasterers</td>
+                  <td className="py-2 px-2">Back box positions, cable depths, coordination of work sequencing</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2 font-semibold">HVAC Engineers</td>
+                  <td className="py-2 px-2">Power requirements, control wiring, coordination of services</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <p>
+            Professional communication across trades not only makes projects run more smoothly but also 
+            enhances your reputation as a collaborative and effective electrical professional.
+          </p>
+        </section>
+      </>
     )
   },
   "1.2": {
@@ -103,6 +198,88 @@ export const sections210: Record<string, SectionData> = {
           <li>Technical diagrams: Creating clear visual representations of installations</li>
         </ul>
       </>
+    ),
+    detailedContent: (
+      <>
+        <h3 className="text-2xl font-bold mb-6">Mastering Professional Written Communication</h3>
+        
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Technical Documentation Excellence</h4>
+          <p className="mb-4">
+            Clear, accurate technical documentation is essential for compliance, safety, and professional reputation:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Electrical Certification Best Practices</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Accuracy:</strong> Enter all measurements exactly as recorded without rounding</li>
+              <li><strong>Completeness:</strong> Fill in all fields, using "N/A" where appropriate rather than leaving blank</li>
+              <li><strong>Legibility:</strong> Write clearly or use digital formats for important documentation</li>
+              <li><strong>Specificity:</strong> Avoid vague terms like "various circuits" - list each one</li>
+              <li><strong>Consistency:</strong> Use standardized terminology throughout documentation</li>
+              <li><strong>Verification:</strong> Double-check all entries before submission</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Client-Facing Documentation</h4>
+          <p className="mb-4">
+            Creating professional documentation for clients enhances your professional image:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Professional Quotation Elements</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Detailed breakdown of materials</li>
+                <li>Labor costs with time estimates</li>
+                <li>Clear payment terms and methods</li>
+                <li>Validity period for the quote</li>
+                <li>Terms and conditions in plain language</li>
+                <li>Your qualifications and insurance details</li>
+              </ul>
+            </div>
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Effective Email Communication</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Descriptive subject lines</li>
+                <li>Formal greeting and professional close</li>
+                <li>Short, focused paragraphs</li>
+                <li>Bulleted lists for key points</li>
+                <li>Proofreading before sending</li>
+                <li>Professional signature with contact details</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4 className="text-xl font-semibold mb-4">Digital Communication Tools</h4>
+          <p className="mb-4">
+            Modern electricians use various digital tools to enhance written communication:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Digital Documentation Advantages</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Job Management Software:</strong> Creates professional documentation with consistent branding</li>
+              <li><strong>Digital Forms:</strong> Ensures all required fields are completed</li>
+              <li><strong>Mobile Applications:</strong> Allows on-site documentation with photo evidence</li>
+              <li><strong>Cloud Storage:</strong> Provides secure backup and easy retrieval of documentation</li>
+              <li><strong>Electronic Signatures:</strong> Streamlines approval processes</li>
+              <li><strong>Template Systems:</strong> Maintains consistency across all client communications</li>
+            </ul>
+          </div>
+          
+          <p>
+            Embracing these digital tools not only improves your efficiency but also projects a 
+            modern, professional image to clients and colleagues.
+          </p>
+        </section>
+      </>
     )
   }
 };
+
+export default sections210;

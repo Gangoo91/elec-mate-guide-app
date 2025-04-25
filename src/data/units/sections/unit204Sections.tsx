@@ -1,10 +1,10 @@
-
 import React from 'react';
 
 interface SectionData {
   title: string;
   description: string;
   content: React.ReactNode;
+  detailedContent?: React.ReactNode;
 }
 
 export const sections204: Record<string, SectionData> = {
@@ -55,6 +55,94 @@ export const sections204: Record<string, SectionData> = {
           <li>Support requirements: Preventing sagging and strain</li>
         </ul>
       </>
+    ),
+    detailedContent: (
+      <>
+        <h3 className="text-2xl font-bold mb-6">Comprehensive Guide to Conduit Installation</h3>
+        
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Steel Conduit Techniques</h4>
+          <p className="mb-4">
+            Steel conduit provides superior protection and mechanical strength, making it ideal for industrial and commercial applications.
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Cutting and Threading</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Use a rotary conduit cutter for clean, square cuts</li>
+              <li>Remove burrs with a reamer to protect cable insulation</li>
+              <li>Use threading dies to create BSP thread (British Standard Pipe)</li>
+              <li>Apply thread lubricant for easier assembly and corrosion protection</li>
+              <li>Standard thread lengths: short (9.5mm) and long (19mm) threads</li>
+            </ul>
+          </div>
+
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Advanced Bending Techniques</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Set Bends:</strong> 90° bends require exact measurement to formers</li>
+              <li><strong>Offset Bends:</strong> Using the 1:4 ratio (1 unit height = 4 units length)</li>
+              <li><strong>Saddle Bends:</strong> Creating double bends to pass obstacles</li>
+              <li><strong>Back-to-Back Bends:</strong> Creating precise U-shaped sections</li>
+              <li><strong>Compound Bends:</strong> Multiple bends in different planes</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">PVC Conduit Installation</h4>
+          <p className="mb-4">
+            PVC conduit offers corrosion resistance and is economical for many installations:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Heat Bending Process</h5>
+              <ol className="list-decimal pl-6 space-y-2">
+                <li>Insert spring to prevent kinking</li>
+                <li>Apply heat evenly with hot air gun</li>
+                <li>Rotate conduit while heating</li>
+                <li>Form bend when sufficiently pliable</li>
+                <li>Hold in position until cool</li>
+              </ol>
+            </div>
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Joint Preparation</h5>
+              <ol className="list-decimal pl-6 space-y-2">
+                <li>Cut square with fine-toothed saw</li>
+                <li>Remove burrs with file or scraper</li>
+                <li>Apply PVC solvent cement</li>
+                <li>Join with quarter-turn twist</li>
+                <li>Wipe away excess solvent</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4 className="text-xl font-semibold mb-4">Flexible Conduit Applications</h4>
+          <p className="mb-4">
+            Flexible conduit is used where movement, vibration or alignment challenges exist:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Installation Best Practices</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Minimum bend radius of 3× the conduit diameter</li>
+              <li>Support within 300mm of terminations</li>
+              <li>Use proper glands designed for flexible conduit</li>
+              <li>Ensure proper earthing continuity with appropriate glands</li>
+              <li>Allow sufficient length for movement without strain</li>
+              <li>Avoid over-tightening glands which can damage conduit</li>
+            </ul>
+          </div>
+          
+          <p className="mt-4">
+            When installing flexible conduit in damp or wet locations, always use liquid-tight varieties with appropriate IP-rated 
+            glands to maintain the integrity of the installation.
+          </p>
+        </section>
+      </>
     )
   },
   "1.2": {
@@ -103,6 +191,109 @@ export const sections204: Record<string, SectionData> = {
           <li>Protection from mechanical damage, water ingress, and rodents</li>
         </ul>
       </>
+    ),
+    detailedContent: (
+      <>
+        <h3 className="text-2xl font-bold mb-6">Professional Cable Installation Practices</h3>
+        
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Cable Selection Methodology</h4>
+          <p className="mb-4">
+            Selecting the appropriate cable is crucial for safety, compliance, and longevity:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Cable Type Selection Factors</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Current Rating:</strong> Based on load requirements and derating factors</li>
+              <li><strong>Voltage Rating:</strong> Must exceed system voltage (usually 300/500V or 450/750V)</li>
+              <li><strong>Environmental Conditions:</strong> Temperature, moisture, UV exposure, chemical exposure</li>
+              <li><strong>Fire Performance:</strong> Standard, low smoke zero halogen, fire resistant</li>
+              <li><strong>Installation Method:</strong> Clipped, contained, buried, overhead</li>
+              <li><strong>Mechanical Protection:</strong> Need for armoring or additional protection</li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h4 className="text-xl font-semibold mb-4">Professional Installation Methods</h4>
+          <p className="mb-4">
+            Proper installation techniques ensure safety and performance:
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Concealed Cable Routes</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Run vertical or horizontal (never diagonal)</li>
+                <li>150mm from corners or openings</li>
+                <li>Minimum depth of 50mm in walls</li>
+                <li>Use mechanically protected routes</li>
+                <li>Avoid proximity to water or gas pipes</li>
+              </ul>
+            </div>
+            <div className="bg-[#22251e] p-6 rounded-lg">
+              <h5 className="text-lg font-semibold mb-3">Cable Pulling Techniques</h5>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Calculate maximum pulling tension</li>
+                <li>Use appropriate lubricants</li>
+                <li>Pull steadily without jerking</li>
+                <li>Maintain communication during pulls</li>
+                <li>Use draw strings for pre-installation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h4 className="text-xl font-semibold mb-4">Cable Support and Protection Standards</h4>
+          <p className="mb-4">
+            Cables must be properly supported throughout their installation:
+          </p>
+          
+          <div className="bg-[#22251e] p-6 rounded-lg mb-4">
+            <h5 className="text-lg font-semibold mb-3">Support Intervals by Cable Type</h5>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[#FFC900]/30">
+                  <th className="text-left py-2 px-2">Cable Type</th>
+                  <th className="text-center py-2 px-2">Horizontal (mm)</th>
+                  <th className="text-center py-2 px-2">Vertical (mm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2">Flat twin & earth (≤ 1.0mm²)</td>
+                  <td className="text-center py-2 px-2">250</td>
+                  <td className="text-center py-2 px-2">400</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2">Flat twin & earth (≥ 1.5mm²)</td>
+                  <td className="text-center py-2 px-2">300</td>
+                  <td className="text-center py-2 px-2">400</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2">Armored cable (≤ 10mm²)</td>
+                  <td className="text-center py-2 px-2">350</td>
+                  <td className="text-center py-2 px-2">450</td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/10">
+                  <td className="py-2 px-2">Armored cable (≥ 16mm²)</td>
+                  <td className="text-center py-2 px-2">450</td>
+                  <td className="text-center py-2 px-2">600</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <p>
+            Maintaining these standards ensures installations comply with BS 7671 requirements and
+            provides protection against mechanical damage while allowing heat dissipation.
+          </p>
+        </section>
+      </>
     )
   }
 };
+
+export default sections204;
