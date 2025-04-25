@@ -57,16 +57,13 @@ const UnitContentPage = () => {
             // Match the section IDs with what's in the sections202 file (1.1, 1.2, etc.)
             const sectionId = `${index + 1}.${index + 1}`;
             
-            // Check if description exists, if not use the title as fallback
-            const sectionDescription = section.description || section.title;
-            
             return (
               <SectionCard
                 key={index}
                 sectionId={sectionId}
                 unitId={extractedUnitId}
                 title={section.title}
-                description={sectionDescription}
+                description={section.content.toString().substring(0, 100) + "..."} 
                 isLevel3={isLevel3}
               />
             );
