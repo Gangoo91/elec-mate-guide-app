@@ -3,7 +3,7 @@ import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Battery, Cable, Lightning, Wrench, Shield, FileText } from "lucide-react";
+import { Battery, FileText, BookOpen, Book } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 
 const SolarPVInstallationPage = () => {
@@ -18,22 +18,22 @@ const SolarPVInstallationPage = () => {
     {
       title: "Installation Process",
       description: "Step-by-step guide to installing solar PV systems safely and efficiently.",
-      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Electrical Integration",
       description: "Connection to existing electrical systems, grid integration, and earthing requirements.",
-      icon: <Lightning className="h-6 w-6 text-[#FFC900]" />
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Wiring and Connections",
       description: "DC and AC wiring methods, cable sizing, and connection techniques.",
-      icon: <Cable className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Safety Procedures",
       description: "Working at height, electrical safety, and risk assessment protocols.",
-      icon: <Shield className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Documentation",
