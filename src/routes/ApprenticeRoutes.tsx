@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -26,6 +25,7 @@ import EALQualificationsPage from "@/pages/EALQualificationsPage";
 import HigherLearningPage from "@/pages/HigherLearningPage";
 import InspectionTestingPage from "@/pages/InspectionTestingPage";
 import SectionPage from "@/pages/units/SectionPage";
+import Level2SectionPage from "@/pages/units/Level2SectionPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -44,6 +44,7 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-level2-unit" path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />,
   <Route key="apprentices-level3-unit" path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<UnitContentPage />} />,
   <Route key="apprentices-section" path="/apprentices/study-materials/city-guilds/level-3/:unitId/:sectionId" element={<SectionPage />} />,
+  <Route key="apprentices-level2-section" path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId/:sectionId" element={<Level2SectionPage />} />,
   <Route key="apprentices-moet" path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />,
   <Route key="apprentices-moet-content" path="/apprentices/study-materials/city-guilds/moet/content" element={<MOETContentPage />} />,
   <Route key="apprentices-moet-core" path="/apprentices/study-materials/city-guilds/moet/core-knowledge" element={<MOETCoreKnowledgePage />} />,
