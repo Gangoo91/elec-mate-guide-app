@@ -26,6 +26,9 @@ import HigherLearningPage from "@/pages/HigherLearningPage";
 import InspectionTestingPage from "@/pages/InspectionTestingPage";
 import SectionPage from "@/pages/units/SectionPage";
 import Level2SectionPage from "@/pages/units/Level2SectionPage";
+import CircuitTheoryPage from "@/pages/moet/CircuitTheoryPage";
+import PowerSystemsPage from "@/pages/moet/PowerSystemsPage";
+import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -56,4 +59,7 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-eal" path="/apprentices/study-materials/eal" element={<EALQualificationsPage />} />,
   <Route key="apprentices-higher-learning" path="/apprentices/study-materials/higher-learning" element={<HigherLearningPage />} />,
   <Route key="apprentices-inspection" path="/apprentices/study-materials/inspection-testing" element={<InspectionTestingPage />} />,
+  <Route key="apprentices-moet-circuit-theory" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory" element={<CircuitTheoryPage />} />,
+  <Route key="apprentices-moet-power-systems" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems" element={<PowerSystemsPage />} />,
+  <Route key="apprentices-moet-basic-electronics" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics" element={<BasicElectronicsPage />} />,
 ];
