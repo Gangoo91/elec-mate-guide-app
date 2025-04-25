@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -47,6 +46,7 @@ import Mentorship from "@/pages/Mentorship";
 import SystemDesignPage from "@/pages/electricians/solar/installation/SystemDesignPage";
 import PhysicalInstallationPage from "@/pages/electricians/solar/installation/PhysicalInstallationPage";
 import CommissioningPage from "@/pages/electricians/solar/installation/CommissioningPage";
+import MountingSystemsInstallationPage from "@/pages/electricians/solar/installation/MountingSystemsInstallationPage";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
@@ -96,4 +96,5 @@ export const ElectricianRoutes = [
   <Route key="system-design" path="/electricians/solar-pv-installation/installation-process/system-design" element={<SystemDesignPage />} />,
   <Route key="physical-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />,
   <Route key="commissioning" path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />,
+  <Route key="mounting-systems-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/mounting-systems" element={<MountingSystemsInstallationPage />} />,
 ];

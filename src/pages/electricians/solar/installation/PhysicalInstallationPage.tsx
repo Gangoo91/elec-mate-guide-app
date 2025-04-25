@@ -1,8 +1,12 @@
-
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import SolarContentLayout from '@/components/solar/SolarContentLayout';
+import { Button } from "@/components/ui/button";
+import { ChevronRight } from "lucide-react";
 
 const PhysicalInstallationPage = () => {
+  const navigate = useNavigate();
+
   const sections = [
     {
       title: "Mounting System Installation",
@@ -18,6 +22,14 @@ const PhysicalInstallationPage = () => {
             <li>Weight distribution analysis and structural considerations</li>
             <li>Wind load calculations and attachment spacing requirements</li>
           </ul>
+          <Button 
+            variant="outline" 
+            className="mt-4 text-[#FFC900] border-[#FFC900] hover:bg-[#FFC900]/10"
+            onClick={() => navigate('/electricians/solar-pv-installation/installation-process/physical-installation/mounting-systems')}
+          >
+            Learn More About Mounting Systems
+            <ChevronRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       )
     },
