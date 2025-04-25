@@ -35,6 +35,13 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
 
+    // Special handling for Level 3 section pages
+    if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}\/\d+\.\d+/)) {
+      const unitId = location.pathname.split('/')[6]; // Get the unit ID from URL
+      navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
+      return;
+    }
+
     // For mental health main page, go back to electricians hub
     if (location.pathname === "/mental-health") {
       navigate("/electricians");

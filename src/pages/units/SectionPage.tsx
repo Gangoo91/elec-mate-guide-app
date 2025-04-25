@@ -51,7 +51,11 @@ const SectionPage = () => {
   }, [sectionContent, toast]);
   
   const handleBackClick = () => {
-    navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
+    if (unitId) {
+      navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
+    } else {
+      navigate('/apprentices/study-materials/city-guilds/level-3');
+    }
   };
 
   if (!sectionContent) {
