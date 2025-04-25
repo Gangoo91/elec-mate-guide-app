@@ -59,6 +59,7 @@ import HigherLearningPage from "./pages/HigherLearningPage";
 import InspectionTestingPage from "./pages/InspectionTestingPage";
 import ToolboxTalkPage from "./pages/ToolboxTalkPage";
 import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
+import CareerPathwaysPage from "./pages/CareerPathwaysPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -131,6 +132,7 @@ const App = () => {
                   <Route path="/electricians/technical-tools/templates" element={<TemplatesPage />} />
                   <Route path="/electricians/technical-tools/templates/:templateId/sign" element={<SignDocumentPage />} />
                   <Route path="/electricians/mentorship" element={<Mentorship />} />
+                  <Route path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   
