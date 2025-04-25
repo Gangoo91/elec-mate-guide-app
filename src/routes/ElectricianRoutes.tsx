@@ -50,6 +50,9 @@ import MountingSystemsInstallationPage from "@/pages/electricians/solar/installa
 import PanelInstallationPage from "@/pages/electricians/solar/installation/PanelInstallationPage";
 import EquipmentInstallationPage from "@/pages/electricians/solar/installation/EquipmentInstallationPage";
 import SafetyConsiderationsPage from "@/pages/electricians/solar/installation/SafetyConsiderationsPage";
+import RoofEvaluationPage from "@/pages/electricians/solar/installation/roof-evaluation/RoofEvaluationPage";
+import LoadAnalysisPage from "@/pages/electricians/solar/installation/roof-evaluation/LoadAnalysisPage";
+import SupportStructurePage from "@/pages/electricians/solar/installation/roof-evaluation/SupportStructurePage";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
@@ -103,4 +106,7 @@ export const ElectricianRoutes = [
   <Route key="panel-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/panel-installation" element={<PanelInstallationPage />} />,
   <Route key="equipment-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/equipment-installation" element={<EquipmentInstallationPage />} />,
   <Route key="safety-considerations" path="/electricians/solar-pv-installation/installation-process/physical-installation/safety-considerations" element={<SafetyConsiderationsPage />} />,
+  <Route key="structural-roof" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/roof-evaluation" element={<RoofEvaluationPage />} />,
+  <Route key="structural-load" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/load-analysis" element={<LoadAnalysisPage />} />,
+  <Route key="structural-support" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/support-structure" element={<SupportStructurePage />} />,
 ];

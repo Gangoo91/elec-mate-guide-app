@@ -1,45 +1,33 @@
 
 import React from 'react';
 import SolarContentLayout from '@/components/solar/SolarContentLayout';
+import ResourceCard from '@/components/shared/ResourceCard';
+import { ClipboardList, FileText, Book } from 'lucide-react';
 
 const StructuralAssessmentPage = () => {
   const sections = [
     {
-      title: "Roof Evaluation",
+      title: "Assessment Overview",
       content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Visual inspection of roof condition and materials</li>
-            <li>Identify signs of wear, damage, or structural weakness</li>
-            <li>Document existing penetrations and obstacles</li>
-            <li>Assess roof age and remaining lifespan</li>
-          </ul>
-        </div>
-      )
-    },
-    {
-      title: "Load Analysis",
-      content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Calculate dead loads from solar array</li>
-            <li>Assess wind and snow load requirements</li>
-            <li>Evaluate existing structural capacity</li>
-            <li>Identify need for structural reinforcement</li>
-          </ul>
-        </div>
-      )
-    },
-    {
-      title: "Support Structure",
-      content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Locate and map roof trusses and rafters</li>
-            <li>Evaluate attachment point options</li>
-            <li>Assess roof deck condition</li>
-            <li>Document structural support layout</li>
-          </ul>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <ResourceCard
+            title="Roof Evaluation"
+            description="Learn how to assess roof condition and materials"
+            icon={<ClipboardList className="h-6 w-6 text-[#FFC900]" />}
+            fullCardLink="/electricians/solar-pv-installation/installation-process/site-assessment/structural/roof-evaluation"
+          />
+          <ResourceCard
+            title="Load Analysis"
+            description="Calculate and analyze structural loads"
+            icon={<FileText className="h-6 w-6 text-[#FFC900]" />}
+            fullCardLink="/electricians/solar-pv-installation/installation-process/site-assessment/structural/load-analysis"
+          />
+          <ResourceCard
+            title="Support Structure"
+            description="Evaluate and document structural support systems"
+            icon={<Book className="h-6 w-6 text-[#FFC900]" />}
+            fullCardLink="/electricians/solar-pv-installation/installation-process/site-assessment/structural/support-structure"
+          />
         </div>
       )
     }
