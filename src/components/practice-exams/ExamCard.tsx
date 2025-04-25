@@ -24,7 +24,7 @@ const ExamCard = ({
   onStart 
 }: ExamCardProps) => {
   return (
-    <Card className="bg-[#22251e] border-[#FFC900]/20">
+    <Card className="bg-[#22251e] border-[#FFC900]/20 h-full flex flex-col">
       <CardHeader>
         <CardTitle className="text-[#FFC900] flex items-center gap-2">
           <Book className="h-5 w-5" />
@@ -32,13 +32,13 @@ const ExamCard = ({
         </CardTitle>
         {unitTitle && (
           <p className="text-[#FFC900]/90 text-sm">
-            Unit {unitCode}: {unitTitle}
+            {unitTitle}
           </p>
         )}
       </CardHeader>
-      <CardContent>
-        <p className="text-[#FFC900]/70 mb-4">{description}</p>
-        <div className="space-y-1 text-[#FFC900]/70">
+      <CardContent className="flex-grow">
+        <p className="text-[#FFC900]/70 mb-4 text-sm">{description}</p>
+        <div className="space-y-1 text-[#FFC900]/70 text-sm">
           <p>Questions: {numQuestions}</p>
           <p>Time Limit: {timeLimit} minutes</p>
         </div>

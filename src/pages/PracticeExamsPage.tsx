@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import BackButton from "@/components/navigation/BackButton";
 import ExamFilters from "@/components/practice-exams/ExamFilters";
 import ExamCard from "@/components/practice-exams/ExamCard";
 import { useExamQuestions } from "@/components/practice-exams/useExamQuestions";
 import { useToast } from "@/components/ui/use-toast";
+import { unitContent } from "@/data/unitContent";
 
 const PracticeExamsPage = () => {
   const [qualification, setQualification] = useState('');
@@ -31,8 +31,8 @@ const PracticeExamsPage = () => {
       if (!acc[unitCode]) {
         acc[unitCode] = {
           unitCode: question.unit_code,
-          unitTitle: question.unit_title,
-          unitDescription: question.unit_description,
+          unitTitle: question.unit_title || unitContent[unitCode]?.title || 'General Questions',
+          unitDescription: question.unit_description || unitContent[unitCode]?.description || 'Practice questions for your qualification',
           questions: []
         };
       }
@@ -46,7 +46,6 @@ const PracticeExamsPage = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
-        <BackButton />
         <PageHeader 
           title="Practice Exams"
           description="Test your knowledge with mock exams and quizzes covering various electrical topics."
@@ -71,12 +70,12 @@ const PracticeExamsPage = () => {
               <p className="text-[#FFC900]/70">Loading available exams...</p>
             </div>
           ) : groupedQuestions.length > 0 ? (
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {groupedQuestions.map((unit, index) => (
                 <div key={unit.unitCode || index}>
                   <ExamCard
-                    title={`${qualification} ${level} Practice Exam`}
-                    description={unit.unitDescription || "Test your knowledge with questions from various topics covered in your qualification."}
+                    title={`Unit ${unit.unitCode || 'General'}`}
+                    description={unit.unitDescription}
                     unitCode={unit.unitCode}
                     unitTitle={unit.unitTitle}
                     numQuestions={unit.questions.length}
