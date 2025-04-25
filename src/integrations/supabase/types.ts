@@ -39,6 +39,84 @@ export type Database = {
         }
         Relationships: []
       }
+      exam_attempts: {
+        Row: {
+          created_at: string | null
+          id: string
+          level: string
+          qualification_type: string
+          score: number
+          time_taken: number
+          total_questions: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          level: string
+          qualification_type: string
+          score: number
+          time_taken: number
+          total_questions: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          level?: string
+          qualification_type?: string
+          score?: number
+          time_taken?: number
+          total_questions?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      exam_questions: {
+        Row: {
+          correct_answer: string
+          created_at: string | null
+          difficulty: string
+          explanation: string | null
+          id: string
+          level: string
+          options: Json
+          qualification_type: string
+          question_text: string
+          topic: string
+          unit_code: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          correct_answer: string
+          created_at?: string | null
+          difficulty: string
+          explanation?: string | null
+          id?: string
+          level: string
+          options: Json
+          qualification_type: string
+          question_text: string
+          topic: string
+          unit_code?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          correct_answer?: string
+          created_at?: string | null
+          difficulty?: string
+          explanation?: string | null
+          id?: string
+          level?: string
+          options?: Json
+          qualification_type?: string
+          question_text?: string
+          topic?: string
+          unit_code?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       exercise_kudos: {
         Row: {
           created_at: string
