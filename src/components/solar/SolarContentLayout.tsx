@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -19,14 +18,13 @@ const SolarContentLayout = ({ title, description, sections }: SolarContentLayout
   const location = useLocation();
 
   const handleBackNavigation = () => {
-    if (location.pathname.includes('/site-assessment/')) {
-      // If we're in a sub-page of site-assessment, go back to site assessment page
+    if (location.pathname.includes('/physical-installation/')) {
+      navigate('/electricians/solar-pv-installation/installation-process/physical-installation');
+    } else if (location.pathname.includes('/site-assessment/')) {
       navigate('/electricians/solar-pv-installation/installation-process/site-assessment');
     } else if (location.pathname.includes('/installation-process/')) {
-      // If we're in the site assessment main page or other installation process pages
       navigate('/electricians/solar-pv-installation/installation-process');
     } else {
-      // Default fallback
       navigate('/electricians/solar-pv-installation');
     }
   };
