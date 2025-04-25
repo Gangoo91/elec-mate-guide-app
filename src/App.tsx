@@ -80,6 +80,11 @@ import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
 import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
 import AccessControlPage from "./pages/electricians/AccessControlPage";
 import SystemComponentsPage from "./pages/electricians/SystemComponentsPage";
+import InstallationProcessPage from "./pages/electricians/solar/InstallationProcessPage";
+import ElectricalIntegrationPage from "./pages/electricians/solar/ElectricalIntegrationPage";
+import WiringConnectionsPage from "./pages/electricians/solar/WiringConnectionsPage";
+import SafetyProceduresPage from "./pages/electricians/solar/SafetyProceduresPage";
+import DocumentationPage from "./pages/electricians/solar/DocumentationPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -147,6 +152,11 @@ const App = () => {
                   <Route path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />
                   <Route path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />
                   <Route path="/electricians/solar-pv-installation/system-components" element={<SystemComponentsPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process" element={<InstallationProcessPage />} />
+                  <Route path="/electricians/solar-pv-installation/electrical-integration" element={<ElectricalIntegrationPage />} />
+                  <Route path="/electricians/solar-pv-installation/wiring-connections" element={<WiringConnectionsPage />} />
+                  <Route path="/electricians/solar-pv-installation/safety-procedures" element={<SafetyProceduresPage />} />
+                  <Route path="/electricians/solar-pv-installation/documentation" element={<DocumentationPage />} />
                   <Route path="/electricians/energy-storage-systems" element={<EnergyStorageSystemsPage />} />
                   <Route path="/electricians/building-management-systems" element={<BuildingManagementSystemsPage />} />
                   <Route path="/electricians/smart-home-technologies" element={<SmartHomeTechnologiesPage />} />
