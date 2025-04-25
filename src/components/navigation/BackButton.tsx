@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -13,13 +12,24 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const location = useLocation();
 
   // Hide back on entry-point ("/" or "/dashboard")
-  const isEntry =
-    location.pathname === "/" || location.pathname === "/dashboard";
+  const isEntry = location.pathname === "/" || location.pathname === "/dashboard";
 
   const handleBackNavigation = () => {
     // Use custom action if provided
     if (customAction) {
       customAction();
+      return;
+    }
+    
+    // Special handling for Level 2 unit pages
+    if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}/)) {
+      navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
+      return;
+    }
+
+    // Special handling for Level 3 unit pages
+    if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}/)) {
+      navigate('/apprentices/study-materials/city-guilds/level-3');
       return;
     }
     

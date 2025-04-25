@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
+import { Card } from "@/components/ui/card";
 import UnitCard from "@/components/level2/UnitCard";
 
 const Level2CoreUnitsPage = () => {
@@ -11,27 +13,32 @@ const Level2CoreUnitsPage = () => {
     {
       unitNumber: "201",
       title: "Health and Safety in Building Services Engineering",
-      description: "Learn essential safety practices for electrical work including:\n• Understanding workplace hazards and risks\n• Using personal protective equipment (PPE)\n• Following safety regulations and procedures\n• Emergency response and first aid basics\n• Safe handling of electrical equipment",
+      description: "Learn essential safety practices for electrical work",
+      path: "/apprentices/study-materials/city-guilds/level-2/core-units/201"
     },
     {
       unitNumber: "202",
       title: "Principles of Electrical Science",
-      description: "Master the fundamentals of electricity through:\n• Understanding voltage, current, and resistance\n• Learning Ohm's Law and power calculations\n• Exploring AC and DC circuits\n• Using multimeters and test equipment\n• Practical applications of electrical theory",
+      description: "Master the fundamentals of electricity",
+      path: "/apprentices/study-materials/city-guilds/level-2/core-units/202"
     },
     {
       unitNumber: "203",
       title: "Electrical Installations Technology",
-      description: "Discover installation techniques including:\n• Types of wiring systems and circuits\n• Installing switches, sockets, and lighting\n• Understanding circuit protection devices\n• Cable selection and installation methods\n• Testing and certification procedures",
+      description: "Discover installation techniques and practices",
+      path: "/apprentices/study-materials/city-guilds/level-2/core-units/203"
     },
     {
       unitNumber: "204",
       title: "Installation of Wiring Systems and Enclosures",
-      description: "Learn practical wiring skills through:\n• Cable installation techniques\n• Working with different conduit types\n• Installing trunking and cable trays\n• Proper cable termination methods\n• Following building regulations",
+      description: "Learn practical wiring skills and techniques",
+      path: "/apprentices/study-materials/city-guilds/level-2/core-units/204"
     },
     {
       unitNumber: "210",
       title: "Understand How to Communicate with Others",
-      description: "Develop essential communication skills including:\n• Professional customer service techniques\n• Effective team collaboration\n• Writing clear technical reports\n• Managing client expectations\n• Handling challenging situations",
+      description: "Develop essential communication skills",
+      path: "/apprentices/study-materials/city-guilds/level-2/core-units/210"
     }
   ];
 
@@ -48,12 +55,19 @@ const Level2CoreUnitsPage = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {units.map((unit) => (
-            <UnitCard 
+            <Card 
               key={unit.unitNumber}
-              {...unit}
-            />
+              className="h-full"
+            >
+              <UnitCard
+                unitNumber={unit.unitNumber}
+                title={unit.title}
+                description={unit.description}
+                path={unit.path}
+              />
+            </Card>
           ))}
         </div>
       </div>
