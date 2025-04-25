@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { BadgeAlert } from "lucide-react";
 
 const pricingData = [
   {
@@ -20,8 +21,8 @@ const pricingData = [
   },
   {
     title: "Electrician",
-    price: "£4.99/mo",
-    annual: "£49.99/yr",
+    price: "£5.99/mo", // Updated price
+    annual: "£59.99/yr", // Updated annual price
     features: [
       "All Apprentice features",
       "Advanced tools",
@@ -41,6 +42,7 @@ const pricingData = [
     ],
     color: "border-[#FFB300]",
     highlight: false,
+    comingSoon: true // Added coming soon flag
   }
 ];
 
@@ -82,12 +84,19 @@ const Welcome = () => {
                   ${tier.color}
                   ${tier.highlight ? "shadow-lg scale-105 border-4 border-yellow-400" : "shadow"}
                   transition-all
+                  ${tier.comingSoon ? "opacity-60 cursor-not-allowed" : ""}
                 `}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold">{tier.title}</span>
                   {tier.highlight && (
                     <span className="ml-2 px-2 py-0.5 rounded bg-[#FFC900] text-[#14130A] text-xs font-semibold">MOST VALUE</span>
+                  )}
+                  {tier.comingSoon && (
+                    <div className="flex items-center gap-1 text-yellow-400">
+                      <BadgeAlert className="h-4 w-4" />
+                      <span className="text-xs font-semibold">Coming Soon</span>
+                    </div>
                   )}
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
@@ -99,6 +108,11 @@ const Welcome = () => {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
+                {tier.comingSoon && (
+                  <div className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
+                    <span className="text-yellow-400 font-bold text-lg">Coming Soon</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -127,4 +141,3 @@ const Welcome = () => {
 };
 
 export default Welcome;
-
