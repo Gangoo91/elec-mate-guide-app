@@ -1,12 +1,18 @@
 
 import React from "react";
-import { MessageSquare, Heart, Book, Handshake, Users } from "lucide-react";
+import { MessageSquare, Heart, Book, Handshake, Users, BookOpen } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import BackButton from "@/components/navigation/BackButton";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const ElectriciansPage = () => {
   const resources = [
+    {
+      title: "Learning Hub",
+      description: "Access comprehensive study materials and practice exams for professional development and qualifications.",
+      icon: <BookOpen className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/learning-hub"
+    },
     {
       title: "Technical Tools",
       description: "Access the latest technical resources, code updates, and specialised tools for electrical installations.",

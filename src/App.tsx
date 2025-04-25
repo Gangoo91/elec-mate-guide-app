@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -66,6 +67,9 @@ import ProjectManagerPage from "./pages/careers/ProjectManagerPage";
 import ControlSystemsEngineerPage from "./pages/careers/ControlSystemsEngineerPage";
 import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
 import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
+import LearningHubElectriciansPage from "./pages/LearningHubElectriciansPage";
+import ElectriciansExamsPage from "./pages/ElectriciansExamsPage";
+import ElectriciansStudyGuidePage from "./pages/ElectriciansStudyGuidePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -129,6 +133,9 @@ const App = () => {
                   <Route path="/apprentices/study-materials/inspection-testing" element={<InspectionTestingPage />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
+                  <Route path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />
+                  <Route path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />
+                  <Route path="/electricians/practice-exams" element={<ElectriciansExamsPage />} />
                   <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
                   <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
