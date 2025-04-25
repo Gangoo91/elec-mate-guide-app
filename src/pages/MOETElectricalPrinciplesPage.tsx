@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bolt, Circuit, Battery } from "lucide-react";
+import { Bolt, CircuitBoard, Battery } from "lucide-react";
 
 const MOETElectricalPrinciplesPage = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const MOETElectricalPrinciplesPage = () => {
     {
       title: "Circuit Theory",
       description: "Understanding electrical circuits, components, and their interactions.",
-      icon: <Circuit className="h-6 w-6 text-[#FFC900]" />
+      icon: <CircuitBoard className="h-6 w-6 text-[#FFC900]" />
     },
     {
       title: "Power Systems",
