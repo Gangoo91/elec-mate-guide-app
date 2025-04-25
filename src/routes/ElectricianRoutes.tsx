@@ -43,6 +43,7 @@ import SiteAssessmentPage from "@/pages/electricians/solar/installation/SiteAsse
 import StructuralAssessmentPage from "@/pages/electricians/solar/installation/StructuralAssessmentPage";
 import SolarResourcePage from "@/pages/electricians/solar/installation/SolarResourcePage";
 import SiteSurveyPage from "@/pages/electricians/solar/installation/SiteSurveyPage";
+import Mentorship from "@/pages/Mentorship";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
