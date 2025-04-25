@@ -1,72 +1,66 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface ResourceCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  children?: React.ReactNode;
   action?: {
     label: string;
-    onClick?: () => void;
     href?: string;
+    onClick?: () => void;
   };
-  fullCardLink?: string; // Prop to enable full card navigation
+  children?: React.ReactNode;
+  fullCardLink?: string;
 }
 
-const ResourceCard = ({ title, description, icon, children, action, fullCardLink }: ResourceCardProps) => {
-  // If fullCardLink is provided, wrap the entire card content in a Link
-  const CardWrapper = fullCardLink ? Link : React.Fragment;
-  const wrapperProps = fullCardLink ? { 
-    to: fullCardLink, 
-    className: "block h-full cursor-pointer no-underline" 
-  } : {};
+const ResourceCard = ({ 
+  title, 
+  description, 
+  icon, 
+  action, 
+  children, 
+  fullCardLink 
+}: ResourceCardProps) => {
+  const CardWrapper = fullCardLink ? Link : 'div';
+  const wrapperProps = fullCardLink ? { to: fullCardLink } : {};
 
   return (
-    <CardWrapper {...wrapperProps}>
-      <Card className="h-full flex flex-col bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#FFC900]/10">
-        <CardHeader className="pb-2">
-          <div className="flex items-center gap-3">
-            {icon}
-            <CardTitle className="text-[#FFC900] text-lg md:text-xl">{title}</CardTitle>
+    <CardWrapper 
+      {...wrapperProps}
+      className={`block h-full ${fullCardLink ? 'cursor-pointer' : ''}`}
+    >
+      <Card className="h-full bg-card border-border/20 hover:border-primary/30 transition-all duration-300">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-4">
+            <div className="text-primary">{icon}</div>
+            <div>
+              <h3 className="text-foreground font-medium text-lg mb-2">{title}</h3>
+              <p className="text-muted-foreground text-sm">{description}</p>
+              {children && <div className="mt-4">{children}</div>}
+              {action && (
+                <div className="mt-4">
+                  {action.href ? (
+                    <Link 
+                      to={action.href}
+                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                    >
+                      {action.label}
+                    </Link>
+                  ) : (
+                    <Button 
+                      onClick={action.onClick}
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      {action.label}
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-          <CardDescription className="text-[#FFC900]/70 text-sm">
-            {description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col justify-between flex-grow pt-2">
-          {children && <div className="mb-4">{children}</div>}
-          
-          {action && !fullCardLink && (
-            action.href ? (
-              action.href.startsWith("#") ? (
-                <a 
-                  href={action.href}
-                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                >
-                  {action.label} →
-                </a>
-              ) : (
-                <Link 
-                  to={action.href}
-                  className="mt-auto inline-block text-[#FFC900] font-medium hover:text-[#FFF200]"
-                >
-                  {action.label} →
-                </Link>
-              )
-            ) : (
-              <Button 
-                variant="ghost" 
-                className="mt-auto w-full justify-start p-0 text-[#FFC900] font-medium hover:text-[#FFF200] hover:bg-transparent"
-                onClick={action.onClick}
-              >
-                {action.label} →
-              </Button>
-            )
-          )}
         </CardContent>
       </Card>
     </CardWrapper>
