@@ -47,6 +47,9 @@ import SystemDesignPage from "@/pages/electricians/solar/installation/SystemDesi
 import PhysicalInstallationPage from "@/pages/electricians/solar/installation/PhysicalInstallationPage";
 import CommissioningPage from "@/pages/electricians/solar/installation/CommissioningPage";
 import MountingSystemsInstallationPage from "@/pages/electricians/solar/installation/MountingSystemsInstallationPage";
+import PanelInstallationPage from "@/pages/electricians/solar/installation/PanelInstallationPage";
+import EquipmentInstallationPage from "@/pages/electricians/solar/installation/EquipmentInstallationPage";
+import SafetyConsiderationsPage from "@/pages/electricians/solar/installation/SafetyConsiderationsPage";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
@@ -97,4 +100,7 @@ export const ElectricianRoutes = [
   <Route key="physical-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />,
   <Route key="commissioning" path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />,
   <Route key="mounting-systems-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/mounting-systems" element={<MountingSystemsInstallationPage />} />,
+  <Route key="panel-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/panel-installation" element={<PanelInstallationPage />} />,
+  <Route key="equipment-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/equipment-installation" element={<EquipmentInstallationPage />} />,
+  <Route key="safety-considerations" path="/electricians/solar-pv-installation/installation-process/physical-installation/safety-considerations" element={<SafetyConsiderationsPage />} />,
 ];
