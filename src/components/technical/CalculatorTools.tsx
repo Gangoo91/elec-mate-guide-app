@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Calculator } from "lucide-react";
 import {
@@ -13,11 +12,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import OhmsLawCalculator from './calculators/OhmsLawCalculator';
 import PowerCalculator from './calculators/PowerCalculator';
 import ResistanceInParallelCalculator from './calculators/ResistanceInParallelCalculator';
+import MotorCurrentCalculator from './calculators/MotorCurrentCalculator';
 import VoltageDropCalculator from './calculators/VoltageDropCalculator';
 import ImpedanceCalculator from './calculators/ImpedanceCalculator';
 import InstrumentationCalculator from './calculators/InstrumentationCalculator';
 import VoltageRegulationCalculator from './calculators/VoltageRegulationCalculator';
 import FaultCurrentCalculator from './calculators/FaultCurrentCalculator';
+import CableSizeCalculator from './calculators/CableSizeCalculator';
+import TransformerCalculator from './calculators/TransformerCalculator';
 
 const CalculatorTools = () => {
   const [selectedCalculator, setSelectedCalculator] = useState<string>('ohms-law');
@@ -27,12 +29,15 @@ const CalculatorTools = () => {
     'ohms-law': { title: "Ohm's Law", component: <OhmsLawCalculator />, type: 'basic' },
     'power': { title: "Power Equations", component: <PowerCalculator />, type: 'basic' },
     'parallel-resistance': { title: "Parallel Resistance", component: <ResistanceInParallelCalculator />, type: 'basic' },
+    'motor-current': { title: "Motor Current", component: <MotorCurrentCalculator />, type: 'basic' },
     
     // Advanced Electrical Calculators
     'voltage-drop': { title: "Cable Voltage Drop", component: <VoltageDropCalculator />, type: 'advanced' },
     'impedance': { title: "Circuit Impedance", component: <ImpedanceCalculator />, type: 'advanced' },
     'voltage-regulation': { title: "Voltage Regulation", component: <VoltageRegulationCalculator />, type: 'advanced' },
     'fault-current': { title: "Fault Current", component: <FaultCurrentCalculator />, type: 'advanced' },
+    'cable-size': { title: "Cable Size", component: <CableSizeCalculator />, type: 'advanced' },
+    'transformer': { title: "Transformer", component: <TransformerCalculator />, type: 'advanced' },
     
     // Instrumentation Calculators
     'instrumentation': { title: "Instrumentation Scaling", component: <InstrumentationCalculator />, type: 'instrumentation' },
