@@ -10,6 +10,8 @@ interface ExamCardProps {
   numQuestions: number;
   timeLimit: number;
   onStart: () => void;
+  unitCode?: string;
+  unitTitle?: string;
 }
 
 const ExamCard: React.FC<ExamCardProps> = ({ 
@@ -17,7 +19,9 @@ const ExamCard: React.FC<ExamCardProps> = ({
   description, 
   numQuestions, 
   timeLimit, 
-  onStart 
+  onStart,
+  unitCode,
+  unitTitle 
 }) => {
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
