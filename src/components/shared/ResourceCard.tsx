@@ -25,7 +25,6 @@ const ResourceCard = ({
   children, 
   fullCardLink 
 }: ResourceCardProps) => {
-  // Fix: Create proper conditional rendering rather than dynamic component
   return (
     <>
       {fullCardLink ? (
@@ -36,7 +35,7 @@ const ResourceCard = ({
           <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
-                <div className="text-primary">{icon}</div>
+                <div className="text-[#FFC900]">{icon}</div>
                 <div>
                   <h3 className="text-[#FFC900] font-medium text-lg mb-2">{title}</h3>
                   <p className="text-[#FFC900]/70 text-sm">{description}</p>
@@ -70,7 +69,7 @@ const ResourceCard = ({
           <Card className="h-full bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
             <CardContent className="pt-6">
               <div className="flex items-start gap-4">
-                <div className="text-primary">{icon}</div>
+                <div className="text-[#FFC900]">{icon}</div>
                 <div>
                   <h3 className="text-[#FFC900] font-medium text-lg mb-2">{title}</h3>
                   <p className="text-[#FFC900]/70 text-sm">{description}</p>
