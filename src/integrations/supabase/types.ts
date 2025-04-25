@@ -85,6 +85,8 @@ export type Database = {
           question_text: string
           topic: string
           unit_code: string | null
+          unit_description: string | null
+          unit_title: string | null
           updated_at: string | null
         }
         Insert: {
@@ -99,6 +101,8 @@ export type Database = {
           question_text: string
           topic: string
           unit_code?: string | null
+          unit_description?: string | null
+          unit_title?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -113,6 +117,8 @@ export type Database = {
           question_text?: string
           topic?: string
           unit_code?: string | null
+          unit_description?: string | null
+          unit_title?: string | null
           updated_at?: string | null
         }
         Relationships: []

@@ -8,6 +8,9 @@ interface ExamQuestion {
   options: string[];
   difficulty: string;
   topic: string;
+  unit_code: string | null;
+  unit_title: string | null;
+  unit_description: string | null;
 }
 
 export const useExamQuestions = (qualification: string, level: string) => {
@@ -18,7 +21,8 @@ export const useExamQuestions = (qualification: string, level: string) => {
         .from('exam_questions')
         .select('*')
         .eq('qualification_type', qualification)
-        .eq('level', level);
+        .eq('level', level)
+        .order('unit_code');
 
       if (error) throw error;
       return data as ExamQuestion[];

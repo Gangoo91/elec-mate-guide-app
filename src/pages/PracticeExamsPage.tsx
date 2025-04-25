@@ -22,6 +22,27 @@ const PracticeExamsPage = () => {
     });
   };
 
+  // Group questions by unit
+  const groupedQuestions = React.useMemo(() => {
+    if (!questions) return [];
+    
+    const groupedByUnit = questions.reduce((acc, question) => {
+      const unitCode = question.unit_code || 'general';
+      if (!acc[unitCode]) {
+        acc[unitCode] = {
+          unitCode: question.unit_code,
+          unitTitle: question.unit_title,
+          unitDescription: question.unit_description,
+          questions: []
+        };
+      }
+      acc[unitCode].questions.push(question);
+      return acc;
+    }, {} as Record<string, any>);
+
+    return Object.values(groupedByUnit);
+  }, [questions]);
+
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
@@ -49,15 +70,21 @@ const PracticeExamsPage = () => {
             <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6">
               <p className="text-[#FFC900]/70">Loading available exams...</p>
             </div>
-          ) : questions && questions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <ExamCard
-                title={`${qualification} ${level} Practice Exam`}
-                description="Test your knowledge with questions from various topics covered in your qualification."
-                numQuestions={20}
-                timeLimit={45}
-                onStart={handleStartExam}
-              />
+          ) : groupedQuestions.length > 0 ? (
+            <div className="space-y-8">
+              {groupedQuestions.map((unit, index) => (
+                <div key={unit.unitCode || index}>
+                  <ExamCard
+                    title={`${qualification} ${level} Practice Exam`}
+                    description={unit.unitDescription || "Test your knowledge with questions from various topics covered in your qualification."}
+                    unitCode={unit.unitCode}
+                    unitTitle={unit.unitTitle}
+                    numQuestions={unit.questions.length}
+                    timeLimit={45}
+                    onStart={handleStartExam}
+                  />
+                </div>
+              ))}
             </div>
           ) : (
             <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6">
