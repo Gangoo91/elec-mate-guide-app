@@ -1,55 +1,53 @@
 
 import React from 'react';
 import SolarContentLayout from '@/components/solar/SolarContentLayout';
+import ResourceCard from '@/components/shared/ResourceCard';
+import { ClipboardList, Sun, Search } from 'lucide-react';
 
 const SiteAssessmentPage = () => {
   const sections = [
     {
       title: "Structural Assessment",
-      content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Evaluate roof condition and load-bearing capacity</li>
-            <li>Check roof material compatibility</li>
-            <li>Identify structural supports and rafters</li>
-            <li>Document any existing damage or weak points</li>
-          </ul>
-        </div>
-      )
+      description: "Learn how to evaluate roof conditions, load-bearing capacity, and structural integrity for solar installations.",
+      icon: <ClipboardList className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/installation-process/site-assessment/structural"
     },
     {
       title: "Solar Resource Analysis",
-      content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Conduct detailed shading analysis</li>
-            <li>Calculate sun path and exposure hours</li>
-            <li>Measure roof orientation (azimuth)</li>
-            <li>Determine optimal tilt angle</li>
-          </ul>
-        </div>
-      )
+      description: "Master the techniques for analyzing solar exposure, shading, and optimal panel positioning.",
+      icon: <Sun className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/installation-process/site-assessment/solar-resource"
     },
     {
       title: "Site Survey",
-      content: (
-        <div className="space-y-4">
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Measure available roof space</li>
-            <li>Identify obstacles (vents, chimneys, etc.)</li>
-            <li>Document access points and safety requirements</li>
-            <li>Assess ground conditions for equipment staging</li>
-          </ul>
-        </div>
-      )
+      description: "Comprehensive guide to conducting thorough site surveys and documenting key installation factors.",
+      icon: <Search className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/solar-pv-installation/installation-process/site-assessment/survey"
     }
   ];
 
   return (
     <SolarContentLayout
       title="Site Assessment"
-      description="Comprehensive guide to conducting a thorough site assessment for solar PV installations."
-      sections={sections}
+      description="Comprehensive guide to conducting thorough site assessments for solar PV installations."
+      sections={[
+        {
+          title: "Assessment Components",
+          content: (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {sections.map((section, index) => (
+                <ResourceCard
+                  key={index}
+                  title={section.title}
+                  description={section.description}
+                  icon={section.icon}
+                  fullCardLink={section.path}
+                />
+              ))}
+            </div>
+          )
+        }
+      ]}
     />
   );
 };

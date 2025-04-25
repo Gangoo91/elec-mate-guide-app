@@ -93,6 +93,9 @@ import SiteAssessmentPage from "./pages/electricians/solar/installation/SiteAsse
 import SystemDesignPage from "./pages/electricians/solar/installation/SystemDesignPage";
 import PhysicalInstallationPage from "./pages/electricians/solar/installation/PhysicalInstallationPage";
 import CommissioningPage from "./pages/electricians/solar/installation/CommissioningPage";
+import StructuralAssessmentPage from "./pages/electricians/solar/installation/StructuralAssessmentPage";
+import SolarResourcePage from "./pages/electricians/solar/installation/SolarResourcePage";
+import SiteSurveyPage from "./pages/electricians/solar/installation/SiteSurveyPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -198,9 +201,9 @@ const App = () => {
                   <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
                   
                   <Route path="/electricians/solar-pv-installation/installation-process/site-assessment" element={<SiteAssessmentPage />} />
-                  <Route path="/electricians/solar-pv-installation/installation-process/system-design" element={<SystemDesignPage />} />
-                  <Route path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />
-                  <Route path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/site-assessment/structural" element={<StructuralAssessmentPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/site-assessment/solar-resource" element={<SolarResourcePage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/site-assessment/survey" element={<SiteSurveyPage />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   
