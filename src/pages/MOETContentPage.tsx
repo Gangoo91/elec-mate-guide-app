@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, ListCheck, List, FileText, FolderOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const MOETContentPage = () => {
   const navigate = useNavigate();
@@ -18,7 +16,8 @@ const MOETContentPage = () => {
     {
       title: "Core Knowledge",
       description: "Essential knowledge covering electrical principles, maintenance practices, and engineering operations.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge')
     },
     {
       title: "Core Skills",
@@ -55,19 +54,15 @@ const MOETContentPage = () => {
           {sections.map((section, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={section.onClick}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   {section.icon}
                   <div>
                     <h3 className="text-[#FFC900] font-medium text-lg mb-2">{section.title}</h3>
-                    <p className="text-[#FFC900]/70 text-sm mb-4">{section.description}</p>
-                    <Button 
-                      className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"
-                    >
-                      Access Content
-                    </Button>
+                    <p className="text-[#FFC900]/70 text-sm">{section.description}</p>
                   </div>
                 </div>
               </CardContent>

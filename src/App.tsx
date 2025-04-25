@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -51,6 +50,7 @@ import MOETPage from "./pages/MOETPage";
 import AM2Page from "./pages/AM2Page";
 import Level2CoreUnitsPage from "./pages/Level2CoreUnitsPage";
 import MOETContentPage from "./pages/MOETContentPage";
+import MOETCoreKnowledgePage from "./pages/MOETCoreKnowledgePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -103,6 +103,7 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds/level-3/course-content/unit-:unitId" element={<UnitContentPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/moet" element={<MOETPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/moet/content" element={<MOETContentPage />} />
+                  <Route path="/apprentices/study-materials/city-guilds/moet/core-knowledge" element={<MOETCoreKnowledgePage />} />
                   <Route path="/apprentices/study-materials/city-guilds/am2" element={<AM2Page />} />
                   <Route path="/apprentices/mentorship" element={<Mentorship />} />
                   
