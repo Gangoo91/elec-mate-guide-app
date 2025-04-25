@@ -84,9 +84,8 @@ const ElectriciansStudyGuidePage = () => {
           {topics.map((topic, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
               onClick={() => topic.link && navigate(topic.link)}
-              style={{ cursor: topic.link ? 'pointer' : 'default' }}
             >
               <CardHeader>
                 <CardTitle className="text-[#FFC900] flex items-center gap-2 text-xl">

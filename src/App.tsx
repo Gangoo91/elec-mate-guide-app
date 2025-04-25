@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -69,7 +68,17 @@ import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
 import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
 import LearningHubElectriciansPage from "./pages/LearningHubElectriciansPage";
 import ElectriciansExamsPage from "./pages/ElectriciansExamsPage";
-import ElectriciansStudyGuidePage from "./pages/ElectriciansStudyGuidePage";
+import ElectriciansStudyGuidePage from "./pages/electricians/ElectriciansStudyGuidePage";
+import SolarPVInstallationPage from "./pages/electricians/SolarPVInstallationPage";
+import EnergyStorageSystemsPage from "./pages/electricians/EnergyStorageSystemsPage";
+import BuildingManagementSystemsPage from "./pages/electricians/BuildingManagementSystemsPage";
+import SmartHomeTechnologiesPage from "./pages/electricians/SmartHomeTechnologiesPage";
+import EVInfrastructurePage from "./pages/electricians/EVInfrastructurePage";
+import DataNetworksPage from "./pages/electricians/DataNetworksPage";
+import EnergyEfficiencyPage from "./pages/electricians/EnergyEfficiencyPage";
+import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
+import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
+import AccessControlPage from "./pages/electricians/AccessControlPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -135,6 +144,17 @@ const App = () => {
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />
                   <Route path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />
+                  <Route path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />
+                  <Route path="/electricians/energy-storage-systems" element={<EnergyStorageSystemsPage />} />
+                  <Route path="/electricians/building-management-systems" element={<BuildingManagementSystemsPage />} />
+                  <Route path="/electricians/smart-home-technologies" element={<SmartHomeTechnologiesPage />} />
+                  <Route path="/electricians/ev-infrastructure" element={<EVInfrastructurePage />} />
+                  <Route path="/electricians/data-networks" element={<DataNetworksPage />} />
+                  <Route path="/electricians/energy-efficiency" element={<EnergyEfficiencyPage />} />
+                  <Route path="/electricians/emergency-lighting" element={<EmergencyLightingPage />} />
+                  <Route path="/electricians/fire-alarm-systems" element={<FireAlarmSystemsPage />} />
+                  <Route path="/electricians/access-control" element={<AccessControlPage />} />
+                  
                   <Route path="/electricians/practice-exams" element={<ElectriciansExamsPage />} />
                   <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
