@@ -5,6 +5,8 @@ import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { BadgeAlert } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Alert } from "@/components/ui/alert";
 
 const pricingData = [
   {
@@ -21,8 +23,8 @@ const pricingData = [
   },
   {
     title: "Electrician",
-    price: "£5.99/mo", // Updated price
-    annual: "£59.99/yr", // Updated annual price
+    price: "£5.99/mo",
+    annual: "£59.99/yr",
     features: [
       "All Apprentice features",
       "Advanced tools",
@@ -42,7 +44,7 @@ const pricingData = [
     ],
     color: "border-[#FFB300]",
     highlight: false,
-    comingSoon: true // Added coming soon flag
+    comingSoon: true
   }
 ];
 
@@ -84,7 +86,7 @@ const Welcome = () => {
                   ${tier.color}
                   ${tier.highlight ? "shadow-lg scale-105 border-4 border-yellow-400" : "shadow"}
                   transition-all
-                  ${tier.comingSoon ? "opacity-60 cursor-not-allowed" : ""}
+                  ${tier.comingSoon ? "opacity-85 cursor-not-allowed" : ""}
                 `}
               >
                 <div className="flex items-center justify-between">
@@ -93,10 +95,10 @@ const Welcome = () => {
                     <span className="ml-2 px-2 py-0.5 rounded bg-[#FFC900] text-[#14130A] text-xs font-semibold">MOST VALUE</span>
                   )}
                   {tier.comingSoon && (
-                    <div className="flex items-center gap-1 text-yellow-400">
+                    <Badge className="bg-amber-500/80 text-black font-semibold border-0 hover:bg-amber-500/90 flex items-center gap-1">
                       <BadgeAlert className="h-4 w-4" />
-                      <span className="text-xs font-semibold">Coming Soon</span>
-                    </div>
+                      <span>Coming Soon</span>
+                    </Badge>
                   )}
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
@@ -108,10 +110,19 @@ const Welcome = () => {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
+                
                 {tier.comingSoon && (
-                  <div className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
-                    <span className="text-yellow-400 font-bold text-lg">Coming Soon</span>
-                  </div>
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/30 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center z-10">
+                      <span className="px-4 py-2 bg-amber-500 text-black font-bold text-lg rounded-full shadow-lg transform -rotate-6 animate-pulse mb-2">Coming Soon</span>
+                      <p className="text-amber-300 text-sm px-4 text-center">Register to be notified when this launches</p>
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-24 h-24 overflow-hidden z-20">
+                      <div className="bg-amber-500 text-black font-bold text-xs py-1 px-4 rotate-45 origin-bottom-left shadow-md absolute top-0 right-0 transform translate-y-2 translate-x-6">
+                        SOON
+                      </div>
+                    </div>
+                  </>
                 )}
               </div>
             ))}
