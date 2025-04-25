@@ -129,11 +129,11 @@ const Welcome = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="absolute -top-2 -right-2 w-24 h-24 overflow-hidden z-20">
+                    <div className="absolute top-0 right-0 w-24 h-16 overflow-hidden z-20">
                       <div 
-                        className="bg-amber-500 text-black font-bold text-xs py-1 px-4 
-                        rotate-45 origin-bottom-left shadow-md absolute top-0 right-0 
-                        transform translate-y-2 translate-x-6"
+                        className="bg-amber-500 text-black font-bold text-xs py-1 px-3 
+                        rotate-45 origin-top-right absolute top-0 right-0 
+                        transform -translate-x-1/2 translate-y-1/4 w-full text-center"
                       >
                         SOON
                       </div>
