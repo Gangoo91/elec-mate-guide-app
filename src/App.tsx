@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -90,6 +89,10 @@ import SolarPanelsPage from "./pages/electricians/solar/components/SolarPanelsPa
 import InvertersPage from "./pages/electricians/solar/components/InvertersPage";
 import MountingSystemsPage from "./pages/electricians/solar/components/MountingSystemsPage";
 import ElectricalComponentsPage from "./pages/electricians/solar/components/ElectricalComponentsPage";
+import SiteAssessmentPage from "./pages/electricians/solar/installation/SiteAssessmentPage";
+import SystemDesignPage from "./pages/electricians/solar/installation/SystemDesignPage";
+import PhysicalInstallationPage from "./pages/electricians/solar/installation/PhysicalInstallationPage";
+import CommissioningPage from "./pages/electricians/solar/installation/CommissioningPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -193,6 +196,11 @@ const App = () => {
                   <Route path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />
                   <Route path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />
                   <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
+                  
+                  <Route path="/electricians/solar-pv-installation/installation-process/site-assessment" element={<SiteAssessmentPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/system-design" element={<SystemDesignPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />
+                  <Route path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />
                   
                   <Route path="/employers" element={<EmployersPage />} />
                   
