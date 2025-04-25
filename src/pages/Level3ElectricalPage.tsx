@@ -4,21 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import UnitCard from "@/components/level2/UnitCard";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 const Level3ElectricalPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
-  const handleBackToCityGuilds = () => {
-    navigate('/apprentices/study-materials/city-guilds');
-  };
-
   const units = [
-    {
-      unitNumber: "201",
-      title: "Health and Safety in Building Services Engineering",
-      description: "Advanced health and safety practices, risk assessment, and safe working procedures in electrical installations.",
-      path: "/apprentices/study-materials/city-guilds/level-3/course-content/unit-201"
-    },
     {
       unitNumber: "301",
       title: "Environmental Technology Systems",
@@ -56,25 +49,33 @@ const Level3ElectricalPage = () => {
       path: "/apprentices/study-materials/city-guilds/level-3/course-content/unit-308"
     }
   ];
+  
+  const handleBackToCityGuilds = () => {
+    navigate('/apprentices/study-materials/city-guilds');
+  };
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
+      <div className="container px-4 py-8">
         <PageHeader 
           title="Level 3 Electrical Installation (2365-05)"
           description="Advanced study materials for your Level 3 electrical qualification, designed to build on your Level 2 knowledge."
           customBackAction={handleBackToCityGuilds}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {units.map((unit) => (
-            <UnitCard
+            <Card 
               key={unit.unitNumber}
-              unitNumber={unit.unitNumber}
-              title={unit.title}
-              description={unit.description}
-              path={unit.path}
-            />
+              className="h-full"
+            >
+              <UnitCard
+                unitNumber={unit.unitNumber}
+                title={unit.title}
+                description={unit.description}
+                path={unit.path}
+              />
+            </Card>
           ))}
         </div>
       </div>
