@@ -20,8 +20,8 @@ const pricingData = [
   },
   {
     title: "Electrician",
-    price: "£6.99/mo",
-    annual: "£69.99/yr",
+    price: "£4.99/mo",
+    annual: "£49.99/yr",
     features: [
       "All Apprentice features",
       "Advanced tools",
@@ -32,8 +32,8 @@ const pricingData = [
   },
   {
     title: "Employer",
-    price: "£49.99/mo",
-    annual: "£499.99/yr",
+    price: "£9.99/mo",
+    annual: "£99.99/yr",
     features: [
       "All Electrician features",
       "Recruitment dashboard",

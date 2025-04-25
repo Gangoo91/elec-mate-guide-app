@@ -2,8 +2,8 @@
 export const subscriptionPlans = [
   {
     name: "Apprentice",
-    monthlyPrice: "£1.99",
-    yearlyPrice: "£19.99",
+    monthlyPrice: "£2.99",
+    yearlyPrice: "£29.99",
     description: "Access to all apprentice resources and training tools",
   },
   {
