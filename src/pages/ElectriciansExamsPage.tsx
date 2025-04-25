@@ -1,18 +1,12 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import ExamFilters from "@/components/practice-exams/ExamFilters";
 import ExamCard from "@/components/practice-exams/ExamCard";
-import { useExamQuestions } from "@/components/practice-exams/useExamQuestions";
 import { useToast } from "@/components/ui/use-toast";
-import { unitContent } from "@/data/unitContent";
 
 const ElectriciansExamsPage = () => {
-  const [qualification, setQualification] = useState('');
-  const [level, setLevel] = useState('');
   const { toast } = useToast();
-  const { data: questions, isLoading } = useExamQuestions(qualification, level);
 
   const handleStartExam = () => {
     toast({
@@ -22,77 +16,88 @@ const ElectriciansExamsPage = () => {
     });
   };
 
-  // Group questions by topic for electricians
-  const groupedQuestions = React.useMemo(() => {
-    if (!questions) return [];
-    
-    const groupedByTopic = questions.reduce((acc, question) => {
-      const topic = question.topic || 'General';
-      if (!acc[topic]) {
-        acc[topic] = {
-          topic,
-          unitTitle: question.unit_title || topic,
-          unitDescription: question.unit_description || `Practice questions for ${topic}`,
-          questions: []
-        };
-      }
-      acc[topic].questions.push(question);
-      return acc;
-    }, {} as Record<string, any>);
-
-    return Object.values(groupedByTopic);
-  }, [questions]);
+  const examTopics = [
+    {
+      title: "Solar PV Installation",
+      description: "Test your knowledge of solar PV system installation, maintenance, and troubleshooting.",
+      numQuestions: 40,
+      timeLimit: 60
+    },
+    {
+      title: "Energy Storage Systems",
+      description: "Assessment covering battery technologies and renewable energy integration.",
+      numQuestions: 35,
+      timeLimit: 50
+    },
+    {
+      title: "Building Management Systems",
+      description: "Questions on BMS architecture, protocols, and maintenance procedures.",
+      numQuestions: 45,
+      timeLimit: 70
+    },
+    {
+      title: "Smart Home Technologies",
+      description: "Test covering home automation and IoT integration techniques.",
+      numQuestions: 30,
+      timeLimit: 45
+    },
+    {
+      title: "EV Infrastructure",
+      description: "Assessment of EV charging installation and load management knowledge.",
+      numQuestions: 40,
+      timeLimit: 60
+    },
+    {
+      title: "Data Networks",
+      description: "Exam covering structured cabling and network installation skills.",
+      numQuestions: 35,
+      timeLimit: 50
+    },
+    {
+      title: "Energy Efficiency",
+      description: "Questions on heat pumps and energy management systems.",
+      numQuestions: 40,
+      timeLimit: 60
+    },
+    {
+      title: "Emergency Lighting",
+      description: "Test on emergency lighting design and installation to BS 5266.",
+      numQuestions: 30,
+      timeLimit: 45
+    },
+    {
+      title: "Fire Alarm Systems",
+      description: "Assessment of fire detection system knowledge to BS 5839.",
+      numQuestions: 45,
+      timeLimit: 70
+    },
+    {
+      title: "Access Control",
+      description: "Exam covering security systems and access control technologies.",
+      numQuestions: 35,
+      timeLimit: 50
+    }
+  ];
 
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <PageHeader 
           title="Professional Practice Exams"
-          description="Test your knowledge with mock exams and quizzes covering advanced electrical topics for qualified electricians."
+          description="Test your knowledge with mock exams covering specialized electrical topics."
         />
 
-        <div className="space-y-6">
-          <ExamFilters
-            qualification={qualification}
-            level={level}
-            onQualificationChange={setQualification}
-            onLevelChange={setLevel}
-          />
-
-          {!qualification || !level ? (
-            <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6">
-              <p className="text-[#FFC900]/70">
-                Select a qualification and level to view available practice exams.
-              </p>
-            </div>
-          ) : isLoading ? (
-            <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6">
-              <p className="text-[#FFC900]/70">Loading available exams...</p>
-            </div>
-          ) : groupedQuestions.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {groupedQuestions.map((group, index) => (
-                <div key={index}>
-                  <ExamCard
-                    title={group.topic || 'General'}
-                    description={group.unitDescription}
-                    unitCode={group.topic}
-                    unitTitle={group.unitTitle}
-                    numQuestions={group.questions.length}
-                    timeLimit={45}
-                    onStart={handleStartExam}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6">
-              <p className="text-[#FFC900]/70">
-                No practice exams are currently available for this qualification and level.
-                More content will be added soon.
-              </p>
-            </div>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          {examTopics.map((topic, index) => (
+            <ExamCard
+              key={index}
+              title={topic.title}
+              description={topic.description}
+              numQuestions={topic.numQuestions}
+              timeLimit={topic.timeLimit}
+              onStart={handleStartExam}
+            />
+          ))}
         </div>
       </div>
     </MainLayout>

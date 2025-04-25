@@ -2,7 +2,6 @@
 import React from 'react';
 import { Book } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
-import BackButton from "@/components/navigation/BackButton";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -36,40 +35,36 @@ const ElectriciansStudyGuidePage = () => {
     {
       title: "Data Networks",
       description: "Structured cabling, network architecture and fiber optic installations for electricians.",
-      comingSoon: true
+      comingSoon: false
     },
     {
       title: "Energy Efficiency",
       description: "Heat pumps, energy monitoring and management systems for commercial and domestic applications.",
-      comingSoon: true
+      comingSoon: false
     },
     {
       title: "Emergency Lighting",
       description: "Design, installation and testing of emergency lighting systems to BS 5266.",
-      comingSoon: true
+      comingSoon: false
     },
     {
       title: "Fire Alarm Systems",
       description: "Fire detection and alarm systems design, installation and maintenance to BS 5839.",
-      comingSoon: true
+      comingSoon: false
     },
     {
       title: "Access Control",
       description: "Security systems, access control technologies and integration with building management systems.",
-      comingSoon: true
+      comingSoon: false
     }
   ];
 
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
-        <div className="mb-4">
-          <BackButton />
-        </div>
         <PageHeader 
           title="Professional Study Materials"
           description="Comprehensive learning resources for electricians to expand knowledge and skills in specialized areas."
-          hideBackButton={true}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

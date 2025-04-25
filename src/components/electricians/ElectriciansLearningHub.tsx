@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Book, TestTube } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import ResourceCard from "@/components/shared/ResourceCard";
 
 const ElectriciansLearningHub = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -25,83 +26,19 @@ const ElectriciansLearningHub = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Study Guide Section */}
-        <Link to="/electricians/study-guide">
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
-            <CardHeader>
-              <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                <Book className="h-6 w-6" />
-                Study Guide
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-[#FFC900]/70 mb-6">
-                Access comprehensive study materials for professional electrician qualifications and continuing education.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  "Solar PV Installation", 
-                  "Energy Storage Systems", 
-                  "Building Management", 
-                  "Smart Home Tech", 
-                  "EV Infrastructure", 
-                  "Data Networks", 
-                  "Energy Efficiency", 
-                  "Emergency Lighting", 
-                  "Fire Alarm Systems", 
-                  "Access Control"
-                ].map((topic, index) => (
-                  <div 
-                    key={index}
-                    className="bg-[#1a1d16] px-3 py-2 rounded-md border border-[#FFC900]/10 text-[#FFC900]/80 text-sm hover:bg-[#2a2d26] hover:border-[#FFC900]/30 transition-colors cursor-pointer"
-                  >
-                    {topic}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+        <ResourceCard
+          title="Study Guide"
+          description="Access comprehensive study materials for professional qualifications and continuing education."
+          icon={<Book className="h-6 w-6" />}
+          fullCardLink="/electricians/study-guide"
+        />
 
-        {/* Online Mock Exams Section */}
-        <Link to="/electricians/practice-exams">
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 h-full">
-            <CardHeader>
-              <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                <TestTube className="h-6 w-6" />
-                Online Mock Exams
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-[#FFC900]/70 mb-6">
-                Practice with our comprehensive mock exams designed to prepare you for professional electrical qualifications and certifications.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  "Solar PV Installation", 
-                  "Energy Storage Systems", 
-                  "Building Management", 
-                  "Smart Home Tech", 
-                  "EV Infrastructure", 
-                  "Data Networks", 
-                  "Energy Efficiency", 
-                  "Emergency Lighting", 
-                  "Fire Alarm Systems", 
-                  "Access Control"
-                ].map((topic, index) => (
-                  <div 
-                    key={index}
-                    className="bg-[#1a1d16] px-3 py-2 rounded-md border border-[#FFC900]/10 text-[#FFC900]/80 text-sm hover:bg-[#2a2d26] hover:border-[#FFC900]/30 transition-colors cursor-pointer"
-                  >
-                    {topic}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+        <ResourceCard
+          title="Online Mock Exams"
+          description="Practice with our comprehensive mock exams designed to prepare you for professional electrical qualifications."
+          icon={<TestTube className="h-6 w-6" />}
+          fullCardLink="/electricians/practice-exams"
+        />
       </div>
     </div>
   );
