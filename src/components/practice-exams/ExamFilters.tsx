@@ -10,6 +10,24 @@ interface ExamFiltersProps {
 }
 
 const ExamFilters = ({ qualification, level, onQualificationChange, onLevelChange }: ExamFiltersProps) => {
+  const getLevelOptions = () => {
+    if (qualification === 'City & Guilds') {
+      return [
+        { value: 'Level 2', label: 'Level 2' },
+        { value: 'Level 3', label: 'Level 3' },
+        { value: 'MOET', label: 'MOET' },
+        { value: 'HNC', label: 'HNC' },
+        { value: 'HND', label: 'HND' },
+        { value: '2391', label: '2391 Inspection and Testing' }
+      ];
+    }
+    return [
+      { value: 'Level 2', label: 'Level 2' },
+      { value: 'Level 3', label: 'Level 3' },
+      { value: 'AM2', label: 'AM2' }
+    ];
+  };
+
   return (
     <div className="flex flex-col md:flex-row gap-4">
       <div className="w-full md:w-48">
@@ -30,9 +48,15 @@ const ExamFilters = ({ qualification, level, onQualificationChange, onLevelChang
             <SelectValue placeholder="Select level" />
           </SelectTrigger>
           <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-            <SelectItem value="Level 2" className="text-[#FFC900]">Level 2</SelectItem>
-            <SelectItem value="Level 3" className="text-[#FFC900]">Level 3</SelectItem>
-            <SelectItem value="AM2" className="text-[#FFC900]">AM2</SelectItem>
+            {getLevelOptions().map((option) => (
+              <SelectItem 
+                key={option.value} 
+                value={option.value} 
+                className="text-[#FFC900]"
+              >
+                {option.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
