@@ -24,7 +24,7 @@ import Mentorship from "@/pages/Mentorship";
 import EALQualificationsPage from "@/pages/EALQualificationsPage";
 import HigherLearningPage from "@/pages/HigherLearningPage";
 import InspectionTestingPage from "@/pages/InspectionTestingPage";
-import SectionPage from "@/pages/SectionPage";
+import SectionPage from "@/pages/units/SectionPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,

@@ -1,5 +1,6 @@
 
 import { UnitContent } from './interfaces';
+import SectionContent from "@/components/units/SectionContent";
 
 export const unit301: UnitContent = {
   title: "Environmental Technology Systems",
