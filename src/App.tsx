@@ -79,7 +79,7 @@ import EnergyEfficiencyPage from "./pages/electricians/EnergyEfficiencyPage";
 import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
 import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
 import AccessControlPage from "./pages/electricians/AccessControlPage";
-import SystemComponentsPage from "./pages/electricians/SystemComponentsPage";
+import SystemComponentsPage from "./pages/electricians/solar/SystemComponentsPage";
 import InstallationProcessPage from "./pages/electricians/solar/InstallationProcessPage";
 import ElectricalIntegrationPage from "./pages/electricians/solar/ElectricalIntegrationPage";
 import WiringConnectionsPage from "./pages/electricians/solar/WiringConnectionsPage";
