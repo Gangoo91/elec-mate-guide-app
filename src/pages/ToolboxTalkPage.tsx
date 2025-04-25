@@ -1,6 +1,6 @@
 
 import React from "react";
-import { MessageSquare, Box, Tools, Shield, DollarSign } from "lucide-react";
+import { MessageSquare, Box, Wrench, Shield, DollarSign } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -22,7 +22,7 @@ const ToolboxTalkPage = () => {
     {
       title: "Tools",
       description: "Explore recommended tools, reviews, and usage guidelines.",
-      icon: <Tools className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Wrench className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/toolbox-talk/tools"
     },
     {
