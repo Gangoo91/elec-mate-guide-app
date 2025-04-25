@@ -53,16 +53,21 @@ const UnitContentPage = () => {
         />
         
         <div className="mt-8">
-          {currentUnit.sections.map((section, index) => (
-            <SectionCard
-              key={index}
-              sectionId={`${index + 1}.${index + 1}`}
-              unitId={extractedUnitId}
-              title={section.title}
-              description={section.title}
-              isLevel3={isLevel3}
-            />
-          ))}
+          {currentUnit.sections.map((section, index) => {
+            // Create section IDs in the format "1.1", "1.2", etc. to match sections202 format
+            const sectionId = `${index + 1}.${index + 1}`;
+            
+            return (
+              <SectionCard
+                key={index}
+                sectionId={sectionId}
+                unitId={extractedUnitId}
+                title={section.title}
+                description={section.title}
+                isLevel3={isLevel3}
+              />
+            );
+          })}
         </div>
       </div>
     </MainLayout>
