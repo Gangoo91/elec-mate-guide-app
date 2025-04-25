@@ -75,16 +75,20 @@ import BuildingManagementSystemsPage from "./pages/electricians/BuildingManageme
 import SmartHomeTechnologiesPage from "./pages/electricians/SmartHomeTechnologiesPage";
 import EVInfrastructurePage from "./pages/electricians/EVInfrastructurePage";
 import DataNetworksPage from "./pages/electricians/DataNetworksPage";
-import EnergyEfficiencyPage from "./pages/electricians/EnergyEfficiencyPage";
-import EmergencyLightingPage from "./pages/electricians/EmergencyLightingPage";
-import FireAlarmSystemsPage from "./pages/electricians/FireAlarmSystemsPage";
-import AccessControlPage from "./pages/electricians/AccessControlPage";
+import EnergyEfficiencyPage from "./pages/EnergyEfficiencyPage";
+import EmergencyLightingPage from "./pages/EmergencyLightingPage";
+import FireAlarmSystemsPage from "./pages/FireAlarmSystemsPage";
+import AccessControlPage from "./pages/AccessControlPage";
 import SystemComponentsPage from "./pages/electricians/solar/SystemComponentsPage";
 import InstallationProcessPage from "./pages/electricians/solar/InstallationProcessPage";
 import ElectricalIntegrationPage from "./pages/electricians/solar/ElectricalIntegrationPage";
 import WiringConnectionsPage from "./pages/electricians/solar/WiringConnectionsPage";
 import SafetyProceduresPage from "./pages/electricians/solar/SafetyProceduresPage";
 import DocumentationPage from "./pages/electricians/solar/DocumentationPage";
+import SolarPanelsPage from "./pages/electricians/solar/components/SolarPanelsPage";
+import InvertersPage from "./pages/electricians/solar/components/InvertersPage";
+import MountingSystemsPage from "./pages/electricians/solar/components/MountingSystemsPage";
+import ElectricalComponentsPage from "./pages/electricians/solar/components/ElectricalComponentsPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -152,6 +156,10 @@ const App = () => {
                   <Route path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />
                   <Route path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />
                   <Route path="/electricians/solar-pv-installation/system-components" element={<SystemComponentsPage />} />
+                  <Route path="/electricians/solar-pv-installation/system-components/panels" element={<SolarPanelsPage />} />
+                  <Route path="/electricians/solar-pv-installation/system-components/inverters" element={<InvertersPage />} />
+                  <Route path="/electricians/solar-pv-installation/system-components/mounting" element={<MountingSystemsPage />} />
+                  <Route path="/electricians/solar-pv-installation/system-components/electrical" element={<ElectricalComponentsPage />} />
                   <Route path="/electricians/solar-pv-installation/installation-process" element={<InstallationProcessPage />} />
                   <Route path="/electricians/solar-pv-installation/electrical-integration" element={<ElectricalIntegrationPage />} />
                   <Route path="/electricians/solar-pv-installation/wiring-connections" element={<WiringConnectionsPage />} />
