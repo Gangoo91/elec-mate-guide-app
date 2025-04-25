@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -9,8 +10,8 @@ import { useToast } from "@/components/ui/use-toast";
 const UnitContentPage = () => {
   const navigate = useNavigate();
   const { unitId } = useParams<{ unitId: string }>();
-  const { toast } = useToast();
-  const [hasShownToast, setHasShownToast] = useState(false);
+  
+  // Remove toast-related code
   
   // Extract the unit number from the URL parameter
   // This handles both formats: /unit-301 and /301
@@ -24,16 +25,7 @@ const UnitContentPage = () => {
   const currentUnit = extractedUnitId && unitContent[extractedUnitId] ? unitContent[extractedUnitId] : null;
   console.log("Current unit found:", !!currentUnit);
   
-  useEffect(() => {
-    // Show toast only once per unit load, preventing repeated notifications
-    if (currentUnit && !hasShownToast) {
-      toast({
-        title: `Unit ${extractedUnitId} Loaded`,
-        description: "Study materials are now ready for you to review.",
-      });
-      setHasShownToast(true);
-    }
-  }, [currentUnit, extractedUnitId, toast, hasShownToast]);
+  // Remove useEffect with toast logic
   
   const handleBackClick = () => {
     // Check if this is a level 3 unit
@@ -69,8 +61,6 @@ const UnitContentPage = () => {
           customBackAction={handleBackClick}
         />
         
-        
-        
         <div className="mt-8">
           {currentUnit.sections.map((section, index) => (
             <ContentSection 
@@ -86,3 +76,4 @@ const UnitContentPage = () => {
 };
 
 export default UnitContentPage;
+
