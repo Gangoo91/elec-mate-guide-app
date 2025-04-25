@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
-import { Briefcase, Engineering } from "lucide-react";
+import { Briefcase, Factory, Wrench, Settings, ClipboardCheck } from "lucide-react";
 
 const CareerPathwaysPage = () => {
   const careers = [
@@ -16,7 +16,7 @@ const CareerPathwaysPage = () => {
     {
       title: "Commissioning Engineer",
       description: "Focus on testing and commissioning of electrical systems in commercial and industrial settings.",
-      icon: <Engineering className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Wrench className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development/career-pathways/commissioning"
     },
     {
@@ -28,19 +28,19 @@ const CareerPathwaysPage = () => {
     {
       title: "Control Systems Engineer",
       description: "Specialise in industrial automation, PLC programming, and control system integration.",
-      icon: <Engineering className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Settings className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development/career-pathways/control-systems"
     },
     {
       title: "Electrical Inspector",
       description: "Become certified to inspect and test electrical installations for safety and compliance.",
-      icon: <Briefcase className="h-7 w-7 text-[#FFC900]" />,
+      icon: <ClipboardCheck className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development/career-pathways/inspection"
     },
     {
       title: "Building Services Engineer",
       description: "Focus on electrical systems within buildings, including lighting, power, and building management systems.",
-      icon: <Engineering className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Factory className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/development/career-pathways/building-services"
     }
   ];
