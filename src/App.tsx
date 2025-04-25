@@ -54,6 +54,9 @@ import MOETCoreKnowledgePage from "./pages/MOETCoreKnowledgePage";
 import MOETElectricalPrinciplesPage from "./pages/MOETElectricalPrinciplesPage";
 import MOETMaintenancePracticesPage from "./pages/MOETMaintenancePracticesPage";
 import MOETEngineeringOperationsPage from "./pages/MOETEngineeringOperationsPage";
+import EALQualificationsPage from "./pages/EALQualificationsPage";
+import HigherLearningPage from "./pages/HigherLearningPage";
+import InspectionTestingPage from "./pages/InspectionTestingPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -112,6 +115,9 @@ const App = () => {
                   <Route path="/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations" element={<MOETEngineeringOperationsPage />} />
                   <Route path="/apprentices/study-materials/city-guilds/am2" element={<AM2Page />} />
                   <Route path="/apprentices/mentorship" element={<Mentorship />} />
+                  <Route path="/apprentices/study-materials/eal" element={<EALQualificationsPage />} />
+                  <Route path="/apprentices/study-materials/higher-learning" element={<HigherLearningPage />} />
+                  <Route path="/apprentices/study-materials/inspection-testing" element={<InspectionTestingPage />} />
                   
                   <Route path="/electricians" element={<ElectriciansPage />} />
                   <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
