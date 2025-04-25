@@ -5,27 +5,36 @@ import SolarContentLayout from '@/components/solar/SolarContentLayout';
 const CommissioningPage = () => {
   const sections = [
     {
-      title: "Pre-commission Checks",
+      title: "Pre-commissioning Inspections",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Essential pre-commissioning checks and verifications:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Visual inspection requirements</li>
-            <li>Mechanical fixing verification</li>
-            <li>Initial electrical checks</li>
-            <li>Safety system verification</li>
+            <li>Complete visual inspection procedures</li>
+            <li>Mechanical installation verification steps</li>
+            <li>Preliminary electrical checks and measurements</li>
+            <li>Safety system verification requirements</li>
+            <li>Documentation and checklist completion</li>
           </ul>
         </div>
       )
     },
     {
-      title: "Testing Procedures",
+      title: "Testing and Verification",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Comprehensive system testing procedures:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>String voltage measurements</li>
-            <li>Insulation resistance testing</li>
-            <li>Earth continuity verification</li>
-            <li>Performance ratio calculation</li>
+            <li>String voltage and current measurements</li>
+            <li>Insulation resistance testing protocols</li>
+            <li>Earth continuity and bonding verification</li>
+            <li>IV curve testing procedures</li>
+            <li>Performance ratio calculations and verification</li>
+            <li>Thermal imaging inspection requirements</li>
           </ul>
         </div>
       )
@@ -34,11 +43,32 @@ const CommissioningPage = () => {
       title: "System Activation",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Steps for safe system activation and verification:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Inverter configuration</li>
-            <li>Grid connection procedures</li>
-            <li>Performance monitoring setup</li>
-            <li>Client handover process</li>
+            <li>Inverter setup and configuration procedures</li>
+            <li>Grid connection and synchronization steps</li>
+            <li>Monitoring system setup and verification</li>
+            <li>Performance testing and validation</li>
+            <li>Safety shutdown system verification</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      title: "Documentation and Handover",
+      content: (
+        <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Required documentation and client handover procedures:
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>As-built documentation requirements</li>
+            <li>Test results and certification documentation</li>
+            <li>System manual and warranty information</li>
+            <li>Owner training and operation instructions</li>
+            <li>Maintenance schedule and requirements</li>
           </ul>
         </div>
       )
@@ -48,7 +78,7 @@ const CommissioningPage = () => {
   return (
     <SolarContentLayout
       title="Commissioning"
-      description="Complete guide to testing and activating solar PV installations."
+      description="Learn the complete process of testing, activating, and validating solar PV installations to ensure safe and optimal performance."
       sections={sections}
     />
   );

@@ -5,40 +5,71 @@ import SolarContentLayout from '@/components/solar/SolarContentLayout';
 const SystemDesignPage = () => {
   const sections = [
     {
-      title: "Array Layout",
+      title: "Array Layout Planning",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Master the principles of solar array layout design:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Panel string configuration and sizing</li>
-            <li>Mounting system selection and layout</li>
-            <li>Optimizing panel orientation and tilt</li>
-            <li>Inter-row spacing calculations</li>
+            <li>String sizing calculations and optimization</li>
+            <li>Module configuration and spacing requirements</li>
+            <li>Optimal tilt angle and azimuth calculations</li>
+            <li>Shading analysis and mitigation strategies</li>
+            <li>Row spacing optimization for maximum production</li>
           </ul>
         </div>
       )
     },
     {
-      title: "Electrical Design",
+      title: "Electrical System Design",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Learn essential electrical design considerations:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Inverter sizing and selection</li>
-            <li>DC circuit design and voltage considerations</li>
-            <li>AC interconnection requirements</li>
-            <li>Protection device specifications</li>
+            <li>Inverter selection and sizing calculations</li>
+            <li>String voltage and current calculations</li>
+            <li>Wire sizing and voltage drop considerations</li>
+            <li>Overcurrent protection requirements</li>
+            <li>Grounding system design and compliance</li>
+            <li>Disconnecting means and rapid shutdown requirements</li>
           </ul>
         </div>
       )
     },
     {
-      title: "Performance Modeling",
+      title: "Performance Analysis",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Understanding system performance calculations:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Energy yield calculations</li>
-            <li>Shading analysis impact</li>
-            <li>Temperature derating factors</li>
-            <li>System losses assessment</li>
+            <li>Solar resource assessment methods</li>
+            <li>Energy production modeling techniques</li>
+            <li>Temperature derating calculations</li>
+            <li>System losses analysis</li>
+            <li>Performance ratio estimation</li>
+            <li>Financial return calculations</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      title: "Code Compliance",
+      content: (
+        <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Essential code requirements for system design:
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>National Electrical Code (NEC) requirements</li>
+            <li>Local building code compliance</li>
+            <li>Fire code setback requirements</li>
+            <li>Equipment listing and labeling requirements</li>
+            <li>Permitting documentation requirements</li>
           </ul>
         </div>
       )
@@ -48,7 +79,7 @@ const SystemDesignPage = () => {
   return (
     <SolarContentLayout
       title="System Design"
-      description="Comprehensive guide to designing solar PV systems for optimal performance."
+      description="Learn the essential principles and calculations needed for designing efficient and code-compliant solar PV systems."
       sections={sections}
     />
   );

@@ -8,11 +8,15 @@ const PhysicalInstallationPage = () => {
       title: "Mounting System Installation",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Learn the critical steps for securely installing solar panel mounting systems:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Roof attachment methods</li>
-            <li>Racking system assembly</li>
-            <li>Waterproofing techniques</li>
-            <li>Load distribution considerations</li>
+            <li>Roof attachment methods including flashing and mounting hardware</li>
+            <li>Proper racking system assembly techniques and load calculations</li>
+            <li>Advanced waterproofing methods to prevent roof leaks</li>
+            <li>Weight distribution analysis and structural considerations</li>
+            <li>Wind load calculations and attachment spacing requirements</li>
           </ul>
         </div>
       )
@@ -21,11 +25,16 @@ const PhysicalInstallationPage = () => {
       title: "Panel Installation",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Master the techniques for safe and efficient solar panel installation:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Panel handling and placement</li>
-            <li>Securing methods</li>
-            <li>Inter-module connections</li>
-            <li>Grounding requirements</li>
+            <li>Safe panel handling procedures and lifting techniques</li>
+            <li>Proper alignment and spacing of modules</li>
+            <li>Module clamping and securing methods</li>
+            <li>Inter-module wiring and connection best practices</li>
+            <li>System grounding requirements and methods</li>
+            <li>Panel orientation optimization for maximum efficiency</li>
           </ul>
         </div>
       )
@@ -34,11 +43,33 @@ const PhysicalInstallationPage = () => {
       title: "Equipment Installation",
       content: (
         <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Learn the proper installation of critical solar system components:
+          </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>Inverter mounting</li>
-            <li>Disconnect placement</li>
-            <li>Conduit routing</li>
-            <li>Weather sealing methods</li>
+            <li>Inverter placement and mounting considerations</li>
+            <li>Disconnect installation and accessibility requirements</li>
+            <li>Proper conduit routing and support methods</li>
+            <li>Weather sealing techniques for roof penetrations</li>
+            <li>Junction box installation and wiring management</li>
+            <li>Equipment grounding and bonding requirements</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      title: "Safety Considerations",
+      content: (
+        <div className="space-y-4">
+          <p className="text-[#FFC900]/80 mb-4">
+            Essential safety protocols for solar installation:
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Fall protection systems and requirements</li>
+            <li>Personal protective equipment (PPE) guidelines</li>
+            <li>Safe tool handling and electrical safety practices</li>
+            <li>Emergency response procedures</li>
+            <li>Site safety management and hazard prevention</li>
           </ul>
         </div>
       )
@@ -48,7 +79,7 @@ const PhysicalInstallationPage = () => {
   return (
     <SolarContentLayout
       title="Physical Installation"
-      description="Step-by-step guide to installing solar PV system components."
+      description="Comprehensive guide to the proper installation of solar PV system components, including mounting systems, panels, and associated equipment."
       sections={sections}
     />
   );
