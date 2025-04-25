@@ -18,7 +18,12 @@ const SectionCard = ({ sectionId, unitId, title, description, isLevel3 = false }
     const basePath = isLevel3 
       ? '/apprentices/study-materials/city-guilds/level-3'
       : '/apprentices/study-materials/city-guilds/level-2/core-units';
-    navigate(`${basePath}/${unitId}/${sectionId}`);
+    
+    // Log the navigation path to debug
+    const path = `${basePath}/${unitId}/${sectionId}`;
+    console.log("Navigating to:", path);
+    
+    navigate(path);
   };
   
   return (

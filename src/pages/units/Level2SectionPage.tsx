@@ -8,6 +8,7 @@ import { sections202 } from "@/data/units/sections/unit202Sections";
 import { sections203 } from "@/data/units/sections/unit203Sections";
 import { sections204 } from "@/data/units/sections/unit204Sections";
 import { sections210 } from "@/data/units/sections/unit210Sections";
+import { useToast } from "@/components/ui/use-toast";
 
 interface SectionData {
   title: string;
@@ -19,12 +20,19 @@ interface SectionData {
 const Level2SectionPage = () => {
   const { unitId, sectionId } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  
+  console.log("Level2SectionPage - unitId:", unitId);
+  console.log("Level2SectionPage - sectionId:", sectionId);
   
   const getSectionContent = () => {
     if (!unitId || !sectionId) return null;
     
+    console.log("Looking for section content in unit:", unitId);
+    
     switch (unitId) {
       case "202":
+        console.log("Available sections in 202:", Object.keys(sections202));
         return sections202[sectionId];
       case "203":
         return sections203[sectionId];
@@ -33,11 +41,22 @@ const Level2SectionPage = () => {
       case "210":
         return sections210[sectionId];
       default:
+        console.log("Unit not found:", unitId);
         return null;
     }
   };
   
   const sectionContent = getSectionContent();
+  console.log("Section content found:", !!sectionContent);
+  
+  React.useEffect(() => {
+    if (sectionContent) {
+      toast({
+        title: "Content Loaded",
+        description: `Now viewing: ${sectionContent.title}`,
+      });
+    }
+  }, [sectionContent, toast]);
   
   const handleBackClick = () => {
     if (unitId) {

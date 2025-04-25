@@ -54,7 +54,7 @@ const UnitContentPage = () => {
         
         <div className="mt-8">
           {currentUnit.sections.map((section, index) => {
-            // Create section IDs in the format "1.1", "1.2", etc. to match sections202 format
+            // Match the section IDs with what's in the sections202 file (1.1, 1.2, etc.)
             const sectionId = `${index + 1}.${index + 1}`;
             
             return (
@@ -63,7 +63,7 @@ const UnitContentPage = () => {
                 sectionId={sectionId}
                 unitId={extractedUnitId}
                 title={section.title}
-                description={section.title}
+                description={section.description || section.title}
                 isLevel3={isLevel3}
               />
             );
