@@ -65,9 +65,52 @@ export function useTeamMembers() {
     }
   };
 
+  const updateTeamMember = async (member: TeamMember) => {
+    try {
+      const { error } = await supabase
+        .from('team_members')
+        .update({
+          name: member.name,
+          role: member.role,
+          email: member.email,
+          phone: member.phone
+        })
+        .eq('id', member.id);
+
+      if (error) throw error;
+
+      setTeamMembers(prev => 
+        prev.map(m => m.id === member.id ? member : m)
+      );
+      
+      return member;
+    } catch (error) {
+      console.error('Error updating team member:', error);
+      throw error;
+    }
+  };
+
+  const deleteTeamMember = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('team_members')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      setTeamMembers(prev => prev.filter(member => member.id !== id));
+      
+      return true;
+    } catch (error) {
+      console.error('Error deleting team member:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     fetchTeamMembers();
   }, []);
 
-  return { teamMembers, loading, addTeamMember };
+  return { teamMembers, loading, addTeamMember, updateTeamMember, deleteTeamMember };
 }

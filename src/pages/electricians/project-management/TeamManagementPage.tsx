@@ -8,16 +8,59 @@ import { TeamMemberDialog } from "@/components/projects/dialog/TeamMemberDialog"
 import { AddTeamMemberDialog } from "@/components/projects/dialog/AddTeamMemberDialog";
 import { useTeamMembers, TeamMember } from "@/hooks/useTeamMembers";
 import { useTeamPresence } from "@/hooks/useTeamPresence";
+import { useToast } from "@/hooks/use-toast";
 
 const TeamManagementPage = () => {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { teamMembers, loading, addTeamMember } = useTeamMembers();
+  const { teamMembers, loading, addTeamMember, updateTeamMember, deleteTeamMember } = useTeamMembers();
   const { presenceData } = useTeamPresence();
+  const { toast } = useToast();
 
   const handleMemberClick = (member: TeamMember) => {
     setSelectedMember(member);
     setDialogOpen(true);
+  };
+
+  const handleEditMember = (member: TeamMember) => {
+    updateTeamMember(member)
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "Team member updated successfully",
+        });
+        setDialogOpen(false);
+      })
+      .catch((error) => {
+        console.error("Error updating team member:", error);
+        toast({
+          title: "Error",
+          description: "Failed to update team member",
+          variant: "destructive",
+        });
+      });
+  };
+
+  const handleDeleteMember = (id: string) => {
+    if (window.confirm("Are you sure you want to remove this team member?")) {
+      deleteTeamMember(id)
+        .then(() => {
+          toast({
+            title: "Success",
+            description: "Team member removed successfully",
+          });
+          setDialogOpen(false);
+          setSelectedMember(null);
+        })
+        .catch((error) => {
+          console.error("Error deleting team member:", error);
+          toast({
+            title: "Error",
+            description: "Failed to remove team member",
+            variant: "destructive",
+          });
+        });
+    }
   };
 
   return (
@@ -51,6 +94,8 @@ const TeamManagementPage = () => {
               presence={presenceData.find(p => p.user_id === selectedMember.id)}
               open={dialogOpen}
               onOpenChange={setDialogOpen}
+              onEdit={handleEditMember}
+              onDelete={handleDeleteMember}
             />
           )}
         </div>
