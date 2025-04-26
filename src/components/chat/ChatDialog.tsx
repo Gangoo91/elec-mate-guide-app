@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useChat } from "@/contexts/ChatContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChatTypeSelector } from "./ChatTypeSelector";
 import { MessageList } from "./MessageList";
 import { ChatInput } from "./ChatInput";
@@ -19,11 +19,20 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
     getUnreadCountByType, 
     activeChatType,
     setActiveChatType, 
-    filterMessagesByType 
+    filterMessagesByType,
+    markAllAsReadByType,
+    loading
   } = useChat();
   
   // Use a proper UUID format instead of "some-user-id"
   const [recipientId] = useState("00000000-0000-0000-0000-000000000000"); // Default system recipient
+
+  // Mark messages as read when chat type is viewed
+  useEffect(() => {
+    if (open) {
+      markAllAsReadByType(activeChatType);
+    }
+  }, [open, activeChatType, markAllAsReadByType]);
 
   // Get unread counts for each chat type
   const unreadCounts = {
@@ -61,11 +70,12 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
           unreadCounts={unreadCounts}
         />
         
-        <MessageList messages={filteredMessages} />
+        <MessageList messages={filteredMessages} loading={loading} />
         
         <ChatInput 
           onSendMessage={handleSendMessage}
           chatTitle={chatTypeTitles[activeChatType]}
+          placeholder={`Type a message in ${chatTypeTitles[activeChatType]}...`}
         />
       </DialogContent>
     </Dialog>

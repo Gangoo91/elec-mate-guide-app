@@ -1,78 +1,151 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BecomeMate } from "@/components/mental-health/BecomeMate";
-import { MatesList } from "@/components/mental-health/MatesList";
-import { useAuth } from "@/hooks/useAuth";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { UserCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ChatButton } from "@/components/chat/ChatButton";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Heart, MessageSquare } from "lucide-react";
+
+interface MentalHealthMate {
+  id: string;
+  user_id: string;
+  about_me: string;
+  experience: string;
+  is_available: boolean;
+  specialties: string[];
+  profile?: {
+    first_name: string;
+    last_name: string;
+    avatar_url: string;
+  };
+}
 
 const MentalHealthBuddy = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [mates, setMates] = useState<MentalHealthMate[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  if (!user) {
-    return (
-      <MainLayout>
-        <div className="container py-8">
-          <PageHeader
-            title="Mental Health Mate"
-            description="Connect with fellow professionals who understand the unique challenges of the electrical industry."
-          />
-          
-          <Alert className="bg-[#22251e] border-[#FFC900]/20 mt-4">
-            <UserCheck className="h-5 w-5 text-[#FFC900]" />
-            <AlertTitle className="text-[#FFC900]">Authentication Required</AlertTitle>
-            <AlertDescription className="text-[#FFC900]/70">
-              You need to be logged in to use the Mental Health Mate feature.
-              <div className="mt-4">
-                <Button asChild className="bg-[#FFC900] text-[#22251e] hover:bg-[#FFC900]/90">
-                  <Link to="/login">Login</Link>
-                </Button>
-              </div>
-            </AlertDescription>
-          </Alert>
-        </div>
-      </MainLayout>
-    );
-  }
+  useEffect(() => {
+    const fetchMates = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('mental_health_mates')
+          .select(`
+            id,
+            user_id,
+            about_me,
+            experience,
+            is_available,
+            specialties,
+            profiles:user_id (
+              first_name,
+              last_name,
+              avatar_url
+            )
+          `)
+          .eq('is_available', true)
+          .limit(9);
+
+        if (error) throw error;
+
+        // Format the data to match the expected structure
+        const formattedMates = data.map(mate => ({
+          ...mate,
+          profile: mate.profiles
+        }));
+
+        setMates(formattedMates);
+      } catch (err) {
+        console.error('Error fetching mental health mates:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMates();
+  }, []);
 
   return (
     <MainLayout>
       <div className="container py-8">
         <PageHeader
           title="Mental Health Mate"
-          description="Connect with fellow professionals who understand the unique challenges of the electrical industry."
+          description="Connect with a mental health mate for support and guidance"
         />
 
-        <Tabs defaultValue="find" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="find">Find a Mate</TabsTrigger>
-            <TabsTrigger value="become">Become a Mate</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="find">
-            <MatesList />
-          </TabsContent>
-
-          <TabsContent value="become">
-            <div className="max-w-2xl mx-auto">
-              <div className="bg-[#22251e] p-6 rounded-lg border border-[#FFC900]/20">
-                <h3 className="text-xl font-semibold mb-4 text-[#FFC900]">
-                  Become a Mental Health Mate
-                </h3>
-                <p className="text-[#FFC900]/70 mb-6">
-                  By becoming a Mental Health Mate, you're offering to be a supportive listener for others in our community. 
-                  This means being open to receiving messages from fellow professionals who need someone to talk to.
-                </p>
-                <BecomeMate />
+        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {loading ? (
+            // Loading skeleton
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="animate-pulse bg-[#2C2F24] rounded-lg p-6 border border-[#FFC900]/20 h-64">
+                <div className="h-10 bg-[#FFC900]/10 rounded mb-4 w-2/3"></div>
+                <div className="h-4 bg-[#FFC900]/10 rounded mb-2"></div>
+                <div className="h-4 bg-[#FFC900]/10 rounded mb-2 w-5/6"></div>
+                <div className="h-4 bg-[#FFC900]/10 rounded mb-4 w-3/4"></div>
+                <div className="flex gap-2 mt-6 justify-end">
+                  <div className="h-9 w-9 rounded-full bg-[#FFC900]/10"></div>
+                </div>
               </div>
+            ))
+          ) : mates.length === 0 ? (
+            <div className="col-span-full text-center py-10">
+              <Heart className="mx-auto h-16 w-16 text-[#FFC900]/50 mb-4" />
+              <h3 className="text-xl font-medium text-[#FFC900] mb-2">No Mental Health Mates Available</h3>
+              <p className="text-[#FFC900]/70 mb-6">
+                There are currently no mates available for support. Please check back later.
+              </p>
+              <Button
+                className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+                onClick={() => navigate("/mental-health")}
+              >
+                Return to Mental Health Hub
+              </Button>
             </div>
-          </TabsContent>
-        </Tabs>
+          ) : (
+            mates.map((mate) => (
+              <div key={mate.id} className="bg-[#2C2F24] rounded-lg p-6 border border-[#FFC900]/20 flex flex-col h-full">
+                <h3 className="text-[#FFC900] font-medium text-lg mb-2">
+                  {mate.profile?.first_name} {mate.profile?.last_name}
+                </h3>
+                <p className="text-[#FFC900]/80 text-sm line-clamp-3 mb-3">{mate.about_me}</p>
+                <div className="text-[#FFC900]/60 text-xs mb-4">
+                  <span className="font-medium">Specialties:</span>{" "}
+                  {mate.specialties?.join(", ") || "General mental health support"}
+                </div>
+                <div className="mt-auto flex justify-end">
+                  <ChatButton
+                    recipientId={mate.user_id}
+                    recipientName={`${mate.profile?.first_name || ''} ${mate.profile?.last_name || ''}`}
+                    chatType="mental_health"
+                  />
+                  <Button
+                    variant="outline"
+                    className="ml-2 border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
+                    onClick={() => {
+                      // Open the central chat dialog with mental_health preselected
+                      const chatButton = document.querySelector('[data-chat-button]') as HTMLButtonElement;
+                      if (chatButton) chatButton.click();
+                      
+                      // Wait for the dialog to open and then select the mental_health tab
+                      setTimeout(() => {
+                        const mentalHealthTab = document.querySelector('[data-value="mental_health"]') as HTMLButtonElement;
+                        if (mentalHealthTab) mentalHealthTab.click();
+                      }, 100);
+                    }}
+                  >
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    View All Messages
+                  </Button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </MainLayout>
   );

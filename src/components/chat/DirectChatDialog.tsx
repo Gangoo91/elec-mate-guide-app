@@ -1,9 +1,9 @@
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useDirectChat } from "@/hooks/useDirectChat";
+import { MessageList } from "./MessageList";
+import { ChatInput } from "./ChatInput";
 
 interface DirectChatDialogProps {
   recipientId: string;
@@ -20,15 +20,11 @@ export function DirectChatDialog({
   open,
   onOpenChange
 }: DirectChatDialogProps) {
-  const [newMessage, setNewMessage] = useState("");
   const { messages, loading, sendMessage } = useDirectChat(recipientId, chatType);
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
-
-    await sendMessage(newMessage);
-    setNewMessage("");
+  const handleSendMessage = async (content: string) => {
+    if (!content.trim()) return;
+    await sendMessage(content);
   };
 
   return (
@@ -40,43 +36,17 @@ export function DirectChatDialog({
             <h3 className="text-[#FFC900] font-medium">Chat with {recipientName}</h3>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {loading ? (
-              <div className="text-center text-[#FFC900]/70">Loading messages...</div>
-            ) : messages.length === 0 ? (
-              <div className="text-center text-[#FFC900]/70">No messages yet</div>
-            ) : (
-              messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`max-w-[80%] p-2 rounded-lg text-sm ${
-                    msg.sender_id === recipientId
-                      ? "bg-[#444] text-[#FFC900] mr-auto"
-                      : "bg-[#FFC900] text-black ml-auto"
-                  }`}
-                >
-                  {msg.content}
-                </div>
-              ))
-            )}
+          <div className="flex-1 overflow-y-auto p-4">
+            <MessageList messages={messages} loading={loading} />
           </div>
 
-          <form onSubmit={handleSendMessage} className="border-t border-[#FFC900]/20 p-3">
-            <div className="flex gap-2">
-              <Input
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
-                className="flex-1 bg-[#444] border-[#555] text-[#FFC900]"
-              />
-              <Button 
-                type="submit" 
-                className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
-              >
-                Send
-              </Button>
-            </div>
-          </form>
+          <div className="p-3">
+            <ChatInput 
+              onSendMessage={handleSendMessage} 
+              chatTitle={`Chat with ${recipientName}`}
+              placeholder="Type your message..."
+            />
+          </div>
         </div>
       </DialogContent>
     </Dialog>

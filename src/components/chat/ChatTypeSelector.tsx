@@ -25,6 +25,12 @@ export function ChatTypeSelector({
   onTypeChange,
   unreadCounts
 }: ChatTypeSelectorProps) {
+  const totalUnread = 
+    unreadCounts.private + 
+    unreadCounts.team + 
+    unreadCounts.mental_health + 
+    unreadCounts.mentor;
+
   return (
     <Tabs 
       value={activeType} 
@@ -32,7 +38,7 @@ export function ChatTypeSelector({
       onValueChange={(value) => onTypeChange(value as ChatType)}
     >
       <TabsList className="grid grid-cols-4 w-full">
-        <TabsTrigger value="private" className="relative">
+        <TabsTrigger value="private" className="relative" data-value="private">
           <MessageSquare className="h-4 w-4 mr-1" />
           <span className="hidden sm:inline">Private</span>
           {unreadCounts.private > 0 && (
@@ -42,7 +48,7 @@ export function ChatTypeSelector({
           )}
         </TabsTrigger>
         
-        <TabsTrigger value="team" className="relative">
+        <TabsTrigger value="team" className="relative" data-value="team">
           <Users className="h-4 w-4 mr-1" />
           <span className="hidden sm:inline">Team</span>
           {unreadCounts.team > 0 && (
@@ -52,7 +58,7 @@ export function ChatTypeSelector({
           )}
         </TabsTrigger>
         
-        <TabsTrigger value="mental_health" className="relative">
+        <TabsTrigger value="mental_health" className="relative" data-value="mental_health">
           <Heart className="h-4 w-4 mr-1" />
           <span className="hidden sm:inline">Mate</span>
           {unreadCounts.mental_health > 0 && (
@@ -62,7 +68,7 @@ export function ChatTypeSelector({
           )}
         </TabsTrigger>
         
-        <TabsTrigger value="mentor" className="relative">
+        <TabsTrigger value="mentor" className="relative" data-value="mentor">
           <Bookmark className="h-4 w-4 mr-1" />
           <span className="hidden sm:inline">Mentor</span>
           {unreadCounts.mentor > 0 && (

@@ -111,16 +111,16 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
           .map(request => (
             <div 
               key={request.id} 
-              className="bg-[#2C2F24] rounded-lg p-4 border border-[#FFC900]/20 flex items-center justify-between"
+              className="bg-[#2C2F24] rounded-lg p-4 border border-[#FFC900]/20 flex flex-col md:flex-row md:items-center justify-between"
             >
-              <div className="flex-grow pr-4">
+              <div className="flex-grow pr-4 mb-3 md:mb-0">
                 <h3 className="text-[#FFC900] font-semibold">{request.apprenticeName}</h3>
                 <p className="text-[#FFC900]/80 text-sm">{request.message}</p>
                 <div className="text-[#FFC900]/60 text-xs mt-2">
                   Expertise: {request.expertise.join(", ")}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {request.status === "pending" ? (
                   <>
                     <Button 
@@ -139,11 +139,21 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
                     </Button>
                   </>
                 ) : request.status === "accepted" && (
-                  <ChatButton 
-                    recipientId={request.apprenticeId}
-                    recipientName={request.apprenticeName}
-                    chatType="mentor"
-                  />
+                  <div className="flex items-center gap-2">
+                    <ChatButton 
+                      recipientId={request.apprenticeId}
+                      recipientName={request.apprenticeName}
+                      chatType="mentor"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-[#FFC900] border-[#FFC900]/20 hover:bg-[#FFC900]/10 whitespace-nowrap"
+                      onClick={() => onScheduleSession(request)}
+                    >
+                      Schedule Session
+                    </Button>
+                  </div>
                 )}
                 <Button 
                   variant="ghost" 

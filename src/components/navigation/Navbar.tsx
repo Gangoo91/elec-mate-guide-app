@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -22,6 +21,7 @@ import NotificationBell from "../notifications/NotificationBell";
 import { useNotificationContext } from "@/contexts/NotificationContext";
 import { ChatDialog } from "@/components/chat/ChatDialog";
 import { MessageSquare } from "lucide-react";
+import { useChat } from "@/contexts/ChatContext";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -33,6 +33,7 @@ const Navbar = () => {
   const { toast } = useToast();
   
   const { notifications } = useNotificationContext();
+  const { unreadCount } = useChat();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -148,10 +149,16 @@ const Navbar = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="text-[#FFC900] hover:bg-[#FFC900]/10"
+                className="text-[#FFC900] hover:bg-[#FFC900]/10 relative"
                 onClick={() => setChatDialogOpen(true)}
+                data-chat-button
               >
                 <MessageSquare className="h-5 w-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 flex items-center justify-center text-[10px] text-white">
+                    {unreadCount}
+                  </span>
+                )}
               </Button>
               <NotificationBell className="mr-1" />
             </>

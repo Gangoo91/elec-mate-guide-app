@@ -1,17 +1,12 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { ChatType } from "@/config/chatTypes";
+import { Message } from "@/types/chat";
 
-interface Message {
-  id: string;
-  content: string;
-  sender_id: string;
-  created_at: string;
-}
-
-export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_health' | 'team') {
+export function useDirectChat(recipientId: string, chatType: ChatType) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -19,7 +14,7 @@ export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_
 
   // Fetch messages on component mount
   useEffect(() => {
-    if (!user || !recipientId) return;
+    if (!user?.id || !recipientId) return;
     
     const fetchMessages = async () => {
       setLoading(true);
@@ -42,6 +37,24 @@ export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_
 
     fetchMessages();
 
+    // Mark messages as read
+    const markAsRead = async () => {
+      try {
+        const { error } = await supabase
+          .from('team_messages')
+          .update({ read: true })
+          .eq('sender_id', recipientId)
+          .eq('recipient_id', user.id)
+          .eq('read', false);
+          
+        if (error) console.error("Error marking messages as read:", error);
+      } catch (err) {
+        console.error("Error marking messages as read:", err);
+      }
+    };
+    
+    markAsRead();
+
     // Subscribe to new messages
     const channel = supabase
       .channel('direct_messages')
@@ -51,17 +64,23 @@ export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_
           event: '*',
           schema: 'public',
           table: 'team_messages',
-          filter: `recipient_id=eq.${user.id}`
+          filter: `recipient_id=eq.${user.id}`,
         },
-        (payload) => {
+        async (payload) => {
           if (payload.eventType === 'INSERT') {
             const newMessage = payload.new as Message;
-            if (newMessage.sender_id === recipientId) {
+            if (newMessage.sender_id === recipientId && newMessage.chat_type === chatType) {
               setMessages(prev => [...prev, newMessage]);
-              toast({
-                title: "New message",
-                description: `${newMessage.content.substring(0, 30)}${newMessage.content.length > 30 ? '...' : ''}`,
-              });
+              
+              // Mark as read immediately since user is in the chat
+              try {
+                await supabase
+                  .from('team_messages')
+                  .update({ read: true })
+                  .eq('id', newMessage.id);
+              } catch (err) {
+                console.error("Error marking message as read:", err);
+              }
             }
           }
         }
@@ -73,19 +92,32 @@ export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_
     };
   }, [user, recipientId, chatType, toast]);
 
-  const sendMessage = async (content: string) => {
-    if (!user || !content.trim()) return;
+  const sendMessage = useCallback(async (content: string) => {
+    if (!user?.id || !content.trim()) return;
 
     try {
-      const { error } = await supabase.from('team_messages').insert({
+      const newMessage = {
         content: content.trim(),
         sender_id: user.id,
         recipient_id: recipientId,
         chat_type: chatType,
         read: false,
-      });
+        is_group_message: false
+      };
+      
+      const { data, error } = await supabase
+        .from('team_messages')
+        .insert(newMessage)
+        .select();
 
       if (error) throw error;
+      
+      // Optimistically add the message to the local state
+      if (data && data[0]) {
+        setMessages(prev => [...prev, data[0] as Message]);
+      }
+      
+      return data;
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
@@ -94,7 +126,7 @@ export function useDirectChat(recipientId: string, chatType: 'mentor' | 'mental_
         variant: "destructive",
       });
     }
-  };
+  }, [user, recipientId, chatType, toast]);
 
   return {
     messages,

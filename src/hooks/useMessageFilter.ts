@@ -2,6 +2,7 @@
 import { Message } from "@/types/chat";
 import { ChatType } from "@/config/chatTypes";
 import { useAuth } from "@/hooks/useAuth";
+import { useMemo } from "react";
 
 export const useMessageFilter = (messages: Message[]) => {
   const { user } = useAuth();
@@ -12,9 +13,9 @@ export const useMessageFilter = (messages: Message[]) => {
     ).length;
   };
 
-  const filterMessagesByType = (chatType: ChatType): Message[] => {
+  const filterMessagesByType = useMemo(() => (chatType: ChatType): Message[] => {
     return messages.filter(msg => msg.chat_type === chatType);
-  };
+  }, [messages]);
 
   return {
     getUnreadCountByType,

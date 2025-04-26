@@ -3,18 +3,31 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
 import { Message } from "@/types/chat";
+import { useEffect, useRef } from "react";
 
 interface MessageListProps {
   messages: Message[];
+  loading?: boolean;
 }
 
-export function MessageList({ messages }: MessageListProps) {
+export function MessageList({ messages, loading = false }: MessageListProps) {
   const { user } = useAuth();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <ScrollArea className="h-[300px] pr-4 mt-2">
       <div className="space-y-4">
-        {messages.length === 0 ? (
+        {loading ? (
+          <div className="text-center py-8 text-sm opacity-70">
+            Loading messages...
+          </div>
+        ) : messages.length === 0 ? (
           <div className="text-center py-8 text-sm opacity-70">
             No messages in this chat area yet
           </div>
@@ -41,6 +54,7 @@ export function MessageList({ messages }: MessageListProps) {
             </div>
           ))
         )}
+        <div ref={messagesEndRef} />
       </div>
     </ScrollArea>
   );

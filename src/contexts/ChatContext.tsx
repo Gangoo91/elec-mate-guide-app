@@ -10,13 +10,15 @@ import { useMessageFilter } from "@/hooks/useMessageFilter";
 
 interface ChatContextType {
   messages: Message[];
-  sendMessage: (recipientId: string, content: string, chatType: ChatType) => Promise<void>;
+  sendMessage: (recipientId: string, content: string, chatType: ChatType) => Promise<any>;
   markAsRead: (messageId: string) => Promise<void>;
+  markAllAsReadByType: (chatType: ChatType) => Promise<void>;
   unreadCount: number;
   getUnreadCountByType: (chatType: ChatType) => number;
   filterMessagesByType: (chatType: ChatType) => Message[];
   activeChatType: ChatType;
   setActiveChatType: (chatType: ChatType) => void;
+  loading: boolean;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -24,6 +26,7 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 export function ChatProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [activeChatType, setActiveChatType] = useState<ChatType>("private");
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
   const { toast } = useToast();
   
@@ -31,21 +34,27 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const messageFilter = useMessageFilter(messages);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) {
+      setLoading(false);
+      return;
+    }
 
     const fetchMessages = async () => {
-      const { data, error } = await supabase
-        .from('team_messages')
-        .select('*')
-        .or(`recipient_id.eq.${user.id},sender_id.eq.${user.id}`)
-        .order('created_at', { ascending: true });
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('team_messages')
+          .select('*')
+          .or(`recipient_id.eq.${user.id},sender_id.eq.${user.id}`)
+          .order('created_at', { ascending: true });
 
-      if (error) {
-        console.error('Error fetching messages:', error);
-        return;
+        if (error) throw error;
+        setMessages((data || []) as Message[]);
+      } catch (err) {
+        console.error('Error fetching messages:', err);
+      } finally {
+        setLoading(false);
       }
-
-      setMessages((data || []) as Message[]);
     };
 
     fetchMessages();
@@ -88,7 +97,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       ...messageFilter,
       unreadCount,
       activeChatType,
-      setActiveChatType
+      setActiveChatType,
+      loading
     }}>
       {children}
     </ChatContext.Provider>
