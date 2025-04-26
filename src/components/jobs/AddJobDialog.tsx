@@ -16,16 +16,6 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { jobFormSchema, JobFormData } from "./jobValidation";
 
-type JobFormData = {
-  clientName: string;
-  address: string;
-  jobType: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  notes?: string;
-};
-
 export function AddJobDialog() {
   const { toast } = useToast();
   const { user } = useAuth();
