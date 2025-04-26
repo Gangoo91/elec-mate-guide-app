@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import LessonContent from "@/components/units/LessonContent";
-import { Transformer } from "lucide-react";
+import { Bolt } from "lucide-react"; // Replaced Transformer with Bolt
 
 const TransformersPage = () => {
   const navigate = useNavigate();
