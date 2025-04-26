@@ -29,6 +29,9 @@ import Level2SectionPage from "@/pages/units/Level2SectionPage";
 import CircuitTheoryPage from "@/pages/moet/CircuitTheoryPage";
 import PowerSystemsPage from "@/pages/moet/PowerSystemsPage";
 import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
+import PowerGenerationPage from "@/pages/moet/power-systems/PowerGenerationPage";
+import PowerTransmissionPage from "@/pages/moet/power-systems/PowerTransmissionPage";
+import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -62,4 +65,7 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-moet-circuit-theory" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory" element={<CircuitTheoryPage />} />,
   <Route key="apprentices-moet-power-systems" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems" element={<PowerSystemsPage />} />,
   <Route key="apprentices-moet-basic-electronics" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics" element={<BasicElectronicsPage />} />,
+  <Route key="apprentices-moet-power-systems-generation" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/generation" element={<PowerGenerationPage />} />,
+  <Route key="apprentices-moet-power-systems-transmission" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission" element={<PowerTransmissionPage />} />,
+  <Route key="apprentices-moet-power-systems-distribution" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution" element={<PowerDistributionPage />} />,
 ];
