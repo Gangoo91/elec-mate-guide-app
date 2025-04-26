@@ -12,14 +12,14 @@ import { Heart, MessageSquare } from "lucide-react";
 interface MentalHealthMate {
   id: string;
   user_id: string;
-  about_me: string;
-  experience: string;
+  about_me: string | null;
+  experience: string | null;
   is_available: boolean;
   specialties: string[];
-  profile?: {
-    first_name: string;
-    last_name: string;
-    avatar_url: string;
+  profiles?: {
+    first_name: string | null;
+    last_name: string | null;
+    avatar_url: string | null;
   };
 }
 
@@ -42,7 +42,7 @@ const MentalHealthBuddy = () => {
             experience,
             is_available,
             specialties,
-            profiles:user_id (
+            profiles:user_id(
               first_name,
               last_name,
               avatar_url
@@ -53,10 +53,10 @@ const MentalHealthBuddy = () => {
 
         if (error) throw error;
 
-        // Format the data to match the expected structure
-        const formattedMates = data.map(mate => ({
+        // Properly type and format the data
+        const formattedMates: MentalHealthMate[] = data.map(mate => ({
           ...mate,
-          profile: mate.profiles
+          profiles: mate.profiles as MentalHealthMate['profiles']
         }));
 
         setMates(formattedMates);

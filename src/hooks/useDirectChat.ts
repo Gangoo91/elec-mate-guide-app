@@ -1,9 +1,10 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { ChatType } from "@/config/chatTypes";
-import { Message } from "@/types/chat";
+import { Message, ChatReport } from "@/types/chat";
 
 export function useDirectChat(recipientId: string, chatType: ChatType) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -122,9 +123,79 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
     }
   }, [user, recipientId, chatType, toast]);
 
+  const blockUser = useCallback(async () => {
+    if (!user?.id || !recipientId) return;
+
+    try {
+      // Update all messages from this user with blocked flag
+      const { error } = await supabase
+        .from('team_messages')
+        .update({ blocked: true })
+        .eq('sender_id', recipientId)
+        .eq('recipient_id', user.id);
+
+      if (error) throw error;
+      
+      // Also update local state
+      setMessages(prev => prev.map(msg => 
+        msg.sender_id === recipientId ? {...msg, blocked: true} : msg
+      ));
+
+      return true;
+    } catch (error) {
+      console.error("Error blocking user:", error);
+      toast({
+        title: "Error",
+        description: "Failed to block user. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  }, [user, recipientId, toast]);
+
+  const reportUser = useCallback(async (reason: string) => {
+    if (!user?.id || !recipientId) return;
+
+    try {
+      // Create a report
+      const report: Partial<ChatReport> = {
+        reporter_id: user.id,
+        reported_id: recipientId,
+        reason,
+        created_at: new Date().toISOString()
+      };
+      
+      // Mark messages from this user as reported
+      const { error: updateError } = await supabase
+        .from('team_messages')
+        .update({ reported: true })
+        .eq('sender_id', recipientId)
+        .eq('recipient_id', user.id);
+
+      if (updateError) throw updateError;
+      
+      // Update local state
+      setMessages(prev => prev.map(msg => 
+        msg.sender_id === recipientId ? {...msg, reported: true} : msg
+      ));
+
+      return true;
+    } catch (error) {
+      console.error("Error reporting user:", error);
+      toast({
+        title: "Error",
+        description: "Failed to report user. Please try again.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  }, [user, recipientId, toast]);
+
   return {
     messages,
     loading,
-    sendMessage
+    sendMessage,
+    blockUser,
+    reportUser
   };
 }
