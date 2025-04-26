@@ -46,7 +46,7 @@ const JobPriceEstimator = () => {
           onJobReferenceChange={setJobReference}
         />
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 sticky bottom-0 bg-background py-4 shadow-lg">
           <Button 
             onClick={generateEstimate} 
             disabled={isLoading}
@@ -58,7 +58,7 @@ const JobPriceEstimator = () => {
                 Generating...
               </>
             ) : (
-              'Generate Estimate'
+              'Generate'
             )}
           </Button>
 
@@ -67,10 +67,10 @@ const JobPriceEstimator = () => {
               onClick={saveEstimate}
               disabled={isLoading}
               variant="outline"
-              className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+              className="flex-1 bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black h-12 text-base font-medium"
             >
               <Save className="w-4 h-4 mr-2" />
-              Save Estimate
+              Save
             </Button>
           )}
         </div>
@@ -88,3 +88,4 @@ const JobPriceEstimator = () => {
 };
 
 export default JobPriceEstimator;
+
