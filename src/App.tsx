@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -17,6 +16,7 @@ import EmployersPage from "./pages/EmployersPage";
 import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import ManageSubscription from "./pages/ManageSubscription";
+import Settings from "./pages/Settings";
 
 import { AuthRoutes } from "./routes/AuthRoutes";
 import { ApprenticeRoutes } from "./routes/ApprenticeRoutes";
@@ -43,7 +43,6 @@ const App = () => {
               <TooltipProvider>
                 <Toaster />
                 <Routes>
-                  {/* Set Dashboard as the default route */}
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/welcome" element={<Welcome />} />
                   <Route path="/index" element={<Navigate to="/" replace />} />
@@ -52,17 +51,16 @@ const App = () => {
                   <Route path="/privacy" element={<Privacy />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/settings" element={<Settings />} />
                   <Route path="/manage-subscription" element={<ManageSubscription />} />
                   <Route path="/subscription" element={<Subscription />} />
                   <Route path="/subscription/success" element={<SubscriptionSuccess />} />
                   
-                  {/* Route groups */}
                   {AuthRoutes}
                   {ApprenticeRoutes}
                   {ElectricianRoutes}
                   {MentalHealthRoutes}
                   
-                  {/* Catch-all route */}
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </TooltipProvider>
