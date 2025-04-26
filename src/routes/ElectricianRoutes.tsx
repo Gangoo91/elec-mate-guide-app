@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -56,6 +55,10 @@ import LoadAnalysisPage from "@/pages/electricians/solar/installation/structural
 import SupportStructurePage from "@/pages/electricians/solar/installation/structural/SupportStructurePage";
 import JobSchedulePage from "@/pages/electricians/JobSchedulePage";
 import ProjectManagementPage from "@/pages/electricians/ProjectManagementPage";
+import UpcomingJobsPage from "@/pages/electricians/job-scheduling/UpcomingJobsPage";
+import TimeManagementPage from "@/pages/electricians/job-scheduling/TimeManagementPage";
+import ClientManagementPage from "@/pages/electricians/job-scheduling/ClientManagementPage";
+import JobCompletionPage from "@/pages/electricians/job-scheduling/JobCompletionPage";
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
@@ -64,6 +67,10 @@ export const ElectricianRoutes = [
   <Route key="electricians-learning-hub" path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />,
   <Route key="electricians-study-guide" path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />,
   <Route key="electricians-solar-pv" path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />,
+  <Route key="electricians-job-scheduling-upcoming" path="/electricians/job-scheduling/upcoming" element={<UpcomingJobsPage />} />,
+  <Route key="electricians-job-scheduling-time" path="/electricians/job-scheduling/time" element={<TimeManagementPage />} />,
+  <Route key="electricians-job-scheduling-clients" path="/electricians/job-scheduling/clients" element={<ClientManagementPage />} />,
+  <Route key="electricians-job-scheduling-completion" path="/electricians/job-scheduling/completion" element={<JobCompletionPage />} />,
   <Route key="electricians-solar-components" path="/electricians/solar-pv-installation/system-components" element={<SystemComponentsPage />} />,
   <Route key="electricians-solar-panels" path="/electricians/solar-pv-installation/system-components/panels" element={<SolarPanelsPage />} />,
   <Route key="electricians-solar-inverters" path="/electricians/solar-pv-installation/system-components/inverters" element={<InvertersPage />} />,
