@@ -4,6 +4,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Phone, MapPin, Search, Mail, FileText } from "lucide-react";
 import { AddClientDialog } from "@/components/clients/AddClientDialog";
+import { EditClientDialog } from "@/components/clients/EditClientDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import BackButton from "@/components/navigation/BackButton";
@@ -21,6 +22,8 @@ interface Client {
 const ClientManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clients, setClients] = useState<Client[]>([]);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { toast } = useToast();
   
   useEffect(() => {
@@ -44,6 +47,11 @@ const ClientManagementPage = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleClientClick = (client: Client) => {
+    setSelectedClient(client);
+    setIsEditDialogOpen(true);
   };
 
   const filteredClients = clients.filter(client => 
@@ -79,7 +87,11 @@ const ClientManagementPage = () => {
           <div className="space-y-4">
             {filteredClients.length > 0 ? (
               filteredClients.map(client => (
-                <Card key={client.id} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+                <Card 
+                  key={client.id} 
+                  className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+                  onClick={() => handleClientClick(client)}
+                >
                   <CardContent className="pt-6">
                     <div className="space-y-4">
                       <div>
@@ -131,6 +143,15 @@ const ClientManagementPage = () => {
           </div>
         </div>
       </div>
+
+      {selectedClient && (
+        <EditClientDialog
+          client={selectedClient}
+          open={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+          onClientUpdated={fetchClients}
+        />
+      )}
     </MainLayout>
   );
 };
