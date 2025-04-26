@@ -213,6 +213,51 @@ export type Database = {
         }
         Relationships: []
       }
+      jobs: {
+        Row: {
+          address: string
+          client_name: string
+          created_at: string | null
+          date: string
+          end_time: string
+          id: string
+          job_type: string
+          notes: string | null
+          start_time: string
+          status: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          address: string
+          client_name: string
+          created_at?: string | null
+          date: string
+          end_time: string
+          id?: string
+          job_type: string
+          notes?: string | null
+          start_time: string
+          status?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          address?: string
+          client_name?: string
+          created_at?: string | null
+          date?: string
+          end_time?: string
+          id?: string
+          job_type?: string
+          notes?: string | null
+          start_time?: string
+          status?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       mate_notifications: {
         Row: {
           created_at: string | null

@@ -1,57 +1,85 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { AddJobDialog } from "@/components/jobs/AddJobDialog";
+import { JobDetailsDialog } from "@/components/jobs/JobDetailsDialog";
+import { useToast } from "@/hooks/use-toast";
+
+type Job = {
+  id: string;
+  client_name: string;
+  address: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  job_type: string;
+  notes?: string;
+  status: string;
+};
 
 const UpcomingJobsPage = () => {
-  // Example data - in a real app, this would come from an API or database
-  const upcomingJobs = [
-    {
-      id: "job1",
-      client: "Smith Residence",
-      address: "123 Main Street, London",
-      date: "May 3, 2025",
-      time: "9:00 AM - 12:00 PM",
-      type: "Electrical Inspection"
-    },
-    {
-      id: "job2",
-      client: "Johnson Commercial Building",
-      address: "456 Business Park, Manchester",
-      date: "May 5, 2025",
-      time: "1:00 PM - 5:00 PM",
-      type: "Wiring Installation"
-    },
-    {
-      id: "job3",
-      client: "City Hospital",
-      address: "789 Health Avenue, Birmingham",
-      date: "May 7, 2025",
-      time: "8:00 AM - 4:00 PM",
-      type: "Emergency Lighting Maintenance"
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { toast } = useToast();
+
+  const fetchJobs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('jobs')
+        .select('*')
+        .eq('status', 'upcoming')
+        .order('date', { ascending: true });
+
+      if (error) throw error;
+      setJobs(data || []);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch jobs. Please try again.",
+        variant: "destructive",
+      });
     }
-  ];
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  const handleJobClick = (job: Job) => {
+    setSelectedJob(job);
+    setIsDetailsOpen(true);
+  };
 
   return (
     <MainLayout>
       <div className="container py-8">
-        <PageHeader
-          title="Upcoming Jobs"
-          description="View and manage your scheduled appointments and upcoming work orders."
-        />
+        <div className="flex justify-between items-center mb-8">
+          <PageHeader
+            title="Upcoming Jobs"
+            description="View and manage your scheduled appointments and upcoming work orders."
+          />
+          <AddJobDialog />
+        </div>
         
         <div className="max-w-4xl mx-auto">
-          {upcomingJobs.length > 0 ? (
+          {jobs.length > 0 ? (
             <div className="space-y-4">
-              {upcomingJobs.map(job => (
-                <Card key={job.id} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+              {jobs.map(job => (
+                <Card 
+                  key={job.id} 
+                  className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+                  onClick={() => handleJobClick(job)}
+                >
                   <CardContent className="pt-6">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-[#FFC900] font-medium text-lg mb-1">{job.client}</h3>
-                        <p className="text-[#FFC900]/70">{job.type}</p>
+                        <h3 className="text-[#FFC900] font-medium text-lg mb-1">{job.client_name}</h3>
+                        <p className="text-[#FFC900]/70">{job.job_type}</p>
                         <p className="text-[#FFC900]/70 text-sm mt-2">{job.address}</p>
                       </div>
                       <div className="text-right">
@@ -61,14 +89,9 @@ const UpcomingJobsPage = () => {
                         </div>
                         <div className="flex items-center justify-end space-x-1 text-[#FFC900] mt-1">
                           <Clock className="h-4 w-4" />
-                          <span className="text-sm">{job.time}</span>
+                          <span className="text-sm">{`${job.start_time} - ${job.end_time}`}</span>
                         </div>
                       </div>
-                    </div>
-                    <div className="mt-4 flex justify-end">
-                      <button className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] px-3 py-1 rounded text-sm">
-                        View Details
-                      </button>
                     </div>
                   </CardContent>
                 </Card>
@@ -82,6 +105,15 @@ const UpcomingJobsPage = () => {
             </div>
           )}
         </div>
+
+        {selectedJob && (
+          <JobDetailsDialog
+            job={selectedJob}
+            open={isDetailsOpen}
+            onOpenChange={setIsDetailsOpen}
+            onJobUpdated={fetchJobs}
+          />
+        )}
       </div>
     </MainLayout>
   );
