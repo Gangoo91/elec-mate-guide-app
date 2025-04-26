@@ -17,4 +17,5 @@ export interface TeamSearchProps {
 export interface TeamMemberListProps {
   teamMembers: TeamMember[];
   isLoading: boolean;
+  onMemberClick: (member: TeamMember) => void;
 }

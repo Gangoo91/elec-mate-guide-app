@@ -1,8 +1,9 @@
+
 import { User, Phone, Mail, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { TeamMemberListProps, TeamMember } from "@/types/team";
 
-export function TeamMemberList({ teamMembers, isLoading }: TeamMemberListProps) {
+export function TeamMemberList({ teamMembers, isLoading, onMemberClick }: TeamMemberListProps) {
   if (isLoading) {
     return (
       <>
@@ -32,7 +33,8 @@ export function TeamMemberList({ teamMembers, isLoading }: TeamMemberListProps) 
       {teamMembers.map(member => (
         <Card 
           key={member.id} 
-          className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+          className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+          onClick={() => onMemberClick(member)}
         >
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row md:justify-between md:items-center">
