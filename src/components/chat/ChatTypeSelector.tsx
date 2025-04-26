@@ -6,7 +6,7 @@ import {
   Heart, 
   Bookmark 
 } from "lucide-react";
-import { ChatType } from "@/contexts/ChatContext";
+import { ChatType } from "@/config/chatTypes";
 import { Badge } from "@/components/ui/badge";
 
 interface ChatTypeSelectorProps {

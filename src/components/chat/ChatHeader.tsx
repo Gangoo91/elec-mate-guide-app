@@ -1,6 +1,6 @@
 
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ChatType } from "@/contexts/ChatContext";
+import { ChatType } from "@/config/chatTypes";
 
 interface ChatHeaderProps {
   title: string;

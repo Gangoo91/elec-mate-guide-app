@@ -2,7 +2,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
-import { Message } from "@/contexts/ChatContext";
+import { Message } from "@/types/chat";
 
 interface MessageListProps {
   messages: Message[];

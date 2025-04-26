@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { ChatType } from "@/contexts/ChatContext";
+import { ChatType } from "@/config/chatTypes";
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;

@@ -43,8 +43,8 @@ export const useChatActions = (
 
       if (error) throw error;
       
-      setMessages(prev =>
-        prev.map(msg =>
+      setMessages(prevMessages =>
+        prevMessages.map(msg =>
           msg.id === messageId ? { ...msg, read: true } : msg
         )
       );

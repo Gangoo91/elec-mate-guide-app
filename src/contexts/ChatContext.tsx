@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -44,7 +45,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      setMessages(data || []);
+      setMessages((data || []) as Message[]);
     };
 
     fetchMessages();
