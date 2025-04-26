@@ -53,12 +53,18 @@ const MentalHealthBuddy = () => {
 
         if (error) throw error;
 
-        // Safely type and format the data
-        const formattedMates: MentalHealthMate[] = data.map(mate => ({
-          ...mate,
-          // Handle potentially missing profile data with a null fallback
-          profiles: mate.profiles as MentalHealthMate['profiles'] || null
-        }));
+        // Type safe handling of the returned data
+        const formattedMates: MentalHealthMate[] = data.map(mate => {
+          // Handle the profiles property more safely
+          const typedMate = {
+            ...mate,
+            // Cast with a type guard to ensure proper typing
+            profiles: typeof mate.profiles === 'object' && mate.profiles !== null
+              ? mate.profiles as MentalHealthMate['profiles']
+              : null
+          };
+          return typedMate;
+        });
 
         setMates(formattedMates);
       } catch (err) {
