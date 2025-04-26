@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { DocumentHeader } from './DocumentHeader';
 import { DocumentSummaryTable } from './DocumentSummaryTable';
 import { DocumentSignatures } from './DocumentSignatures';
@@ -9,6 +9,7 @@ import { DocumentNotes } from './DocumentNotes';
 import { DocumentTerms } from './DocumentTerms';
 import { DocumentFooter } from './DocumentFooter';
 import { format } from 'date-fns';
+import { Textarea } from "@/components/ui/textarea";
 
 interface DocumentContentProps {
   isEstimate: boolean;
@@ -31,22 +32,30 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
   const documentNumber = isEstimate ? 'EST-2025-0001' : 'INV-2025-0001';
   const documentTypeLabel = isEstimate ? 'Estimate' : 'Invoice';
 
-  const fromAddress = {
+  const [fromAddress, setFromAddress] = useState({
     companyName: 'Spark Electrical Ltd',
     street: '123 Circuit Avenue',
     city: 'London',
     postcode: 'EC1A 1BB',
     country: 'United Kingdom',
     vatNumber: 'GB123456789'
-  };
+  });
 
-  const toAddress = {
+  const [toAddress, setToAddress] = useState({
     companyName: 'John Smith',
     street: '456 Wiring Road',
     city: 'London',
     postcode: 'SW1A 1AA',
     country: 'United Kingdom',
     projectName: 'Home Rewiring'
+  });
+
+  const handleFromAddressChange = (field: string, value: string) => {
+    setFromAddress(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleToAddressChange = (field: string, value: string) => {
+    setToAddress(prev => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -73,6 +82,9 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
             <DocumentAddressSection 
               fromAddress={fromAddress}
               toAddress={toAddress}
+              onFromAddressChange={handleFromAddressChange}
+              onToAddressChange={handleToAddressChange}
+              editable={true}
             />
 
             <div className="mb-6">
