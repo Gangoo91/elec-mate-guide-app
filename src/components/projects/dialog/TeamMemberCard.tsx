@@ -2,6 +2,7 @@
 import { OnlineIndicator } from "./OnlineIndicator";
 import { ChatPopover } from "../ChatPopover";
 import { TeamMemberPresence } from "@/hooks/useTeamPresence";
+import { useState } from "react";
 
 interface TeamMemberCardProps {
   member: {
@@ -14,6 +15,13 @@ interface TeamMemberCardProps {
 }
 
 export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProps) {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const handleChatClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsChatOpen(!isChatOpen);
+  };
+
   return (
     <div 
       className="flex items-center justify-between p-2 rounded-md hover:bg-[#444]/30 cursor-pointer transition-colors"
@@ -32,7 +40,7 @@ export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProp
       </div>
       <div className="flex items-center space-x-2">
         <OnlineIndicator online={presence?.online} />
-        <div onClick={(e) => e.stopPropagation()}>
+        <div onClick={handleChatClick}>
           <ChatPopover 
             recipientId={member.id} 
             data-member-id={member.id}
