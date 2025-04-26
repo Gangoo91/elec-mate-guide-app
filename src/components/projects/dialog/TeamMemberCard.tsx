@@ -32,11 +32,12 @@ export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProp
       </div>
       <div className="flex items-center space-x-2">
         <OnlineIndicator online={presence?.online} />
-        <ChatPopover 
-          recipientId={member.id} 
-          data-member-id={member.id}
-          onClick={(e) => e.stopPropagation()} // Prevent triggering parent click
-        />
+        <div onClick={(e) => e.stopPropagation()}>
+          <ChatPopover 
+            recipientId={member.id} 
+            data-member-id={member.id}
+          />
+        </div>
       </div>
     </div>
   );
