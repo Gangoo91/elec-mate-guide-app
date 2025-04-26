@@ -258,6 +258,69 @@ export type Database = {
         }
         Relationships: []
       }
+      invoices: {
+        Row: {
+          client_address: string | null
+          client_email: string | null
+          client_name: string
+          created_at: string
+          due_date: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          items: Json
+          notes: string | null
+          status: string
+          subtotal: number
+          terms: string | null
+          total: number
+          updated_at: string
+          user_id: string
+          vat_amount: number
+          vat_rate: number
+        }
+        Insert: {
+          client_address?: string | null
+          client_email?: string | null
+          client_name: string
+          created_at?: string
+          due_date: string
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          items?: Json
+          notes?: string | null
+          status?: string
+          subtotal: number
+          terms?: string | null
+          total: number
+          updated_at?: string
+          user_id: string
+          vat_amount: number
+          vat_rate?: number
+        }
+        Update: {
+          client_address?: string | null
+          client_email?: string | null
+          client_name?: string
+          created_at?: string
+          due_date?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          items?: Json
+          notes?: string | null
+          status?: string
+          subtotal?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          user_id?: string
+          vat_amount?: number
+          vat_rate?: number
+        }
+        Relationships: []
+      }
       job_estimates: {
         Row: {
           client_name: string | null

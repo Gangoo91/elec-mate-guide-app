@@ -1,9 +1,8 @@
-
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ResourceCard from "@/components/shared/ResourceCard";
 import BackButton from "@/components/navigation/BackButton";
-import { Calculator, Ruler, BookOpen } from "lucide-react";
+import { Calculator, Ruler, BookOpen, FileText } from "lucide-react";
 
 const TechnicalToolsPage = () => {
   const tools = [
@@ -24,6 +23,12 @@ const TechnicalToolsPage = () => {
       description: "Comprehensive guide for electrical inspection and testing procedures.",
       icon: <BookOpen className="h-8 w-8 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/inspection-guide"
+    },
+    {
+      title: "Invoice Manager",
+      description: "Create and manage professional invoices for your electrical services.",
+      icon: <FileText className="h-8 w-8 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/invoice-manager"
     }
   ];
 
