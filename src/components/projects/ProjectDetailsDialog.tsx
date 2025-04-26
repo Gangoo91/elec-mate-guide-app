@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Edit, Trash2, Users } from "lucide-react";
+import { CalendarDays, Edit, Trash2, Users, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectForm } from "./ProjectForm";
 import { useProjects, type Project } from "@/hooks/useProjects";
@@ -29,6 +30,7 @@ export function ProjectDetailsDialog({
   const handleDelete = async () => {
     try {
       await deleteProject.mutateAsync(project.id);
+      setShowDeleteAlert(false);
       onOpenChange(false);
     } catch (error) {
       console.error("Error deleting project:", error);
@@ -42,6 +44,10 @@ export function ProjectDetailsDialog({
     } catch (error) {
       console.error("Error updating project:", error);
     }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
   };
 
   const getStatusColor = (status: string) => {
@@ -63,7 +69,7 @@ export function ProjectDetailsDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="bg-[#22251e] border-[#FFC900]/20 max-w-3xl w-[95%]">
+        <DialogContent className="bg-[#22251e] border-[#FFC900]/20 max-w-3xl w-[95%] overflow-y-auto max-h-[90vh]">
           <DialogHeader>
             <DialogTitle className="text-[#FFC900]">
               {isEditing ? "Edit Project" : "Project Details"}
@@ -71,7 +77,11 @@ export function ProjectDetailsDialog({
           </DialogHeader>
           
           {isEditing ? (
-            <ProjectForm onSubmit={handleUpdate} initialData={project} />
+            <ProjectForm 
+              onSubmit={handleUpdate} 
+              initialData={project} 
+              onCancel={handleCancel}
+            />
           ) : (
             <div className="space-y-6 py-4">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -88,7 +98,12 @@ export function ProjectDetailsDialog({
                   <Button onClick={handleEdit} variant="outline" size="sm" className="border-[#444] text-[#FFC900]">
                     <Edit className="h-4 w-4 mr-2" /> Edit
                   </Button>
-                  <Button onClick={handleDelete} variant="outline" size="sm" className="border-[#444] text-red-500">
+                  <Button 
+                    onClick={() => setShowDeleteAlert(true)} 
+                    variant="outline" 
+                    size="sm" 
+                    className="border-[#444] text-red-500"
+                  >
                     <Trash2 className="h-4 w-4 mr-2" /> Delete
                   </Button>
                 </div>
@@ -159,7 +174,7 @@ export function ProjectDetailsDialog({
                 <Card className="bg-[#333] border-[#444]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-[#FFC900]">
-                      <Clock className="inline-block w-4 h-4 mr-2" /> Timeline
+                      <Calendar className="inline-block w-4 h-4 mr-2" /> Timeline
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-2">
@@ -197,6 +212,17 @@ export function ProjectDetailsDialog({
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Add explicit close button at bottom for better UX */}
+          {!isEditing && (
+            <div className="flex justify-end mt-6">
+              <DialogClose asChild>
+                <Button variant="outline" className="border-[#444] text-[#FFC900]">
+                  Close
+                </Button>
+              </DialogClose>
             </div>
           )}
         </DialogContent>

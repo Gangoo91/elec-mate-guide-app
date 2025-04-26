@@ -28,6 +28,10 @@ export function AddProjectDialog() {
     }
   };
 
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -35,11 +39,11 @@ export function AddProjectDialog() {
           <Plus className="mr-2 h-4 w-4" /> New Project
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#22251e] border-[#FFC900]/20 w-[95%] max-w-lg mx-auto">
+      <DialogContent className="bg-[#22251e] border-[#FFC900]/20 w-[95%] max-w-lg mx-auto overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle className="text-[#FFC900]">Add New Project</DialogTitle>
         </DialogHeader>
-        <ProjectForm onSubmit={handleSubmit} />
+        <ProjectForm onSubmit={handleSubmit} onCancel={handleCancel} />
       </DialogContent>
     </Dialog>
   );

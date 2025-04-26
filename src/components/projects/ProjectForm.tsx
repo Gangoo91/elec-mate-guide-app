@@ -25,9 +25,10 @@ type ProjectFormData = z.infer<typeof projectSchema>;
 interface ProjectFormProps {
   onSubmit: (data: ProjectFormData) => void;
   initialData?: Partial<ProjectFormData>;
+  onCancel?: () => void;
 }
 
-export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
+export function ProjectForm({ onSubmit, initialData, onCancel }: ProjectFormProps) {
   const form = useForm<ProjectFormData>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -40,6 +41,15 @@ export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
       progress: initialData?.progress || 0,
     },
   });
+
+  const handleCancel = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onCancel) {
+      onCancel();
+    }
+    form.reset();
+  };
 
   return (
     <Form {...form}>
@@ -192,7 +202,7 @@ export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
           <Button
             type="button"
             variant="outline"
-            onClick={() => form.reset()}
+            onClick={handleCancel}
             className="border-[#444] text-[#FFC900]"
           >
             Cancel
