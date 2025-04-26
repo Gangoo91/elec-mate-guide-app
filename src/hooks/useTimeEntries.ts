@@ -12,7 +12,6 @@ export interface TimeEntry {
   break_start: string | null;
   break_end: string | null;
   total_hours: number | null;
-  travel_time: number | null;
   created_at: string;
 }
 
@@ -87,16 +86,14 @@ export function useTimeEntries(selectedDate = new Date()) {
     
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const weekSummary = days.map((day, index) => {
-      // Calculate hours worked on this day (including work time + travel time)
+      // Calculate hours worked on this day
       const dayHours = entries
         .filter(entry => {
           const clockInDate = parseISO(entry.clock_in);
           return clockInDate.getDay() === index && entry.total_hours;
         })
         .reduce((sum, entry) => {
-          const workHours = entry.total_hours || 0;
-          const travelHours = entry.travel_time || 0;
-          return sum + workHours + travelHours;
+          return sum + (entry.total_hours || 0);
         }, 0);
       
       // Count jobs on this day
