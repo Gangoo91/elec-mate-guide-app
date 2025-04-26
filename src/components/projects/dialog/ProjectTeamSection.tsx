@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { TeamMemberDialog } from "./TeamMemberDialog";
 import { TeamMemberList } from "./TeamMemberList";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { AddTeamMemberDialog } from "./AddTeamMemberDialog";
 
 interface TeamMember {
@@ -20,7 +19,6 @@ export function ProjectTeamSection() {
   const { toast } = useToast();
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
     { id: "1", name: "John Smith", role: "Project Manager" },
     { id: "2", name: "Sarah Wilson", role: "Lead Electrician" },
@@ -37,7 +35,6 @@ export function ProjectTeamSection() {
       description: "Team member updated successfully",
     });
     setIsDialogOpen(false);
-    setIsSheetOpen(false);
   };
 
   const handleDelete = (id: string) => {
@@ -48,12 +45,16 @@ export function ProjectTeamSection() {
       description: "Team member removed successfully",
     });
     setIsDialogOpen(false);
-    setIsSheetOpen(false);
   };
 
   const handleAddMember = (newMember: Omit<TeamMember, 'id'>) => {
     const id = `${teamMembers.length + 1}`; // In a real app, this would be handled by the backend
     setTeamMembers(prev => [...prev, { ...newMember, id }]);
+    
+    toast({
+      title: "Success",
+      description: "Team member added successfully",
+    });
   };
 
   const handleMemberClick = (member: TeamMember) => {
@@ -81,7 +82,6 @@ export function ProjectTeamSection() {
         />
       </CardContent>
 
-      {/* Member Details Dialog */}
       {selectedMember && (
         <TeamMemberDialog
           member={selectedMember}

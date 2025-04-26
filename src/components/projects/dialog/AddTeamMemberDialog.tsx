@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Plus, User, Briefcase } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface TeamMember {
   id: string;
@@ -19,6 +21,8 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,6 +45,8 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
     // Reset form
     setName('');
     setRole('');
+    setEmail('');
+    setPhone('');
     setOpen(false);
     
     toast({
@@ -62,29 +68,53 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
-          <div>
-            <label className="block text-sm font-medium text-[#FFC900] mb-1">
-              <User className="h-4 w-4 inline-block mr-1" /> Name *
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label className="text-[#FFC900]">
+              <User className="h-4 w-4 inline-block mr-2" />
+              Name *
+            </Label>
+            <Input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter team member name"
-              className="w-full p-2 bg-[#444] border border-[#555] rounded text-[#FFC900]"
+              className="w-full p-2 bg-[#444] border border-[#555] text-[#FFC900] placeholder:text-[#FFC900]/50"
             />
           </div>
           
-          <div>
-            <label className="block text-sm font-medium text-[#FFC900] mb-1">
-              <Briefcase className="h-4 w-4 inline-block mr-1" /> Role *
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label className="text-[#FFC900]">
+              <Briefcase className="h-4 w-4 inline-block mr-2" />
+              Role *
+            </Label>
+            <Input
               type="text"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               placeholder="Enter team member role"
-              className="w-full p-2 bg-[#444] border border-[#555] rounded text-[#FFC900]"
+              className="w-full p-2 bg-[#444] border border-[#555] text-[#FFC900] placeholder:text-[#FFC900]/50"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label className="text-[#FFC900]">Email</Label>
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter email address"
+              className="w-full p-2 bg-[#444] border border-[#555] text-[#FFC900] placeholder:text-[#FFC900]/50"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label className="text-[#FFC900]">Phone</Label>
+            <Input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Enter phone number"
+              className="w-full p-2 bg-[#444] border border-[#555] text-[#FFC900] placeholder:text-[#FFC900]/50"
             />
           </div>
           
