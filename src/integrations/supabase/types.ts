@@ -330,6 +330,9 @@ export type Database = {
           job_description: string
           job_reference: string | null
           status: string | null
+          template_description: string | null
+          template_name: string | null
+          template_type: string | null
           user_id: string
         }
         Insert: {
@@ -340,6 +343,9 @@ export type Database = {
           job_description: string
           job_reference?: string | null
           status?: string | null
+          template_description?: string | null
+          template_name?: string | null
+          template_type?: string | null
           user_id: string
         }
         Update: {
@@ -350,6 +356,9 @@ export type Database = {
           job_description?: string
           job_reference?: string | null
           status?: string | null
+          template_description?: string | null
+          template_name?: string | null
+          template_type?: string | null
           user_id?: string
         }
         Relationships: []

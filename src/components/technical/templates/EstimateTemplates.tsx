@@ -3,6 +3,8 @@ import React from 'react';
 import { DocumentCard } from './DocumentCard';
 import { SignatureDialog } from './SignatureDialog';
 import { useDocumentSignature } from '@/hooks/useDocumentSignature';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 interface EstimateTemplatesProps {
   onPreview: (templateId: string) => void;
@@ -19,7 +21,22 @@ const EstimateTemplates = ({ onPreview }: EstimateTemplatesProps) => {
     handleClientInfoChange,
     openElectricianSignatureModal
   } = useDocumentSignature('estimate');
+
+  // Fetch saved estimates
+  const { data: savedEstimates } = useQuery({
+    queryKey: ['saved-estimates'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('job_estimates')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    }
+  });
   
+  // Combine default templates with saved estimates
   const templates = [
     {
       id: "standard",
@@ -32,7 +49,14 @@ const EstimateTemplates = ({ onPreview }: EstimateTemplatesProps) => {
       name: "Detailed Project Estimate",
       description: "Comprehensive estimate with project phases and timelines",
       thumbnail: "/placeholder.svg"
-    }
+    },
+    ...(savedEstimates?.map(estimate => ({
+      id: estimate.id,
+      name: estimate.template_name || 'Saved Estimate',
+      description: estimate.template_description || 'Custom estimate template',
+      thumbnail: "/placeholder.svg",
+      isSaved: true
+    })) || [])
   ];
 
   const handlePrint = () => {

@@ -62,12 +62,15 @@ export const useJobEstimate = () => {
           estimate_response: estimate,
           client_name: clientName,
           job_reference: jobReference,
-          user_id: user.id
+          user_id: user.id,
+          template_type: 'standard',
+          template_name: jobReference || 'Standard Estimate',
+          template_description: `Estimate for ${clientName || 'client'}`
         });
 
       if (error) throw error;
       
-      toast.success("Estimate saved successfully");
+      toast.success("Estimate saved successfully and added to templates");
     } catch (err) {
       console.error("Error:", err);
       handleError(err, "Unable to save estimate. Please try again.");
