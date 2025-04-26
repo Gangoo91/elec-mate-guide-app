@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -43,6 +44,9 @@ import MOETAssessmentPage from "@/pages/MOETAssessmentPage";
 import SemiconductorBasicsPage from "@/pages/moet/basic-electronics/semiconductors/SemiconductorBasicsPage";
 import ElectronicComponentsPage from "@/pages/moet/basic-electronics/components/ElectronicComponentsPage";
 import BasicCircuitsPage from "@/pages/moet/basic-electronics/circuits/BasicCircuitsPage";
+import PreventiveMaintenancePage from "@/pages/maintenance/PreventiveMaintenancePage";
+import SafetyProtocolsPage from "@/pages/maintenance/SafetyProtocolsPage";
+import DocumentationPage from "@/pages/maintenance/DocumentationPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -125,5 +129,20 @@ export const ApprenticeRoutes = [
     key="apprentices-moet-basic-electronics-circuits" 
     path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/circuits" 
     element={<BasicCircuitsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-maintenance-preventive" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/preventive" 
+    element={<PreventiveMaintenancePage />} 
+  />,
+  <Route 
+    key="apprentices-moet-maintenance-safety" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/safety" 
+    element={<SafetyProtocolsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-maintenance-documentation" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/documentation" 
+    element={<DocumentationPage />} 
   />,
 ];
