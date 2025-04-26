@@ -591,6 +591,42 @@ export type Database = {
         }
         Relationships: []
       }
+      time_entries: {
+        Row: {
+          break_end: string | null
+          break_start: string | null
+          clock_in: string
+          clock_out: string | null
+          created_at: string | null
+          id: string
+          total_hours: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          break_end?: string | null
+          break_start?: string | null
+          clock_in: string
+          clock_out?: string | null
+          created_at?: string | null
+          id?: string
+          total_hours?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          break_end?: string | null
+          break_start?: string | null
+          clock_in?: string
+          clock_out?: string | null
+          created_at?: string | null
+          id?: string
+          total_hours?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           content_id: string
