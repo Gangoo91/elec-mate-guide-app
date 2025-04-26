@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -8,14 +8,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import type { Project } from "@/hooks/useProjects";
 
 const projectSchema = z.object({
   name: z.string().min(2, { message: "Project name must be at least 2 characters." }),
   client_name: z.string().min(2, { message: "Client name is required." }),
-  status: z.string(),
+  status: z.enum(["planning", "in-progress", "on-hold", "completed", "cancelled"]),
   description: z.string().optional(),
   deadline: z.string().optional(),
-  budget: z.coerce.number().positive().optional(),
+  budget: z.number().positive().optional(),
+  progress: z.number().min(0).max(100).optional(),
 });
 
 type ProjectFormData = z.infer<typeof projectSchema>;
@@ -33,8 +35,9 @@ export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
       client_name: initialData?.client_name || "",
       status: initialData?.status || "planning",
       description: initialData?.description || "",
-      deadline: initialData?.deadline || "",
+      deadline: initialData?.deadline?.split("T")[0] || "",
       budget: initialData?.budget,
+      progress: initialData?.progress || 0,
     },
   });
 
@@ -146,13 +149,14 @@ export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
           <FormField
             control={form.control}
             name="budget"
-            render={({ field }) => (
+            render={({ field: { onChange, ...field }}) => (
               <FormItem>
                 <FormLabel className="text-[#FFC900]">Budget (£)</FormLabel>
                 <FormControl>
                   <Input 
-                    {...field} 
+                    {...field}
                     type="number"
+                    onChange={(e) => onChange(e.target.value ? Number(e.target.value) : '')}
                     placeholder="0.00"
                     className="bg-[#333] border-[#444] text-white"
                   />
@@ -162,6 +166,27 @@ export function ProjectForm({ onSubmit, initialData }: ProjectFormProps) {
             )}
           />
         </div>
+
+        <FormField
+          control={form.control}
+          name="progress"
+          render={({ field: { onChange, ...field }}) => (
+            <FormItem>
+              <FormLabel className="text-[#FFC900]">Progress (%)</FormLabel>
+              <FormControl>
+                <Input 
+                  {...field}
+                  type="number"
+                  min="0"
+                  max="100"
+                  onChange={(e) => onChange(e.target.value ? Number(e.target.value) : '')}
+                  className="bg-[#333] border-[#444] text-white"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         
         <div className="flex justify-end gap-2 pt-4">
           <Button

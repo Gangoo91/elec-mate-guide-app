@@ -2,37 +2,20 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import { Plus } from "lucide-react";
 import { ProjectForm } from "./ProjectForm";
+import { useProjects } from "@/hooks/useProjects";
 
-interface AddProjectDialogProps {
-  onProjectAdded: () => void;
-}
-
-export function AddProjectDialog({ onProjectAdded }: AddProjectDialogProps) {
+export function AddProjectDialog() {
   const [open, setOpen] = useState(false);
-  const { toast } = useToast();
+  const { addProject } = useProjects();
 
   const handleSubmit = async (data: any) => {
     try {
-      // In a real implementation, we would save to the database
-      console.log("Adding new project:", data);
-      
-      toast({
-        title: "Success",
-        description: "Project has been added successfully",
-      });
-      
+      await addProject.mutateAsync(data);
       setOpen(false);
-      onProjectAdded();
     } catch (error) {
-      console.error("Error adding project:", error);
-      toast({
-        title: "Error",
-        description: "Failed to add project. Please try again.",
-        variant: "destructive",
-      });
+      console.error("Error in handleSubmit:", error);
     }
   };
 
