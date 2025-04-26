@@ -6,9 +6,11 @@ import { TimeClockCard } from "@/components/jobs/TimeClockCard";
 import { WeeklySummaryCard } from "@/components/jobs/WeeklySummaryCard";
 import { TimeHistoryView } from "@/components/jobs/TimeHistoryView";
 import { useTimeEntries } from "@/hooks/useTimeEntries";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TimeManagementPage = () => {
   const { weekData, isLoading, refetch } = useTimeEntries();
+  const isMobile = useIsMobile();
 
   return (
     <MainLayout>
@@ -19,9 +21,19 @@ const TimeManagementPage = () => {
         />
         
         <div className="max-w-6xl mx-auto">
+          {/* Conditionally render the card grid based on device type */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <WeeklySummaryCard weekData={weekData} loading={isLoading} />
-            <TimeClockCard />
+            {isMobile ? (
+              <>
+                <TimeClockCard />
+                <WeeklySummaryCard weekData={weekData} loading={isLoading} />
+              </>
+            ) : (
+              <>
+                <WeeklySummaryCard weekData={weekData} loading={isLoading} />
+                <TimeClockCard />
+              </>
+            )}
           </div>
           
           <div className="mt-8">
