@@ -32,6 +32,9 @@ import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
 import PowerGenerationPage from "@/pages/moet/power-systems/PowerGenerationPage";
 import PowerTransmissionPage from "@/pages/moet/power-systems/PowerTransmissionPage";
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
+import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
+import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
+import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGridPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -68,4 +71,19 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-moet-power-systems-generation" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/generation" element={<PowerGenerationPage />} />,
   <Route key="apprentices-moet-power-systems-transmission" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission" element={<PowerTransmissionPage />} />,
   <Route key="apprentices-moet-power-systems-distribution" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution" element={<PowerDistributionPage />} />,
+  <Route 
+    key="apprentices-moet-power-systems-distribution-networks" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution/networks" 
+    element={<DistributionNetworksPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-power-systems-distribution-transformers" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution/transformers" 
+    element={<TransformersPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-power-systems-distribution-smart-grid" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution/smart-grid" 
+    element={<SmartGridPage />} 
+  />,
 ];
