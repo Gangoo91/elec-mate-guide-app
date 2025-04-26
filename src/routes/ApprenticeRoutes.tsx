@@ -30,7 +30,6 @@ import CircuitTheoryPage from "@/pages/moet/CircuitTheoryPage";
 import PowerSystemsPage from "@/pages/moet/PowerSystemsPage";
 import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
 import PowerGenerationPage from "@/pages/moet/power-systems/PowerGenerationPage";
-import TransmissionSystemsPage from "@/pages/moet/power-systems/transmission/TransmissionSystemsPage";
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
 import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
@@ -80,7 +79,7 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-moet-power-systems" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems" element={<PowerSystemsPage />} />,
   <Route key="apprentices-moet-basic-electronics" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics" element={<BasicElectronicsPage />} />,
   <Route key="apprentices-moet-power-systems-generation" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/generation" element={<PowerGenerationPage />} />,
-  <Route key="apprentices-moet-power-systems-transmission" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission" element={<PowerTransmissionPage />} />,
+  <Route key="apprentices-moet-power-systems-transmission" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission" element={<TransmissionSystemsPage />} />,
   <Route key="apprentices-moet-power-systems-distribution" path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution" element={<PowerDistributionPage />} />,
   <Route 
     key="apprentices-moet-power-systems-distribution-networks" 
