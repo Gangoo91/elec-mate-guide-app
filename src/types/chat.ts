@@ -10,8 +10,6 @@ export interface Message {
   read: boolean;
   chat_type: ChatType;
   is_group_message: boolean;
-  blocked?: boolean;
-  reported?: boolean;
 }
 
 export interface ChatReport {

@@ -20,7 +20,7 @@ interface MentalHealthMate {
     first_name: string | null;
     last_name: string | null;
     avatar_url: string | null;
-  };
+  } | null;
 }
 
 const MentalHealthBuddy = () => {
@@ -53,10 +53,11 @@ const MentalHealthBuddy = () => {
 
         if (error) throw error;
 
-        // Properly type and format the data
+        // Safely type and format the data
         const formattedMates: MentalHealthMate[] = data.map(mate => ({
           ...mate,
-          profiles: mate.profiles as MentalHealthMate['profiles']
+          // Handle potentially missing profile data with a null fallback
+          profiles: mate.profiles as MentalHealthMate['profiles'] || null
         }));
 
         setMates(formattedMates);
