@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -29,7 +30,7 @@ import CircuitTheoryPage from "@/pages/moet/CircuitTheoryPage";
 import PowerSystemsPage from "@/pages/moet/PowerSystemsPage";
 import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
 import PowerGenerationPage from "@/pages/moet/power-systems/PowerGenerationPage";
-import PowerTransmissionPage from "@/pages/moet/power-systems/TransmissionSystemsPage";
+import TransmissionSystemsPage from "@/pages/moet/power-systems/transmission/TransmissionSystemsPage";
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
 import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
