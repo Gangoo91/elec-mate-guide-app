@@ -19,3 +19,11 @@ export interface TeamMemberListProps {
   isLoading: boolean;
   onMemberClick: (member: TeamMember) => void;
 }
+
+export interface TeamMemberDialogProps {
+  member: TeamMember | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onEdit?: (member: TeamMember) => void;
+  onDelete?: (id: string) => void;
+}
