@@ -26,9 +26,12 @@ export function ChatPopover({ recipientId }: { recipientId: string }) {
   const { user } = useAuth();
   const { toast } = useToast();
 
+  // Make sure recipientId is a valid UUID
+  const validRecipientId = recipientId || "00000000-0000-0000-0000-000000000000";
+
   // Fetch messages when the component mounts or when recipientId changes
   useEffect(() => {
-    if (!user || !recipientId) return;
+    if (!user || !validRecipientId) return;
     
     const fetchMessages = async () => {
       setLoading(true);
@@ -59,7 +62,7 @@ export function ChatPopover({ recipientId }: { recipientId: string }) {
           event: '*', 
           schema: 'public',
           table: 'team_messages',
-          filter: `sender_id=eq.${recipientId},recipient_id=eq.${user.id}`
+          filter: `sender_id=eq.${validRecipientId},recipient_id=eq.${user.id}`
         },
         (payload) => {
           console.log('New message:', payload);
@@ -79,7 +82,7 @@ export function ChatPopover({ recipientId }: { recipientId: string }) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [user, recipientId, toast]);
+  }, [user, validRecipientId, toast]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,7 +92,9 @@ export function ChatPopover({ recipientId }: { recipientId: string }) {
       const { error } = await supabase.from('team_messages').insert({
         content: newMessage.trim(),
         sender_id: user.id,
-        recipient_id: recipientId,
+        recipient_id: validRecipientId,
+        chat_type: 'private', // Default to private chat type
+        read: false,
       });
 
       if (error) throw error;

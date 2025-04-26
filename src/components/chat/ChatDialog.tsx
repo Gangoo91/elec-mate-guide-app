@@ -22,7 +22,8 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
     filterMessagesByType 
   } = useChat();
   
-  const [recipientId] = useState("some-user-id"); // Default recipient
+  // Use a proper UUID format instead of "some-user-id"
+  const [recipientId] = useState("00000000-0000-0000-0000-000000000000"); // Default system recipient
 
   // Get unread counts for each chat type
   const unreadCounts = {
