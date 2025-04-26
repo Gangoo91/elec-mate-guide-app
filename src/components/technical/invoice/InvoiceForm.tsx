@@ -57,6 +57,8 @@ export function InvoiceForm() {
       const vatAmount = subtotal * (vatRate / 100);
       const total = subtotal + vatAmount;
 
+      // The database has a trigger to generate invoice_number automatically,
+      // so we don't need to provide it here
       const invoiceData = {
         user_id: user?.id,
         client_name: data.clientName,
