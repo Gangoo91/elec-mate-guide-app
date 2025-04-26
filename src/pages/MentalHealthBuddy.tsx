@@ -110,7 +110,7 @@ const MentalHealthBuddy = () => {
             mates.map((mate) => (
               <div key={mate.id} className="bg-[#2C2F24] rounded-lg p-6 border border-[#FFC900]/20 flex flex-col h-full">
                 <h3 className="text-[#FFC900] font-medium text-lg mb-2">
-                  {mate.profile?.first_name} {mate.profile?.last_name}
+                  {mate.profiles?.first_name} {mate.profiles?.last_name}
                 </h3>
                 <p className="text-[#FFC900]/80 text-sm line-clamp-3 mb-3">{mate.about_me}</p>
                 <div className="text-[#FFC900]/60 text-xs mb-4">
@@ -120,7 +120,7 @@ const MentalHealthBuddy = () => {
                 <div className="mt-auto flex justify-end">
                   <ChatButton
                     recipientId={mate.user_id}
-                    recipientName={`${mate.profile?.first_name || ''} ${mate.profile?.last_name || ''}`}
+                    recipientName={`${mate.profiles?.first_name || ''} ${mate.profiles?.last_name || ''}`}
                     chatType="mental_health"
                   />
                   <Button
