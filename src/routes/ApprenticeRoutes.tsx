@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -34,10 +35,10 @@ import PowerTransmissionPage from "@/pages/moet/power-systems/PowerTransmissionP
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
 import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
-import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGrid";
+import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGridPage";
 import TransmissionSystemsPage from "@/pages/moet/power-systems/transmission/TransmissionSystemsPage";
 import TransformersSubstationsPage from "@/pages/moet/power-systems/transmission/TransformersSubstationsPage";
-import GridInfrastructurePage from "@/pages/moet/power-systems/transmission/infrastructure/GridInfrastructurePage";
+import GridInfrastructurePage from "@/pages/moet/power-systems/transmission/GridInfrastructurePage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
