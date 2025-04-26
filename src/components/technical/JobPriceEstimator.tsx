@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { EstimateForm } from './estimate/EstimateForm';
 import { EstimateDisplay } from './estimate/EstimateDisplay';
 import { useJobEstimate } from '@/hooks/useJobEstimate';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const JobPriceEstimator = () => {
   const {
@@ -74,15 +75,16 @@ const JobPriceEstimator = () => {
           )}
         </div>
         
-        <EstimateDisplay 
-          estimate={estimate}
-          clientName={clientName}
-          jobReference={jobReference}
-        />
+        <ScrollArea className="max-h-[60vh] overflow-y-auto pb-20">
+          <EstimateDisplay 
+            estimate={estimate}
+            clientName={clientName}
+            jobReference={jobReference}
+          />
+        </ScrollArea>
       </CardContent>
     </div>
   );
 };
 
 export default JobPriceEstimator;
-
