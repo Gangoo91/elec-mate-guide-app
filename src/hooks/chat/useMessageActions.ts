@@ -13,6 +13,7 @@ export function useMessageActions(
 ) {
   const { toast } = useToast();
 
+  // Use useCallback to memoize functions
   const sendMessage = useCallback(async (content: string) => {
     if (!userId || !content.trim()) return;
 
@@ -48,6 +49,7 @@ export function useMessageActions(
     }
   }, [userId, recipientId, chatType, setMessages, toast]);
 
+  // Memoize blockUser function
   const blockUser = useCallback(async () => {
     if (!userId || !recipientId) return false;
 
@@ -55,14 +57,13 @@ export function useMessageActions(
       // First update the messages in the database
       const { error } = await supabase
         .from('team_messages')
-        .update({ read: true }) // We're just marking as read since 'blocked' isn't in our schema
+        .update({ read: true }) // Mark as read
         .eq('sender_id', recipientId)
         .eq('recipient_id', userId);
 
       if (error) throw error;
       
-      // Then update the UI - we're treating messages as blocked in the UI even though
-      // we don't store that flag in the database
+      // Update the UI 
       setMessages(prev => prev.map(msg => 
         msg.sender_id === recipientId ? {...msg, read: true} : msg
       ));
@@ -79,21 +80,21 @@ export function useMessageActions(
     }
   }, [userId, recipientId, setMessages, toast]);
 
+  // Memoize reportUser function
   const reportUser = useCallback(async (reason: string) => {
     if (!userId || !recipientId) return false;
 
     try {
-      // First update the messages in the database
+      // Update the messages in the database
       const { error } = await supabase
         .from('team_messages')
-        .update({ read: true }) // We're just marking as read since 'reported' isn't in our schema
+        .update({ read: true })
         .eq('sender_id', recipientId)
         .eq('recipient_id', userId);
 
       if (error) throw error;
       
-      // Then update the UI - we're treating messages as reported in the UI even though
-      // we don't store that flag in the database
+      // Update the UI
       setMessages(prev => prev.map(msg => 
         msg.sender_id === recipientId ? {...msg, read: true} : msg
       ));

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { ChatButton } from "@/components/chat/ChatButton";
@@ -29,52 +29,83 @@ const MentalHealthBuddy = () => {
   const [mates, setMates] = useState<MentalHealthMate[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Use useCallback to avoid recreating this function on each render
+  const fetchMates = useCallback(async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('mental_health_mates')
+        .select(`
+          id,
+          user_id,
+          about_me,
+          experience,
+          is_available,
+          specialties,
+          profiles:user_id(
+            first_name,
+            last_name,
+            avatar_url
+          )
+        `)
+        .eq('is_available', true)
+        .limit(9);
+
+      if (error) throw error;
+
+      // Type safe handling of the returned data
+      const formattedMates: MentalHealthMate[] = data.map(mate => {
+        // Handle the profiles property more safely
+        const typedMate = {
+          ...mate,
+          // Cast with a type guard to ensure proper typing
+          profiles: typeof mate.profiles === 'object' && mate.profiles !== null
+            ? mate.profiles as MentalHealthMate['profiles']
+            : null
+        };
+        return typedMate;
+      });
+
+      setMates(formattedMates);
+    } catch (err) {
+      console.error('Error fetching mental health mates:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    const fetchMates = async () => {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('mental_health_mates')
-          .select(`
-            id,
-            user_id,
-            about_me,
-            experience,
-            is_available,
-            specialties,
-            profiles:user_id(
-              first_name,
-              last_name,
-              avatar_url
-            )
-          `)
-          .eq('is_available', true)
-          .limit(9);
-
-        if (error) throw error;
-
-        // Type safe handling of the returned data
-        const formattedMates: MentalHealthMate[] = data.map(mate => {
-          // Handle the profiles property more safely
-          const typedMate = {
-            ...mate,
-            // Cast with a type guard to ensure proper typing
-            profiles: typeof mate.profiles === 'object' && mate.profiles !== null
-              ? mate.profiles as MentalHealthMate['profiles']
-              : null
-          };
-          return typedMate;
-        });
-
-        setMates(formattedMates);
-      } catch (err) {
-        console.error('Error fetching mental health mates:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchMates();
+  }, [fetchMates]);
+
+  // Memoize any derived values
+  const emptyStateContent = useMemo(() => (
+    <div className="col-span-full text-center py-10">
+      <Heart className="mx-auto h-16 w-16 text-[#FFC900]/50 mb-4" />
+      <h3 className="text-xl font-medium text-[#FFC900] mb-2">No Mental Health Mates Available</h3>
+      <p className="text-[#FFC900]/70 mb-6">
+        There are currently no mates available for support. Please check back later.
+      </p>
+      <Button
+        className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+        onClick={() => navigate("/mental-health")}
+      >
+        Return to Mental Health Hub
+      </Button>
+    </div>
+  ), [navigate]);
+
+  // Create a memoized handler for the chat button click to avoid recreating it on each render
+  const handleViewAllMessages = useCallback(() => {
+    // Open the central chat dialog with mental_health preselected
+    const chatButton = document.querySelector('[data-chat-button]') as HTMLButtonElement;
+    if (chatButton) chatButton.click();
+    
+    // Wait for the dialog to open and then select the mental_health tab
+    setTimeout(() => {
+      const mentalHealthTab = document.querySelector('[data-value="mental_health"]') as HTMLButtonElement;
+      if (mentalHealthTab) mentalHealthTab.click();
+    }, 100);
   }, []);
 
   return (
@@ -100,19 +131,7 @@ const MentalHealthBuddy = () => {
               </div>
             ))
           ) : mates.length === 0 ? (
-            <div className="col-span-full text-center py-10">
-              <Heart className="mx-auto h-16 w-16 text-[#FFC900]/50 mb-4" />
-              <h3 className="text-xl font-medium text-[#FFC900] mb-2">No Mental Health Mates Available</h3>
-              <p className="text-[#FFC900]/70 mb-6">
-                There are currently no mates available for support. Please check back later.
-              </p>
-              <Button
-                className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
-                onClick={() => navigate("/mental-health")}
-              >
-                Return to Mental Health Hub
-              </Button>
-            </div>
+            emptyStateContent
           ) : (
             mates.map((mate) => (
               <div key={mate.id} className="bg-[#2C2F24] rounded-lg p-6 border border-[#FFC900]/20 flex flex-col h-full">
@@ -133,17 +152,7 @@ const MentalHealthBuddy = () => {
                   <Button
                     variant="outline"
                     className="ml-2 border-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/10"
-                    onClick={() => {
-                      // Open the central chat dialog with mental_health preselected
-                      const chatButton = document.querySelector('[data-chat-button]') as HTMLButtonElement;
-                      if (chatButton) chatButton.click();
-                      
-                      // Wait for the dialog to open and then select the mental_health tab
-                      setTimeout(() => {
-                        const mentalHealthTab = document.querySelector('[data-value="mental_health"]') as HTMLButtonElement;
-                        if (mentalHealthTab) mentalHealthTab.click();
-                      }, 100);
-                    }}
+                    onClick={handleViewAllMessages}
                   >
                     <MessageSquare className="h-4 w-4 mr-2" />
                     View All Messages

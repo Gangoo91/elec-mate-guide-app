@@ -1,8 +1,8 @@
 
+import { memo, useState, useCallback } from "react";
 import { OnlineIndicator } from "./OnlineIndicator";
 import { ChatPopover } from "../ChatPopover";
 import { TeamMemberPresence } from "@/hooks/useTeamPresence";
-import { useState } from "react";
 
 interface TeamMemberCardProps {
   member: {
@@ -14,13 +14,21 @@ interface TeamMemberCardProps {
   onClick: () => void;
 }
 
-export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProps) {
+// Use React.memo to prevent unnecessary re-renders
+export const TeamMemberCard = memo(function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const handleChatClick = (e: React.MouseEvent) => {
+  // Memoize event handlers
+  const handleChatClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsChatOpen(!isChatOpen);
-  };
+    setIsChatOpen(prev => !prev);
+  }, []);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      onClick();
+    }
+  }, [onClick]);
 
   return (
     <div 
@@ -28,11 +36,7 @@ export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProp
       role="button"
       tabIndex={0}
       onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          onClick();
-        }
-      }}
+      onKeyDown={handleKeyDown}
     >
       <div>
         <p className="text-sm text-[#FFC900]">{member.name}</p>
@@ -49,4 +53,4 @@ export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProp
       </div>
     </div>
   );
-}
+});

@@ -1,7 +1,7 @@
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useChat } from "@/contexts/ChatContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { ChatTypeSelector } from "./ChatTypeSelector";
 import { MessageList } from "./MessageList";
 import { ChatInput } from "./ChatInput";
@@ -24,38 +24,41 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
     loading
   } = useChat();
   
-  // Use a proper UUID format instead of "some-user-id"
-  const [recipientId] = useState("00000000-0000-0000-0000-000000000000"); // Default system recipient
+  // Use a proper UUID format instead of "some-user-id", and make it stable with useMemo
+  const recipientId = useMemo(() => "00000000-0000-0000-0000-000000000000", []);
 
-  // Mark messages as read when chat type is viewed
+  // Use useEffect with proper dependencies
   useEffect(() => {
     if (open) {
       markAllAsReadByType(activeChatType);
     }
   }, [open, activeChatType, markAllAsReadByType]);
 
-  // Get unread counts for each chat type
-  const unreadCounts = {
+  // Memoize unread counts to prevent unnecessary recalculations
+  const unreadCounts = useMemo(() => ({
     private: getUnreadCountByType("private"),
     team: getUnreadCountByType("team"),
     mental_health: getUnreadCountByType("mental_health"),
     mentor: getUnreadCountByType("mentor"),
-  };
+  }), [getUnreadCountByType]);
 
-  // Chat type titles for the header
-  const chatTypeTitles = {
+  // Memoize chat type titles to prevent object recreation
+  const chatTypeTitles = useMemo(() => ({
     private: "Private Chat",
     team: "Team Chat",
     mental_health: "Mental Health Mate",
     mentor: "Mentor Connect"
-  };
+  }), []);
 
-  const handleSendMessage = (message: string) => {
+  // Memoize filtered messages to prevent unnecessary refiltering
+  const filteredMessages = useMemo(() => 
+    filterMessagesByType(activeChatType),
+  [filterMessagesByType, activeChatType]);
+
+  // Use useCallback for event handlers
+  const handleSendMessage = useCallback((message: string) => {
     sendMessage(recipientId, message, activeChatType);
-  };
-
-  // Filter messages based on the active chat type
-  const filteredMessages = filterMessagesByType(activeChatType);
+  }, [sendMessage, recipientId, activeChatType]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
