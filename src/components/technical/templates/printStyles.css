@@ -30,4 +30,20 @@
   * {
     box-shadow: none !important;
   }
+  
+  /* Fix for mobile printing */
+  .overflow-x-auto {
+    overflow-x: visible !important;
+  }
+  
+  /* Hide UI elements during print */
+  button, .print:hidden {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .WhitePaperDocument table {
+    font-size: 0.85rem;
+  }
 }

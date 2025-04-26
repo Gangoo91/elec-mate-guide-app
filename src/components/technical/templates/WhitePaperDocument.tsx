@@ -12,7 +12,7 @@ export const WhitePaperDocument = ({ children, className }: WhitePaperDocumentPr
     <div 
       className={cn(
         "bg-white text-black rounded-md shadow-md print:shadow-none", 
-        "border border-gray-200 overflow-hidden",
+        "border border-gray-200 overflow-hidden max-w-full",
         className
       )}
     >
@@ -23,7 +23,7 @@ export const WhitePaperDocument = ({ children, className }: WhitePaperDocumentPr
 
 export const WhitePaperHeader = ({ children, className }: WhitePaperDocumentProps) => {
   return (
-    <div className={cn("border-b border-gray-200 p-6", className)}>
+    <div className={cn("border-b border-gray-200 p-4 md:p-6", className)}>
       {children}
     </div>
   );
@@ -31,7 +31,7 @@ export const WhitePaperHeader = ({ children, className }: WhitePaperDocumentProp
 
 export const WhitePaperContent = ({ children, className }: WhitePaperDocumentProps) => {
   return (
-    <div className={cn("p-6", className)}>
+    <div className={cn("p-4 md:p-6", className)}>
       {children}
     </div>
   );
@@ -39,7 +39,7 @@ export const WhitePaperContent = ({ children, className }: WhitePaperDocumentPro
 
 export const WhitePaperFooter = ({ children, className }: WhitePaperDocumentProps) => {
   return (
-    <div className={cn("border-t border-gray-200 p-6 text-gray-500 text-sm", className)}>
+    <div className={cn("border-t border-gray-200 p-4 md:p-6 text-gray-500 text-sm", className)}>
       {children}
     </div>
   );
