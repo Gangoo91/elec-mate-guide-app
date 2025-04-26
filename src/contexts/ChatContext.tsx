@@ -1,20 +1,11 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { ChatType } from "@/config/chatTypes";
-import { useChatActions } from "@/hooks/useChat";
+import { ChatType, getChatTitle } from "@/config/chatTypes";
 import { useToast } from "@/hooks/use-toast";
-
-export interface Message {
-  id: string;
-  sender_id: string;
-  recipient_id: string;
-  content: string;
-  created_at: string;
-  read: boolean;
-  chat_type: ChatType;
-}
+import { Message } from "@/types/chat";
+import { useChatActions } from "@/hooks/useChat";
+import { useMessageFilter } from "@/hooks/useMessageFilter";
 
 interface ChatContextType {
   messages: Message[];
@@ -35,9 +26,9 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const { toast } = useToast();
   
-  // Use our custom hook for chat actions
   const chatActions = useChatActions(messages, setMessages);
-  
+  const messageFilter = useMessageFilter(messages);
+
   useEffect(() => {
     if (!user) return;
 
@@ -93,6 +84,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     <ChatContext.Provider value={{ 
       messages, 
       ...chatActions,
+      ...messageFilter,
       unreadCount,
       activeChatType,
       setActiveChatType

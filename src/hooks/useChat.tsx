@@ -2,10 +2,16 @@
 import { useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { ChatType, getChatTitle } from "@/config/chatTypes";
+import { useAuth } from "@/hooks/useAuth";
+import { ChatType } from "@/config/chatTypes";
+import { Message } from "@/types/chat";
 
-export const useChatActions = (messages: any[], setMessages: (messages: any[]) => void) => {
+export const useChatActions = (
+  messages: Message[], 
+  setMessages: (messages: Message[]) => void
+) => {
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const sendMessage = useCallback(async (recipientId: string, content: string, chatType: ChatType) => {
     try {
@@ -47,20 +53,8 @@ export const useChatActions = (messages: any[], setMessages: (messages: any[]) =
     }
   }, [setMessages]);
 
-  const getUnreadCountByType = useCallback((chatType: ChatType): number => {
-    return messages.filter(
-      msg => !msg.read && msg.recipient_id === user?.id && msg.chat_type === chatType
-    ).length;
-  }, [messages, user]);
-
-  const filterMessagesByType = useCallback((chatType: ChatType): Message[] => {
-    return messages.filter(msg => msg.chat_type === chatType);
-  }, [messages]);
-
   return {
     sendMessage,
     markAsRead,
-    getUnreadCountByType,
-    filterMessagesByType,
   };
 };
