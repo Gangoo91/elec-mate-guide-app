@@ -669,6 +669,66 @@ export type Database = {
         }
         Relationships: []
       }
+      team_member_presence: {
+        Row: {
+          created_at: string
+          id: string
+          last_seen: string
+          online: boolean
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_seen?: string
+          online?: boolean
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_seen?: string
+          online?: boolean
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      team_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_group_message: boolean
+          read: boolean
+          recipient_id: string | null
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          is_group_message?: boolean
+          read?: boolean
+          recipient_id?: string | null
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_group_message?: boolean
+          read?: boolean
+          recipient_id?: string | null
+          sender_id?: string
+        }
+        Relationships: []
+      }
       time_entries: {
         Row: {
           break_end: string | null
