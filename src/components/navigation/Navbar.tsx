@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -19,12 +20,14 @@ import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import NotificationBell from "../notifications/NotificationBell";
 import { useNotificationContext } from "@/contexts/NotificationContext";
-import { ChatButton } from "@/components/chat/ChatButton";
+import { ChatDialog } from "@/components/chat/ChatDialog";
+import { MessageSquare } from "lucide-react";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
   const [bypassAuth, setBypassAuth] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [chatDialogOpen, setChatDialogOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -142,7 +145,14 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           {(user || bypassAuth) && (
             <>
-              <ChatButton />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-[#FFC900] hover:bg-[#FFC900]/10"
+                onClick={() => setChatDialogOpen(true)}
+              >
+                <MessageSquare className="h-5 w-5" />
+              </Button>
               <NotificationBell className="mr-1" />
             </>
           )}
@@ -168,6 +178,9 @@ const Navbar = () => {
           navigate={navigate}
         />
       )}
+
+      {/* Chat Dialog */}
+      <ChatDialog open={chatDialogOpen} onOpenChange={setChatDialogOpen} />
     </header>
   );
 };

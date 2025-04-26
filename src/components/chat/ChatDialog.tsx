@@ -1,5 +1,5 @@
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useChat } from "@/contexts/ChatContext";
 import { useState } from "react";
 import { ChatTypeSelector } from "./ChatTypeSelector";
@@ -51,6 +51,8 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-[#333] border-[#444] text-[#FFC900]">
+        <DialogTitle className="sr-only">{chatTypeTitles[activeChatType]}</DialogTitle>
+        
         <ChatHeader title={chatTypeTitles[activeChatType]} />
         
         <ChatTypeSelector 

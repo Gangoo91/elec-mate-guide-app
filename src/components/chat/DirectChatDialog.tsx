@@ -1,5 +1,5 @@
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -34,6 +34,7 @@ export function DirectChatDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-[#22251e] border-[#FFC900]/20">
+        <DialogTitle className="sr-only">Chat with {recipientName}</DialogTitle>
         <div className="flex flex-col h-[400px]">
           <div className="border-b border-[#FFC900]/20 p-3">
             <h3 className="text-[#FFC900] font-medium">Chat with {recipientName}</h3>
