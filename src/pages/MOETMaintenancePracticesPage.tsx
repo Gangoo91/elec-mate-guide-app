@@ -17,17 +17,20 @@ const MOETMaintenancePracticesPage = () => {
     {
       title: "Preventive Maintenance",
       description: "Scheduled maintenance procedures and best practices.",
-      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/preventive"
     },
     {
       title: "Safety Protocols",
       description: "Essential safety procedures and regulations in maintenance.",
-      icon: <Shield className="h-6 w-6 text-[#FFC900]" />
+      icon: <Shield className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/safety"
     },
     {
       title: "Documentation",
       description: "Maintenance records, reports, and documentation procedures.",
-      icon: <FileCheck className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileCheck className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/documentation"
     }
   ];
 
@@ -44,7 +47,8 @@ const MOETMaintenancePracticesPage = () => {
           {topics.map((topic, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => navigate(topic.path)}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
