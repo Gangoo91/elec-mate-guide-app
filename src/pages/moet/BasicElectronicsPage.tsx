@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import LessonContent from "@/components/units/LessonContent";
+import { Card, CardContent } from "@/components/ui/card";
 
 const BasicElectronicsPage = () => {
   const navigate = useNavigate();
@@ -11,6 +11,24 @@ const BasicElectronicsPage = () => {
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles');
   };
+
+  const topics = [
+    {
+      title: "Semiconductor Basics",
+      description: "P-N Junctions, Diodes, Transistors, and Basic Semiconductor Materials",
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/semiconductors')
+    },
+    {
+      title: "Electronic Components",
+      description: "Active Components, Passive Components, Sensors and Transducers, Display Devices",
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/components')
+    },
+    {
+      title: "Basic Circuits",
+      description: "Amplifier Circuits, Power Supply Circuits, Digital Logic Circuits, Timer Circuits",
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/circuits')
+    }
+  ];
 
   return (
     <MainLayout>
@@ -21,42 +39,19 @@ const BasicElectronicsPage = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="mt-8 space-y-8">
-          <LessonContent title="Semiconductor Basics">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Semiconductor Theory</h3>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>P-N Junctions</li>
-                <li>Diodes and Their Applications</li>
-                <li>Transistor Types</li>
-                <li>Basic Semiconductor Materials</li>
-              </ul>
-            </div>
-          </LessonContent>
-
-          <LessonContent title="Electronic Components">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Common Components</h3>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Active Components (Transistors, ICs)</li>
-                <li>Passive Components (Resistors, Capacitors)</li>
-                <li>Sensors and Transducers</li>
-                <li>Display Devices</li>
-              </ul>
-            </div>
-          </LessonContent>
-
-          <LessonContent title="Basic Circuits">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Circuit Applications</h3>
-              <ul className="list-disc pl-6 space-y-2">
-                <li>Amplifier Circuits</li>
-                <li>Power Supply Circuits</li>
-                <li>Digital Logic Circuits</li>
-                <li>Timer Circuits</li>
-              </ul>
-            </div>
-          </LessonContent>
+        <div className="mt-8 space-y-6">
+          {topics.map((topic, index) => (
+            <Card 
+              key={index}
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={topic.onClick}
+            >
+              <CardContent className="pt-6">
+                <h3 className="text-lg font-semibold text-[#FFC900] mb-2">{topic.title}</h3>
+                <p className="text-[#FFC900]/80">{topic.description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </MainLayout>

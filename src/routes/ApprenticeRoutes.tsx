@@ -40,6 +40,9 @@ import GridInfrastructurePage from "@/pages/moet/power-systems/transmission/Grid
 import MOETCoreSkillsPage from "@/pages/MOETCoreSkillsPage";
 import MOETBehavioursPage from "@/pages/MOETBehavioursPage";
 import MOETAssessmentPage from "@/pages/MOETAssessmentPage";
+import SemiconductorBasicsPage from "@/pages/moet/basic-electronics/semiconductors/SemiconductorBasicsPage";
+import ElectronicComponentsPage from "@/pages/moet/basic-electronics/components/ElectronicComponentsPage";
+import BasicCircuitsPage from "@/pages/moet/basic-electronics/circuits/BasicCircuitsPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -108,4 +111,19 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-moet-core-skills" path="/apprentices/study-materials/city-guilds/moet/core-skills" element={<MOETCoreSkillsPage />} />,
   <Route key="apprentices-moet-behaviours" path="/apprentices/study-materials/city-guilds/moet/behaviours" element={<MOETBehavioursPage />} />,
   <Route key="apprentices-moet-assessment" path="/apprentices/study-materials/city-guilds/moet/assessment" element={<MOETAssessmentPage />} />,
+  <Route 
+    key="apprentices-moet-basic-electronics-semiconductors" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/semiconductors" 
+    element={<SemiconductorBasicsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-basic-electronics-components" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/components" 
+    element={<ElectronicComponentsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-basic-electronics-circuits" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics/circuits" 
+    element={<BasicCircuitsPage />} 
+  />,
 ];
