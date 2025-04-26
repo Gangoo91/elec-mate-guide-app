@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from "@/components/ui/input";
@@ -57,8 +56,6 @@ export function InvoiceForm() {
       const vatAmount = subtotal * (vatRate / 100);
       const total = subtotal + vatAmount;
 
-      // The database has a trigger to generate invoice_number automatically,
-      // so we don't need to provide it here
       const invoiceData = {
         user_id: user?.id,
         client_name: data.clientName,
@@ -72,7 +69,8 @@ export function InvoiceForm() {
         total,
         notes: data.notes,
         terms: data.terms,
-        status: 'draft'
+        status: 'draft',
+        invoice_number: null
       };
 
       const { error } = await supabase
