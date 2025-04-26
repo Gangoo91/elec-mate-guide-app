@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Book, CalendarCheck, Award, Handshake, Heart } from "lucide-react";
+import { Book, Handshake, Heart, Users, MessageSquare, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -7,7 +7,6 @@ import ResourceCard from "@/components/shared/ResourceCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "@/components/ui/drawer";
-import IndustryResources from "@/components/IndustryResources";
 
 const MentalHealthHubContent = () => (
   <>
@@ -102,6 +101,27 @@ const ApprenticesPage = () => {
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       fullCardLink: "/apprentices/learning-hub",
       action: { label: "Start Learning", href: "/apprentices/learning-hub" }
+    },
+    {
+      title: "Study Groups",
+      description: "Join or create study groups with fellow apprentices to share knowledge and support each other in your learning journey.",
+      icon: <Users className="h-6 w-6 text-[#FFC900]" />,
+      action: { label: "Join Groups", href: "/apprentices/study-groups" },
+      fullCardLink: "/apprentices/study-groups"
+    },
+    {
+      title: "Expert Q&A",
+      description: "Connect with experienced electricians and get answers to your technical questions in real-time.",
+      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
+      fullCardLink: "/apprentices/expert-qa",
+      action: { label: "Ask Questions", href: "/apprentices/expert-qa" }
+    },
+    {
+      title: "Progress Tracking",
+      description: "Track your learning journey, share achievements with mentors, and celebrate your milestones.",
+      icon: <Award className="h-6 w-6 text-[#FFC900]" />,
+      fullCardLink: "/apprentices/progress",
+      action: { label: "View Progress", href: "/apprentices/progress" }
     },
     {
       title: "Mentor Connect",

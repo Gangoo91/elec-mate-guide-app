@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -145,4 +144,10 @@ export const ApprenticeRoutes = [
     path="/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/documentation" 
     element={<DocumentationPage />} 
   />,
+  <Route key="apprentices-video-demos" path="/apprentices/video-demonstrations" />,
+  <Route key="apprentices-ar-learning" path="/apprentices/ar-learning" />,
+  <Route key="apprentices-audio-tutorials" path="/apprentices/audio-tutorials" />,
+  <Route key="apprentices-study-groups" path="/apprentices/study-groups" />,
+  <Route key="apprentices-expert-qa" path="/apprentices/expert-qa" />,
+  <Route key="apprentices-progress" path="/apprentices/progress" />,
 ];
