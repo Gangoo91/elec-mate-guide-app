@@ -2,96 +2,28 @@
 import React, { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { CalendarDays, ClipboardList, Clock, FolderGit2, LineChart, PenTool, Share2, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { AddProjectDialog } from "@/components/projects/AddProjectDialog";
 import { ProjectDetailsDialog } from "@/components/projects/ProjectDetailsDialog";
 import { useProjects, type Project } from "@/hooks/useProjects";
-import { useNavigate } from "react-router-dom";
-
-const statusColors: Record<string, string> = {
-  planning: "bg-blue-500/20 text-blue-500",
-  "in-progress": "bg-amber-500/20 text-amber-500",
-  "on-hold": "bg-purple-500/20 text-purple-500",
-  completed: "bg-green-500/20 text-green-500",
-  cancelled: "bg-red-500/20 text-red-500"
-};
+import { DashboardStats } from "@/components/projects/DashboardStats";
+import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
+import { QuickActionsCard } from "@/components/projects/QuickActionsCard";
+import { RecentUpdatesCard } from "@/components/projects/RecentUpdatesCard";
 
 const ProjectManagementPage = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { projects, isLoading } = useProjects();
-  const navigate = useNavigate();
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
     setIsDetailsOpen(true);
   };
 
-  const getStatusBadgeClass = (status: string) => {
-    return statusColors[status] || "bg-gray-500/20 text-gray-500";
-  };
-
-  const handleQuickAction = (path: string) => {
-    navigate(path);
-  };
-
   const recentCompletedJobs = projects
     ?.filter(project => project.status === "completed")
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
     .slice(0, 3);
-
-  const renderDashboardStats = () => {
-    const totalProjects = projects?.length || 0;
-    const completedProjects = projects?.filter(p => p.status === "completed").length || 0;
-    const inProgressProjects = projects?.filter(p => p.status === "in-progress").length || 0;
-    const planningProjects = projects?.filter(p => p.status === "planning").length || 0;
-    
-    return (
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <Card className="bg-[#22251e] border-[#FFC900]/20">
-          <CardContent className="p-4 flex flex-col items-center justify-center">
-            <div className="rounded-full bg-[#FFC900]/10 p-3 mb-3">
-              <FolderGit2 className="h-5 w-5 text-[#FFC900]" />
-            </div>
-            <p className="text-sm text-[#FFC900]/70">Total Projects</p>
-            <h4 className="text-xl font-bold text-[#FFC900]">{totalProjects}</h4>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-[#22251e] border-[#FFC900]/20">
-          <CardContent className="p-4 flex flex-col items-center justify-center">
-            <div className="rounded-full bg-green-500/10 p-3 mb-3">
-              <ClipboardList className="h-5 w-5 text-green-500" />
-            </div>
-            <p className="text-sm text-[#FFC900]/70">Completed</p>
-            <h4 className="text-xl font-bold text-[#FFC900]">{completedProjects}</h4>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-[#22251e] border-[#FFC900]/20">
-          <CardContent className="p-4 flex flex-col items-center justify-center">
-            <div className="rounded-full bg-amber-500/10 p-3 mb-3">
-              <Clock className="h-5 w-5 text-amber-500" />
-            </div>
-            <p className="text-sm text-[#FFC900]/70">In Progress</p>
-            <h4 className="text-xl font-bold text-[#FFC900]">{inProgressProjects}</h4>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-[#22251e] border-[#FFC900]/20">
-          <CardContent className="p-4 flex flex-col items-center justify-center">
-            <div className="rounded-full bg-blue-500/10 p-3 mb-3">
-              <PenTool className="h-5 w-5 text-blue-500" />
-            </div>
-            <p className="text-sm text-[#FFC900]/70">Planning</p>
-            <h4 className="text-xl font-bold text-[#FFC900]">{planningProjects}</h4>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  };
 
   return (
     <MainLayout>
@@ -103,132 +35,24 @@ const ProjectManagementPage = () => {
         />
 
         <div className="max-w-7xl mx-auto">
-          {renderDashboardStats()}
+          <DashboardStats projects={projects} />
           
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-[#FFC900]">Your Projects</h2>
             <AddProjectDialog />
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-            {isLoading ? (
-              Array(4).fill(0).map((_, index) => (
-                <Card key={index} className="bg-[#22251e] border-[#FFC900]/20">
-                  <CardContent className="p-6">
-                    <div className="w-full h-24 bg-[#333]/20 rounded-md animate-pulse"></div>
-                  </CardContent>
-                </Card>
-              ))
-            ) : projects?.length === 0 ? (
-              <div className="col-span-full text-center py-12">
-                <FolderGit2 className="h-12 w-12 text-[#FFC900]/50 mx-auto mb-4" />
-                <h3 className="text-xl text-[#FFC900]">No Projects Yet</h3>
-                <p className="text-[#FFC900]/70 mt-2">Create your first project to get started.</p>
-              </div>
-            ) : (
-              projects?.map(project => (
-                <Card 
-                  key={project.id} 
-                  className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-                  onClick={() => handleProjectClick(project)}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <span className={`text-xs px-2 py-1 rounded-full font-medium ${getStatusBadgeClass(project.status)}`}>
-                        {project.status.replace("-", " ")}
-                      </span>
-                      {project.progress !== undefined && (
-                        <div className="bg-[#333]/30 w-12 h-12 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-bold text-[#FFC900]">{project.progress}%</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <h3 className="text-lg font-semibold text-[#FFC900] mb-1">{project.name}</h3>
-                    <p className="text-[#FFC900]/70 text-sm mb-3">Client: {project.client_name}</p>
-                    
-                    {project.deadline && (
-                      <div className="flex items-center text-[#FFC900]/60 text-xs mt-4">
-                        <CalendarDays className="h-4 w-4 mr-1" />
-                        <span>Due: {new Date(project.deadline).toLocaleDateString()}</span>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              ))
-            )}
+          <div className="mb-10">
+            <ProjectsGrid
+              projects={projects}
+              isLoading={isLoading}
+              onProjectClick={handleProjectClick}
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900]">Quick Actions</CardTitle>
-                <CardDescription className="text-[#FFC900]/70">
-                  Common project management tasks
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid gap-4">
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
-                  onClick={() => handleQuickAction("/electricians/project-management/team")}
-                >
-                  <Users className="mr-2 h-4 w-4" />
-                  Manage Team Members
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
-                  onClick={() => handleQuickAction("/electricians/technical-tools/templates")}
-                >
-                  <Share2 className="mr-2 h-4 w-4" />
-                  Share Project Documents
-                </Button>
-                <Button 
-                  variant="outline" 
-                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
-                  onClick={() => handleQuickAction("/electricians/job-scheduling")}
-                >
-                  <LineChart className="mr-2 h-4 w-4" />
-                  View Schedule Analytics
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-[#22251e] border-[#FFC900]/20">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900]">Recent Updates</CardTitle>
-                <CardDescription className="text-[#FFC900]/70">
-                  Latest activity on your projects
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {recentCompletedJobs?.map((job) => (
-                    <div key={job.id} className="border-l-2 border-[#FFC900] pl-4 py-1">
-                      <p className="text-sm text-[#FFC900]">{job.name} - {job.status}</p>
-                      <p className="text-xs text-[#FFC900]/60">
-                        {new Date(job.updated_at).toLocaleString()}
-                      </p>
-                    </div>
-                  ))}
-                  {(!recentCompletedJobs || recentCompletedJobs.length === 0) && (
-                    <div className="text-center py-4">
-                      <p className="text-sm text-[#FFC900]/70">No recent updates</p>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button 
-                  variant="ghost" 
-                  className="text-xs text-[#FFC900]/80 hover:text-[#FFC900]"
-                  onClick={() => handleQuickAction("/electricians/job-scheduling")}
-                >
-                  View all updates
-                </Button>
-              </CardFooter>
-            </Card>
+            <QuickActionsCard />
+            <RecentUpdatesCard recentCompletedJobs={recentCompletedJobs} />
           </div>
         </div>
 
