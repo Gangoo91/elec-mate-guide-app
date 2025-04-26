@@ -5,14 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { ProjectForm } from "./ProjectForm";
 import { useProjects } from "@/hooks/useProjects";
+import { useAuth } from "@/hooks/useAuth";
 
 export function AddProjectDialog() {
   const [open, setOpen] = useState(false);
   const { addProject } = useProjects();
+  const { user } = useAuth();
 
   const handleSubmit = async (data: any) => {
     try {
-      await addProject.mutateAsync(data);
+      if (!user?.id) {
+        throw new Error("User not authenticated");
+      }
+      
+      await addProject.mutateAsync({
+        ...data,
+        user_id: user.id
+      });
       setOpen(false);
     } catch (error) {
       console.error("Error in handleSubmit:", error);

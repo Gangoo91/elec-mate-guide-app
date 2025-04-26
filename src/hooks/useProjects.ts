@@ -14,23 +14,26 @@ export type Project = {
   progress?: number;
   created_at: string;
   updated_at: string;
+  user_id: string;
 };
 
 export function useProjects() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
+  const fetchProjects = async (): Promise<Project[]> => {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data as unknown as Project[];
+  };
+
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      return data as Project[];
-    },
+    queryFn: fetchProjects,
   });
 
   const addProject = useMutation({

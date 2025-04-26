@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, Edit, Trash2, Users } from "lucide-react";
+import { CalendarDays, Edit, Trash2, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectForm } from "./ProjectForm";
 import { useProjects, type Project } from "@/hooks/useProjects";
