@@ -50,7 +50,7 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
   };
 
   return (
-    <div className="p-4 overflow-y-auto max-h-[80vh] md:max-h-[80vh]">
+    <div className="min-h-[100svh] md:min-h-0 flex flex-col md:max-h-[80vh] bg-gray-100">
       <DocumentActions
         handleDownload={handleDownload}
         handlePrint={handlePrint}
@@ -59,32 +59,34 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
         documentTypeLabel={documentTypeLabel}
       />
 
-      <div className="bg-white text-black rounded-md shadow-md print:shadow-none border border-gray-200 overflow-hidden">
-        <div className="border-b border-gray-200 p-4 md:p-6">
-          <DocumentHeader 
-            isEstimate={isEstimate} 
-            today={today} 
-            documentNumber={documentNumber} 
-          />
-        </div>
-
-        <div className="p-4 md:p-6">
-          <DocumentAddressSection 
-            fromAddress={fromAddress}
-            toAddress={toAddress}
-          />
-
-          <div className="mb-8">
-            <h3 className="font-semibold text-gray-700 mb-4">Summary</h3>
-            <DocumentSummaryTable />
+      <div className="flex-1 overflow-y-auto px-4 py-4 md:p-4">
+        <div className="bg-white text-black rounded-md shadow-md print:shadow-none border border-gray-200">
+          <div className="border-b border-gray-200 p-4">
+            <DocumentHeader 
+              isEstimate={isEstimate} 
+              today={today} 
+              documentNumber={documentNumber} 
+            />
           </div>
 
-          <DocumentNotes isEstimate={isEstimate} documentNumber={documentNumber} />
-          <DocumentTerms isEstimate={isEstimate} />
-          <DocumentSignatures signatureData={signatureData} />
-        </div>
+          <div className="p-4">
+            <DocumentAddressSection 
+              fromAddress={fromAddress}
+              toAddress={toAddress}
+            />
 
-        <DocumentFooter signatureData={signatureData} />
+            <div className="mb-6">
+              <h3 className="font-semibold text-gray-700 mb-4">Summary</h3>
+              <DocumentSummaryTable />
+            </div>
+
+            <DocumentNotes isEstimate={isEstimate} documentNumber={documentNumber} />
+            <DocumentTerms isEstimate={isEstimate} />
+            <DocumentSignatures signatureData={signatureData} />
+          </div>
+
+          <DocumentFooter signatureData={signatureData} />
+        </div>
       </div>
     </div>
   );

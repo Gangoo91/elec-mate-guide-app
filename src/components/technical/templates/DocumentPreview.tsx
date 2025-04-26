@@ -95,7 +95,7 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
   
   return isMobile ? (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0 bg-gray-100">
+      <SheetContent side="bottom" className="h-[100svh] p-0 bg-gray-100">
         {content}
       </SheetContent>
     </Sheet>
