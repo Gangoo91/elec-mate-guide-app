@@ -10,13 +10,11 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { jobFormSchema, JobFormData } from "./jobValidation";
 
 type JobFormData = {
   clientName: string;
@@ -32,6 +30,7 @@ export function AddJobDialog() {
   const { toast } = useToast();
   const { user } = useAuth();
   const form = useForm<JobFormData>({
+    resolver: zodResolver(jobFormSchema),
     defaultValues: {
       date: format(new Date(), 'dd/MM/yyyy'),
     }
