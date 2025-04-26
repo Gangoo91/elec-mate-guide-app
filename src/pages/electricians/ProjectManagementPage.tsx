@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -170,7 +171,7 @@ const ProjectManagementPage = () => {
                 <Button 
                   variant="outline" 
                   className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
-                  onClick={() => handleQuickAction("/electricians/job-scheduling/clients")}
+                  onClick={() => handleQuickAction("/electricians/project-management/team")}
                 >
                   <Users className="mr-2 h-4 w-4" />
                   Manage Team Members
