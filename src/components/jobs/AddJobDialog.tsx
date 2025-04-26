@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 type JobFormData = {
   clientName: string;
@@ -21,11 +22,21 @@ type JobFormData = {
 
 export function AddJobDialog() {
   const { toast } = useToast();
+  const { user } = useAuth();
   const form = useForm<JobFormData>();
   const [open, setOpen] = React.useState(false);
 
   const onSubmit = async (data: JobFormData) => {
     try {
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to add a job",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase.from('jobs').insert({
         client_name: data.clientName,
         address: data.address,
@@ -34,6 +45,8 @@ export function AddJobDialog() {
         start_time: data.startTime,
         end_time: data.endTime,
         notes: data.notes,
+        user_id: user.id,
+        status: 'upcoming'
       });
 
       if (error) throw error;
@@ -43,7 +56,13 @@ export function AddJobDialog() {
         description: "Job has been added successfully",
       });
       setOpen(false);
+      // Reset form after successful submission
+      form.reset();
+      
+      // Refresh the page to show the new job
+      window.location.reload();
     } catch (error) {
+      console.error("Error adding job:", error);
       toast({
         title: "Error",
         description: "Failed to add job. Please try again.",
