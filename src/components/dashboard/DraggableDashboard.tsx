@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   DndContext,
@@ -32,9 +31,9 @@ const defaultBoxes = [
   },
   {
     id: 'admin',
-    title: 'Admin Dashboard',
+    title: 'Templates & Documents',
     type: 'admin' as const,
-    description: 'Access administrative tools and settings.',
+    description: 'Access and manage your estimates, invoices, and certificates.',
   },
 ];
 

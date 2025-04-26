@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ResourceCard from "@/components/shared/ResourceCard";
 import BackButton from "@/components/navigation/BackButton";
-import { Calculator, Ruler, BookOpen, FileText } from "lucide-react";
+import { Calculator, Ruler, BookOpen } from "lucide-react";
 
 const TechnicalToolsPage = () => {
   const tools = [
@@ -18,12 +18,6 @@ const TechnicalToolsPage = () => {
       description: "Essential electrical calculations including Ohm's Law, voltage drop, and more.",
       icon: <Ruler className="h-8 w-8 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/calculators"
-    },
-    {
-      title: "Templates & Documents",
-      description: "Access professional templates for quotes, invoices, certificates, and reports.",
-      icon: <FileText className="h-8 w-8 text-[#FFC900]" />,
-      fullCardLink: "/electricians/technical-tools/templates"
     },
     {
       title: "Inspection & Testing Guide",
