@@ -1,25 +1,31 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
-import { TeamMember } from "@/types/team";
 import { useToast } from "@/hooks/use-toast";
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  email?: string;
+  phone?: string;
+}
 
 export function useTeamMembers() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   const fetchTeamMembers = async () => {
     try {
-      setIsLoading(true);
+      setLoading(true);
       const { data, error } = await supabase
         .from('team_members')
         .select('*')
         .order('name');
 
       if (error) throw error;
-
-      setTeamMembers(data);
+      setTeamMembers(data || []);
     } catch (error) {
       console.error('Error fetching team members:', error);
       toast({
@@ -28,11 +34,11 @@ export function useTeamMembers() {
         variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  const addTeamMember = async (newMember: Omit<TeamMember, 'id' | 'created_at' | 'updated_at'>) => {
+  const addTeamMember = async (newMember: Omit<TeamMember, 'id'>) => {
     try {
       const { data, error } = await supabase
         .from('team_members')
@@ -59,72 +65,9 @@ export function useTeamMembers() {
     }
   };
 
-  const updateTeamMember = async (id: string, updates: Partial<TeamMember>) => {
-    try {
-      const { data, error } = await supabase
-        .from('team_members')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setTeamMembers(prev => prev.map(member => 
-        member.id === id ? { ...member, ...data } : member
-      ));
-
-      toast({
-        title: "Success",
-        description: "Team member updated successfully",
-      });
-      return data;
-    } catch (error) {
-      console.error('Error updating team member:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update team member",
-        variant: "destructive",
-      });
-      throw error;
-    }
-  };
-
-  const deleteTeamMember = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('team_members')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-
-      setTeamMembers(prev => prev.filter(member => member.id !== id));
-      toast({
-        title: "Success",
-        description: "Team member removed successfully",
-      });
-    } catch (error) {
-      console.error('Error deleting team member:', error);
-      toast({
-        title: "Error",
-        description: "Failed to remove team member",
-        variant: "destructive",
-      });
-      throw error;
-    }
-  };
-
   useEffect(() => {
     fetchTeamMembers();
   }, []);
 
-  return {
-    teamMembers,
-    isLoading,
-    addTeamMember,
-    updateTeamMember,
-    deleteTeamMember,
-    refreshTeamMembers: fetchTeamMembers
-  };
+  return { teamMembers, loading, addTeamMember };
 }

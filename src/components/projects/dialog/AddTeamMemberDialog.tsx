@@ -1,23 +1,17 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Plus, User, Briefcase } from "lucide-react";
+import { Plus, User, Briefcase, Phone, Mail } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
+interface AddTeamMemberProps {
+  onAddMember: (member: { name: string; role: string; email?: string; phone?: string }) => void;
 }
 
-interface AddTeamMemberDialogProps {
-  onAddMember: (member: Omit<TeamMember, 'id'>) => void;
-}
-
-export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
+export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberProps) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
@@ -39,7 +33,9 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
 
     onAddMember({
       name: name.trim(),
-      role: role.trim()
+      role: role.trim(),
+      email: email.trim() || undefined,
+      phone: phone.trim() || undefined
     });
     
     // Reset form
@@ -48,11 +44,6 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
     setEmail('');
     setPhone('');
     setOpen(false);
-    
-    toast({
-      title: "Success",
-      description: "Team member added successfully"
-    });
   };
 
   return (
@@ -97,7 +88,10 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
           </div>
           
           <div className="space-y-2">
-            <Label className="text-[#FFC900]">Email</Label>
+            <Label className="text-[#FFC900]">
+              <Mail className="h-4 w-4 inline-block mr-2" />
+              Email
+            </Label>
             <Input
               type="email"
               value={email}
@@ -108,7 +102,10 @@ export function AddTeamMemberDialog({ onAddMember }: AddTeamMemberDialogProps) {
           </div>
           
           <div className="space-y-2">
-            <Label className="text-[#FFC900]">Phone</Label>
+            <Label className="text-[#FFC900]">
+              <Phone className="h-4 w-4 inline-block mr-2" />
+              Phone
+            </Label>
             <Input
               type="tel"
               value={phone}
