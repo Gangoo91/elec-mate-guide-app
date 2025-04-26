@@ -31,6 +31,24 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
   const documentNumber = isEstimate ? 'EST-2025-0001' : 'INV-2025-0001';
   const documentTypeLabel = isEstimate ? 'Estimate' : 'Invoice';
 
+  const fromAddress = {
+    companyName: 'Spark Electrical Ltd',
+    street: '123 Circuit Avenue',
+    city: 'London',
+    postcode: 'EC1A 1BB',
+    country: 'United Kingdom',
+    vatNumber: 'GB123456789'
+  };
+
+  const toAddress = {
+    companyName: 'John Smith',
+    street: '456 Wiring Road',
+    city: 'London',
+    postcode: 'SW1A 1AA',
+    country: 'United Kingdom',
+    projectName: 'Home Rewiring'
+  };
+
   return (
     <div className="p-4 overflow-y-auto max-h-[80vh] md:max-h-[80vh]">
       <DocumentActions
@@ -51,7 +69,10 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
         </div>
 
         <div className="p-4 md:p-6">
-          <DocumentAddressSection />
+          <DocumentAddressSection 
+            fromAddress={fromAddress}
+            toAddress={toAddress}
+          />
 
           <div className="mb-8">
             <h3 className="font-semibold text-gray-700 mb-4">Summary</h3>
