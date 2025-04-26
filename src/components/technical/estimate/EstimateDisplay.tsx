@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import html2pdf from 'jspdf-html2canvas';
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { 
   Collapsible,
   CollapsibleContent,
@@ -22,44 +22,27 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
   const handleDownloadPDF = async () => {
     const element = contentRef.current;
     if (!element) {
-      toast({
-        title: "Error",
-        description: "Could not find content to download",
-        variant: "destructive",
-      });
+      toast.error("Could not find content to download");
       return;
     }
 
     try {
       const options = {
-        margin: { top: 15, right: 15, bottom: 15, left: 15 },
+        margin: 15,
+        filename: `estimate-${jobReference || 'job'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { 
-          unit: 'mm' as const, 
-          format: 'a4' as const, 
-          orientation: 'portrait' as const
-        }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
       
-      toast({
-        title: "Generating PDF",
-        description: "Please wait while we prepare your estimate...",
-      });
+      toast.loading("Generating PDF...");
       
-      const pdf = await html2pdf(element, options);
-      pdf.save(`estimate-${jobReference || 'job'}.pdf`);
+      await html2pdf().from(element).set(options).save();
       
-      toast({
-        title: "Success",
-        description: "PDF downloaded successfully",
-      });
+      toast.success("PDF downloaded successfully");
     } catch (error) {
       console.error('Error generating PDF:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to generate PDF. Please try again.");
     }
   };
 
