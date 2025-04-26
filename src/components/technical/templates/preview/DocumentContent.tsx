@@ -10,6 +10,7 @@ import { DocumentTerms } from './DocumentTerms';
 import { DocumentFooter } from './DocumentFooter';
 import { format } from 'date-fns';
 import { Textarea } from "@/components/ui/textarea";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface DocumentContentProps {
   isEstimate: boolean;
@@ -59,16 +60,18 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
   };
 
   return (
-    <div className="min-h-[100svh] md:min-h-0 flex flex-col md:max-h-[80vh] bg-gray-100">
-      <DocumentActions
-        handleDownload={handleDownload}
-        handlePrint={handlePrint}
-        onOpenChange={onOpenChange}
-        isMobile={isMobile}
-        documentTypeLabel={documentTypeLabel}
-      />
+    <div className="flex flex-col h-[100svh] md:h-[80vh] bg-gray-100">
+      <div className="px-4 py-4 md:p-4">
+        <DocumentActions
+          handleDownload={handleDownload}
+          handlePrint={handlePrint}
+          onOpenChange={onOpenChange}
+          isMobile={isMobile}
+          documentTypeLabel={documentTypeLabel}
+        />
+      </div>
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 md:p-4">
+      <ScrollArea className="flex-1 px-4 pb-4 md:px-4 md:pb-4">
         <div className="bg-white text-black rounded-md shadow-md print:shadow-none border border-gray-200">
           <div className="border-b border-gray-200 p-4">
             <DocumentHeader 
@@ -99,7 +102,7 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
 
           <DocumentFooter signatureData={signatureData} />
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 };

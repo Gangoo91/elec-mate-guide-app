@@ -95,13 +95,13 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
   
   return isMobile ? (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[100svh] p-0 bg-gray-100">
+      <SheetContent side="bottom" className="h-[100svh] p-0" style={{ overflow: 'hidden' }}>
         {content}
       </SheetContent>
     </Sheet>
   ) : (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] p-0 bg-gray-100">
+      <DialogContent className="sm:max-w-[800px] p-0 bg-gray-100 h-[80vh]">
         {content}
       </DialogContent>
     </Dialog>
