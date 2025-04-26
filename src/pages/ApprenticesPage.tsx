@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Book, Handshake, Heart, Users, MessageSquare, Award } from "lucide-react";
+import { Book, Handshake, Heart, Users, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -108,13 +108,6 @@ const ApprenticesPage = () => {
       icon: <Users className="h-6 w-6 text-[#FFC900]" />,
       action: { label: "Join Groups", href: "/apprentices/study-groups" },
       fullCardLink: "/apprentices/study-groups"
-    },
-    {
-      title: "Expert Q&A",
-      description: "Connect with experienced electricians and get answers to your technical questions in real-time.",
-      icon: <MessageSquare className="h-6 w-6 text-[#FFC900]" />,
-      fullCardLink: "/apprentices/expert-qa",
-      action: { label: "Ask Questions", href: "/apprentices/expert-qa" }
     },
     {
       title: "Progress Tracking",

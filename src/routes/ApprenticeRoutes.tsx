@@ -29,7 +29,7 @@ import CircuitTheoryPage from "@/pages/moet/CircuitTheoryPage";
 import PowerSystemsPage from "@/pages/moet/PowerSystemsPage";
 import BasicElectronicsPage from "@/pages/moet/BasicElectronicsPage";
 import PowerGenerationPage from "@/pages/moet/power-systems/PowerGenerationPage";
-import PowerTransmissionPage from "@/pages/moet/power-systems/PowerTransmissionPage";
+import PowerTransmissionPage from "@/pages/moet/power-systems/TransmissionSystemsPage";
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
 import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
@@ -148,6 +148,5 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-ar-learning" path="/apprentices/ar-learning" />,
   <Route key="apprentices-audio-tutorials" path="/apprentices/audio-tutorials" />,
   <Route key="apprentices-study-groups" path="/apprentices/study-groups" />,
-  <Route key="apprentices-expert-qa" path="/apprentices/expert-qa" />,
   <Route key="apprentices-progress" path="/apprentices/progress" />,
 ];
