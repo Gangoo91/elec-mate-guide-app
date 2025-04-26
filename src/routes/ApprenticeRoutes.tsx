@@ -34,7 +34,10 @@ import PowerTransmissionPage from "@/pages/moet/power-systems/PowerTransmissionP
 import PowerDistributionPage from "@/pages/moet/power-systems/PowerDistributionPage";
 import DistributionNetworksPage from "@/pages/moet/power-systems/distribution/DistributionNetworksPage";
 import TransformersPage from "@/pages/moet/power-systems/distribution/TransformersPage";
-import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGridPage";
+import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGrid";
+import TransmissionSystemsPage from "@/pages/moet/power-systems/transmission/TransmissionSystemsPage";
+import TransformersSubstationsPage from "@/pages/moet/power-systems/transmission/TransformersSubstationsPage";
+import GridInfrastructurePage from "@/pages/moet/power-systems/transmission/infrastructure/GridInfrastructurePage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -85,5 +88,20 @@ export const ApprenticeRoutes = [
     key="apprentices-moet-power-systems-distribution-smart-grid" 
     path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/distribution/smart-grid" 
     element={<SmartGridPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-power-systems-transmission-systems" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission/systems" 
+    element={<TransmissionSystemsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-power-systems-transmission-transformers" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission/transformers" 
+    element={<TransformersSubstationsPage />} 
+  />,
+  <Route 
+    key="apprentices-moet-power-systems-transmission-infrastructure" 
+    path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission/infrastructure" 
+    element={<GridInfrastructurePage />} 
   />,
 ];
