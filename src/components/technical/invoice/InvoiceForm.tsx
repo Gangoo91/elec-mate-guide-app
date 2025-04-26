@@ -9,6 +9,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from 'date-fns';
 import { CalendarIcon, Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface InvoiceItem {
   description: string;
@@ -28,6 +31,9 @@ interface InvoiceFormData {
 }
 
 export function InvoiceForm() {
+  const { toast } = useToast();
+  const { user } = useAuth();
+  
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<InvoiceFormData>({
     defaultValues: {
       items: [{ description: '', quantity: 1, unitPrice: 0, amount: 0 }],
@@ -52,17 +58,38 @@ export function InvoiceForm() {
       const total = subtotal + vatAmount;
 
       const invoiceData = {
-        ...data,
+        user_id: user?.id,
+        client_name: data.clientName,
+        client_address: data.clientAddress,
+        client_email: data.clientEmail,
+        due_date: data.dueDate,
+        items: data.items,
         subtotal,
         vat_rate: vatRate,
         vat_amount: vatAmount,
         total,
+        notes: data.notes,
+        terms: data.terms,
+        status: 'draft'
       };
 
-      // TODO: Implement invoice creation with Supabase
-      console.log('Invoice data:', invoiceData);
-    } catch (error) {
+      const { error } = await supabase
+        .from('invoices')
+        .insert(invoiceData);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Invoice created successfully",
+      });
+    } catch (error: any) {
       console.error('Error creating invoice:', error);
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
