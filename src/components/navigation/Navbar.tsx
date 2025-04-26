@@ -19,6 +19,7 @@ import MobileMenu from "./MobileMenu";
 import UserMenu from "./UserMenu";
 import NotificationBell from "../notifications/NotificationBell";
 import { useNotificationContext } from "@/contexts/NotificationContext";
+import { ChatButton } from "@/components/chat/ChatButton";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -140,7 +141,10 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           {(user || bypassAuth) && (
-            <NotificationBell className="mr-1" />
+            <>
+              <ChatButton />
+              <NotificationBell className="mr-1" />
+            </>
           )}
           
           <Button 
