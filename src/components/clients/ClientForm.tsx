@@ -86,9 +86,9 @@ export default function ClientForm({ onSubmit, initialData }: ClientFormProps) {
 
       <div>
         <Textarea
-          placeholder="Notes"
+          placeholder="Additional Notes"
           {...register("notes")}
-          className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+          className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900] min-h-[100px]"
         />
       </div>
 
