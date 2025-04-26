@@ -49,7 +49,6 @@ export function useTimeEntries(selectedDate = new Date()) {
         throw error;
       }
       
-      // Cast the data to make TypeScript happy
       return data as TimeEntry[];
     },
     enabled: !!user,
