@@ -1,9 +1,9 @@
-
 import React from "react";
 import { MessageSquare, Heart, Book, Handshake, Users, BookOpen } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import BackButton from "@/components/navigation/BackButton";
 import ResourceCard from "@/components/shared/ResourceCard";
+import DraggableDashboard from "@/components/dashboard/DraggableDashboard";
 
 const ElectriciansPage = () => {
   const resources = [
@@ -58,15 +58,15 @@ const ElectriciansPage = () => {
             Your central resource for professional growth, technical support, and community connection within the electrical industry.
           </p>
         </div>
+
+        <DraggableDashboard />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+        <h2 className="text-2xl font-bold text-[#FFC900] mb-6 mt-12">Resources</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((resource, index) => (
             <ResourceCard
               key={index}
               {...resource}
-              title={resource.title}
-              description={resource.description}
-              icon={resource.icon}
             />
           ))}
         </div>
