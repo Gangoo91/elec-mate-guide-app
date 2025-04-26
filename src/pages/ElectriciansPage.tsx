@@ -1,3 +1,4 @@
+
 import React from "react";
 import { MessageSquare, Heart, Book, Handshake, Users, BookOpen } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -61,8 +62,7 @@ const ElectriciansPage = () => {
 
         <DraggableDashboard />
         
-        <h2 className="text-2xl font-bold text-[#FFC900] mb-6 mt-12">Resources</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {resources.map((resource, index) => (
             <ResourceCard
               key={index}
