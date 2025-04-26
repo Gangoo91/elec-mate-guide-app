@@ -56,7 +56,7 @@ export function InvoiceForm() {
         client_address: data.clientAddress,
         client_email: data.clientEmail,
         due_date: formattedDueDate,
-        items: data.items,
+        items: data.items as any, // Type assertion to avoid TS error
         subtotal,
         vat_rate: vatRate,
         vat_amount: vatAmount,
