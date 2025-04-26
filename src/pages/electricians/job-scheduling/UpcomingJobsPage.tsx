@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AddJobDialog } from "@/components/jobs/AddJobDialog";
 import { JobDetailsDialog } from "@/components/jobs/JobDetailsDialog";
 import { useToast } from "@/hooks/use-toast";
-import BackButton from "@/components/navigation/BackButton";
+import PageHeader from "@/components/layout/PageHeader";
 
 type Job = {
   id: string;
@@ -57,9 +58,11 @@ const UpcomingJobsPage = () => {
   return (
     <MainLayout>
       <div className="container py-4 md:py-8">
-        <div className="mb-4">
-          <BackButton />
-        </div>
+        <PageHeader
+          title="Upcoming Jobs"
+          description="View and manage your scheduled appointments and upcoming work orders"
+          hideBackButton={false}
+        />
         
         <div className="flex flex-col items-center justify-center mb-8">
           <AddJobDialog />

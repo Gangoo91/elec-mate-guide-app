@@ -87,7 +87,10 @@ export function AddJobDialog() {
       });
       setOpen(false);
       
-      window.location.reload();
+      // Use window.location.reload() with a small timeout to ensure the database operation completes
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error) {
       console.error("Error adding job:", error);
       toast({
