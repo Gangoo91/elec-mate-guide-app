@@ -1,54 +1,51 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
-import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Phone, MapPin, Search } from "lucide-react";
+import { AddClientDialog } from "@/components/clients/AddClientDialog";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import BackButton from "@/components/navigation/BackButton";
+
+interface Client {
+  id: string;
+  name: string;
+  type: string;
+  address: string;
+  phone: string | null;
+  email: string | null;
+  notes: string | null;
+}
 
 const ClientManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [clients, setClients] = useState<Client[]>([]);
+  const { toast } = useToast();
   
-  // Example client data
-  const clients = [
-    {
-      id: "client1",
-      name: "John Smith",
-      type: "Residential",
-      address: "123 Main Street, London",
-      phone: "020-1234-5678",
-      email: "john.smith@example.com",
-      lastJob: "April 15, 2025"
-    },
-    {
-      id: "client2",
-      name: "ABC Corporation",
-      type: "Commercial",
-      address: "456 Business Avenue, Manchester",
-      phone: "0161-876-5432",
-      email: "contact@abccorp.com",
-      lastJob: "April 22, 2025"
-    },
-    {
-      id: "client3",
-      name: "Sarah Williams",
-      type: "Residential",
-      address: "789 Park Lane, Birmingham",
-      phone: "0121-555-7890",
-      email: "sarah.w@example.com",
-      lastJob: "April 28, 2025"
-    },
-    {
-      id: "client4",
-      name: "City Hospital",
-      type: "Institutional",
-      address: "101 Health Drive, Glasgow",
-      phone: "0141-222-3333",
-      email: "maintenance@cityhospital.org",
-      lastJob: "May 1, 2025"
+  useEffect(() => {
+    fetchClients();
+  }, []);
+
+  const fetchClients = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('clients')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setClients(data || []);
+    } catch (error) {
+      console.error("Error fetching clients:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch clients. Please try again.",
+        variant: "destructive",
+      });
     }
-  ];
-  
-  // Filter clients based on search term
+  };
+
   const filteredClients = clients.filter(client => 
     client.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     client.address.toLowerCase().includes(searchTerm.toLowerCase())
@@ -57,10 +54,13 @@ const ClientManagementPage = () => {
   return (
     <MainLayout>
       <div className="container py-8">
-        <PageHeader
-          title="Client Management"
-          description="Access client details, contact information, and job histories."
-        />
+        <div className="mb-4">
+          <BackButton />
+        </div>
+
+        <div className="flex flex-col items-center justify-center mb-8">
+          <AddClientDialog />
+        </div>
         
         <div className="max-w-4xl mx-auto">
           <div className="mb-6 relative">
@@ -94,21 +94,12 @@ const ClientManagementPage = () => {
                             <MapPin className="h-4 w-4 mr-1" />
                             {client.address}
                           </p>
-                          <p className="text-[#FFC900]/70 text-sm flex items-center">
-                            <Phone className="h-4 w-4 mr-1" />
-                            {client.phone}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="text-right">
-                        <span className="bg-[#FFC900]/20 text-[#FFC900] px-2 py-1 rounded text-xs">
-                          Last Job: {client.lastJob}
-                        </span>
-                        <div className="mt-4">
-                          <button className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] px-3 py-1 rounded text-sm">
-                            View History
-                          </button>
+                          {client.phone && (
+                            <p className="text-[#FFC900]/70 text-sm flex items-center">
+                              <Phone className="h-4 w-4 mr-1" />
+                              {client.phone}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>

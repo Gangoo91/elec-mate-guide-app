@@ -9,6 +9,84 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      client_jobs: {
+        Row: {
+          client_id: string
+          created_at: string
+          id: string
+          job_id: string | null
+          notes: string | null
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          notes?: string | null
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          id?: string
+          job_id?: string | null
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_jobs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_jobs_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          address: string
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       course_content: {
         Row: {
           content: Json
