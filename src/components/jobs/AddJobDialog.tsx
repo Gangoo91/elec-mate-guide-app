@@ -62,11 +62,11 @@ export function AddJobDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]">
+        <Button className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] w-full md:w-auto px-8">
           <Plus className="mr-2 h-4 w-4" /> Add New Job
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#22251e] border-[#FFC900]/20">
+      <DialogContent className="bg-[#22251e] border-[#FFC900]/20 w-[95%] max-w-lg mx-auto">
         <DialogHeader>
           <DialogTitle className="text-[#FFC900]">Add New Job</DialogTitle>
         </DialogHeader>
