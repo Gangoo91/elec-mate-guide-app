@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AddProjectDialog } from "@/components/projects/AddProjectDialog";
 import { ProjectDetailsDialog } from "@/components/projects/ProjectDetailsDialog";
 import { useProjects, type Project } from "@/hooks/useProjects";
+import { useNavigate } from "react-router-dom";
 
 const statusColors: Record<string, string> = {
   planning: "bg-blue-500/20 text-blue-500",
@@ -20,6 +21,7 @@ const ProjectManagementPage = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { projects, isLoading } = useProjects();
+  const navigate = useNavigate();
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -30,8 +32,16 @@ const ProjectManagementPage = () => {
     return statusColors[status] || "bg-gray-500/20 text-gray-500";
   };
 
+  const handleQuickAction = (path: string) => {
+    navigate(path);
+  };
+
+  const recentCompletedJobs = projects
+    ?.filter(project => project.status === "completed")
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+    .slice(0, 3);
+
   const renderDashboardStats = () => {
-    // Calculate some statistics from the projects
     const totalProjects = projects?.length || 0;
     const completedProjects = projects?.filter(p => p.status === "completed").length || 0;
     const inProgressProjects = projects?.filter(p => p.status === "in-progress").length || 0;
@@ -157,17 +167,29 @@ const ProjectManagementPage = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4">
-                <Button variant="outline" className="w-full justify-start border-[#333] text-[#FFC900]">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
+                  onClick={() => handleQuickAction("/electricians/job-scheduling/clients")}
+                >
                   <Users className="mr-2 h-4 w-4" />
                   Manage Team Members
                 </Button>
-                <Button variant="outline" className="w-full justify-start border-[#333] text-[#FFC900]">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
+                  onClick={() => handleQuickAction("/electricians/technical-tools/templates")}
+                >
                   <Share2 className="mr-2 h-4 w-4" />
                   Share Project Documents
                 </Button>
-                <Button variant="outline" className="w-full justify-start border-[#333] text-[#FFC900]">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start border-[#333] text-[#FFC900] hover:bg-[#333] hover:text-[#FFC900]"
+                  onClick={() => handleQuickAction("/electricians/job-scheduling")}
+                >
                   <LineChart className="mr-2 h-4 w-4" />
-                  View Project Analytics
+                  View Schedule Analytics
                 </Button>
               </CardContent>
             </Card>
@@ -181,22 +203,27 @@ const ProjectManagementPage = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="border-l-2 border-[#FFC900] pl-4 py-1">
-                    <p className="text-sm text-[#FFC900]">Office Lighting Upgrade - Materials delivered</p>
-                    <p className="text-xs text-[#FFC900]/60">Today, 10:23 AM</p>
-                  </div>
-                  <div className="border-l-2 border-[#FFC900] pl-4 py-1">
-                    <p className="text-sm text-[#FFC900]">Residential Rewiring - Phase 1 completed</p>
-                    <p className="text-xs text-[#FFC900]/60">Yesterday, 4:12 PM</p>
-                  </div>
-                  <div className="border-l-2 border-[#FFC900] pl-4 py-1">
-                    <p className="text-sm text-[#FFC900]">Solar Panel Installation - Final inspection passed</p>
-                    <p className="text-xs text-[#FFC900]/60">April 24, 2025</p>
-                  </div>
+                  {recentCompletedJobs?.map((job) => (
+                    <div key={job.id} className="border-l-2 border-[#FFC900] pl-4 py-1">
+                      <p className="text-sm text-[#FFC900]">{job.name} - {job.status}</p>
+                      <p className="text-xs text-[#FFC900]/60">
+                        {new Date(job.updated_at).toLocaleString()}
+                      </p>
+                    </div>
+                  ))}
+                  {(!recentCompletedJobs || recentCompletedJobs.length === 0) && (
+                    <div className="text-center py-4">
+                      <p className="text-sm text-[#FFC900]/70">No recent updates</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
               <CardFooter>
-                <Button variant="ghost" className="text-xs text-[#FFC900]/80">
+                <Button 
+                  variant="ghost" 
+                  className="text-xs text-[#FFC900]/80 hover:text-[#FFC900]"
+                  onClick={() => handleQuickAction("/electricians/job-scheduling")}
+                >
                   View all updates
                 </Button>
               </CardFooter>
