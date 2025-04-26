@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -6,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Search, Plus, User, Phone, Mail, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { NotificationBadge } from "@/components/projects/NotificationBadge";
+import { AddTeamMemberDialog } from "@/components/projects/dialog/AddTeamMemberDialog";
 
 interface TeamMember {
   id: string;
@@ -23,7 +24,6 @@ const TeamManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -88,6 +88,26 @@ const TeamManagementPage = () => {
     */
   }, []);
 
+  const handleAddMember = (newMember: { name: string; role: string; email?: string; phone?: string }) => {
+    const id = `${Date.now()}`; // Generate a unique ID
+    const newTeamMember: TeamMember = {
+      id,
+      name: newMember.name,
+      role: newMember.role,
+      phone: newMember.phone || null,
+      email: newMember.email || null,
+      skills: [],
+      availability: "Monday-Friday"
+    };
+    
+    setTeamMembers(prev => [...prev, newTeamMember]);
+    
+    toast({
+      title: "Success",
+      description: "Team member added successfully",
+    });
+  };
+
   const filteredTeamMembers = teamMembers.filter(member => 
     member.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     member.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -123,12 +143,7 @@ const TeamManagementPage = () => {
               />
             </div>
             
-            <Button 
-              className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] ml-4"
-              onClick={() => setIsAddDialogOpen(true)}
-            >
-              <Plus className="mr-2 h-4 w-4" /> Add Team Member
-            </Button>
+            <AddTeamMemberDialog onAddMember={handleAddMember} />
           </div>
           
           <div className="space-y-4">
@@ -203,25 +218,6 @@ const TeamManagementPage = () => {
           </div>
         </div>
       </div>
-
-      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="bg-[#22251e] border-[#FFC900]/20 w-[95%] max-w-lg mx-auto">
-          <DialogHeader>
-            <DialogTitle className="text-[#FFC900]">Add New Team Member</DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-[#FFC900]/70">
-              This is a placeholder for the team member form. In a real application, you would implement a form to collect team member details here.
-            </p>
-            <Button 
-              className="bg-[#FFC900] hover:bg-[#e5b700] text-[#151812] mt-4"
-              onClick={() => setIsAddDialogOpen(false)}
-            >
-              Close
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </MainLayout>
   );
 };
