@@ -1,7 +1,7 @@
 
 import { OnlineIndicator } from "./OnlineIndicator";
 import { ChatPopover } from "../ChatPopover";
-import { TeamPresence } from "@/hooks/useTeamPresence";
+import { TeamMemberPresence } from "@/hooks/useTeamPresence";
 
 interface TeamMemberCardProps {
   member: {
@@ -9,7 +9,7 @@ interface TeamMemberCardProps {
     name: string;
     role: string;
   };
-  presence?: TeamPresence;
+  presence?: TeamMemberPresence;
   onClick: () => void;
 }
 
@@ -35,6 +35,7 @@ export function TeamMemberCard({ member, presence, onClick }: TeamMemberCardProp
         <ChatPopover 
           recipientId={member.id} 
           data-member-id={member.id}
+          onClick={(e) => e.stopPropagation()} // Prevent triggering parent click
         />
       </div>
     </div>

@@ -1,6 +1,6 @@
 
 import { TeamMemberCard } from "./TeamMemberCard";
-import { TeamPresence } from "@/hooks/useTeamPresence";
+import { TeamMemberPresence } from "@/hooks/useTeamPresence";
 
 interface TeamMemberListProps {
   teamMembers: Array<{
@@ -8,7 +8,7 @@ interface TeamMemberListProps {
     name: string;
     role: string;
   }>;
-  presenceData: TeamPresence[];
+  presenceData: TeamMemberPresence[];
   onMemberClick: (member: { id: string; name: string; role: string; }) => void;
 }
 
