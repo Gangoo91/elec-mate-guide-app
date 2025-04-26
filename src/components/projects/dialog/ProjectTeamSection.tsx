@@ -5,6 +5,7 @@ import { useTeamPresence } from "@/hooks/useTeamPresence";
 import { OnlineIndicator } from "./OnlineIndicator";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { ChatPopover } from "../ChatPopover";
 
 export function ProjectTeamSection() {
   const { presenceData } = useTeamPresence();
@@ -37,7 +38,10 @@ export function ProjectTeamSection() {
                   <p className="text-sm text-[#FFC900]">{member.name}</p>
                   <p className="text-xs text-[#FFC900]/70">{member.role}</p>
                 </div>
-                <OnlineIndicator online={presence?.online} />
+                <div className="flex items-center space-x-2">
+                  <OnlineIndicator online={presence?.online} />
+                  <ChatPopover recipientId={member.id} />
+                </div>
               </div>
             );
           })}

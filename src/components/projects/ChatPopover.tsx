@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Popover,
   PopoverContent,
@@ -10,6 +10,7 @@ import { MessageCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
@@ -21,19 +22,86 @@ interface Message {
 export function ChatPopover({ recipientId }: { recipientId: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [loading, setLoading] = useState(true);
   const { user } = useAuth();
+  const { toast } = useToast();
+
+  // Fetch messages when the component mounts or when recipientId changes
+  useEffect(() => {
+    if (!user || !recipientId) return;
+    
+    const fetchMessages = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('team_messages')
+          .select('*')
+          .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
+          .order('created_at', { ascending: true });
+        
+        if (error) throw error;
+        setMessages(data || []);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessages();
+
+    // Subscribe to new messages
+    const channel = supabase
+      .channel('team_messages_changes')
+      .on(
+        'postgres_changes',
+        { 
+          event: '*', 
+          schema: 'public',
+          table: 'team_messages',
+          filter: `sender_id=eq.${recipientId},recipient_id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log('New message:', payload);
+          if (payload.eventType === 'INSERT') {
+            setMessages(prev => [...prev, payload.new as Message]);
+            
+            // Show a notification for the new message
+            toast({
+              title: "New message",
+              description: `${payload.new.content.substring(0, 30)}${payload.new.content.length > 30 ? '...' : ''}`,
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, recipientId, toast]);
 
   const sendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user || !newMessage.trim()) return;
 
-    await supabase.from('team_messages').insert({
-      content: newMessage.trim(),
-      sender_id: user.id,
-      recipient_id: recipientId,
-    });
+    try {
+      const { error } = await supabase.from('team_messages').insert({
+        content: newMessage.trim(),
+        sender_id: user.id,
+        recipient_id: recipientId,
+      });
 
-    setNewMessage("");
+      if (error) throw error;
+      setNewMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -50,18 +118,28 @@ export function ChatPopover({ recipientId }: { recipientId: string }) {
       <PopoverContent className="w-80 p-0 bg-[#333] border-[#444]">
         <div className="p-4 space-y-4">
           <div className="h-48 overflow-y-auto space-y-2">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`p-2 rounded-lg text-sm ${
-                  msg.sender_id === user?.id
-                    ? "bg-[#FFC900] text-black ml-8"
-                    : "bg-[#444] text-[#FFC900] mr-8"
-                }`}
-              >
-                {msg.content}
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-[#FFC900]/70">Loading messages...</p>
               </div>
-            ))}
+            ) : messages.length > 0 ? (
+              messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`p-2 rounded-lg text-sm ${
+                    msg.sender_id === user?.id
+                      ? "bg-[#FFC900] text-black ml-8"
+                      : "bg-[#444] text-[#FFC900] mr-8"
+                  }`}
+                >
+                  {msg.content}
+                </div>
+              ))
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-[#FFC900]/50">No messages yet</p>
+              </div>
+            )}
           </div>
           <form onSubmit={sendMessage} className="flex gap-2">
             <Input

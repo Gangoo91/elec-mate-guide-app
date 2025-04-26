@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -8,6 +7,7 @@ import { Search, Plus, User, Phone, Mail, Briefcase } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { NotificationBadge } from "@/components/projects/NotificationBadge";
 
 interface TeamMember {
   id: string;
@@ -26,7 +26,6 @@ const TeamManagementPage = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  // Mock data for team members - in a real app, this would come from Supabase
   useEffect(() => {
     const mockTeamMembers = [
       {
@@ -63,7 +62,6 @@ const TeamManagementPage = () => {
       setIsLoading(false);
     }, 500);
 
-    // In a real implementation, we would fetch from Supabase like:
     /*
     const fetchTeamMembers = async () => {
       try {
@@ -101,11 +99,14 @@ const TeamManagementPage = () => {
   return (
     <MainLayout>
       <div className="container py-8">
-        <PageHeader
-          title="Team Management"
-          description="Manage your electrical team members and their availability"
-          hideBackButton={false}
-        />
+        <div className="flex justify-between items-center mb-6">
+          <PageHeader
+            title="Team Management"
+            description="Manage your electrical team members and their availability"
+            hideBackButton={false}
+          />
+          <NotificationBadge />
+        </div>
 
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-6">
@@ -203,7 +204,6 @@ const TeamManagementPage = () => {
         </div>
       </div>
 
-      {/* Add Team Member Dialog - in a real app this would have a form */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
         <DialogContent className="bg-[#22251e] border-[#FFC900]/20 w-[95%] max-w-lg mx-auto">
           <DialogHeader>
