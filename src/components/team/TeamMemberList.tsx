@@ -1,21 +1,6 @@
-
 import { User, Phone, Mail, Briefcase } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  phone: string | null;
-  email: string | null;
-  skills: string[] | null;
-  availability: string | null;
-}
-
-interface TeamMemberListProps {
-  teamMembers: TeamMember[];
-  isLoading: boolean;
-}
+import { TeamMemberListProps, TeamMember } from "@/types/team";
 
 export function TeamMemberList({ teamMembers, isLoading }: TeamMemberListProps) {
   if (isLoading) {

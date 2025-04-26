@@ -6,16 +6,7 @@ import { NotificationBadge } from "@/components/projects/NotificationBadge";
 import { TeamSearch } from "@/components/team/TeamSearch";
 import { TeamMemberList } from "@/components/team/TeamMemberList";
 import { AddTeamMemberDialog } from "@/components/projects/dialog/AddTeamMemberDialog";
-
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  phone: string | null;
-  email: string | null;
-  skills: string[] | null;
-  availability: string | null;
-}
+import { TeamMember } from "@/types/team";
 
 const TeamManagementPage = () => {
   const [searchTerm, setSearchTerm] = useState("");

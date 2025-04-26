@@ -1,10 +1,5 @@
-
 import { Search } from "lucide-react";
-
-interface TeamSearchProps {
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
-}
+import { TeamSearchProps } from "@/types/team";
 
 export function TeamSearch({ searchTerm, onSearchChange }: TeamSearchProps) {
   return (
