@@ -1,9 +1,14 @@
+
 import React from 'react';
 import { DocumentCard } from './DocumentCard';
 import { SignatureDialog } from './SignatureDialog';
 import { useDocumentSignature } from '@/hooks/useDocumentSignature';
 
-const EstimateTemplates = () => {
+interface EstimateTemplatesProps {
+  onPreview: (templateId: string) => void;
+}
+
+const EstimateTemplates = ({ onPreview }: EstimateTemplatesProps) => {
   const {
     isSignatureModalOpen,
     setIsSignatureModalOpen,
@@ -43,6 +48,7 @@ const EstimateTemplates = () => {
             template={template}
             onPrint={handlePrint}
             onSignature={openElectricianSignatureModal}
+            onPreview={onPreview}
           />
         ))}
       </div>

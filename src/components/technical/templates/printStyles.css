@@ -1,0 +1,33 @@
+
+@media print {
+  body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-hide {
+    display: none !important;
+  }
+
+  /* White paper specific print styles */
+  .bg-white {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Remove any shadows and borders for print */
+  * {
+    box-shadow: none !important;
+  }
+}

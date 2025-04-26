@@ -10,6 +10,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger 
 } from "@/components/ui/collapsible";
+import { WhitePaperDocument, WhitePaperHeader, WhitePaperContent } from '../templates/WhitePaperDocument';
 
 interface EstimateDisplayProps {
   estimate: string;
@@ -64,9 +65,9 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
         .split('\n')
         .map(line => {
           if (line.startsWith('*') || line.startsWith('-')) {
-            return `<li class="mb-2 text-[#FFC900]/90 ml-5 list-disc">${line.substring(2)}</li>`;
+            return `<li class="mb-2 text-gray-700 ml-5 list-disc">${line.substring(2)}</li>`;
           }
-          return `<p class="mb-2 text-[#FFC900]/90">${line}</p>`;
+          return `<p class="mb-2 text-gray-700">${line}</p>`;
         })
         .join('')
     };
@@ -94,24 +95,37 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
           </Button>
         </div>
         
-        <div ref={contentRef} className="space-y-4">
-          {sections.map((section, index) => (
-            <Collapsible key={index} className="bg-[#353824] rounded-lg overflow-hidden">
-              <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-[#FFC900] hover:bg-[#404328] transition-colors">
-                <span className="text-xl font-bold flex items-center">
-                  <Calculator className="mr-2 h-5 w-5" />
-                  {section.title}
-                </span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="p-4 pt-0">
-                <div
-                  className="prose prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: section.content }}
-                />
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
-        </div>
+        <WhitePaperDocument className="print:shadow-none">
+          <WhitePaperHeader>
+            <h2 className="text-xl font-bold text-gray-800">
+              {clientName ? `Estimate for ${clientName}` : 'Estimate'}
+            </h2>
+            {jobReference && (
+              <p className="text-gray-500">Reference: {jobReference}</p>
+            )}
+          </WhitePaperHeader>
+          
+          <WhitePaperContent>
+            <div ref={contentRef} className="space-y-4">
+              {sections.map((section, index) => (
+                <Collapsible key={index} className="mb-4 border border-gray-200 rounded-lg overflow-hidden bg-white">
+                  <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-gray-800 hover:bg-gray-50 transition-colors">
+                    <span className="text-xl font-bold flex items-center">
+                      <Calculator className="mr-2 h-5 w-5 text-gray-600" />
+                      {section.title}
+                    </span>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="p-4 pt-0 border-t border-gray-200">
+                    <div
+                      className="prose max-w-none"
+                      dangerouslySetInnerHTML={{ __html: section.content }}
+                    />
+                  </CollapsibleContent>
+                </Collapsible>
+              ))}
+            </div>
+          </WhitePaperContent>
+        </WhitePaperDocument>
       </CardContent>
     </Card>
   );

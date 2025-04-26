@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText } from "lucide-react";
+import { FileText, Eye } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -11,9 +11,17 @@ import {
 } from "@/components/ui/select";
 import EstimateTemplates from "./EstimateTemplates";
 import InvoiceTemplates from "./InvoiceTemplates";
+import DocumentPreview from "./DocumentPreview";
 
 const TemplatesSection = () => {
   const [selectedType, setSelectedType] = useState<'estimates' | 'invoices' | 'certificates'>('estimates');
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewTemplate, setPreviewTemplate] = useState<string | null>(null);
+
+  const handlePreview = (templateId: string) => {
+    setPreviewTemplate(templateId);
+    setPreviewOpen(true);
+  };
 
   return (
     <Card className="bg-[#1a1c15] border-[#FFC900]/20">
@@ -47,8 +55,8 @@ const TemplatesSection = () => {
       </div>
       
       <CardContent className="pt-6">
-        {selectedType === 'estimates' && <EstimateTemplates />}
-        {selectedType === 'invoices' && <InvoiceTemplates />}
+        {selectedType === 'estimates' && <EstimateTemplates onPreview={handlePreview} />}
+        {selectedType === 'invoices' && <InvoiceTemplates onPreview={handlePreview} />}
         {selectedType === 'certificates' && (
           <div className="flex flex-col items-center justify-center p-8 border border-dashed border-[#FFC900]/20 rounded-lg">
             <FileText className="h-16 w-16 text-[#FFC900]/30 mb-4" />
@@ -59,6 +67,13 @@ const TemplatesSection = () => {
           </div>
         )}
       </CardContent>
+
+      <DocumentPreview 
+        isOpen={previewOpen} 
+        onOpenChange={setPreviewOpen} 
+        templateId={previewTemplate} 
+        documentType={selectedType} 
+      />
     </Card>
   );
 };

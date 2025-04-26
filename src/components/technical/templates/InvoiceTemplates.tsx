@@ -1,9 +1,14 @@
+
 import React from 'react';
 import { DocumentCard } from './DocumentCard';
 import { SignatureDialog } from './SignatureDialog';
 import { useDocumentSignature } from '@/hooks/useDocumentSignature';
 
-const InvoiceTemplates = () => {
+interface InvoiceTemplatesProps {
+  onPreview: (templateId: string) => void;
+}
+
+const InvoiceTemplates = ({ onPreview }: InvoiceTemplatesProps) => {
   const {
     isSignatureModalOpen,
     setIsSignatureModalOpen,
@@ -45,6 +50,7 @@ const InvoiceTemplates = () => {
             template={template}
             onPrint={handlePrint}
             onSignature={openElectricianSignatureModal}
+            onPreview={onPreview}
           />
         ))}
       </div>

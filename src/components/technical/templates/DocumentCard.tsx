@@ -19,9 +19,10 @@ interface DocumentCardProps {
   template: DocumentTemplate;
   onPrint: () => void;
   onSignature: (templateId: string) => void;
+  onPreview: (templateId: string) => void;
 }
 
-export const DocumentCard = ({ template, onPrint, onSignature }: DocumentCardProps) => {
+export const DocumentCard = ({ template, onPrint, onSignature, onPreview }: DocumentCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -46,7 +47,7 @@ export const DocumentCard = ({ template, onPrint, onSignature }: DocumentCardPro
             Coming Soon
           </Button>
         ) : (
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-5 gap-2">
             <Button 
               variant="outline" 
               size="icon"
@@ -55,6 +56,15 @@ export const DocumentCard = ({ template, onPrint, onSignature }: DocumentCardPro
               title="Edit Document"
             >
               <Eye className="h-4 w-4" />
+            </Button>
+            <Button 
+              variant="outline" 
+              size="icon"
+              onClick={() => onPreview(template.id)}
+              className="bg-transparent border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900] hover:text-black"
+              title="Preview Document"
+            >
+              <FileText className="h-4 w-4" />
             </Button>
             <Button 
               variant="outline" 
