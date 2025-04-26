@@ -1,40 +1,65 @@
 
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
-import BackButton from "@/components/navigation/BackButton";
-import { Card, CardContent } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
+import { Calendar, ClockIcon, Users, CheckSquare } from "lucide-react";
+import ResourceCard from "@/components/shared/ResourceCard";
+import PageHeader from "@/components/layout/PageHeader";
 
 const JobSchedulePage = () => {
+  const scheduleFeatures = [
+    {
+      title: "Upcoming Jobs",
+      description: "View and manage your scheduled appointments and upcoming work orders.",
+      icon: <Calendar className="h-7 w-7 text-[#FFC900]" />,
+      action: {
+        label: "View Schedule",
+        href: "#"
+      }
+    },
+    {
+      title: "Time Management",
+      description: "Track work hours, travel time, and job durations efficiently.",
+      icon: <ClockIcon className="h-7 w-7 text-[#FFC900]" />,
+      action: {
+        label: "Manage Time",
+        href: "#"
+      }
+    },
+    {
+      title: "Client Management",
+      description: "Access client details, contact information, and job histories.",
+      icon: <Users className="h-7 w-7 text-[#FFC900]" />,
+      action: {
+        label: "View Clients",
+        href: "#"
+      }
+    },
+    {
+      title: "Job Completion",
+      description: "Mark jobs as complete, collect signatures, and process paperwork.",
+      icon: <CheckSquare className="h-7 w-7 text-[#FFC900]" />,
+      action: {
+        label: "Complete Jobs",
+        href: "#"
+      }
+    }
+  ];
+
   return (
     <MainLayout>
       <div className="container py-8">
-        <BackButton />
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#FFC900] mb-4">
-            Job Scheduling
-          </h1>
-          <p className="text-[#FFC900]/80 mb-8">
-            Manage your appointments, tasks, and job timelines effectively.
-          </p>
-          
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-4 mb-4">
-                <Calendar className="h-8 w-8 text-[#FFC900]" />
-                <h2 className="text-xl font-semibold text-[#FFC900]">Coming Soon</h2>
-              </div>
-              <p className="text-[#FFC900]/70">
-                Our job scheduling system is under development. Soon you'll be able to:
-              </p>
-              <ul className="list-disc list-inside mt-4 text-[#FFC900]/70 space-y-2">
-                <li>Schedule and manage appointments</li>
-                <li>Track job progress</li>
-                <li>Set reminders and notifications</li>
-                <li>View your calendar and timeline</li>
-              </ul>
-            </CardContent>
-          </Card>
+        <PageHeader
+          title="Job Scheduling"
+          description="Efficiently manage your appointments, tasks, and job timelines."
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {scheduleFeatures.map((feature, index) => (
+            <ResourceCard
+              key={index}
+              {...feature}
+            />
+          ))}
         </div>
       </div>
     </MainLayout>
