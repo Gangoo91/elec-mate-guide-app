@@ -4,26 +4,34 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
-interface Message {
+export type ChatType = "private" | "team" | "mental_health" | "mentor";
+
+export interface Message {
   id: string;
   sender_id: string;
   recipient_id: string;
   content: string;
   created_at: string;
   read: boolean;
+  chat_type: ChatType;
 }
 
 interface ChatContextType {
   messages: Message[];
-  sendMessage: (recipientId: string, content: string) => Promise<void>;
+  sendMessage: (recipientId: string, content: string, chatType: ChatType) => Promise<void>;
   markAsRead: (messageId: string) => Promise<void>;
   unreadCount: number;
+  getUnreadCountByType: (chatType: ChatType) => number;
+  filterMessagesByType: (chatType: ChatType) => Message[];
+  activeChatType: ChatType;
+  setActiveChatType: (chatType: ChatType) => void;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export function ChatProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [activeChatType, setActiveChatType] = useState<ChatType>("private");
   const { user } = useAuth();
   const { toast } = useToast();
   
@@ -43,7 +51,13 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      setMessages(data || []);
+      // Handle existing messages without chat_type by assigning default "private"
+      const processedData = data?.map(msg => ({
+        ...msg,
+        chat_type: msg.chat_type || "private"
+      }));
+      
+      setMessages(processedData || []);
     };
 
     fetchMessages();
@@ -61,11 +75,24 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         },
         (payload) => {
           const newMessage = payload.new as Message;
+          // Assign default chat_type if not present
+          if (!newMessage.chat_type) {
+            newMessage.chat_type = "private";
+          }
+          
           setMessages(prev => [...prev, newMessage]);
           
+          // Show toast notification with context about which chat the message is from
+          const chatTypeLabels = {
+            "private": "Private Message",
+            "team": "Team Chat",
+            "mental_health": "Mental Health Mate",
+            "mentor": "Mentor Connect"
+          };
+          
           toast({
-            title: "New message",
-            description: newMessage.content.substring(0, 50),
+            title: chatTypeLabels[newMessage.chat_type as ChatType] || "New message",
+            description: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? "..." : ""),
           });
         }
       )
@@ -76,7 +103,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     };
   }, [user, toast]);
 
-  const sendMessage = async (recipientId: string, content: string) => {
+  const sendMessage = async (recipientId: string, content: string, chatType: ChatType = "private") => {
     if (!user) return;
 
     try {
@@ -84,7 +111,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
         sender_id: user.id,
         recipient_id: recipientId,
         content,
-        read: false
+        read: false,
+        chat_type: chatType
       });
 
       if (error) throw error;
@@ -120,9 +148,28 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const unreadCount = messages.filter(
     msg => !msg.read && msg.recipient_id === user?.id
   ).length;
+  
+  const getUnreadCountByType = (chatType: ChatType): number => {
+    return messages.filter(
+      msg => !msg.read && msg.recipient_id === user?.id && msg.chat_type === chatType
+    ).length;
+  };
+  
+  const filterMessagesByType = (chatType: ChatType): Message[] => {
+    return messages.filter(msg => msg.chat_type === chatType);
+  };
 
   return (
-    <ChatContext.Provider value={{ messages, sendMessage, markAsRead, unreadCount }}>
+    <ChatContext.Provider value={{ 
+      messages, 
+      sendMessage, 
+      markAsRead, 
+      unreadCount,
+      getUnreadCountByType,
+      filterMessagesByType,
+      activeChatType,
+      setActiveChatType
+    }}>
       {children}
     </ChatContext.Provider>
   );
