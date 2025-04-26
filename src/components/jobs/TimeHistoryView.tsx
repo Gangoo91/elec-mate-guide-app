@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { TimeHistoryTable } from "./TimeHistoryTable";
 import { useTimeEntries } from "@/hooks/useTimeEntries";
 import { Calendar } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TimeHistoryView() {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { entries, isLoading } = useTimeEntries(selectedDate);
+  const { entries, isLoading, weekData } = useTimeEntries(selectedDate);
   
   const start = startOfWeek(selectedDate);
   const end = endOfWeek(selectedDate);
@@ -71,7 +72,23 @@ export function TimeHistoryView() {
           </div>
         </div>
         
-        <TimeHistoryTable entries={weekEntries} loading={isLoading} />
+        <Tabs defaultValue="entries" className="w-full">
+          <TabsList className="grid grid-cols-2 mb-4">
+            <TabsTrigger value="entries">Entries</TabsTrigger>
+            <TabsTrigger value="summary">Weekly Summary</TabsTrigger>
+          </TabsList>
+          <TabsContent value="entries">
+            <TimeHistoryTable entries={weekEntries} loading={isLoading} />
+          </TabsContent>
+          <TabsContent value="summary">
+            <TimeHistoryTable 
+              entries={weekEntries} 
+              loading={isLoading} 
+              weekData={weekData}
+              showSummary={true}
+            />
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   );

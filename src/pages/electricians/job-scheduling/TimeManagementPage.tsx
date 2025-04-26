@@ -8,7 +8,7 @@ import { TimeHistoryView } from "@/components/jobs/TimeHistoryView";
 import { useTimeEntries } from "@/hooks/useTimeEntries";
 
 const TimeManagementPage = () => {
-  const { weekData, isLoading } = useTimeEntries();
+  const { weekData, isLoading, refetch } = useTimeEntries();
 
   return (
     <MainLayout>
