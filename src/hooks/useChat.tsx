@@ -8,7 +8,7 @@ import { Message } from "@/types/chat";
 
 export const useChatActions = (
   messages: Message[], 
-  setMessages: (messages: Message[]) => void
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>
 ) => {
   const { toast } = useToast();
   const { user } = useAuth();
