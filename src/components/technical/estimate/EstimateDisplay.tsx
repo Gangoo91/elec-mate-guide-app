@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
@@ -28,7 +29,12 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
 
     try {
       const options = {
-        margin: 15,
+        margin: {
+          top: 15,
+          right: 15,
+          bottom: 15,
+          left: 15
+        },
         filename: `estimate-${jobReference || 'job'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true },

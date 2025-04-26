@@ -48,10 +48,10 @@ const ElectriciansPage = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4">
+      <div className="container px-4 py-2 md:py-6">
         <BackButton />
         
-        <div className="text-centre mb-8">
+        <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-[#FFC900] mb-4">
             Electricians Hub
           </h1>
