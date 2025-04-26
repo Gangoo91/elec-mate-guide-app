@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import ClientSignatureCanvas from './ClientSignatureCanvas';
 
@@ -38,6 +39,11 @@ export const SignatureDialog = ({
           <DialogTitle className="text-[#FFC900]">
             {signerType === "electrician" ? "Sign and Send Document" : "Client Signature"}
           </DialogTitle>
+          <DialogDescription className="text-[#FFC900]/70">
+            {signerType === "electrician" 
+              ? "Sign this document and send it to your client for their signature." 
+              : "Please sign this document to confirm your agreement."}
+          </DialogDescription>
         </DialogHeader>
         
         {signerType === "electrician" && (

@@ -1,12 +1,14 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { WhitePaperDocument, WhitePaperHeader, WhitePaperContent, WhitePaperFooter } from './WhitePaperDocument';
 import { Button } from "@/components/ui/button";
-import { Download, Printer, FileCheck, X } from "lucide-react";
+import { Download, Printer, FileCheck, X, FileSignature } from "lucide-react";
 import { format } from 'date-fns';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 
 interface DocumentPreviewProps {
   isOpen: boolean;
@@ -15,7 +17,59 @@ interface DocumentPreviewProps {
   documentType: 'estimates' | 'invoices' | 'certificates';
 }
 
+interface SignatureData {
+  electricianSignature?: string;
+  clientSignature?: string;
+  dateSigned?: string;
+  status?: string;
+}
+
 const DocumentPreview = ({ isOpen, onOpenChange, templateId, documentType }: DocumentPreviewProps) => {
+  const [signatureData, setSignatureData] = useState<SignatureData | null>(null);
+  const { user } = useAuth();
+  
+  useEffect(() => {
+    const fetchSignatures = async () => {
+      if (!templateId || !user || !isOpen) return;
+      
+      try {
+        // Try to fetch any existing signed document with this template
+        const { data, error } = await supabase
+          .from('job_estimates')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('job_description', `Template: ${templateId}`)
+          .order('created_at', { ascending: false })
+          .limit(1);
+          
+        if (error) {
+          console.error("Error fetching signatures:", error);
+          return;
+        }
+        
+        if (data && data.length > 0) {
+          try {
+            const parsedResponse = JSON.parse(data[0].estimate_response || '{}');
+            setSignatureData({
+              electricianSignature: parsedResponse.electrician_signature,
+              clientSignature: parsedResponse.client_signature,
+              dateSigned: parsedResponse.date_signed,
+              status: parsedResponse.status
+            });
+          } catch (e) {
+            console.error("Error parsing signature data:", e);
+          }
+        } else {
+          setSignatureData(null);
+        }
+      } catch (err) {
+        console.error("Error in signature fetching:", err);
+      }
+    };
+    
+    fetchSignatures();
+  }, [templateId, user, isOpen]);
+
   if (!templateId) return null;
   
   const isMobile = useIsMobile();
@@ -191,6 +245,57 @@ const DocumentPreview = ({ isOpen, onOpenChange, templateId, documentType }: Doc
               <li>Late payments are subject to a 2% monthly interest charge.</li>
             </ul>
           </div>
+          
+          {/* Signatures Section */}
+          {signatureData && (
+            <div className="mt-10 border-t pt-6 border-gray-200">
+              <h3 className="font-semibold text-gray-700 mb-4">Signatures</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {signatureData.electricianSignature && (
+                  <div>
+                    <p className="text-gray-500 mb-2">Electrician Signature:</p>
+                    <div className="border border-gray-200 rounded h-24 flex items-center justify-center overflow-hidden">
+                      <img 
+                        src={signatureData.electricianSignature} 
+                        alt="Electrician Signature" 
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    {signatureData.dateSigned && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        Signed on {format(new Date(signatureData.dateSigned), 'dd MMM yyyy')}
+                      </p>
+                    )}
+                  </div>
+                )}
+                
+                {signatureData.clientSignature ? (
+                  <div>
+                    <p className="text-gray-500 mb-2">Client Signature:</p>
+                    <div className="border border-gray-200 rounded h-24 flex items-center justify-center overflow-hidden">
+                      <img 
+                        src={signatureData.clientSignature} 
+                        alt="Client Signature" 
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                    {signatureData.clientSignature && (
+                      <p className="text-sm text-gray-500 mt-1">
+                        Document fully signed and completed
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="border border-dashed border-gray-200 rounded h-24 flex items-center justify-center">
+                    <div className="text-center text-gray-400">
+                      <FileSignature className="mx-auto h-6 w-6 mb-1" />
+                      <p className="text-sm">Awaiting client signature</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </WhitePaperContent>
 
         <WhitePaperFooter>
@@ -200,7 +305,11 @@ const DocumentPreview = ({ isOpen, onOpenChange, templateId, documentType }: Doc
               <p className="text-xs md:text-sm">info@sparkelectrical.com | +44 20 1234 5678 | www.sparkelectrical.com</p>
             </div>
             <div>
-              <FileCheck className="h-5 w-5 text-green-600" />
+              {signatureData && signatureData.clientSignature ? (
+                <FileCheck className="h-5 w-5 text-green-600" />
+              ) : (
+                <FileSignature className="h-5 w-5 text-amber-600" />
+              )}
             </div>
           </div>
         </WhitePaperFooter>
