@@ -22,7 +22,6 @@ const Mentorship = () => {
   const [requestMessage, setRequestMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Demo mentorship requests data for electricians view - with typed status
   const demoMentorshipRequests: MentorshipRequest[] = [
     {
       id: "1",
@@ -63,7 +62,6 @@ const Mentorship = () => {
   const handleMentorshipRequest = () => {
     if (!selectedMentor) return;
 
-    // Here we would integrate with Supabase to send the mentorship request
     toast({
       title: "Request Sent",
       description: `Your mentorship request has been submitted to ${selectedMentor.name}. You'll be notified when they respond.`,
@@ -82,7 +80,7 @@ const Mentorship = () => {
     
     toast({
       title: "Request Accepted",
-      description: `You have accepted the mentorship request from ${request.apprenticeName}. They have been notified.`,
+      description: `You have accepted the mentorship request from ${request.apprenticeName}. You can now chat with them.`,
     });
   };
 

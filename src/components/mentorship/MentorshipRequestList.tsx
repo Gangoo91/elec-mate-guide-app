@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Filter, ChevronDown, Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ChatButton } from "@/components/chat/ChatButton";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { toast } from "sonner";
 import {
@@ -58,14 +59,6 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
       toast.error("Failed to copy request details");
     });
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <LoadingSpinner size="lg" className="text-[#FFC900]" />
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center space-y-6">
@@ -127,18 +120,44 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
                   Expertise: {request.expertise.join(", ")}
                 </div>
               </div>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => handleCopyRequest(request)}
-                className="text-[#FFC900] hover:bg-[#FFC900]/10"
-              >
-                {copiedRequestId === request.id ? (
-                  <CheckCheck className="h-5 w-5" />
-                ) : (
-                  <Copy className="h-5 w-5" />
+              <div className="flex items-center gap-2">
+                {request.status === "pending" ? (
+                  <>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => onAcceptRequest(request)}
+                      className="text-green-500 border-green-500/20 hover:bg-green-500/10"
+                    >
+                      Accept
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => onRejectRequest(request)}
+                      className="text-red-500 border-red-500/20 hover:bg-red-500/10"
+                    >
+                      Decline
+                    </Button>
+                  </>
+                ) : request.status === "accepted" && (
+                  <ChatButton 
+                    recipientId={request.apprenticeId}
+                    recipientName={request.apprenticeName}
+                    chatType="mentor"
+                  />
                 )}
-              </Button>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => handleCopyRequest(request)}
+                  className="text-[#FFC900] hover:bg-[#FFC900]/10"
+                >
+                  {copiedRequestId === request.id ? (
+                    <CheckCheck className="h-5 w-5" />
+                  ) : (
+                    <Copy className="h-5 w-5" />
+                  )}
+                </Button>
+              </div>
             </div>
           ))}
       </div>
