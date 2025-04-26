@@ -37,6 +37,9 @@ import SmartGridPage from "@/pages/moet/power-systems/distribution/SmartGridPage
 import TransmissionSystemsPage from "@/pages/moet/power-systems/transmission/TransmissionSystemsPage";
 import TransformersSubstationsPage from "@/pages/moet/power-systems/transmission/TransformersSubstationsPage";
 import GridInfrastructurePage from "@/pages/moet/power-systems/transmission/GridInfrastructurePage";
+import MOETCoreSkillsPage from "@/pages/MOETCoreSkillsPage";
+import MOETBehavioursPage from "@/pages/MOETBehavioursPage";
+import MOETAssessmentPage from "@/pages/MOETAssessmentPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -102,4 +105,7 @@ export const ApprenticeRoutes = [
     path="/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems/transmission/infrastructure" 
     element={<GridInfrastructurePage />} 
   />,
+  <Route key="apprentices-moet-core-skills" path="/apprentices/study-materials/city-guilds/moet/core-skills" element={<MOETCoreSkillsPage />} />,
+  <Route key="apprentices-moet-behaviours" path="/apprentices/study-materials/city-guilds/moet/behaviours" element={<MOETBehavioursPage />} />,
+  <Route key="apprentices-moet-assessment" path="/apprentices/study-materials/city-guilds/moet/assessment" element={<MOETAssessmentPage />} />,
 ];

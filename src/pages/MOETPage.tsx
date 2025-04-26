@@ -24,19 +24,19 @@ const MOETPage = () => {
       title: "Core Skills",
       description: "Practical skills in electrical maintenance, fault finding, and equipment installation.",
       icon: <ListCheck className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge')
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-skills')
     },
     {
       title: "Behaviours Expected",
       description: "Professional conduct, safety awareness, and teamwork expectations in the workplace.",
       icon: <List className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge')
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/behaviours')
     },
     {
       title: "End Point Assessment",
       description: "Final assessment requirements including practical observations and technical interviews.",
       icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge')
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/assessment')
     }
   ];
 
