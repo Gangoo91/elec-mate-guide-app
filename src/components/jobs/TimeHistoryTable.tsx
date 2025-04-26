@@ -1,10 +1,9 @@
-
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { 
   Table, 
-  TableBody, 
   TableCaption, 
+  TableBody, 
   TableCell, 
   TableHead, 
   TableHeader, 
@@ -43,6 +42,20 @@ export function TimeHistoryTable({
 }: TimeHistoryTableProps) {
   const isMobile = useIsMobile();
   
+  // Utility function to abbreviate days
+  const abbreviateDay = (day: string) => {
+    const abbreviations: { [key: string]: string } = {
+      "Sunday": "Sun",
+      "Monday": "Mon", 
+      "Tuesday": "Tue",
+      "Wednesday": "Wed",
+      "Thursday": "Thu",
+      "Friday": "Fri",
+      "Saturday": "Sat"
+    };
+    return abbreviations[day] || day;
+  };
+
   if (loading) {
     return <div className="text-center text-[#FFC900]/70">Loading time entries...</div>;
   }
@@ -62,7 +75,7 @@ export function TimeHistoryTable({
           {weekData.map((day) => (
             <TableRow key={day.day}>
               <TableCell className="font-medium text-[#FFC900]/90">
-                {day.day}
+                {abbreviateDay(day.day)}
               </TableCell>
               <TableCell className="text-[#FFC900]/90">
                 {day.hours.toFixed(1)}h
