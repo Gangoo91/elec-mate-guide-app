@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -21,7 +21,7 @@ interface ClientFormProps {
 }
 
 export default function ClientForm({ onSubmit, initialData }: ClientFormProps) {
-  const { register, handleSubmit, formState: { errors } } = useForm<ClientFormData>({
+  const { register, handleSubmit, control, formState: { errors } } = useForm<ClientFormData>({
     defaultValues: initialData || {
       type: 'Residential'
     }
@@ -41,19 +41,26 @@ export default function ClientForm({ onSubmit, initialData }: ClientFormProps) {
       </div>
 
       <div>
-        <Select
-          {...register("type")}
+        <Controller
+          name="type"
+          control={control}
           defaultValue="Residential"
-        >
-          <SelectTrigger className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]">
-            <SelectValue placeholder="Client Type" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-            <SelectItem value="Residential">Residential</SelectItem>
-            <SelectItem value="Commercial">Commercial</SelectItem>
-            <SelectItem value="Industrial">Industrial</SelectItem>
-          </SelectContent>
-        </Select>
+          render={({ field }) => (
+            <Select 
+              onValueChange={field.onChange} 
+              defaultValue={field.value}
+            >
+              <SelectTrigger className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]">
+                <SelectValue placeholder="Client Type" />
+              </SelectTrigger>
+              <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                <SelectItem value="Residential">Residential</SelectItem>
+                <SelectItem value="Commercial">Commercial</SelectItem>
+                <SelectItem value="Industrial">Industrial</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
       </div>
 
       <div>

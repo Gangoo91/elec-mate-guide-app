@@ -8,6 +8,7 @@ import { EditClientDialog } from "@/components/clients/EditClientDialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import BackButton from "@/components/navigation/BackButton";
+import PageHeader from "@/components/layout/PageHeader";
 
 interface Client {
   id: string;
@@ -62,9 +63,11 @@ const ClientManagementPage = () => {
   return (
     <MainLayout>
       <div className="container py-8">
-        <div className="mb-4">
-          <BackButton />
-        </div>
+        <PageHeader
+          title="Client Management"
+          description="View and manage your client information"
+          hideBackButton={false}
+        />
 
         <div className="flex flex-col items-center justify-center mb-8">
           <AddClientDialog />

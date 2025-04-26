@@ -33,7 +33,10 @@ export function AddClientDialog() {
       });
       setOpen(false);
       
-      window.location.reload();
+      // Use a proper function to reload data instead of full page reload
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error) {
       console.error("Error adding client:", error);
       toast({
