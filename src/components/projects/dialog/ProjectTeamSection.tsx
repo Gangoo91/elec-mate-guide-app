@@ -3,13 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import { useTeamPresence } from "@/hooks/useTeamPresence";
 import { OnlineIndicator } from "./OnlineIndicator";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ChatPopover } from "../ChatPopover";
+import { TeamMemberDialog } from "./TeamMemberDialog";
+import { useToast } from "@/hooks/use-toast";
 
 export function ProjectTeamSection() {
   const { presenceData } = useTeamPresence();
   const { user } = useAuth();
+  const { toast } = useToast();
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const teamMembers = [
     { id: "1", name: "John Smith", role: "Project Manager" },
@@ -19,6 +24,22 @@ export function ProjectTeamSection() {
 
   const getPresenceForMember = (memberId: string) => {
     return presenceData.find(p => p.user_id === memberId);
+  };
+
+  const handleEdit = (member) => {
+    toast({
+      title: "Success",
+      description: "Team member updated successfully",
+    });
+    setIsDialogOpen(false);
+  };
+
+  const handleDelete = (id: string) => {
+    toast({
+      title: "Success",
+      description: "Team member deleted successfully",
+    });
+    setIsDialogOpen(false);
   };
 
   return (
@@ -39,13 +60,13 @@ export function ProjectTeamSection() {
                 role="button"
                 tabIndex={0}
                 onClick={() => {
-                  const chatButton = document.querySelector(`[data-member-id="${member.id}"]`) as HTMLButtonElement;
-                  if (chatButton) chatButton.click();
+                  setSelectedMember(member);
+                  setIsDialogOpen(true);
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
-                    const chatButton = document.querySelector(`[data-member-id="${member.id}"]`) as HTMLButtonElement;
-                    if (chatButton) chatButton.click();
+                    setSelectedMember(member);
+                    setIsDialogOpen(true);
                   }
                 }}
               >
@@ -65,6 +86,14 @@ export function ProjectTeamSection() {
           })}
         </div>
       </CardContent>
+
+      <TeamMemberDialog
+        member={selectedMember}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </Card>
   );
 }
