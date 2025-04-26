@@ -11,37 +11,25 @@ const JobSchedulePage = () => {
       title: "Upcoming Jobs",
       description: "View and manage your scheduled appointments and upcoming work orders.",
       icon: <Calendar className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "View Schedule",
-        href: "#"
-      }
+      fullCardLink: "/electricians/job-scheduling/upcoming"
     },
     {
       title: "Time Management",
       description: "Track work hours, travel time, and job durations efficiently.",
       icon: <ClockIcon className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Manage Time",
-        href: "#"
-      }
+      fullCardLink: "/electricians/job-scheduling/time"
     },
     {
       title: "Client Management",
       description: "Access client details, contact information, and job histories.",
       icon: <Users className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "View Clients",
-        href: "#"
-      }
+      fullCardLink: "/electricians/job-scheduling/clients"
     },
     {
       title: "Job Completion",
       description: "Mark jobs as complete, collect signatures, and process paperwork.",
       icon: <CheckSquare className="h-7 w-7 text-[#FFC900]" />,
-      action: {
-        label: "Complete Jobs",
-        href: "#"
-      }
+      fullCardLink: "/electricians/job-scheduling/completion"
     }
   ];
 
