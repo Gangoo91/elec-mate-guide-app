@@ -5,12 +5,10 @@ import { format } from "date-fns";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { jobFormSchema, JobFormData } from "./jobValidation";
+import { DatePickerField } from "./DatePickerField";
+import { TimeInputFields } from "./TimeInputFields";
 
 interface JobFormProps {
   onSubmit: (data: JobFormData) => Promise<void>;
@@ -25,8 +23,6 @@ export function JobForm({ onSubmit, defaultValues }: JobFormProps) {
       ...defaultValues
     }
   });
-  
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
 
   return (
     <Form {...form}>
@@ -70,76 +66,8 @@ export function JobForm({ onSubmit, defaultValues }: JobFormProps) {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel className="text-[#FFC900]">Date</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full pl-3 text-left font-normal bg-[#151812] text-[#FFC900]",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {date ? (
-                        format(date, 'dd/MM/yyyy')
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={(selectedDate) => {
-                      setDate(selectedDate);
-                      field.onChange(selectedDate ? format(selectedDate, 'dd/MM/yyyy') : '');
-                    }}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="startTime"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#FFC900]">Start Time</FormLabel>
-                <FormControl>
-                  <Input type="time" {...field} className="bg-[#151812] text-[#FFC900]" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="endTime"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#FFC900]">End Time</FormLabel>
-                <FormControl>
-                  <Input type="time" {...field} className="bg-[#151812] text-[#FFC900]" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <DatePickerField form={form} />
+        <TimeInputFields form={form} />
         <FormField
           control={form.control}
           name="notes"
