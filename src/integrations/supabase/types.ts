@@ -737,6 +737,7 @@ export type Database = {
       }
       team_messages: {
         Row: {
+          chat_type: string
           content: string
           created_at: string
           id: string
@@ -746,6 +747,7 @@ export type Database = {
           sender_id: string
         }
         Insert: {
+          chat_type?: string
           content: string
           created_at?: string
           id?: string
@@ -755,6 +757,7 @@ export type Database = {
           sender_id: string
         }
         Update: {
+          chat_type?: string
           content?: string
           created_at?: string
           id?: string
