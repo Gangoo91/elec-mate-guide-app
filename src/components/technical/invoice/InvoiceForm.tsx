@@ -1,15 +1,14 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { format } from 'date-fns';
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { ClientInfoSection } from './ClientInfoSection';
 import { InvoiceItemsSection } from './InvoiceItemsSection';
+import { FormFooterSection } from './FormFooterSection';
 
 interface InvoiceItem {
   description: string;
@@ -49,7 +48,6 @@ export function InvoiceForm() {
       const vatAmount = subtotal * (vatRate / 100);
       const total = subtotal + vatAmount;
 
-      // Format the due date as a string (YYYY-MM-DD)
       const formattedDueDate = format(data.dueDate, 'yyyy-MM-dd');
 
       const invoiceData = {
@@ -65,8 +63,8 @@ export function InvoiceForm() {
         total,
         notes: data.notes,
         terms: data.terms,
-        status: 'draft'
-        // invoice_number is generated automatically by the database
+        status: 'draft',
+        invoice_number: null // Allow the database trigger to generate this
       };
 
       const { error } = await supabase
@@ -105,25 +103,9 @@ export function InvoiceForm() {
         />
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="notes">Notes</Label>
-          <Input
-            id="notes"
-            {...register('notes')}
-            className="mt-1"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="terms">Terms and Conditions</Label>
-          <Input
-            id="terms"
-            {...register('terms')}
-            className="mt-1"
-          />
-        </div>
-      </div>
+      <FormFooterSection 
+        register={register}
+      />
 
       <Button type="submit" className="w-full">Create Invoice</Button>
     </form>
