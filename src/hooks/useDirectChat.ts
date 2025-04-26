@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -12,7 +11,6 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
   const { user } = useAuth();
   const { toast } = useToast();
 
-  // Fetch messages on component mount
   useEffect(() => {
     if (!user?.id || !recipientId) return;
     
@@ -27,7 +25,7 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
           .order('created_at', { ascending: true });
         
         if (error) throw error;
-        setMessages(data || []);
+        setMessages((data || []) as Message[]);
       } catch (error) {
         console.error("Error fetching messages:", error);
       } finally {
@@ -37,7 +35,6 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
 
     fetchMessages();
 
-    // Mark messages as read
     const markAsRead = async () => {
       try {
         const { error } = await supabase
@@ -55,7 +52,6 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
     
     markAsRead();
 
-    // Subscribe to new messages
     const channel = supabase
       .channel('direct_messages')
       .on(
@@ -72,7 +68,6 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
             if (newMessage.sender_id === recipientId && newMessage.chat_type === chatType) {
               setMessages(prev => [...prev, newMessage]);
               
-              // Mark as read immediately since user is in the chat
               try {
                 await supabase
                   .from('team_messages')
@@ -112,7 +107,6 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
 
       if (error) throw error;
       
-      // Optimistically add the message to the local state
       if (data && data[0]) {
         setMessages(prev => [...prev, data[0] as Message]);
       }

@@ -1,6 +1,5 @@
-
 import React, { useState } from "react";
-import { Filter, ChevronDown, Copy, CheckCheck } from "lucide-react";
+import { Filter, ChevronDown, Copy, CheckCheck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChatButton } from "@/components/chat/ChatButton";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -58,6 +57,11 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
       console.error('Failed to copy:', err);
       toast.error("Failed to copy request details");
     });
+  };
+
+  const handleStopMentoring = (request: MentorshipRequest) => {
+    toast.success(`Stopped mentoring ${request.apprenticeName}`);
+    onRejectRequest(request);
   };
 
   return (
@@ -152,6 +156,15 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
                       onClick={() => onScheduleSession(request)}
                     >
                       Schedule Session
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleStopMentoring(request)}
+                      className="text-red-500 hover:bg-red-500/10"
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Stop mentoring</span>
                     </Button>
                   </div>
                 )}
