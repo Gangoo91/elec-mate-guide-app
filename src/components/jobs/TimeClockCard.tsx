@@ -3,12 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Car } from "lucide-react";
+import { Clock } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export function TimeClockCard() {
   const { toast } = useToast();
@@ -16,7 +14,6 @@ export function TimeClockCard() {
   const [loading, setLoading] = useState(false);
   const [activeEntry, setActiveEntry] = useState<any>(null);
   const [onBreak, setOnBreak] = useState(false);
-  const [travelTime, setTravelTime] = useState<string>('0');
   
   useEffect(() => {
     if (user) {
@@ -92,14 +89,10 @@ export function TimeClockCard() {
     try {
       setLoading(true);
       
-      // Convert travel time from string to number
-      const travelTimeNumber = parseFloat(travelTime) || 0;
-      
       const { error } = await supabase
         .from('time_entries')
         .update({
           clock_out: new Date().toISOString(),
-          travel_time: travelTimeNumber
         })
         .eq('id', activeEntry.id);
       
@@ -111,7 +104,6 @@ export function TimeClockCard() {
       });
       setActiveEntry(null);
       setOnBreak(false);
-      setTravelTime('0');
     } catch (error) {
       console.error("Error clocking out:", error);
       toast({
@@ -228,23 +220,6 @@ export function TimeClockCard() {
 
     return (
       <div className="space-y-4">
-        <div className="space-y-2">
-          <div className="flex items-center space-x-2">
-            <Car className="w-4 h-4 text-[#FFC900]" />
-            <Label htmlFor="travelTime" className="text-[#FFC900]/90">Travel Time (hours)</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Input
-              id="travelTime"
-              type="number"
-              step="0.25"
-              min="0"
-              value={travelTime}
-              onChange={(e) => setTravelTime(e.target.value)}
-              className="border-[#FFC900]/30 text-[#FFC900] bg-[#22251e]/50"
-            />
-          </div>
-        </div>
         <Button 
           onClick={handleClockOut} 
           className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"

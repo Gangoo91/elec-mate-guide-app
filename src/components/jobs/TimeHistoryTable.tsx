@@ -1,3 +1,4 @@
+
 import React from "react";
 import { format, parseISO } from "date-fns";
 import { 
@@ -18,7 +19,6 @@ interface TimeEntry {
   break_start: string | null;
   break_end: string | null;
   total_hours: number | null;
-  travel_time: number | null;
 }
 
 interface WeekSummary {
@@ -136,18 +136,9 @@ export function TimeHistoryTable({
               <span className="text-[#FFC900]/70">Work Time:</span>
               <span className="text-[#FFC900]">{formatDuration(entry.total_hours)}</span>
               
-              {entry.travel_time ? (
-                <>
-                  <span className="text-[#FFC900]/70">Travel Time:</span>
-                  <span className="text-[#FFC900]">{formatDuration(entry.travel_time)}</span>
-                </>
-              ) : null}
-              
               <span className="text-[#FFC900]/70">Total:</span>
               <span className="font-medium text-[#FFC900]">
-                {entry.total_hours && entry.travel_time 
-                  ? formatDuration(entry.total_hours + entry.travel_time)
-                  : formatDuration(entry.total_hours)}
+                {formatDuration(entry.total_hours)}
               </span>
             </div>
           </div>
@@ -166,7 +157,6 @@ export function TimeHistoryTable({
           <TableHead className="text-[#FFC900]">Clock In</TableHead>
           <TableHead className="text-[#FFC900]">Clock Out</TableHead>
           <TableHead className="text-[#FFC900]">Work Time</TableHead>
-          <TableHead className="text-[#FFC900]">Travel Time</TableHead>
           <TableHead className="text-[#FFC900] text-right">Total Duration</TableHead>
         </TableRow>
       </TableHeader>
@@ -185,13 +175,8 @@ export function TimeHistoryTable({
             <TableCell className="text-[#FFC900]/90">
               {formatDuration(entry.total_hours)}
             </TableCell>
-            <TableCell className="text-[#FFC900]/90">
-              {entry.travel_time ? formatDuration(entry.travel_time) : "—"}
-            </TableCell>
             <TableCell className="text-right text-[#FFC900]/90">
-              {entry.total_hours && entry.travel_time 
-                ? formatDuration(entry.total_hours + entry.travel_time)
-                : formatDuration(entry.total_hours)}
+              {formatDuration(entry.total_hours)}
             </TableCell>
           </TableRow>
         ))}
