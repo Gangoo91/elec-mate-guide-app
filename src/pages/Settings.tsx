@@ -29,7 +29,6 @@ const Settings = () => {
         <PageHeader
           title="Settings"
           description="Manage your account preferences and notifications"
-          icon={<SettingsIcon className="h-6 w-6 text-[#FFC900]" />}
         />
 
         <div className="space-y-6 mt-6">

@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
@@ -37,7 +38,8 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
       
       toast.loading("Generating PDF...");
       
-      await html2pdf().from(element).set(options).save();
+      // Correct usage of html2pdf library
+      await html2pdf(element, options);
       
       toast.success("PDF downloaded successfully");
     } catch (error) {
