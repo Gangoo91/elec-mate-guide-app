@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -57,6 +56,8 @@ import SupportStructurePage from "@/pages/electricians/solar/installation/struct
 
 export const ElectricianRoutes = [
   <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
+  <Route key="electricians-job-scheduling" path="/electricians/job-scheduling" element={<JobSchedulePage />} />,
+  <Route key="electricians-project-management" path="/electricians/project-management" element={<ProjectManagementPage />} />,
   <Route key="electricians-learning-hub" path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />,
   <Route key="electricians-study-guide" path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />,
   <Route key="electricians-solar-pv" path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />,

@@ -1,12 +1,32 @@
 
 import React from "react";
-import { MessageSquare, Heart, Book, Handshake, Users, BookOpen } from "lucide-react";
+import { MessageSquare, Heart, Book, Handshake, Users, BookOpen, Calendar, FolderGit2, FileText } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import BackButton from "@/components/navigation/BackButton";
 import ResourceCard from "@/components/shared/ResourceCard";
-import DraggableDashboard from "@/components/dashboard/DraggableDashboard";
 
 const ElectriciansPage = () => {
+  const mainFeatures = [
+    {
+      title: "Job Scheduling",
+      description: "Manage your appointments, tasks, and job timelines.",
+      icon: <Calendar className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/job-scheduling"
+    },
+    {
+      title: "Project Management",
+      description: "Integration with project tracking and collaboration tools.",
+      icon: <FolderGit2 className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/project-management"
+    },
+    {
+      title: "Templates & Documents",
+      description: "Access and manage your estimates, invoices, and certificates.",
+      icon: <FileText className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/templates"
+    }
+  ];
+
   const resources = [
     {
       title: "Learning Hub",
@@ -60,9 +80,16 @@ const ElectriciansPage = () => {
           </p>
         </div>
 
-        <DraggableDashboard />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {mainFeatures.map((feature, index) => (
+            <ResourceCard
+              key={index}
+              {...feature}
+            />
+          ))}
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((resource, index) => (
             <ResourceCard
               key={index}
