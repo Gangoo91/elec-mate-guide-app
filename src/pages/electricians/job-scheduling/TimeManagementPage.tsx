@@ -1,16 +1,20 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { TimeClockCard } from "@/components/jobs/TimeClockCard";
 import { WeeklySummaryCard } from "@/components/jobs/WeeklySummaryCard";
 import { TimeHistoryView } from "@/components/jobs/TimeHistoryView";
 import { useTimeEntries } from "@/hooks/useTimeEntries";
+import { useTimeReminders } from "@/hooks/useTimeReminders";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const TimeManagementPage = () => {
   const { weekData, isLoading, refetch } = useTimeEntries();
   const isMobile = useIsMobile();
+  
+  // Initialize the time reminders hook
+  useTimeReminders();
 
   return (
     <MainLayout>
