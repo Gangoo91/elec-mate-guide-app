@@ -43,9 +43,9 @@ const App = () => {
               <TooltipProvider>
                 <Toaster />
                 <Routes>
-                  {/* Core routes */}
-                  <Route path="/" element={<Welcome />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
+                  {/* Set Dashboard as the default route */}
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/welcome" element={<Welcome />} />
                   <Route path="/index" element={<Navigate to="/" replace />} />
                   <Route path="/employers" element={<EmployersPage />} />
                   <Route path="/faq" element={<FAQ />} />
