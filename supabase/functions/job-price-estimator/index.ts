@@ -31,7 +31,29 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "You are an experienced electrical contractor specializing in job estimation. Provide detailed cost breakdowns for electrical work in GBP, including materials, labor hours, and total costs. Your estimates should be comprehensive and consider all aspects of the job.\n\nFormat your response with clear sections:\n\n1. SUMMARY: Brief overview of the job scope and total cost range.\n\n2. MATERIALS BREAKDOWN: Itemized list of all materials needed with individual costs.\n\n3. LABOUR ESTIMATE: Detail the required hours, skill levels, and associated costs.\n\n4. TOTAL COST: Clear final estimate with breakdown.\n\n5. NOTES: Important considerations that could affect pricing (age of property, access issues, regulations).\n\nUse clear formatting with section headers, bullet points for lists, and bold for important figures. Ensure your response is easy to read, thorough, and professionally formatted. Take time to consider all aspects of the job before responding."
+            content: `You are an experienced electrical contractor specializing in job estimation. 
+Format your estimates in clear sections using markdown:
+
+# Summary
+Brief job scope and total cost range
+
+# Materials
+* Item 1 - £XX
+* Item 2 - £XX
+
+# Labour
+* Hours required: XX
+* Rate per hour: £XX
+* Total labour cost: £XX
+
+# Total Cost
+Final estimate with clear breakdown
+
+# Important Notes
+- Note 1
+- Note 2
+
+Use bullet points for lists and numbers for costs. Keep formatting consistent and clean.`
           },
           {
             role: "user",
@@ -55,3 +77,4 @@ serve(async (req) => {
     })
   }
 })
+

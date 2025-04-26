@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Calculator, Download } from "lucide-react";
@@ -66,26 +65,23 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
 
   if (!estimate) return null;
 
-  const formatSection = (text: string) => {
-    return text.split('\n').map(line => {
-      if (line.trim().startsWith('•') || line.trim().startsWith('-')) {
-        return `<li class="mb-2 text-[#FFC900]/90 ml-5 list-disc">${line.substring(2)}</li>`;
-      }
-      return `<p class="mb-2 text-[#FFC900]/90">${line}</p>`;
-    }).join('');
-  };
-
-  const sections = estimate.split(/^(SUMMARY|MATERIALS BREAKDOWN|LABOUR ESTIMATE|TOTAL COST|NOTES):/gm)
-    .filter(Boolean)
-    .reduce((acc, curr, i, arr) => {
-      if (i % 2 === 0) {
-        acc.push({
-          title: curr,
-          content: formatSection(arr[i + 1]?.trim() || '')
-        });
-      }
-      return acc;
-    }, [] as { title: string; content: string }[]);
+  const sections = estimate.split(/\n#\s/).filter(Boolean).map(section => {
+    const [title, ...content] = section.split('\n');
+    return {
+      title: title.trim(),
+      content: content
+        .join('\n')
+        .trim()
+        .split('\n')
+        .map(line => {
+          if (line.startsWith('*') || line.startsWith('-')) {
+            return `<li class="mb-2 text-[#FFC900]/90 ml-5 list-disc">${line.substring(2)}</li>`;
+          }
+          return `<p class="mb-2 text-[#FFC900]/90">${line}</p>`;
+        })
+        .join('')
+    };
+  });
 
   return (
     <Card className="mt-6 bg-[#2C2F24] border-[#FFC900]/20">
@@ -109,7 +105,7 @@ export const EstimateDisplay: React.FC<EstimateDisplayProps> = ({ estimate, clie
           </Button>
         </div>
         
-        <div ref={contentRef} className="estimate-content space-y-2">
+        <div ref={contentRef} className="space-y-4">
           {sections.map((section, index) => (
             <Collapsible key={index} className="bg-[#353824] rounded-lg overflow-hidden">
               <CollapsibleTrigger className="flex justify-between items-center w-full p-4 text-[#FFC900] hover:bg-[#404328] transition-colors">
