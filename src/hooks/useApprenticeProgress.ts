@@ -37,10 +37,10 @@ export function useApprenticeProgress() {
   });
 
   const addMilestoneMutation = useMutation({
-    mutationFn: async (newMilestone: Omit<Milestone, 'id'>) => {
+    mutationFn: async (newMilestone: Omit<Milestone, 'id'> & { user_id: string }) => {
       const { data, error } = await supabase
         .from('apprentice_milestones')
-        .insert([newMilestone])
+        .insert(newMilestone)
         .select()
         .single();
 
