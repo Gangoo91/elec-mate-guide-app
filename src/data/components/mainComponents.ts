@@ -6,7 +6,7 @@ export const mainComponents: ComponentInfo[] = [
     name: 'RCBO (BS EN 61009)',
     description: 'Residual Current Breaker with Overcurrent protection, commonly used in UK consumer units. Combines RCD and MCB functionality in a single device.',
     youtubeId: 'mc979OhitAg',
-    imageUrl: '/images/electrical-components/rcbo.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
     specifications: [
       'Common ratings: 6A, 10A, 16A, 20A, 32A, 40A',
       'Typical sensitivity: 30mA for personal protection',
@@ -24,7 +24,7 @@ export const mainComponents: ComponentInfo[] = [
     name: 'Consumer Unit (BS 7671)',
     description: 'Modern metal consumer units (distribution boards) required by the 18th Edition IET Wiring Regulations for UK domestic installations.',
     youtubeId: '9iKD8kW84C0',
-    imageUrl: '/images/electrical-components/consumer-unit.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7',
     specifications: [
       'Must be metal construction for domestic installations',
       'Typical sizes: 4-24 ways',
@@ -42,7 +42,7 @@ export const mainComponents: ComponentInfo[] = [
     name: 'Socket Outlet (BS 1363)',
     description: 'UK standard 13A socket outlet with safety features including shuttered live/neutral and earth pin.',
     youtubeId: 'vN9aR2wKv0U',
-    imageUrl: '/images/electrical-components/socket-outlet.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1',
     specifications: [
       'Rating: 13A at 230V',
       'Must include safety shutters',

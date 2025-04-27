@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircuitBoard } from "lucide-react";
+import { CircuitBoard, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { ComponentInfo } from "@/types/arLearning";
@@ -15,6 +15,7 @@ const ComponentViewer = ({ activeComponent }: ComponentViewerProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
+  const [imageError, setImageError] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   const handleZoomIn = () => {
@@ -34,15 +35,21 @@ const ComponentViewer = ({ activeComponent }: ComponentViewerProps) => {
     setRotation(0);
   };
 
+  // Reset states when component changes
   useEffect(() => {
     setIsLoading(true);
+    setImageError(false);
     setZoom(1);
     setRotation(0);
     
+    // Simulate loading time
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   }, [activeComponent]);
+
+  // Create a fallback image URL using the component name
+  const fallbackImageUrl = `https://via.placeholder.com/400x300/22251e/FFC900?text=${encodeURIComponent(activeComponent.name.replace(/[()]/g, ''))}`;
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 lg:col-span-2">
@@ -76,21 +83,29 @@ const ComponentViewer = ({ activeComponent }: ComponentViewerProps) => {
                 transform: `scale(${zoom}) rotate(${rotation}deg)`
               }}
             >
-              {activeComponent.imageUrl ? (
+              {activeComponent.imageUrl && !imageError ? (
                 <img 
                   src={activeComponent.imageUrl} 
                   alt={activeComponent.name}
                   className="max-w-full max-h-full object-contain"
+                  onError={() => setImageError(true)}
                 />
               ) : (
                 <div className="text-center p-6">
-                  <CircuitBoard className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
+                  <AlertTriangle className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
                   <h3 className="text-[#FFC900] text-lg font-medium mb-2">
                     {activeComponent.name}
                   </h3>
                   <p className="text-[#FFC900]/70 mb-4">
-                    No image available. Use controls below to interact.
+                    {imageError ? 
+                      "Image could not be loaded. Using fallback display." : 
+                      "No image available."}
                   </p>
+                  <img 
+                    src={fallbackImageUrl}
+                    alt={`Placeholder for ${activeComponent.name}`}
+                    className="max-w-full max-h-[150px] object-contain mx-auto"
+                  />
                 </div>
               )}
             </div>
