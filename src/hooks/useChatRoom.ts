@@ -15,10 +15,12 @@ export function useChatRoom() {
 
   useEffect(() => {
     fetchMessages();
-    setupSubscription();
+    const channel = setupSubscription();
     
     return () => {
-      supabase.removeChannel('public:chat_messages');
+      if (channel) {
+        supabase.channel(channel).unsubscribe();
+      }
     };
   }, []);
 
@@ -27,12 +29,12 @@ export function useChatRoom() {
       const { data: messages, error } = await supabase
         .from('chat_messages')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false }) as { data: ChatMessage[] | null, error: any };
 
       if (error) throw error;
       
-      setMessages(messages as ChatMessage[] || []);
-      await fetchCommentsAndReactions(messages as ChatMessage[]);
+      setMessages(messages || []);
+      await fetchCommentsAndReactions(messages || []);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -51,19 +53,19 @@ export function useChatRoom() {
       const { data: comments } = await supabase
         .from('chat_comments')
         .select('*')
-        .in('message_id', messageIds);
+        .in('message_id', messageIds) as { data: ChatComment[] | null, error: any };
 
       const { data: reactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .in('message_id', messageIds);
+        .in('message_id', messageIds) as { data: ChatReaction[] | null, error: any };
 
-      const commentsByMessage = (comments as ChatComment[] || []).reduce((acc, comment) => {
+      const commentsByMessage = (comments || []).reduce((acc, comment) => {
         acc[comment.message_id] = [...(acc[comment.message_id] || []), comment];
         return acc;
       }, {} as Record<string, ChatComment[]>);
 
-      const reactionsByMessage = (reactions as ChatReaction[] || []).reduce((acc, reaction) => {
+      const reactionsByMessage = (reactions || []).reduce((acc, reaction) => {
         acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction];
         return acc;
       }, {} as Record<string, ChatReaction[]>);
@@ -76,21 +78,30 @@ export function useChatRoom() {
   };
 
   const setupSubscription = () => {
-    const channel = supabase
-      .channel('public:chat_messages')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'chat_messages'
-      }, async (payload) => {
-        if (payload.eventType === 'INSERT') {
-          setMessages(prev => [payload.new as ChatMessage, ...prev]);
-        }
-        if (payload.eventType === 'DELETE') {
-          setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
-        }
-      })
-      .subscribe();
+    const channelName = 'public:chat_messages';
+    
+    try {
+      const channel = supabase
+        .channel(channelName)
+        .on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table: 'chat_messages'
+        }, async (payload) => {
+          if (payload.eventType === 'INSERT') {
+            setMessages(prev => [payload.new as ChatMessage, ...prev]);
+          }
+          if (payload.eventType === 'DELETE') {
+            setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
+          }
+        })
+        .subscribe();
+      
+      return channelName;
+    } catch (error) {
+      console.error('Error setting up subscription:', error);
+      return null;
+    }
   };
 
   const sendMessage = async (content: string) => {
@@ -100,8 +111,7 @@ export function useChatRoom() {
       const { data, error } = await supabase
         .from('chat_messages')
         .insert([{ content, user_id: user.id }])
-        .select()
-        .single();
+        .select() as { data: ChatMessage | null, error: any };
 
       if (error) throw error;
       
@@ -151,11 +161,11 @@ export function useChatRoom() {
       const { data: updatedReactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .eq('message_id', messageId);
+        .eq('message_id', messageId) as { data: ChatReaction[] | null, error: any };
 
       setReactions(prev => ({
         ...prev,
-        [messageId]: updatedReactions as ChatReaction[] || []
+        [messageId]: updatedReactions || []
       }));
     } catch (error) {
       console.error('Error toggling reaction:', error);
@@ -178,8 +188,7 @@ export function useChatRoom() {
           user_id: user.id,
           content
         }])
-        .select()
-        .single();
+        .select() as { data: ChatComment | null, error: any };
 
       if (error) throw error;
 
