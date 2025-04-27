@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -39,7 +40,7 @@ import ControlSystemsEngineerPage from "@/pages/careers/ControlSystemsEngineerPa
 import ElectricalInspectorPage from "@/pages/careers/ElectricalInspectorPage";
 import BuildingServicesEngineerPage from "@/pages/careers/BuildingServicesEngineerPage";
 import SiteAssessmentPage from "@/pages/electricians/solar/installation/SiteAssessmentPage";
-import StructuralAssessmentPage from "@/pages/electricians/solar/installation/structural/StructuralAssessmentPage";
+import StructuralAssessmentPage from "@/pages/electricians/solar/installation/StructuralAssessmentPage";
 import SolarResourcePage from "@/pages/electricians/solar/installation/SolarResourcePage";
 import SiteSurveyPage from "@/pages/electricians/solar/installation/SiteSurveyPage";
 import Mentorship from "@/pages/Mentorship";
