@@ -4,13 +4,16 @@ import { ChatType } from "@/config/chatTypes";
 import { useMessageFetching } from "./chat/useMessageFetching";
 import { useMessageSubscription } from "./chat/useMessageSubscription";
 import { useMessageActions } from "./chat/useMessageActions";
+import { Message } from "@/types/chat";
+import { useState } from "react";
 
 export function useDirectChat(recipientId: string, chatType: ChatType) {
   const { user } = useAuth();
-  const { messages, setMessages, loading } = useMessageFetching(recipientId, chatType);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { loading } = useMessageFetching();
   const { sendMessage, blockUser, reportUser } = useMessageActions(user?.id, recipientId, chatType, setMessages);
 
-  useMessageSubscription(recipientId, chatType, user?.id, setMessages);
+  useMessageSubscription(setMessages);
 
   return {
     messages,
