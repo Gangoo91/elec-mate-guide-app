@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -24,7 +23,8 @@ const ChatRoomPage = () => {
     loading,
     sendMessage,
     toggleReaction,
-    addComment
+    addComment,
+    fetchMessages
   } = useChatRoom();
   
   const { typingUsers, setTyping, isAnyoneTyping } = useTypingIndicator('chat-room');
@@ -51,6 +51,10 @@ const ChatRoomPage = () => {
     } else {
       setTyping(false);
     }
+  };
+
+  const handleRefresh = async () => {
+    await fetchMessages();
   };
 
   return (
