@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/hooks/useAuth';
+import { ChatErrorBoundary } from '@/components/chat/ChatErrorBoundary';
 
 const ChatRoomPage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const ChatRoomPage = () => {
               </Button>
             </div>
           ) : (
-            <>
+            <ChatErrorBoundary>
               <form onSubmit={handleSendMessage} className="mb-8">
                 <Textarea
                   value={newMessage}
@@ -89,7 +90,7 @@ const ChatRoomPage = () => {
                   ))
                 )}
               </ScrollArea>
-            </>
+            </ChatErrorBoundary>
           )}
         </div>
       </div>

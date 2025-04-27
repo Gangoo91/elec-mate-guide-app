@@ -1,4 +1,3 @@
-
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useDirectChat } from "@/hooks/useDirectChat";
@@ -7,6 +6,7 @@ import { ChatInput } from "./ChatInput";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Ban, Flag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ChatErrorBoundary } from "./ChatErrorBoundary";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -66,45 +66,47 @@ export function DirectChatDialog({
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-md bg-[#22251e] border-[#FFC900]/20">
-          <div className="flex items-center justify-between border-b border-[#FFC900]/20 p-3">
-            <DialogTitle className="text-[#FFC900] font-medium">
-              Chat with {recipientName}
-            </DialogTitle>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setReportDialogOpen(true)}
-                className="text-[#FFC900] hover:bg-[#FFC900]/10"
-              >
-                <Flag className="h-4 w-4" />
-                <span className="sr-only">Report user</span>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setBlockDialogOpen(true)}
-                className="text-[#FFC900] hover:bg-[#FFC900]/10"
-              >
-                <Ban className="h-4 w-4" />
-                <span className="sr-only">Block user</span>
-              </Button>
-            </div>
-          </div>
+          <ChatErrorBoundary>
+            <div className="flex flex-col h-[400px]">
+              <div className="flex items-center justify-between border-b border-[#FFC900]/20 p-3">
+                <DialogTitle className="text-[#FFC900] font-medium">
+                  Chat with {recipientName}
+                </DialogTitle>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setReportDialogOpen(true)}
+                    className="text-[#FFC900] hover:bg-[#FFC900]/10"
+                  >
+                    <Flag className="h-4 w-4" />
+                    <span className="sr-only">Report user</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setBlockDialogOpen(true)}
+                    className="text-[#FFC900] hover:bg-[#FFC900]/10"
+                  >
+                    <Ban className="h-4 w-4" />
+                    <span className="sr-only">Block user</span>
+                  </Button>
+                </div>
+              </div>
 
-          <div className="flex flex-col h-[400px]">
-            <div className="flex-1 overflow-y-auto p-4">
-              <MessageList messages={messages} loading={loading} />
-            </div>
+              <div className="flex-1 overflow-y-auto p-4">
+                <MessageList messages={messages} loading={loading} />
+              </div>
 
-            <div className="p-3">
-              <ChatInput 
-                onSendMessage={handleSendMessage} 
-                chatTitle={`Chat with ${recipientName}`}
-                placeholder="Type your message..."
-              />
+              <div className="p-3">
+                <ChatInput 
+                  onSendMessage={handleSendMessage} 
+                  chatTitle={`Chat with ${recipientName}`}
+                  placeholder="Type your message..."
+                />
+              </div>
             </div>
-          </div>
+          </ChatErrorBoundary>
         </DialogContent>
       </Dialog>
 
