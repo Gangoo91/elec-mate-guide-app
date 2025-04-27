@@ -13,7 +13,7 @@ export function useDirectChat(recipientId: string, chatType: ChatType) {
   const { loading } = useMessageFetching();
   const { sendMessage, blockUser, reportUser } = useMessageActions(user?.id, recipientId, chatType, setMessages);
 
-  // Use the generic version of useMessageSubscription
+  // Now Message type is guaranteed to have an id property
   useMessageSubscription<Message>(setMessages);
 
   return {

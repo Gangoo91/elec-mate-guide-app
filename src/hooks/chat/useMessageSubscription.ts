@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Message } from '@/types/chat';
 
-type MessageType = Message | any;
-
-export const useMessageSubscription = <T extends MessageType>(
+// Ensure our generic type T extends object and has an id property
+export const useMessageSubscription = <T extends { id: string }>(
   setMessages: React.Dispatch<React.SetStateAction<T[]>>
 ) => {
   useEffect(() => {
@@ -23,8 +22,8 @@ export const useMessageSubscription = <T extends MessageType>(
             setMessages(prev => [payload.new as T, ...prev]);
           }
           if (payload.eventType === 'DELETE') {
-            // Ensure we check for id property explicitly
-            setMessages(prev => prev.filter(msg => 'id' in msg && msg.id !== payload.old.id));
+            // Now we're safe to access id because T is constrained
+            setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
           }
         })
         .subscribe();

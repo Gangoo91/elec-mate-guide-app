@@ -38,6 +38,7 @@ export function useChatRoom() {
           setMessages(prev => [payload.new as ChatMessage, ...prev]);
         }
         if (payload.eventType === 'DELETE') {
+          // ChatMessage is guaranteed to have an id
           setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
         }
       })

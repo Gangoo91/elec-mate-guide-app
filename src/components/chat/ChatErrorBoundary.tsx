@@ -4,6 +4,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface ChatErrorBoundaryProps {
   children: React.ReactNode;
@@ -11,14 +12,15 @@ interface ChatErrorBoundaryProps {
 
 export function ChatErrorBoundary({ children }: ChatErrorBoundaryProps) {
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
 
-  const handleError = (error: Error) => {
+  const onError = (error: Error) => {
     toast({
       title: "Chat Error",
       description: "There was an error with the chat. Please try again.",
       variant: "destructive",
     });
-    console.error("Chat error:", error);
+    handleError(error, "Chat error occurred");
   };
 
   const fallback = (
@@ -39,7 +41,7 @@ export function ChatErrorBoundary({ children }: ChatErrorBoundaryProps) {
   );
 
   return (
-    <ErrorBoundary fallback={fallback} onError={handleError}>
+    <ErrorBoundary fallback={fallback} onError={onError}>
       {children}
     </ErrorBoundary>
   );
