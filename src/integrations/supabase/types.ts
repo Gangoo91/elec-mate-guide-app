@@ -914,6 +914,89 @@ export type Database = {
           },
         ]
       }
+      video_lessons: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string
+          duration: string
+          id: string
+          kudos_points: number
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          video_url: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description: string
+          duration: string
+          id?: string
+          kudos_points?: number
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          video_url: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string
+          duration?: string
+          id?: string
+          kudos_points?: number
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          video_url?: string
+        }
+        Relationships: []
+      }
+      video_progress: {
+        Row: {
+          created_at: string | null
+          id: string
+          kudos_awarded: boolean | null
+          last_position: number | null
+          updated_at: string | null
+          user_id: string
+          video_id: string
+          watch_time: number | null
+          watched: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          kudos_awarded?: boolean | null
+          last_position?: number | null
+          updated_at?: string | null
+          user_id: string
+          video_id: string
+          watch_time?: number | null
+          watched?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          kudos_awarded?: boolean | null
+          last_position?: number | null
+          updated_at?: string | null
+          user_id?: string
+          video_id?: string
+          watch_time?: number | null
+          watched?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "video_progress_video_id_fkey"
+            columns: ["video_id"]
+            isOneToOne: false
+            referencedRelation: "video_lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

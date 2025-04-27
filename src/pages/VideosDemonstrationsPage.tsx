@@ -1,12 +1,14 @@
-
 import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Play } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import KudosDisplay from "@/components/profile/KudosDisplay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VideoPlayer } from '@/components/video/VideoPlayer';
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 interface VideoLesson {
   id: string;
@@ -14,39 +16,9 @@ interface VideoLesson {
   description: string;
   duration: string;
   category: 'practical' | 'theory' | 'safety';
-  kudosPoints: number;
-  videoUrl: string;
+  kudos_points: number;
+  video_url: string;
 }
-
-const demoVideos: VideoLesson[] = [
-  {
-    id: "1",
-    title: "Basic Circuit Installation",
-    description: "Step-by-step guide to installing a basic electrical circuit safely.",
-    duration: "15:30",
-    category: 'practical',
-    kudosPoints: 10,
-    videoUrl: "https://example.com/video1"
-  },
-  {
-    id: "2",
-    title: "Safety Protocols for Live Testing",
-    description: "Essential safety measures when conducting live electrical testing.",
-    duration: "12:45",
-    category: 'safety',
-    kudosPoints: 15,
-    videoUrl: "https://example.com/video2"
-  },
-  {
-    id: "3",
-    title: "Understanding 3-Phase Systems",
-    description: "Theoretical explanation of 3-phase power systems with real examples.",
-    duration: "20:15",
-    category: 'theory',
-    kudosPoints: 12,
-    videoUrl: "https://example.com/video3"
-  }
-];
 
 const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: VideoLesson) => void }) => (
   <Card className="hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer bg-[#22251e] border-[#FFC900]/20">
@@ -63,24 +35,44 @@ const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: Vi
           <Play className="h-5 w-5 text-[#FFC900]" />
           <span className="text-[#FFC900]/70">Watch Now</span>
         </div>
-        <span className="text-[#FFC900] text-sm">+{video.kudosPoints} kudos</span>
+        <span className="text-[#FFC900] text-sm">+{video.kudos_points} kudos</span>
       </div>
     </CardContent>
   </Card>
 );
 
 const VideosDemonstrationsPage = () => {
-  const { toast } = useToast();
-  const [selectedCategory, setSelectedCategory] = useState<'practical' | 'theory' | 'safety'>('practical');
+  const [selectedVideo, setSelectedVideo] = useState<VideoLesson | null>(null);
+  
+  const { data: videos = [], isLoading } = useQuery({
+    queryKey: ['video-lessons'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('video_lessons')
+        .select('*');
+      
+      if (error) throw error;
+      return data as VideoLesson[];
+    }
+  });
 
-  const handleWatchVideo = (video: VideoLesson) => {
-    // Here you would normally start playing the video
-    // For now, we'll just show a toast and award kudos
-    toast({
-      title: "Video Started",
-      description: `You've earned ${video.kudosPoints} kudos points for starting "${video.title}"`,
-    });
-  };
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-[#FFC900]/20 rounded w-1/4"></div>
+            <div className="h-4 bg-[#FFC900]/20 rounded w-2/4"></div>
+            <div className="grid gap-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-40 bg-[#FFC900]/20 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
@@ -114,35 +106,21 @@ const VideosDemonstrationsPage = () => {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="practical" className="mt-6">
-                <div className="grid gap-4">
-                  {demoVideos
-                    .filter(video => video.category === 'practical')
-                    .map(video => (
-                      <VideoCard key={video.id} video={video} onWatch={handleWatchVideo} />
-                    ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="theory" className="mt-6">
-                <div className="grid gap-4">
-                  {demoVideos
-                    .filter(video => video.category === 'theory')
-                    .map(video => (
-                      <VideoCard key={video.id} video={video} onWatch={handleWatchVideo} />
-                    ))}
-                </div>
-              </TabsContent>
-
-              <TabsContent value="safety" className="mt-6">
-                <div className="grid gap-4">
-                  {demoVideos
-                    .filter(video => video.category === 'safety')
-                    .map(video => (
-                      <VideoCard key={video.id} video={video} onWatch={handleWatchVideo} />
-                    ))}
-                </div>
-              </TabsContent>
+              {['practical', 'theory', 'safety'].map((category) => (
+                <TabsContent key={category} value={category} className="mt-6">
+                  <div className="grid gap-4">
+                    {videos
+                      .filter(video => video.category === category)
+                      .map(video => (
+                        <VideoCard 
+                          key={video.id} 
+                          video={video} 
+                          onWatch={() => setSelectedVideo(video)} 
+                        />
+                      ))}
+                  </div>
+                </TabsContent>
+              ))}
             </Tabs>
           </div>
 
@@ -150,6 +128,22 @@ const VideosDemonstrationsPage = () => {
             <KudosDisplay />
           </div>
         </div>
+
+        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+          <DialogContent className="max-w-4xl bg-[#22251e] border-[#FFC900]/20">
+            {selectedVideo && (
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-[#FFC900]">{selectedVideo.title}</h2>
+                <VideoPlayer
+                  videoId={selectedVideo.id}
+                  videoUrl={selectedVideo.video_url}
+                  title={selectedVideo.title}
+                />
+                <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </MainLayout>
   );
