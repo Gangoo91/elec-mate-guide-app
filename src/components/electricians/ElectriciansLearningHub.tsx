@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Book, TestTube } from "lucide-react";
+import { Book, TestTube, Video } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
@@ -38,6 +37,13 @@ const ElectriciansLearningHub = () => {
           description="Practice with our comprehensive mock exams designed to prepare you for professional electrical qualifications."
           icon={<TestTube className="h-6 w-6 text-[#FFC900]" />}
           fullCardLink="/electricians/practice-exams"
+        />
+
+        <ResourceCard
+          title="Video Demonstrations"
+          description="Watch comprehensive UK electrical training videos and earn kudos while learning essential skills."
+          icon={<Video className="h-6 w-6 text-[#FFC900]" />}
+          fullCardLink="/electricians/video-demonstrations"
         />
       </div>
     </div>

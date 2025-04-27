@@ -61,9 +61,11 @@ import ClientManagementPage from "@/pages/electricians/job-scheduling/ClientMana
 import JobCompletionPage from "@/pages/electricians/job-scheduling/JobCompletionPage";
 import TeamManagementPage from "@/pages/electricians/project-management/TeamManagementPage";
 import InvoiceManagerPage from "@/pages/InvoiceManagerPage";
+import VideosDemonstrationsPage from "@/pages/VideosDemonstrationsPage";
 
 export const ElectricianRoutes = (
   <>
+    <Route key="electricians-video-demonstrations" path="/electricians/video-demonstrations" element={<VideosDemonstrationsPage />} />,
     <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
     <Route key="electricians-job-scheduling" path="/electricians/job-scheduling" element={<JobSchedulePage />} />,
     <Route key="electricians-project-management" path="/electricians/project-management" element={<ProjectManagementPage />} />,
