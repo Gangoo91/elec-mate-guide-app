@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Book, Box, Quiz } from "lucide-react";
+import { Book, Box, ClipboardCheck } from "lucide-react";
 
 const Level2ElectricalPage = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Level2ElectricalPage = () => {
     {
       title: "Mock Exams",
       description: "Practice assessments to help you prepare for your Level 2 qualification examinations.",
-      icon: <Quiz className="h-6 w-6 text-[#FFC900]" />
+      icon: <ClipboardCheck className="h-6 w-6 text-[#FFC900]" />
     }
   ];
 
