@@ -12,6 +12,8 @@ const StudyMaterialsPage = lazy(() => import('@/pages/StudyMaterialsPage'));
 const CityGuildsPage = lazy(() => import('@/pages/CityGuildsPage'));
 const Level2ElectricalPage = lazy(() => import('@/pages/Level2ElectricalPage'));
 const Level2CoreUnitsPage = lazy(() => import('@/pages/Level2CoreUnitsPage'));
+const Level2SimplifiedPage = lazy(() => import('@/pages/Level2SimplifiedPage'));
+const Level2ExamsPage = lazy(() => import('@/pages/Level2ExamsPage'));
 const EALQualificationsPage = lazy(() => import('@/pages/EALQualificationsPage'));
 const MOETPage = lazy(() => import('@/pages/MOETPage'));
 const PracticeExamsPage = lazy(() => import('@/pages/PracticeExamsPage'));
@@ -37,6 +39,8 @@ export const ApprenticeRoutes = [
   <Route key="city-guilds" path="/apprentices/study-materials/city-guilds" element={withSuspense(<CityGuildsPage />)} />,
   <Route key="level2-electrical" path="/apprentices/study-materials/city-guilds/level-2" element={withSuspense(<Level2ElectricalPage />)} />,
   <Route key="level2-core-units" path="/apprentices/study-materials/city-guilds/level-2/core-units" element={withSuspense(<Level2CoreUnitsPage />)} />,
+  <Route key="level2-simplified" path="/apprentices/study-materials/city-guilds/level-2/simplified" element={withSuspense(<Level2SimplifiedPage />)} />,
+  <Route key="level2-exams" path="/apprentices/study-materials/city-guilds/level-2/exams" element={withSuspense(<Level2ExamsPage />)} />,
   <Route key="eal-qualifications" path="/apprentices/study-materials/eal" element={withSuspense(<EALQualificationsPage />)} />,
   <Route key="moet" path="/apprentices/study-materials/city-guilds/moet" element={withSuspense(<MOETPage />)} />,
   <Route key="practice-exams" path="/apprentices/practice-exams" element={withSuspense(<PracticeExamsPage />)} />,
