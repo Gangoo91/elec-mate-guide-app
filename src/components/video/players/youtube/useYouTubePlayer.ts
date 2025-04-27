@@ -1,3 +1,4 @@
+
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { useYouTubeInitialization } from './hooks/useYouTubeInitialization';
 import { useYouTubePlayerState } from './hooks/useYouTubePlayerState';
@@ -31,6 +32,30 @@ export const useYouTubePlayer = ({
   useEffect(() => {
     playAfterReadyRef.current = playing;
   }, [playing]);
+
+  const handlePlayerStateChange = useCallback((event: any) => {
+    if (!window.YT) return;
+    
+    try {
+      switch (event.data) {
+        case window.YT.PlayerState.ENDED:
+          onPlayStateChange(false);
+          onProgress(event.target.getDuration(), event.target.getDuration());
+          clearProgressInterval();
+          break;
+        case window.YT.PlayerState.PLAYING:
+          onPlayStateChange(true);
+          startProgressInterval();
+          break;
+        case window.YT.PlayerState.PAUSED:
+          onPlayStateChange(false);
+          clearProgressInterval();
+          break;
+      }
+    } catch (err) {
+      console.error('Error handling player state change:', err);
+    }
+  }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
 
   const handlePlayerReady = useCallback((event: any) => {
     console.log("YouTube player ready event received");
@@ -72,6 +97,13 @@ export const useYouTubePlayer = ({
     }
   }, [startAt, onPlayerReady]);
 
+  // Define the progress functions first
+  const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
+    onProgress,
+    playerRef: useRef<any>(null) // Temporary ref, will be updated below
+  });
+
+  // Now initialize the player with the handlePlayerStateChange function
   const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
@@ -83,34 +115,17 @@ export const useYouTubePlayer = ({
     startAt
   });
 
-  const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
-    onProgress,
-    playerRef
-  });
-
-  const handlePlayerStateChange = useCallback((event: any) => {
-    if (!window.YT) return;
-    
-    try {
-      switch (event.data) {
-        case window.YT.PlayerState.ENDED:
-          onPlayStateChange(false);
-          onProgress(event.target.getDuration(), event.target.getDuration());
-          clearProgressInterval();
-          break;
-        case window.YT.PlayerState.PLAYING:
-          onPlayStateChange(true);
-          startProgressInterval();
-          break;
-        case window.YT.PlayerState.PAUSED:
-          onPlayStateChange(false);
-          clearProgressInterval();
-          break;
-      }
-    } catch (err) {
-      console.error('Error handling player state change:', err);
+  // Update the real playerRef in useYouTubeProgress
+  useEffect(() => {
+    // This ensures that the playerRef from useYouTubeInitialization
+    // is properly used in the useYouTubeProgress hook
+    if (playerRef.current) {
+      startProgressInterval();
     }
-  }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
+    return () => {
+      clearProgressInterval();
+    };
+  }, [playerRef.current, startProgressInterval, clearProgressInterval]);
 
   // Create player element if it doesn't exist
   useEffect(() => {
