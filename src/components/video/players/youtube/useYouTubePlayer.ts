@@ -127,11 +127,8 @@ export const useYouTubePlayer = ({
     };
   }, [containerCreated, videoId, initPlayer, playerInitialized]);
 
-  const { isLoaded, cleanupPlayer } = useYouTubePlayerState({
-    playerRef,
-    playing,
-    playerReady
-  });
+  // Fix: Call useYouTubePlayerState without arguments as it no longer expects any
+  const { isLoaded, cleanupPlayer } = useYouTubePlayerState();
 
   useEffect(() => {
     return () => {
