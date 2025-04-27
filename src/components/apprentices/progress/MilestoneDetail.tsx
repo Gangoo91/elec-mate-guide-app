@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDistance } from 'date-fns';
-import { Calendar, MessageSquare } from 'lucide-react';
+import { Calendar, MessageSquare, Clock } from 'lucide-react';
 import MilestoneStatusButton from './MilestoneStatusButton';
 import { Separator } from "@/components/ui/separator";
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
