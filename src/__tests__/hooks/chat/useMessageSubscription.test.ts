@@ -47,7 +47,7 @@ describe('useMessageSubscription', () => {
 
     (supabase.channel as jest.Mock).mockReturnValue(mockChannel);
 
-    renderHook(() => useMessageSubscription(setMessages));
+    renderHook(() => useMessageSubscription<Message>(setMessages));
 
     expect(supabase.channel).toHaveBeenCalled();
     expect(mockChannel.on).toHaveBeenCalled();
@@ -81,7 +81,7 @@ describe('useMessageSubscription', () => {
 
     vi.mocked(supabase.channel).mockReturnValue(channelMock);
 
-    renderHook(() => useMessageSubscription(setMessages));
+    renderHook(() => useMessageSubscription<Message>(setMessages));
 
     expect(supabase.channel).toHaveBeenCalledWith('public:chat_messages');
     expect(channelMock.on).toHaveBeenCalled();

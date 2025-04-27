@@ -23,7 +23,8 @@ export const useMessageSubscription = <T extends MessageType>(
             setMessages(prev => [payload.new as T, ...prev]);
           }
           if (payload.eventType === 'DELETE') {
-            setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
+            // Ensure we check for id property explicitly
+            setMessages(prev => prev.filter(msg => 'id' in msg && msg.id !== payload.old.id));
           }
         })
         .subscribe();
