@@ -27,6 +27,7 @@ export const HTML5Player = ({
   const attemptedLoadRef = useRef(false);
   const [loadAttempts, setLoadAttempts] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const playAttemptRef = useRef(0);
 
   // Apply currentTime whenever it changes or video is loaded
   useEffect(() => {
@@ -52,12 +53,25 @@ export const HTML5Player = ({
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
-          // Could be due to autoplay restrictions, try muted
-          if (!muted && err.name === 'NotAllowedError') {
-            videoElement.muted = true;
-            videoElement.play().catch(innerErr => {
-              console.error("Failed to play even when muted:", innerErr);
-            });
+          
+          // If we get an error, retry a few times with increasing delays
+          if (playAttemptRef.current < 3) {
+            const delay = 300 * (playAttemptRef.current + 1);
+            playAttemptRef.current++;
+            
+            setTimeout(() => {
+              if (videoElement && !videoElement.paused) return;
+              console.log(`Retry play attempt ${playAttemptRef.current}`);
+              
+              // Try with muted if autoplay was blocked
+              if (err.name === 'NotAllowedError') {
+                videoElement.muted = true;
+              }
+              
+              videoElement.play().catch(innerErr => {
+                console.error("Failed to play on retry:", innerErr);
+              });
+            }, delay);
           }
         });
       }
@@ -68,11 +82,23 @@ export const HTML5Player = ({
     return () => {
       if (videoElement) {
         videoElement.pause();
+      }
+    };
+  }, [playing, videoUrl, muted]);
+
+  // Reset play attempt counter when video URL changes
+  useEffect(() => {
+    playAttemptRef.current = 0;
+    
+    // Clean up video src when unmounting or URL changes
+    return () => {
+      const videoElement = videoRef.current;
+      if (videoElement) {
         videoElement.src = ""; // Empty source
         videoElement.load(); // Reset the video element
       }
     };
-  }, [playing, videoUrl, muted]);
+  }, [videoUrl]);
 
   const handleLoadedMetadata = () => {
     attemptedLoadRef.current = true;

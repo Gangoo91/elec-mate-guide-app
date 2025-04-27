@@ -1,5 +1,5 @@
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
@@ -26,17 +26,26 @@ export const YouTubePlayer = ({
   const [hasError, setHasError] = useState(false);
   const videoId = useCallback(() => extractVideoId(videoUrl), [videoUrl])();
   const [playerReady, setPlayerReady] = useState(false);
+  const [playerAttempts, setPlayerAttempts] = useState(0);
   
   // Handle player errors locally first
   const handleError = () => {
     console.log(`YouTube player error for video: ${title}`);
+    
+    // Try to reinitialize player up to 2 times before showing an error
+    if (playerAttempts < 2) {
+      setPlayerAttempts(prev => prev + 1);
+      return;
+    }
+    
     setHasError(true);
     onError();
   };
   
   const handlePlayerReady = useCallback(() => {
+    console.log(`YouTube player ready for video: ${title}`);
     setPlayerReady(true);
-  }, []);
+  }, [title]);
   
   // Only initialize the player if we have a valid videoId and no errors yet
   const { containerRef } = useYouTubePlayer({
@@ -50,17 +59,38 @@ export const YouTubePlayer = ({
   });
 
   // If videoId is invalid, trigger error immediately
-  React.useEffect(() => {
+  useEffect(() => {
     if (!videoId && !hasError) {
       handleError();
     }
-  }, [videoId, hasError]);
+    
+    // Reset state when video URL changes
+    return () => {
+      setPlayerReady(false);
+      setHasError(false);
+      setPlayerAttempts(0);
+    };
+  }, [videoId, hasError, videoUrl]);
+  
+  // Reinitialize player on attempt change
+  useEffect(() => {
+    if (playerAttempts > 0) {
+      // Short delay before retrying
+      const timer = setTimeout(() => {
+        if (!playerReady && !hasError && videoId) {
+          console.log(`Retrying YouTube player for ${title}, attempt ${playerAttempts}`);
+        }
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [playerAttempts, playerReady, hasError, videoId, title]);
 
   return (
     <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
       <div
         ref={containerRef}
-        className={`w-full h-full bg-black ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}
+        className={`w-full h-full bg-black ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
         title={title}
         aria-label={title}
         data-video-id={videoId || ''}

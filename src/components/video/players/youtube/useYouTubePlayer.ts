@@ -27,6 +27,11 @@ export const useYouTubePlayer = ({
   const [playerReady, setPlayerReady] = useState(false);
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const lastVideoIdRef = useRef<string | null>(null);
+  const playAfterReadyRef = useRef(playing);
+
+  useEffect(() => {
+    playAfterReadyRef.current = playing;
+  }, [playing]);
 
   const clearProgressInterval = useCallback(() => {
     if (progressIntervalRef.current) {
@@ -49,13 +54,13 @@ export const useYouTubePlayer = ({
           }
         } catch (e) {
           console.error('Error getting player time:', e);
-          clearProgressInterval();
         }
       }
     }, 1000);
   }, [onProgress, clearProgressInterval]);
 
   const handlePlayerReady = useCallback((event: any) => {
+    console.log("YouTube player ready event received");
     setPlayerReady(true);
     errorRetryCountRef.current = 0;
     
@@ -76,18 +81,23 @@ export const useYouTubePlayer = ({
       }
     }
     
-    if (playing) {
-      try {
-        event.target.playVideo();
-      } catch (err) {
-        console.error('Error playing video:', err);
-      }
+    // Delay play command to ensure player is fully ready
+    if (playAfterReadyRef.current) {
+      setTimeout(() => {
+        try {
+          if (event.target && typeof event.target.playVideo === 'function') {
+            event.target.playVideo();
+          }
+        } catch (err) {
+          console.error('Error playing video after ready:', err);
+        }
+      }, 300);
     }
     
     if (onPlayerReady) {
       onPlayerReady();
     }
-  }, [startAt, playing, onPlayerReady]);
+  }, [startAt, onPlayerReady]);
 
   const handlePlayerStateChange = useCallback((event: any) => {
     if (!window.YT) return;
@@ -158,13 +168,20 @@ export const useYouTubePlayer = ({
   useEffect(() => {
     if (!containerRef.current || !videoId) return;
 
-    while (containerRef.current.firstChild) {
-      containerRef.current.removeChild(containerRef.current.firstChild);
-    }
+    const createPlayerElement = () => {
+      // Clear container first
+      while (containerRef.current && containerRef.current.firstChild) {
+        containerRef.current.removeChild(containerRef.current.firstChild);
+      }
+  
+      if (containerRef.current) {
+        const playerDiv = document.createElement('div');
+        playerDiv.id = playerElementId;
+        containerRef.current.appendChild(playerDiv);
+      }
+    };
 
-    const playerDiv = document.createElement('div');
-    playerDiv.id = playerElementId;
-    containerRef.current.appendChild(playerDiv);
+    createPlayerElement();
   }, [videoId, playerElementId]);
 
   // Initialize player when video changes
@@ -177,6 +194,15 @@ export const useYouTubePlayer = ({
       lastVideoIdRef.current = videoId;
       setPlayerReady(false);
       errorRetryCountRef.current = 0;
+      
+      // Make sure any existing player is destroyed
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
+        try {
+          playerRef.current.destroy();
+        } catch (err) {
+          console.error('Error destroying player before reinitializing:', err);
+        }
+      }
     }
     
     const initTimeout = setTimeout(() => {

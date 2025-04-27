@@ -22,6 +22,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [muted, setMuted] = useState(false);
   const { toast } = useToast();
+  const [playerInitialized, setPlayerInitialized] = useState(false);
   
   const isYouTubeUrl = useCallback((url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
@@ -32,6 +33,13 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     if (progress.lastPosition > 0) {
       setCurrentTime(progress.lastPosition);
     }
+    
+    // Delay player initialization to ensure components are properly mounted
+    const timer = setTimeout(() => {
+      setPlayerInitialized(true);
+    }, 200);
+    
+    return () => clearTimeout(timer);
   }, [progress.lastPosition]);
 
   // Reset state when video changes
@@ -42,7 +50,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   }, [videoId, videoUrl, progress.lastPosition]);
 
   const handlePlay = () => {
-    setPlaying(!playing);
+    setPlaying(prevState => !prevState);
   };
 
   const handleVolumeClick = () => {
@@ -115,7 +123,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
         <VideoErrorDisplay videoUrl={videoUrl} />
       ) : (
         <>
-          {isYouTubeUrl(videoUrl) ? (
+          {playerInitialized && isYouTubeUrl(videoUrl) ? (
             <YouTubePlayer
               videoUrl={videoUrl}
               title={title}
@@ -125,7 +133,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               startAt={progress.lastPosition}
               playing={playing}
             />
-          ) : (
+          ) : playerInitialized ? (
             <HTML5Player
               videoUrl={videoUrl}
               title={title}
@@ -141,6 +149,10 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               playing={playing}
               muted={muted}
             />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="animate-pulse text-white/50">Loading video...</div>
+            </div>
           )}
           
           {!playing && (

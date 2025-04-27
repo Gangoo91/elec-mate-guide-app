@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 interface UseYouTubePlayerStateProps {
   playerRef: React.MutableRefObject<any>;
@@ -17,12 +17,18 @@ export const useYouTubePlayerState = ({
     if (!playerReady || !playerRef.current) return;
 
     try {
-      if (playing && typeof playerRef.current.playVideo === 'function') {
-        playerRef.current.playVideo();
-        
-        if (typeof playerRef.current.unMute === 'function') {
-          playerRef.current.unMute();
-        }
+      if (playing) {
+        // Add delay to ensure YouTube API is ready
+        setTimeout(() => {
+          if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
+            playerRef.current.playVideo();
+            
+            if (typeof playerRef.current.unMute === 'function') {
+              playerRef.current.unMute();
+              playerRef.current.setVolume(100);
+            }
+          }
+        }, 100);
       } else if (!playing && typeof playerRef.current.pauseVideo === 'function') {
         playerRef.current.pauseVideo();
       }
