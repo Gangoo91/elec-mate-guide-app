@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -46,6 +45,7 @@ import BasicCircuitsPage from "@/pages/moet/basic-electronics/circuits/BasicCirc
 import PreventiveMaintenancePage from "@/pages/maintenance/PreventiveMaintenancePage";
 import SafetyProtocolsPage from "@/pages/maintenance/SafetyProtocolsPage";
 import DocumentationPage from "@/pages/maintenance/DocumentationPage";
+import VideosDemonstrationsPage from "@/pages/VideosDemonstrationsPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -144,7 +144,7 @@ export const ApprenticeRoutes = [
     path="/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/documentation" 
     element={<DocumentationPage />} 
   />,
-  <Route key="apprentices-video-demos" path="/apprentices/video-demonstrations" />,
+  <Route key="apprentices-video-demos" path="/apprentices/video-demonstrations" element={<VideosDemonstrationsPage />} />,
   <Route key="apprentices-ar-learning" path="/apprentices/ar-learning" />,
   <Route key="apprentices-audio-tutorials" path="/apprentices/audio-tutorials" />,
   <Route key="apprentices-study-groups" path="/apprentices/study-groups" />,
