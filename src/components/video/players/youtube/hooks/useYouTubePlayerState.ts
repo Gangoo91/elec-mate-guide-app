@@ -12,7 +12,8 @@ export const useYouTubePlayerState = ({
   playing, 
   playerReady 
 }: UseYouTubePlayerStateProps) => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // Initialize with false to prevent React state queue error
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const attemptCountRef = useRef(0);
   const mountedRef = useRef(true);
   const playTimeoutRef = useRef<NodeJS.Timeout | null>(null);
