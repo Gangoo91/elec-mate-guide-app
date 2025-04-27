@@ -1,4 +1,5 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 
 export interface VideoLesson {
@@ -138,10 +139,23 @@ export function useVideos() {
           throw error;
         }
         
-        return data.map(video => ({
-          ...video,
-          category: mapVideoCategory(video.category)
-        })) as VideoLesson[];
+        // Map database videos and ensure they have properly formatted URLs
+        return data.map(video => {
+          // Ensure YouTube URLs are properly formatted for embedding
+          let videoUrl = video.video_url;
+          
+          // Replace example.com URLs with a working demo URL
+          if (videoUrl.includes('example.com')) {
+            // Default to an electrical principles video if it's example.com
+            videoUrl = 'https://www.youtube.com/watch?v=mc979OhitAg';
+          }
+          
+          return {
+            ...video,
+            category: mapVideoCategory(video.category),
+            video_url: videoUrl
+          };
+        }) as VideoLesson[];
       } catch (err) {
         console.error("Failed to fetch videos:", err);
         return [];

@@ -7,6 +7,7 @@ interface UseYouTubePlayerProps {
   onError: () => void;
   onProgress: (currentTime: number, duration: number) => void;
   onPlayStateChange: (isPlaying: boolean) => void;
+  onPlayerReady?: () => void;
   startAt?: number;
   playing?: boolean;
 }
@@ -16,6 +17,7 @@ export const useYouTubePlayer = ({
   onError,
   onProgress,
   onPlayStateChange,
+  onPlayerReady,
   startAt = 0,
   playing = false
 }: UseYouTubePlayerProps) => {
@@ -26,6 +28,7 @@ export const useYouTubePlayer = ({
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const playerInitializedRef = useRef(false);
   const errorRetryCountRef = useRef(0);
+  const lastVideoIdRef = useRef<string | null>(null);
 
   // Define all callbacks outside of useEffect to prevent them from being recreated
   const startProgressInterval = useCallback(() => {
@@ -70,6 +73,16 @@ export const useYouTubePlayer = ({
     setPlayerReady(true);
     errorRetryCountRef.current = 0; // Reset error count on successful load
     
+    // Make sure video has sound and is not muted
+    try {
+      if (event.target && typeof event.target.unMute === 'function') {
+        event.target.unMute();
+        event.target.setVolume(100);
+      }
+    } catch (err) {
+      console.error('Error setting volume:', err);
+    }
+    
     if (startAt > 0) {
       try {
         event.target.seekTo(startAt);
@@ -85,7 +98,11 @@ export const useYouTubePlayer = ({
         console.error('Error playing video:', err);
       }
     }
-  }, [startAt, playing]);
+    
+    if (onPlayerReady) {
+      onPlayerReady();
+    }
+  }, [startAt, playing, onPlayerReady]);
 
   const handlePlayerStateChange = useCallback((event: any) => {
     if (!window.YT) return;
@@ -145,6 +162,13 @@ export const useYouTubePlayer = ({
       return;
     }
 
+    // Skip re-initialization for same video ID
+    if (videoId === lastVideoIdRef.current && playerRef.current) {
+      return;
+    }
+    
+    lastVideoIdRef.current = videoId;
+
     loadYouTubeAPI().then(() => {
       if (!window.YT || !window.YT.Player) {
         console.error('YouTube API not available');
@@ -173,11 +197,12 @@ export const useYouTubePlayer = ({
             origin: window.location.origin,
             rel: 0,
             start: Math.floor(startAt),
-            // Additional parameters to improve stability
+            // Additional parameters to improve stability and prevent muting
             playsinline: 1,
             modestbranding: 1,
             iv_load_policy: 3, // Hide annotations
-            fs: 0 // Disable fullscreen button (we'll handle this ourselves)
+            fs: 0, // Disable fullscreen button (we'll handle this ourselves)
+            mute: 0 // Ensure video is not muted
           },
           events: {
             onReady: handlePlayerReady,
@@ -204,9 +229,11 @@ export const useYouTubePlayer = ({
     }
     
     // Reset state when videoId changes
-    playerInitializedRef.current = false;
-    setPlayerReady(false);
-    errorRetryCountRef.current = 0;
+    if (videoId !== lastVideoIdRef.current) {
+      playerInitializedRef.current = false;
+      setPlayerReady(false);
+      errorRetryCountRef.current = 0;
+    }
     
     // Delay initialization slightly to ensure DOM is ready
     const initTimeout = setTimeout(() => {
@@ -216,14 +243,6 @@ export const useYouTubePlayer = ({
     return () => {
       clearTimeout(initTimeout);
       clearProgressInterval();
-      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
-        try {
-          playerRef.current.destroy();
-        } catch (err) {
-          console.error('Error destroying player:', err);
-        }
-        playerInitializedRef.current = false;
-      }
     };
   }, [videoId, initPlayer, clearProgressInterval]);
 
@@ -234,6 +253,11 @@ export const useYouTubePlayer = ({
     try {
       if (playing && typeof playerRef.current.playVideo === 'function') {
         playerRef.current.playVideo();
+        
+        // Make sure video is not muted
+        if (typeof playerRef.current.unMute === 'function') {
+          playerRef.current.unMute();
+        }
       } else if (!playing && typeof playerRef.current.pauseVideo === 'function') {
         playerRef.current.pauseVideo();
       }
@@ -242,5 +266,20 @@ export const useYouTubePlayer = ({
     }
   }, [playing, playerReady]);
 
-  return { containerRef };
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      clearProgressInterval();
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
+        try {
+          playerRef.current.destroy();
+        } catch (err) {
+          console.error('Error destroying player:', err);
+        }
+        playerInitializedRef.current = false;
+      }
+    };
+  }, [clearProgressInterval]);
+
+  return { containerRef, playerReady };
 };

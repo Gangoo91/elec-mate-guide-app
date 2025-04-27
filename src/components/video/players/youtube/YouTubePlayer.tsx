@@ -25,6 +25,7 @@ export const YouTubePlayer = ({
 }: YouTubePlayerProps) => {
   const [hasError, setHasError] = useState(false);
   const videoId = useCallback(() => extractVideoId(videoUrl), [videoUrl])();
+  const [playerReady, setPlayerReady] = useState(false);
   
   // Handle player errors locally first
   const handleError = () => {
@@ -33,12 +34,17 @@ export const YouTubePlayer = ({
     onError();
   };
   
+  const handlePlayerReady = useCallback(() => {
+    setPlayerReady(true);
+  }, []);
+  
   // Only initialize the player if we have a valid videoId and no errors yet
   const { containerRef } = useYouTubePlayer({
     videoId: hasError ? null : videoId,
     onError: handleError,
     onProgress,
     onPlayStateChange,
+    onPlayerReady: handlePlayerReady,
     startAt,
     playing,
   });
@@ -54,7 +60,7 @@ export const YouTubePlayer = ({
     <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
       <div
         ref={containerRef}
-        className="w-full h-full bg-black"
+        className={`w-full h-full bg-black ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-300'}`}
         title={title}
         aria-label={title}
         data-video-id={videoId || ''}

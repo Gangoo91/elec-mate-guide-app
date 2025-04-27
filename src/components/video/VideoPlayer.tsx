@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
 import { YouTubePlayer } from './players/youtube/YouTubePlayer';
@@ -20,11 +20,12 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [muted, setMuted] = useState(false);
   const { toast } = useToast();
   
-  const isYouTubeUrl = (url: string): boolean => {
+  const isYouTubeUrl = useCallback((url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
-  };
+  }, []);
 
   // Initialize player with last position if available
   useEffect(() => {
@@ -45,14 +46,18 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleVolumeClick = () => {
+    const newMutedState = !muted;
+    setMuted(newMutedState);
+    
     const video = document.querySelector('video');
     if (video) {
-      video.muted = !video.muted;
-      toast({
-        title: video.muted ? "Sound muted" : "Sound unmuted",
-        duration: 2000,
-      });
+      video.muted = newMutedState;
     }
+    
+    toast({
+      title: newMutedState ? "Sound muted" : "Sound unmuted",
+      duration: 2000,
+    });
   };
 
   const handleFullscreenClick = () => {
@@ -83,7 +88,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleVideoError = () => {
-    console.error("Video error occurred");
+    console.error("Video error occurred for:", title);
     setError(true);
     setPlaying(false);
     toast({
@@ -134,6 +139,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               }}
               currentTime={currentTime}
               playing={playing}
+              muted={muted}
             />
           )}
           
@@ -159,6 +165,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             onPlay={handlePlay}
             onVolumeClick={handleVolumeClick}
             onFullscreenClick={handleFullscreenClick}
+            muted={muted}
           />
         </>
       )}

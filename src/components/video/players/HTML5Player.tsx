@@ -10,6 +10,7 @@ interface HTML5PlayerProps {
   onTimeUpdate: () => void;
   currentTime?: number;
   playing?: boolean;
+  muted?: boolean;
 }
 
 export const HTML5Player = ({ 
@@ -19,11 +20,13 @@ export const HTML5Player = ({
   onEnded, 
   onTimeUpdate,
   currentTime = 0,
-  playing = false
+  playing = false,
+  muted = false
 }: HTML5PlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const attemptedLoadRef = useRef(false);
   const [loadAttempts, setLoadAttempts] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Apply currentTime whenever it changes or video is loaded
   useEffect(() => {
@@ -38,13 +41,24 @@ export const HTML5Player = ({
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
+    // Set muted state
+    if (videoElement.muted !== muted) {
+      videoElement.muted = muted;
+    }
+
     if (playing) {
       const playPromise = videoElement.play();
       
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
-          // Don't call onError yet - we might be hitting autoplay restrictions
+          // Could be due to autoplay restrictions, try muted
+          if (!muted && err.name === 'NotAllowedError') {
+            videoElement.muted = true;
+            videoElement.play().catch(innerErr => {
+              console.error("Failed to play even when muted:", innerErr);
+            });
+          }
         });
       }
     } else {
@@ -58,7 +72,7 @@ export const HTML5Player = ({
         videoElement.load(); // Reset the video element
       }
     };
-  }, [playing, videoUrl]);
+  }, [playing, videoUrl, muted]);
 
   const handleLoadedMetadata = () => {
     attemptedLoadRef.current = true;
@@ -67,6 +81,13 @@ export const HTML5Player = ({
     if (videoElement && currentTime > 0) {
       videoElement.currentTime = currentTime;
     }
+    
+    if (videoElement) {
+      videoElement.muted = muted;
+    }
+    
+    // Show video once it's ready
+    setIsVisible(true);
     
     if (playing && videoElement) {
       videoElement.play().catch(err => {
@@ -129,7 +150,7 @@ export const HTML5Player = ({
     <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
       <video
         ref={videoRef}
-        className="w-full h-full object-cover"
+        className={`w-full h-full object-cover ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
         src={isValidVideoUrl(videoUrl) ? videoUrl : ''}
         title={title}
         controls={false}
@@ -139,6 +160,7 @@ export const HTML5Player = ({
         onLoadedMetadata={handleLoadedMetadata}
         preload="metadata"
         playsInline
+        muted={muted}
       />
     </AspectRatio>
   );
