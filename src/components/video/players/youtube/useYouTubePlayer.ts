@@ -1,54 +1,9 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { loadYouTubeAPI } from './youtubeApi';
 
-// Define YouTube API types
-declare global {
-  interface Window {
-    YT: {
-      Player: new (
-        elementId: string,
-        options: {
-          videoId?: string;
-          width?: string | number;
-          height?: string | number;
-          playerVars?: {
-            autoplay?: 0 | 1;
-            controls?: 0 | 1;
-            enablejsapi?: 0 | 1;
-            origin?: string;
-            rel?: 0 | 1;
-            start?: number;
-          };
-          events: {
-            onStateChange: (event: any) => void;
-            onError: (event: any) => void;
-            onReady: (event: any) => void;
-          }
-        }
-      ) => {
-        getCurrentTime: () => number;
-        getDuration: () => number;
-        playVideo: () => void;
-        pauseVideo: () => void;
-        getPlayerState: () => number;
-        seekTo: (seconds: number) => void;
-        destroy: () => void;
-      };
-      PlayerState: {
-        ENDED: number;
-        PLAYING: number;
-        PAUSED: number;
-        BUFFERING: number;
-        CUED: number;
-      };
-    };
-    onYouTubeIframeAPIReady: (() => void) | null;
-  }
-}
-
-interface YouTubePlayerProps {
-  videoUrl: string;
-  title: string;
+interface UseYouTubePlayerProps {
+  videoId: string | null;
   onError: () => void;
   onProgress: (currentTime: number, duration: number) => void;
   onPlayStateChange: (isPlaying: boolean) => void;
@@ -56,56 +11,19 @@ interface YouTubePlayerProps {
   playing?: boolean;
 }
 
-export const YouTubePlayer = ({ 
-  videoUrl, 
-  title, 
-  onError, 
+export const useYouTubePlayer = ({
+  videoId,
+  onError,
   onProgress,
   onPlayStateChange,
   startAt = 0,
   playing = false
-}: YouTubePlayerProps) => {
+}: UseYouTubePlayerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [playerReady, setPlayerReady] = useState(false);
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
-
-  const extractVideoId = (url: string): string | null => {
-    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-  };
-
-  const videoId = extractVideoId(videoUrl);
-
-  useEffect(() => {
-    // Load YouTube API script
-    const loadYouTubeAPI = () => {
-      if (!window.YT) {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        
-        // Make sure we're not adding it multiple times
-        if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
-          const firstScriptTag = document.getElementsByTagName('script')[0];
-          if (firstScriptTag && firstScriptTag.parentNode) {
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-          }
-        }
-      }
-    };
-
-    loadYouTubeAPI();
-
-    // Cleanup function to destroy player and clear interval
-    return () => {
-      clearProgressInterval();
-      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
-        playerRef.current.destroy();
-      }
-    };
-  }, []);
 
   const startProgressInterval = () => {
     if (progressIntervalRef.current) {
@@ -134,32 +52,37 @@ export const YouTubePlayer = ({
   };
 
   useEffect(() => {
-    // Initialize player when videoId changes or script loads
+    loadYouTubeAPI();
+    return () => {
+      clearProgressInterval();
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
+        playerRef.current.destroy();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (!videoId) {
-      console.error('Invalid YouTube URL:', videoUrl);
+      console.error('Invalid YouTube video ID');
       onError();
       return;
     }
 
     const initPlayer = () => {
-      // Only initialize if container exists and YT API is ready
       if (!containerRef.current || !window.YT || !window.YT.Player) {
         return;
       }
 
-      // Ensure we have a valid container element
       if (!document.getElementById(playerElementId)) {
         const playerDiv = document.createElement('div');
         playerDiv.id = playerElementId;
         containerRef.current.appendChild(playerDiv);
       }
 
-      // Clear previous player
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         playerRef.current.destroy();
       }
 
-      // Create new player
       try {
         playerRef.current = new window.YT.Player(playerElementId, {
           videoId: videoId,
@@ -224,9 +147,8 @@ export const YouTubePlayer = ({
         window.onYouTubeIframeAPIReady = null;
       }
     };
-  }, [videoId, videoUrl, onError, startAt, playerElementId]);
+  }, [videoId, onError, startAt, playerElementId, playing, onProgress, onPlayStateChange]);
 
-  // Control playing/paused state
   useEffect(() => {
     if (!playerReady || !playerRef.current) return;
 
@@ -241,9 +163,6 @@ export const YouTubePlayer = ({
     }
   }, [playing, playerReady]);
 
-  return (
-    <div className="w-full h-full bg-black">
-      <div ref={containerRef} className="w-full h-full" />
-    </div>
-  );
+  return { containerRef };
 };
+
