@@ -31,7 +31,6 @@ export const useYouTubeInitialization = ({
   const mountedRef = useRef(true);
   const apiLoadingPromiseRef = useRef<Promise<void> | null>(null);
 
-  // Track if component is mounted to prevent state updates after unmount
   useEffect(() => {
     mountedRef.current = true;
     return () => {
@@ -39,7 +38,6 @@ export const useYouTubeInitialization = ({
     };
   }, []);
 
-  // Function to handle API loading with caching of the promise
   const loadAPI = useCallback(async () => {
     if (apiLoadedRef.current) return Promise.resolve();
     
@@ -60,7 +58,6 @@ export const useYouTubeInitialization = ({
 
   const createYoutubePlayer = useCallback(() => {
     try {
-      // Clean up any previous instance
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         try {
           playerRef.current.destroy();
@@ -81,17 +78,15 @@ export const useYouTubeInitialization = ({
         return false;
       }
       
-      // Ensure DOM content is stable before creating player
       if (!document.body.contains(playerElement)) {
         console.error('Player element not in DOM');
         return false;
       }
 
-      // Create the player with reduced parameters to improve stability
       playerRef.current = new window.YT.Player(playerElementId, {
         videoId: videoId,
         playerVars: {
-          autoplay: 0, // Always start paused for stability
+          autoplay: 0,
           controls: 0,
           enablejsapi: 1,
           origin: window.location.origin,
@@ -101,7 +96,7 @@ export const useYouTubeInitialization = ({
           modestbranding: 1,
           iv_load_policy: 3,
           fs: 0,
-          mute: 1 // Start muted to avoid audio glitches
+          mute: 1
         },
         events: {
           onReady: onPlayerReady,
@@ -133,12 +128,10 @@ export const useYouTubeInitialization = ({
       
       if (!mountedRef.current) return;
       
-      // Add a small delay before creating the player to ensure DOM is stable
       setTimeout(() => {
         if (!mountedRef.current) return;
         
         if (!createYoutubePlayer() && errorRetryCountRef.current < 3) {
-          // Try again after a delay if failed
           setTimeout(() => {
             if (mountedRef.current && !playerInitializedRef.current) {
               createYoutubePlayer();
@@ -154,7 +147,6 @@ export const useYouTubeInitialization = ({
     }
   }, [videoId, loadAPI, createYoutubePlayer, onError]);
 
-  // Cleanup on unmount or videoId change
   useEffect(() => {
     return () => {
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
