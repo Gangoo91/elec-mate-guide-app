@@ -1,60 +1,80 @@
 
-import { useState, useEffect } from 'react';
-import { supabase } from "@/integrations/supabase/client";
-import { Message } from "@/types/chat";
-import { useAuth } from "@/hooks/useAuth";
-import { ChatType } from "@/config/chatTypes";
+import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
+import { useToast } from '@/hooks/use-toast';
+import { isValidChatReaction } from '@/utils/chatTypeGuards';
 
-export function useMessageFetching(recipientId: string, chatType: ChatType) {
-  const [messages, setMessages] = useState<Message[]>([]);
+export const useMessageFetching = () => {
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [comments, setComments] = useState<Record<string, ChatComment[]>>({});
+  const [reactions, setReactions] = useState<Record<string, ChatReaction[]>>({});
+  const { toast } = useToast();
 
-  useEffect(() => {
-    if (!user?.id || !recipientId) return;
-    
-    const fetchMessages = async () => {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('team_messages')
-          .select('*')
-          .or(`and(sender_id.eq.${user.id},recipient_id.eq.${recipientId}),and(sender_id.eq.${recipientId},recipient_id.eq.${user.id})`)
-          .eq('chat_type', chatType)
-          .order('created_at', { ascending: true });
-        
-        if (error) throw error;
-        setMessages((data || []) as Message[]);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchMessages = async () => {
+    try {
+      const { data: messages, error } = await supabase
+        .from('chat_messages')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    fetchMessages();
-    
-    const markAsRead = async () => {
-      try {
-        const { error } = await supabase
-          .from('team_messages')
-          .update({ read: true })
-          .eq('sender_id', recipientId)
-          .eq('recipient_id', user.id)
-          .eq('read', false);
-          
-        if (error) console.error("Error marking messages as read:", error);
-      } catch (err) {
-        console.error("Error marking messages as read:", err);
-      }
-    };
-    
-    markAsRead();
+      if (error) throw error;
+      
+      setMessages(messages || []);
+      await fetchCommentsAndReactions(messages || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load messages",
+        variant: "destructive",
+      });
+    }
+  };
 
-    return () => {
-      // Cleanup
-    };
-  }, [user, recipientId, chatType]);
+  const fetchCommentsAndReactions = async (messages: ChatMessage[]) => {
+    try {
+      const messageIds = messages.map(m => m.id);
+      
+      const { data: comments } = await supabase
+        .from('chat_comments')
+        .select('*')
+        .in('message_id', messageIds);
 
-  return { messages, setMessages, loading };
-}
+      const { data: reactions } = await supabase
+        .from('chat_reactions')
+        .select('*')
+        .in('message_id', messageIds);
+
+      const commentsByMessage = (comments || []).reduce((acc, comment) => {
+        acc[comment.message_id] = [...(acc[comment.message_id] || []), comment as ChatComment];
+        return acc;
+      }, {} as Record<string, ChatComment[]>);
+
+      const reactionsByMessage = (reactions || []).reduce((acc, reaction) => {
+        if (isValidChatReaction(reaction)) {
+          acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction];
+        }
+        return acc;
+      }, {} as Record<string, ChatReaction[]>);
+
+      setComments(commentsByMessage);
+      setReactions(reactionsByMessage);
+    } catch (error) {
+      console.error('Error fetching comments and reactions:', error);
+    }
+  };
+
+  return {
+    messages,
+    comments,
+    reactions,
+    loading,
+    setMessages,
+    setComments,
+    setReactions,
+    fetchMessages,
+  };
+};

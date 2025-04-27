@@ -1,58 +1,39 @@
 
 import { useEffect } from 'react';
-import { supabase } from "@/integrations/supabase/client";
-import { Message } from "@/types/chat";
-import { useToast } from "@/hooks/use-toast";
-import { ChatType, getChatTitle } from "@/config/chatTypes";
+import { supabase } from '@/integrations/supabase/client';
+import { ChatMessage } from '@/types/chat-room';
 
-export function useMessageSubscription(
-  recipientId: string, 
-  chatType: ChatType,
-  userId: string | undefined,
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>
-) {
-  const { toast } = useToast();
-
+export const useMessageSubscription = (
+  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
+) => {
   useEffect(() => {
-    if (!userId) return;
-
-    const channel = supabase
-      .channel('direct_messages')
-      .on(
-        'postgres_changes',
-        {
+    const channelName = 'public:chat_messages';
+    
+    try {
+      const channel = supabase
+        .channel(channelName)
+        .on('postgres_changes', {
           event: '*',
           schema: 'public',
-          table: 'team_messages',
-          filter: `recipient_id=eq.${userId}`,
-        },
-        async (payload) => {
+          table: 'chat_messages'
+        }, async (payload: any) => {
           if (payload.eventType === 'INSERT') {
-            const newMessage = payload.new as Message;
-            if (newMessage.sender_id === recipientId && newMessage.chat_type === chatType) {
-              setMessages(prev => [...prev, newMessage]);
-              
-              try {
-                await supabase
-                  .from('team_messages')
-                  .update({ read: true })
-                  .eq('id', newMessage.id);
-              } catch (err) {
-                console.error("Error marking message as read:", err);
-              }
-
-              toast({
-                title: getChatTitle(chatType),
-                description: newMessage.content.substring(0, 50) + (newMessage.content.length > 50 ? "..." : ""),
-              });
-            }
+            setMessages(prev => [payload.new as ChatMessage, ...prev]);
           }
-        }
-      )
-      .subscribe();
+          if (payload.eventType === 'DELETE') {
+            setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
+          }
+        })
+        .subscribe();
+      
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    } catch (error) {
+      console.error('Error setting up subscription:', error);
+      return () => {};
+    }
+  }, [setMessages]);
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId, recipientId, chatType, setMessages, toast]);
-}
+  return null;
+};
