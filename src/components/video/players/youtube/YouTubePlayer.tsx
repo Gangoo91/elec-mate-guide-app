@@ -1,7 +1,7 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
 import { useYouTubePlayer } from './useYouTubePlayer';
-import { extractVideoId } from './youtubeApi';
+import { extractVideoId, isValidYouTubeId, FALLBACK_YOUTUBE_IDS } from './youtubeApi';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -27,17 +27,34 @@ export const YouTubePlayer = ({
   muted = false,
 }: YouTubePlayerProps) => {
   const [hasError, setHasError] = useState(false);
-  const videoId = extractVideoId(videoUrl);
+  const [videoId, setVideoId] = useState<string | null>(null);
   const [playerAttempts, setPlayerAttempts] = useState(0);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   
+  // Extract and validate video ID
   useEffect(() => {
-    console.log(`Attempting to load YouTube video: ${title} (${videoUrl}) - ID: ${videoId}`);
-    const timeout = setTimeout(() => {
-      setLoadingTimeout(true);
-    }, 8000);
+    const extractedId = extractVideoId(videoUrl);
     
-    return () => clearTimeout(timeout);
+    if (!isValidYouTubeId(extractedId)) {
+      console.warn(`Invalid YouTube ID extracted: ${extractedId} from URL: ${videoUrl}`);
+      // Choose a fallback ID
+      const fallbackId = FALLBACK_YOUTUBE_IDS[Math.floor(Math.random() * FALLBACK_YOUTUBE_IDS.length)];
+      console.log(`Using fallback YouTube ID: ${fallbackId}`);
+      setVideoId(fallbackId);
+    } else {
+      setVideoId(extractedId);
+    }
+  }, [videoUrl]);
+  
+  useEffect(() => {
+    if (videoId) {
+      console.log(`Attempting to load YouTube video: ${title} (${videoUrl}) - ID: ${videoId}`);
+      const timeout = setTimeout(() => {
+        setLoadingTimeout(true);
+      }, 8000);
+      
+      return () => clearTimeout(timeout);
+    }
   }, [title, videoUrl, videoId]);
   
   const handleError = useCallback(() => {
@@ -45,6 +62,11 @@ export const YouTubePlayer = ({
     
     if (playerAttempts < 2) {
       setPlayerAttempts(prev => prev + 1);
+      
+      // Try a different fallback ID on error
+      const fallbackId = FALLBACK_YOUTUBE_IDS[playerAttempts + 1 % FALLBACK_YOUTUBE_IDS.length];
+      console.log(`Trying fallback YouTube ID on error: ${fallbackId}`);
+      setVideoId(fallbackId);
       return;
     }
     
@@ -56,8 +78,8 @@ export const YouTubePlayer = ({
     console.log(`YouTube player ready for video: ${title} (${videoUrl})`);
   }, [title, videoUrl]);
   
-  // Use fallback video ID if extraction fails
-  const safeVideoId = videoId || 'dQw4w9WgXcQ'; // Rick Roll as fallback
+  // Use the current videoId for the player
+  const safeVideoId = videoId || FALLBACK_YOUTUBE_IDS[0]; // Rick Roll as ultimate fallback
   
   const { containerRef, playerReady, isLoaded } = useYouTubePlayer({
     videoId: hasError ? null : safeVideoId,

@@ -1,8 +1,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
-import { loadYouTubeAPI } from '../youtubeApi';
+import { loadYouTubeAPI, isValidYouTubeId, FALLBACK_YOUTUBE_IDS } from '../youtubeApi';
 
-// Import the YouTubeWindow interface to have proper typing for window.YT
 interface UseYouTubeInitializationProps {
   videoId: string | null;
   playerElementId: string;
@@ -15,8 +14,8 @@ interface UseYouTubeInitializationProps {
   playerRef: React.MutableRefObject<any>;
 }
 
-// Ensure we use the correct window type with YT property
-declare let window: Window & {
+// Define the YouTube window interface
+interface YouTubeWindow extends Window {
   YT?: {
     loaded: number;
     Player: any;
@@ -30,7 +29,9 @@ declare let window: Window & {
     };
   };
   onYouTubeIframeAPIReady?: () => void;
-};
+}
+
+declare let window: YouTubeWindow;
 
 export const useYouTubeInitialization = ({
   videoId,
@@ -48,6 +49,7 @@ export const useYouTubeInitialization = ({
   const apiLoadedRef = useRef(false);
   const mountedRef = useRef(true);
   const apiLoadingPromiseRef = useRef<Promise<void> | null>(null);
+  const initAttemptsRef = useRef(0);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -76,6 +78,8 @@ export const useYouTubeInitialization = ({
 
   const createYoutubePlayer = useCallback(() => {
     try {
+      console.log(`Creating YouTube player for ${videoId} in element ${playerElementId}`);
+      
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         try {
           playerRef.current.destroy();
@@ -101,9 +105,14 @@ export const useYouTubeInitialization = ({
         return false;
       }
 
-      // Use a consistent video ID format for all videos
-      // Make sure we're using a valid YouTube video ID format
-      const safeVideoId = videoId || 'dQw4w9WgXcQ'; // Fallback to a known working video if ID is missing
+      // Ensure valid video ID - use fallback if needed
+      let safeVideoId = videoId;
+      if (!isValidYouTubeId(safeVideoId)) {
+        console.warn(`Invalid YouTube ID: ${videoId}, using fallback`);
+        safeVideoId = FALLBACK_YOUTUBE_IDS[0]; // Use Rick Roll as fallback
+      }
+
+      console.log(`Initializing YouTube player with video ID: ${safeVideoId}`);
 
       playerRef.current = new window.YT.Player(playerElementId, {
         videoId: safeVideoId,
@@ -128,6 +137,7 @@ export const useYouTubeInitialization = ({
       });
       
       playerInitializedRef.current = true;
+      console.log('YouTube player created successfully');
       return true;
     } catch (error) {
       console.error('Error initializing YouTube player:', error);
@@ -144,6 +154,9 @@ export const useYouTubeInitialization = ({
     if (!videoId || playerInitializedRef.current || !mountedRef.current) {
       return;
     }
+
+    initAttemptsRef.current++;
+    console.log(`Initializing YouTube player (attempt ${initAttemptsRef.current})`);
 
     try {
       await loadAPI();

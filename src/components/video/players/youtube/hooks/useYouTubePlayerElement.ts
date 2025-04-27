@@ -12,13 +12,24 @@ export const useYouTubePlayerElement = ({ videoId, playerElementId }: UseYouTube
   const playerCreationAttemptedRef = useRef(false);
 
   useEffect(() => {
-    if (!containerRef.current || !videoId || playerCreationAttemptedRef.current) return;
-
+    if (!containerRef.current || !videoId) {
+      playerCreationAttemptedRef.current = false;
+      return;
+    }
+    
+    if (playerCreationAttemptedRef.current) return;
+    
     playerCreationAttemptedRef.current = true;
     
     const createPlayerElement = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current) {
+        console.error('Container ref is null when creating player element');
+        return;
+      }
       
+      console.log(`Creating player element with ID: ${playerElementId}`);
+      
+      // Clean up any previous elements
       while (containerRef.current.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild);
       }
@@ -32,6 +43,8 @@ export const useYouTubePlayerElement = ({ videoId, playerElementId }: UseYouTube
       playerDiv.style.height = '100%';
       containerRef.current.appendChild(playerDiv);
       setContainerCreated(true);
+      
+      console.log(`Player element created with ID: ${playerElementId}`);
     };
 
     createPlayerElement();
