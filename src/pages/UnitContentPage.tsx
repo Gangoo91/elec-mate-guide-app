@@ -4,17 +4,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { unitContent } from '@/data/unitContent';
+import { UnitContent } from './data/units/interfaces';
 
 const UnitContentPage = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const navigate = useNavigate();
   
   // Get unit data based on unitId
-  const getUnitData = () => {
+  const getUnitData = (): UnitContent => {
     if (unitId && unitContent[unitId]) {
       return unitContent[unitId];
     } else {
-      return { title: "Unit Not Found", description: "The requested unit could not be found." };
+      return { 
+        title: "Unit Not Found", 
+        description: "The requested unit could not be found.",
+        sections: [] 
+      };
     }
   };
   
