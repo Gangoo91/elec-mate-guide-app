@@ -1,5 +1,5 @@
 
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { useYouTubeInitialization } from './hooks/useYouTubeInitialization';
 import { useYouTubePlayerState } from './hooks/useYouTubePlayerState';
 
@@ -123,7 +123,6 @@ export const useYouTubePlayer = ({
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         try {
           playerRef.current.destroy();
-          playerInitializedRef.current = false;
         } catch (err) {
           console.error('Error destroying player:', err);
         }
@@ -138,7 +137,7 @@ export const useYouTubePlayer = ({
     }
   }, [onError, clearProgressInterval]);
 
-  const { playerRef, initPlayer, errorRetryCountRef, playerInitializedRef } = useYouTubeInitialization({
+  const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
     onError,
@@ -175,7 +174,7 @@ export const useYouTubePlayer = ({
     }
     
     if (videoId !== lastVideoIdRef.current) {
-      playerInitializedRef.current = false;
+      lastVideoIdRef.current = videoId;
       setPlayerReady(false);
       errorRetryCountRef.current = 0;
     }
@@ -188,7 +187,7 @@ export const useYouTubePlayer = ({
       clearTimeout(initTimeout);
       clearProgressInterval();
     };
-  }, [videoId, initPlayer, clearProgressInterval]);
+  }, [videoId, initPlayer, clearProgressInterval, errorRetryCountRef]);
 
   // Cleanup on unmount
   useEffect(() => {
