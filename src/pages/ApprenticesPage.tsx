@@ -1,13 +1,15 @@
 
-import React from "react";
+import React, { Suspense } from "react";
 import MainLayout from "@/components/layout/MainLayout";
-import PageHeader from "@/components/layout/PageHeader";
 import ApprenticeHub from "./ApprenticeHub";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ApprenticesPage = () => {
   return (
     <MainLayout>
-      <ApprenticeHub />
+      <Suspense fallback={<div className="w-full h-full min-h-screen flex items-center justify-center"><LoadingSpinner /></div>}>
+        <ApprenticeHub />
+      </Suspense>
     </MainLayout>
   );
 };
