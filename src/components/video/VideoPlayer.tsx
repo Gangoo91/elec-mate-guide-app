@@ -20,6 +20,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [playerKey, setPlayerKey] = useState(Date.now()); // Add key to force remount when needed
   const { toast } = useToast();
   
   const isYouTubeUrl = (url: string): boolean => {
@@ -76,6 +77,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleVideoError = () => {
+    console.error("Video error occurred");
     setError(true);
     setPlaying(false);
     toast({
@@ -86,7 +88,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
-    if (videoDuration > 0) {
+    if (videoDuration > 0 && videoDuration !== Infinity) {
       setDuration(videoDuration);
     }
     
@@ -94,6 +96,11 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       setCurrentTime(currentTime);
       updateProgress(currentTime, videoDuration || duration);
     }
+  };
+
+  // Function to handle player reload if needed
+  const handlePlayerReset = () => {
+    setPlayerKey(Date.now());
   };
 
   return (
@@ -104,6 +111,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
         <>
           {isYouTubeUrl(videoUrl) ? (
             <YouTubePlayer
+              key={`youtube-${playerKey}`}
               videoUrl={videoUrl}
               title={title}
               onError={handleVideoError}
@@ -114,6 +122,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             />
           ) : (
             <HTML5Player
+              key={`html5-${playerKey}`}
               videoUrl={videoUrl}
               title={title}
               onError={handleVideoError}

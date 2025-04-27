@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 interface VideoProgress {
   watched: boolean;
@@ -14,44 +15,62 @@ interface VideoProgress {
 export function useVideoProgress(videoId: string) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
   const [progress, setProgress] = useState<VideoProgress>({
     watched: false,
     watchTime: 0,
     lastPosition: 0,
     kudosAwarded: false
   });
+  
+  // Check if this is a demo video ID (non-UUID format)
+  const isDemoVideo = !videoId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || isDemoVideo) return;
     loadProgress();
   }, [user, videoId]);
 
   const loadProgress = async () => {
-    const { data, error } = await supabase
-      .from('video_progress')
-      .select('*')
-      .eq('video_id', videoId)
-      .eq('user_id', user?.id)
-      .maybeSingle();
+    try {
+      const { data, error } = await supabase
+        .from('video_progress')
+        .select('*')
+        .eq('video_id', videoId)
+        .eq('user_id', user?.id)
+        .maybeSingle();
 
-    if (error) {
-      console.error('Error loading progress:', error);
-      return;
-    }
+      if (error) {
+        handleError(error, 'Error loading video progress');
+        return;
+      }
 
-    if (data) {
-      setProgress({
-        watched: data.watched,
-        watchTime: data.watch_time,
-        lastPosition: data.last_position,
-        kudosAwarded: data.kudos_awarded
-      });
+      if (data) {
+        setProgress({
+          watched: data.watched,
+          watchTime: data.watch_time,
+          lastPosition: data.last_position,
+          kudosAwarded: data.kudos_awarded
+        });
+      }
+    } catch (err) {
+      handleError(err, 'Error loading video progress');
     }
   };
 
   const updateProgress = async (position: number, duration: number) => {
-    if (!user) return;
-
+    if (!user || isDemoVideo) {
+      // For demo videos, just update the local state without database operations
+      const watched = position >= duration * 0.9;
+      setProgress(prev => ({
+        ...prev,
+        watched,
+        watchTime: Math.floor(position),
+        lastPosition: position,
+      }));
+      return;
+    }
+    
     // Consider video watched at 90% completion or if specifically marked as complete
     const watched = position >= duration * 0.9;
     
@@ -68,7 +87,7 @@ export function useVideoProgress(videoId: string) {
         });
 
       if (error) {
-        console.error('Error updating progress:', error);
+        handleError(error, 'Error updating video progress');
         return;
       }
 
@@ -106,7 +125,7 @@ export function useVideoProgress(videoId: string) {
         kudosAwarded: watched ? true : prev.kudosAwarded
       }));
     } catch (err) {
-      console.error('Error in updateProgress:', err);
+      handleError(err, 'Error updating video progress');
     }
   };
 

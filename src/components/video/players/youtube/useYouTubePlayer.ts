@@ -73,15 +73,15 @@ export const useYouTubePlayer = ({
         return;
       }
 
-      if (!document.getElementById(playerElementId)) {
-        const playerDiv = document.createElement('div');
-        playerDiv.id = playerElementId;
-        containerRef.current.appendChild(playerDiv);
+      // Clear existing player element if it exists
+      while (containerRef.current.firstChild) {
+        containerRef.current.removeChild(containerRef.current.firstChild);
       }
 
-      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
-        playerRef.current.destroy();
-      }
+      // Create a new player element
+      const playerDiv = document.createElement('div');
+      playerDiv.id = playerElementId;
+      containerRef.current.appendChild(playerDiv);
 
       try {
         playerRef.current = new window.YT.Player(playerElementId, {
@@ -147,16 +147,18 @@ export const useYouTubePlayer = ({
         window.onYouTubeIframeAPIReady = null;
       }
     };
-  }, [videoId, onError, startAt, playerElementId, playing, onProgress, onPlayStateChange]);
+  }, [videoId, onError, startAt, playerElementId, onProgress, onPlayStateChange]);
 
+  // Handle play/pause state changes
   useEffect(() => {
     if (!playerReady || !playerRef.current) return;
 
     try {
-      if (playing) {
-        playerRef.current.playVideo();
-      } else {
-        playerRef.current.pauseVideo();
+      const player = playerRef.current;
+      if (playing && player && typeof player.playVideo === 'function') {
+        player.playVideo();
+      } else if (!playing && player && typeof player.pauseVideo === 'function') {
+        player.pauseVideo();
       }
     } catch (error) {
       console.error('Error controlling YouTube player:', error);
@@ -165,4 +167,3 @@ export const useYouTubePlayer = ({
 
   return { containerRef };
 };
-
