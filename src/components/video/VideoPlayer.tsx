@@ -10,6 +10,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import { VideoPlayerProvider, useVideoPlayer } from './context/VideoPlayerContext';
 import { PlayOverlay } from './components/PlayOverlay';
 import { CompletionBadge } from './components/CompletionBadge';
+import { useVideoControls } from '@/hooks/useVideoControls';
 
 const VideoPlayerContent = ({ videoId, videoUrl, title }: { videoId: string, videoUrl: string, title: string }) => {
   const { progress, updateProgress } = useVideoProgress(videoId);
@@ -23,11 +24,12 @@ const VideoPlayerContent = ({ videoId, videoUrl, title }: { videoId: string, vid
     error,
     currentTime,
     setPlaying,
-    setMuted,
     setError,
     setCurrentTime,
     setDuration
   } = useVideoPlayer();
+
+  const { handlePlay, handleVolumeClick, handleFullscreenClick } = useVideoControls();
 
   const isYouTubeUrl = useCallback((url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
@@ -40,43 +42,6 @@ const VideoPlayerContent = ({ videoId, videoUrl, title }: { videoId: string, vid
     }, 500);
     return () => clearTimeout(timer);
   }, []);
-
-  const handlePlay = () => {
-    setPlaying(!playing);
-  };
-
-  const handleVolumeClick = () => {
-    const newMutedState = !muted;
-    setMuted(newMutedState);
-    
-    const video = document.querySelector('video');
-    if (video) {
-      video.muted = newMutedState;
-    }
-    
-    toast({
-      title: newMutedState ? "Sound muted" : "Sound unmuted",
-      duration: 2000,
-    });
-  };
-
-  const handleFullscreenClick = () => {
-    const container = document.querySelector('.video-container');
-    if (container instanceof HTMLElement) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        container.requestFullscreen().catch(err => {
-          console.error("Error attempting to enable fullscreen:", err);
-          toast({
-            title: "Fullscreen Error",
-            description: "Couldn't enter fullscreen mode",
-            variant: "destructive",
-          });
-        });
-      }
-    }
-  };
 
   const handleVideoEnded = () => {
     setPlaying(false);
