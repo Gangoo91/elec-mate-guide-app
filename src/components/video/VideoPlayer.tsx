@@ -20,7 +20,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
-  const [playerKey, setPlayerKey] = useState(Date.now()); // Add key to force remount when needed
   const { toast } = useToast();
   
   const isYouTubeUrl = (url: string): boolean => {
@@ -98,11 +97,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   };
 
-  // Function to handle player reload if needed
-  const handlePlayerReset = () => {
-    setPlayerKey(Date.now());
-  };
-
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
       {error ? (
@@ -111,7 +105,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
         <>
           {isYouTubeUrl(videoUrl) ? (
             <YouTubePlayer
-              key={`youtube-${playerKey}`}
               videoUrl={videoUrl}
               title={title}
               onError={handleVideoError}
@@ -122,7 +115,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             />
           ) : (
             <HTML5Player
-              key={`html5-${playerKey}`}
               videoUrl={videoUrl}
               title={title}
               onError={handleVideoError}

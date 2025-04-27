@@ -26,6 +26,10 @@ export function useVideoProgress(videoId: string) {
   // Check if this is a demo video ID (non-UUID format)
   const isDemoVideo = !videoId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
 
+  // Prevent too frequent updates for demo videos
+  const [lastUpdateTime, setLastUpdateTime] = useState(0);
+  const updateThrottleMs = 1000; // Update at most once per second for demo videos
+
   useEffect(() => {
     if (!user || isDemoVideo) return;
     loadProgress();
@@ -59,6 +63,13 @@ export function useVideoProgress(videoId: string) {
   };
 
   const updateProgress = async (position: number, duration: number) => {
+    // Skip updates that are too close together for demo videos
+    const now = Date.now();
+    if (isDemoVideo && now - lastUpdateTime < updateThrottleMs) {
+      return;
+    }
+    setLastUpdateTime(now);
+    
     if (!user || isDemoVideo) {
       // For demo videos, just update the local state without database operations
       const watched = position >= duration * 0.9;
