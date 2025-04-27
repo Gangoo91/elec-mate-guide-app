@@ -37,9 +37,15 @@ export function useApprenticeProgress() {
       
       // Transform the data to ensure it matches the Milestone type
       const typedMilestones = data.map(item => ({
-        ...item,
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        type: item.type,
+        status: item.status,
+        target_completion_date: item.target_completion_date,
+        completed_at: item.completed_at,
         resource_id: item.resource_id || null,
-        resource_type: item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null
+        resource_type: (item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null) || null
       })) as Milestone[];
       
       return typedMilestones;
