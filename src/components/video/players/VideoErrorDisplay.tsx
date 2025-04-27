@@ -7,7 +7,7 @@ interface VideoErrorDisplayProps {
 }
 
 export const VideoErrorDisplay = ({ videoUrl }: VideoErrorDisplayProps) => (
-  <div className="w-full h-full flex flex-col items-center justify-center bg-black/90 p-6 text-center">
+  <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-black/90 p-6 text-center">
     <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
     <h3 className="text-white text-lg font-semibold mb-2">Video Unavailable</h3>
     <p className="text-white/70 mb-4">

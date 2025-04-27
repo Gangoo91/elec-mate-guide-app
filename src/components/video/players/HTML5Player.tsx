@@ -59,7 +59,7 @@ export const HTML5Player = ({
   }, [muted]);
 
   return (
-    <div className="absolute inset-0 w-full h-full">
+    <div className="absolute inset-0 w-full h-full bg-black">
       <video
         ref={videoRef}
         className="w-full h-full object-contain"

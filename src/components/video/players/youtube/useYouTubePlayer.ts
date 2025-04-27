@@ -34,7 +34,7 @@ export const useYouTubePlayer = ({
     playAfterReadyRef.current = playing;
   }, [playing]);
 
-  // Define the progress functions first
+  // Define progress functions
   const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
     onProgress,
     playerRef
@@ -67,7 +67,6 @@ export const useYouTubePlayer = ({
   const handlePlayerReady = useCallback((event: any) => {
     console.log("YouTube player ready event received");
     setPlayerReady(true);
-    errorRetryCountRef.current = 0;
     
     try {
       if (event.target && typeof event.target.unMute === 'function') {
@@ -104,7 +103,7 @@ export const useYouTubePlayer = ({
     }
   }, [startAt, onPlayerReady]);
 
-  // Now initialize the player with the handlePlayerStateChange function
+  // Initialize the player with the handlePlayerStateChange function
   const { initPlayer, errorRetryCountRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
@@ -140,7 +139,14 @@ export const useYouTubePlayer = ({
     };
 
     createPlayerElement();
-  }, [videoId, playerElementId]);
+    
+    // Small timeout to ensure DOM is ready
+    const initTimeout = setTimeout(() => {
+      initPlayer();
+    }, 100);
+    
+    return () => clearTimeout(initTimeout);
+  }, [videoId, playerElementId, initPlayer]);
 
   const { cleanupPlayer } = useYouTubePlayerState({
     playerRef,
@@ -169,15 +175,10 @@ export const useYouTubePlayer = ({
       }
     }
     
-    const initTimeout = setTimeout(() => {
-      initPlayer();
-    }, 100);
-    
     return () => {
-      clearTimeout(initTimeout);
       clearProgressInterval();
     };
-  }, [videoId, initPlayer, clearProgressInterval, errorRetryCountRef]);
+  }, [videoId, clearProgressInterval, errorRetryCountRef]);
 
   // Cleanup on unmount
   useEffect(() => {

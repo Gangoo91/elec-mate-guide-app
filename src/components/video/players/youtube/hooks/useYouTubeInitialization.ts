@@ -79,11 +79,17 @@ export const useYouTubeInitialization = ({
         return;
       }
 
+      // Check if element still exists
+      if (!document.getElementById(playerElementId)) {
+        console.error('Player element not found:', playerElementId);
+        return;
+      }
+      
       // Small delay to ensure the API is fully initialized
       setTimeout(() => {
         try {
           if (!document.getElementById(playerElementId)) {
-            console.error('Player element not found:', playerElementId);
+            console.error('Player element not found after delay:', playerElementId);
             return;
           }
           
@@ -114,7 +120,7 @@ export const useYouTubeInitialization = ({
           console.error('Error initializing YouTube player:', error);
           onError();
         }
-      }, 200);
+      }, 300); // Increased delay for better reliability
     }).catch(err => {
       console.error('Failed to load YouTube API:', err);
       onError();

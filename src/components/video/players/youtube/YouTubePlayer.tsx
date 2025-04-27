@@ -47,8 +47,7 @@ export const YouTubePlayer = ({
     setPlayerReady(true);
   }, [title]);
   
-  // Initialize the player - Using useYouTubePlayer regardless of videoId/error state
-  // We'll handle the conditional logic inside the hook
+  // Initialize the player
   const { containerRef } = useYouTubePlayer({
     videoId: hasError ? null : videoId,
     onError: handleError,
@@ -96,6 +95,11 @@ export const YouTubePlayer = ({
         aria-label={title}
         data-video-id={videoId || ''}
       />
+      {!playerReady && !hasError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black">
+          <div className="animate-pulse text-white/70">Loading video...</div>
+        </div>
+      )}
     </AspectRatio>
   );
 };

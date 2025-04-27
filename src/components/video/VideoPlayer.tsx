@@ -37,7 +37,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     // Delay player initialization to ensure components are properly mounted
     const timer = setTimeout(() => {
       setPlayerInitialized(true);
-    }, 200);
+    }, 300); // Increased for better reliability
     
     return () => clearTimeout(timer);
   }, [progress.lastPosition]);
@@ -150,8 +150,8 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               muted={muted}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="animate-pulse text-white/50">Loading video...</div>
+            <div className="absolute inset-0 flex items-center justify-center bg-black">
+              <div className="animate-pulse text-white/50">Loading video player...</div>
             </div>
           )}
           
