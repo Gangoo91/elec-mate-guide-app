@@ -65,10 +65,14 @@ export function useChatRoom() {
         return acc;
       }, {} as Record<string, ChatComment[]>);
 
+      // Define a type guard for valid chat reactions
+      const isValidChatReaction = (reaction: any): reaction is ChatReaction => {
+        return reaction.reaction_type === "upvote" || reaction.reaction_type === "downvote";
+      };
+
       const reactionsByMessage = (reactions || []).reduce((acc, reaction) => {
-        // Make sure reaction_type is correctly typed
-        if (reaction.reaction_type === "upvote" || reaction.reaction_type === "downvote") {
-          acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction as ChatReaction];
+        if (isValidChatReaction(reaction)) {
+          acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction];
         }
         return acc;
       }, {} as Record<string, ChatReaction[]>);
@@ -166,11 +170,16 @@ export function useChatRoom() {
         .select('*')
         .eq('message_id', messageId);
 
-      // Filter and ensure correct typing before setting state
-      const typedReactions = (updatedReactions || []).filter(
-        (r): r is ChatReaction => 
-          r.reaction_type === "upvote" || r.reaction_type === "downvote"
-      );
+      // Define a type guard for valid chat reactions
+      const isValidChatReaction = (reaction: any): reaction is ChatReaction => {
+        return reaction && 
+          typeof reaction === 'object' && 
+          (reaction.reaction_type === "upvote" || reaction.reaction_type === "downvote");
+      };
+
+      // Filter reactions to only include valid ones
+      const typedReactions = (updatedReactions || [])
+        .filter(isValidChatReaction);
 
       setReactions(prev => ({
         ...prev,
