@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
@@ -23,7 +23,9 @@ export const YouTubePlayer = ({
   startAt = 0,
   playing = false,
 }: YouTubePlayerProps) => {
-  const videoId = extractVideoId(videoUrl);
+  const videoId = useCallback(() => extractVideoId(videoUrl), [videoUrl])();
+  
+  // Only initialize the player if we have a valid videoId
   const { containerRef } = useYouTubePlayer({
     videoId,
     onError,
@@ -40,6 +42,7 @@ export const YouTubePlayer = ({
         className="w-full h-full bg-black"
         title={title}
         aria-label={title}
+        data-video-id={videoId || ''}
       />
     </AspectRatio>
   );

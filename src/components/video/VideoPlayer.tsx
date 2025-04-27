@@ -97,6 +97,11 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   };
 
+  // Reset error state when videoUrl changes
+  useEffect(() => {
+    setError(false);
+  }, [videoUrl]);
+
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
       {error ? (

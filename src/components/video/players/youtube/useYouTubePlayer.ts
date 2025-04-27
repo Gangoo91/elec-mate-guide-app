@@ -26,6 +26,7 @@ export const useYouTubePlayer = ({
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const playerInitializedRef = useRef(false);
 
+  // Define all callbacks outside of useEffect to prevent them from being recreated
   const startProgressInterval = useCallback(() => {
     if (progressIntervalRef.current) {
       clearInterval(progressIntervalRef.current);
@@ -52,9 +53,46 @@ export const useYouTubePlayer = ({
     }
   }, []);
 
+  // Handle YouTube events
+  const handlePlayerReady = useCallback((event: any) => {
+    setPlayerReady(true);
+    if (startAt > 0) {
+      event.target.seekTo(startAt);
+    }
+    if (playing) {
+      event.target.playVideo();
+    }
+  }, [startAt, playing]);
+
+  const handlePlayerStateChange = useCallback((event: any) => {
+    if (!window.YT) return;
+    
+    switch (event.data) {
+      case window.YT.PlayerState.ENDED:
+        onPlayStateChange(false);
+        onProgress(event.target.getDuration(), event.target.getDuration());
+        clearProgressInterval();
+        break;
+      case window.YT.PlayerState.PLAYING:
+        onPlayStateChange(true);
+        startProgressInterval();
+        break;
+      case window.YT.PlayerState.PAUSED:
+        onPlayStateChange(false);
+        clearProgressInterval();
+        break;
+    }
+  }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
+
+  const handlePlayerError = useCallback((event: any) => {
+    console.error('YouTube player error:', event);
+    onError();
+    clearProgressInterval();
+  }, [onError, clearProgressInterval]);
+
   // Initialize YouTube player only once
   const initPlayer = useCallback(() => {
-    if (!containerRef.current || !window.YT || !window.YT.Player || playerInitializedRef.current) {
+    if (!containerRef.current || !window.YT || !window.YT.Player || playerInitializedRef.current || !videoId) {
       return;
     }
 
@@ -73,47 +111,22 @@ export const useYouTubePlayer = ({
       playerRef.current = new window.YT.Player(playerElementId, {
         videoId: videoId,
         playerVars: {
-          autoplay: 0,
+          autoplay: playing ? 1 : 0,
           controls: 0,
           enablejsapi: 1,
           origin: window.location.origin,
           rel: 0,
-          start: Math.floor(startAt)
+          start: Math.floor(startAt),
+          // Additional parameters to improve stability
+          playsinline: 1,
+          modestbranding: 1,
+          iv_load_policy: 3, // Hide annotations
+          fs: 0 // Disable fullscreen button (we'll handle this ourselves)
         },
         events: {
-          onReady: (event: any) => {
-            setPlayerReady(true);
-            if (startAt > 0) {
-              event.target.seekTo(startAt);
-            }
-            if (playing) {
-              event.target.playVideo();
-            }
-          },
-          onStateChange: (event: any) => {
-            if (!window.YT) return;
-            
-            switch (event.data) {
-              case window.YT.PlayerState.ENDED:
-                onPlayStateChange(false);
-                onProgress(event.target.getDuration(), event.target.getDuration());
-                clearProgressInterval();
-                break;
-              case window.YT.PlayerState.PLAYING:
-                onPlayStateChange(true);
-                startProgressInterval();
-                break;
-              case window.YT.PlayerState.PAUSED:
-                onPlayStateChange(false);
-                clearProgressInterval();
-                break;
-            }
-          },
-          onError: (event: any) => {
-            console.error('YouTube player error:', event);
-            onError();
-            clearProgressInterval();
-          }
+          onReady: handlePlayerReady,
+          onStateChange: handlePlayerStateChange,
+          onError: handlePlayerError
         }
       });
       
@@ -122,21 +135,24 @@ export const useYouTubePlayer = ({
       console.error('Error initializing YouTube player:', error);
       onError();
     }
-  }, [videoId, onError, startAt, playerElementId, onProgress, onPlayStateChange, playing, startProgressInterval, clearProgressInterval]);
+  }, [videoId, playerElementId, playing, startAt, handlePlayerReady, handlePlayerStateChange, handlePlayerError, onError]);
 
   useEffect(() => {
+    // Load YouTube API if not loaded already
     loadYouTubeAPI();
     
+    // Clean up on unmount
     return () => {
       clearProgressInterval();
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         playerRef.current.destroy();
+        playerInitializedRef.current = false;
       }
-      playerInitializedRef.current = false;
     };
   }, [clearProgressInterval]);
 
   useEffect(() => {
+    // Initialize player when YT API is ready
     if (window.YT && window.YT.Player) {
       initPlayer();
     } else {
