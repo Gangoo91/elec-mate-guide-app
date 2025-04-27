@@ -22,7 +22,7 @@ export function useTypingIndicator(chatId?: string) {
     
     const channel = supabase
       .channel('typing_indicators')
-      .on('broadcast', { event: 'typing' }, (payload: { typing: TypingState }) => {
+      .on('presence', { event: 'typing' }, (payload: { typing: TypingState }) => {
         if (payload.typing.userId !== user.id && (!chatId || payload.typing.chatId === chatId)) {
           setTypingUsers(prev => ({
             ...prev,
@@ -52,7 +52,7 @@ export function useTypingIndicator(chatId?: string) {
     if (!user) return;
     
     await supabase.channel('typing_indicators').send({
-      type: 'broadcast',
+      type: 'presence',
       event: 'typing',
       payload: {
         typing: {
