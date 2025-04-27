@@ -1,3 +1,4 @@
+
 import { useExerciseKudos } from "@/hooks/useExerciseKudos";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, Star, Trophy } from "lucide-react";
@@ -12,7 +13,7 @@ const KudosDisplay = () => {
   
   if (!userKudos || userKudos.totalPoints === 0) {
     return (
-      <Card className="bg-[#22251e] border-[#FFC900]/20 mb-6">
+      <Card className="bg-[#22251e] border-[#FFC900]/20">
         <CardHeader>
           <CardTitle className="text-[#FFC900] text-xl flex items-center gap-2">
             <Award className="h-5 w-5" /> Your Kudos
@@ -20,7 +21,7 @@ const KudosDisplay = () => {
         </CardHeader>
         <CardContent>
           <p className="text-[#FFC900]/70">
-            You haven't earned any kudos yet. Complete stress management exercises to start earning points!
+            No kudos earned yet
           </p>
         </CardContent>
       </Card>
@@ -32,13 +33,13 @@ const KudosDisplay = () => {
   const progress = (userKudos.totalPoints / nextLevelPoints) * 100;
   
   return (
-    <Card className="bg-[#22251e] border-[#FFC900]/20 mb-6">
+    <Card className="bg-[#22251e] border-[#FFC900]/20">
       <CardHeader>
         <CardTitle className="text-[#FFC900] text-xl flex items-center gap-2">
           <Award className="h-5 w-5" /> Your Kudos
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3">
         <div className="flex justify-between items-center">
           <div className="flex flex-col">
             <span className="text-[#FFC900] text-2xl font-bold">{userKudos.totalPoints}</span>
@@ -62,10 +63,6 @@ const KudosDisplay = () => {
             <span className="text-[#FFC900]/70">{userKudos.totalPoints} / {nextLevelPoints} points</span>
           </div>
           <Progress value={progress} className="h-2 bg-[#FFC900]/20" />
-        </div>
-        
-        <div className="text-center mt-2 text-sm text-[#FFC900]/70">
-          <p>Keep engaging with stress management exercises for a chance to win monthly rewards!</p>
         </div>
       </CardContent>
     </Card>
