@@ -5,11 +5,12 @@ import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play } from "lucide-react";
+import { Play, Clock } from "lucide-react";
 import KudosDisplay from "@/components/profile/KudosDisplay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from '@/components/video/VideoPlayer';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
 interface VideoLesson {
   id: string;
@@ -22,21 +23,27 @@ interface VideoLesson {
 }
 
 const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: VideoLesson) => void }) => (
-  <Card className="hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer bg-[#22251e] border-[#FFC900]/20">
+  <Card 
+    onClick={() => onWatch(video)}
+    className="hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer bg-[#22251e] border-[#FFC900]/20 hover:shadow-lg hover:shadow-[#FFC900]/10 transform hover:-translate-y-1"
+  >
     <CardHeader>
       <CardTitle className="flex items-center justify-between text-[#FFC900]">
         <span>{video.title}</span>
-        <span className="text-sm">{video.duration}</span>
+        <div className="flex items-center gap-1 text-sm">
+          <Clock className="h-4 w-4" />
+          <span>{video.duration}</span>
+        </div>
       </CardTitle>
     </CardHeader>
     <CardContent>
-      <p className="text-[#FFC900]/70 mb-4">{video.description}</p>
+      <p className="text-[#FFC900]/70 mb-4 line-clamp-2">{video.description}</p>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Play className="h-5 w-5 text-[#FFC900]" />
           <span className="text-[#FFC900]/70">Watch Now</span>
         </div>
-        <span className="text-[#FFC900] text-sm">+{video.kudos_points} kudos</span>
+        <span className="text-[#FFC900] text-sm font-semibold">+{video.kudos_points} kudos</span>
       </div>
     </CardContent>
   </Card>
@@ -75,12 +82,15 @@ const VideosDemonstrationsPage = () => {
     );
   }
 
+  // Extract categories for filtering
+  const categories = [...new Set(videos.map(video => video.category))];
+
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <PageHeader
           title="Video Demonstrations"
-          description="Watch practical demonstrations and earn kudos while learning essential electrical skills."
+          description="Watch practical demonstrations and earn kudos while learning essential electrical skills. These videos cover UK electrical standards and practices."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -127,6 +137,28 @@ const VideosDemonstrationsPage = () => {
 
           <div className="lg:col-span-1">
             <KudosDisplay />
+            
+            <div className="mt-6 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-4">
+              <h3 className="text-lg font-semibold text-[#FFC900] mb-3">Why Watch These Videos?</h3>
+              <ul className="space-y-2 text-[#FFC900]/80">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#FFC900] font-bold">•</span>
+                  <span>Learn UK electrical standards and practices</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#FFC900] font-bold">•</span>
+                  <span>Earn kudos points toward certifications</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#FFC900] font-bold">•</span>
+                  <span>Track your learning progress</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#FFC900] font-bold">•</span>
+                  <span>Build practical skills for the field</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -140,7 +172,17 @@ const VideosDemonstrationsPage = () => {
                   videoUrl={selectedVideo.video_url}
                   title={selectedVideo.title}
                 />
-                <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
+                <Separator className="bg-[#FFC900]/20" />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
+                    <div className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      {selectedVideo.duration}
+                    </div>
+                  </div>
+                  <p className="text-[#FFC900]/50 text-sm">Complete this video to earn {selectedVideo.kudos_points} kudos points.</p>
+                </div>
               </div>
             )}
           </DialogContent>

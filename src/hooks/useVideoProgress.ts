@@ -52,56 +52,62 @@ export function useVideoProgress(videoId: string) {
   const updateProgress = async (position: number, duration: number) => {
     if (!user) return;
 
-    const watched = position >= duration * 0.9; // Consider video watched at 90%
-    const { error } = await supabase
-      .from('video_progress')
-      .upsert({
-        user_id: user.id,
-        video_id: videoId,
-        watched,
-        watch_time: Math.floor(position),
-        last_position: position,
-        kudos_awarded: watched && !progress.kudosAwarded
-      });
+    // Consider video watched at 90% completion or if specifically marked as complete
+    const watched = position >= duration * 0.9;
+    
+    try {
+      const { error } = await supabase
+        .from('video_progress')
+        .upsert({
+          user_id: user.id,
+          video_id: videoId,
+          watched,
+          watch_time: Math.floor(position),
+          last_position: position,
+          kudos_awarded: watched && !progress.kudosAwarded
+        });
 
-    if (error) {
-      console.error('Error updating progress:', error);
-      return;
-    }
+      if (error) {
+        console.error('Error updating progress:', error);
+        return;
+      }
 
-    if (watched && !progress.kudosAwarded) {
-      // Award kudos points
-      const { data: video } = await supabase
-        .from('video_lessons')
-        .select('kudos_points, title')
-        .eq('id', videoId)
-        .single();
+      if (watched && !progress.kudosAwarded) {
+        // Award kudos points
+        const { data: video } = await supabase
+          .from('video_lessons')
+          .select('kudos_points, title')
+          .eq('id', videoId)
+          .single();
 
-      if (video) {
-        const { error: kudosError } = await supabase
-          .from('exercise_kudos')
-          .insert({
-            user_id: user.id,
-            exercise_id: videoId,
-            points: video.kudos_points
-          });
+        if (video) {
+          const { error: kudosError } = await supabase
+            .from('exercise_kudos')
+            .insert({
+              user_id: user.id,
+              exercise_id: videoId,
+              points: video.kudos_points
+            });
 
-        if (!kudosError) {
-          toast({
-            title: "Kudos Awarded!",
-            description: `You earned ${video.kudos_points} kudos points for completing "${video.title}"`,
-          });
+          if (!kudosError) {
+            toast({
+              title: "Kudos Awarded!",
+              description: `You earned ${video.kudos_points} kudos points for completing "${video.title}"`,
+            });
+          }
         }
       }
-    }
 
-    setProgress(prev => ({
-      ...prev,
-      watched,
-      watchTime: Math.floor(position),
-      lastPosition: position,
-      kudosAwarded: watched ? true : prev.kudosAwarded
-    }));
+      setProgress(prev => ({
+        ...prev,
+        watched,
+        watchTime: Math.floor(position),
+        lastPosition: position,
+        kudosAwarded: watched ? true : prev.kudosAwarded
+      }));
+    } catch (err) {
+      console.error('Error in updateProgress:', err);
+    }
   };
 
   return {
