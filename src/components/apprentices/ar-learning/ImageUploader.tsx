@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Camera, ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Camera as CapacitorCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 interface ImageUploaderProps {
   onIdentifyComponent: (componentId: string) => void;
@@ -14,18 +15,38 @@ const ImageUploader = ({ onIdentifyComponent }: ImageUploaderProps) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const handleImageCapture = async () => {
     try {
-      // Create preview
-      setPreviewUrl(URL.createObjectURL(file));
+      // Request camera permissions
+      const permissionStatus = await CapacitorCamera.checkPermissions();
+      if (permissionStatus.camera !== 'granted') {
+        const requested = await CapacitorCamera.requestPermissions();
+        if (requested.camera !== 'granted') {
+          toast.error('Camera permission is required');
+          return;
+        }
+      }
+
+      // Take the picture
+      const image = await CapacitorCamera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+        source: CameraSource.Camera
+      });
+
+      if (!image.base64String) {
+        throw new Error('No image captured');
+      }
+
+      // Create preview URL
+      setPreviewUrl(`data:image/jpeg;base64,${image.base64String}`);
       setIsAnalyzing(true);
 
       // Create form data
       const formData = new FormData();
-      formData.append('image', file);
+      const blob = await fetch(`data:image/jpeg;base64,${image.base64String}`).then(r => r.blob());
+      formData.append('image', blob, 'capture.jpg');
 
       // Call the Supabase Edge Function
       const response = await fetch('/functions/v1/identify-component', {
@@ -44,8 +65,8 @@ const ImageUploader = ({ onIdentifyComponent }: ImageUploaderProps) => {
         toast.error('Could not identify component');
       }
     } catch (error) {
-      console.error('Error analyzing image:', error);
-      toast.error('Failed to analyze image');
+      console.error('Error capturing/analyzing image:', error);
+      toast.error('Failed to capture or analyze image');
     } finally {
       setIsAnalyzing(false);
     }
@@ -64,23 +85,15 @@ const ImageUploader = ({ onIdentifyComponent }: ImageUploaderProps) => {
           <div className="flex justify-center">
             <Button
               className="bg-[#FFC900] hover:bg-[#FFC900]/80 text-[#22251e]"
-              onClick={() => document.getElementById('image-upload')?.click()}
+              onClick={handleImageCapture}
               disabled={isAnalyzing}
             >
               {isAnalyzing ? (
                 <LoadingSpinner size="sm" />
               ) : (
-                <>Upload Image</>
+                <>Capture Image</>
               )}
             </Button>
-            <input
-              type="file"
-              id="image-upload"
-              className="hidden"
-              accept="image/*"
-              onChange={handleImageUpload}
-              disabled={isAnalyzing}
-            />
           </div>
 
           {previewUrl && (
@@ -99,3 +112,4 @@ const ImageUploader = ({ onIdentifyComponent }: ImageUploaderProps) => {
 };
 
 export default ImageUploader;
+
