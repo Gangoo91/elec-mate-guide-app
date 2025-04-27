@@ -40,7 +40,6 @@ export const useAudioPlayer = (audioUrl: string) => {
       audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
       audioRef.current.addEventListener('error', handleError as EventListener);
 
-      // Try to load the audio metadata
       audioRef.current.load();
 
       return () => {
@@ -67,7 +66,6 @@ export const useAudioPlayer = (audioUrl: string) => {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      console.log('Playing audio from:', audioUrl);
       const playPromise = audioRef.current.play();
       
       if (playPromise !== undefined) {
@@ -84,7 +82,14 @@ export const useAudioPlayer = (audioUrl: string) => {
     }
   };
 
-  // Format time in MM:SS format
+  const seek = (value: number) => {
+    if (audioRef.current && !isNaN(value)) {
+      const newTime = (value / 100) * duration;
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   const formatTime = (timeInSeconds: number): string => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
@@ -95,10 +100,11 @@ export const useAudioPlayer = (audioUrl: string) => {
   
   return { 
     isPlaying, 
-    togglePlayback, 
+    togglePlayback,
     currentTime: formatTime(currentTime),
     progress,
     duration: formatTime(duration),
-    error
+    error,
+    seek
   };
 };
