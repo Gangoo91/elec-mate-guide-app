@@ -2,6 +2,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { loadYouTubeAPI } from '../youtubeApi';
 
+// Import the YouTubeWindow interface to have proper typing for window.YT
 interface UseYouTubeInitializationProps {
   videoId: string | null;
   playerElementId: string;
@@ -13,6 +14,23 @@ interface UseYouTubeInitializationProps {
   startAt?: number;
   playerRef: React.MutableRefObject<any>;
 }
+
+// Ensure we use the correct window type with YT property
+declare let window: Window & {
+  YT?: {
+    loaded: number;
+    Player: any;
+    PlayerState: {
+      UNSTARTED: number;
+      ENDED: number;
+      PLAYING: number;
+      PAUSED: number;
+      BUFFERING: number;
+      CUED: number;
+    };
+  };
+  onYouTubeIframeAPIReady?: () => void;
+};
 
 export const useYouTubeInitialization = ({
   videoId,
