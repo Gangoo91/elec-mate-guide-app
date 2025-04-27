@@ -12,6 +12,8 @@ type Milestone = {
   status: 'not_started' | 'in_progress' | 'completed';
   target_completion_date: string | null;
   completed_at: string | null;
+  resource_id: string | null;
+  resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
 };
 
 type MilestoneUpdate = {
