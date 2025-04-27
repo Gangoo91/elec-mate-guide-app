@@ -14,7 +14,13 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  
+  // Check if URL is a YouTube URL
+  const isYouTubeUrl = (url: string): boolean => {
+    return url.includes('youtube.com') || url.includes('youtu.be');
+  };
   
   const getYouTubeEmbedUrl = (url: string) => {
     try {
@@ -33,7 +39,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       }
       
       // If no match was found, return the original URL
-      console.log("Could not parse YouTube URL:", url);
       return url;
     } catch (err) {
       console.error("Error parsing YouTube URL:", err);
@@ -44,13 +49,33 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const handlePlay = () => {
     if (!playing) {
       setPlaying(true);
-      if (iframeRef.current) {
+      if (isYouTubeUrl(videoUrl) && iframeRef.current) {
         try {
           // Use postMessage to interact with YouTube iframe
           iframeRef.current.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
         } catch (err) {
-          console.error("Error playing video:", err);
+          console.error("Error playing YouTube video:", err);
         }
+      } else if (videoRef.current) {
+        // Play HTML5 video
+        videoRef.current.play().catch(err => {
+          console.error("Error playing video:", err);
+          setError(true);
+        });
+      }
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setPlaying(false);
+    updateProgress(duration, duration);
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const currentTime = videoRef.current.currentTime;
+      if (currentTime > 0) {
+        updateProgress(currentTime, videoRef.current.duration);
       }
     }
   };
@@ -61,45 +86,78 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   useEffect(() => {
+    // For YouTube videos
     const iframe = iframeRef.current;
-    if (!iframe) return;
-
-    const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== "https://www.youtube.com") return;
-      
-      try {
-        const data = JSON.parse(event.data);
+    if (isYouTubeUrl(videoUrl) && iframe) {
+      const handleMessage = (event: MessageEvent) => {
+        if (event.origin !== "https://www.youtube.com") return;
         
-        if (data.event === "onStateChange") {
-          switch(data.info) {
-            case 0: // Video ended
-              updateProgress(duration, duration);
-              setPlaying(false);
-              break;
-            case 1: // Playing
-              setPlaying(true);
-              break;
-            case 2: // Paused
-              setPlaying(false);
-              break;
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.event === "onStateChange") {
+            switch(data.info) {
+              case 0: // Video ended
+                updateProgress(duration, duration);
+                setPlaying(false);
+                break;
+              case 1: // Playing
+                setPlaying(true);
+                break;
+              case 2: // Paused
+                setPlaying(false);
+                break;
+            }
+          } else if (data.event === "duration") {
+            setDuration(data.duration);
+          } else if (data.event === "onError") {
+            console.error("YouTube player error:", data);
+            setError(true);
           }
-        } else if (data.event === "duration") {
-          setDuration(data.duration);
-        } else if (data.event === "onError") {
-          console.error("YouTube player error:", data);
-          setError(true);
+        } catch (e) {
+          // Not all messages from the iframe will be JSON
         }
-      } catch (e) {
-        // Not all messages from the iframe will be JSON
-      }
-    };
+      };
 
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, [duration, updateProgress]);
+      window.addEventListener('message', handleMessage);
+      return () => window.removeEventListener('message', handleMessage);
+    }
+  }, [duration, updateProgress, videoUrl]);
 
-  const embedUrl = getYouTubeEmbedUrl(videoUrl);
-  console.log("Embedding video URL:", embedUrl);
+  // Get video source and player
+  const renderVideoPlayer = () => {
+    if (isYouTubeUrl(videoUrl)) {
+      const embedUrl = getYouTubeEmbedUrl(videoUrl);
+      console.log("Embedding YouTube URL:", embedUrl);
+      
+      return (
+        <iframe
+          ref={iframeRef}
+          className="w-full h-full"
+          src={embedUrl}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          onError={handleIframeError}
+        />
+      );
+    } else {
+      console.log("Using HTML5 video player for:", videoUrl);
+      
+      return (
+        <video
+          ref={videoRef}
+          className="w-full h-full"
+          src={videoUrl}
+          title={title}
+          controls={false}
+          onEnded={handleVideoEnded}
+          onTimeUpdate={handleTimeUpdate}
+          onError={() => setError(true)}
+        />
+      );
+    }
+  };
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group">
@@ -114,20 +172,12 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             rel="noopener noreferrer" 
             className="text-[#FFC900] hover:underline"
           >
-            Try watching on YouTube
+            Try opening the video in a new tab
           </a>
         </div>
       ) : (
         <>
-          <iframe
-            ref={iframeRef}
-            className="w-full h-full"
-            src={embedUrl}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            onError={handleIframeError}
-          />
+          {renderVideoPlayer()}
           
           {!playing && (
             <div 
@@ -148,7 +198,10 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
           
           <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button className="text-white hover:text-[#FFC900] transition">
+              <button 
+                className="text-white hover:text-[#FFC900] transition"
+                onClick={handlePlay}
+              >
                 <Play className="h-5 w-5" />
               </button>
               <button className="text-white hover:text-[#FFC900] transition">
