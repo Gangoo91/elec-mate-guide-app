@@ -1,17 +1,18 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { format, parseISO } from "date-fns";
-import { Calendar, Users, Tag, ArrowLeft, Link, ExternalLink } from "lucide-react";
+import { ArrowLeft, Tag } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useStudyGroupDetails } from "@/hooks/useStudyGroupDetails";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/use-toast";
-import type { StudyGroup, StudyGroupSchedule } from '@/types/studyGroups';
+import StudyGroupMembership from "@/components/apprentices/study-groups/StudyGroupMembership";
+import StudyGroupSchedules from "@/components/apprentices/study-groups/StudyGroupSchedules";
 
 const StudyGroupDetailsPage = () => {
   const { groupId } = useParams();
@@ -19,89 +20,15 @@ const StudyGroupDetailsPage = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const { handleError } = useErrorHandler();
-  const [group, setGroup] = useState<StudyGroup | null>(null);
-  const [schedules, setSchedules] = useState<StudyGroupSchedule[]>([]);
-  const [memberCount, setMemberCount] = useState(0);
-  const [isMember, setIsMember] = useState(false);
-  const [isOwner, setIsOwner] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (groupId) {
-      fetchGroupDetails();
-    }
-  }, [groupId, user]);
-
-  const fetchGroupDetails = async () => {
-    try {
-      setIsLoading(true);
-      
-      // Fetch group details
-      const { data: groupData, error: groupError } = await supabase
-        .from('study_groups')
-        .select('*')
-        .eq('id', groupId)
-        .single();
-      
-      if (groupError) throw groupError;
-      
-      if (groupData) {
-        const typedGroup: StudyGroup = {
-          id: groupData.id,
-          name: groupData.name,
-          description: groupData.description || '',
-          topic: groupData.topic,
-          level: groupData.level,
-          max_participants: groupData.max_participants,
-          created_by: groupData.created_by,
-          next_meeting_at: groupData.next_meeting_at,
-          meeting_link: groupData.meeting_link,
-          tags: groupData.tags || [],
-          is_private: groupData.is_private || false,
-          study_materials: Array.isArray(groupData.study_materials) ? groupData.study_materials : []
-        };
-        
-        setGroup(typedGroup);
-        setIsOwner(user?.id === groupData.created_by);
-
-        // Fetch schedules
-        const { data: schedulesData, error: schedulesError } = await supabase
-          .from('study_group_schedules')
-          .select('*')
-          .eq('group_id', groupId);
-        
-        if (schedulesError) throw schedulesError;
-        setSchedules(schedulesData || []);
-
-        // Fetch member count
-        const { count, error: countError } = await supabase
-          .from('study_group_members')
-          .select('*', { count: 'exact' })
-          .eq('group_id', groupId);
-        
-        if (countError) throw countError;
-        setMemberCount(count || 0);
-
-        // Check if user is a member
-        if (user) {
-          const { data: memberData, error: memberError } = await supabase
-            .from('study_group_members')
-            .select('*')
-            .eq('group_id', groupId)
-            .eq('user_id', user.id)
-            .maybeSingle();
-          
-          if (memberError) throw memberError;
-          setIsMember(!!memberData);
-        }
-      }
-    } catch (error) {
-      handleError(error, "Failed to load study group details");
-      navigate('/apprentices/study-groups');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    group,
+    schedules,
+    memberCount,
+    isMember,
+    isOwner,
+    isLoading,
+    fetchGroupDetails
+  } = useStudyGroupDetails(groupId);
 
   const handleJoinLeave = async () => {
     if (!user) {
@@ -127,8 +54,6 @@ const StudyGroupDetailsPage = () => {
           title: "Left group",
           description: "You have left the study group",
         });
-        setIsMember(false);
-        setMemberCount(prev => prev - 1);
       } else {
         const { error } = await supabase
           .from('study_group_members')
@@ -143,9 +68,9 @@ const StudyGroupDetailsPage = () => {
           title: "Joined group",
           description: "You have joined the study group",
         });
-        setIsMember(true);
-        setMemberCount(prev => prev + 1);
       }
+      
+      fetchGroupDetails();
     } catch (error) {
       handleError(error, "Failed to update group membership");
     }
@@ -236,91 +161,16 @@ const StudyGroupDetailsPage = () => {
               </CardContent>
             </Card>
             
-            <Card className="bg-[#22251e] border-[#FFC900]/20 mt-6">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900]">Upcoming Meetings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {schedules.length > 0 ? (
-                  <div className="space-y-4">
-                    {schedules.map((schedule) => (
-                      <div key={schedule.id} className="p-4 border border-[#FFC900]/20 rounded-md">
-                        <div className="flex justify-between items-center mb-2">
-                          <h4 className="text-[#FFC900]">{schedule.day_of_week}</h4>
-                          <span className="text-[#FFC900]/80">{schedule.start_time} ({schedule.duration_minutes} minutes)</span>
-                        </div>
-                        {schedule.meeting_link && (
-                          <div className="mt-2">
-                            <a 
-                              href={schedule.meeting_link} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-2 text-[#FFC900] hover:underline"
-                            >
-                              <ExternalLink size={16} />
-                              Join Meeting
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-6 text-[#FFC900]/60">
-                    <Calendar className="mx-auto h-12 w-12 mb-2 opacity-50" />
-                    <p>No meetings scheduled yet.</p>
-                    {isOwner && (
-                      <p className="mt-2 text-sm">Click the calendar icon on the group card to schedule a meeting.</p>
-                    )}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <StudyGroupSchedules schedules={schedules} isOwner={isOwner} />
           </div>
           
           <div>
-            <Card className="bg-[#22251e] border-[#FFC900]/20 sticky top-6">
-              <CardHeader>
-                <CardTitle className="text-[#FFC900]">Membership</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {group.meeting_link && isMember && (
-                  <div className="mb-4">
-                    <Button 
-                      className="w-full bg-green-600 hover:bg-green-700 text-white"
-                      onClick={() => window.open(group.meeting_link, '_blank')}
-                    >
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Join Next Meeting
-                    </Button>
-                  </div>
-                )}
-                
-                <Button 
-                  onClick={handleJoinLeave}
-                  className={`w-full ${isMember ? 'bg-red-500 hover:bg-red-600' : 'bg-[#FFC900] hover:bg-[#FFC900]/90 text-black'}`}
-                >
-                  {isMember ? 'Leave Group' : 'Join Group'}
-                </Button>
-                
-                {isMember && (
-                  <div className="text-center mt-4">
-                    <p className="text-[#FFC900]/70 text-sm">
-                      You're currently a member of this group
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            
-            {isOwner && (
-              <div className="mt-6 text-center p-4 border border-[#FFC900]/20 rounded-md">
-                <p className="text-[#FFC900]/90 mb-2">You are the owner of this group</p>
-                <p className="text-[#FFC900]/70 text-sm">
-                  Go to the main Study Groups page and click on the calendar icon on your group's card to schedule meetings.
-                </p>
-              </div>
-            )}
+            <StudyGroupMembership 
+              isMember={isMember}
+              isOwner={isOwner}
+              meetingLink={group.meeting_link}
+              onJoinLeave={handleJoinLeave}
+            />
           </div>
         </div>
       </div>
