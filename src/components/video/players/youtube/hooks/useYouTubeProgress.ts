@@ -9,6 +9,7 @@ interface UseYouTubeProgressProps {
 export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgressProps) => {
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const mountedRef = useRef(true);
+  const lastTimeRef = useRef<{currentTime: number, duration: number} | null>(null);
 
   // Track component mount state to prevent updates after unmount
   useEffect(() => {
@@ -44,8 +45,17 @@ export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgress
           const currentTime = playerRef.current.getCurrentTime();
           const duration = playerRef.current.getDuration();
           
+          // Only send progress updates when the values change significantly
+          // or if it's the first update
           if (!isNaN(currentTime) && !isNaN(duration) && duration > 0) {
-            onProgress(currentTime, duration);
+            const shouldUpdate = !lastTimeRef.current || 
+              Math.abs(lastTimeRef.current.currentTime - currentTime) > 0.5 ||
+              Math.abs(lastTimeRef.current.duration - duration) > 0.5;
+              
+            if (shouldUpdate) {
+              lastTimeRef.current = { currentTime, duration };
+              onProgress(currentTime, duration);
+            }
           }
         }
       } catch (e) {

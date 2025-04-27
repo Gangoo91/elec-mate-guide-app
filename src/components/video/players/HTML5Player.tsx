@@ -23,13 +23,18 @@ export const HTML5Player = ({
   muted = false,
 }: HTML5PlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-
+  const attemptedPlayRef = useRef(false);
+  
   // Handle play/pause
   useEffect(() => {
     if (!videoRef.current) return;
     
+    const videoElement = videoRef.current;
+    
     if (playing) {
-      const playPromise = videoRef.current.play();
+      attemptedPlayRef.current = true;
+      const playPromise = videoElement.play();
+      
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
@@ -39,14 +44,16 @@ export const HTML5Player = ({
           }
         });
       }
-    } else {
-      videoRef.current.pause();
+    } else if (attemptedPlayRef.current) {
+      // Only pause if we've attempted to play before
+      // This prevents unnecessary pause calls on initial render
+      videoElement.pause();
     }
   }, [playing, onError]);
 
   // Set current time
   useEffect(() => {
-    if (!videoRef.current || !currentTime) return;
+    if (!videoRef.current || currentTime === undefined) return;
     
     try {
       // Only seek if the time difference is significant
@@ -64,13 +71,25 @@ export const HTML5Player = ({
     videoRef.current.muted = muted;
   }, [muted]);
 
-  // Make sure video fits container
+  // Make sure video fits container and apply styles
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.style.width = '100%';
       videoRef.current.style.height = '100%';
       videoRef.current.style.objectFit = 'contain';
+      videoRef.current.style.backgroundColor = 'black';
     }
+    
+    return () => {
+      // Cleanup - pause the video when unmounting
+      if (videoRef.current) {
+        try {
+          videoRef.current.pause();
+        } catch (e) {
+          console.error("Error pausing video on unmount:", e);
+        }
+      }
+    };
   }, []);
 
   return (
