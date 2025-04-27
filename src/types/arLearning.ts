@@ -3,7 +3,6 @@ export type ComponentInfo = {
   id: string;
   name: string;
   description: string;
-  youtubeId: string;
   imageUrl?: string;
   specifications?: string[];
   tips?: string[];
@@ -14,4 +13,3 @@ export type ComponentCategory = {
   name: string;
   items: ComponentInfo[];
 }
-
