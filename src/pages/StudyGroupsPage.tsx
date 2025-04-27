@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -185,10 +186,13 @@ const StudyGroupsPage = () => {
                 description={group.description || ""}
                 topic={group.topic}
                 level={group.level}
-                maxParticipants={group.max_participants}
-                createdBy={group.created_by}
-                nextMeetingAt={group.next_meeting_at}
-                meetingLink={group.meeting_link}
+                max_participants={group.max_participants}
+                created_by={group.created_by}
+                next_meeting_at={group.next_meeting_at}
+                meeting_link={group.meeting_link}
+                tags={group.tags}
+                is_private={group.is_private}
+                study_materials={group.study_materials || []}
                 memberCount={memberCounts[group.id] || 0}
                 isMember={userMemberships.has(group.id)}
                 onJoinLeave={() => handleJoinLeave(group.id, userMemberships.has(group.id))}

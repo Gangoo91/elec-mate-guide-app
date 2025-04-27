@@ -21,20 +21,20 @@ const StudyGroupCard = ({
   description,
   topic,
   level,
-  maxParticipants,
-  nextMeetingAt,
-  meetingLink,
+  max_participants,
+  next_meeting_at,
+  meeting_link,
   memberCount,
   isMember,
   onJoinLeave,
   tags = [],
-  isPrivate,
-  createdBy
+  is_private,
+  created_by
 }: StudyGroupProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
-  const isOwner = user?.id === createdBy;
+  const isOwner = user?.id === created_by;
 
   const handleJoinLeave = async () => {
     if (!user) {
@@ -63,7 +63,7 @@ const StudyGroupCard = ({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-semibold text-[#FFC900]">{name}</h3>
-              {isPrivate && (
+              {is_private && (
                 <span className="px-2 py-1 text-xs rounded-full bg-[#FFC900]/10 text-[#FFC900]">
                   Private
                 </span>
@@ -96,16 +96,16 @@ const StudyGroupCard = ({
               <Users size={16} />
               Members
             </span>
-            <span className="text-[#FFC900]">{memberCount} / {maxParticipants}</span>
+            <span className="text-[#FFC900]">{memberCount} / {max_participants}</span>
           </div>
-          {nextMeetingAt && (
+          {next_meeting_at && (
             <div className="flex justify-between text-sm">
               <span className="text-[#FFC900]/60 flex items-center gap-2">
                 <Calendar size={16} />
                 Next Meeting
               </span>
               <span className="text-[#FFC900]">
-                {formatDistanceToNow(new Date(nextMeetingAt), { addSuffix: true })}
+                {formatDistanceToNow(new Date(next_meeting_at), { addSuffix: true })}
               </span>
             </div>
           )}

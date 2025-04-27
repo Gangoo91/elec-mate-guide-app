@@ -39,12 +39,18 @@ const ScheduleDialog: React.FC<ScheduleDialogProps> = ({
 
   const onSubmit = async (data: Partial<StudyGroupSchedule>) => {
     try {
+      const scheduleData = {
+        ...data,
+        group_id: groupId,
+        // Ensure required fields are included and properly typed
+        day_of_week: data.day_of_week || 'Monday',
+        start_time: data.start_time || '09:00',
+        duration_minutes: data.duration_minutes || 60
+      };
+
       const { error } = await supabase
         .from('study_group_schedules')
-        .insert({
-          ...data,
-          group_id: groupId,
-        });
+        .insert(scheduleData);
 
       if (error) throw error;
 
