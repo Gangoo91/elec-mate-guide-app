@@ -10,34 +10,69 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Plus } from "lucide-react";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface CreateStudyGroupForm {
-  name: string;
-  description: string;
-  topic: string;
-  level: string;
-  maxParticipants: number;
-  meetingLink?: string;
-}
+const studyGroupSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  topic: z.string().min(2, "Topic is required"),
+  level: z.string().min(1, "Level is required"),
+  maxParticipants: z.number().min(2).max(50),
+  meetingLink: z.string().optional()
+});
+
+type StudyGroupFormValues = z.infer<typeof studyGroupSchema>;
 
 const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateStudyGroupForm>();
   const [open, setOpen] = React.useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { handleError } = useErrorHandler();
+  
+  const form = useForm<StudyGroupFormValues>({
+    resolver: zodResolver(studyGroupSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      topic: "",
+      level: "",
+      maxParticipants: 10,
+      meetingLink: ""
+    }
+  });
 
-  const onSubmit = async (data: CreateStudyGroupForm) => {
-    if (!user) return;
+  const onSubmit = async (data: StudyGroupFormValues) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to create study groups",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
+      console.log("Submitting study group data:", data);
+      
       const { error } = await supabase
         .from('study_groups')
         .insert({
-          ...data,
+          name: data.name,
+          description: data.description,
+          topic: data.topic,
+          level: data.level,
+          max_participants: data.maxParticipants,
+          meeting_link: data.meetingLink || null,
           created_by: user.id
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase error:", error);
+        throw error;
+      }
 
       toast({
         title: "Success",
@@ -45,14 +80,10 @@ const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void
       });
 
       setOpen(false);
-      reset();
+      form.reset();
       onGroupCreated();
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to create study group",
-        variant: "destructive",
-      });
+      handleError(error, "Failed to create study group. Please check your entries and try again.");
     }
   };
 
@@ -68,61 +99,131 @@ const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void
         <DialogHeader>
           <DialogTitle className="text-[#FFC900]">Create a New Study Group</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <Input
-              placeholder="Group Name"
-              {...register("name", { required: true })}
-              className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Group Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Group Name"
+                      {...field}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div>
-            <Textarea
-              placeholder="Description"
-              {...register("description", { required: true })}
-              className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+            
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Describe your study group..."
+                      {...field}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div>
-            <Input
-              placeholder="Topic"
-              {...register("topic", { required: true })}
-              className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+            
+            <FormField
+              control={form.control}
+              name="topic"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Topic</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Topic (e.g., Electrical Theory, Wiring)"
+                      {...field}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div>
-            <Select
-              onValueChange={(value) => register("level").onChange({ target: { value } })}
-            >
-              <SelectTrigger className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]">
-                <SelectValue placeholder="Select Level" />
-              </SelectTrigger>
-              <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-                <SelectItem value="beginner">Beginner</SelectItem>
-                <SelectItem value="intermediate">Intermediate</SelectItem>
-                <SelectItem value="advanced">Advanced</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Input
-              type="number"
-              placeholder="Maximum Participants"
-              {...register("maxParticipants", { required: true, min: 2, max: 50 })}
-              className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+            
+            <FormField
+              control={form.control}
+              name="level"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Level</FormLabel>
+                  <Select 
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]">
+                        <SelectValue placeholder="Select Level" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
+                      <SelectItem value="beginner">Beginner</SelectItem>
+                      <SelectItem value="intermediate">Intermediate</SelectItem>
+                      <SelectItem value="advanced">Advanced</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-          </div>
-          <div>
-            <Input
-              placeholder="Meeting Link (optional)"
-              {...register("meetingLink")}
-              className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+            
+            <FormField
+              control={form.control}
+              name="maxParticipants"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Maximum Participants</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-          </div>
-          <Button type="submit" className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90">
-            Create Group
-          </Button>
-        </form>
+            
+            <FormField
+              control={form.control}
+              name="meetingLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#FFC900]">Meeting Link (optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Teams/Zoom meeting link"
+                      {...field}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
+            />
+            
+            <Button type="submit" className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90">
+              Create Group
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

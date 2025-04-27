@@ -10,48 +10,70 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Search } from "lucide-react";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const StudyGroupsPage = () => {
   const [groups, setGroups] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [levelFilter, setLevelFilter] = useState<string>("");
+  const [levelFilter, setLevelFilter] = useState<string>("all");
   const [memberCounts, setMemberCounts] = useState<Record<string, number>>({});
   const [userMemberships, setUserMemberships] = useState<Set<string>>(new Set());
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const { toast } = useToast();
+  const { handleError } = useErrorHandler();
 
   const fetchGroups = async () => {
     try {
+      setIsLoading(true);
+      console.log("Fetching study groups...");
+      
       const { data: groups, error } = await supabase
         .from('study_groups')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching study groups:", error);
+        throw error;
+      }
+      
+      console.log("Fetched groups:", groups);
       setGroups(groups || []);
 
       // Fetch member counts for each group
       const counts: Record<string, number> = {};
       for (const group of groups || []) {
-        const { count } = await supabase
+        const { count, error: countError } = await supabase
           .from('study_group_members')
           .select('*', { count: 'exact' })
           .eq('group_id', group.id);
+          
+        if (countError) {
+          console.error("Error fetching member count:", countError);
+        }
+        
         counts[group.id] = count || 0;
       }
       setMemberCounts(counts);
 
       // Fetch user memberships
       if (user) {
-        const { data: memberships } = await supabase
+        const { data: memberships, error: membershipError } = await supabase
           .from('study_group_members')
           .select('group_id')
           .eq('user_id', user.id);
         
+        if (membershipError) {
+          console.error("Error fetching user memberships:", membershipError);
+        }
+        
         setUserMemberships(new Set((memberships || []).map(m => m.group_id)));
       }
     } catch (error) {
-      console.error('Error fetching study groups:', error);
+      handleError(error, "Failed to load study groups");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,7 +82,14 @@ const StudyGroupsPage = () => {
   }, [user]);
 
   const handleJoinLeave = async (groupId: string, isMember: boolean) => {
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to join study groups",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       if (isMember) {
@@ -71,6 +100,11 @@ const StudyGroupsPage = () => {
           .eq('user_id', user.id);
 
         if (error) throw error;
+        
+        toast({
+          title: "Left group",
+          description: "You have left the study group",
+        });
       } else {
         const { error } = await supabase
           .from('study_group_members')
@@ -80,27 +114,24 @@ const StudyGroupsPage = () => {
           });
 
         if (error) throw error;
+        
+        toast({
+          title: "Joined group",
+          description: "You have joined the study group",
+        });
       }
 
       fetchGroups();
-      toast({
-        title: isMember ? "Left group" : "Joined group",
-        description: isMember ? "You have left the study group" : "You have joined the study group",
-      });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update group membership",
-        variant: "destructive",
-      });
+      handleError(error, "Failed to update group membership");
     }
   };
 
   const filteredGroups = groups.filter(group => {
     const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          group.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         group.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesLevel = !levelFilter || group.level === levelFilter;
+                         (group.description && group.description.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesLevel = levelFilter === "all" || group.level === levelFilter;
     return matchesSearch && matchesLevel;
   });
 
@@ -140,30 +171,36 @@ const StudyGroupsPage = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredGroups.map(group => (
-            <StudyGroupCard
-              key={group.id}
-              id={group.id}
-              name={group.name}
-              description={group.description}
-              topic={group.topic}
-              level={group.level}
-              maxParticipants={group.max_participants}
-              createdBy={group.created_by}
-              nextMeetingAt={group.next_meeting_at}
-              meetingLink={group.meeting_link}
-              memberCount={memberCounts[group.id] || 0}
-              isMember={userMemberships.has(group.id)}
-              onJoinLeave={() => handleJoinLeave(group.id, userMemberships.has(group.id))}
-            />
-          ))}
-          {filteredGroups.length === 0 && (
-            <div className="col-span-full text-center py-8 text-[#FFC900]/60">
-              No study groups found matching your criteria
-            </div>
-          )}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-8">
+            <div className="h-8 w-8 rounded-full border-2 border-[#FFC900]/80 border-t-transparent animate-spin"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGroups.map(group => (
+              <StudyGroupCard
+                key={group.id}
+                id={group.id}
+                name={group.name}
+                description={group.description || ""}
+                topic={group.topic}
+                level={group.level}
+                maxParticipants={group.max_participants}
+                createdBy={group.created_by}
+                nextMeetingAt={group.next_meeting_at}
+                meetingLink={group.meeting_link}
+                memberCount={memberCounts[group.id] || 0}
+                isMember={userMemberships.has(group.id)}
+                onJoinLeave={() => handleJoinLeave(group.id, userMemberships.has(group.id))}
+              />
+            ))}
+            {filteredGroups.length === 0 && !isLoading && (
+              <div className="col-span-full text-center py-8 text-[#FFC900]/60">
+                No study groups found matching your criteria
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </MainLayout>
   );
