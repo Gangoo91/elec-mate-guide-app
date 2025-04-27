@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Dialog,
@@ -16,7 +15,11 @@ import {
   MessageSquare, 
   Clock, 
   PlusCircle,
-  ArrowUpRight 
+  ArrowUpRight,
+  Play,
+  BookOpen,
+  CirclePlay,
+  Headphones
 } from 'lucide-react';
 import MilestoneStatusButton from './MilestoneStatusButton';
 import { Separator } from "@/components/ui/separator";
@@ -35,6 +38,7 @@ type Milestone = {
   completed_at: string | null;
   resource_id: string | null;
   resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  created_at: string;
 };
 
 type Update = {
@@ -53,7 +57,6 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
   const { updateMilestone, addMilestoneUpdate, milestoneUpdates } = useApprenticeProgress();
   const navigate = useNavigate();
   
-  // Filter updates for this specific milestone
   const milestoneSpecificUpdates = milestoneUpdates.filter(
     update => update.milestone_id === milestone.id
   );
@@ -144,7 +147,7 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
               </Badge>
               <div className="flex items-center gap-2 text-sm text-[#FFC900]/70">
                 <Calendar className="h-4 w-4" />
-                <span>Created {formatDistance(new Date(milestone.created_at || new Date()), new Date(), { addSuffix: true })}</span>
+                <span>Created {formatDistance(new Date(milestone.created_at), new Date(), { addSuffix: true })}</span>
               </div>
             </div>
             
