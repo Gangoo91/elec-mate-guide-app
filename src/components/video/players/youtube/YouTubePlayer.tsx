@@ -88,10 +88,10 @@ export const YouTubePlayer = ({
   }, [playerAttempts, playerReady, hasError, videoId, title]);
 
   return (
-    <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
+    <AspectRatio ratio={16 / 9} className="w-full overflow-hidden bg-black relative">
       <div
         ref={containerRef}
-        className={`w-full h-full bg-black ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
+        className={`absolute inset-0 w-full h-full ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
         title={title}
         aria-label={title}
         data-video-id={videoId || ''}

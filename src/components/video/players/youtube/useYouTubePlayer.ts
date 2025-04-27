@@ -28,6 +28,7 @@ export const useYouTubePlayer = ({
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const lastVideoIdRef = useRef<string | null>(null);
   const playAfterReadyRef = useRef(playing);
+  const playerRef = useRef<any>(null);
 
   useEffect(() => {
     playAfterReadyRef.current = playing;
@@ -36,7 +37,7 @@ export const useYouTubePlayer = ({
   // Define the progress functions first
   const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
     onProgress,
-    playerRef: useRef<any>(null) // Temporary ref, will be updated below
+    playerRef
   });
 
   const handlePlayerStateChange = useCallback((event: any) => {
@@ -104,7 +105,7 @@ export const useYouTubePlayer = ({
   }, [startAt, onPlayerReady]);
 
   // Now initialize the player with the handlePlayerStateChange function
-  const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
+  const { initPlayer, errorRetryCountRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
     onError,
@@ -112,20 +113,9 @@ export const useYouTubePlayer = ({
     onPlayerStateChange: handlePlayerStateChange,
     onPlayerError: onError,
     playing,
-    startAt
+    startAt,
+    playerRef
   });
-
-  // Update the real playerRef in useYouTubeProgress
-  useEffect(() => {
-    // This ensures that the playerRef from useYouTubeInitialization
-    // is properly used in the useYouTubeProgress hook
-    if (playerRef.current) {
-      startProgressInterval();
-    }
-    return () => {
-      clearProgressInterval();
-    };
-  }, [playerRef.current, startProgressInterval, clearProgressInterval]);
 
   // Create player element if it doesn't exist
   useEffect(() => {
@@ -140,6 +130,11 @@ export const useYouTubePlayer = ({
       if (containerRef.current) {
         const playerDiv = document.createElement('div');
         playerDiv.id = playerElementId;
+        playerDiv.style.position = 'absolute';
+        playerDiv.style.top = '0';
+        playerDiv.style.left = '0';
+        playerDiv.style.width = '100%';
+        playerDiv.style.height = '100%';
         containerRef.current.appendChild(playerDiv);
       }
     };

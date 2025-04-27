@@ -11,6 +11,7 @@ interface UseYouTubeInitializationProps {
   onPlayerError: (event: any) => void;
   playing?: boolean;
   startAt?: number;
+  playerRef: React.MutableRefObject<any>;
 }
 
 export const useYouTubeInitialization = ({
@@ -21,9 +22,9 @@ export const useYouTubeInitialization = ({
   onPlayerStateChange,
   onPlayerError,
   playing = false,
-  startAt = 0
+  startAt = 0,
+  playerRef
 }: UseYouTubeInitializationProps) => {
-  const playerRef = useRef<any>(null);
   const playerInitializedRef = useRef(false);
   const errorRetryCountRef = useRef(0);
   const apiLoadedRef = useRef(false);
@@ -118,7 +119,7 @@ export const useYouTubeInitialization = ({
       console.error('Failed to load YouTube API:', err);
       onError();
     });
-  }, [videoId, playerElementId, playing, startAt, onPlayerReady, onPlayerStateChange, onPlayerError, onError]);
+  }, [videoId, playerElementId, playing, startAt, onPlayerReady, onPlayerStateChange, onPlayerError, onError, playerRef]);
 
   useEffect(() => {
     // Reset state when videoId changes
@@ -135,10 +136,9 @@ export const useYouTubeInitialization = ({
         }
       }
     };
-  }, [videoId]);
+  }, [videoId, playerRef]);
 
   return {
-    playerRef,
     initPlayer,
     errorRetryCountRef
   };
