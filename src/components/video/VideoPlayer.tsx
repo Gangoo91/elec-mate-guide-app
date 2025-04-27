@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Play } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Play, Pause } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
 import { YouTubePlayer } from './players/YouTubePlayer';
 import { HTML5Player } from './players/HTML5Player';
@@ -18,20 +18,43 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   
   const isYouTubeUrl = (url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
   };
 
+  // Initialize player with last position if available
+  useEffect(() => {
+    if (progress.lastPosition > 0) {
+      setCurrentTime(progress.lastPosition);
+    }
+  }, [progress.lastPosition]);
+
   const handlePlay = () => {
-    if (!playing) {
-      setPlaying(true);
+    setPlaying(!playing);
+    
+    // For HTML5 video, manually trigger play/pause
+    if (!isYouTubeUrl(videoUrl)) {
+      const video = document.querySelector('video');
+      if (video) {
+        if (video.paused) {
+          video.play().catch(err => {
+            console.error("Error playing video:", err);
+            setError(true);
+          });
+        } else {
+          video.pause();
+        }
+      }
     }
   };
 
   const handleVolumeClick = () => {
-    // Volume control will be implemented in a future update
-    console.log('Volume control clicked');
+    const video = document.querySelector('video');
+    if (video) {
+      video.muted = !video.muted;
+    }
   };
 
   const handleFullscreenClick = () => {
@@ -40,7 +63,9 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       if (document.fullscreenElement) {
         document.exitFullscreen();
       } else {
-        container.requestFullscreen();
+        container.requestFullscreen().catch(err => {
+          console.error("Error attempting to enable fullscreen:", err);
+        });
       }
     }
   };
@@ -51,8 +76,13 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
+    if (videoDuration > 0) {
+      setDuration(videoDuration);
+    }
+    
     if (currentTime > 0) {
-      updateProgress(currentTime, videoDuration);
+      setCurrentTime(currentTime);
+      updateProgress(currentTime, videoDuration || duration);
     }
   };
 
@@ -69,6 +99,8 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               onError={() => setError(true)}
               onProgress={handleTimeUpdate}
               onPlayStateChange={setPlaying}
+              startAt={progress.lastPosition}
+              playing={playing}
             />
           ) : (
             <HTML5Player
@@ -82,6 +114,8 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
                   handleTimeUpdate(video.currentTime, video.duration);
                 }
               }}
+              currentTime={currentTime}
+              playing={playing}
             />
           )}
           

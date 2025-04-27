@@ -1,6 +1,4 @@
-
 import React, { useRef, useEffect } from 'react';
-import { AlertTriangle } from 'lucide-react';
 
 interface YouTubePlayerProps {
   videoUrl: string;
@@ -8,6 +6,8 @@ interface YouTubePlayerProps {
   onError: () => void;
   onProgress: (currentTime: number, duration: number) => void;
   onPlayStateChange: (isPlaying: boolean) => void;
+  startAt?: number;
+  playing?: boolean;
 }
 
 export const YouTubePlayer = ({ 
@@ -15,9 +15,13 @@ export const YouTubePlayer = ({
   title, 
   onError, 
   onProgress,
-  onPlayStateChange 
+  onPlayStateChange,
+  startAt = 0,
+  playing = false
 }: YouTubePlayerProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerRef = useRef<any>(null);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const getYouTubeEmbedUrl = (url: string) => {
     try {
@@ -25,6 +29,7 @@ export const YouTubePlayer = ({
         const embedUrl = new URL(url);
         embedUrl.searchParams.set('enablejsapi', '1');
         embedUrl.searchParams.set('origin', window.location.origin);
+        embedUrl.searchParams.set('start', Math.floor(startAt).toString());
         return embedUrl.toString();
       }
       
@@ -33,7 +38,12 @@ export const YouTubePlayer = ({
       
       if (match && match[1]) {
         const videoId = match[1];
-        return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`;
+        const params = new URLSearchParams({
+          enablejsapi: '1',
+          origin: window.location.origin,
+          start: Math.floor(startAt).toString()
+        });
+        return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
       }
       
       return url;
@@ -44,47 +54,110 @@ export const YouTubePlayer = ({
   };
 
   useEffect(() => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-
-    const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== "https://www.youtube.com") return;
-      
-      try {
-        const data = JSON.parse(event.data);
-        
-        if (data.event === "onStateChange") {
-          switch(data.info) {
-            case 0: // Video ended
-              onProgress(data.duration || 0, data.duration || 0);
-              onPlayStateChange(false);
-              break;
-            case 1: // Playing
-              onPlayStateChange(true);
-              break;
-            case 2: // Paused
-              onPlayStateChange(false);
-              break;
-          }
-        } else if (data.event === "duration") {
-          // Duration update
-        } else if (data.event === "onError") {
-          console.error("YouTube player error:", data);
-          onError();
+    const initYouTubeAPI = () => {
+      if (!window.YT) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        if (firstScriptTag.parentNode) {
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         }
-      } catch (e) {
-        // Not all messages from the iframe will be JSON
       }
     };
 
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, [onError, onProgress, onPlayStateChange]);
+    initYouTubeAPI();
+  }, []);
 
+  useEffect(() => {
+    const setupPlayer = () => {
+      if (iframeRef.current && iframeRef.current.id && window.YT) {
+        playerRef.current = new window.YT.Player(iframeRef.current.id, {
+          events: {
+            'onStateChange': (event: any) => {
+              switch(event.data) {
+                case 0: // Ended
+                  onPlayStateChange(false);
+                  onProgress(event.target.getDuration(), event.target.getDuration());
+                  clearProgressInterval();
+                  break;
+                case 1: // Playing
+                  onPlayStateChange(true);
+                  startProgressInterval();
+                  break;
+                case 2: // Paused
+                  onPlayStateChange(false);
+                  clearProgressInterval();
+                  break;
+              }
+            },
+            'onError': () => {
+              onError();
+              clearProgressInterval();
+            },
+            'onReady': (event: any) => {
+              if (startAt > 0) {
+                event.target.seekTo(startAt);
+              }
+            }
+          }
+        });
+      }
+    };
+
+    const startProgressInterval = () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+
+      progressIntervalRef.current = setInterval(() => {
+        if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+          onProgress(
+            playerRef.current.getCurrentTime(),
+            playerRef.current.getDuration()
+          );
+        }
+      }, 1000);
+    };
+
+    const clearProgressInterval = () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+    };
+
+    if (iframeRef.current && window.YT) {
+      setupPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = setupPlayer;
+    }
+
+    return () => {
+      clearProgressInterval();
+      if (window.onYouTubeIframeAPIReady === setupPlayer) {
+        window.onYouTubeIframeAPIReady = null;
+      }
+    };
+  }, [iframeRef, onError, onPlayStateChange, onProgress, startAt]);
+
+  useEffect(() => {
+    if (playerRef.current && typeof playerRef.current.getPlayerState === 'function') {
+      const playerState = playerRef.current.getPlayerState();
+      
+      if (playing && playerState !== 1) { // Not playing
+        playerRef.current.playVideo();
+      } else if (!playing && playerState === 1) { // Currently playing
+        playerRef.current.pauseVideo();
+      }
+    }
+  }, [playing]);
+
+  const iframeId = `yt-player-${videoId}`;
   const embedUrl = getYouTubeEmbedUrl(videoUrl);
   
   return (
     <iframe
+      id={iframeId}
       ref={iframeRef}
       className="w-full h-full"
       src={embedUrl}

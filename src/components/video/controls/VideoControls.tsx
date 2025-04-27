@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Play, Volume2, Maximize } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
 interface VideoControlsProps {
   playing: boolean;
@@ -23,7 +23,11 @@ export const VideoControls = ({
           onClick={onPlay}
           aria-label={playing ? 'Pause' : 'Play'}
         >
-          <Play className="h-5 w-5" />
+          {playing ? (
+            <Pause className="h-5 w-5" />
+          ) : (
+            <Play className="h-5 w-5" />
+          )}
         </button>
         <button 
           className="text-white hover:text-[#FFC900] transition"
