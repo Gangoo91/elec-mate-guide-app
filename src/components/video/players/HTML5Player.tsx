@@ -1,6 +1,5 @@
 
-import React, { useRef, useEffect, useState } from 'react';
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import React, { useEffect, useRef } from 'react';
 
 interface HTML5PlayerProps {
   videoUrl: string;
@@ -13,181 +12,64 @@ interface HTML5PlayerProps {
   muted?: boolean;
 }
 
-export const HTML5Player = ({ 
-  videoUrl, 
-  title, 
-  onError, 
-  onEnded, 
+export const HTML5Player = ({
+  videoUrl,
+  title,
+  onError,
+  onEnded,
   onTimeUpdate,
   currentTime = 0,
   playing = false,
-  muted = false
+  muted = false,
 }: HTML5PlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const attemptedLoadRef = useRef(false);
-  const [loadAttempts, setLoadAttempts] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const playAttemptRef = useRef(0);
-
-  // Apply currentTime whenever it changes or video is loaded
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (videoElement && currentTime > 0 && videoElement.readyState >= 2) {
-      videoElement.currentTime = currentTime;
-    }
-  }, [currentTime]);
 
   // Handle play/pause
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    // Set muted state
-    if (videoElement.muted !== muted) {
-      videoElement.muted = muted;
-    }
-
+    if (!videoRef.current) return;
+    
     if (playing) {
-      const playPromise = videoElement.play();
-      
+      const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
-          
-          // If we get an error, retry a few times with increasing delays
-          if (playAttemptRef.current < 3) {
-            const delay = 300 * (playAttemptRef.current + 1);
-            playAttemptRef.current++;
-            
-            setTimeout(() => {
-              if (videoElement && !videoElement.paused) return;
-              console.log(`Retry play attempt ${playAttemptRef.current}`);
-              
-              // Try with muted if autoplay was blocked
-              if (err.name === 'NotAllowedError') {
-                videoElement.muted = true;
-              }
-              
-              videoElement.play().catch(innerErr => {
-                console.error("Failed to play on retry:", innerErr);
-              });
-            }, delay);
-          }
+          onError();
         });
       }
     } else {
-      videoElement.pause();
+      videoRef.current.pause();
     }
+  }, [playing, onError]);
 
-    return () => {
-      if (videoElement) {
-        videoElement.pause();
-      }
-    };
-  }, [playing, videoUrl, muted]);
-
-  // Reset play attempt counter when video URL changes
+  // Set current time
   useEffect(() => {
-    playAttemptRef.current = 0;
+    if (!videoRef.current || !currentTime) return;
     
-    // Clean up video src when unmounting or URL changes
-    return () => {
-      const videoElement = videoRef.current;
-      if (videoElement) {
-        videoElement.src = ""; // Empty source
-        videoElement.load(); // Reset the video element
-      }
-    };
-  }, [videoUrl]);
-
-  const handleLoadedMetadata = () => {
-    attemptedLoadRef.current = true;
-    const videoElement = videoRef.current;
-    
-    if (videoElement && currentTime > 0) {
-      videoElement.currentTime = currentTime;
+    try {
+      videoRef.current.currentTime = currentTime;
+    } catch (err) {
+      console.error("Error setting video time:", err);
     }
-    
-    if (videoElement) {
-      videoElement.muted = muted;
-    }
-    
-    // Show video once it's ready
-    setIsVisible(true);
-    
-    if (playing && videoElement) {
-      videoElement.play().catch(err => {
-        console.error("Error auto-playing after metadata load:", err);
-      });
-    }
-  };
+  }, [currentTime]);
 
-  const handleLoadError = () => {
-    // Retry loading up to 3 times with different mime types
-    if (loadAttempts < 3 && videoRef.current) {
-      setLoadAttempts(prev => prev + 1);
-      // Try again after a delay
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.load();
-        }
-      }, 1000);
-    } else {
-      onError();
-      attemptedLoadRef.current = true;
-    }
-  };
-
-  // Verify the video URL is valid
-  const isValidVideoUrl = (url: string): boolean => {
-    if (!url) return false;
-    
-    return url && (
-      url.endsWith('.mp4') || 
-      url.endsWith('.webm') || 
-      url.endsWith('.ogg') ||
-      url.startsWith('blob:') ||
-      url.includes('video') ||
-      // Some URLs may not have file extensions but still be valid
-      url.includes('googleapis.com') || 
-      url.includes('cloudfront.net') ||
-      url.includes('amazonaws.com')
-    );
-  };
-
-  // Check if after 5 seconds the video hasn't loaded
+  // Set muted state
   useEffect(() => {
-    if (!isValidVideoUrl(videoUrl)) {
-      onError();
-      return;
-    }
-
-    const timeoutId = setTimeout(() => {
-      if (videoRef.current && videoRef.current.readyState === 0 && !attemptedLoadRef.current) {
-        console.error("Video failed to load after timeout");
-        onError();
-      }
-    }, 5000);
-
-    return () => clearTimeout(timeoutId);
-  }, [videoUrl, onError]);
+    if (!videoRef.current) return;
+    videoRef.current.muted = muted;
+  }, [muted]);
 
   return (
-    <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
+    <div className="absolute inset-0 w-full h-full">
       <video
         ref={videoRef}
-        className={`w-full h-full object-cover ${isVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}
-        src={isValidVideoUrl(videoUrl) ? videoUrl : ''}
+        className="w-full h-full object-contain"
+        src={videoUrl}
         title={title}
-        controls={false}
+        onError={onError}
         onEnded={onEnded}
         onTimeUpdate={onTimeUpdate}
-        onError={handleLoadError}
-        onLoadedMetadata={handleLoadedMetadata}
-        preload="metadata"
         playsInline
-        muted={muted}
       />
-    </AspectRatio>
+    </div>
   );
 };
