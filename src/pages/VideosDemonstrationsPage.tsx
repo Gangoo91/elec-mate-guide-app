@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
@@ -8,6 +7,20 @@ import { VideoDialog } from '@/components/video/VideoDialog';
 import { VideoCategoryTabs } from '@/components/video/VideoCategoryTabs';
 import { VideoSidebar } from '@/components/video/VideoSidebar';
 import { Skeleton } from "@/components/ui/skeleton";
+
+console.log('Debugging video categories:');
+const { data: categories } = useQuery({
+  queryKey: ['video-categories'],
+  queryFn: async () => {
+    const { data, error } = await supabase
+      .from('video_lessons')
+      .select('category')
+      .distinct();
+    
+    console.log('Existing categories:', data?.map(cat => cat.category));
+    return data;
+  }
+});
 
 interface VideoLesson {
   id: string;
