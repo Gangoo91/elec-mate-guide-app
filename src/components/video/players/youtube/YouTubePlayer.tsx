@@ -3,6 +3,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface YouTubePlayerProps {
   videoUrl: string;
@@ -87,7 +88,7 @@ export const YouTubePlayer = ({
   }, [playerAttempts, playerReady, hasError, videoId, title]);
 
   return (
-    <AspectRatio ratio={16 / 9} className="w-full overflow-hidden bg-black relative">
+    <div className="w-full h-full relative bg-black overflow-hidden">
       <div
         ref={containerRef}
         className={`absolute inset-0 w-full h-full ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
@@ -97,9 +98,10 @@ export const YouTubePlayer = ({
       />
       {!playerReady && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-black">
-          <div className="animate-pulse text-white/70">Loading video...</div>
+          <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading video..." />
+          <p className="absolute mt-24 text-white/70">Loading video...</p>
         </div>
       )}
-    </AspectRatio>
+    </div>
   );
 };

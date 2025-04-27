@@ -34,11 +34,17 @@ export const useYouTubeInitialization = ({
       return;
     }
 
-    if (apiLoadedRef.current && window.YT && window.YT.Player) {
+    const createYoutubePlayer = () => {
       try {
         // Clean up any previous instance
         if (playerRef.current && typeof playerRef.current.destroy === 'function') {
           playerRef.current.destroy();
+          playerRef.current = null;
+        }
+        
+        if (!document.getElementById(playerElementId)) {
+          console.error('Player element not found before initialization:', playerElementId);
+          return;
         }
         
         playerRef.current = new window.YT.Player(playerElementId, {
@@ -68,6 +74,11 @@ export const useYouTubeInitialization = ({
         console.error('Error initializing YouTube player:', error);
         onError();
       }
+    };
+
+    if (apiLoadedRef.current && window.YT && window.YT.Player) {
+      // Add a small delay to ensure DOM is ready
+      setTimeout(createYoutubePlayer, 150);
       return;
     }
     
@@ -79,48 +90,8 @@ export const useYouTubeInitialization = ({
         return;
       }
 
-      // Check if element still exists
-      if (!document.getElementById(playerElementId)) {
-        console.error('Player element not found:', playerElementId);
-        return;
-      }
-      
-      // Small delay to ensure the API is fully initialized
-      setTimeout(() => {
-        try {
-          if (!document.getElementById(playerElementId)) {
-            console.error('Player element not found after delay:', playerElementId);
-            return;
-          }
-          
-          playerRef.current = new window.YT.Player(playerElementId, {
-            videoId: videoId,
-            playerVars: {
-              autoplay: playing ? 1 : 0,
-              controls: 0,
-              enablejsapi: 1,
-              origin: window.location.origin,
-              rel: 0,
-              start: Math.floor(startAt),
-              playsinline: 1,
-              modestbranding: 1,
-              iv_load_policy: 3,
-              fs: 0,
-              mute: 0
-            },
-            events: {
-              onReady: onPlayerReady,
-              onStateChange: onPlayerStateChange,
-              onError: onPlayerError
-            }
-          });
-          
-          playerInitializedRef.current = true;
-        } catch (error) {
-          console.error('Error initializing YouTube player:', error);
-          onError();
-        }
-      }, 300); // Increased delay for better reliability
+      // Longer delay for API initialization
+      setTimeout(createYoutubePlayer, 300);
     }).catch(err => {
       console.error('Failed to load YouTube API:', err);
       onError();

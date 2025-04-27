@@ -16,10 +16,20 @@ export const useYouTubePlayerState = ({
   useEffect(() => {
     if (!playerReady || !playerRef.current) return;
 
-    try {
-      if (playing) {
-        // Add delay to ensure YouTube API is ready
-        setTimeout(() => {
+    const attemptPlayerAction = (action: () => void) => {
+      try {
+        if (document.body.contains(playerRef.current.getIframe())) {
+          action();
+        }
+      } catch (error) {
+        console.error('Error controlling YouTube player:', error);
+      }
+    };
+
+    if (playing) {
+      // Add delay to ensure YouTube API is ready
+      setTimeout(() => {
+        attemptPlayerAction(() => {
           if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
             playerRef.current.playVideo();
             
@@ -28,12 +38,14 @@ export const useYouTubePlayerState = ({
               playerRef.current.setVolume(100);
             }
           }
-        }, 100);
-      } else if (!playing && typeof playerRef.current.pauseVideo === 'function') {
-        playerRef.current.pauseVideo();
-      }
-    } catch (error) {
-      console.error('Error controlling YouTube player:', error);
+        });
+      }, 100);
+    } else if (!playing && playerRef.current) {
+      attemptPlayerAction(() => {
+        if (typeof playerRef.current.pauseVideo === 'function') {
+          playerRef.current.pauseVideo();
+        }
+      });
     }
   }, [playing, playerReady]);
 

@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Play, Pause } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
 import { YouTubePlayer } from './players/youtube/YouTubePlayer';
 import { HTML5Player } from './players/HTML5Player';
 import { VideoErrorDisplay } from './players/VideoErrorDisplay';
 import { VideoControls } from './controls/VideoControls';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -23,6 +23,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [muted, setMuted] = useState(false);
   const { toast } = useToast();
   const [playerInitialized, setPlayerInitialized] = useState(false);
+  const [playerLoading, setPlayerLoading] = useState(true);
   
   const isYouTubeUrl = useCallback((url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
@@ -37,7 +38,11 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     // Delay player initialization to ensure components are properly mounted
     const timer = setTimeout(() => {
       setPlayerInitialized(true);
-    }, 300); // Increased for better reliability
+      // Set loading false after a timeout if it hasn't been set yet
+      setTimeout(() => {
+        setPlayerLoading(false);
+      }, 5000);
+    }, 500);
     
     return () => clearTimeout(timer);
   }, [progress.lastPosition]);
@@ -46,6 +51,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   useEffect(() => {
     setError(false);
     setPlaying(false);
+    setPlayerLoading(true);
     setCurrentTime(progress.lastPosition > 0 ? progress.lastPosition : 0);
   }, [videoId, videoUrl, progress.lastPosition]);
 
@@ -99,6 +105,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     console.error("Video error occurred for:", title);
     setError(true);
     setPlaying(false);
+    setPlayerLoading(false);
     toast({
       title: "Video Error",
       description: "There was an issue playing this video",
@@ -107,6 +114,8 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
+    setPlayerLoading(false);
+    
     if (videoDuration > 0 && videoDuration !== Infinity) {
       setDuration(videoDuration);
     }
@@ -117,19 +126,31 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   };
 
+  const handlePlayerStateChange = (isPlaying: boolean) => {
+    setPlaying(isPlaying);
+    setPlayerLoading(false);
+  };
+
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
       {error ? (
         <VideoErrorDisplay videoUrl={videoUrl} />
       ) : (
         <>
+          {!playerInitialized && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">
+              <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading video player..." />
+              <p className="text-white/70 mt-4">Loading video player...</p>
+            </div>
+          )}
+          
           {playerInitialized && isYouTubeUrl(videoUrl) ? (
             <YouTubePlayer
               videoUrl={videoUrl}
               title={title}
               onError={handleVideoError}
               onProgress={handleTimeUpdate}
-              onPlayStateChange={setPlaying}
+              onPlayStateChange={handlePlayerStateChange}
               startAt={progress.lastPosition}
               playing={playing}
             />
@@ -149,25 +170,32 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
               playing={playing}
               muted={muted}
             />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
-              <div className="animate-pulse text-white/50">Loading video player...</div>
-            </div>
-          )}
+          ) : null}
           
-          {!playing && (
+          {!playing && !playerLoading && (
             <div 
-              className="absolute inset-0 flex items-center justify-center bg-black/50 cursor-pointer"
+              className="absolute inset-0 flex items-center justify-center bg-black/50 cursor-pointer z-10"
               onClick={handlePlay}
             >
               <div className="bg-white/10 hover:bg-white/20 p-4 rounded-full transition-all">
-                <Play className="h-12 w-12 text-white" />
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="h-12 w-12 text-white"
+                >
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
               </div>
             </div>
           )}
           
           {progress.watched && (
-            <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-sm">
+            <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-sm z-20">
               Completed
             </div>
           )}

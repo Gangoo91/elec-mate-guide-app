@@ -29,6 +29,7 @@ export const useYouTubePlayer = ({
   const lastVideoIdRef = useRef<string | null>(null);
   const playAfterReadyRef = useRef(playing);
   const playerRef = useRef<any>(null);
+  const containerCreatedRef = useRef(false);
 
   useEffect(() => {
     playAfterReadyRef.current = playing;
@@ -121,31 +122,38 @@ export const useYouTubePlayer = ({
     if (!containerRef.current || !videoId) return;
 
     const createPlayerElement = () => {
+      if (!containerRef.current) return;
+      
       // Clear container first
       while (containerRef.current && containerRef.current.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild);
       }
   
-      if (containerRef.current) {
-        const playerDiv = document.createElement('div');
-        playerDiv.id = playerElementId;
-        playerDiv.style.position = 'absolute';
-        playerDiv.style.top = '0';
-        playerDiv.style.left = '0';
-        playerDiv.style.width = '100%';
-        playerDiv.style.height = '100%';
-        containerRef.current.appendChild(playerDiv);
-      }
+      // Create fresh player div
+      const playerDiv = document.createElement('div');
+      playerDiv.id = playerElementId;
+      playerDiv.style.position = 'absolute';
+      playerDiv.style.top = '0';
+      playerDiv.style.left = '0';
+      playerDiv.style.width = '100%';
+      playerDiv.style.height = '100%';
+      containerRef.current.appendChild(playerDiv);
+      containerCreatedRef.current = true;
     };
 
     createPlayerElement();
     
     // Small timeout to ensure DOM is ready
     const initTimeout = setTimeout(() => {
-      initPlayer();
-    }, 100);
+      if (containerCreatedRef.current) {
+        initPlayer();
+      }
+    }, 200);
     
-    return () => clearTimeout(initTimeout);
+    return () => {
+      clearTimeout(initTimeout);
+      containerCreatedRef.current = false;
+    };
   }, [videoId, playerElementId, initPlayer]);
 
   const { cleanupPlayer } = useYouTubePlayerState({
