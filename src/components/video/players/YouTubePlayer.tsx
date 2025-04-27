@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 // Define YouTube API types
 declare global {
@@ -8,9 +8,20 @@ declare global {
       Player: new (
         elementId: string,
         options: {
+          videoId?: string;
+          width?: string | number;
+          height?: string | number;
+          playerVars?: {
+            autoplay?: 0 | 1;
+            controls?: 0 | 1;
+            enablejsapi?: 0 | 1;
+            origin?: string;
+            rel?: 0 | 1;
+            start?: number;
+          };
           events: {
             onStateChange: (event: any) => void;
-            onError: () => void;
+            onError: (event: any) => void;
             onReady: (event: any) => void;
           }
         }
@@ -21,6 +32,14 @@ declare global {
         pauseVideo: () => void;
         getPlayerState: () => number;
         seekTo: (seconds: number) => void;
+        destroy: () => void;
+      };
+      PlayerState: {
+        ENDED: number;
+        PLAYING: number;
+        PAUSED: number;
+        BUFFERING: number;
+        CUED: number;
       };
     };
     onYouTubeIframeAPIReady: (() => void) | null;
@@ -46,154 +65,177 @@ export const YouTubePlayer = ({
   startAt = 0,
   playing = false
 }: YouTubePlayerProps) => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<any>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [playerReady, setPlayerReady] = useState(false);
 
-  const getYouTubeEmbedUrl = (url: string) => {
-    try {
-      if (url.includes('youtube.com/embed/')) {
-        const embedUrl = new URL(url);
-        embedUrl.searchParams.set('enablejsapi', '1');
-        embedUrl.searchParams.set('origin', window.location.origin);
-        embedUrl.searchParams.set('start', Math.floor(startAt).toString());
-        return embedUrl.toString();
+  const extractVideoId = (url: string): string | null => {
+    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  };
+
+  const videoId = extractVideoId(videoUrl);
+
+  useEffect(() => {
+    // Load YouTube API script
+    const loadYouTubeAPI = () => {
+      if (!window.YT) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        
+        // Make sure we're not adding it multiple times
+        if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+          const firstScriptTag = document.getElementsByTagName('script')[0];
+          if (firstScriptTag && firstScriptTag.parentNode) {
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+          }
+        }
       }
-      
-      const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-      const match = url.match(youtubeRegex);
-      
-      if (match && match[1]) {
-        const videoId = match[1];
-        const params = new URLSearchParams({
-          enablejsapi: '1',
-          origin: window.location.origin,
-          start: Math.floor(startAt).toString()
-        });
-        return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+    };
+
+    loadYouTubeAPI();
+
+    // Cleanup function to destroy player and clear interval
+    return () => {
+      clearProgressInterval();
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
+        playerRef.current.destroy();
       }
-      
-      return url;
-    } catch (err) {
-      console.error("Error parsing YouTube URL:", err);
-      return url;
+    };
+  }, []);
+
+  const startProgressInterval = () => {
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current);
+    }
+
+    progressIntervalRef.current = setInterval(() => {
+      if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
+        try {
+          const currentTime = playerRef.current.getCurrentTime();
+          const duration = playerRef.current.getDuration();
+          onProgress(currentTime, duration);
+        } catch (e) {
+          console.error('Error getting player time:', e);
+          clearProgressInterval();
+        }
+      }
+    }, 1000);
+  };
+
+  const clearProgressInterval = () => {
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
     }
   };
 
   useEffect(() => {
-    const initYouTubeAPI = () => {
-      if (!window.YT) {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        if (firstScriptTag.parentNode) {
-          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-        }
+    // Initialize player when videoId changes or script loads
+    if (!videoId) {
+      console.error('Invalid YouTube URL:', videoUrl);
+      onError();
+      return;
+    }
+
+    const initPlayer = () => {
+      // Only initialize if container exists and YT API is ready
+      if (!containerRef.current || !window.YT || !window.YT.Player) {
+        return;
       }
-    };
 
-    initYouTubeAPI();
-  }, []);
+      // Clear previous player
+      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
+        playerRef.current.destroy();
+      }
 
-  useEffect(() => {
-    const setupPlayer = () => {
-      if (iframeRef.current && iframeRef.current.id && window.YT) {
-        playerRef.current = new window.YT.Player(iframeRef.current.id, {
+      // Create new player
+      try {
+        playerRef.current = new window.YT.Player(containerRef.current, {
+          videoId: videoId,
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            enablejsapi: 1,
+            origin: window.location.origin,
+            rel: 0,
+            start: Math.floor(startAt)
+          },
           events: {
-            'onStateChange': (event: any) => {
-              switch(event.data) {
-                case 0: // Ended
+            onReady: (event: any) => {
+              setPlayerReady(true);
+              if (startAt > 0) {
+                event.target.seekTo(startAt);
+              }
+              if (playing) {
+                event.target.playVideo();
+              }
+            },
+            onStateChange: (event: any) => {
+              if (!window.YT) return;
+              
+              switch (event.data) {
+                case window.YT.PlayerState.ENDED:
                   onPlayStateChange(false);
                   onProgress(event.target.getDuration(), event.target.getDuration());
                   clearProgressInterval();
                   break;
-                case 1: // Playing
+                case window.YT.PlayerState.PLAYING:
                   onPlayStateChange(true);
                   startProgressInterval();
                   break;
-                case 2: // Paused
+                case window.YT.PlayerState.PAUSED:
                   onPlayStateChange(false);
                   clearProgressInterval();
                   break;
               }
             },
-            'onError': () => {
+            onError: (event: any) => {
+              console.error('YouTube player error:', event);
               onError();
               clearProgressInterval();
-            },
-            'onReady': (event: any) => {
-              if (startAt > 0) {
-                event.target.seekTo(startAt);
-              }
             }
           }
         });
+      } catch (error) {
+        console.error('Error initializing YouTube player:', error);
+        onError();
       }
     };
 
-    const startProgressInterval = () => {
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
-      }
-
-      progressIntervalRef.current = setInterval(() => {
-        if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
-          onProgress(
-            playerRef.current.getCurrentTime(),
-            playerRef.current.getDuration()
-          );
-        }
-      }, 1000);
-    };
-
-    const clearProgressInterval = () => {
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
-        progressIntervalRef.current = null;
-      }
-    };
-
-    if (iframeRef.current && window.YT) {
-      setupPlayer();
+    if (window.YT && window.YT.Player) {
+      initPlayer();
     } else {
-      window.onYouTubeIframeAPIReady = setupPlayer;
+      window.onYouTubeIframeAPIReady = initPlayer;
     }
 
     return () => {
-      clearProgressInterval();
-      if (window.onYouTubeIframeAPIReady === setupPlayer) {
+      if (window.onYouTubeIframeAPIReady === initPlayer) {
         window.onYouTubeIframeAPIReady = null;
       }
     };
-  }, [iframeRef, onError, onPlayStateChange, onProgress, startAt]);
+  }, [videoId, videoUrl, onError, startAt]);
 
+  // Control playing/paused state
   useEffect(() => {
-    if (playerRef.current && typeof playerRef.current.getPlayerState === 'function') {
-      const playerState = playerRef.current.getPlayerState();
-      
-      if (playing && playerState !== 1) { // Not playing
+    if (!playerReady || !playerRef.current) return;
+
+    try {
+      if (playing) {
         playerRef.current.playVideo();
-      } else if (!playing && playerState === 1) { // Currently playing
+      } else {
         playerRef.current.pauseVideo();
       }
+    } catch (error) {
+      console.error('Error controlling YouTube player:', error);
     }
-  }, [playing]);
+  }, [playing, playerReady]);
 
-  // Extract video ID for the iframe ID
-  const videoIdMatch = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-  const iframeId = `yt-player-${videoIdMatch ? videoIdMatch[1] : 'video'}`;
-  const embedUrl = getYouTubeEmbedUrl(videoUrl);
-  
   return (
-    <iframe
-      id={iframeId}
-      ref={iframeRef}
-      className="w-full h-full"
-      src={embedUrl}
-      title={title}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      onError={onError}
-    />
+    <div className="w-full h-full bg-black">
+      <div ref={containerRef} className="w-full h-full" />
+    </div>
   );
 };

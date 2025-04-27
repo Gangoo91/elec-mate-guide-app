@@ -6,6 +6,7 @@ import { YouTubePlayer } from './players/YouTubePlayer';
 import { HTML5Player } from './players/HTML5Player';
 import { VideoErrorDisplay } from './players/VideoErrorDisplay';
 import { VideoControls } from './controls/VideoControls';
+import { useToast } from '@/hooks/use-toast';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -19,6 +20,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const { toast } = useToast();
   
   const isYouTubeUrl = (url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
@@ -33,27 +35,16 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
 
   const handlePlay = () => {
     setPlaying(!playing);
-    
-    // For HTML5 video, manually trigger play/pause
-    if (!isYouTubeUrl(videoUrl)) {
-      const video = document.querySelector('video');
-      if (video) {
-        if (video.paused) {
-          video.play().catch(err => {
-            console.error("Error playing video:", err);
-            setError(true);
-          });
-        } else {
-          video.pause();
-        }
-      }
-    }
   };
 
   const handleVolumeClick = () => {
     const video = document.querySelector('video');
     if (video) {
       video.muted = !video.muted;
+      toast({
+        title: video.muted ? "Sound muted" : "Sound unmuted",
+        duration: 2000,
+      });
     }
   };
 
@@ -65,6 +56,11 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       } else {
         container.requestFullscreen().catch(err => {
           console.error("Error attempting to enable fullscreen:", err);
+          toast({
+            title: "Fullscreen Error",
+            description: "Couldn't enter fullscreen mode",
+            variant: "destructive",
+          });
         });
       }
     }
@@ -73,6 +69,20 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const handleVideoEnded = () => {
     setPlaying(false);
     updateProgress(duration, duration);
+    toast({
+      title: "Video completed",
+      description: progress.kudosAwarded ? "Thanks for watching!" : "You earned kudos points!",
+    });
+  };
+
+  const handleVideoError = () => {
+    setError(true);
+    setPlaying(false);
+    toast({
+      title: "Video Error",
+      description: "There was an issue playing this video",
+      variant: "destructive",
+    });
   };
 
   const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
@@ -96,7 +106,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             <YouTubePlayer
               videoUrl={videoUrl}
               title={title}
-              onError={() => setError(true)}
+              onError={handleVideoError}
               onProgress={handleTimeUpdate}
               onPlayStateChange={setPlaying}
               startAt={progress.lastPosition}
@@ -106,7 +116,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             <HTML5Player
               videoUrl={videoUrl}
               title={title}
-              onError={() => setError(true)}
+              onError={handleVideoError}
               onEnded={handleVideoEnded}
               onTimeUpdate={() => {
                 const video = document.querySelector('video');

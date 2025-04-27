@@ -33,15 +33,27 @@ export const HTML5Player = ({
   useEffect(() => {
     if (videoRef.current) {
       if (playing) {
-        videoRef.current.play().catch(err => {
-          console.error("Error playing video:", err);
-          onError();
-        });
+        // Add a catch for autoplay restrictions
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.error("Error playing video:", err);
+            onError();
+          });
+        }
       } else {
         videoRef.current.pause();
       }
     }
   }, [playing, onError]);
+
+  const handleLoadedMetadata = () => {
+    // Video metadata has loaded - this is a good sign that the video is valid
+    if (videoRef.current && currentTime > 0) {
+      videoRef.current.currentTime = currentTime;
+    }
+  };
 
   return (
     <video
@@ -53,6 +65,7 @@ export const HTML5Player = ({
       onEnded={onEnded}
       onTimeUpdate={onTimeUpdate}
       onError={onError}
+      onLoadedMetadata={handleLoadedMetadata}
       preload="metadata"
     />
   );
