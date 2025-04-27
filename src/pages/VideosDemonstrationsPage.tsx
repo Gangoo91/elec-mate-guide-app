@@ -8,17 +8,23 @@ import { VideoCategoryTabs } from '@/components/video/VideoCategoryTabs';
 import { VideoSidebar } from '@/components/video/VideoSidebar';
 import { Skeleton } from "@/components/ui/skeleton";
 
-console.log('Debugging video categories:');
+// Fetch unique categories
 const { data: categories } = useQuery({
   queryKey: ['video-categories'],
   queryFn: async () => {
     const { data, error } = await supabase
       .from('video_lessons')
       .select('category')
-      .distinct();
+      .returns<{ category: string }[]>();
     
-    console.log('Existing categories:', data?.map(cat => cat.category));
-    return data;
+    if (error) {
+      console.error('Error fetching video categories:', error);
+      return [];
+    }
+
+    const uniqueCategories = [...new Set(data?.map(cat => cat.category))];
+    console.log('Existing categories:', uniqueCategories);
+    return uniqueCategories;
   }
 });
 
