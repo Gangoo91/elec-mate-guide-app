@@ -92,14 +92,16 @@ const VideosDemonstrationsPage = () => {
           description="Access comprehensive video lessons aligned with your course units. Watch demonstrations, theoretical explanations, and earn kudos while progressing through your qualifications."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
+          <div className="order-2 lg:order-1 lg:col-span-3">
             <VideoCategoryTabs 
               categorizedVideos={categorizedVideos}
               onWatchVideo={setSelectedVideo}
             />
           </div>
-          <VideoSidebar />
+          <div className="order-1 lg:order-2">
+            <VideoSidebar />
+          </div>
         </div>
 
         <VideoDialog 

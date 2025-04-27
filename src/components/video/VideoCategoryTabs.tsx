@@ -40,16 +40,17 @@ export const categoryTitles = {
 
 export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo }: VideoCategoryTabsProps) => (
   <Tabs defaultValue="core_units" className="w-full">
-    <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20">
+    <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20 flex flex-wrap gap-1 h-auto p-1">
       {Object.keys(categoryTitles).map((category) => (
         <TabsTrigger 
           key={category}
           value={category}
-          className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
+          className="flex-1 min-w-[150px] data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900] py-2"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-sm">
             {categoryIcons[category as keyof typeof categoryIcons]}
-            <span>{categoryTitles[category as keyof typeof categoryTitles]}</span>
+            <span className="hidden sm:inline">{categoryTitles[category as keyof typeof categoryTitles]}</span>
+            <span className="sm:hidden">{categoryTitles[category as keyof typeof categoryTitles].split(' ')[0]}</span>
           </div>
         </TabsTrigger>
       ))}
