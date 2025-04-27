@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import CreateStudyGroupDialog from "@/components/apprentices/CreateStudyGroupDialog";
+import CreateStudyGroupDialog from "@/components/apprentices/study-groups/CreateStudyGroupDialog";
 import StudyGroupFilters from "@/components/apprentices/study-groups/StudyGroupFilters";
 import StudyGroupsList from "@/components/apprentices/study-groups/StudyGroupsList";
 import { useStudyGroups } from "@/hooks/useStudyGroups";
@@ -36,7 +36,7 @@ const StudyGroupsPage = () => {
             onLevelFilterChange={setLevelFilter}
           />
           <div className="w-full md:w-auto">
-            <CreateStudyGroupDialog onGroupCreated={() => fetchGroups()} />
+            <CreateStudyGroupDialog onGroupCreated={() => console.log('Group created')} />
           </div>
         </div>
 
