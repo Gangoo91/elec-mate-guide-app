@@ -33,6 +33,12 @@ export const useYouTubePlayer = ({
     playAfterReadyRef.current = playing;
   }, [playing]);
 
+  // Define the progress functions first
+  const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
+    onProgress,
+    playerRef: useRef<any>(null) // Temporary ref, will be updated below
+  });
+
   const handlePlayerStateChange = useCallback((event: any) => {
     if (!window.YT) return;
     
@@ -96,12 +102,6 @@ export const useYouTubePlayer = ({
       onPlayerReady();
     }
   }, [startAt, onPlayerReady]);
-
-  // Define the progress functions first
-  const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
-    onProgress,
-    playerRef: useRef<any>(null) // Temporary ref, will be updated below
-  });
 
   // Now initialize the player with the handlePlayerStateChange function
   const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
