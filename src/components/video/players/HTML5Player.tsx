@@ -55,11 +55,22 @@ export const HTML5Player = ({
     }
   };
 
+  // Verify the video URL is valid
+  const isValidVideoUrl = (url: string): boolean => {
+    return url && (
+      url.endsWith('.mp4') || 
+      url.endsWith('.webm') || 
+      url.endsWith('.ogg') ||
+      url.startsWith('blob:') ||
+      url.includes('video')
+    );
+  };
+
   return (
     <video
       ref={videoRef}
       className="w-full h-full"
-      src={videoUrl}
+      src={isValidVideoUrl(videoUrl) ? videoUrl : ''}
       title={title}
       controls={false}
       onEnded={onEnded}

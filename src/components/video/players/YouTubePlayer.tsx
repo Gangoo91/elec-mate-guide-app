@@ -69,6 +69,7 @@ export const YouTubePlayer = ({
   const playerRef = useRef<any>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [playerReady, setPlayerReady] = useState(false);
+  const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
 
   const extractVideoId = (url: string): string | null => {
     const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
@@ -146,6 +147,13 @@ export const YouTubePlayer = ({
         return;
       }
 
+      // Ensure we have a valid container element
+      if (!document.getElementById(playerElementId)) {
+        const playerDiv = document.createElement('div');
+        playerDiv.id = playerElementId;
+        containerRef.current.appendChild(playerDiv);
+      }
+
       // Clear previous player
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         playerRef.current.destroy();
@@ -153,7 +161,7 @@ export const YouTubePlayer = ({
 
       // Create new player
       try {
-        playerRef.current = new window.YT.Player(containerRef.current, {
+        playerRef.current = new window.YT.Player(playerElementId, {
           videoId: videoId,
           playerVars: {
             autoplay: 0,
@@ -216,7 +224,7 @@ export const YouTubePlayer = ({
         window.onYouTubeIframeAPIReady = null;
       }
     };
-  }, [videoId, videoUrl, onError, startAt]);
+  }, [videoId, videoUrl, onError, startAt, playerElementId]);
 
   // Control playing/paused state
   useEffect(() => {

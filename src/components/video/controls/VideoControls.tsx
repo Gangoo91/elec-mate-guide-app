@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
 interface VideoControlsProps {
@@ -15,6 +15,13 @@ export const VideoControls = ({
   onVolumeClick,
   onFullscreenClick
 }: VideoControlsProps) => {
+  const [muted, setMuted] = useState(false);
+  
+  const handleVolumeClick = () => {
+    setMuted(!muted);
+    onVolumeClick();
+  };
+
   return (
     <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-between">
       <div className="flex items-center gap-3">
@@ -31,10 +38,14 @@ export const VideoControls = ({
         </button>
         <button 
           className="text-white hover:text-[#FFC900] transition"
-          onClick={onVolumeClick}
+          onClick={handleVolumeClick}
           aria-label="Volume"
         >
-          <Volume2 className="h-5 w-5" />
+          {muted ? (
+            <VolumeX className="h-5 w-5" />
+          ) : (
+            <Volume2 className="h-5 w-5" />
+          )}
         </button>
       </div>
       <button 
