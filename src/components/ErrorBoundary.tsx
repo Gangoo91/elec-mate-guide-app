@@ -3,11 +3,11 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Button } from "@/components/ui/button";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { RefreshCw, AlertTriangle } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
+  onError?: (error: Error) => void;
 }
 
 interface State {
@@ -28,9 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     this.setState({ errorInfo });
-    
-    // Report to analytics or logging service in a production environment
-    // This is where you would send the error to your error tracking service
+    this.props.onError?.(error);
   }
 
   private handleReload = () => {
@@ -43,8 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return (
+      return this.props.fallback || (
         <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-background" role="alert">
           <div className="max-w-md w-full space-y-6">
             <Alert variant="destructive" className="border-[#FFC900]/30 bg-[#22251e]">
@@ -72,12 +69,6 @@ class ErrorBoundary extends Component<Props, State> {
                 Try to Recover
               </Button>
             </div>
-
-            {this.props.fallback && (
-              <div className="mt-6">
-                {this.props.fallback}
-              </div>
-            )}
           </div>
         </div>
       );
