@@ -123,37 +123,13 @@ export const useYouTubePlayer = ({
     }
   }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
 
-  const handlePlayerError = useCallback((event: any) => {
-    console.error('YouTube player error:', event);
-    
-    if (errorRetryCountRef.current < 2) {
-      errorRetryCountRef.current++;
-      console.log(`Retrying YouTube player initialization (attempt ${errorRetryCountRef.current})`);
-      
-      if (playerRef.current && typeof playerRef.current.destroy === 'function') {
-        try {
-          playerRef.current.destroy();
-        } catch (err) {
-          console.error('Error destroying player:', err);
-        }
-      }
-      
-      setTimeout(() => {
-        initPlayer();
-      }, 1500);
-    } else {
-      onError();
-      clearProgressInterval();
-    }
-  }, [onError, clearProgressInterval]);
-
   const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
     onError,
     onPlayerReady: handlePlayerReady,
     onPlayerStateChange: handlePlayerStateChange,
-    onPlayerError: handlePlayerError,
+    onPlayerError: onError,
     playing,
     startAt
   });
