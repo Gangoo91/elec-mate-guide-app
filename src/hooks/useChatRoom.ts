@@ -15,21 +15,22 @@ export function useChatRoom() {
 
   useEffect(() => {
     fetchMessages();
-    const channel = setupSubscription();
+    const channelName = setupSubscription();
     
     return () => {
-      if (channel) {
-        supabase.channel(channel).unsubscribe();
+      if (channelName) {
+        supabase.removeChannel(supabase.channel(channelName));
       }
     };
   }, []);
 
   const fetchMessages = async () => {
     try {
+      // Use the REST API endpoint directly
       const { data: messages, error } = await supabase
         .from('chat_messages')
         .select('*')
-        .order('created_at', { ascending: false }) as { data: ChatMessage[] | null, error: any };
+        .order('created_at', { ascending: false }) as any;
 
       if (error) throw error;
       
@@ -50,15 +51,17 @@ export function useChatRoom() {
     try {
       const messageIds = messages.map(m => m.id);
       
+      // Use the REST API endpoint directly
       const { data: comments } = await supabase
         .from('chat_comments')
         .select('*')
-        .in('message_id', messageIds) as { data: ChatComment[] | null, error: any };
+        .in('message_id', messageIds) as any;
 
+      // Use the REST API endpoint directly
       const { data: reactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .in('message_id', messageIds) as { data: ChatReaction[] | null, error: any };
+        .in('message_id', messageIds) as any;
 
       const commentsByMessage = (comments || []).reduce((acc, comment) => {
         acc[comment.message_id] = [...(acc[comment.message_id] || []), comment];
@@ -81,13 +84,13 @@ export function useChatRoom() {
     const channelName = 'public:chat_messages';
     
     try {
-      const channel = supabase
+      supabase
         .channel(channelName)
         .on('postgres_changes', {
           event: '*',
           schema: 'public',
           table: 'chat_messages'
-        }, async (payload) => {
+        }, async (payload: any) => {
           if (payload.eventType === 'INSERT') {
             setMessages(prev => [payload.new as ChatMessage, ...prev]);
           }
@@ -108,10 +111,11 @@ export function useChatRoom() {
     if (!user) return;
     
     try {
+      // Use the REST API endpoint directly
       const { data, error } = await supabase
         .from('chat_messages')
         .insert([{ content, user_id: user.id }])
-        .select() as { data: ChatMessage | null, error: any };
+        .select() as any;
 
       if (error) throw error;
       
@@ -138,13 +142,13 @@ export function useChatRoom() {
           await supabase
             .from('chat_reactions')
             .delete()
-            .eq('id', existingReaction.id);
+            .eq('id', existingReaction.id) as any;
         } else {
           // Update reaction
           await supabase
             .from('chat_reactions')
             .update({ reaction_type: type })
-            .eq('id', existingReaction.id);
+            .eq('id', existingReaction.id) as any;
         }
       } else {
         // Add new reaction
@@ -154,14 +158,14 @@ export function useChatRoom() {
             message_id: messageId,
             user_id: user.id,
             reaction_type: type
-          }]);
+          }]) as any;
       }
 
       // Refresh reactions for this message
       const { data: updatedReactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .eq('message_id', messageId) as { data: ChatReaction[] | null, error: any };
+        .eq('message_id', messageId) as any;
 
       setReactions(prev => ({
         ...prev,
@@ -181,6 +185,7 @@ export function useChatRoom() {
     if (!user) return;
 
     try {
+      // Use the REST API endpoint directly
       const { data, error } = await supabase
         .from('chat_comments')
         .insert([{
@@ -188,13 +193,13 @@ export function useChatRoom() {
           user_id: user.id,
           content
         }])
-        .select() as { data: ChatComment | null, error: any };
+        .select() as any;
 
       if (error) throw error;
 
       setComments(prev => ({
         ...prev,
-        [messageId]: [...(prev[messageId] || []), data as ChatComment]
+        [messageId]: [...(prev[messageId] || []), data[0] as ChatComment]
       }));
     } catch (error) {
       console.error('Error adding comment:', error);
