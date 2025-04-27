@@ -22,23 +22,13 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
-    // Handle job scheduling pages - ensure proper parent page navigation
-    if (location.pathname === '/electricians/job-scheduling/upcoming') {
-      navigate('/electricians/job-scheduling');
-      return;
-    }
-    
-    if (location.pathname === '/electricians/job-scheduling/time') {
-      navigate('/electricians/job-scheduling');
-      return;
-    }
-    
-    if (location.pathname === '/electricians/job-scheduling/clients') {
-      navigate('/electricians/job-scheduling');
-      return;
-    }
-    
-    if (location.pathname === '/electricians/job-scheduling/completion') {
+    // Job scheduling pages - direct navigation to parent
+    if ([
+      '/electricians/job-scheduling/upcoming',
+      '/electricians/job-scheduling/time',
+      '/electricians/job-scheduling/clients',
+      '/electricians/job-scheduling/completion'
+    ].includes(location.pathname)) {
       navigate('/electricians/job-scheduling');
       return;
     }
