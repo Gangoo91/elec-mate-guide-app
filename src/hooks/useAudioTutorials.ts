@@ -17,7 +17,7 @@ export const useAudioTutorials = () => {
         return [];
       }
 
-      return data as AudioTutorial[];
+      return data as unknown as AudioTutorial[];
     }
   });
 
