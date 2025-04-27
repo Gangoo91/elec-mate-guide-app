@@ -28,9 +28,18 @@ export const useYouTubeInitialization = ({
   const playerInitializedRef = useRef(false);
   const errorRetryCountRef = useRef(0);
   const apiLoadedRef = useRef(false);
+  const mountedRef = useRef(true);
+
+  // Track if component is mounted to prevent state updates after unmount
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   const initPlayer = useCallback(() => {
-    if (!videoId || playerInitializedRef.current) {
+    if (!videoId || playerInitializedRef.current || !mountedRef.current) {
       return;
     }
 
@@ -49,7 +58,6 @@ export const useYouTubeInitialization = ({
         const playerElement = document.getElementById(playerElementId);
         if (!playerElement) {
           console.error('Player element not found before initialization:', playerElementId);
-          // Don't throw error yet, wait for next attempt
           return false;
         }
         
@@ -58,6 +66,12 @@ export const useYouTubeInitialization = ({
           return false;
         }
         
+        // Ensure DOM content is stable before creating player
+        if (!document.body.contains(playerElement)) {
+          console.error('Player element not in DOM');
+          return false;
+        }
+
         playerRef.current = new window.YT.Player(playerElementId, {
           videoId: videoId,
           playerVars: {
@@ -93,35 +107,51 @@ export const useYouTubeInitialization = ({
       }
     };
 
+    // If API already loaded, initialize player after a delay
     if (apiLoadedRef.current && window.YT && window.YT.Player) {
-      // Add a small delay to ensure DOM is ready
+      // Delay player creation to ensure DOM is stable
       setTimeout(() => {
+        if (!mountedRef.current) return;
+        
         if (!createYoutubePlayer()) {
-          // If player creation failed, retry once more after a short delay
-          setTimeout(createYoutubePlayer, 500);
+          // If player creation failed, retry once more after a longer delay
+          setTimeout(() => {
+            if (!mountedRef.current) return;
+            createYoutubePlayer();
+          }, 800);
         }
-      }, 100);
+      }, 300);
       return;
     }
     
+    // Load API if not already loaded
     loadYouTubeAPI().then(() => {
+      if (!mountedRef.current) return;
+      
       apiLoadedRef.current = true;
       if (!window.YT || !window.YT.Player) {
         // Wait a bit longer for API to be fully ready
         setTimeout(() => {
+          if (!mountedRef.current) return;
+          
           if (!window.YT || !window.YT.Player) {
             console.error('YouTube API still not available after delay');
             onError();
             return;
           }
-          setTimeout(createYoutubePlayer, 200);
-        }, 500);
+          setTimeout(createYoutubePlayer, 500);
+        }, 800);
         return;
       }
 
-      // Give a little more time for API to be fully initialized
-      setTimeout(createYoutubePlayer, 200);
+      // Give time for API to be fully initialized
+      setTimeout(() => {
+        if (!mountedRef.current) return;
+        createYoutubePlayer();
+      }, 500);
     }).catch(err => {
+      if (!mountedRef.current) return;
+      
       console.error('Failed to load YouTube API:', err);
       onError();
     });
@@ -132,8 +162,8 @@ export const useYouTubeInitialization = ({
     if (videoId !== null) {
       playerInitializedRef.current = false;
       errorRetryCountRef.current = 0;
-      // Initialize with a slight delay to ensure clean DOM updates
-      const timer = setTimeout(initPlayer, 100);
+      // Initialize with a delay to ensure clean DOM updates
+      const timer = setTimeout(initPlayer, 300);
       return () => clearTimeout(timer);
     }
     

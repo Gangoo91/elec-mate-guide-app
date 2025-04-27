@@ -1,5 +1,5 @@
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 
 interface UseYouTubeProgressProps {
   onProgress: (currentTime: number, duration: number) => void;
@@ -8,6 +8,15 @@ interface UseYouTubeProgressProps {
 
 export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgressProps) => {
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const mountedRef = useRef(true);
+
+  // Track component mount state to prevent updates after unmount
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   const clearProgressInterval = useCallback(() => {
     if (progressIntervalRef.current) {
@@ -21,10 +30,17 @@ export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgress
 
     // Use a shorter interval for more responsive progress updates
     progressIntervalRef.current = setInterval(() => {
+      if (!mountedRef.current) {
+        clearProgressInterval();
+        return;
+      }
+      
       if (!playerRef.current) return;
       
       try {
-        if (typeof playerRef.current.getCurrentTime === 'function') {
+        if (typeof playerRef.current.getCurrentTime === 'function' && 
+            typeof playerRef.current.getDuration === 'function') {
+          
           const currentTime = playerRef.current.getCurrentTime();
           const duration = playerRef.current.getDuration();
           
@@ -37,6 +53,13 @@ export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgress
       }
     }, 500);  // Every half second is enough for smooth progress
   }, [onProgress, clearProgressInterval, playerRef]);
+
+  // Ensure cleanup on unmount
+  useEffect(() => {
+    return () => {
+      clearProgressInterval();
+    };
+  }, [clearProgressInterval]);
 
   return {
     startProgressInterval,

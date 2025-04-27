@@ -26,13 +26,23 @@ export const YouTubePlayer = ({
   const [hasError, setHasError] = useState(false);
   const videoId = extractVideoId(videoUrl);
   const [playerAttempts, setPlayerAttempts] = useState(0);
+  const [loadingTimeout, setLoadingTimeout] = useState(false);
+  
+  // Set loading timeout after 8 seconds to show error if needed
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoadingTimeout(true);
+    }, 8000);
+    
+    return () => clearTimeout(timeout);
+  }, []);
   
   // Handle player errors locally first
   const handleError = useCallback(() => {
     console.error(`YouTube player error for video: ${title}`);
     
-    // Try to reinitialize player up to 2 times before showing an error
-    if (playerAttempts < 2) {
+    // Try to reinitialize player up to 3 times before showing an error
+    if (playerAttempts < 3) {
       setPlayerAttempts(prev => prev + 1);
       return;
     }
@@ -83,6 +93,9 @@ export const YouTubePlayer = ({
     }
   }, [playerAttempts, playerReady, hasError, videoId, title]);
 
+  // Show error if loading takes too long and player isn't ready
+  const showError = loadingTimeout && !playerReady && !isLoaded && !hasError;
+
   return (
     <div className="w-full h-full relative bg-black overflow-hidden">
       <div
@@ -95,7 +108,30 @@ export const YouTubePlayer = ({
       {(!playerReady || !isLoaded) && !hasError && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">
           <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading video..." />
-          <p className="mt-4 text-white/70">Loading video...</p>
+          <p className="mt-4 text-white/70">
+            {showError ? "Video is taking too long to load. Please try again." : "Loading video..."}
+          </p>
+        </div>
+      )}
+      {(hasError || showError) && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90">
+          <div className="text-red-500 mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <h3 className="text-white text-lg font-semibold mb-2">Video Loading Error</h3>
+          <p className="text-white/70 mb-4 text-center px-4">
+            Unable to load this video. Please try refreshing the page or check your connection.
+          </p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-[#FFC900] text-black px-4 py-2 rounded hover:bg-[#FFC900]/80"
+          >
+            Refresh Page
+          </button>
         </div>
       )}
     </div>

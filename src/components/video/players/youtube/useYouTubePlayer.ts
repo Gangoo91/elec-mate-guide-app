@@ -28,6 +28,15 @@ export const useYouTubePlayer = ({
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const playerRef = useRef<any>(null);
   const [containerCreated, setContainerCreated] = useState(false);
+  const mountedRef = useRef(true);
+
+  // Track component mount state
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   // Define progress functions
   const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
@@ -36,7 +45,7 @@ export const useYouTubePlayer = ({
   });
 
   const handlePlayerStateChange = useCallback((event: any) => {
-    if (!window.YT) return;
+    if (!mountedRef.current || !window.YT) return;
     
     try {
       switch (event.data) {
@@ -60,6 +69,8 @@ export const useYouTubePlayer = ({
   }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
 
   const handlePlayerReady = useCallback((event: any) => {
+    if (!mountedRef.current) return;
+    
     console.log("YouTube player ready event received");
     setPlayerReady(true);
     
@@ -83,6 +94,8 @@ export const useYouTubePlayer = ({
     // Delay play command to ensure player is fully ready
     if (playing) {
       setTimeout(() => {
+        if (!mountedRef.current) return;
+        
         try {
           if (event.target && typeof event.target.playVideo === 'function') {
             event.target.playVideo();
@@ -90,7 +103,7 @@ export const useYouTubePlayer = ({
         } catch (err) {
           console.error('Error playing video after ready:', err);
         }
-      }, 200);
+      }, 300);
     }
     
     if (onPlayerReady) {
@@ -99,7 +112,7 @@ export const useYouTubePlayer = ({
   }, [startAt, onPlayerReady, playing]);
 
   // Initialize the player with the handlePlayerStateChange function
-  const { initPlayer, errorRetryCountRef } = useYouTubeInitialization({
+  const { initPlayer } = useYouTubeInitialization({
     videoId,
     playerElementId,
     onError,
@@ -116,7 +129,7 @@ export const useYouTubePlayer = ({
     if (!containerRef.current || !videoId) return;
 
     const createPlayerElement = () => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || !mountedRef.current) return;
       
       // Clear container first
       while (containerRef.current && containerRef.current.firstChild) {
@@ -137,12 +150,12 @@ export const useYouTubePlayer = ({
 
     createPlayerElement();
     
-    // Small timeout to ensure DOM is ready
+    // Initialize player after DOM is updated
     const initTimeout = setTimeout(() => {
-      if (containerCreated) {
+      if (containerCreated && mountedRef.current) {
         initPlayer();
       }
-    }, 100);
+    }, 300);
     
     return () => clearTimeout(initTimeout);
   }, [videoId, playerElementId, initPlayer, containerCreated]);
@@ -156,6 +169,7 @@ export const useYouTubePlayer = ({
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      if (!mountedRef.current) return;
       clearProgressInterval();
       cleanupPlayer();
     };

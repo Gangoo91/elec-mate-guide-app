@@ -38,7 +38,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     // Delay player initialization to ensure components are properly mounted
     const timer = setTimeout(() => {
       setPlayerInitialized(true);
-    }, 300);
+    }, 500);
     
     return () => clearTimeout(timer);
   }, [progress.lastPosition]);
@@ -53,7 +53,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     // Hide loading indicator after a timeout if it hasn't been set yet
     const loadingTimeout = setTimeout(() => {
       setPlayerLoading(false);
-    }, 8000);
+    }, 10000);
     
     return () => clearTimeout(loadingTimeout);
   }, [videoId, videoUrl, progress.lastPosition]);
@@ -104,19 +104,20 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     });
   };
 
-  const handleVideoError = () => {
+  const handleVideoError = useCallback(() => {
     console.error("Video error occurred for:", title);
     setError(true);
     setPlaying(false);
     setPlayerLoading(false);
+    
     toast({
       title: "Video Error",
       description: "There was an issue playing this video",
       variant: "destructive",
     });
-  };
+  }, [title, toast]);
 
-  const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
+  const handleTimeUpdate = useCallback((currentTime: number, videoDuration: number) => {
     setPlayerLoading(false);
     
     if (videoDuration > 0 && videoDuration !== Infinity) {
@@ -127,12 +128,12 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       setCurrentTime(currentTime);
       updateProgress(currentTime, videoDuration || duration);
     }
-  };
+  }, [updateProgress, duration]);
 
-  const handlePlayerStateChange = (isPlaying: boolean) => {
+  const handlePlayerStateChange = useCallback((isPlaying: boolean) => {
     setPlaying(isPlaying);
     setPlayerLoading(false);
-  };
+  }, []);
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
@@ -143,7 +144,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
           {!playerInitialized && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">
               <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading video player..." />
-              <p className="text-white/70 mt-4">Loading video player...</p>
+              <p className="text-white/70 mt-4">Initializing video player...</p>
             </div>
           )}
           

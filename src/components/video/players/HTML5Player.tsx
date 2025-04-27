@@ -33,7 +33,10 @@ export const HTML5Player = ({
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
-          onError();
+          // Only call onError for errors that aren't just user interaction requirements
+          if (err.name !== 'NotAllowedError') {
+            onError();
+          }
         });
       }
     } else {
@@ -46,7 +49,10 @@ export const HTML5Player = ({
     if (!videoRef.current || !currentTime) return;
     
     try {
-      videoRef.current.currentTime = currentTime;
+      // Only seek if the time difference is significant
+      if (Math.abs(videoRef.current.currentTime - currentTime) > 1) {
+        videoRef.current.currentTime = currentTime;
+      }
     } catch (err) {
       console.error("Error setting video time:", err);
     }
@@ -57,6 +63,15 @@ export const HTML5Player = ({
     if (!videoRef.current) return;
     videoRef.current.muted = muted;
   }, [muted]);
+
+  // Make sure video fits container
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.style.width = '100%';
+      videoRef.current.style.height = '100%';
+      videoRef.current.style.objectFit = 'contain';
+    }
+  }, []);
 
   return (
     <div className="absolute inset-0 w-full h-full bg-black">

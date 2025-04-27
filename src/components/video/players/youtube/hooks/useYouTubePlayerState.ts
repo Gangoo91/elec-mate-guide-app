@@ -24,16 +24,21 @@ export const useYouTubePlayerState = ({
 
     const attemptPlayerAction = (action: () => void) => {
       try {
-        if (playerRef.current && document.body.contains(playerRef.current.getIframe?.())) {
+        if (playerRef.current && 
+            typeof playerRef.current.getIframe === 'function' && 
+            document.body.contains(playerRef.current.getIframe())) {
           action();
+        } else {
+          console.error('Player not ready or not attached to DOM');
         }
       } catch (error) {
         console.error('Error controlling YouTube player:', error);
       }
     };
 
+    // Use a more reliable approach for play/pause
     if (playing) {
-      // Smaller delay to ensure YouTube API is ready but not too long
+      // Gradually increasing delay to help with initialization timing
       const timer = setTimeout(() => {
         attemptPlayerAction(() => {
           if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
@@ -45,7 +50,7 @@ export const useYouTubePlayerState = ({
             }
           }
         });
-      }, 50);
+      }, 200);
       
       return () => clearTimeout(timer);
     } else if (!playing && playerRef.current) {
@@ -55,7 +60,7 @@ export const useYouTubePlayerState = ({
         }
       });
     }
-  }, [playing, playerReady, isLoaded]);
+  }, [playing, playerReady, isLoaded, playerRef]);
 
   return {
     isLoaded,
@@ -67,6 +72,6 @@ export const useYouTubePlayerState = ({
           console.error('Error destroying player:', err);
         }
       }
-    }, [])
+    }, [playerRef])
   };
 };
