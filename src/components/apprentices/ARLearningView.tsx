@@ -4,7 +4,6 @@ import { componentCategories } from "@/data/components/categories";
 import ComponentSelector from "./ar-learning/ComponentSelector";
 import ComponentViewer from "./ar-learning/ComponentViewer";
 import ComponentDetails from "./ar-learning/ComponentDetails";
-import HowToUseSection from "./ar-learning/HowToUseSection";
 import ImageUploader from "./ar-learning/ImageUploader";
 import { ComponentInfo } from "@/types/arLearning";
 
@@ -55,7 +54,6 @@ const ARLearningView = () => {
       </div>
 
       <ComponentDetails component={activeComponent} />
-      <HowToUseSection component={activeComponent} />
     </div>
   );
 };
