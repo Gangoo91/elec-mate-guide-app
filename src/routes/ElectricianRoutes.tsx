@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -40,7 +39,7 @@ import ControlSystemsEngineerPage from "@/pages/careers/ControlSystemsEngineerPa
 import ElectricalInspectorPage from "@/pages/careers/ElectricalInspectorPage";
 import BuildingServicesEngineerPage from "@/pages/careers/BuildingServicesEngineerPage";
 import SiteAssessmentPage from "@/pages/electricians/solar/installation/SiteAssessmentPage";
-import StructuralAssessmentPage from "@/pages/electricians/solar/installation/StructuralAssessmentPage";
+import StructuralAssessmentPage from "@/pages/electricians/solar/installation/structural/StructuralAssessmentPage";
 import SolarResourcePage from "@/pages/electricians/solar/installation/SolarResourcePage";
 import SiteSurveyPage from "@/pages/electricians/solar/installation/SiteSurveyPage";
 import Mentorship from "@/pages/Mentorship";
@@ -63,6 +62,11 @@ import JobCompletionPage from "@/pages/electricians/job-scheduling/JobCompletion
 import TeamManagementPage from "@/pages/electricians/project-management/TeamManagementPage";
 import InvoiceManagerPage from "@/pages/InvoiceManagerPage";
 import VideoDemonstrationsPage from "@/pages/VideoDemonstrationsPage";
+import ChatRoomPage from "@/pages/toolbox/ChatRoomPage";
+import MaterialsPage from "@/pages/toolbox/MaterialsPage";
+import ToolsPage from "@/pages/toolbox/ToolsPage";
+import SafetyPage from "@/pages/toolbox/SafetyPage";
+import PricingPage from "@/pages/toolbox/PricingPage";
 
 export const ElectricianRoutes = (
   <>
@@ -128,6 +132,11 @@ export const ElectricianRoutes = (
     <Route key="structural-roof" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/roof-evaluation" element={<RoofEvaluationPage />} />,
     <Route key="structural-load" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/load-analysis" element={<LoadAnalysisPage />} />,
     <Route key="structural-support" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/support-structure" element={<SupportStructurePage />} />,
-    <Route path="/electricians/technical-tools/invoice-manager" element={<InvoiceManagerPage />} />
+    <Route path="/electricians/technical-tools/invoice-manager" element={<InvoiceManagerPage />} />,
+    <Route path="/electricians/toolbox-talk/chat" element={<ChatRoomPage />} />,
+    <Route path="/electricians/toolbox-talk/materials" element={<MaterialsPage />} />,
+    <Route path="/electricians/toolbox-talk/tools" element={<ToolsPage />} />,
+    <Route path="/electricians/toolbox-talk/safety" element={<SafetyPage />} />,
+    <Route path="/electricians/toolbox-talk/pricing" element={<PricingPage />} />
   </>
 );
