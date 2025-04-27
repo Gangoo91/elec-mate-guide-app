@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from '@/components/video/VideoPlayer';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface VideoLesson {
   id: string;
@@ -57,12 +58,21 @@ const VideosDemonstrationsPage = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('video_lessons')
-        .select('*');
+        .select('*')
+        .order('kudos_points', { ascending: false });
       
       if (error) throw error;
       return data as VideoLesson[];
     }
   });
+
+  const categorizedVideos = useMemo(() => {
+    return {
+      practical: videos.filter(v => v.category === 'practical'),
+      theory: videos.filter(v => v.category === 'theory'),
+      safety: videos.filter(v => v.category === 'safety')
+    };
+  }, [videos]);
 
   if (isLoading) {
     return (
@@ -73,7 +83,7 @@ const VideosDemonstrationsPage = () => {
             <div className="h-4 bg-[#FFC900]/20 rounded w-2/4"></div>
             <div className="grid gap-4">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-40 bg-[#FFC900]/20 rounded"></div>
+                <Skeleton key={i} className="h-40 w-full" />
               ))}
             </div>
           </div>
@@ -82,53 +92,39 @@ const VideosDemonstrationsPage = () => {
     );
   }
 
-  // Extract categories for filtering
-  const categories = [...new Set(videos.map(video => video.category))];
-
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <PageHeader
           title="Video Demonstrations"
-          description="Watch practical demonstrations and earn kudos while learning essential electrical skills. These videos cover UK electrical standards and practices."
+          description="Watch comprehensive UK electrical training videos and earn kudos while learning essential skills. These videos cover UK electrical standards and practices."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
             <Tabs defaultValue="practical" className="w-full">
               <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20">
-                <TabsTrigger 
-                  value="practical"
-                  className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
-                >
-                  Practical Skills
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="theory"
-                  className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
-                >
-                  Theory
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="safety"
-                  className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
-                >
-                  Safety
-                </TabsTrigger>
+                {['practical', 'theory', 'safety'].map((category) => (
+                  <TabsTrigger 
+                    key={category}
+                    value={category}
+                    className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900] capitalize"
+                  >
+                    {category} Skills
+                  </TabsTrigger>
+                ))}
               </TabsList>
 
-              {['practical', 'theory', 'safety'].map((category) => (
+              {(['practical', 'theory', 'safety'] as const).map((category) => (
                 <TabsContent key={category} value={category} className="mt-6">
                   <div className="grid gap-4">
-                    {videos
-                      .filter(video => video.category === category)
-                      .map(video => (
-                        <VideoCard 
-                          key={video.id} 
-                          video={video} 
-                          onWatch={() => setSelectedVideo(video)} 
-                        />
-                      ))}
+                    {categorizedVideos[category].map(video => (
+                      <VideoCard 
+                        key={video.id} 
+                        video={video} 
+                        onWatch={() => setSelectedVideo(video)} 
+                      />
+                    ))}
                   </div>
                 </TabsContent>
               ))}
@@ -141,22 +137,17 @@ const VideosDemonstrationsPage = () => {
             <div className="mt-6 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-4">
               <h3 className="text-lg font-semibold text-[#FFC900] mb-3">Why Watch These Videos?</h3>
               <ul className="space-y-2 text-[#FFC900]/80">
-                <li className="flex items-start gap-2">
-                  <span className="text-[#FFC900] font-bold">•</span>
-                  <span>Learn UK electrical standards and practices</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#FFC900] font-bold">•</span>
-                  <span>Earn kudos points toward certifications</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#FFC900] font-bold">•</span>
-                  <span>Track your learning progress</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#FFC900] font-bold">•</span>
-                  <span>Build practical skills for the field</span>
-                </li>
+                {[
+                  "Learn UK electrical standards and practices",
+                  "Earn kudos points toward certifications",
+                  "Track your learning progress",
+                  "Build practical skills for the field"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-[#FFC900] font-bold">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

@@ -12,18 +12,17 @@ interface VideoPlayerProps {
 export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const { progress, updateProgress } = useVideoProgress(videoId);
   const [playing, setPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   
-  // Extract YouTube video ID from URL if it's a YouTube URL
   const getYouTubeEmbedUrl = (url: string) => {
     if (url.includes('youtube.com/embed/')) {
-      return url; // Already an embed URL
+      return url;
     }
     
     const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const match = url.match(youtubeRegex);
     
-    // If it's a YouTube URL, add parameters for API
     if (match) {
       const videoId = match[1];
       return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`;
@@ -32,57 +31,60 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     return url;
   };
 
-  // Handle video play and tracking
   const handlePlay = () => {
-    if (iframeRef.current) {
-      // Start tracking progress when video plays
+    if (!playing) {
       setPlaying(true);
-      
-      // For YouTube iframe, we can only track when it completes
-      // Set a timer to check and mark as watched after expected duration
-      setTimeout(() => {
-        if (playing) {
-          // Assume video is watched after 60 seconds (adjust as needed)
-          updateProgress(60, 60); // Mark as watched
-        }
-      }, 60000);
+      if (iframeRef.current) {
+        // Use postMessage to interact with YouTube iframe
+        iframeRef.current.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      }
     }
   };
 
-  // Track when user clicks on the video
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    // Set up message listener for YouTube iframe API events
     const handleMessage = (event: MessageEvent) => {
       if (event.origin !== "https://www.youtube.com") return;
       
       try {
         const data = JSON.parse(event.data);
-        if (data.event === "onStateChange" && data.info === 0) {
-          // Video ended (state 0)
-          updateProgress(100, 100); // Mark as completed
+        
+        if (data.event === "onStateChange") {
+          switch(data.info) {
+            case 0: // Video ended
+              updateProgress(duration, duration);
+              setPlaying(false);
+              break;
+            case 1: // Playing
+              setPlaying(true);
+              break;
+            case 2: // Paused
+              setPlaying(false);
+              break;
+          }
+        } else if (data.event === "duration") {
+          setDuration(data.duration);
         }
       } catch (e) {
-        // Not a JSON message or other error
+        console.error("YouTube iframe message error:", e);
       }
     };
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [updateProgress]);
+  }, [duration, updateProgress]);
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group">
       <iframe
         ref={iframeRef}
         className="w-full h-full"
-        src={getYouTubeEmbedUrl(videoUrl)}
+        src={`${getYouTubeEmbedUrl(videoUrl)}?enablejsapi=1&origin=${window.location.origin}`}
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        onClick={handlePlay}
       />
       
       {!playing && (
