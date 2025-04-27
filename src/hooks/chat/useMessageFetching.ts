@@ -25,6 +25,7 @@ export const useMessageFetching = () => {
       setMessages(messages || []);
       await fetchCommentsAndReactions(messages || []);
       setLoading(false);
+      return messages || [];
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
@@ -33,6 +34,7 @@ export const useMessageFetching = () => {
         variant: "destructive",
       });
       setLoading(false);
+      return [];
     }
   };
 
@@ -51,17 +53,106 @@ export const useMessageFetching = () => {
         if (payload.eventType === 'DELETE') {
           setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
         }
+        if (payload.eventType === 'UPDATE') {
+          setMessages(prev => prev.map(msg => 
+            msg.id === payload.new.id ? { ...msg, ...payload.new } : msg
+          ));
+        }
+      })
+      .subscribe();
+    
+    // Also subscribe to comment changes
+    const commentChannel = supabase
+      .channel('public:chat_comments')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'chat_comments'
+      }, async (payload: any) => {
+        if (payload.eventType === 'INSERT') {
+          const comment = payload.new as ChatComment;
+          setComments(prev => ({
+            ...prev,
+            [comment.message_id]: [...(prev[comment.message_id] || []), comment]
+          }));
+        }
+        if (payload.eventType === 'DELETE') {
+          setComments(prev => {
+            const newComments = { ...prev };
+            Object.keys(newComments).forEach(messageId => {
+              newComments[messageId] = newComments[messageId].filter(
+                comment => comment.id !== payload.old.id
+              );
+            });
+            return newComments;
+          });
+        }
+        if (payload.eventType === 'UPDATE') {
+          setComments(prev => {
+            const newComments = { ...prev };
+            Object.keys(newComments).forEach(messageId => {
+              newComments[messageId] = newComments[messageId].map(
+                comment => comment.id === payload.new.id ? { ...comment, ...payload.new } : comment
+              );
+            });
+            return newComments;
+          });
+        }
+      })
+      .subscribe();
+
+    // And reactions changes
+    const reactionChannel = supabase
+      .channel('public:chat_reactions')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'chat_reactions'
+      }, async (payload: any) => {
+        if (payload.eventType === 'INSERT' && isValidChatReaction(payload.new)) {
+          const reaction = payload.new as ChatReaction;
+          setReactions(prev => ({
+            ...prev,
+            [reaction.message_id]: [...(prev[reaction.message_id] || []), reaction]
+          }));
+        }
+        if (payload.eventType === 'DELETE') {
+          setReactions(prev => {
+            const newReactions = { ...prev };
+            Object.keys(newReactions).forEach(messageId => {
+              newReactions[messageId] = newReactions[messageId].filter(
+                reaction => reaction.id !== payload.old.id
+              );
+            });
+            return newReactions;
+          });
+        }
+        if (payload.eventType === 'UPDATE' && isValidChatReaction(payload.new)) {
+          setReactions(prev => {
+            const newReactions = { ...prev };
+            Object.keys(newReactions).forEach(messageId => {
+              newReactions[messageId] = newReactions[messageId].map(
+                reaction => reaction.id === payload.new.id ? { ...reaction, ...payload.new } : reaction
+              );
+            });
+            return newReactions;
+          });
+        }
       })
       .subscribe();
     
     return () => {
       supabase.removeChannel(channel);
+      supabase.removeChannel(commentChannel);
+      supabase.removeChannel(reactionChannel);
     };
   }, []);
 
   const fetchCommentsAndReactions = async (messages: ChatMessage[]) => {
     try {
       const messageIds = messages.map(m => m.id);
+      
+      if (messageIds.length === 0) return;
       
       const { data: comments } = await supabase
         .from('chat_comments')

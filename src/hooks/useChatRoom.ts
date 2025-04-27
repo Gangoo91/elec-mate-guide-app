@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -8,6 +9,7 @@ import { useReactions } from './chat/useReactions';
 export function useChatRoom() {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [originalMessages, setOriginalMessages] = useState<any[]>([]);
   const {
     messages,
     comments,
@@ -16,10 +18,31 @@ export function useChatRoom() {
     setMessages,
     setComments,
     setReactions,
-    fetchMessages
+    fetchMessages: fetchMessagesBase
   } = useMessageFetching();
 
   const { toggleReaction } = useReactions(setReactions);
+
+  const fetchMessages = async () => {
+    const result = await fetchMessagesBase();
+    if (result) {
+      setOriginalMessages(result);
+    }
+    return result;
+  };
+
+  const searchMessages = (query: string) => {
+    if (!query.trim()) {
+      setMessages(originalMessages);
+      return;
+    }
+    
+    const filtered = originalMessages.filter(message => 
+      message.content.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    setMessages(filtered);
+  };
 
   const sendMessage = async (content: string) => {
     if (!user) return;
@@ -58,6 +81,11 @@ export function useChatRoom() {
       setMessages(prev => 
         prev.map(msg => msg.id === messageId ? { ...msg, content, updated_at: new Date().toISOString() } : msg)
       );
+      
+      // Also update in original messages for search functionality
+      setOriginalMessages(prev => 
+        prev.map(msg => msg.id === messageId ? { ...msg, content, updated_at: new Date().toISOString() } : msg)
+      );
 
       toast({
         title: "Success",
@@ -86,6 +114,7 @@ export function useChatRoom() {
       if (error) throw error;
 
       setMessages(prev => prev.filter(msg => msg.id !== messageId));
+      setOriginalMessages(prev => prev.filter(msg => msg.id !== messageId));
       
       // Also clear related comments and reactions from state
       setComments(prev => {
@@ -235,6 +264,7 @@ export function useChatRoom() {
     addComment,
     editComment,
     deleteComment,
-    fetchMessages
+    fetchMessages,
+    searchMessages
   };
 }
