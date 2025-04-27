@@ -4,6 +4,7 @@ export interface ChatMessage {
   user_id: string;
   content: string;
   created_at: string;
+  updated_at?: string;
   upvotes: number;
   downvotes: number;
 }
@@ -14,6 +15,7 @@ export interface ChatComment {
   user_id: string;
   content: string;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface ChatReaction {

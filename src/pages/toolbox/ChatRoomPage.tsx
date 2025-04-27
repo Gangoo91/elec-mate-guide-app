@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from "@/components/ui/button";  // Add this import
+import { Button } from "@/components/ui/button";  
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { ChatMessageComponent } from '@/components/chat/ChatMessage';
@@ -22,8 +22,11 @@ const ChatRoomPage = () => {
     reactions,
     loading,
     sendMessage,
+    editMessage,
+    deleteMessage,
     toggleReaction,
     addComment,
+    editComment,
     fetchMessages,
     deleteComment
   } = useChatRoom();
@@ -83,6 +86,9 @@ const ChatRoomPage = () => {
                           reactions={reactions[message.id] || []}
                           onReaction={(type) => toggleReaction(message.id, type)}
                           onComment={(content) => addComment(message.id, content)}
+                          onEditMessage={(content) => editMessage(message.id, content)}
+                          onDeleteMessage={() => deleteMessage(message.id)}
+                          onEditComment={(commentId, content) => editComment(commentId, content)}
                           onDeleteComment={deleteComment}
                         />
                       ))}

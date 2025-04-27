@@ -1,3 +1,4 @@
+
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -42,6 +43,77 @@ export function useChatRoom() {
     }
   };
 
+  const editMessage = async (messageId: string, content: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('chat_messages')
+        .update({ content, updated_at: new Date().toISOString() })
+        .eq('id', messageId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setMessages(prev => 
+        prev.map(msg => msg.id === messageId ? { ...msg, content, updated_at: new Date().toISOString() } : msg)
+      );
+
+      toast({
+        title: "Success",
+        description: "Message updated successfully",
+      });
+    } catch (error) {
+      console.error('Error editing message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update message",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const deleteMessage = async (messageId: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('chat_messages')
+        .delete()
+        .eq('id', messageId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setMessages(prev => prev.filter(msg => msg.id !== messageId));
+      
+      // Also clear related comments and reactions from state
+      setComments(prev => {
+        const newComments = { ...prev };
+        delete newComments[messageId];
+        return newComments;
+      });
+      
+      setReactions(prev => {
+        const newReactions = { ...prev };
+        delete newReactions[messageId];
+        return newReactions;
+      });
+
+      toast({
+        title: "Success",
+        description: "Message deleted successfully",
+      });
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete message",
+        variant: "destructive",
+      });
+    }
+  };
+
   const addComment = async (messageId: string, content: string) => {
     if (!user) return;
 
@@ -71,6 +143,44 @@ export function useChatRoom() {
       toast({
         title: "Error",
         description: "Failed to add comment",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const editComment = async (commentId: string, content: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('chat_comments')
+        .update({ content, updated_at: new Date().toISOString() })
+        .eq('id', commentId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setComments(prev => {
+        const newComments = { ...prev };
+        Object.keys(newComments).forEach(messageId => {
+          newComments[messageId] = newComments[messageId].map(
+            comment => comment.id === commentId 
+              ? { ...comment, content, updated_at: new Date().toISOString() } 
+              : comment
+          );
+        });
+        return newComments;
+      });
+
+      toast({
+        title: "Success",
+        description: "Comment updated successfully",
+      });
+    } catch (error) {
+      console.error('Error editing comment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update comment",
         variant: "destructive",
       });
     }
@@ -118,9 +228,12 @@ export function useChatRoom() {
     reactions,
     loading,
     sendMessage,
+    editMessage,
+    deleteMessage,
     toggleReaction: (messageId: string, type: 'upvote' | 'downvote') => 
       user && toggleReaction(messageId, type, user.id),
     addComment,
+    editComment,
     deleteComment,
     fetchMessages
   };

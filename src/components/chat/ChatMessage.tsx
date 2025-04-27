@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ThumbsUp, ThumbsDown, MessageSquare, Send, Trash2 } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, MessageSquare, Send, Trash2, Edit, Check } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { MessageTime } from './MessageTime';
 import { useProfiles } from '@/hooks/useProfiles';
@@ -15,6 +16,9 @@ interface ChatMessageProps {
   onReaction: (type: 'upvote' | 'downvote') => void;
   onComment: (content: string) => void;
   onDeleteComment?: (commentId: string) => void;
+  onEditMessage?: (content: string) => void;
+  onDeleteMessage?: () => void;
+  onEditComment?: (commentId: string, content: string) => void;
 }
 
 export function ChatMessageComponent({
@@ -23,10 +27,17 @@ export function ChatMessageComponent({
   reactions,
   onReaction,
   onComment,
-  onDeleteComment
+  onDeleteComment,
+  onEditMessage,
+  onDeleteMessage,
+  onEditComment
 }: ChatMessageProps) {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(message.content);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editingCommentContent, setEditingCommentContent] = useState('');
   const { user } = useAuth();
   const { profiles } = useProfiles();
 
@@ -44,14 +55,81 @@ export function ChatMessageComponent({
     setNewComment('');
   };
 
+  const handleEditMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editContent.trim()) return;
+    onEditMessage?.(editContent);
+    setIsEditing(false);
+  };
+
+  const handleEditComment = (commentId: string) => {
+    if (!editingCommentContent.trim()) return;
+    onEditComment?.(commentId, editingCommentContent);
+    setEditingCommentId(null);
+    setEditingCommentContent('');
+  };
+
+  const startEditingComment = (comment: ChatComment) => {
+    setEditingCommentId(comment.id);
+    setEditingCommentContent(comment.content);
+  };
+
+  const isCurrentUserMessage = user?.id === message.user_id;
+
   return (
     <div className="p-4 bg-[#22251e] border border-[#FFC900]/20 rounded-lg mb-4">
       <div className="flex justify-between items-start mb-2">
         <span className="text-[#FFC900] font-medium">{senderName}</span>
-        <MessageTime timestamp={message.created_at} />
+        <div className="flex items-center gap-2">
+          <MessageTime timestamp={message.created_at} />
+          {message.updated_at && message.updated_at !== message.created_at && (
+            <span className="text-xs text-[#FFC900]/50">(edited)</span>
+          )}
+          {isCurrentUserMessage && (
+            <div className="flex gap-1 ml-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-[#FFC900]/70 hover:text-[#FFC900]"
+                onClick={() => setIsEditing(true)}
+              >
+                <Edit className="h-3 w-3" />
+                <span className="sr-only">Edit message</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 text-red-500/70 hover:text-red-500"
+                onClick={onDeleteMessage}
+              >
+                <Trash2 className="h-3 w-3" />
+                <span className="sr-only">Delete message</span>
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
       
-      <div className="text-[#FFC900]/90 mb-4">{message.content}</div>
+      {isEditing ? (
+        <form onSubmit={handleEditMessage} className="mb-4 flex gap-2">
+          <Input
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+            className="flex-1 bg-[#333] border-[#444] text-[#FFC900]"
+            autoFocus
+          />
+          <Button 
+            type="submit" 
+            size="icon"
+            className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+          >
+            <Check className="h-4 w-4" />
+            <span className="sr-only">Save edit</span>
+          </Button>
+        </form>
+      ) : (
+        <div className="text-[#FFC900]/90 mb-4">{message.content}</div>
+      )}
       
       <div className="flex items-center gap-4">
         <Button
@@ -97,19 +175,57 @@ export function ChatMessageComponent({
             <div key={comment.id} className="mb-2 group">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <div className="text-sm text-[#FFC900]/90">{comment.content}</div>
+                  {editingCommentId === comment.id ? (
+                    <div className="flex gap-2">
+                      <Input
+                        value={editingCommentContent}
+                        onChange={(e) => setEditingCommentContent(e.target.value)}
+                        className="flex-1 bg-[#333] border-[#444] text-[#FFC900] text-sm"
+                        autoFocus
+                      />
+                      <Button 
+                        size="icon"
+                        className="h-6 w-6 bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
+                        onClick={() => handleEditComment(comment.id)}
+                      >
+                        <Check className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-[#FFC900]/90">
+                      {comment.content}
+                      {comment.updated_at && comment.updated_at !== comment.created_at && (
+                        <span className="text-xs text-[#FFC900]/50 ml-1">(edited)</span>
+                      )}
+                    </div>
+                  )}
                   <MessageTime timestamp={comment.created_at} className="text-xs" />
                 </div>
-                {user && comment.user_id === user.id && onDeleteComment && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
-                    onClick={() => onDeleteComment(comment.id)}
-                  >
-                    <Trash2 className="h-4 w-4 text-red-500" />
-                    <span className="sr-only">Delete comment</span>
-                  </Button>
+                {user && comment.user_id === user.id && (
+                  <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
+                    {onEditComment && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={() => startEditingComment(comment)}
+                      >
+                        <Edit className="h-3 w-3 text-[#FFC900]/70" />
+                        <span className="sr-only">Edit comment</span>
+                      </Button>
+                    )}
+                    {onDeleteComment && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6"
+                        onClick={() => onDeleteComment(comment.id)}
+                      >
+                        <Trash2 className="h-3 w-3 text-red-500" />
+                        <span className="sr-only">Delete comment</span>
+                      </Button>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
