@@ -1,4 +1,3 @@
-
 import { lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -13,6 +12,7 @@ const PracticeExamsPage = lazy(() => import('@/pages/PracticeExamsPage'));
 const AIToolsPage = lazy(() => import('@/pages/AIToolsPage'));
 const VideoDemonstrationsPage = lazy(() => import('@/pages/VideoDemonstrationsPage'));
 const ARLearningPage = lazy(() => import('@/pages/ARLearningPage'));
+const AudioTutorialsPage = lazy(() => import('@/pages/AudioTutorialsPage'));
 
 // Wrap lazy components in suspense
 const withSuspense = (Component) => (
@@ -30,5 +30,6 @@ export const ApprenticeRoutes = [
   <Route key="practice-exams" path="/apprentices/practice-exams" element={withSuspense(<PracticeExamsPage />)} />,
   <Route key="ai-tools" path="/apprentices/ai-tools" element={withSuspense(<AIToolsPage />)} />,
   <Route key="video-demonstrations" path="/apprentices/video-demonstrations" element={withSuspense(<VideoDemonstrationsPage />)} />,
-  <Route key="ar-learning" path="/apprentices/ar-learning" element={withSuspense(<ARLearningPage />)} />
+  <Route key="ar-learning" path="/apprentices/ar-learning" element={withSuspense(<ARLearningPage />)} />,
+  <Route key="audio-tutorials" path="/apprentices/audio-tutorials" element={withSuspense(<AudioTutorialsPage />)} />
 ];
