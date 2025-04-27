@@ -5,38 +5,59 @@ export const useAudioPlayer = (audioUrl: string) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [error, setError] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(audioUrl);
+    if (!audioUrl) {
+      setError('No audio URL provided');
+      return;
+    }
     
-    const handleEnded = () => setIsPlaying(false);
-    const handleTimeUpdate = () => {
-      if (audioRef.current) {
-        setCurrentTime(audioRef.current.currentTime);
-      }
-    };
-    const handleLoadedMetadata = () => {
-      if (audioRef.current) {
-        setDuration(audioRef.current.duration);
-      }
-    };
+    try {
+      audioRef.current = new Audio(audioUrl);
+      
+      const handleEnded = () => setIsPlaying(false);
+      const handleTimeUpdate = () => {
+        if (audioRef.current) {
+          setCurrentTime(audioRef.current.currentTime);
+        }
+      };
+      const handleLoadedMetadata = () => {
+        if (audioRef.current) {
+          setDuration(audioRef.current.duration);
+          setError(null);
+        }
+      };
+      const handleError = (e: ErrorEvent) => {
+        console.error('Audio loading error:', e);
+        setError('Failed to load audio file');
+        setIsPlaying(false);
+      };
 
-    audioRef.current.addEventListener('ended', handleEnded);
-    audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
-    audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+      audioRef.current.addEventListener('ended', handleEnded);
+      audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
+      audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
+      audioRef.current.addEventListener('error', handleError as EventListener);
 
-    // Try to load the audio metadata
-    audioRef.current.load();
+      // Try to load the audio metadata
+      audioRef.current.load();
 
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.removeEventListener('ended', handleEnded);
-        audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
-        audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        audioRef.current.pause();
-      }
-    };
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener('ended', handleEnded);
+          audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+          audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
+          audioRef.current.removeEventListener('error', handleError as EventListener);
+          audioRef.current.pause();
+          audioRef.current = null;
+        }
+      };
+    } catch (err) {
+      console.error('Error setting up audio player:', err);
+      setError('Error setting up audio player');
+      return () => {};
+    }
   }, [audioUrl]);
 
   const togglePlayback = () => {
@@ -44,18 +65,23 @@ export const useAudioPlayer = (audioUrl: string) => {
 
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      // Log the URL to diagnose any issues
       console.log('Playing audio from:', audioUrl);
       const playPromise = audioRef.current.play();
       
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error('Audio playback failed:', error);
-        });
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(err => {
+            console.error('Audio playback failed:', err);
+            setError('Failed to play audio');
+            setIsPlaying(false);
+          });
       }
     }
-    setIsPlaying(!isPlaying);
   };
 
   // Format time in MM:SS format
@@ -72,6 +98,7 @@ export const useAudioPlayer = (audioUrl: string) => {
     togglePlayback, 
     currentTime: formatTime(currentTime),
     progress,
-    duration: formatTime(duration)
+    duration: formatTime(duration),
+    error
   };
 };

@@ -2,16 +2,30 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2 } from "lucide-react";
+import { Play, Pause, Volume2, AlertCircle } from "lucide-react";
 import { AudioTutorial } from '@/types/audio';
 import { useAudioPlayer } from '@/hooks/useAudioPlayer';
+import { useToast } from "@/components/ui/use-toast";
 
 interface AudioTutorialCardProps {
   tutorial: AudioTutorial;
 }
 
 const AudioTutorialCard = ({ tutorial }: AudioTutorialCardProps) => {
-  const { isPlaying, togglePlayback, currentTime, progress, duration } = useAudioPlayer(tutorial.audioUrl);
+  const { isPlaying, togglePlayback, currentTime, progress, duration, error } = useAudioPlayer(tutorial.audioUrl);
+  const { toast } = useToast();
+  
+  const handlePlayPause = () => {
+    if (error) {
+      toast({
+        title: "Audio Error",
+        description: error,
+        variant: "destructive",
+      });
+      return;
+    }
+    togglePlayback();
+  };
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
@@ -23,9 +37,9 @@ const AudioTutorialCard = ({ tutorial }: AudioTutorialCardProps) => {
           variant="ghost"
           size="icon"
           className="text-[#FFC900] hover:text-[#FFC900]/70"
-          onClick={togglePlayback}
+          onClick={handlePlayPause}
         >
-          {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+          {error ? <AlertCircle className="h-5 w-5" /> : isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         </Button>
       </CardHeader>
       <CardContent>

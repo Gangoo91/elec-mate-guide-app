@@ -10,6 +10,12 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 const AudioTutorialsList = () => {
   const { tutorials, categories, isLoading } = useAudioTutorials();
 
+  // Add test audio URLs to tutorials
+  const tutorialsWithAudio = tutorials.map(tutorial => ({
+    ...tutorial,
+    audioUrl: tutorial.audioUrl || 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+  }));
+
   if (isLoading) {
     return <div className="flex justify-center py-8"><LoadingSpinner /></div>;
   }
@@ -34,7 +40,7 @@ const AudioTutorialsList = () => {
       {categories.map((category) => (
         <TabsContent key={category} value={category} className="mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {tutorials
+            {tutorialsWithAudio
               .filter(tutorial => tutorial.category === category)
               .map((tutorial) => (
                 <AudioTutorialCard key={tutorial.id} tutorial={tutorial} />
