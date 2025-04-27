@@ -14,18 +14,26 @@ type Milestone = {
   completed_at: string | null;
   resource_id: string | null;
   resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  created_at: string;
 };
 
 type MilestoneUpdate = {
+  id: string;
   note: string;
   created_at: string;
+  milestone_id: string;
+};
+
+type NewMilestoneUpdate = {
+  note: string;
+  milestone_id: string;
 };
 
 export function useApprenticeProgress() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: milestones, isLoading } = useQuery({
+  const { data: milestones, isLoading: milestonesLoading } = useQuery({
     queryKey: ['apprentice-milestones'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -51,7 +59,8 @@ export function useApprenticeProgress() {
           target_completion_date: item.target_completion_date,
           completed_at: item.completed_at,
           resource_id: resourceId,
-          resource_type: resourceType
+          resource_type: resourceType,
+          created_at: item.created_at
         };
       }) as Milestone[];
       
@@ -59,8 +68,22 @@ export function useApprenticeProgress() {
     }
   });
 
+  const { data: milestoneUpdates = [], isLoading: updatesLoading } = useQuery({
+    queryKey: ['milestone-updates'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('progress_updates')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      
+      return data as MilestoneUpdate[];
+    }
+  });
+
   const addMilestoneMutation = useMutation({
-    mutationFn: async (newMilestone: Omit<Milestone, 'id'> & { user_id: string }) => {
+    mutationFn: async (newMilestone: Omit<Milestone, 'id' | 'created_at'> & { user_id: string }) => {
       const { data, error } = await supabase
         .from('apprentice_milestones')
         .insert(newMilestone)
@@ -107,10 +130,39 @@ export function useApprenticeProgress() {
     }
   });
 
+  const addMilestoneUpdateMutation = useMutation({
+    mutationFn: async (newUpdate: NewMilestoneUpdate) => {
+      const { data, error } = await supabase
+        .from('progress_updates')
+        .insert(newUpdate)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['milestone-updates'] });
+      toast({
+        title: "Success",
+        description: "Update added successfully",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to add update",
+        variant: "destructive",
+      });
+    }
+  });
+
   return {
     milestones,
-    isLoading,
+    milestoneUpdates,
+    isLoading: milestonesLoading || updatesLoading,
     addMilestone: addMilestoneMutation.mutate,
     updateMilestone: updateMilestoneMutation.mutate,
+    addMilestoneUpdate: addMilestoneUpdateMutation.mutate,
   };
 }
