@@ -71,32 +71,57 @@ export const extractVideoId = (url: string): string | null => {
   if (!url) return null;
   
   try {
+    // Handle direct video IDs (no URL, just ID)
+    if (url.length === 11 && !url.includes('/') && !url.includes('.')) {
+      return url;
+    }
+    
     // Handle youtu.be format
     if (url.includes('youtu.be/')) {
-      const id = url.split('youtu.be/')[1]?.split(/[?&]/)[0];
+      const id = url.split('youtu.be/')[1]?.split(/[?&#]/)[0];
       return id || null;
     }
     
     // Handle youtube.com format
-    const urlObj = new URL(url);
-    
-    if (urlObj.hostname.includes('youtube.com')) {
-      // Standard watch URL
-      if (urlObj.pathname.includes('/watch')) {
-        return urlObj.searchParams.get('v');
-      }
+    try {
+      const urlObj = new URL(url);
       
-      // Embed URL
-      if (urlObj.pathname.includes('/embed/')) {
-        return urlObj.pathname.split('/embed/')[1]?.split(/[?&]/)[0] || null;
+      if (urlObj.hostname.includes('youtube.com')) {
+        // Standard watch URL
+        if (urlObj.pathname.includes('/watch')) {
+          return urlObj.searchParams.get('v');
+        }
+        
+        // Embed URL
+        if (urlObj.pathname.includes('/embed/')) {
+          return urlObj.pathname.split('/embed/')[1]?.split(/[?&#]/)[0] || null;
+        }
+        
+        // Short URL
+        if (urlObj.pathname.includes('/shorts/')) {
+          return urlObj.pathname.split('/shorts/')[1]?.split(/[?&#]/)[0] || null;
+        }
       }
+    } catch (e) {
+      // If URL parsing fails, try regex approach
+      const regexPatterns = [
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)([^?&#]+)/,
+        /youtube\.com\/watch.*?[?&]v=([^&#]+)/i,
+        /youtube\.com\/embed\/([^?&#]+)/i,
+        /youtube\.com\/v\/([^?&#]+)/i,
+        /youtube\.com\/shorts\/([^?&#]+)/i,
+        /youtu\.be\/([^?&#]+)/i
+      ];
       
-      // Short URL
-      if (urlObj.pathname.includes('/shorts/')) {
-        return urlObj.pathname.split('/shorts/')[1]?.split(/[?&]/)[0] || null;
+      for (const pattern of regexPatterns) {
+        const match = url.match(pattern);
+        if (match && match[1]) {
+          return match[1];
+        }
       }
     }
     
+    console.warn('Could not extract YouTube ID from URL:', url);
     return null;
   } catch (e) {
     console.error('Error extracting YouTube video ID:', e);

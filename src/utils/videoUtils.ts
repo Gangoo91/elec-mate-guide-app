@@ -17,13 +17,36 @@ export const mapVideoCategory = (category: string): VideoLesson['category'] => {
 
 // Ensure all videos have valid YouTube URLs
 export const ensureValidVideoUrl = (url: string): string => {
+  // Known working YouTube videos to use as fallbacks
+  const fallbackVideos = [
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Rick Roll
+    'https://www.youtube.com/watch?v=mc979OhitAg', // Electrical video
+    'https://www.youtube.com/watch?v=vN9aR2wKv0U', // Circuit theory
+    'https://www.youtube.com/watch?v=9iKD8kW84C0'  // Safety video
+  ];
+  
   // Check if URL is a valid YouTube URL
-  if (url.includes('youtube.com/watch?v=') || url.includes('youtu.be/')) {
+  if (!url || typeof url !== 'string') {
+    return fallbackVideos[0]; // Default fallback
+  }
+  
+  // If it's a YouTube URL already, return it
+  if (url.includes('youtube.com/watch?v=') || 
+      url.includes('youtu.be/') ||
+      url.includes('youtube.com/embed/') ||
+      url.includes('youtube.com/shorts/')) {
     return url;
   }
   
+  // For example videos, assign consistent working YouTube videos
+  if (url.includes('example.com')) {
+    // Rotate through our fallbacks based on the string content
+    const index = Math.abs(url.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % fallbackVideos.length;
+    return fallbackVideos[index];
+  }
+  
   // Default to a known working YouTube video if URL is invalid
-  return 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+  return fallbackVideos[0];
 };
 
 export const useCombinedVideos = (dbVideos: VideoLesson[]): VideoLesson[] => {

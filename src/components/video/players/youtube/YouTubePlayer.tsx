@@ -32,12 +32,13 @@ export const YouTubePlayer = ({
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   
   useEffect(() => {
+    console.log(`Attempting to load YouTube video: ${title} (${videoUrl}) - ID: ${videoId}`);
     const timeout = setTimeout(() => {
       setLoadingTimeout(true);
     }, 8000);
     
     return () => clearTimeout(timeout);
-  }, []);
+  }, [title, videoUrl, videoId]);
   
   const handleError = useCallback(() => {
     console.error(`YouTube player error for video: ${title} (${videoUrl})`);
@@ -56,7 +57,7 @@ export const YouTubePlayer = ({
   }, [title, videoUrl]);
   
   // Use fallback video ID if extraction fails
-  const safeVideoId = videoId || 'dQw4w9WgXcQ';
+  const safeVideoId = videoId || 'dQw4w9WgXcQ'; // Rick Roll as fallback
   
   const { containerRef, playerReady, isLoaded } = useYouTubePlayer({
     videoId: hasError ? null : safeVideoId,
