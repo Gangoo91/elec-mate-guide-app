@@ -33,10 +33,10 @@ export default function AddMilestoneDialog() {
       title,
       description,
       type,
-      status: 'not_started',
+      status: 'not_started' as 'not_started' | 'in_progress' | 'completed',
       user_id: user.id,
-      target_completion_date: null, // Adding the missing property
-      completed_at: null // Adding the missing property
+      target_completion_date: null,
+      completed_at: null
     };
 
     addMilestone(newMilestone);
