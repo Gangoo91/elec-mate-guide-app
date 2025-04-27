@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 
@@ -102,8 +101,6 @@ const demoVideos: VideoLesson[] = [
 ];
 
 export function useVideos() {
-  const queryClient = useQueryClient();
-  
   const { data: categories = [], isLoading: isCategoriesLoading } = useQuery({
     queryKey: ['video-categories'],
     queryFn: async () => {

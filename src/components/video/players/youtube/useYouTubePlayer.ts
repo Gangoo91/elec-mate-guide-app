@@ -1,5 +1,5 @@
 
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useYouTubeInitialization } from './hooks/useYouTubeInitialization';
 import { useYouTubePlayerState } from './hooks/useYouTubePlayerState';
 
@@ -138,7 +138,7 @@ export const useYouTubePlayer = ({
     }
   }, [onError, clearProgressInterval]);
 
-  const { playerRef, initPlayer, errorRetryCountRef } = useYouTubeInitialization({
+  const { playerRef, initPlayer, errorRetryCountRef, playerInitializedRef } = useYouTubeInitialization({
     videoId,
     playerElementId,
     onError,
@@ -155,6 +155,20 @@ export const useYouTubePlayer = ({
     playerReady
   });
 
+  // Create player element if it doesn't exist
+  useEffect(() => {
+    if (!containerRef.current || !videoId) return;
+
+    while (containerRef.current.firstChild) {
+      containerRef.current.removeChild(containerRef.current.firstChild);
+    }
+
+    const playerDiv = document.createElement('div');
+    playerDiv.id = playerElementId;
+    containerRef.current.appendChild(playerDiv);
+  }, [videoId, playerElementId]);
+
+  // Initialize player when video changes
   useEffect(() => {
     if (!videoId) {
       return;
@@ -176,25 +190,13 @@ export const useYouTubePlayer = ({
     };
   }, [videoId, initPlayer, clearProgressInterval]);
 
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       clearProgressInterval();
       cleanupPlayer();
     };
   }, [clearProgressInterval, cleanupPlayer]);
-
-  // Create player element if it doesn't exist
-  useEffect(() => {
-    if (!containerRef.current || !videoId) return;
-
-    while (containerRef.current.firstChild) {
-      containerRef.current.removeChild(containerRef.current.firstChild);
-    }
-
-    const playerDiv = document.createElement('div');
-    playerDiv.id = playerElementId;
-    containerRef.current.appendChild(playerDiv);
-  }, [videoId, playerElementId]);
 
   return { containerRef, playerReady };
 };
