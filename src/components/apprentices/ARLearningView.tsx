@@ -1,32 +1,26 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Info, CircuitBoard, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { arComponents } from "@/data/arComponents";
+import { componentCategories } from "@/data/arComponents";
 import ARViewControls from "./ar-learning/ARViewControls";
 import ComponentDetails from "./ar-learning/ComponentDetails";
 import { ComponentInfo } from "@/types/arLearning";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-
-// Group components by category
-const componentCategories = {
-  'Protection Devices': ['rcbo', 'mcb', 'rcd'],
-  'Distribution Equipment': ['consumer-unit', 'metal-conduit', 'junction-box'],
-  'Installation Components': ['socket-outlet', 'metal-clad-switch']
-};
 
 const ARLearningView = () => {
   const [activeTab, setActiveTab] = useState('rcbo');
   const [isLoading, setIsLoading] = useState(true);
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
-  const [openCategories, setOpenCategories] = useState<string[]>(['Protection Devices']);
+  const [openCategories, setOpenCategories] = useState<string[]>(['protection-devices']);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   function getActiveComponent(): ComponentInfo {
-    return arComponents.find(comp => comp.id === activeTab) || arComponents[0];
+    return componentCategories
+      .flatMap(category => category.items)
+      .find(comp => comp.id === activeTab) || componentCategories[0].items[0];
   }
 
   const handleZoomIn = () => {
@@ -46,11 +40,11 @@ const ARLearningView = () => {
     setRotation(0);
   };
 
-  const toggleCategory = (category: string) => {
+  const toggleCategory = (categoryId: string) => {
     setOpenCategories(prev =>
-      prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+      prev.includes(categoryId)
+        ? prev.filter(c => c !== categoryId)
+        : [...prev, categoryId]
     );
   };
 
@@ -76,38 +70,34 @@ const ARLearningView = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {Object.entries(componentCategories).map(([category, componentIds]) => (
+            {componentCategories.map((category) => (
               <Collapsible
-                key={category}
-                open={openCategories.includes(category)}
-                onOpenChange={() => toggleCategory(category)}
+                key={category.id}
+                open={openCategories.includes(category.id)}
+                onOpenChange={() => toggleCategory(category.id)}
                 className="space-y-2"
               >
                 <CollapsibleTrigger className="flex w-full items-center justify-between p-2 text-[#FFC900] hover:bg-[#FFC900]/10 rounded-md">
-                  <span>{category}</span>
+                  <span>{category.name}</span>
                   <ChevronDown className={`h-4 w-4 transform transition-transform ${
-                    openCategories.includes(category) ? 'rotate-180' : ''
+                    openCategories.includes(category.id) ? 'rotate-180' : ''
                   }`} />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="space-y-2 pl-4">
-                  {componentIds.map(id => {
-                    const component = arComponents.find(c => c.id === id);
-                    if (!component) return null;
-                    return (
-                      <Button
-                        key={component.id}
-                        variant="ghost"
-                        className={`w-full justify-start ${
-                          activeTab === component.id
-                            ? 'bg-[#FFC900] text-[#22251e]'
-                            : 'text-[#FFC900] hover:bg-[#FFC900]/10'
-                        }`}
-                        onClick={() => setActiveTab(component.id)}
-                      >
-                        {component.name}
-                      </Button>
-                    );
-                  })}
+                  {category.items.map(component => (
+                    <Button
+                      key={component.id}
+                      variant="ghost"
+                      className={`w-full justify-start ${
+                        activeTab === component.id
+                          ? 'bg-[#FFC900] text-[#22251e]'
+                          : 'text-[#FFC900] hover:bg-[#FFC900]/10'
+                      }`}
+                      onClick={() => setActiveTab(component.id)}
+                    >
+                      {component.name}
+                    </Button>
+                  ))}
                 </CollapsibleContent>
               </Collapsible>
             ))}

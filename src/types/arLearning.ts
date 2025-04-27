@@ -4,7 +4,14 @@ export type ComponentInfo = {
   name: string;
   description: string;
   youtubeId: string;
-  imageUrl?: string; // New field for component images
+  imageUrl?: string;
   specifications?: string[];
   tips?: string[];
 }
+
+export type ComponentCategory = {
+  id: string;
+  name: string;
+  items: ComponentInfo[];
+}
+
