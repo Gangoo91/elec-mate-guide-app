@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      apprentice_milestones: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          id: string
+          status: string
+          target_completion_date: string | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          target_completion_date?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          status?: string
+          target_completion_date?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       audio_tutorials: {
         Row: {
           audiourl: string
@@ -668,6 +707,38 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      progress_updates: {
+        Row: {
+          created_at: string
+          id: string
+          milestone_id: string
+          note: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          milestone_id: string
+          note: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          milestone_id?: string
+          note?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "progress_updates_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "apprentice_milestones"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       quiz_attempts: {
         Row: {

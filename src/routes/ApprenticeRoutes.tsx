@@ -13,6 +13,7 @@ const AIToolsPage = lazy(() => import('@/pages/AIToolsPage'));
 const VideoDemonstrationsPage = lazy(() => import('@/pages/VideoDemonstrationsPage'));
 const ARLearningPage = lazy(() => import('@/pages/ARLearningPage'));
 const AudioTutorialsPage = lazy(() => import('@/pages/AudioTutorialsPage'));
+const ProgressTrackingPage = lazy(() => import('@/pages/apprentices/ProgressTrackingPage'));
 
 // Wrap lazy components in suspense
 const withSuspense = (Component) => (
@@ -31,5 +32,6 @@ export const ApprenticeRoutes = [
   <Route key="ai-tools" path="/apprentices/ai-tools" element={withSuspense(<AIToolsPage />)} />,
   <Route key="video-demonstrations" path="/apprentices/video-demonstrations" element={withSuspense(<VideoDemonstrationsPage />)} />,
   <Route key="ar-learning" path="/apprentices/ar-learning" element={withSuspense(<ARLearningPage />)} />,
-  <Route key="audio-tutorials" path="/apprentices/audio-tutorials" element={withSuspense(<AudioTutorialsPage />)} />
+  <Route key="audio-tutorials" path="/apprentices/audio-tutorials" element={withSuspense(<AudioTutorialsPage />)} />,
+  <Route key="progress-tracking" path="/apprentices/progress" element={withSuspense(<ProgressTrackingPage />)} />
 ];
