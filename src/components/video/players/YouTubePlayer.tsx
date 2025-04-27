@@ -1,4 +1,31 @@
+
 import React, { useRef, useEffect } from 'react';
+
+// Define YouTube API types
+declare global {
+  interface Window {
+    YT: {
+      Player: new (
+        elementId: string,
+        options: {
+          events: {
+            onStateChange: (event: any) => void;
+            onError: () => void;
+            onReady: (event: any) => void;
+          }
+        }
+      ) => {
+        getCurrentTime: () => number;
+        getDuration: () => number;
+        playVideo: () => void;
+        pauseVideo: () => void;
+        getPlayerState: () => number;
+        seekTo: (seconds: number) => void;
+      };
+    };
+    onYouTubeIframeAPIReady: (() => void) | null;
+  }
+}
 
 interface YouTubePlayerProps {
   videoUrl: string;
@@ -152,7 +179,9 @@ export const YouTubePlayer = ({
     }
   }, [playing]);
 
-  const iframeId = `yt-player-${videoId}`;
+  // Extract video ID for the iframe ID
+  const videoIdMatch = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+  const iframeId = `yt-player-${videoIdMatch ? videoIdMatch[1] : 'video'}`;
   const embedUrl = getYouTubeEmbedUrl(videoUrl);
   
   return (
