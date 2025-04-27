@@ -35,6 +35,8 @@ export default function AddMilestoneDialog() {
       type,
       status: 'not_started',
       user_id: user.id,
+      target_completion_date: null, // Adding the missing property
+      completed_at: null // Adding the missing property
     };
 
     addMilestone(newMilestone);
