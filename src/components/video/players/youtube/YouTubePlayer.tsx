@@ -1,5 +1,5 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
@@ -23,17 +23,32 @@ export const YouTubePlayer = ({
   startAt = 0,
   playing = false,
 }: YouTubePlayerProps) => {
+  const [hasError, setHasError] = useState(false);
   const videoId = useCallback(() => extractVideoId(videoUrl), [videoUrl])();
   
-  // Only initialize the player if we have a valid videoId
+  // Handle player errors locally first
+  const handleError = () => {
+    console.log(`YouTube player error for video: ${title}`);
+    setHasError(true);
+    onError();
+  };
+  
+  // Only initialize the player if we have a valid videoId and no errors yet
   const { containerRef } = useYouTubePlayer({
-    videoId,
-    onError,
+    videoId: hasError ? null : videoId,
+    onError: handleError,
     onProgress,
     onPlayStateChange,
     startAt,
     playing,
   });
+
+  // If videoId is invalid, trigger error immediately
+  React.useEffect(() => {
+    if (!videoId && !hasError) {
+      handleError();
+    }
+  }, [videoId, hasError]);
 
   return (
     <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">

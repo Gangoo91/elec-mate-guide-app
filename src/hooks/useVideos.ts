@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 
@@ -22,7 +21,7 @@ const demoVideos: VideoLesson[] = [
     duration: "15:30",
     category: "core_units",
     kudos_points: 10,
-    video_url: "https://www.youtube.com/watch?v=Cw_rGCPQ-oo",
+    video_url: "https://www.youtube.com/watch?v=mc979OhitAg", 
     unit_number: "201"
   },
   {
@@ -32,7 +31,7 @@ const demoVideos: VideoLesson[] = [
     duration: "22:15",
     category: "core_units",
     kudos_points: 15,
-    video_url: "https://www.youtube.com/watch?v=ZRLXDiiUv8Q",
+    video_url: "https://www.youtube.com/watch?v=vN9aR2wKv0U",
     unit_number: "202"
   },
   {
@@ -52,7 +51,7 @@ const demoVideos: VideoLesson[] = [
     duration: "24:10",
     category: "installation",
     kudos_points: 20,
-    video_url: "https://www.youtube.com/watch?v=GmYVfyqbdEo"
+    video_url: "https://www.youtube.com/watch?v=TAGjuRwx_zw"
   },
   {
     id: "installation-2",
@@ -128,25 +127,27 @@ export function useVideos() {
   } = useQuery({
     queryKey: ['video-lessons'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('video_lessons')
-        .select('*')
-        .order('created_at', { ascending: true });
-      
-      if (error) {
-        console.error("Error fetching videos:", error);
-        throw error;
+      try {
+        const { data, error } = await supabase
+          .from('video_lessons')
+          .select('*')
+          .order('created_at', { ascending: true });
+        
+        if (error) {
+          console.error("Error fetching videos:", error);
+          throw error;
+        }
+        
+        return data.map(video => ({
+          ...video,
+          category: mapVideoCategory(video.category)
+        })) as VideoLesson[];
+      } catch (err) {
+        console.error("Failed to fetch videos:", err);
+        return [];
       }
-      
-      return data.map(video => ({
-        ...video,
-        category: mapVideoCategory(video.category)
-      })) as VideoLesson[];
     }
   });
-
-  // Combine database videos with demo videos for empty categories
-  const videos = useCombinedVideos(dbVideos);
 
   const mapVideoCategory = (category: string): VideoLesson['category'] => {
     const categoryMap: Record<string, VideoLesson['category']> = {
@@ -161,7 +162,6 @@ export function useVideos() {
     return categoryMap[category] || 'theory';
   };
 
-  // This function merges database videos with demo videos for categories that are empty
   function useCombinedVideos(dbVideos: VideoLesson[]): VideoLesson[] {
     if (dbVideos.length === 0) {
       return demoVideos;
@@ -169,24 +169,22 @@ export function useVideos() {
     
     const dbCategories = [...new Set(dbVideos.map(v => v.category))];
     
-    // Check if any categories are missing
     const missingCategories = ['core_units', 'installation', 'testing'].filter(
       cat => !dbCategories.includes(cat as VideoLesson['category'])
     );
     
-    // If all categories are present, return database videos
     if (missingCategories.length === 0) {
       return dbVideos;
     }
     
-    // Get demo videos for missing categories
     const neededDemoVideos = demoVideos.filter(
       v => missingCategories.includes(v.category)
     );
     
-    // Combine database videos with needed demo videos
     return [...dbVideos, ...neededDemoVideos];
   }
+
+  const videos = useCombinedVideos(dbVideos);
 
   return {
     videos,

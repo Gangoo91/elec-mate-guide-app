@@ -48,21 +48,59 @@ declare global {
   }
 }
 
-export const loadYouTubeAPI = (): void => {
-  // Don't load multiple instances of the API
-  if (document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
-    return;
+// Cache for API loading state
+let apiLoading = false;
+
+export const loadYouTubeAPI = (): Promise<void> => {
+  // Return existing promise if already loading
+  if (apiLoading || window.YT) {
+    return Promise.resolve();
   }
   
-  if (!window.YT) {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    if (firstScriptTag && firstScriptTag.parentNode) {
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  apiLoading = true;
+  
+  return new Promise((resolve, reject) => {
+    // Don't load multiple instances of the API
+    if (document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      return resolve();
     }
-  }
+    
+    try {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      
+      // Setup callback for when API is ready
+      window.onYouTubeIframeAPIReady = () => {
+        apiLoading = false;
+        resolve();
+      };
+      
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      if (firstScriptTag && firstScriptTag.parentNode) {
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      } else {
+        document.head.appendChild(tag);
+      }
+      
+      // Add timeout in case API fails to load
+      setTimeout(() => {
+        if (!window.YT) {
+          apiLoading = false;
+          reject(new Error("YouTube API failed to load"));
+        }
+      }, 10000);
+    } catch (error) {
+      apiLoading = false;
+      reject(error);
+    }
+  });
+};
+
+// Test if a video ID is valid by format (doesn't check if video exists)
+export const isValidYouTubeId = (id: string | null): boolean => {
+  if (!id) return false;
+  // YouTube IDs are 11 characters of letters, numbers, dashes and underscores
+  return /^[a-zA-Z0-9_-]{11}$/.test(id);
 };
 
 export const extractVideoId = (url: string): string | null => {

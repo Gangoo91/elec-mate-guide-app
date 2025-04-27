@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface HTML5PlayerProps {
@@ -23,57 +23,72 @@ export const HTML5Player = ({
 }: HTML5PlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const attemptedLoadRef = useRef(false);
+  const [loadAttempts, setLoadAttempts] = useState(0);
 
+  // Apply currentTime whenever it changes or video is loaded
   useEffect(() => {
-    if (videoRef.current) {
-      if (currentTime > 0) {
-        videoRef.current.currentTime = currentTime;
-      }
+    const videoElement = videoRef.current;
+    if (videoElement && currentTime > 0 && videoElement.readyState >= 2) {
+      videoElement.currentTime = currentTime;
     }
   }, [currentTime]);
 
+  // Handle play/pause
   useEffect(() => {
-    // Set up video element
     const videoElement = videoRef.current;
     if (!videoElement) return;
 
     if (playing) {
-      // Add a catch for autoplay restrictions
       const playPromise = videoElement.play();
       
       if (playPromise !== undefined) {
         playPromise.catch(err => {
           console.error("Error playing video:", err);
           // Don't call onError yet - we might be hitting autoplay restrictions
-          // Instead try again with user interaction
         });
       }
     } else {
       videoElement.pause();
     }
 
-    // Cleanup
     return () => {
-      // Stop loading/downloading the video when component unmounts
       if (videoElement) {
         videoElement.pause();
         videoElement.src = ""; // Empty source
         videoElement.load(); // Reset the video element
       }
     };
-  }, [playing, onError]);
+  }, [playing, videoUrl]);
 
   const handleLoadedMetadata = () => {
-    // Video metadata has loaded - this is a good sign that the video is valid
     attemptedLoadRef.current = true;
-    if (videoRef.current && currentTime > 0) {
-      videoRef.current.currentTime = currentTime;
+    const videoElement = videoRef.current;
+    
+    if (videoElement && currentTime > 0) {
+      videoElement.currentTime = currentTime;
+    }
+    
+    if (playing && videoElement) {
+      videoElement.play().catch(err => {
+        console.error("Error auto-playing after metadata load:", err);
+      });
     }
   };
 
   const handleLoadError = () => {
-    onError();
-    attemptedLoadRef.current = true;
+    // Retry loading up to 3 times with different mime types
+    if (loadAttempts < 3 && videoRef.current) {
+      setLoadAttempts(prev => prev + 1);
+      // Try again after a delay
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.load();
+        }
+      }, 1000);
+    } else {
+      onError();
+      attemptedLoadRef.current = true;
+    }
   };
 
   // Verify the video URL is valid
@@ -93,7 +108,7 @@ export const HTML5Player = ({
     );
   };
 
-  // Check if after 5 seconds the video hasn't loaded, we should trigger an error
+  // Check if after 5 seconds the video hasn't loaded
   useEffect(() => {
     if (!isValidVideoUrl(videoUrl)) {
       onError();

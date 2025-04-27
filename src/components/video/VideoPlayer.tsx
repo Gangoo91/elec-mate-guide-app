@@ -33,6 +33,13 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   }, [progress.lastPosition]);
 
+  // Reset state when video changes
+  useEffect(() => {
+    setError(false);
+    setPlaying(false);
+    setCurrentTime(progress.lastPosition > 0 ? progress.lastPosition : 0);
+  }, [videoId, videoUrl, progress.lastPosition]);
+
   const handlePlay = () => {
     setPlaying(!playing);
   };
@@ -96,11 +103,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
       updateProgress(currentTime, videoDuration || duration);
     }
   };
-
-  // Reset error state when videoUrl changes
-  useEffect(() => {
-    setError(false);
-  }, [videoUrl]);
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
