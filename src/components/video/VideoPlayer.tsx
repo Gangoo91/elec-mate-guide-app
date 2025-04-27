@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { Play, Maximize, Volume2 } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
 import { YouTubePlayer } from './players/YouTubePlayer';
 import { HTML5Player } from './players/HTML5Player';
 import { VideoErrorDisplay } from './players/VideoErrorDisplay';
+import { VideoControls } from './controls/VideoControls';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -28,6 +29,22 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   };
 
+  const handleVolumeClick = () => {
+    // Volume control will be implemented in a future update
+    console.log('Volume control clicked');
+  };
+
+  const handleFullscreenClick = () => {
+    const container = document.querySelector('.video-container');
+    if (container instanceof HTMLElement) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        container.requestFullscreen();
+      }
+    }
+  };
+
   const handleVideoEnded = () => {
     setPlaying(false);
     updateProgress(duration, duration);
@@ -40,7 +57,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   };
 
   return (
-    <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group">
+    <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group video-container">
       {error ? (
         <VideoErrorDisplay videoUrl={videoUrl} />
       ) : (
@@ -85,22 +102,12 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
             </div>
           )}
           
-          <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button 
-                className="text-white hover:text-[#FFC900] transition"
-                onClick={handlePlay}
-              >
-                <Play className="h-5 w-5" />
-              </button>
-              <button className="text-white hover:text-[#FFC900] transition">
-                <Volume2 className="h-5 w-5" />
-              </button>
-            </div>
-            <button className="text-white hover:text-[#FFC900] transition">
-              <Maximize className="h-5 w-5" />
-            </button>
-          </div>
+          <VideoControls
+            playing={playing}
+            onPlay={handlePlay}
+            onVolumeClick={handleVolumeClick}
+            onFullscreenClick={handleFullscreenClick}
+          />
         </>
       )}
     </div>
