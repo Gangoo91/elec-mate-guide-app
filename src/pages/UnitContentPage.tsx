@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { unitData } from '@/data/units';
+import { unitContent } from '@/data/unitContent';
 
 const UnitContentPage = () => {
   const { unitId } = useParams<{ unitId: string }>();
@@ -11,19 +11,10 @@ const UnitContentPage = () => {
   
   // Get unit data based on unitId
   const getUnitData = () => {
-    switch(unitId) {
-      case '201':
-        return unitData.unit201;
-      case '202':
-        return unitData.unit202;
-      case '203':
-        return unitData.unit203;
-      case '204':
-        return unitData.unit204;
-      case '210':
-        return unitData.unit210;
-      default:
-        return { title: "Unit Not Found", description: "The requested unit could not be found." };
+    if (unitId && unitContent[unitId]) {
+      return unitContent[unitId];
+    } else {
+      return { title: "Unit Not Found", description: "The requested unit could not be found." };
     }
   };
   
@@ -45,7 +36,18 @@ const UnitContentPage = () => {
         <div className="mt-8 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
           <h3 className="text-[#FFC900] font-medium text-xl mb-4">Unit Content</h3>
           <div className="text-[#FFC900]/70">
-            {unitId && (
+            {unit.sections && unit.sections.length > 0 ? (
+              <div className="space-y-6">
+                {unit.sections.map((section, index) => (
+                  <div key={index} className="border-t border-[#FFC900]/20 pt-4 first:border-t-0 first:pt-0">
+                    <h4 className="text-[#FFC900] font-medium text-lg mb-2">{section.title}</h4>
+                    <div className="text-[#FFC900]/80">
+                      {section.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
               <p>Detailed content for Unit {unitId} will be displayed here.</p>
             )}
           </div>
