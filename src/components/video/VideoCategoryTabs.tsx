@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BookOpen, Lightbulb, Wrench, Shield, WrenchScrewdriver, TestTube } from 'lucide-react';
+import { BookOpen, Lightbulb, Wrench, Shield, Tool, TestTube } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoCard } from './VideoCard';
 
@@ -25,7 +25,7 @@ export const categoryIcons = {
   practical_skills: <Wrench className="h-5 w-5" />,
   theory: <Lightbulb className="h-5 w-5" />,
   safety: <Shield className="h-5 w-5" />,
-  installation: <WrenchScrewdriver className="h-5 w-5" />,
+  installation: <Tool className="h-5 w-5" />,
   testing: <TestTube className="h-5 w-5" />
 };
 
