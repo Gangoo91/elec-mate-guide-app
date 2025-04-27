@@ -1,3 +1,4 @@
+
 import { lazy, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -8,6 +9,11 @@ const LearningHubPage = lazy(() => import('@/pages/LearningHubPage'));
 const StudyGroupsPage = lazy(() => import('@/pages/StudyGroupsPage'));
 const StudyGroupDetailsPage = lazy(() => import('@/pages/StudyGroupDetailsPage'));
 const StudyMaterialsPage = lazy(() => import('@/pages/StudyMaterialsPage'));
+const CityGuildsPage = lazy(() => import('@/pages/CityGuildsPage'));
+const Level2ElectricalPage = lazy(() => import('@/pages/Level2ElectricalPage'));
+const Level2CoreUnitsPage = lazy(() => import('@/pages/Level2CoreUnitsPage'));
+const EALQualificationsPage = lazy(() => import('@/pages/EALQualificationsPage'));
+const MOETPage = lazy(() => import('@/pages/MOETPage'));
 const PracticeExamsPage = lazy(() => import('@/pages/PracticeExamsPage'));
 const AIToolsPage = lazy(() => import('@/pages/AIToolsPage'));
 const VideoDemonstrationsPage = lazy(() => import('@/pages/VideoDemonstrationsPage'));
@@ -28,6 +34,11 @@ export const ApprenticeRoutes = [
   <Route key="study-groups" path="/apprentices/study-groups" element={withSuspense(<StudyGroupsPage />)} />,
   <Route key="study-group-details" path="/apprentices/study-groups/:groupId" element={withSuspense(<StudyGroupDetailsPage />)} />,
   <Route key="study-materials" path="/apprentices/study-materials" element={withSuspense(<StudyMaterialsPage />)} />,
+  <Route key="city-guilds" path="/apprentices/study-materials/city-guilds" element={withSuspense(<CityGuildsPage />)} />,
+  <Route key="level2-electrical" path="/apprentices/study-materials/city-guilds/level-2" element={withSuspense(<Level2ElectricalPage />)} />,
+  <Route key="level2-core-units" path="/apprentices/study-materials/city-guilds/level-2/core-units" element={withSuspense(<Level2CoreUnitsPage />)} />,
+  <Route key="eal-qualifications" path="/apprentices/study-materials/eal" element={withSuspense(<EALQualificationsPage />)} />,
+  <Route key="moet" path="/apprentices/study-materials/city-guilds/moet" element={withSuspense(<MOETPage />)} />,
   <Route key="practice-exams" path="/apprentices/practice-exams" element={withSuspense(<PracticeExamsPage />)} />,
   <Route key="ai-tools" path="/apprentices/ai-tools" element={withSuspense(<AIToolsPage />)} />,
   <Route key="video-demonstrations" path="/apprentices/video-demonstrations" element={withSuspense(<VideoDemonstrationsPage />)} />,

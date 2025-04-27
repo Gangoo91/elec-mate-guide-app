@@ -15,25 +15,37 @@ const CityGuildsPage = () => {
       title: "Level 2 Electrical Installation",
       description: "Essential materials for Level 2 qualification including practical tasks, theory modules, and assessment preparation.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/level-2')
+      onClick: () => {
+        console.log("Navigating to: /apprentices/study-materials/city-guilds/level-2");
+        navigate('/apprentices/study-materials/city-guilds/level-2');
+      }
     },
     {
       title: "Level 3 Electrical Installation",
       description: "Advanced materials covering complex installations, fault finding, and inspection & testing preparations.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/level-3')
+      onClick: () => {
+        console.log("Navigating to: /apprentices/study-materials/city-guilds/level-3");
+        navigate('/apprentices/study-materials/city-guilds/level-3');
+      }
     },
     {
       title: "MOET Level 3",
       description: "Maintenance and Operations Engineering Technician (Electrical) qualification materials, covering industrial maintenance and operations.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet')
+      onClick: () => {
+        console.log("Navigating to: /apprentices/study-materials/city-guilds/moet");
+        navigate('/apprentices/study-materials/city-guilds/moet');
+      }
     },
     {
       title: "AM2 Assessment Materials",
       description: "Comprehensive preparation materials for the AM2 assessment, including practical scenarios and mock tests.",
       icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/am2')
+      onClick: () => {
+        console.log("Navigating to: /apprentices/study-materials/city-guilds/am2");
+        navigate('/apprentices/study-materials/city-guilds/am2');
+      }
     }
   ];
 
@@ -53,7 +65,7 @@ const CityGuildsPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {materials.map((material, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer">
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   {material.icon}

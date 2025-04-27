@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, GraduationCap, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const EALQualificationsPage = () => {
   const navigate = useNavigate();
@@ -17,17 +18,20 @@ const EALQualificationsPage = () => {
     {
       title: "Level 2 EAL Courses",
       description: "Foundation learning in electrical installation covering basic principles and practices.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/eal/level-2')
     },
     {
       title: "Level 3 EAL Courses",
       description: "Advanced electrical installation techniques and theoretical concepts.",
-      icon: <GraduationCap className="h-6 w-6 text-[#FFC900]" />
+      icon: <GraduationCap className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/eal/level-3')
     },
     {
       title: "Assessment Preparation",
       description: "Preparation materials for EAL assessments and examinations.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/eal/assessment')
     }
   ];
 
@@ -44,7 +48,8 @@ const EALQualificationsPage = () => {
           {topics.map((topic, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={topic.onClick}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
