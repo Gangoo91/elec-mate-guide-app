@@ -19,7 +19,7 @@ export const useStudyGroups = () => {
     try {
       setIsLoading(true);
       
-      const { data: groups, error } = await supabase
+      const { data: groupsData, error } = await supabase
         .from('study_groups')
         .select(`
           *,
@@ -34,10 +34,26 @@ export const useStudyGroups = () => {
 
       if (error) throw error;
       
-      setGroups(groups || []);
+      // Convert the fetched data to match the StudyGroup type
+      const typedGroups: StudyGroup[] = groupsData?.map(group => ({
+        id: group.id,
+        name: group.name,
+        description: group.description || '',
+        topic: group.topic,
+        level: group.level,
+        max_participants: group.max_participants,
+        created_by: group.created_by,
+        next_meeting_at: group.next_meeting_at,
+        meeting_link: group.meeting_link,
+        tags: group.tags || [],
+        is_private: group.is_private || false,
+        study_materials: Array.isArray(group.study_materials) ? group.study_materials : []
+      })) || [];
+      
+      setGroups(typedGroups);
 
       const counts: Record<string, number> = {};
-      for (const group of groups || []) {
+      for (const group of groupsData || []) {
         const { count, error: countError } = await supabase
           .from('study_group_members')
           .select('*', { count: 'exact' })

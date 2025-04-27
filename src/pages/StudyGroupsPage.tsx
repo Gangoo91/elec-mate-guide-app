@@ -10,7 +10,7 @@ import { useStudyGroups } from "@/hooks/useStudyGroups";
 const StudyGroupsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [levelFilter, setLevelFilter] = useState<string>("all");
-  const { groups, memberCounts, userMemberships, isLoading, handleJoinLeave } = useStudyGroups();
+  const { groups, memberCounts, userMemberships, isLoading, fetchGroups, handleJoinLeave } = useStudyGroups();
 
   const filteredGroups = groups.filter(group => {
     const matchesSearch = group.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -36,7 +36,7 @@ const StudyGroupsPage = () => {
             onLevelFilterChange={setLevelFilter}
           />
           <div className="w-full md:w-auto">
-            <CreateStudyGroupDialog onGroupCreated={() => console.log('Group created')} />
+            <CreateStudyGroupDialog onGroupCreated={() => fetchGroups()} />
           </div>
         </div>
 
