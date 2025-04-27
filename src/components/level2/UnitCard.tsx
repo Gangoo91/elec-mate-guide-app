@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
 
 interface UnitCardProps {
@@ -10,7 +10,7 @@ interface UnitCardProps {
   path?: string;
 }
 
-const UnitCard = ({ unitNumber, title, path }: UnitCardProps) => {
+const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = () => {
@@ -21,16 +21,17 @@ const UnitCard = ({ unitNumber, title, path }: UnitCardProps) => {
   };
   
   return (
-    <Card 
-      className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+    <div 
+      className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer p-6"
       onClick={handleClick}
     >
-      <CardContent className="pt-6">
-        <h3 className="text-[#FFC900] font-medium text-xl text-center">
-          Unit {unitNumber} - {title}
-        </h3>
-      </CardContent>
-    </Card>
+      <h3 className="text-[#FFC900] font-medium text-xl text-center mb-2">
+        Unit {unitNumber} - {title}
+      </h3>
+      <p className="text-[#FFC900]/70 text-sm text-center">
+        {description}
+      </p>
+    </div>
   );
 };
 

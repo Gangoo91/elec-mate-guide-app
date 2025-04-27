@@ -22,6 +22,7 @@ const VideoDemonstrationsPage = lazy(() => import('@/pages/VideoDemonstrationsPa
 const ARLearningPage = lazy(() => import('@/pages/ARLearningPage'));
 const AudioTutorialsPage = lazy(() => import('@/pages/AudioTutorialsPage'));
 const ProgressTrackingPage = lazy(() => import('@/pages/apprentices/ProgressTrackingPage'));
+const UnitContentPage = lazy(() => import('@/pages/UnitContentPage'));
 
 // Wrap lazy components in suspense
 const withSuspense = (Component) => (
@@ -48,5 +49,7 @@ export const ApprenticeRoutes = [
   <Route key="video-demonstrations" path="/apprentices/video-demonstrations" element={withSuspense(<VideoDemonstrationsPage />)} />,
   <Route key="ar-learning" path="/apprentices/ar-learning" element={withSuspense(<ARLearningPage />)} />,
   <Route key="audio-tutorials" path="/apprentices/audio-tutorials" element={withSuspense(<AudioTutorialsPage />)} />,
-  <Route key="progress-tracking" path="/apprentices/progress" element={withSuspense(<ProgressTrackingPage />)} />
+  <Route key="progress-tracking" path="/apprentices/progress" element={withSuspense(<ProgressTrackingPage />)} />,
+  // Add route for individual unit pages
+  <Route key="unit-content" path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={withSuspense(<UnitContentPage />)} />
 ];
