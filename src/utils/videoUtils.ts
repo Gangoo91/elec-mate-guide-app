@@ -1,5 +1,6 @@
 
 import { VideoLesson } from '@/types/videos';
+import { demoVideos } from '@/data/demoVideos';
 
 export const mapVideoCategory = (category: string): VideoLesson['category'] => {
   const categoryMap: Record<string, VideoLesson['category']> = {
