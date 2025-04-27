@@ -29,8 +29,7 @@ export const useAudioPlayer = (audioUrl: string) => {
           setError(null);
         }
       };
-      const handleError = (e: ErrorEvent) => {
-        console.error('Audio loading error:', e);
+      const handleError = () => {
         setError('Failed to load audio file');
         setIsPlaying(false);
       };
@@ -38,16 +37,14 @@ export const useAudioPlayer = (audioUrl: string) => {
       audioRef.current.addEventListener('ended', handleEnded);
       audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
       audioRef.current.addEventListener('loadedmetadata', handleLoadedMetadata);
-      audioRef.current.addEventListener('error', handleError as EventListener);
-
-      audioRef.current.load();
+      audioRef.current.addEventListener('error', handleError);
 
       return () => {
         if (audioRef.current) {
           audioRef.current.removeEventListener('ended', handleEnded);
           audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
           audioRef.current.removeEventListener('loadedmetadata', handleLoadedMetadata);
-          audioRef.current.removeEventListener('error', handleError as EventListener);
+          audioRef.current.removeEventListener('error', handleError);
           audioRef.current.pause();
           audioRef.current = null;
         }
