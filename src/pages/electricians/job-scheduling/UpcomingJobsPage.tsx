@@ -8,6 +8,7 @@ import { AddJobDialog } from "@/components/jobs/AddJobDialog";
 import { JobDetailsDialog } from "@/components/jobs/JobDetailsDialog";
 import { useToast } from "@/hooks/use-toast";
 import PageHeader from "@/components/layout/PageHeader";
+import { useNavigate } from "react-router-dom";
 
 type Job = {
   id: string;
@@ -26,6 +27,7 @@ const UpcomingJobsPage = () => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const fetchJobs = async () => {
     try {
@@ -38,6 +40,7 @@ const UpcomingJobsPage = () => {
       if (error) throw error;
       setJobs(data || []);
     } catch (error) {
+      console.error("Error fetching jobs:", error);
       toast({
         title: "Error",
         description: "Failed to fetch jobs. Please try again.",
@@ -55,6 +58,10 @@ const UpcomingJobsPage = () => {
     setIsDetailsOpen(true);
   };
 
+  const handleBackNavigation = () => {
+    navigate('/electricians/job-scheduling');
+  };
+
   return (
     <MainLayout>
       <div className="container py-4 md:py-8">
@@ -62,6 +69,7 @@ const UpcomingJobsPage = () => {
           title="Upcoming Jobs"
           description="View and manage your scheduled appointments and upcoming work orders"
           hideBackButton={false}
+          customBackAction={handleBackNavigation}
         />
         
         <div className="flex flex-col items-center justify-center mb-8">

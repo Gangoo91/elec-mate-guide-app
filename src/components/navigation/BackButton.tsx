@@ -22,7 +22,28 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
-    // Handle job scheduling pages
+    // Handle job scheduling pages - ensure proper parent page navigation
+    if (location.pathname === '/electricians/job-scheduling/upcoming') {
+      navigate('/electricians/job-scheduling');
+      return;
+    }
+    
+    if (location.pathname === '/electricians/job-scheduling/time') {
+      navigate('/electricians/job-scheduling');
+      return;
+    }
+    
+    if (location.pathname === '/electricians/job-scheduling/clients') {
+      navigate('/electricians/job-scheduling');
+      return;
+    }
+    
+    if (location.pathname === '/electricians/job-scheduling/completion') {
+      navigate('/electricians/job-scheduling');
+      return;
+    }
+    
+    // Handle existing route patterns
     if (location.pathname.startsWith('/electricians/job-scheduling/')) {
       navigate('/electricians/job-scheduling');
       return;
