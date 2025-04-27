@@ -36,17 +36,24 @@ export function useApprenticeProgress() {
       if (error) throw error;
       
       // Transform the data to ensure it matches the Milestone type
-      const typedMilestones = data.map(item => ({
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        type: item.type,
-        status: item.status,
-        target_completion_date: item.target_completion_date,
-        completed_at: item.completed_at,
-        resource_id: item.resource_id || null,
-        resource_type: (item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null) || null
-      })) as Milestone[];
+      const typedMilestones = data.map(item => {
+        // Check if properties exist in the database response
+        const resourceId = 'resource_id' in item ? item.resource_id : null;
+        const resourceType = 'resource_type' in item ? 
+          item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null : null;
+          
+        return {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+          type: item.type,
+          status: item.status,
+          target_completion_date: item.target_completion_date,
+          completed_at: item.completed_at,
+          resource_id: resourceId,
+          resource_type: resourceType
+        };
+      }) as Milestone[];
       
       return typedMilestones;
     }
