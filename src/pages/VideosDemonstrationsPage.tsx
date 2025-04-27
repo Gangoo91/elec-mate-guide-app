@@ -9,9 +9,10 @@ import { Play, Clock, BookOpen, Lightbulb, Shield, Wrench, TestTube } from "luci
 import KudosDisplay from "@/components/profile/KudosDisplay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from '@/components/video/VideoPlayer';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface VideoLesson {
   id: string;
@@ -79,7 +80,7 @@ const categoryTitles = {
 const VideosDemonstrationsPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoLesson | null>(null);
   
-  const { data: videos = [], isLoading } = useQuery({
+  const { data: videos = [], isLoading, error } = useQuery({
     queryKey: ['video-lessons'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -87,7 +88,12 @@ const VideosDemonstrationsPage = () => {
         .select('*')
         .order('unit_number', { ascending: true });
       
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching videos:", error);
+        throw error;
+      }
+      
+      console.log("Fetched videos:", data);
       return data as VideoLesson[];
     }
   });
@@ -115,6 +121,37 @@ const VideosDemonstrationsPage = () => {
                 <Skeleton key={i} className="h-40 w-full" />
               ))}
             </div>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <MainLayout>
+        <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-red-500 mb-2">Error Loading Videos</h2>
+            <p className="text-[#FFC900]/70">
+              There was a problem loading the videos. Please try again later.
+            </p>
+          </div>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (videos.length === 0 && !isLoading) {
+    return (
+      <MainLayout>
+        <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
+          <PageHeader
+            title="Course Video Library"
+            description="Access comprehensive video lessons aligned with your course units."
+          />
+          <div className="text-center py-12">
+            <p className="text-[#FFC900]/70 mb-4">No videos are currently available.</p>
           </div>
         </div>
       </MainLayout>
@@ -150,13 +187,17 @@ const VideosDemonstrationsPage = () => {
               {Object.keys(categorizedVideos).map((category) => (
                 <TabsContent key={category} value={category} className="mt-6">
                   <div className="grid gap-4">
-                    {categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
-                      <VideoCard 
-                        key={video.id} 
-                        video={video} 
-                        onWatch={() => setSelectedVideo(video)} 
-                      />
-                    ))}
+                    {categorizedVideos[category as keyof typeof categorizedVideos].length === 0 ? (
+                      <p className="text-center py-6 text-[#FFC900]/60">No videos available in this category.</p>
+                    ) : (
+                      categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
+                        <VideoCard 
+                          key={video.id} 
+                          video={video} 
+                          onWatch={() => setSelectedVideo(video)} 
+                        />
+                      ))
+                    )}
                   </div>
                 </TabsContent>
               ))}
@@ -190,32 +231,33 @@ const VideosDemonstrationsPage = () => {
         <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
           <DialogContent className="max-w-4xl bg-[#22251e] border-[#FFC900]/20">
             {selectedVideo && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-[#FFC900]">{selectedVideo.title}</h2>
-                  {selectedVideo.unit_number && (
-                    <span className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm">
-                      Unit {selectedVideo.unit_number}
-                    </span>
-                  )}
-                </div>
-                <VideoPlayer
-                  videoId={selectedVideo.id}
-                  videoUrl={selectedVideo.video_url}
-                  title={selectedVideo.title}
-                />
-                <Separator className="bg-[#FFC900]/20" />
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
-                    <div className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {selectedVideo.duration}
+              <>
+                <DialogTitle className="text-xl font-semibold text-[#FFC900]">
+                  {selectedVideo.title}
+                </DialogTitle>
+                <DialogDescription className="text-[#FFC900]/70">
+                  {selectedVideo.unit_number && `Unit ${selectedVideo.unit_number} - `}
+                  {selectedVideo.duration} duration
+                </DialogDescription>
+                <div className="space-y-4">
+                  <VideoPlayer
+                    videoId={selectedVideo.id}
+                    videoUrl={selectedVideo.video_url}
+                    title={selectedVideo.title}
+                  />
+                  <Separator className="bg-[#FFC900]/20" />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
+                      <div className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {selectedVideo.duration}
+                      </div>
                     </div>
+                    <p className="text-[#FFC900]/50 text-sm">Complete this video to earn {selectedVideo.kudos_points} kudos points.</p>
                   </div>
-                  <p className="text-[#FFC900]/50 text-sm">Complete this video to earn {selectedVideo.kudos_points} kudos points.</p>
                 </div>
-              </div>
+              </>
             )}
           </DialogContent>
         </Dialog>
@@ -225,4 +267,3 @@ const VideosDemonstrationsPage = () => {
 };
 
 export default VideosDemonstrationsPage;
-
