@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Clock, BookOpen, Lightbulb, Shield, Wrench } from "lucide-react";
+import { Play, Clock, BookOpen, Lightbulb, Shield, Wrench, TestTube } from "lucide-react";
 import KudosDisplay from "@/components/profile/KudosDisplay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from '@/components/video/VideoPlayer';
