@@ -31,8 +31,8 @@ export function useChatRoom() {
 
       if (error) throw error;
       
-      setMessages(messages || []);
-      await fetchCommentsAndReactions(messages);
+      setMessages(messages as ChatMessage[] || []);
+      await fetchCommentsAndReactions(messages as ChatMessage[]);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -58,12 +58,12 @@ export function useChatRoom() {
         .select('*')
         .in('message_id', messageIds);
 
-      const commentsByMessage = (comments || []).reduce((acc, comment) => {
+      const commentsByMessage = (comments as ChatComment[] || []).reduce((acc, comment) => {
         acc[comment.message_id] = [...(acc[comment.message_id] || []), comment];
         return acc;
       }, {} as Record<string, ChatComment[]>);
 
-      const reactionsByMessage = (reactions || []).reduce((acc, reaction) => {
+      const reactionsByMessage = (reactions as ChatReaction[] || []).reduce((acc, reaction) => {
         acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction];
         return acc;
       }, {} as Record<string, ChatReaction[]>);
@@ -155,7 +155,7 @@ export function useChatRoom() {
 
       setReactions(prev => ({
         ...prev,
-        [messageId]: updatedReactions || []
+        [messageId]: updatedReactions as ChatReaction[] || []
       }));
     } catch (error) {
       console.error('Error toggling reaction:', error);
@@ -185,7 +185,7 @@ export function useChatRoom() {
 
       setComments(prev => ({
         ...prev,
-        [messageId]: [...(prev[messageId] || []), data]
+        [messageId]: [...(prev[messageId] || []), data as ChatComment]
       }));
     } catch (error) {
       console.error('Error adding comment:', error);
