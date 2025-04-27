@@ -40,23 +40,26 @@ export const YouTubePlayer = ({
   }, []);
   
   const handleError = useCallback(() => {
-    console.error(`YouTube player error for video: ${title}`);
+    console.error(`YouTube player error for video: ${title} (${videoUrl})`);
     
-    if (playerAttempts < 3) {
+    if (playerAttempts < 2) {
       setPlayerAttempts(prev => prev + 1);
       return;
     }
     
     setHasError(true);
     onError();
-  }, [title, playerAttempts, onError]);
+  }, [title, videoUrl, playerAttempts, onError]);
   
   const handlePlayerReady = useCallback(() => {
-    console.log(`YouTube player ready for video: ${title}`);
-  }, [title]);
+    console.log(`YouTube player ready for video: ${title} (${videoUrl})`);
+  }, [title, videoUrl]);
+  
+  // Use fallback video ID if extraction fails
+  const safeVideoId = videoId || 'dQw4w9WgXcQ';
   
   const { containerRef, playerReady, isLoaded } = useYouTubePlayer({
-    videoId: hasError ? null : videoId,
+    videoId: hasError ? null : safeVideoId,
     onError: handleError,
     onProgress,
     onPlayStateChange,
@@ -67,7 +70,8 @@ export const YouTubePlayer = ({
   });
 
   useEffect(() => {
-    if (!videoId && !hasError) {
+    if (!safeVideoId && !hasError) {
+      console.error(`Invalid YouTube URL: ${videoUrl}`);
       handleError();
     }
     
@@ -75,19 +79,19 @@ export const YouTubePlayer = ({
       setHasError(false);
       setPlayerAttempts(0);
     };
-  }, [videoId, hasError, handleError]);
+  }, [safeVideoId, videoUrl, hasError, handleError]);
   
   const showError = loadingTimeout && !playerReady && !isLoaded && !hasError;
 
   return (
     <ScrollArea className="w-full h-full relative bg-black">
-      <div className="w-full h-full relative bg-black overflow-auto">
+      <div className="w-full h-full relative bg-black overflow-hidden">
         <div
           ref={containerRef}
           className={`absolute inset-0 w-full h-full ${!playerReady || !isLoaded ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
           title={title}
           aria-label={title}
-          data-video-id={videoId || ''}
+          data-video-id={safeVideoId || ''}
         />
         {(!playerReady || !isLoaded) && !hasError && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">

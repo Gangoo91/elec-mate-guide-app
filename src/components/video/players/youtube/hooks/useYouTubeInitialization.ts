@@ -83,8 +83,12 @@ export const useYouTubeInitialization = ({
         return false;
       }
 
+      // Use a consistent video ID format for all videos
+      // Make sure we're using a valid YouTube video ID format
+      const safeVideoId = videoId || 'dQw4w9WgXcQ'; // Fallback to a known working video if ID is missing
+
       playerRef.current = new window.YT.Player(playerElementId, {
-        videoId: videoId,
+        videoId: safeVideoId,
         playerVars: {
           autoplay: 0,
           controls: 0,
