@@ -22,19 +22,19 @@ export function useTypingIndicator(chatId?: string) {
     
     const channel = supabase
       .channel('typing_indicators')
-      .on('broadcast', { event: 'typing' }, (payload: { typing: TypingState }) => {
-        if (payload.typing.userId !== user.id && (!chatId || payload.typing.chatId === chatId)) {
+      .on('broadcast', { event: 'typing' }, (payload: { payload: { typing: TypingState } }) => {
+        if (payload.payload.typing.userId !== user.id && (!chatId || payload.payload.typing.chatId === chatId)) {
           setTypingUsers(prev => ({
             ...prev,
-            [payload.typing.userId]: payload.typing.isTyping
+            [payload.payload.typing.userId]: payload.payload.typing.isTyping
           }));
           
           // Auto-clear typing indicator after 3 seconds of inactivity
-          if (payload.typing.isTyping) {
+          if (payload.payload.typing.isTyping) {
             setTimeout(() => {
               setTypingUsers(prev => ({
                 ...prev,
-                [payload.typing.userId]: false
+                [payload.payload.typing.userId]: false
               }));
             }, 3000);
           }
