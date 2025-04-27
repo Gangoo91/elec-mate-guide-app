@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
 import { useToast } from '@/hooks/use-toast';
@@ -14,6 +14,7 @@ export const useMessageFetching = () => {
 
   const fetchMessages = async () => {
     try {
+      setLoading(true);
       const { data: messages, error } = await supabase
         .from('chat_messages')
         .select('*')
@@ -31,6 +32,7 @@ export const useMessageFetching = () => {
         description: "Failed to load messages",
         variant: "destructive",
       });
+      setLoading(false);
     }
   };
 
@@ -66,6 +68,11 @@ export const useMessageFetching = () => {
       console.error('Error fetching comments and reactions:', error);
     }
   };
+
+  // Fetch messages on component mount
+  useEffect(() => {
+    fetchMessages();
+  }, []);
 
   return {
     messages,

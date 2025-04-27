@@ -4,6 +4,7 @@ import { useMessageSubscription } from '@/hooks/chat/useMessageSubscription';
 import { supabase } from '@/integrations/supabase/client';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 import { RealtimeChannel } from '@supabase/supabase-js';
+import { Message } from '@/types/chat';
 
 vi.mock('@/integrations/supabase/client', () => ({
   supabase: {
@@ -13,7 +14,7 @@ vi.mock('@/integrations/supabase/client', () => ({
 }));
 
 describe('useMessageSubscription', () => {
-  const setMessages = vi.fn();
+  const setMessages = vi.fn() as React.Dispatch<React.SetStateAction<Message[]>>;
 
   beforeEach(() => {
     vi.clearAllMocks();
