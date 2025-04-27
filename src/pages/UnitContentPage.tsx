@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { unitContent } from '@/data/unitContent';
-import { UnitContent } from './data/units/interfaces';
+import { UnitContent } from '@/data/units/interfaces';
 
 const UnitContentPage = () => {
   const { unitId } = useParams<{ unitId: string }>();
