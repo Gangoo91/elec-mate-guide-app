@@ -9,41 +9,27 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const { progress, updateProgress } = useVideoProgress(videoId);
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Set initial position if available
-    if (progress.lastPosition > 0) {
-      video.currentTime = progress.lastPosition;
+  // Extract YouTube video ID from URL if it's a YouTube URL
+  const getYouTubeEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/embed/')) {
+      return url; // Already an embed URL
     }
-
-    // Update progress periodically
-    const updateInterval = setInterval(() => {
-      if (video.paused) return;
-      updateProgress(video.currentTime, video.duration);
-    }, 5000);
-
-    return () => clearInterval(updateInterval);
-  }, [videoRef.current]);
+    
+    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = url.match(youtubeRegex);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+  };
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black">
-      <video
-        ref={videoRef}
+      <iframe
         className="w-full h-full"
-        controls
-        src={videoUrl}
+        src={getYouTubeEmbedUrl(videoUrl)}
         title={title}
-        onEnded={() => {
-          const video = videoRef.current;
-          if (video) {
-            updateProgress(video.duration, video.duration);
-          }
-        }}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
       />
       {progress.watched && (
         <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-sm">
