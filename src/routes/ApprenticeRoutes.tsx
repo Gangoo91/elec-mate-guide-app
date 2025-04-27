@@ -46,7 +46,7 @@ import PreventiveMaintenancePage from "@/pages/maintenance/PreventiveMaintenance
 import SafetyProtocolsPage from "@/pages/maintenance/SafetyProtocolsPage";
 import DocumentationPage from "@/pages/maintenance/DocumentationPage";
 import VideosDemonstrationsPage from "@/pages/VideosDemonstrationsPage";
-import StudyGroups from "@/pages/StudyGroups";
+import StudyGroupsPage from "@/pages/StudyGroupsPage";
 
 export const ApprenticeRoutes = [
   <Route key="apprentices" path="/apprentices" element={<ApprenticesPage />} />,
@@ -148,6 +148,6 @@ export const ApprenticeRoutes = [
   <Route key="apprentices-video-demos" path="/apprentices/video-demonstrations" element={<VideosDemonstrationsPage />} />,
   <Route key="apprentices-ar-learning" path="/apprentices/ar-learning" />,
   <Route key="apprentices-audio-tutorials" path="/apprentices/audio-tutorials" />,
-  <Route key="apprentices-study-groups" path="/apprentices/study-groups" element={<StudyGroups />} />,
+  <Route key="apprentices-study-groups" path="/apprentices/study-groups" element={<StudyGroupsPage />} />,
   <Route key="apprentices-progress" path="/apprentices/progress" />,
 ];
