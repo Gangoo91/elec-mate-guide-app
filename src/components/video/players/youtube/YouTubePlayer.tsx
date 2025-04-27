@@ -24,12 +24,12 @@ export const YouTubePlayer = ({
   playing = false,
 }: YouTubePlayerProps) => {
   const [hasError, setHasError] = useState(false);
-  const videoId = useCallback(() => extractVideoId(videoUrl), [videoUrl])();
+  const videoId = extractVideoId(videoUrl);
   const [playerReady, setPlayerReady] = useState(false);
   const [playerAttempts, setPlayerAttempts] = useState(0);
   
   // Handle player errors locally first
-  const handleError = () => {
+  const handleError = useCallback(() => {
     console.log(`YouTube player error for video: ${title}`);
     
     // Try to reinitialize player up to 2 times before showing an error
@@ -40,14 +40,15 @@ export const YouTubePlayer = ({
     
     setHasError(true);
     onError();
-  };
+  }, [title, playerAttempts, onError]);
   
   const handlePlayerReady = useCallback(() => {
     console.log(`YouTube player ready for video: ${title}`);
     setPlayerReady(true);
   }, [title]);
   
-  // Only initialize the player if we have a valid videoId and no errors yet
+  // Initialize the player - Using useYouTubePlayer regardless of videoId/error state
+  // We'll handle the conditional logic inside the hook
   const { containerRef } = useYouTubePlayer({
     videoId: hasError ? null : videoId,
     onError: handleError,
@@ -70,7 +71,7 @@ export const YouTubePlayer = ({
       setHasError(false);
       setPlayerAttempts(0);
     };
-  }, [videoId, hasError, videoUrl]);
+  }, [videoId, hasError, handleError]);
   
   // Reinitialize player on attempt change
   useEffect(() => {
