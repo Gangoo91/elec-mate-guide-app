@@ -51,6 +51,13 @@ const UpcomingJobsPage = () => {
 
   useEffect(() => {
     fetchJobs();
+    
+    // Adding console logs for debugging navigation
+    console.log("UpcomingJobsPage mounted");
+    
+    return () => {
+      console.log("UpcomingJobsPage unmounted");
+    };
   }, []);
 
   const handleJobClick = (job: Job) => {
@@ -59,7 +66,8 @@ const UpcomingJobsPage = () => {
   };
 
   const handleBackNavigation = () => {
-    navigate('/electricians/job-scheduling');
+    console.log("Custom back action triggered");
+    navigate('/electricians/job-scheduling', { replace: true });
   };
 
   return (

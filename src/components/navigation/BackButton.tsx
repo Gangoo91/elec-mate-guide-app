@@ -16,7 +16,7 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const isEntry = location.pathname === "/" || location.pathname === "/dashboard";
 
   const handleBackNavigation = () => {
-    // Use custom action if provided
+    // Use custom action if provided - this takes priority
     if (customAction) {
       customAction();
       return;
@@ -29,13 +29,13 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       '/electricians/job-scheduling/clients',
       '/electricians/job-scheduling/completion'
     ].includes(location.pathname)) {
-      navigate('/electricians/job-scheduling');
+      navigate('/electricians/job-scheduling', {replace: true});
       return;
     }
     
     // Handle existing route patterns
     if (location.pathname.startsWith('/electricians/job-scheduling/')) {
-      navigate('/electricians/job-scheduling');
+      navigate('/electricians/job-scheduling', {replace: true});
       return;
     }
     

@@ -4,8 +4,11 @@ import MainLayout from "@/components/layout/MainLayout";
 import { Calendar, ClockIcon, Users, CheckSquare } from "lucide-react";
 import ResourceCard from "@/components/shared/ResourceCard";
 import PageHeader from "@/components/layout/PageHeader";
+import { useNavigate } from "react-router-dom";
 
 const JobSchedulePage = () => {
+  const navigate = useNavigate();
+  
   const scheduleFeatures = [
     {
       title: "Upcoming Jobs",
@@ -33,12 +36,17 @@ const JobSchedulePage = () => {
     }
   ];
 
+  const handleBackNavigation = () => {
+    navigate("/electricians", { replace: true });
+  };
+
   return (
     <MainLayout>
       <div className="container py-8">
         <PageHeader
           title="Job Scheduling"
           description="Efficiently manage your appointments, tasks, and job timelines."
+          customBackAction={handleBackNavigation}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
