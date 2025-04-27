@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
-import { YouTubePlayer } from './players/YouTubePlayer';
+import { YouTubePlayer } from './players/youtube/YouTubePlayer';
 import { HTML5Player } from './players/HTML5Player';
 import { VideoErrorDisplay } from './players/VideoErrorDisplay';
 import { VideoControls } from './controls/VideoControls';
