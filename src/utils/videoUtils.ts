@@ -1,7 +1,6 @@
 
 import { VideoLesson } from '@/types/videos';
 import { demoVideos } from '@/data/demoVideos';
-import { extractVideoId, isValidYouTubeId } from '@/components/video/players/youtube/youtubeApi';
 
 export const mapVideoCategory = (category: string): VideoLesson['category'] => {
   const categoryMap: Record<string, VideoLesson['category']> = {
@@ -23,6 +22,27 @@ const FALLBACK_VIDEOS = [
   'https://www.youtube.com/watch?v=vN9aR2wKv0U', // Circuit theory
   'https://www.youtube.com/watch?v=9iKD8kW84C0'  // Safety video
 ];
+
+// Extract video ID function (simplified version)
+const extractVideoId = (url: string): string | null => {
+  if (!url) return null;
+  
+  let match;
+  if ((match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/))) {
+    return match[1];
+  }
+  
+  if ((match = url.match(/youtube\.com\/embed\/([\w-]+)/))) {
+    return match[1];
+  }
+  
+  return null;
+};
+
+// Check if a video ID is valid
+const isValidYouTubeId = (id: string | null): boolean => {
+  return id !== null && /^[\w-]{11}$/.test(id);
+};
 
 // Ensure all videos have valid YouTube URLs
 export const ensureValidVideoUrl = (url: string): string => {

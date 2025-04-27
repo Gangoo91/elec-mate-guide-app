@@ -6,7 +6,6 @@ export const fittings: ComponentInfo[] = [
     id: 'bolts',
     name: 'Electrical Fixing Bolts',
     description: 'Various bolts used in electrical installations including M6, M8, and M10 sizes.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: 'https://images.unsplash.com/photo-1591958911259-bee2173bdccc', // Updated to show actual bolts
     specifications: [
       'Common sizes: M6, M8, M10',
@@ -24,7 +23,6 @@ export const fittings: ComponentInfo[] = [
     id: 'screws',
     name: 'Electrical Fixing Screws',
     description: 'Self-tapping and wood screws for electrical installations.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: '/images/electrical-components/screws.jpg',
     specifications: [
       'Types: Self-tapping, wood screws',
@@ -42,7 +40,6 @@ export const fittings: ComponentInfo[] = [
     id: 'grommets',
     name: 'Cable Grommets',
     description: 'Rubber and plastic grommets for cable protection.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: '/images/electrical-components/grommets.jpg',
     specifications: [
       'Sizes: 20mm to 32mm',

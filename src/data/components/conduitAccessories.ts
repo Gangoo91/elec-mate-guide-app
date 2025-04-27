@@ -1,3 +1,4 @@
+
 import { ComponentInfo } from "@/types/arLearning";
 
 export const conduitAccessories: ComponentInfo[] = [
@@ -5,7 +6,6 @@ export const conduitAccessories: ComponentInfo[] = [
     id: 'saddles',
     name: 'Conduit Saddles',
     description: 'Spacer bar saddles and distance saddles for metal conduit mounting.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: '/images/electrical-components/saddles.jpg',
     specifications: [
       'Sizes: 20mm, 25mm, 32mm',
@@ -23,7 +23,6 @@ export const conduitAccessories: ComponentInfo[] = [
     id: 'unistrut-brackets',
     name: 'Unistrut Brackets',
     description: 'L-brackets and right angle brackets for strut mounting systems.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: '/images/electrical-components/unistrut-brackets.jpg',
     specifications: [
       'Types: L-brackets, Right angles',
@@ -41,7 +40,6 @@ export const conduitAccessories: ComponentInfo[] = [
     id: 'clips',
     name: 'Conduit Clips',
     description: 'Spring clips and two-piece clips for conduit securing.',
-    youtubeId: 'xrEHoA_iDww',
     imageUrl: '/images/electrical-components/clips.jpg',
     specifications: [
       'Types: Spring, Two-piece',
