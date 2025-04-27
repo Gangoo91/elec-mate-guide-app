@@ -1,7 +1,10 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+
+import { useState, useRef, useEffect } from 'react';
 import { useYouTubeInitialization } from './hooks/useYouTubeInitialization';
 import { useYouTubePlayerState } from './hooks/useYouTubePlayerState';
 import { useYouTubeProgress } from './hooks/useYouTubeProgress';
+import { useYouTubePlayerElement } from './hooks/useYouTubePlayerElement';
+import { useYouTubePlayerEvents } from './hooks/useYouTubePlayerEvents';
 
 interface UseYouTubePlayerProps {
   videoId: string | null;
@@ -24,52 +27,31 @@ export const useYouTubePlayer = ({
   playing = false,
   muted = false
 }: UseYouTubePlayerProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [playerReady, setPlayerReady] = useState(false);
   const [playerElementId] = useState(`youtube-player-${Math.random().toString(36).substr(2, 9)}`);
   const playerRef = useRef<any>(null);
-  const [containerCreated, setContainerCreated] = useState(false);
-  const mountedRef = useRef(true);
-  const playerCreationAttemptedRef = useRef(false);
   const [playerInitialized, setPlayerInitialized] = useState(false);
-
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
+  const mountedRef = useRef(true);
 
   const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
     onProgress,
     playerRef
   });
 
-  const handlePlayerStateChange = useCallback((event: any) => {
-    if (!mountedRef.current || !window.YT) return;
-    
-    try {
-      switch (event.data) {
-        case window.YT.PlayerState.ENDED:
-          onPlayStateChange(false);
-          onProgress(event.target.getDuration(), event.target.getDuration());
-          clearProgressInterval();
-          break;
-        case window.YT.PlayerState.PLAYING:
-          onPlayStateChange(true);
-          startProgressInterval();
-          break;
-        case window.YT.PlayerState.PAUSED:
-          onPlayStateChange(false);
-          clearProgressInterval();
-          break;
-      }
-    } catch (err) {
-      console.error('Error handling player state change:', err);
-    }
-  }, [onPlayStateChange, onProgress, startProgressInterval, clearProgressInterval]);
+  const { handlePlayerStateChange } = useYouTubePlayerEvents({
+    onProgress,
+    onPlayStateChange,
+    startProgressInterval,
+    clearProgressInterval,
+    mountedRef
+  });
 
-  const handlePlayerReady = useCallback((event: any) => {
+  const { containerRef, containerCreated } = useYouTubePlayerElement({
+    videoId,
+    playerElementId
+  });
+
+  const handlePlayerReady = (event: any) => {
     if (!mountedRef.current) return;
     
     console.log("YouTube player ready event received");
@@ -105,16 +87,12 @@ export const useYouTubePlayer = ({
               }
             }, 100);
           }
-        } else {
-          console.log("Player iframe not in DOM yet");
         }
-      } else {
-        console.log("Player not fully initialized");
       }
     } catch (err) {
       console.error('Error in player ready handler:', err);
     }
-  }, [startAt, onPlayerReady, playing, muted]);
+  };
 
   const { initPlayer } = useYouTubeInitialization({
     videoId,
@@ -129,34 +107,11 @@ export const useYouTubePlayer = ({
   });
 
   useEffect(() => {
-    if (!containerRef.current || !videoId || playerCreationAttemptedRef.current) return;
-
-    playerCreationAttemptedRef.current = true;
-    
-    const createPlayerElement = () => {
-      if (!containerRef.current || !mountedRef.current) return;
-      
-      while (containerRef.current.firstChild) {
-        containerRef.current.removeChild(containerRef.current.firstChild);
-      }
-  
-      const playerDiv = document.createElement('div');
-      playerDiv.id = playerElementId;
-      playerDiv.style.position = 'absolute';
-      playerDiv.style.top = '0';
-      playerDiv.style.left = '0';
-      playerDiv.style.width = '100%';
-      playerDiv.style.height = '100%';
-      containerRef.current.appendChild(playerDiv);
-      setContainerCreated(true);
-    };
-
-    createPlayerElement();
-    
+    mountedRef.current = true;
     return () => {
-      playerCreationAttemptedRef.current = false;
+      mountedRef.current = false;
     };
-  }, [videoId, playerElementId]);
+  }, []);
 
   useEffect(() => {
     if (!containerCreated || !videoId || playerInitialized) return;
@@ -177,24 +132,6 @@ export const useYouTubePlayer = ({
     playing,
     playerReady
   });
-
-  useEffect(() => {
-    if (!playerReady || !playerRef.current) return;
-    
-    if (playing && typeof playerRef.current.playVideo === 'function') {
-      try {
-        playerRef.current.playVideo();
-      } catch (err) {
-        console.error('Error playing video:', err);
-      }
-    } else if (!playing && typeof playerRef.current.pauseVideo === 'function') {
-      try {
-        playerRef.current.pauseVideo();
-      } catch (err) {
-        console.error('Error pausing video:', err);
-      }
-    }
-  }, [playing, playerReady]);
 
   useEffect(() => {
     return () => {
