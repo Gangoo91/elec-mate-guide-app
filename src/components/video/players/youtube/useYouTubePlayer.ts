@@ -29,6 +29,8 @@ export const useYouTubePlayer = ({
   const playerRef = useRef<any>(null);
   const [containerCreated, setContainerCreated] = useState(false);
   const mountedRef = useRef(true);
+  const playerCreationAttemptedRef = useRef(false);
+  const [playerInitialized, setPlayerInitialized] = useState(false);
 
   // Track component mount state
   useEffect(() => {
@@ -72,42 +74,48 @@ export const useYouTubePlayer = ({
     if (!mountedRef.current) return;
     
     console.log("YouTube player ready event received");
-    setPlayerReady(true);
     
     try {
-      if (event.target && typeof event.target.unMute === 'function') {
-        event.target.unMute();
-        event.target.setVolume(100);
+      // Make sure the player is properly initialized before proceeding
+      if (event.target && typeof event.target.getIframe === 'function') {
+        const iframe = event.target.getIframe();
+        if (iframe && document.body.contains(iframe)) {
+          setPlayerReady(true);
+          setPlayerInitialized(true);
+          
+          // Configure player
+          if (typeof event.target.unMute === 'function') {
+            event.target.unMute();
+            event.target.setVolume(100);
+          }
+          
+          // Seek to starting position if needed
+          if (startAt > 0 && typeof event.target.seekTo === 'function') {
+            event.target.seekTo(startAt);
+          }
+          
+          // Notify parent component
+          if (onPlayerReady) {
+            onPlayerReady();
+          }
+          
+          // Handle play state
+          if (playing && typeof event.target.playVideo === 'function') {
+            // Small delay to ensure the player is fully ready
+            setTimeout(() => {
+              if (mountedRef.current && typeof event.target.playVideo === 'function') {
+                event.target.playVideo();
+              }
+            }, 100);
+          }
+        } else {
+          console.log("Player iframe not in DOM yet");
+        }
+      } else {
+        console.log("Player not fully initialized");
       }
     } catch (err) {
-      console.error('Error setting volume:', err);
-    }
-    
-    if (startAt > 0) {
-      try {
-        event.target.seekTo(startAt);
-      } catch (err) {
-        console.error('Error seeking to position:', err);
-      }
-    }
-    
-    // Delay play command to ensure player is fully ready
-    if (playing) {
-      setTimeout(() => {
-        if (!mountedRef.current) return;
-        
-        try {
-          if (event.target && typeof event.target.playVideo === 'function') {
-            event.target.playVideo();
-          }
-        } catch (err) {
-          console.error('Error playing video after ready:', err);
-        }
-      }, 300);
-    }
-    
-    if (onPlayerReady) {
-      onPlayerReady();
+      console.error('Error in player ready handler:', err);
     }
   }, [startAt, onPlayerReady, playing]);
 
@@ -126,13 +134,15 @@ export const useYouTubePlayer = ({
 
   // Create player element if it doesn't exist
   useEffect(() => {
-    if (!containerRef.current || !videoId) return;
+    if (!containerRef.current || !videoId || playerCreationAttemptedRef.current) return;
 
+    playerCreationAttemptedRef.current = true;
+    
     const createPlayerElement = () => {
       if (!containerRef.current || !mountedRef.current) return;
       
       // Clear container first
-      while (containerRef.current && containerRef.current.firstChild) {
+      while (containerRef.current.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild);
       }
   
@@ -150,21 +160,50 @@ export const useYouTubePlayer = ({
 
     createPlayerElement();
     
-    // Initialize player after DOM is updated
-    const initTimeout = setTimeout(() => {
-      if (containerCreated && mountedRef.current) {
+    return () => {
+      playerCreationAttemptedRef.current = false;
+    };
+  }, [videoId, playerElementId]);
+
+  // Initialize player after DOM is updated
+  useEffect(() => {
+    if (!containerCreated || !videoId || playerInitialized) return;
+    
+    const timer = setTimeout(() => {
+      if (mountedRef.current) {
         initPlayer();
       }
     }, 300);
     
-    return () => clearTimeout(initTimeout);
-  }, [videoId, playerElementId, initPlayer, containerCreated]);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [containerCreated, videoId, initPlayer, playerInitialized]);
 
   const { isLoaded, cleanupPlayer } = useYouTubePlayerState({
     playerRef,
     playing,
     playerReady
   });
+
+  // Update player state when play prop changes
+  useEffect(() => {
+    if (!playerReady || !playerRef.current) return;
+    
+    if (playing && typeof playerRef.current.playVideo === 'function') {
+      try {
+        playerRef.current.playVideo();
+      } catch (err) {
+        console.error('Error playing video:', err);
+      }
+    } else if (!playing && typeof playerRef.current.pauseVideo === 'function') {
+      try {
+        playerRef.current.pauseVideo();
+      } catch (err) {
+        console.error('Error pausing video:', err);
+      }
+    }
+  }, [playing, playerReady]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -79,20 +79,6 @@ export const YouTubePlayer = ({
     };
   }, [videoId, hasError, handleError]);
   
-  // Reinitialize player on attempt change
-  useEffect(() => {
-    if (playerAttempts > 0) {
-      // Short delay before retrying
-      const timer = setTimeout(() => {
-        if (!playerReady && !hasError && videoId) {
-          console.log(`Retrying YouTube player for ${title}, attempt ${playerAttempts}`);
-        }
-      }, 1000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [playerAttempts, playerReady, hasError, videoId, title]);
-
   // Show error if loading takes too long and player isn't ready
   const showError = loadingTimeout && !playerReady && !isLoaded && !hasError;
 
