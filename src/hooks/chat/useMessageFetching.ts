@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
@@ -45,6 +46,7 @@ export const useMessageFetching = () => {
       }, async (payload: any) => {
         if (payload.eventType === 'INSERT') {
           setMessages(prev => [payload.new as ChatMessage, ...prev]);
+          await fetchCommentsAndReactions([payload.new as ChatMessage]);
         }
         if (payload.eventType === 'DELETE') {
           setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
@@ -83,8 +85,8 @@ export const useMessageFetching = () => {
         return acc;
       }, {} as Record<string, ChatReaction[]>);
 
-      setComments(commentsByMessage);
-      setReactions(reactionsByMessage);
+      setComments(prev => ({...prev, ...commentsByMessage}));
+      setReactions(prev => ({...prev, ...reactionsByMessage}));
     } catch (error) {
       console.error('Error fetching comments and reactions:', error);
     }

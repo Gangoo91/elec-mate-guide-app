@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -5,7 +6,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import { ChatMessageComponent } from '@/components/chat/ChatMessage';
 import { useChatRoom } from '@/hooks/useChatRoom';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
+import { ChatInput } from '@/components/chat/ChatInput';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/hooks/useAuth';
 import { ChatErrorBoundary } from '@/components/chat/ChatErrorBoundary';
@@ -14,7 +15,6 @@ import { TypingIndicator } from '@/components/chat/TypingIndicator';
 
 const ChatRoomPage = () => {
   const navigate = useNavigate();
-  const [newMessage, setNewMessage] = useState('');
   const { user } = useAuth();
   const {
     messages,
@@ -28,29 +28,14 @@ const ChatRoomPage = () => {
   } = useChatRoom();
   
   const { typingUsers, setTyping, isAnyoneTyping } = useTypingIndicator('chat-room');
-  
+
   const handleBackClick = () => {
     navigate('/electricians/toolbox-talk');
   };
 
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
-
-    await sendMessage(newMessage);
-    setNewMessage('');
+  const handleSendMessage = async (message: string) => {
+    await sendMessage(message);
     setTyping(false);
-  };
-  
-  // Handle typing indicator
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewMessage(e.target.value);
-    
-    if (e.target.value.trim() !== '') {
-      setTyping(true);
-    } else {
-      setTyping(false);
-    }
   };
 
   const handleRefresh = async () => {
@@ -76,47 +61,40 @@ const ChatRoomPage = () => {
             </div>
           ) : (
             <ChatErrorBoundary>
-              <form onSubmit={handleSendMessage} className="mb-8">
-                <Textarea
-                  value={newMessage}
-                  onChange={handleInputChange}
+              <div className="flex flex-col h-[calc(100vh-300px)]">
+                <ScrollArea className="flex-1 pr-4">
+                  {loading ? (
+                    <div className="text-center py-8 text-[#FFC900]/70">Loading messages...</div>
+                  ) : messages.length === 0 ? (
+                    <div className="text-center py-8 text-[#FFC900]/70">No messages yet. Be the first to post!</div>
+                  ) : (
+                    <>
+                      {isAnyoneTyping && (
+                        <div className="mb-4">
+                          <TypingIndicator isTyping={true} />
+                        </div>
+                      )}
+                      {messages.map(message => (
+                        <ChatMessageComponent
+                          key={message.id}
+                          message={message}
+                          comments={comments[message.id] || []}
+                          reactions={reactions[message.id] || []}
+                          onReaction={(type) => toggleReaction(message.id, type)}
+                          onComment={(content) => addComment(message.id, content)}
+                        />
+                      ))}
+                    </>
+                  )}
+                </ScrollArea>
+                
+                <ChatInput
+                  onSendMessage={handleSendMessage}
+                  chatTitle="Chat Room"
                   placeholder="Share your thoughts..."
-                  className="mb-4 bg-[#22251e] border-[#FFC900]/20 text-[#FFC900] min-h-[100px]"
+                  chatId="chat-room"
                 />
-                <Button 
-                  type="submit"
-                  disabled={!newMessage.trim()}
-                  className="w-full bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
-                >
-                  Post Message
-                </Button>
-              </form>
-
-              <ScrollArea className="h-[600px] pr-4">
-                {loading ? (
-                  <div className="text-center py-8 text-[#FFC900]/70">Loading messages...</div>
-                ) : messages.length === 0 ? (
-                  <div className="text-center py-8 text-[#FFC900]/70">No messages yet. Be the first to post!</div>
-                ) : (
-                  <>
-                    {isAnyoneTyping && (
-                      <div className="mb-4">
-                        <TypingIndicator isTyping={true} />
-                      </div>
-                    )}
-                    {messages.map(message => (
-                      <ChatMessageComponent
-                        key={message.id}
-                        message={message}
-                        comments={comments[message.id] || []}
-                        reactions={reactions[message.id] || []}
-                        onReaction={(type) => toggleReaction(message.id, type)}
-                        onComment={(content) => addComment(message.id, content)}
-                      />
-                    ))}
-                  </>
-                )}
-              </ScrollArea>
+              </div>
             </ChatErrorBoundary>
           )}
         </div>

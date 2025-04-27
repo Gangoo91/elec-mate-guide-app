@@ -1,7 +1,7 @@
+
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
 import { useMessageFetching } from './chat/useMessageFetching';
 import { useReactions } from './chat/useReactions';
 
@@ -62,6 +62,11 @@ export function useChatRoom() {
         ...prev,
         [messageId]: [...(prev[messageId] || []), data[0]]
       }));
+
+      toast({
+        title: "Success",
+        description: "Comment added successfully",
+      });
     } catch (error) {
       console.error('Error adding comment:', error);
       toast({

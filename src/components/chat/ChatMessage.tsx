@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ThumbsUp, ThumbsDown, MessageSquare } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, MessageSquare, Send } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { format } from 'date-fns';
+import { MessageTime } from './MessageTime';
+import { useProfiles } from '@/hooks/useProfiles';
+import { cn } from '@/lib/utils';
 
 interface ChatMessageProps {
   message: ChatMessage;
@@ -25,36 +28,39 @@ export function ChatMessageComponent({
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
   const { user } = useAuth();
+  const { profiles } = useProfiles();
 
+  const userProfile = profiles?.find(p => p.id === message.user_id);
+  const senderName = userProfile ? `${userProfile.first_name || 'Unknown'} ${userProfile.last_name || ''}`.trim() : 'Unknown';
+  
   const upvotes = reactions.filter(r => r.reaction_type === 'upvote').length;
   const downvotes = reactions.filter(r => r.reaction_type === 'downvote').length;
-  
-  const userReaction = user 
-    ? reactions.find(r => r.user_id === user.id)?.reaction_type 
-    : null;
+  const userReaction = user ? reactions.find(r => r.user_id === user.id)?.reaction_type : null;
 
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-    
     onComment(newComment);
     setNewComment('');
   };
 
   return (
     <div className="p-4 bg-[#22251e] border border-[#FFC900]/20 rounded-lg mb-4">
-      <div className="text-[#FFC900]/90 mb-2">{message.content}</div>
-      <div className="text-xs text-[#FFC900]/50 mb-3">
-        {format(new Date(message.created_at), 'MMM d, yyyy HH:mm')}
+      <div className="flex justify-between items-start mb-2">
+        <span className="text-[#FFC900] font-medium">{senderName}</span>
+        <MessageTime timestamp={message.created_at} />
       </div>
+      
+      <div className="text-[#FFC900]/90 mb-4">{message.content}</div>
       
       <div className="flex items-center gap-4">
         <Button
           variant="ghost"
           size="sm"
-          className={`flex items-center gap-1 ${
+          className={cn(
+            "flex items-center gap-1",
             userReaction === 'upvote' ? 'text-green-500' : 'text-[#FFC900]/70'
-          }`}
+          )}
           onClick={() => onReaction('upvote')}
         >
           <ThumbsUp className="w-4 h-4" />
@@ -64,9 +70,10 @@ export function ChatMessageComponent({
         <Button
           variant="ghost"
           size="sm"
-          className={`flex items-center gap-1 ${
+          className={cn(
+            "flex items-center gap-1",
             userReaction === 'downvote' ? 'text-red-500' : 'text-[#FFC900]/70'
-          }`}
+          )}
           onClick={() => onReaction('downvote')}
         >
           <ThumbsDown className="w-4 h-4" />
@@ -89,9 +96,7 @@ export function ChatMessageComponent({
           {comments.map(comment => (
             <div key={comment.id} className="mb-2">
               <div className="text-sm text-[#FFC900]/90">{comment.content}</div>
-              <div className="text-xs text-[#FFC900]/50">
-                {format(new Date(comment.created_at), 'MMM d, yyyy HH:mm')}
-              </div>
+              <MessageTime timestamp={comment.created_at} className="text-xs" />
             </div>
           ))}
 
@@ -104,11 +109,12 @@ export function ChatMessageComponent({
             />
             <Button 
               type="submit" 
-              variant="outline"
+              size="icon"
               disabled={!newComment.trim()}
-              className="border-[#FFC900]/20 text-[#FFC900]"
+              className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90"
             >
-              Post
+              <Send className="h-4 w-4" />
+              <span className="sr-only">Send comment</span>
             </Button>
           </form>
         </div>
