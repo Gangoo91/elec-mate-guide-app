@@ -18,6 +18,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { useTypingIndicator } from "@/hooks/useTypingIndicator";
 
 interface DirectChatDialogProps {
   recipientId: string;
@@ -38,6 +39,7 @@ export function DirectChatDialog({
   const { toast } = useToast();
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [blockDialogOpen, setBlockDialogOpen] = useState(false);
+  const { typingUsers } = useTypingIndicator(`direct-${recipientId}`);
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -96,7 +98,12 @@ export function DirectChatDialog({
               </div>
 
               <div className="flex-1 overflow-y-auto p-4">
-                <MessageList messages={messages} loading={loading} />
+                <MessageList 
+                  messages={messages} 
+                  loading={loading} 
+                  typingUsers={typingUsers}
+                  showReadReceipts={true}
+                />
               </div>
 
               <div className="p-3">
@@ -104,6 +111,7 @@ export function DirectChatDialog({
                   onSendMessage={handleSendMessage} 
                   chatTitle={`Chat with ${recipientName}`}
                   placeholder="Type your message..."
+                  chatId={`direct-${recipientId}`}
                 />
               </div>
             </div>
