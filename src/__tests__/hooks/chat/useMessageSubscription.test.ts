@@ -1,3 +1,4 @@
+
 import { renderHook } from '@testing-library/react';
 import { useMessageSubscription } from '@/hooks/chat/useMessageSubscription';
 import { supabase } from '@/integrations/supabase/client';
@@ -56,7 +57,26 @@ describe('useMessageSubscription', () => {
     const channelMock = {
       on: vi.fn().mockReturnThis(),
       subscribe: vi.fn(),
-    };
+      topic: 'public:chat_messages',
+      params: {},
+      socket: {},
+      bindings: {},
+      state: 'SUBSCRIBED',
+      unsubscribe: vi.fn(),
+      send: vi.fn(),
+      track: vi.fn(),
+      untrack: vi.fn(),
+      on_error: vi.fn(),
+      joinRef: '1',
+      ref: '1',
+      timeout: 1000,
+      push: vi.fn(),
+      cancelRefEvent: vi.fn(),
+      onError: vi.fn(),
+      onMessage: vi.fn(),
+      onClose: vi.fn(),
+      trigger: vi.fn(),
+    } as unknown as RealtimeChannel;
 
     vi.mocked(supabase.channel).mockReturnValue(channelMock);
 

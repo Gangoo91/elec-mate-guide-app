@@ -1,10 +1,10 @@
 
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { ChatMessage } from '@/types/chat-room';
+import { Message } from '@/types/chat';
 
 export const useMessageSubscription = (
-  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>
 ) => {
   useEffect(() => {
     const channelName = 'public:chat_messages';
@@ -18,7 +18,7 @@ export const useMessageSubscription = (
           table: 'chat_messages'
         }, async (payload: any) => {
           if (payload.eventType === 'INSERT') {
-            setMessages(prev => [payload.new as ChatMessage, ...prev]);
+            setMessages(prev => [payload.new as Message, ...prev]);
           }
           if (payload.eventType === 'DELETE') {
             setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
