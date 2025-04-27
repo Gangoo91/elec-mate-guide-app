@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { componentCategories } from "@/data/arComponents";
+import { componentCategories } from "@/data/components/categories";  // Updated import
 import ComponentSelector from "./ar-learning/ComponentSelector";
 import ComponentViewer from "./ar-learning/ComponentViewer";
 import ComponentDetails from "./ar-learning/ComponentDetails";
