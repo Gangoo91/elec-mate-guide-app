@@ -100,6 +100,7 @@ const VideoPlayerContent = ({ videoId, videoUrl, title }: { videoId: string, vid
               onPlayStateChange={setPlaying}
               startAt={progress.lastPosition}
               playing={playing}
+              muted={muted}
             />
           ) : playerInitialized ? (
             <HTML5Player

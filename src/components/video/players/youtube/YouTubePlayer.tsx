@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState, useEffect } from 'react';
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
@@ -12,6 +11,7 @@ interface YouTubePlayerProps {
   onPlayStateChange: (isPlaying: boolean) => void;
   startAt?: number;
   playing?: boolean;
+  muted?: boolean;
 }
 
 export const YouTubePlayer = ({
@@ -22,13 +22,13 @@ export const YouTubePlayer = ({
   onPlayStateChange,
   startAt = 0,
   playing = false,
+  muted = false,
 }: YouTubePlayerProps) => {
   const [hasError, setHasError] = useState(false);
   const videoId = extractVideoId(videoUrl);
   const [playerAttempts, setPlayerAttempts] = useState(0);
   const [loadingTimeout, setLoadingTimeout] = useState(false);
   
-  // Set loading timeout after 8 seconds to show error if needed
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoadingTimeout(true);
@@ -37,11 +37,9 @@ export const YouTubePlayer = ({
     return () => clearTimeout(timeout);
   }, []);
   
-  // Handle player errors locally first
   const handleError = useCallback(() => {
     console.error(`YouTube player error for video: ${title}`);
     
-    // Try to reinitialize player up to 3 times before showing an error
     if (playerAttempts < 3) {
       setPlayerAttempts(prev => prev + 1);
       return;
@@ -55,7 +53,6 @@ export const YouTubePlayer = ({
     console.log(`YouTube player ready for video: ${title}`);
   }, [title]);
   
-  // Initialize the player
   const { containerRef, playerReady, isLoaded } = useYouTubePlayer({
     videoId: hasError ? null : videoId,
     onError: handleError,
@@ -64,22 +61,20 @@ export const YouTubePlayer = ({
     onPlayerReady: handlePlayerReady,
     startAt,
     playing,
+    muted,
   });
 
-  // If videoId is invalid, trigger error immediately
   useEffect(() => {
     if (!videoId && !hasError) {
       handleError();
     }
     
-    // Reset state when video URL changes
     return () => {
       setHasError(false);
       setPlayerAttempts(0);
     };
   }, [videoId, hasError, handleError]);
   
-  // Show error if loading takes too long and player isn't ready
   const showError = loadingTimeout && !playerReady && !isLoaded && !hasError;
 
   return (

@@ -1,4 +1,3 @@
-
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { useYouTubeInitialization } from './hooks/useYouTubeInitialization';
 import { useYouTubePlayerState } from './hooks/useYouTubePlayerState';
@@ -12,6 +11,7 @@ interface UseYouTubePlayerProps {
   onPlayerReady?: () => void;
   startAt?: number;
   playing?: boolean;
+  muted?: boolean;
 }
 
 export const useYouTubePlayer = ({
@@ -21,7 +21,8 @@ export const useYouTubePlayer = ({
   onPlayStateChange,
   onPlayerReady,
   startAt = 0,
-  playing = false
+  playing = false,
+  muted = false
 }: UseYouTubePlayerProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [playerReady, setPlayerReady] = useState(false);
@@ -32,7 +33,6 @@ export const useYouTubePlayer = ({
   const playerCreationAttemptedRef = useRef(false);
   const [playerInitialized, setPlayerInitialized] = useState(false);
 
-  // Track component mount state
   useEffect(() => {
     mountedRef.current = true;
     return () => {
@@ -40,7 +40,6 @@ export const useYouTubePlayer = ({
     };
   }, []);
 
-  // Define progress functions
   const { startProgressInterval, clearProgressInterval } = useYouTubeProgress({
     onProgress,
     playerRef
@@ -76,32 +75,30 @@ export const useYouTubePlayer = ({
     console.log("YouTube player ready event received");
     
     try {
-      // Make sure the player is properly initialized before proceeding
       if (event.target && typeof event.target.getIframe === 'function') {
         const iframe = event.target.getIframe();
         if (iframe && document.body.contains(iframe)) {
           setPlayerReady(true);
           setPlayerInitialized(true);
           
-          // Configure player
-          if (typeof event.target.unMute === 'function') {
-            event.target.unMute();
-            event.target.setVolume(100);
+          if (typeof event.target.setVolume === 'function') {
+            if (muted) {
+              event.target.mute();
+            } else {
+              event.target.unMute();
+              event.target.setVolume(100);
+            }
           }
           
-          // Seek to starting position if needed
           if (startAt > 0 && typeof event.target.seekTo === 'function') {
             event.target.seekTo(startAt);
           }
           
-          // Notify parent component
           if (onPlayerReady) {
             onPlayerReady();
           }
           
-          // Handle play state
           if (playing && typeof event.target.playVideo === 'function') {
-            // Small delay to ensure the player is fully ready
             setTimeout(() => {
               if (mountedRef.current && typeof event.target.playVideo === 'function') {
                 event.target.playVideo();
@@ -117,9 +114,8 @@ export const useYouTubePlayer = ({
     } catch (err) {
       console.error('Error in player ready handler:', err);
     }
-  }, [startAt, onPlayerReady, playing]);
+  }, [startAt, onPlayerReady, playing, muted]);
 
-  // Initialize the player with the handlePlayerStateChange function
   const { initPlayer } = useYouTubeInitialization({
     videoId,
     playerElementId,
@@ -132,7 +128,6 @@ export const useYouTubePlayer = ({
     playerRef
   });
 
-  // Create player element if it doesn't exist
   useEffect(() => {
     if (!containerRef.current || !videoId || playerCreationAttemptedRef.current) return;
 
@@ -141,12 +136,10 @@ export const useYouTubePlayer = ({
     const createPlayerElement = () => {
       if (!containerRef.current || !mountedRef.current) return;
       
-      // Clear container first
       while (containerRef.current.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild);
       }
   
-      // Create fresh player div
       const playerDiv = document.createElement('div');
       playerDiv.id = playerElementId;
       playerDiv.style.position = 'absolute';
@@ -165,7 +158,6 @@ export const useYouTubePlayer = ({
     };
   }, [videoId, playerElementId]);
 
-  // Initialize player after DOM is updated
   useEffect(() => {
     if (!containerCreated || !videoId || playerInitialized) return;
     
@@ -186,7 +178,6 @@ export const useYouTubePlayer = ({
     playerReady
   });
 
-  // Update player state when play prop changes
   useEffect(() => {
     if (!playerReady || !playerRef.current) return;
     
@@ -205,7 +196,6 @@ export const useYouTubePlayer = ({
     }
   }, [playing, playerReady]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (!mountedRef.current) return;
