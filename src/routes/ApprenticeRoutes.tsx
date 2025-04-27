@@ -2,6 +2,7 @@
 import { lazy } from 'react';
 import { Route } from 'react-router-dom';
 
+// Use consistent lazy loading for all components
 const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
 const LearningHubPage = lazy(() => import('@/pages/LearningHubPage'));
 const StudyGroupsPage = lazy(() => import('@/pages/StudyGroupsPage'));
