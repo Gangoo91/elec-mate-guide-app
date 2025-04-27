@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircuitBoard, AlertTriangle } from "lucide-react";
+import { CircuitBoard, AlertTriangle, ImageOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { ComponentInfo } from "@/types/arLearning";
 import ARViewControls from "./ARViewControls";
+import { toast } from "sonner";
 
 interface ComponentViewerProps {
   activeComponent: ComponentInfo;
@@ -48,8 +49,15 @@ const ComponentViewer = ({ activeComponent }: ComponentViewerProps) => {
     }, 1000);
   }, [activeComponent]);
 
-  // Create a fallback image URL using the component name
-  const fallbackImageUrl = `https://via.placeholder.com/400x300/22251e/FFC900?text=${encodeURIComponent(activeComponent.name.replace(/[()]/g, ''))}`;
+  // Create a fallback image URL using the component name and id
+  const fallbackImageUrl = `https://via.placeholder.com/400x300/22251e/FFC900?text=${encodeURIComponent(
+    activeComponent.name.replace(/[()]/g, '')
+  )}`;
+
+  const handleImageError = () => {
+    setImageError(true);
+    toast.error(`Image for ${activeComponent.name} could not be loaded`);
+  };
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 lg:col-span-2">
@@ -88,18 +96,18 @@ const ComponentViewer = ({ activeComponent }: ComponentViewerProps) => {
                   src={activeComponent.imageUrl} 
                   alt={activeComponent.name}
                   className="max-w-full max-h-full object-contain"
-                  onError={() => setImageError(true)}
+                  onError={handleImageError}
                 />
               ) : (
                 <div className="text-center p-6">
-                  <AlertTriangle className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
+                  <ImageOff className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
                   <h3 className="text-[#FFC900] text-lg font-medium mb-2">
                     {activeComponent.name}
                   </h3>
                   <p className="text-[#FFC900]/70 mb-4">
                     {imageError ? 
                       "Image could not be loaded. Using fallback display." : 
-                      "No image available."}
+                      "No image available for this component."}
                   </p>
                   <img 
                     src={fallbackImageUrl}

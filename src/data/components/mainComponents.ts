@@ -1,3 +1,4 @@
+
 import { ComponentInfo } from "@/types/arLearning";
 
 export const mainComponents: ComponentInfo[] = [
@@ -6,7 +7,7 @@ export const mainComponents: ComponentInfo[] = [
     name: 'RCBO (BS EN 61009)',
     description: 'Residual Current Breaker with Overcurrent protection, commonly used in UK consumer units. Combines RCD and MCB functionality in a single device.',
     youtubeId: 'mc979OhitAg',
-    imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475',
+    imageUrl: 'https://images.unsplash.com/photo-1591024911028-bab2e060f6b7', // Updated to show actual RCBO image
     specifications: [
       'Common ratings: 6A, 10A, 16A, 20A, 32A, 40A',
       'Typical sensitivity: 30mA for personal protection',
@@ -24,7 +25,7 @@ export const mainComponents: ComponentInfo[] = [
     name: 'Consumer Unit (BS 7671)',
     description: 'Modern metal consumer units (distribution boards) required by the 18th Edition IET Wiring Regulations for UK domestic installations.',
     youtubeId: '9iKD8kW84C0',
-    imageUrl: 'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7',
+    imageUrl: 'https://images.unsplash.com/photo-1626126529124-388a929f5ff2', // Updated to show consumer unit
     specifications: [
       'Must be metal construction for domestic installations',
       'Typical sizes: 4-24 ways',

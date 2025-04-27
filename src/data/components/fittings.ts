@@ -7,7 +7,7 @@ export const fittings: ComponentInfo[] = [
     name: 'Electrical Fixing Bolts',
     description: 'Various bolts used in electrical installations including M6, M8, and M10 sizes.',
     youtubeId: 'xrEHoA_iDww',
-    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f', // Updated to use accessible image
+    imageUrl: 'https://images.unsplash.com/photo-1591958911259-bee2173bdccc', // Updated to show actual bolts
     specifications: [
       'Common sizes: M6, M8, M10',
       'Material: Zinc plated steel',
