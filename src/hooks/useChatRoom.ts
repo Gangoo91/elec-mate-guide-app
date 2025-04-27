@@ -26,11 +26,10 @@ export function useChatRoom() {
 
   const fetchMessages = async () => {
     try {
-      // Use the REST API endpoint directly
       const { data: messages, error } = await supabase
         .from('chat_messages')
         .select('*')
-        .order('created_at', { ascending: false }) as any;
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       
@@ -51,17 +50,15 @@ export function useChatRoom() {
     try {
       const messageIds = messages.map(m => m.id);
       
-      // Use the REST API endpoint directly
       const { data: comments } = await supabase
         .from('chat_comments')
         .select('*')
-        .in('message_id', messageIds) as any;
+        .in('message_id', messageIds);
 
-      // Use the REST API endpoint directly
       const { data: reactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .in('message_id', messageIds) as any;
+        .in('message_id', messageIds);
 
       const commentsByMessage = (comments || []).reduce((acc, comment) => {
         acc[comment.message_id] = [...(acc[comment.message_id] || []), comment];
@@ -111,11 +108,10 @@ export function useChatRoom() {
     if (!user) return;
     
     try {
-      // Use the REST API endpoint directly
       const { data, error } = await supabase
         .from('chat_messages')
         .insert([{ content, user_id: user.id }])
-        .select() as any;
+        .select();
 
       if (error) throw error;
       
@@ -142,13 +138,13 @@ export function useChatRoom() {
           await supabase
             .from('chat_reactions')
             .delete()
-            .eq('id', existingReaction.id) as any;
+            .eq('id', existingReaction.id);
         } else {
           // Update reaction
           await supabase
             .from('chat_reactions')
             .update({ reaction_type: type })
-            .eq('id', existingReaction.id) as any;
+            .eq('id', existingReaction.id);
         }
       } else {
         // Add new reaction
@@ -158,14 +154,14 @@ export function useChatRoom() {
             message_id: messageId,
             user_id: user.id,
             reaction_type: type
-          }]) as any;
+          }]);
       }
 
       // Refresh reactions for this message
       const { data: updatedReactions } = await supabase
         .from('chat_reactions')
         .select('*')
-        .eq('message_id', messageId) as any;
+        .eq('message_id', messageId);
 
       setReactions(prev => ({
         ...prev,
@@ -185,7 +181,6 @@ export function useChatRoom() {
     if (!user) return;
 
     try {
-      // Use the REST API endpoint directly
       const { data, error } = await supabase
         .from('chat_comments')
         .insert([{
@@ -193,7 +188,7 @@ export function useChatRoom() {
           user_id: user.id,
           content
         }])
-        .select() as any;
+        .select();
 
       if (error) throw error;
 
