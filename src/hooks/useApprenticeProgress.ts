@@ -34,7 +34,15 @@ export function useApprenticeProgress() {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as Milestone[];
+      
+      // Transform the data to ensure it matches the Milestone type
+      const typedMilestones = data.map(item => ({
+        ...item,
+        resource_id: item.resource_id || null,
+        resource_type: item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null
+      })) as Milestone[];
+      
+      return typedMilestones;
     }
   });
 
