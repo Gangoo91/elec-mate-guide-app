@@ -61,12 +61,15 @@ export function useChatRoom() {
         .in('message_id', messageIds);
 
       const commentsByMessage = (comments || []).reduce((acc, comment) => {
-        acc[comment.message_id] = [...(acc[comment.message_id] || []), comment];
+        acc[comment.message_id] = [...(acc[comment.message_id] || []), comment as ChatComment];
         return acc;
       }, {} as Record<string, ChatComment[]>);
 
       const reactionsByMessage = (reactions || []).reduce((acc, reaction) => {
-        acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction];
+        // Make sure reaction_type is correctly typed
+        if (reaction.reaction_type === "upvote" || reaction.reaction_type === "downvote") {
+          acc[reaction.message_id] = [...(acc[reaction.message_id] || []), reaction as ChatReaction];
+        }
         return acc;
       }, {} as Record<string, ChatReaction[]>);
 
@@ -163,9 +166,15 @@ export function useChatRoom() {
         .select('*')
         .eq('message_id', messageId);
 
+      // Filter and ensure correct typing before setting state
+      const typedReactions = (updatedReactions || []).filter(
+        (r): r is ChatReaction => 
+          r.reaction_type === "upvote" || r.reaction_type === "downvote"
+      );
+
       setReactions(prev => ({
         ...prev,
-        [messageId]: updatedReactions || []
+        [messageId]: typedReactions
       }));
     } catch (error) {
       console.error('Error toggling reaction:', error);
