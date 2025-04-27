@@ -130,7 +130,7 @@ const StudyGroupsPage = () => {
                 <SelectValue placeholder="Filter by level" />
               </SelectTrigger>
               <SelectContent className="bg-[#22251e] border-[#FFC900]/20">
-                <SelectItem value="">All Levels</SelectItem>
+                <SelectItem value="all">All Levels</SelectItem>
                 <SelectItem value="beginner">Beginner</SelectItem>
                 <SelectItem value="intermediate">Intermediate</SelectItem>
                 <SelectItem value="advanced">Advanced</SelectItem>
