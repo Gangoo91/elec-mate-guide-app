@@ -6,7 +6,7 @@ interface PageHeaderProps {
   title: string;
   description?: string;
   hideBackButton?: boolean;
-  customBackAction?: () => void; // Add custom back action prop
+  customBackAction?: () => void;
 }
 
 const PageHeader = ({ 
@@ -18,7 +18,7 @@ const PageHeader = ({
   return (
     <div className="text-center mb-6 md:mb-8 animate-fade-in px-4">
       {!hideBackButton && (
-        <div className="mb-4">
+        <div className="mb-4 text-left">
           <BackButton customAction={customBackAction} />
         </div>
       )}

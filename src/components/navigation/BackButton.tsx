@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -21,6 +22,12 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
+    // Handle job scheduling pages
+    if (location.pathname.startsWith('/electricians/job-scheduling/')) {
+      navigate('/electricians/job-scheduling');
+      return;
+    }
+    
     // Special handling for Level 2 unit pages
     if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}/)) {
       navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
@@ -28,6 +35,11 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     }
 
     // Special handling for Level 3 unit pages
+    if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+/)) {
+      navigate('/electricians/development/career-pathways');
+      return;
+    }
+    
     if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}/)) {
       navigate('/apprentices/study-materials/city-guilds/level-3');
       return;
