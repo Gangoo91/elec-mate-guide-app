@@ -7,6 +7,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useApprenticeProgress } from "@/hooks/useApprenticeProgress";
 import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useVideos } from "@/hooks/useVideos";
+import { useNavigate } from 'react-router-dom';
+import { Play, BookOpen, Headphones, CirclePlay } from "lucide-react";
 
 export default function AddMilestoneDialog() {
   const { toast } = useToast();
@@ -15,6 +19,10 @@ export default function AddMilestoneDialog() {
   const [description, setDescription] = useState('');
   const [type, setType] = useState<'qualification' | 'certification' | 'skill' | 'module'>('skill');
   const [open, setOpen] = useState(false);
+  const [selectedResource, setSelectedResource] = useState<string | null>(null);
+  const [resourceType, setResourceType] = useState<'video' | 'exam' | 'quiz' | 'audio' | 'none'>('none');
+  const { videos } = useVideos();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,14 +44,47 @@ export default function AddMilestoneDialog() {
       status: 'not_started' as 'not_started' | 'in_progress' | 'completed',
       user_id: user.id,
       target_completion_date: null,
-      completed_at: null
+      completed_at: null,
+      resource_id: selectedResource,
+      resource_type: resourceType !== 'none' ? resourceType : null
     };
 
     addMilestone(newMilestone);
     setOpen(false);
+    resetForm();
+  };
+
+  const resetForm = () => {
     setTitle('');
     setDescription('');
     setType('skill');
+    setSelectedResource(null);
+    setResourceType('none');
+  };
+
+  const handleResourceSelect = (id: string, type: 'video' | 'exam' | 'quiz' | 'audio') => {
+    setSelectedResource(id);
+    setResourceType(type);
+  };
+
+  const goToResource = (type: string, id: string) => {
+    switch(type) {
+      case 'video':
+        navigate('/apprentices/video-demonstrations');
+        break;
+      case 'exam':
+        navigate('/apprentices/practice-exams');
+        break;
+      case 'quiz':
+        // Navigate to the appropriate quiz page when available
+        navigate('/apprentices/study-materials');
+        break;
+      case 'audio':
+        navigate('/apprentices/audio-tutorials');
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -51,7 +92,7 @@ export default function AddMilestoneDialog() {
       <DialogTrigger asChild>
         <Button className="w-full mb-4">Add New Milestone</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Create New Milestone</DialogTitle>
         </DialogHeader>
@@ -62,6 +103,7 @@ export default function AddMilestoneDialog() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              className="mb-2"
             />
           </div>
           <div>
@@ -69,9 +111,10 @@ export default function AddMilestoneDialog() {
               placeholder="Description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              className="mb-2"
             />
           </div>
-          <div>
+          <div className="mb-4">
             <Select value={type} onValueChange={(value: any) => setType(value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select type" />
@@ -84,6 +127,71 @@ export default function AddMilestoneDialog() {
               </SelectContent>
             </Select>
           </div>
+          
+          <div className="bg-[#22251e]/50 p-4 rounded-lg mb-4">
+            <h3 className="text-sm font-medium mb-2 text-[#FFC900]">Link Learning Resource (Optional)</h3>
+            
+            <Tabs defaultValue="video" className="w-full">
+              <TabsList className="w-full mb-4">
+                <TabsTrigger value="video" className="flex items-center gap-1">
+                  <Play className="h-4 w-4" /> Videos
+                </TabsTrigger>
+                <TabsTrigger value="exam" className="flex items-center gap-1">
+                  <BookOpen className="h-4 w-4" /> Exams
+                </TabsTrigger>
+                <TabsTrigger value="quiz" className="flex items-center gap-1">
+                  <CirclePlay className="h-4 w-4" /> Quizzes
+                </TabsTrigger>
+                <TabsTrigger value="audio" className="flex items-center gap-1">
+                  <Headphones className="h-4 w-4" /> Audio
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="video" className="max-h-40 overflow-y-auto p-2">
+                {videos?.length > 0 ? (
+                  videos.map(video => (
+                    <div 
+                      key={video.id} 
+                      className={`p-2 mb-1 border rounded cursor-pointer flex items-center gap-2 ${selectedResource === video.id && resourceType === 'video' ? 'border-[#FFC900] bg-[#FFC900]/10' : 'border-gray-700 hover:border-[#FFC900]/50'}`}
+                      onClick={() => handleResourceSelect(video.id, 'video')}
+                    >
+                      <Play className="h-4 w-4 text-[#FFC900]" />
+                      <div className="text-sm">{video.title}</div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-400">No videos available.</p>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="exam" className="max-h-40 overflow-y-auto p-2">
+                <p className="text-sm text-gray-400">Mock exams will be available soon.</p>
+              </TabsContent>
+              
+              <TabsContent value="quiz" className="max-h-40 overflow-y-auto p-2">
+                <p className="text-sm text-gray-400">Mini quizzes will be available soon.</p>
+              </TabsContent>
+              
+              <TabsContent value="audio" className="max-h-40 overflow-y-auto p-2">
+                <p className="text-sm text-gray-400">Audio tutorials will be available soon.</p>
+              </TabsContent>
+            </Tabs>
+            
+            {selectedResource && resourceType !== 'none' && (
+              <div className="mt-2 p-2 bg-[#FFC900]/10 rounded flex justify-between items-center">
+                <span className="text-sm text-[#FFC900]">Resource selected</span>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => {setSelectedResource(null); setResourceType('none');}}
+                  className="text-xs"
+                >
+                  Clear
+                </Button>
+              </div>
+            )}
+          </div>
+          
           <Button type="submit" className="w-full">Create Milestone</Button>
         </form>
       </DialogContent>
