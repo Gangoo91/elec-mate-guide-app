@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { BookOpen, Lightbulb, Wrench, Shield, TestTube } from 'lucide-react';
+import { BookOpen, Lightbulb, Wrench, Shield, Screwdriver, TestTube } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoCard } from './VideoCard';
 
@@ -22,17 +22,17 @@ interface VideoCategoryTabsProps {
 
 export const categoryIcons = {
   core_units: <BookOpen className="h-5 w-5" />,
-  theory: <Lightbulb className="h-5 w-5" />,
   practical_skills: <Wrench className="h-5 w-5" />,
+  theory: <Lightbulb className="h-5 w-5" />,
   safety: <Shield className="h-5 w-5" />,
-  installation: <Wrench className="h-5 w-5" />,
+  installation: <Screwdriver className="h-5 w-5" />,
   testing: <TestTube className="h-5 w-5" />
 };
 
 export const categoryTitles = {
   core_units: "Core Units",
-  theory: "Theory",
   practical_skills: "Practical Skills",
+  theory: "Theory",
   safety: "Safety",
   installation: "Installation",
   testing: "Testing & Inspection"

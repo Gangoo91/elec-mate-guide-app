@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from 'react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
 import { Play, Maximize, Volume2, AlertTriangle } from 'lucide-react';
@@ -17,7 +16,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   
-  // Check if URL is a YouTube URL
   const isYouTubeUrl = (url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
   };
@@ -26,7 +24,11 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     try {
       // If it's already an embed URL, just return it
       if (url.includes('youtube.com/embed/')) {
-        return url;
+        const embedUrl = new URL(url);
+        // Add origin parameter for postMessage API
+        embedUrl.searchParams.set('enablejsapi', '1');
+        embedUrl.searchParams.set('origin', window.location.origin);
+        return embedUrl.toString();
       }
       
       // Extract video ID from various YouTube URL formats
@@ -124,7 +126,6 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     }
   }, [duration, updateProgress, videoUrl]);
 
-  // Get video source and player
   const renderVideoPlayer = () => {
     if (isYouTubeUrl(videoUrl)) {
       const embedUrl = getYouTubeEmbedUrl(videoUrl);

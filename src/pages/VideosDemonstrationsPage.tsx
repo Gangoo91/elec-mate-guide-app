@@ -36,15 +36,32 @@ const VideosDemonstrationsPage = () => {
         throw error;
       }
       
-      return data as VideoLesson[];
+      return data.map(video => ({
+        ...video,
+        // Ensure category matches our expected categories
+        category: mapVideoCategory(video.category)
+      })) as VideoLesson[];
     }
   });
+
+  const mapVideoCategory = (category: string): 'core_units' | 'practical_skills' | 'theory' | 'safety' | 'installation' | 'testing' => {
+    const categoryMap: Record<string, 'core_units' | 'practical_skills' | 'theory' | 'safety' | 'installation' | 'testing'> = {
+      'practical': 'practical_skills',
+      'theory': 'theory',
+      'safety': 'safety',
+      'installation': 'installation',
+      'testing': 'testing',
+      'core': 'core_units'
+    };
+    
+    return categoryMap[category] || 'theory';
+  };
 
   const categorizedVideos = useMemo(() => {
     return {
       core_units: videos.filter(v => v.category === 'core_units'),
-      theory: videos.filter(v => v.category === 'theory'),
       practical_skills: videos.filter(v => v.category === 'practical_skills'),
+      theory: videos.filter(v => v.category === 'theory'),
       safety: videos.filter(v => v.category === 'safety'),
       installation: videos.filter(v => v.category === 'installation'),
       testing: videos.filter(v => v.category === 'testing')
