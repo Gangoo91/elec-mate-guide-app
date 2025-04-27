@@ -51,8 +51,6 @@ const UpcomingJobsPage = () => {
 
   useEffect(() => {
     fetchJobs();
-    
-    // Adding console logs for debugging navigation
     console.log("UpcomingJobsPage mounted");
     
     return () => {
@@ -67,7 +65,8 @@ const UpcomingJobsPage = () => {
 
   const handleBackNavigation = () => {
     console.log("Custom back action triggered");
-    navigate('/electricians/job-scheduling', { replace: true });
+    // Using direct window.location navigation to force a clean state
+    window.location.href = '/electricians/job-scheduling';
   };
 
   return (
@@ -92,6 +91,13 @@ const UpcomingJobsPage = () => {
                   key={job.id} 
                   className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer mx-4 md:mx-0"
                   onClick={() => handleJobClick(job)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      handleJobClick(job);
+                    }
+                  }}
                 >
                   <CardContent className="pt-6">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">

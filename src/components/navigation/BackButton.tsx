@@ -16,8 +16,11 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const isEntry = location.pathname === "/" || location.pathname === "/dashboard";
 
   const handleBackNavigation = () => {
+    console.log("BackButton: handleBackNavigation called");
+    
     // Use custom action if provided - this takes priority
     if (customAction) {
+      console.log("BackButton: Using custom action");
       customAction();
       return;
     }
@@ -29,13 +32,16 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       '/electricians/job-scheduling/clients',
       '/electricians/job-scheduling/completion'
     ].includes(location.pathname)) {
-      navigate('/electricians/job-scheduling', {replace: true});
+      console.log("BackButton: Navigating to job scheduling");
+      // Using direct window location to force a clean state
+      window.location.href = '/electricians/job-scheduling';
       return;
     }
     
     // Handle existing route patterns
     if (location.pathname.startsWith('/electricians/job-scheduling/')) {
-      navigate('/electricians/job-scheduling', {replace: true});
+      console.log("BackButton: Navigating to job scheduling (pattern match)");
+      window.location.href = '/electricians/job-scheduling';
       return;
     }
     

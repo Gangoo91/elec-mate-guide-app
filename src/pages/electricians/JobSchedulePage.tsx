@@ -37,7 +37,8 @@ const JobSchedulePage = () => {
   ];
 
   const handleBackNavigation = () => {
-    navigate("/electricians", { replace: true });
+    // Using direct window.location navigation to force a clean state
+    window.location.href = "/electricians";
   };
 
   return (
