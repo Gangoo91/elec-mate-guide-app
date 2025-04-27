@@ -1,6 +1,5 @@
 
 import React, { useCallback, useState, useEffect } from 'react';
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { useYouTubePlayer } from './useYouTubePlayer';
 import { extractVideoId } from './youtubeApi';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -26,12 +25,11 @@ export const YouTubePlayer = ({
 }: YouTubePlayerProps) => {
   const [hasError, setHasError] = useState(false);
   const videoId = extractVideoId(videoUrl);
-  const [playerReady, setPlayerReady] = useState(false);
   const [playerAttempts, setPlayerAttempts] = useState(0);
   
   // Handle player errors locally first
   const handleError = useCallback(() => {
-    console.log(`YouTube player error for video: ${title}`);
+    console.error(`YouTube player error for video: ${title}`);
     
     // Try to reinitialize player up to 2 times before showing an error
     if (playerAttempts < 2) {
@@ -45,11 +43,10 @@ export const YouTubePlayer = ({
   
   const handlePlayerReady = useCallback(() => {
     console.log(`YouTube player ready for video: ${title}`);
-    setPlayerReady(true);
   }, [title]);
   
   // Initialize the player
-  const { containerRef } = useYouTubePlayer({
+  const { containerRef, playerReady, isLoaded } = useYouTubePlayer({
     videoId: hasError ? null : videoId,
     onError: handleError,
     onProgress,
@@ -67,7 +64,6 @@ export const YouTubePlayer = ({
     
     // Reset state when video URL changes
     return () => {
-      setPlayerReady(false);
       setHasError(false);
       setPlayerAttempts(0);
     };
@@ -91,15 +87,15 @@ export const YouTubePlayer = ({
     <div className="w-full h-full relative bg-black overflow-hidden">
       <div
         ref={containerRef}
-        className={`absolute inset-0 w-full h-full ${!playerReady ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
+        className={`absolute inset-0 w-full h-full ${!playerReady || !isLoaded ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}
         title={title}
         aria-label={title}
         data-video-id={videoId || ''}
       />
-      {!playerReady && !hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black">
+      {(!playerReady || !isLoaded) && !hasError && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black">
           <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading video..." />
-          <p className="absolute mt-24 text-white/70">Loading video...</p>
+          <p className="mt-4 text-white/70">Loading video...</p>
         </div>
       )}
     </div>

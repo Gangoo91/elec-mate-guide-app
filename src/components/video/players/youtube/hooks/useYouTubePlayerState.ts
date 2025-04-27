@@ -1,5 +1,5 @@
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 interface UseYouTubePlayerStateProps {
   playerRef: React.MutableRefObject<any>;
@@ -12,13 +12,19 @@ export const useYouTubePlayerState = ({
   playing, 
   playerReady 
 }: UseYouTubePlayerStateProps) => {
+  const [isLoaded, setIsLoaded] = useState(false);
   
   useEffect(() => {
     if (!playerReady || !playerRef.current) return;
+    
+    // Mark as loaded once player is ready
+    if (!isLoaded) {
+      setIsLoaded(true);
+    }
 
     const attemptPlayerAction = (action: () => void) => {
       try {
-        if (document.body.contains(playerRef.current.getIframe())) {
+        if (playerRef.current && document.body.contains(playerRef.current.getIframe?.())) {
           action();
         }
       } catch (error) {
@@ -27,8 +33,8 @@ export const useYouTubePlayerState = ({
     };
 
     if (playing) {
-      // Add delay to ensure YouTube API is ready
-      setTimeout(() => {
+      // Smaller delay to ensure YouTube API is ready but not too long
+      const timer = setTimeout(() => {
         attemptPlayerAction(() => {
           if (playerRef.current && typeof playerRef.current.playVideo === 'function') {
             playerRef.current.playVideo();
@@ -39,7 +45,9 @@ export const useYouTubePlayerState = ({
             }
           }
         });
-      }, 100);
+      }, 50);
+      
+      return () => clearTimeout(timer);
     } else if (!playing && playerRef.current) {
       attemptPlayerAction(() => {
         if (typeof playerRef.current.pauseVideo === 'function') {
@@ -47,9 +55,10 @@ export const useYouTubePlayerState = ({
         }
       });
     }
-  }, [playing, playerReady]);
+  }, [playing, playerReady, isLoaded]);
 
   return {
+    isLoaded,
     cleanupPlayer: useCallback(() => {
       if (playerRef.current && typeof playerRef.current.destroy === 'function') {
         try {

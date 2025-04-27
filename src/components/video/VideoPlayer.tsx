@@ -38,11 +38,7 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     // Delay player initialization to ensure components are properly mounted
     const timer = setTimeout(() => {
       setPlayerInitialized(true);
-      // Set loading false after a timeout if it hasn't been set yet
-      setTimeout(() => {
-        setPlayerLoading(false);
-      }, 5000);
-    }, 500);
+    }, 300);
     
     return () => clearTimeout(timer);
   }, [progress.lastPosition]);
@@ -53,6 +49,13 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     setPlaying(false);
     setPlayerLoading(true);
     setCurrentTime(progress.lastPosition > 0 ? progress.lastPosition : 0);
+    
+    // Hide loading indicator after a timeout if it hasn't been set yet
+    const loadingTimeout = setTimeout(() => {
+      setPlayerLoading(false);
+    }, 8000);
+    
+    return () => clearTimeout(loadingTimeout);
   }, [videoId, videoUrl, progress.lastPosition]);
 
   const handlePlay = () => {

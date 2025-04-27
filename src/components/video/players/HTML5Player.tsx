@@ -69,6 +69,7 @@ export const HTML5Player = ({
         onEnded={onEnded}
         onTimeUpdate={onTimeUpdate}
         playsInline
+        preload="auto"
       />
     </div>
   );

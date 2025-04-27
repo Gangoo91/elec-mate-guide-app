@@ -19,20 +19,23 @@ export const useYouTubeProgress = ({ onProgress, playerRef }: UseYouTubeProgress
   const startProgressInterval = useCallback(() => {
     clearProgressInterval();
 
+    // Use a shorter interval for more responsive progress updates
     progressIntervalRef.current = setInterval(() => {
-      if (playerRef.current && typeof playerRef.current.getCurrentTime === 'function') {
-        try {
+      if (!playerRef.current) return;
+      
+      try {
+        if (typeof playerRef.current.getCurrentTime === 'function') {
           const currentTime = playerRef.current.getCurrentTime();
           const duration = playerRef.current.getDuration();
           
-          if (!isNaN(currentTime) && !isNaN(duration)) {
+          if (!isNaN(currentTime) && !isNaN(duration) && duration > 0) {
             onProgress(currentTime, duration);
           }
-        } catch (e) {
-          console.error('Error getting player time:', e);
         }
+      } catch (e) {
+        console.error('Error getting player time:', e);
       }
-    }, 1000);
+    }, 500);  // Every half second is enough for smooth progress
   }, [onProgress, clearProgressInterval, playerRef]);
 
   return {
