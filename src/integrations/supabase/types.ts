@@ -693,6 +693,51 @@ export type Database = {
         }
         Relationships: []
       }
+      study_group_discussions: {
+        Row: {
+          created_at: string | null
+          group_id: string | null
+          id: string
+          message: string
+          parent_id: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string
+          message: string
+          parent_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          group_id?: string | null
+          id?: string
+          message?: string
+          parent_id?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_group_discussions_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "study_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_group_discussions_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "study_group_discussions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_group_members: {
         Row: {
           group_id: string
@@ -725,17 +770,105 @@ export type Database = {
           },
         ]
       }
+      study_group_resources: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          group_id: string | null
+          id: string
+          resource_type: string
+          title: string
+          updated_at: string | null
+          url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          group_id?: string | null
+          id?: string
+          resource_type: string
+          title: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          group_id?: string | null
+          id?: string
+          resource_type?: string
+          title?: string
+          updated_at?: string | null
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_group_resources_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "study_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      study_group_schedules: {
+        Row: {
+          created_at: string | null
+          day_of_week: string
+          duration_minutes: number
+          group_id: string | null
+          id: string
+          meeting_link: string | null
+          start_time: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          day_of_week: string
+          duration_minutes?: number
+          group_id?: string | null
+          id?: string
+          meeting_link?: string | null
+          start_time: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          day_of_week?: string
+          duration_minutes?: number
+          group_id?: string | null
+          id?: string
+          meeting_link?: string | null
+          start_time?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_group_schedules_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "study_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       study_groups: {
         Row: {
           created_at: string
           created_by: string
           description: string | null
           id: string
+          is_private: boolean | null
           level: string
           max_participants: number
           meeting_link: string | null
           name: string
           next_meeting_at: string | null
+          study_materials: Json | null
+          tags: string[] | null
           topic: string
           updated_at: string
         }
@@ -744,11 +877,14 @@ export type Database = {
           created_by: string
           description?: string | null
           id?: string
+          is_private?: boolean | null
           level: string
           max_participants?: number
           meeting_link?: string | null
           name: string
           next_meeting_at?: string | null
+          study_materials?: Json | null
+          tags?: string[] | null
           topic: string
           updated_at?: string
         }
@@ -757,11 +893,14 @@ export type Database = {
           created_by?: string
           description?: string | null
           id?: string
+          is_private?: boolean | null
           level?: string
           max_participants?: number
           meeting_link?: string | null
           name?: string
           next_meeting_at?: string | null
+          study_materials?: Json | null
+          tags?: string[] | null
           topic?: string
           updated_at?: string
         }

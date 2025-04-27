@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -21,7 +20,10 @@ const studyGroupSchema = z.object({
   topic: z.string().min(2, "Topic is required"),
   level: z.string().min(1, "Level is required"),
   maxParticipants: z.number().min(2).max(50),
-  meetingLink: z.string().optional()
+  meetingLink: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  is_private: z.boolean().default(false),
+  study_materials: z.array(z.any()).optional(),
 });
 
 type StudyGroupFormValues = z.infer<typeof studyGroupSchema>;
@@ -40,7 +42,10 @@ const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void
       topic: "",
       level: "",
       maxParticipants: 10,
-      meetingLink: ""
+      meetingLink: "",
+      tags: [],
+      is_private: false,
+      study_materials: [],
     }
   });
 
@@ -66,7 +71,10 @@ const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void
           level: data.level,
           max_participants: data.maxParticipants,
           meeting_link: data.meetingLink || null,
-          created_by: user.id
+          created_by: user.id,
+          tags: data.tags,
+          is_private: data.is_private,
+          study_materials: data.study_materials
         });
 
       if (error) {
@@ -215,6 +223,24 @@ const CreateStudyGroupDialog = ({ onGroupCreated }: { onGroupCreated: () => void
                     />
                   </FormControl>
                   <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="is_private"
+              render={({ field }) => (
+                <FormItem className="flex items-center gap-2">
+                  <FormControl>
+                    <input
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={field.onChange}
+                      className="bg-[#151812] border-[#FFC900]/20 text-[#FFC900]"
+                    />
+                  </FormControl>
+                  <FormLabel className="text-[#FFC900] mb-0">Make group private</FormLabel>
                 </FormItem>
               )}
             />

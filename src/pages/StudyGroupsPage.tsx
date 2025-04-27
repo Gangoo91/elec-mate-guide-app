@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -26,22 +25,24 @@ const StudyGroupsPage = () => {
   const fetchGroups = async () => {
     try {
       setIsLoading(true);
-      console.log("Fetching study groups...");
       
       const { data: groups, error } = await supabase
         .from('study_groups')
-        .select('*')
+        .select(`
+          *,
+          study_group_schedules (
+            day_of_week,
+            start_time,
+            duration_minutes,
+            meeting_link
+          )
+        `)
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error("Error fetching study groups:", error);
-        throw error;
-      }
+      if (error) throw error;
       
-      console.log("Fetched groups:", groups);
       setGroups(groups || []);
 
-      // Fetch member counts for each group
       const counts: Record<string, number> = {};
       for (const group of groups || []) {
         const { count, error: countError } = await supabase
@@ -57,7 +58,6 @@ const StudyGroupsPage = () => {
       }
       setMemberCounts(counts);
 
-      // Fetch user memberships
       if (user) {
         const { data: memberships, error: membershipError } = await supabase
           .from('study_group_members')
