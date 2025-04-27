@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Clock } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -25,20 +24,22 @@ export const VideoDialog = ({ video, onClose }: VideoDialogProps) => {
 
   return (
     <Dialog open={!!video} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl bg-[#22251e] border-[#FFC900]/20">
-        <DialogTitle className="text-xl font-semibold text-[#FFC900]">
+      <DialogContent className="max-w-4xl w-[95vw] p-4 sm:p-6 bg-[#22251e] border-[#FFC900]/20">
+        <DialogTitle className="text-lg sm:text-xl font-semibold text-[#FFC900]">
           {video.title}
         </DialogTitle>
-        <DialogDescription className="text-[#FFC900]/70">
+        <DialogDescription className="text-sm sm:text-base text-[#FFC900]/70">
           {video.unit_number && `Unit ${video.unit_number} - `}
           {video.duration} duration
         </DialogDescription>
         <div className="space-y-4">
-          <VideoPlayer
-            videoId={video.id}
-            videoUrl={video.video_url}
-            title={video.title}
-          />
+          <div className="w-full">
+            <VideoPlayer
+              videoId={video.id}
+              videoUrl={video.video_url}
+              title={video.title}
+            />
+          </div>
           <Separator className="bg-[#FFC900]/20" />
           <div className="space-y-2">
             <div className="flex items-center justify-between">

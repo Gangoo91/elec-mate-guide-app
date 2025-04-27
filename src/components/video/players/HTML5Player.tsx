@@ -1,5 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface HTML5PlayerProps {
   videoUrl: string;
@@ -67,17 +68,19 @@ export const HTML5Player = ({
   };
 
   return (
-    <video
-      ref={videoRef}
-      className="w-full h-full"
-      src={isValidVideoUrl(videoUrl) ? videoUrl : ''}
-      title={title}
-      controls={false}
-      onEnded={onEnded}
-      onTimeUpdate={onTimeUpdate}
-      onError={onError}
-      onLoadedMetadata={handleLoadedMetadata}
-      preload="metadata"
-    />
+    <AspectRatio ratio={16 / 9} className="w-full overflow-hidden">
+      <video
+        ref={videoRef}
+        className="w-full h-full object-cover"
+        src={isValidVideoUrl(videoUrl) ? videoUrl : ''}
+        title={title}
+        controls={false}
+        onEnded={onEnded}
+        onTimeUpdate={onTimeUpdate}
+        onError={onError}
+        onLoadedMetadata={handleLoadedMetadata}
+        preload="metadata"
+      />
+    </AspectRatio>
   );
 };
