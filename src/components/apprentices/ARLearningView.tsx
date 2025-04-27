@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, Rotate3d } from "lucide-react";
+import { Info, Circuit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { arComponents } from "@/data/arComponents";
@@ -45,7 +45,7 @@ const ARLearningView = () => {
     
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   }, [activeTab]);
 
   return (
@@ -71,8 +71,8 @@ const ARLearningView = () => {
                 <CardHeader>
                   <CardTitle className="text-[#FFC900] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Rotate3d className="h-5 w-5" />
-                      3D View
+                      <Circuit className="h-5 w-5" />
+                      Component View
                     </div>
                     <ARViewControls 
                       onZoomIn={handleZoomIn}
@@ -89,7 +89,7 @@ const ARLearningView = () => {
                   >
                     {isLoading ? (
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <LoadingSpinner size="lg" label="Loading 3D model..." />
+                        <LoadingSpinner size="lg" label="Loading component..." />
                       </div>
                     ) : (
                       <div 
@@ -98,23 +98,33 @@ const ARLearningView = () => {
                           transform: `scale(${zoom}) rotate(${rotation}deg)`
                         }}
                       >
-                        <div className="text-center p-6">
-                          <Rotate3d className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
-                          <h3 className="text-[#FFC900] text-lg font-medium mb-2">Interactive 3D View</h3>
-                          <p className="text-[#FFC900]/70 mb-4">
-                            Viewing: {getActiveComponent().name}
-                          </p>
-                          <div className="space-y-2">
-                            <Button 
-                              className="bg-[#FFC900] hover:bg-[#FFC900]/80 text-[#22251e] w-full"
-                              onClick={handleRotate}
-                            >
-                              Rotate Model
-                            </Button>
+                        {getActiveComponent().imageUrl ? (
+                          <img 
+                            src={getActiveComponent().imageUrl} 
+                            alt={getActiveComponent().name}
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        ) : (
+                          <div className="text-center p-6">
+                            <Circuit className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
+                            <h3 className="text-[#FFC900] text-lg font-medium mb-2">
+                              {getActiveComponent().name}
+                            </h3>
+                            <p className="text-[#FFC900]/70 mb-4">
+                              No image available. Use controls below to interact.
+                            </p>
                           </div>
-                        </div>
+                        )}
                       </div>
                     )}
+                  </div>
+                  <div className="mt-4 flex justify-center">
+                    <Button 
+                      className="bg-[#FFC900] hover:bg-[#FFC900]/80 text-[#22251e] w-full md:w-auto"
+                      onClick={handleRotate}
+                    >
+                      Rotate Component
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -140,11 +150,11 @@ const ARLearningView = () => {
               <CardContent>
                 <div className="space-y-3 text-[#FFC900]/70">
                   <p>
-                    Interact with the 3D model to learn about {getActiveComponent().name}:
+                    Interact with the {getActiveComponent().name} to learn about its structure and function:
                   </p>
                   <ol className="list-decimal list-inside space-y-2 ml-4">
                     <li>Use the zoom buttons to get a closer look</li>
-                    <li>Rotate the model to view from different angles</li>
+                    <li>Rotate the component to view from different angles</li>
                     <li>Reset the view to return to default position</li>
                     <li>Review specifications and installation tips</li>
                     <li>Watch the video demonstration for practical insights</li>
