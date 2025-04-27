@@ -1,4 +1,3 @@
-
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -77,6 +76,42 @@ export function useChatRoom() {
     }
   };
 
+  const deleteComment = async (commentId: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('chat_comments')
+        .delete()
+        .eq('id', commentId)
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      setComments(prev => {
+        const newComments = { ...prev };
+        Object.keys(newComments).forEach(messageId => {
+          newComments[messageId] = newComments[messageId].filter(
+            comment => comment.id !== commentId
+          );
+        });
+        return newComments;
+      });
+
+      toast({
+        title: "Success",
+        description: "Comment deleted successfully",
+      });
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete comment",
+        variant: "destructive",
+      });
+    }
+  };
+
   return {
     messages,
     comments,
@@ -86,6 +121,7 @@ export function useChatRoom() {
     toggleReaction: (messageId: string, type: 'upvote' | 'downvote') => 
       user && toggleReaction(messageId, type, user.id),
     addComment,
+    deleteComment,
     fetchMessages
   };
 }

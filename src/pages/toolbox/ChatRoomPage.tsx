@@ -1,11 +1,9 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { ChatMessageComponent } from '@/components/chat/ChatMessage';
 import { useChatRoom } from '@/hooks/useChatRoom';
-import { Button } from '@/components/ui/button';
 import { ChatInput } from '@/components/chat/ChatInput';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,7 +22,8 @@ const ChatRoomPage = () => {
     sendMessage,
     toggleReaction,
     addComment,
-    fetchMessages
+    fetchMessages,
+    deleteComment
   } = useChatRoom();
   
   const { typingUsers, setTyping, isAnyoneTyping } = useTypingIndicator('chat-room');
@@ -82,6 +81,7 @@ const ChatRoomPage = () => {
                           reactions={reactions[message.id] || []}
                           onReaction={(type) => toggleReaction(message.id, type)}
                           onComment={(content) => addComment(message.id, content)}
+                          onDeleteComment={deleteComment}
                         />
                       ))}
                     </>

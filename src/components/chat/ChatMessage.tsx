@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ThumbsUp, ThumbsDown, MessageSquare, Send } from 'lucide-react';
+import { ThumbsUp, ThumbsDown, MessageSquare, Send, Trash2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { format } from 'date-fns';
 import { MessageTime } from './MessageTime';
 import { useProfiles } from '@/hooks/useProfiles';
 import { cn } from '@/lib/utils';
@@ -16,6 +14,7 @@ interface ChatMessageProps {
   reactions: ChatReaction[];
   onReaction: (type: 'upvote' | 'downvote') => void;
   onComment: (content: string) => void;
+  onDeleteComment?: (commentId: string) => void;
 }
 
 export function ChatMessageComponent({
@@ -23,7 +22,8 @@ export function ChatMessageComponent({
   comments,
   reactions,
   onReaction,
-  onComment
+  onComment,
+  onDeleteComment
 }: ChatMessageProps) {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
@@ -94,9 +94,24 @@ export function ChatMessageComponent({
       {showComments && (
         <div className="mt-4 pl-4 border-l-2 border-[#FFC900]/20">
           {comments.map(comment => (
-            <div key={comment.id} className="mb-2">
-              <div className="text-sm text-[#FFC900]/90">{comment.content}</div>
-              <MessageTime timestamp={comment.created_at} className="text-xs" />
+            <div key={comment.id} className="mb-2 group">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="text-sm text-[#FFC900]/90">{comment.content}</div>
+                  <MessageTime timestamp={comment.created_at} className="text-xs" />
+                </div>
+                {user && comment.user_id === user.id && onDeleteComment && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
+                    onClick={() => onDeleteComment(comment.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-red-500" />
+                    <span className="sr-only">Delete comment</span>
+                  </Button>
+                )}
+              </div>
             </div>
           ))}
 
