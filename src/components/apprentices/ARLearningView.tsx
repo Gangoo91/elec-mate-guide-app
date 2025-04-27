@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info, Circuit } from "lucide-react";
+import { Info, CircuitBoard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { arComponents } from "@/data/arComponents";
@@ -71,7 +71,7 @@ const ARLearningView = () => {
                 <CardHeader>
                   <CardTitle className="text-[#FFC900] flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Circuit className="h-5 w-5" />
+                      <CircuitBoard className="h-5 w-5" />
                       Component View
                     </div>
                     <ARViewControls 
@@ -106,7 +106,7 @@ const ARLearningView = () => {
                           />
                         ) : (
                           <div className="text-center p-6">
-                            <Circuit className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
+                            <CircuitBoard className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
                             <h3 className="text-[#FFC900] text-lg font-medium mb-2">
                               {getActiveComponent().name}
                             </h3>
