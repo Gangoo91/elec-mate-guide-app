@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Clock } from "lucide-react";
+import { Play, Clock, BookOpen, Lightbulb, Shield, Wrench } from "lucide-react";
 import KudosDisplay from "@/components/profile/KudosDisplay";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VideoPlayer } from '@/components/video/VideoPlayer';
@@ -18,9 +18,10 @@ interface VideoLesson {
   title: string;
   description: string;
   duration: string;
-  category: 'practical' | 'theory' | 'safety';
+  category: 'core_units' | 'practical_skills' | 'theory' | 'safety' | 'installation' | 'testing';
   kudos_points: number;
   video_url: string;
+  unit_number?: string;
 }
 
 const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: VideoLesson) => void }) => (
@@ -30,7 +31,14 @@ const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: Vi
   >
     <CardHeader>
       <CardTitle className="flex items-center justify-between text-[#FFC900]">
-        <span>{video.title}</span>
+        <div className="flex items-center gap-2">
+          <span>{video.title}</span>
+          {video.unit_number && (
+            <span className="text-sm bg-[#FFC900]/10 px-2 py-1 rounded">
+              Unit {video.unit_number}
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-1 text-sm">
           <Clock className="h-4 w-4" />
           <span>{video.duration}</span>
@@ -50,6 +58,24 @@ const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: Vi
   </Card>
 );
 
+const categoryIcons = {
+  core_units: <BookOpen className="h-5 w-5" />,
+  theory: <Lightbulb className="h-5 w-5" />,
+  practical_skills: <Wrench className="h-5 w-5" />,
+  safety: <Shield className="h-5 w-5" />,
+  installation: <Wrench className="h-5 w-5" />,
+  testing: <TestTube className="h-5 w-5" />
+};
+
+const categoryTitles = {
+  core_units: "Core Units",
+  theory: "Theory",
+  practical_skills: "Practical Skills",
+  safety: "Safety",
+  installation: "Installation",
+  testing: "Testing & Inspection"
+};
+
 const VideosDemonstrationsPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoLesson | null>(null);
   
@@ -59,7 +85,7 @@ const VideosDemonstrationsPage = () => {
       const { data, error } = await supabase
         .from('video_lessons')
         .select('*')
-        .order('kudos_points', { ascending: false });
+        .order('unit_number', { ascending: true });
       
       if (error) throw error;
       return data as VideoLesson[];
@@ -68,9 +94,12 @@ const VideosDemonstrationsPage = () => {
 
   const categorizedVideos = useMemo(() => {
     return {
-      practical: videos.filter(v => v.category === 'practical'),
+      core_units: videos.filter(v => v.category === 'core_units'),
       theory: videos.filter(v => v.category === 'theory'),
-      safety: videos.filter(v => v.category === 'safety')
+      practical_skills: videos.filter(v => v.category === 'practical_skills'),
+      safety: videos.filter(v => v.category === 'safety'),
+      installation: videos.filter(v => v.category === 'installation'),
+      testing: videos.filter(v => v.category === 'testing')
     };
   }, [videos]);
 
@@ -96,29 +125,32 @@ const VideosDemonstrationsPage = () => {
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <PageHeader
-          title="Video Demonstrations"
-          description="Watch comprehensive UK electrical training videos and earn kudos while learning essential skills. These videos cover UK electrical standards and practices."
+          title="Course Video Library"
+          description="Access comprehensive video lessons aligned with your course units. Watch demonstrations, theoretical explanations, and earn kudos while progressing through your qualifications."
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
-            <Tabs defaultValue="practical" className="w-full">
+            <Tabs defaultValue="core_units" className="w-full">
               <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20">
-                {['practical', 'theory', 'safety'].map((category) => (
+                {Object.keys(categoryTitles).map((category) => (
                   <TabsTrigger 
                     key={category}
                     value={category}
-                    className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900] capitalize"
+                    className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
                   >
-                    {category} Skills
+                    <div className="flex items-center gap-2">
+                      {categoryIcons[category as keyof typeof categoryIcons]}
+                      <span>{categoryTitles[category as keyof typeof categoryTitles]}</span>
+                    </div>
                   </TabsTrigger>
                 ))}
               </TabsList>
 
-              {(['practical', 'theory', 'safety'] as const).map((category) => (
+              {Object.keys(categorizedVideos).map((category) => (
                 <TabsContent key={category} value={category} className="mt-6">
                   <div className="grid gap-4">
-                    {categorizedVideos[category].map(video => (
+                    {categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
                       <VideoCard 
                         key={video.id} 
                         video={video} 
@@ -135,13 +167,15 @@ const VideosDemonstrationsPage = () => {
             <KudosDisplay />
             
             <div className="mt-6 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-[#FFC900] mb-3">Why Watch These Videos?</h3>
+              <h3 className="text-lg font-semibold text-[#FFC900] mb-3">Course Content Guide</h3>
               <ul className="space-y-2 text-[#FFC900]/80">
                 {[
-                  "Learn UK electrical standards and practices",
-                  "Earn kudos points toward certifications",
-                  "Track your learning progress",
-                  "Build practical skills for the field"
+                  "Videos aligned with course units",
+                  "Practical demonstrations for hands-on skills",
+                  "Theory explanations with visual aids",
+                  "Safety procedures and best practices",
+                  "Installation techniques and methods",
+                  "Testing and inspection guidance"
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <span className="text-[#FFC900] font-bold">•</span>
@@ -157,7 +191,14 @@ const VideosDemonstrationsPage = () => {
           <DialogContent className="max-w-4xl bg-[#22251e] border-[#FFC900]/20">
             {selectedVideo && (
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-[#FFC900]">{selectedVideo.title}</h2>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-[#FFC900]">{selectedVideo.title}</h2>
+                  {selectedVideo.unit_number && (
+                    <span className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm">
+                      Unit {selectedVideo.unit_number}
+                    </span>
+                  )}
+                </div>
                 <VideoPlayer
                   videoId={selectedVideo.id}
                   videoUrl={selectedVideo.video_url}
@@ -184,3 +225,4 @@ const VideosDemonstrationsPage = () => {
 };
 
 export default VideosDemonstrationsPage;
+
