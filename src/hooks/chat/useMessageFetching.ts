@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
@@ -36,6 +35,28 @@ export const useMessageFetching = () => {
     }
   };
 
+  useEffect(() => {
+    const channel = supabase
+      .channel('public:chat_messages')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'chat_messages'
+      }, async (payload: any) => {
+        if (payload.eventType === 'INSERT') {
+          setMessages(prev => [payload.new as ChatMessage, ...prev]);
+        }
+        if (payload.eventType === 'DELETE') {
+          setMessages(prev => prev.filter(msg => msg.id !== payload.old.id));
+        }
+      })
+      .subscribe();
+    
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   const fetchCommentsAndReactions = async (messages: ChatMessage[]) => {
     try {
       const messageIds = messages.map(m => m.id);
@@ -69,7 +90,6 @@ export const useMessageFetching = () => {
     }
   };
 
-  // Fetch messages on component mount
   useEffect(() => {
     fetchMessages();
   }, []);
