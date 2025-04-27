@@ -1,6 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
+
+import React, { useState } from 'react';
+import { Play, Maximize, Volume2 } from 'lucide-react';
 import { useVideoProgress } from '@/hooks/useVideoProgress';
-import { Play, Maximize, Volume2, AlertTriangle } from 'lucide-react';
+import { YouTubePlayer } from './players/YouTubePlayer';
+import { HTML5Player } from './players/HTML5Player';
+import { VideoErrorDisplay } from './players/VideoErrorDisplay';
 
 interface VideoPlayerProps {
   videoId: string;
@@ -13,58 +17,14 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
   const [playing, setPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [error, setError] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   
   const isYouTubeUrl = (url: string): boolean => {
     return url.includes('youtube.com') || url.includes('youtu.be');
-  };
-  
-  const getYouTubeEmbedUrl = (url: string) => {
-    try {
-      // If it's already an embed URL, just return it
-      if (url.includes('youtube.com/embed/')) {
-        const embedUrl = new URL(url);
-        // Add origin parameter for postMessage API
-        embedUrl.searchParams.set('enablejsapi', '1');
-        embedUrl.searchParams.set('origin', window.location.origin);
-        return embedUrl.toString();
-      }
-      
-      // Extract video ID from various YouTube URL formats
-      const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-      const match = url.match(youtubeRegex);
-      
-      if (match && match[1]) {
-        const videoId = match[1];
-        return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`;
-      }
-      
-      // If no match was found, return the original URL
-      return url;
-    } catch (err) {
-      console.error("Error parsing YouTube URL:", err);
-      return url;
-    }
   };
 
   const handlePlay = () => {
     if (!playing) {
       setPlaying(true);
-      if (isYouTubeUrl(videoUrl) && iframeRef.current) {
-        try {
-          // Use postMessage to interact with YouTube iframe
-          iframeRef.current.contentWindow?.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-        } catch (err) {
-          console.error("Error playing YouTube video:", err);
-        }
-      } else if (videoRef.current) {
-        // Play HTML5 video
-        videoRef.current.play().catch(err => {
-          console.error("Error playing video:", err);
-          setError(true);
-        });
-      }
     }
   };
 
@@ -73,112 +33,40 @@ export const VideoPlayer = ({ videoId, videoUrl, title }: VideoPlayerProps) => {
     updateProgress(duration, duration);
   };
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const currentTime = videoRef.current.currentTime;
-      if (currentTime > 0) {
-        updateProgress(currentTime, videoRef.current.duration);
-      }
-    }
-  };
-
-  const handleIframeError = () => {
-    console.error("Video iframe failed to load:", videoUrl);
-    setError(true);
-  };
-
-  useEffect(() => {
-    // For YouTube videos
-    const iframe = iframeRef.current;
-    if (isYouTubeUrl(videoUrl) && iframe) {
-      const handleMessage = (event: MessageEvent) => {
-        if (event.origin !== "https://www.youtube.com") return;
-        
-        try {
-          const data = JSON.parse(event.data);
-          
-          if (data.event === "onStateChange") {
-            switch(data.info) {
-              case 0: // Video ended
-                updateProgress(duration, duration);
-                setPlaying(false);
-                break;
-              case 1: // Playing
-                setPlaying(true);
-                break;
-              case 2: // Paused
-                setPlaying(false);
-                break;
-            }
-          } else if (data.event === "duration") {
-            setDuration(data.duration);
-          } else if (data.event === "onError") {
-            console.error("YouTube player error:", data);
-            setError(true);
-          }
-        } catch (e) {
-          // Not all messages from the iframe will be JSON
-        }
-      };
-
-      window.addEventListener('message', handleMessage);
-      return () => window.removeEventListener('message', handleMessage);
-    }
-  }, [duration, updateProgress, videoUrl]);
-
-  const renderVideoPlayer = () => {
-    if (isYouTubeUrl(videoUrl)) {
-      const embedUrl = getYouTubeEmbedUrl(videoUrl);
-      console.log("Embedding YouTube URL:", embedUrl);
-      
-      return (
-        <iframe
-          ref={iframeRef}
-          className="w-full h-full"
-          src={embedUrl}
-          title={title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          onError={handleIframeError}
-        />
-      );
-    } else {
-      console.log("Using HTML5 video player for:", videoUrl);
-      
-      return (
-        <video
-          ref={videoRef}
-          className="w-full h-full"
-          src={videoUrl}
-          title={title}
-          controls={false}
-          onEnded={handleVideoEnded}
-          onTimeUpdate={handleTimeUpdate}
-          onError={() => setError(true)}
-        />
-      );
+  const handleTimeUpdate = (currentTime: number, videoDuration: number) => {
+    if (currentTime > 0) {
+      updateProgress(currentTime, videoDuration);
     }
   };
 
   return (
     <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-black group">
       {error ? (
-        <div className="w-full h-full flex flex-col items-center justify-center bg-black/90 p-6 text-center">
-          <AlertTriangle className="h-12 w-12 text-red-500 mb-4" />
-          <h3 className="text-white text-lg font-semibold mb-2">Video Unavailable</h3>
-          <p className="text-white/70 mb-4">This video cannot be played. It may have been removed or is currently unavailable.</p>
-          <a 
-            href={videoUrl} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="text-[#FFC900] hover:underline"
-          >
-            Try opening the video in a new tab
-          </a>
-        </div>
+        <VideoErrorDisplay videoUrl={videoUrl} />
       ) : (
         <>
-          {renderVideoPlayer()}
+          {isYouTubeUrl(videoUrl) ? (
+            <YouTubePlayer
+              videoUrl={videoUrl}
+              title={title}
+              onError={() => setError(true)}
+              onProgress={handleTimeUpdate}
+              onPlayStateChange={setPlaying}
+            />
+          ) : (
+            <HTML5Player
+              videoUrl={videoUrl}
+              title={title}
+              onError={() => setError(true)}
+              onEnded={handleVideoEnded}
+              onTimeUpdate={() => {
+                const video = document.querySelector('video');
+                if (video) {
+                  handleTimeUpdate(video.currentTime, video.duration);
+                }
+              }}
+            />
+          )}
           
           {!playing && (
             <div 
