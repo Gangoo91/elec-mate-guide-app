@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";  // Add this import
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { ChatMessageComponent } from '@/components/chat/ChatMessage';
