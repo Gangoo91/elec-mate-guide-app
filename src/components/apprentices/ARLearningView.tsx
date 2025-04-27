@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Info, Rotate3d } from "lucide-react";
+import { Info, Rotate3d, ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useYouTubePlayerElement } from "@/components/video/players/youtube/hooks/useYouTubePlayerElement";
 
@@ -13,65 +13,149 @@ type ComponentInfo = {
   name: string;
   description: string;
   youtubeId: string;
+  specifications?: string[];
+  tips?: string[];
 }
 
 const ARLearningView = () => {
-  const [activeTab, setActiveTab] = useState('circuit-breaker');
+  const [activeTab, setActiveTab] = useState('rcbo');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [rotation, setRotation] = useState(0);
   const canvasRef = useRef<HTMLDivElement>(null);
-  
-  // Component data
+
+  // Component data with UK-specific information
   const components: ComponentInfo[] = [
     {
-      id: 'circuit-breaker',
-      name: 'Circuit Breaker',
-      description: 'Circuit breakers are automatic electrical switches designed to protect an electrical circuit from damage caused by excess current from an overload or short circuit.',
-      youtubeId: 'mc979OhitAg'
+      id: 'rcbo',
+      name: 'RCBO (BS EN 61009)',
+      description: 'Residual Current Breaker with Overcurrent protection, commonly used in UK consumer units. Combines RCD and MCB functionality in a single device.',
+      youtubeId: 'mc979OhitAg',
+      specifications: [
+        'Common ratings: 6A, 10A, 16A, 20A, 32A, 40A',
+        'Typical sensitivity: 30mA for personal protection',
+        'Breaking capacity: 6kA to 10kA',
+        'Type AC, A, or B depending on application'
+      ],
+      tips: [
+        'Always test the test button monthly',
+        'Check terminal tightness during installation',
+        'Ensure correct current rating for circuit'
+      ]
     },
     {
       id: 'consumer-unit',
-      name: 'Consumer Unit',
-      description: 'Consumer units (also known as fuse boxes) distribute electricity around your home and contain circuit breakers that automatically switch off the power when they detect a fault.',
-      youtubeId: '9iKD8kW84C0'
+      name: 'Consumer Unit (BS 7671)',
+      description: 'Modern metal consumer units (distribution boards) required by the 18th Edition IET Wiring Regulations for UK domestic installations.',
+      youtubeId: '9iKD8kW84C0',
+      specifications: [
+        'Must be metal construction for domestic installations',
+        'Typical sizes: 4-24 ways',
+        'Main switch rating: 63A or 100A',
+        'Compliant with BS EN 61439-3'
+      ],
+      tips: [
+        'Always ensure proper labeling of circuits',
+        'Maintain adequate working space',
+        'Check cable entry points for sharp edges'
+      ]
     },
     {
       id: 'socket-outlet',
-      name: 'Socket Outlet',
-      description: 'Socket outlets provide a safe and convenient method of connecting electrical equipment to the power supply.',
-      youtubeId: 'vN9aR2wKv0U'
+      name: 'Socket Outlet (BS 1363)',
+      description: 'UK standard 13A socket outlet with safety features including shuttered live/neutral and earth pin.',
+      youtubeId: 'vN9aR2wKv0U',
+      specifications: [
+        'Rating: 13A at 230V',
+        'Must include safety shutters',
+        'Required earth connection',
+        'Standard British 3-pin configuration'
+      ],
+      tips: [
+        'Check socket alignment during installation',
+        'Ensure proper earth connection',
+        'Verify shutter operation'
+      ]
+    },
+    {
+      id: 'mcb',
+      name: 'MCB (BS EN 60898)',
+      description: 'Miniature Circuit Breakers used for overcurrent protection in UK electrical installations.',
+      youtubeId: 'HB-BgG7pHWo',
+      specifications: [
+        'Common types: B, C, and D curve',
+        'Standard ratings: 6A to 63A',
+        'Breaking capacity: 6kA to 10kA',
+        'Single pole and multi-pole options'
+      ],
+      tips: [
+        'Select correct curve type for load',
+        'Ensure adequate breaking capacity',
+        'Check load calculations carefully'
+      ]
+    },
+    {
+      id: 'rcd',
+      name: 'RCD (BS EN 61008)',
+      description: 'Residual Current Device providing additional protection against electric shock in UK installations.',
+      youtubeId: 'QR3q_lxYgXo',
+      specifications: [
+        'Typical ratings: 40A, 63A, 80A, 100A',
+        'Standard sensitivity: 30mA or 100mA',
+        'Type AC, A, or B depending on loads',
+        'Operating time: ≤ 40ms at rated current'
+      ],
+      tips: [
+        'Regular testing required',
+        'Consider selectivity with other devices',
+        'Check for nuisance tripping causes'
+      ]
     }
   ];
-  
-  // Define getActiveComponent function before using it
+
   function getActiveComponent(): ComponentInfo {
     return components.find(comp => comp.id === activeTab) || components[0];
   }
-  
+
   // Video player setup
   const playerElementId = "component-video-player";
   const { containerRef, containerCreated } = useYouTubePlayerElement({
     videoId: getActiveComponent().youtubeId,
     playerElementId
   });
-  
+
+  const handleZoomIn = () => {
+    setZoom(prev => Math.min(prev + 0.2, 2));
+  };
+
+  const handleZoomOut = () => {
+    setZoom(prev => Math.max(prev - 0.2, 0.5));
+  };
+
+  const handleRotate = () => {
+    setRotation(prev => (prev + 90) % 360);
+  };
+
+  const resetView = () => {
+    setZoom(1);
+    setRotation(0);
+  };
+
   useEffect(() => {
     setIsLoading(true);
+    setZoom(1);
+    setRotation(0);
     
-    // Simulate 3D loading
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-    
-    return () => {
-      // Cleanup
-    };
   }, [activeTab]);
-  
+
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-[#22251e] border border-[#FFC900]/20">
+        <TabsList className="bg-[#22251e] border border-[#FFC900]/20 flex flex-wrap">
           {components.map(component => (
             <TabsTrigger 
               key={component.id} 
@@ -89,9 +173,45 @@ const ARLearningView = () => {
               {/* 3D View */}
               <Card className="bg-[#22251e] border-[#FFC900]/20 col-span-1 lg:col-span-2">
                 <CardHeader>
-                  <CardTitle className="text-[#FFC900] flex items-center gap-2">
-                    <Rotate3d className="h-5 w-5" />
-                    3D View
+                  <CardTitle className="text-[#FFC900] flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Rotate3d className="h-5 w-5" />
+                      3D View
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleZoomIn}
+                        className="text-[#FFC900]"
+                      >
+                        <ZoomIn className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleZoomOut}
+                        className="text-[#FFC900]"
+                      >
+                        <ZoomOut className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={handleRotate}
+                        className="text-[#FFC900]"
+                      >
+                        <Rotate3d className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={resetView}
+                        className="text-[#FFC900]"
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -104,17 +224,26 @@ const ARLearningView = () => {
                         <LoadingSpinner size="lg" label="Loading 3D model..." />
                       </div>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
+                      <div 
+                        className="w-full h-full flex items-center justify-center transition-transform duration-300"
+                        style={{
+                          transform: `scale(${zoom}) rotate(${rotation}deg)`
+                        }}
+                      >
                         <div className="text-center p-6">
                           <Rotate3d className="h-12 w-12 mx-auto text-[#FFC900] mb-4" />
-                          <h3 className="text-[#FFC900] text-lg font-medium mb-2">3D View Simulation</h3>
+                          <h3 className="text-[#FFC900] text-lg font-medium mb-2">Interactive 3D View</h3>
                           <p className="text-[#FFC900]/70 mb-4">
-                            This is a placeholder for the interactive 3D model. In a real AR implementation, 
-                            you would see a 3D model of a {getActiveComponent().name} here.
+                            Viewing: {getActiveComponent().name}
                           </p>
-                          <Button className="bg-[#FFC900] hover:bg-[#FFC900]/80 text-[#22251e]">
-                            Rotate Model
-                          </Button>
+                          <div className="space-y-2">
+                            <Button 
+                              className="bg-[#FFC900] hover:bg-[#FFC900]/80 text-[#22251e] w-full"
+                              onClick={handleRotate}
+                            >
+                              Rotate Model
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -138,6 +267,31 @@ const ARLearningView = () => {
                     <p className="text-[#FFC900]/70">
                       {getActiveComponent().description}
                     </p>
+                    
+                    {/* Specifications */}
+                    {getActiveComponent().specifications && (
+                      <div className="mt-4">
+                        <h4 className="text-[#FFC900] font-medium mb-2">Specifications</h4>
+                        <ul className="list-disc list-inside text-[#FFC900]/70 space-y-1">
+                          {getActiveComponent().specifications.map((spec, index) => (
+                            <li key={index}>{spec}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {/* Installation Tips */}
+                    {getActiveComponent().tips && (
+                      <div className="mt-4">
+                        <h4 className="text-[#FFC900] font-medium mb-2">Installation Tips</h4>
+                        <ul className="list-disc list-inside text-[#FFC900]/70 space-y-1">
+                          {getActiveComponent().tips.map((tip, index) => (
+                            <li key={index}>{tip}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
                     <div className="mt-4">
                       <h4 className="text-[#FFC900] font-medium mb-2">Video Demonstration</h4>
                       <div className="w-full h-[180px] relative bg-black rounded overflow-hidden">
@@ -164,13 +318,14 @@ const ARLearningView = () => {
               <CardContent>
                 <div className="space-y-3 text-[#FFC900]/70">
                   <p>
-                    This simplified 3D visualization helps you understand the structure and function of 
-                    electrical components. In a full AR implementation, you would:
+                    Interact with the 3D model to learn about {getActiveComponent().name}:
                   </p>
                   <ol className="list-decimal list-inside space-y-2 ml-4">
-                    <li>Point your device camera at a specially designated marker</li>
-                    <li>See a 3D model appear and overlay on your real-world environment</li>
-                    <li>Interact with the model by moving around it or tapping on parts</li>
+                    <li>Use the zoom buttons to get a closer look</li>
+                    <li>Rotate the model to view from different angles</li>
+                    <li>Reset the view to return to default position</li>
+                    <li>Review specifications and installation tips</li>
+                    <li>Watch the video demonstration for practical insights</li>
                   </ol>
                 </div>
               </CardContent>
