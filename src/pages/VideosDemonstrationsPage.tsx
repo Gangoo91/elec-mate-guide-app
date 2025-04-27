@@ -4,15 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play, Clock, BookOpen, Lightbulb, Shield, Wrench, TestTube } from "lucide-react";
-import KudosDisplay from "@/components/profile/KudosDisplay";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { VideoPlayer } from '@/components/video/VideoPlayer';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
+import { VideoDialog } from '@/components/video/VideoDialog';
+import { VideoCategoryTabs } from '@/components/video/VideoCategoryTabs';
+import { VideoSidebar } from '@/components/video/VideoSidebar';
 import { Skeleton } from "@/components/ui/skeleton";
-import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface VideoLesson {
   id: string;
@@ -25,58 +20,6 @@ interface VideoLesson {
   unit_number?: string;
 }
 
-const VideoCard = ({ video, onWatch }: { video: VideoLesson; onWatch: (video: VideoLesson) => void }) => (
-  <Card 
-    onClick={() => onWatch(video)}
-    className="hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer bg-[#22251e] border-[#FFC900]/20 hover:shadow-lg hover:shadow-[#FFC900]/10 transform hover:-translate-y-1"
-  >
-    <CardHeader>
-      <CardTitle className="flex items-center justify-between text-[#FFC900]">
-        <div className="flex items-center gap-2">
-          <span>{video.title}</span>
-          {video.unit_number && (
-            <span className="text-sm bg-[#FFC900]/10 px-2 py-1 rounded">
-              Unit {video.unit_number}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-1 text-sm">
-          <Clock className="h-4 w-4" />
-          <span>{video.duration}</span>
-        </div>
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-[#FFC900]/70 mb-4 line-clamp-2">{video.description}</p>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Play className="h-5 w-5 text-[#FFC900]" />
-          <span className="text-[#FFC900]/70">Watch Now</span>
-        </div>
-        <span className="text-[#FFC900] text-sm font-semibold">+{video.kudos_points} kudos</span>
-      </div>
-    </CardContent>
-  </Card>
-);
-
-const categoryIcons = {
-  core_units: <BookOpen className="h-5 w-5" />,
-  theory: <Lightbulb className="h-5 w-5" />,
-  practical_skills: <Wrench className="h-5 w-5" />,
-  safety: <Shield className="h-5 w-5" />,
-  installation: <Wrench className="h-5 w-5" />,
-  testing: <TestTube className="h-5 w-5" />
-};
-
-const categoryTitles = {
-  core_units: "Core Units",
-  theory: "Theory",
-  practical_skills: "Practical Skills",
-  safety: "Safety",
-  installation: "Installation",
-  testing: "Testing & Inspection"
-};
-
 const VideosDemonstrationsPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<VideoLesson | null>(null);
   
@@ -86,14 +29,13 @@ const VideosDemonstrationsPage = () => {
       const { data, error } = await supabase
         .from('video_lessons')
         .select('*')
-        .order('unit_number', { ascending: true });
+        .order('created_at', { ascending: true });
       
       if (error) {
         console.error("Error fetching videos:", error);
         throw error;
       }
       
-      console.log("Fetched videos:", data);
       return data as VideoLesson[];
     }
   });
@@ -142,22 +84,6 @@ const VideosDemonstrationsPage = () => {
     );
   }
 
-  if (videos.length === 0 && !isLoading) {
-    return (
-      <MainLayout>
-        <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
-          <PageHeader
-            title="Course Video Library"
-            description="Access comprehensive video lessons aligned with your course units."
-          />
-          <div className="text-center py-12">
-            <p className="text-[#FFC900]/70 mb-4">No videos are currently available.</p>
-          </div>
-        </div>
-      </MainLayout>
-    );
-  }
-
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
@@ -168,99 +94,18 @@ const VideosDemonstrationsPage = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
-            <Tabs defaultValue="core_units" className="w-full">
-              <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20">
-                {Object.keys(categoryTitles).map((category) => (
-                  <TabsTrigger 
-                    key={category}
-                    value={category}
-                    className="flex-1 data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]"
-                  >
-                    <div className="flex items-center gap-2">
-                      {categoryIcons[category as keyof typeof categoryIcons]}
-                      <span>{categoryTitles[category as keyof typeof categoryTitles]}</span>
-                    </div>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
-              {Object.keys(categorizedVideos).map((category) => (
-                <TabsContent key={category} value={category} className="mt-6">
-                  <div className="grid gap-4">
-                    {categorizedVideos[category as keyof typeof categorizedVideos].length === 0 ? (
-                      <p className="text-center py-6 text-[#FFC900]/60">No videos available in this category.</p>
-                    ) : (
-                      categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
-                        <VideoCard 
-                          key={video.id} 
-                          video={video} 
-                          onWatch={() => setSelectedVideo(video)} 
-                        />
-                      ))
-                    )}
-                  </div>
-                </TabsContent>
-              ))}
-            </Tabs>
+            <VideoCategoryTabs 
+              categorizedVideos={categorizedVideos}
+              onWatchVideo={setSelectedVideo}
+            />
           </div>
-
-          <div className="lg:col-span-1">
-            <KudosDisplay />
-            
-            <div className="mt-6 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-4">
-              <h3 className="text-lg font-semibold text-[#FFC900] mb-3">Course Content Guide</h3>
-              <ul className="space-y-2 text-[#FFC900]/80">
-                {[
-                  "Videos aligned with course units",
-                  "Practical demonstrations for hands-on skills",
-                  "Theory explanations with visual aids",
-                  "Safety procedures and best practices",
-                  "Installation techniques and methods",
-                  "Testing and inspection guidance"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-[#FFC900] font-bold">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <VideoSidebar />
         </div>
 
-        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-          <DialogContent className="max-w-4xl bg-[#22251e] border-[#FFC900]/20">
-            {selectedVideo && (
-              <>
-                <DialogTitle className="text-xl font-semibold text-[#FFC900]">
-                  {selectedVideo.title}
-                </DialogTitle>
-                <DialogDescription className="text-[#FFC900]/70">
-                  {selectedVideo.unit_number && `Unit ${selectedVideo.unit_number} - `}
-                  {selectedVideo.duration} duration
-                </DialogDescription>
-                <div className="space-y-4">
-                  <VideoPlayer
-                    videoId={selectedVideo.id}
-                    videoUrl={selectedVideo.video_url}
-                    title={selectedVideo.title}
-                  />
-                  <Separator className="bg-[#FFC900]/20" />
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <p className="text-[#FFC900]/70">{selectedVideo.description}</p>
-                      <div className="bg-[#FFC900]/10 text-[#FFC900] px-3 py-1 rounded-full text-sm flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {selectedVideo.duration}
-                      </div>
-                    </div>
-                    <p className="text-[#FFC900]/50 text-sm">Complete this video to earn {selectedVideo.kudos_points} kudos points.</p>
-                  </div>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
+        <VideoDialog 
+          video={selectedVideo} 
+          onClose={() => setSelectedVideo(null)} 
+        />
       </div>
     </MainLayout>
   );
