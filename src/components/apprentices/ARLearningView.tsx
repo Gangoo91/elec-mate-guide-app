@@ -20,13 +20,6 @@ const ARLearningView = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
-  const playerElementId = "component-video-player";
-  
-  // Video player setup
-  const { containerRef, containerCreated } = useYouTubePlayerElement({
-    videoId: getActiveComponent().youtubeId,
-    playerElementId
-  });
   
   // Component data
   const components: ComponentInfo[] = [
@@ -50,9 +43,17 @@ const ARLearningView = () => {
     }
   ];
   
+  // Define getActiveComponent function before using it
   function getActiveComponent(): ComponentInfo {
     return components.find(comp => comp.id === activeTab) || components[0];
   }
+  
+  // Video player setup
+  const playerElementId = "component-video-player";
+  const { containerRef, containerCreated } = useYouTubePlayerElement({
+    videoId: getActiveComponent().youtubeId,
+    playerElementId
+  });
   
   useEffect(() => {
     setIsLoading(true);
