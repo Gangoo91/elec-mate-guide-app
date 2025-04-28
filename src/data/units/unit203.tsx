@@ -4,62 +4,67 @@ import { UnitContent } from './interfaces';
 
 export const unit203: UnitContent = {
   title: "Electrical Installations Technology",
-  description: "Learn about the different parts used in electrical installations, like switches and sockets. You'll discover how to put them together safely in homes and buildings.",
+  description: "Learn about electrical installation components, technologies, and techniques used in modern electrical systems.",
   sections: [
     {
-      title: "Basic Electrical Components",
+      title: "Components of Electrical Installations",
       content: (
         <>
-          <p>An electrical installation includes many different parts:</p>
+          <p>Modern electrical installations use various specialized components to distribute power safely and effectively.</p>
+          <p className="mt-2">Key components include:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Switches: Turn things on and off</li>
-            <li>Sockets: Where you plug appliances in</li>
-            <li>Consumer unit (fuse box): Main control point for all circuits</li>
-            <li>Circuit breakers: Automatically turn off power if something goes wrong</li>
-            <li>Cables: Carry electricity from place to place</li>
+            <li>Consumer units (distribution boards)</li>
+            <li>Circuit protection devices (MCBs, RCDs, RCBOs)</li>
+            <li>Conductors and cables of various types</li>
+            <li>Wiring accessories (switches, socket outlets, etc.)</li>
+            <li>Earthing and bonding arrangements</li>
           </ul>
         </>
       )
     },
     {
-      title: "Understanding Circuits",
+      title: "Installation Methods and Techniques",
       content: (
         <>
-          <p>A circuit is a complete path for electricity to flow around. Most homes have several types:</p>
+          <p>There are several standard methods for installing electrical systems in buildings.</p>
+          <p className="mt-2">These include:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Lighting circuits: For ceiling lights and lamps</li>
-            <li>Power circuits: For sockets and high-power devices</li>
-            <li>Dedicated circuits: For special appliances like cookers or showers</li>
+            <li>Surface wiring using clips and fixings</li>
+            <li>Conduit systems (metal and plastic)</li>
+            <li>Cable trunking and tray systems</li>
+            <li>Embedded installations in walls and floors</li>
+            <li>Installation in special locations (bathrooms, outdoor areas)</li>
           </ul>
-          <p className="mt-2">Each circuit is protected by its own fuse or circuit breaker.</p>
         </>
       )
     },
     {
-      title: "Cables and Wiring",
+      title: "Testing and Verification",
       content: (
         <>
-          <p>Different types of cables are used for different jobs:</p>
+          <p>All electrical installations must be properly tested and verified before use.</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>Twin and earth: Most common for home wiring</li>
-            <li>3-core and earth: For 2-way switching (controlling one light from two places)</li>
-            <li>Armored cable: For outdoor use or where extra protection is needed</li>
+            <li>Initial inspection procedures</li>
+            <li>Dead testing protocols</li>
+            <li>Live testing requirements</li>
+            <li>Certification and documentation</li>
           </ul>
-          <p className="mt-2">Cable size (thickness) depends on how much current it needs to carry safely.</p>
+          <p className="mt-2">This ensures the installation is safe and complies with regulations.</p>
         </>
       )
     },
     {
-      title: "Earthing and Bonding",
+      title: "Regulations and Standards",
       content: (
         <>
-          <p>Earthing is a safety system that protects people from electric shocks:</p>
+          <p>Electrical installations must comply with relevant regulations:</p>
           <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>The earth wire gives electricity a safe path to ground if something goes wrong</li>
-            <li>Main bonding connects metal pipes (water, gas) to the earth system</li>
-            <li>Supplementary bonding connects metal parts in bathrooms and kitchens</li>
+            <li>BS 7671 (IET Wiring Regulations)</li>
+            <li>Building Regulations Part P</li>
+            <li>Electricity at Work Regulations</li>
+            <li>Product standards and specifications</li>
           </ul>
-          <p className="mt-2">Without proper earthing, metal parts of appliances could become dangerous if a fault happens.</p>
+          <p className="mt-2">These regulations are periodically updated to incorporate new safety requirements and technologies.</p>
         </>
       )
     }
