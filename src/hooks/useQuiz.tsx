@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -24,43 +23,20 @@ export const useQuiz = (timeLimit: number) => {
 
   const fetchQuestions = async () => {
     try {
-      const { count, error: countError } = await supabase
+      const { data, error } = await supabase
         .from('safety_quiz_questions')
-        .select('*', { count: 'exact', head: true });
+        .select('id, question, options, category')
+        .limit(5)
+        .order('RANDOM()');
 
-      if (countError) throw countError;
-      
-      if (!count || count === 0) {
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
         setLoading(false);
         return;
       }
 
-      const totalQuestions = count;
-      const questionIndices = new Set<number>();
-      const questionLimit = Math.min(5, totalQuestions);
-      
-      while (questionIndices.size < questionLimit) {
-        const randomIndex = Math.floor(Math.random() * totalQuestions);
-        questionIndices.add(randomIndex);
-      }
-
-      const promises = Array.from(questionIndices).map(index => {
-        return supabase
-          .from('safety_quiz_questions')
-          .select('id, question, options, category')
-          .range(index, index)
-          .single();
-      });
-
-      const results = await Promise.all(promises);
-      const validResults = results
-        .filter(result => !result.error && result.data)
-        .map(result => ({
-          ...result.data,
-          options: result.data.options as string[]
-        }));
-
-      setQuestions(validResults);
+      setQuestions(data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching questions:', error);
