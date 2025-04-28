@@ -68,6 +68,11 @@ import SupportStructurePage from "@/pages/electricians/solar/installation/struct
 import ToolboxTalkPage from "@/pages/ToolboxTalkPage";
 import ToolsPage from "@/pages/toolbox/ToolsPage";
 import Mentorship from "@/pages/Mentorship";
+import ChatRoomPage from "@/pages/toolbox/ChatRoomPage";
+import MaterialsPage from "@/pages/toolbox/MaterialsPage";
+import SafetyPage from "@/pages/toolbox/SafetyPage";
+import PricingPage from "@/pages/toolbox/PricingPage";
+import UpdatesPage from "@/pages/toolbox/UpdatesPage";
 
 // Specialisations pages
 import IndustrialAutomationPage from "@/pages/electricians/specialisations/IndustrialAutomationPage";
@@ -160,6 +165,11 @@ export const ElectricianRoutes = (
     <Route path="/electricians/solar-pv/installation/structural/support" element={<SupportStructurePage />} />
     <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
     <Route path="/electricians/toolbox-talk/tools" element={<ToolsPage />} />
+    <Route path="/electricians/toolbox-talk/chat" element={<ChatRoomPage />} />
+    <Route path="/electricians/toolbox-talk/materials" element={<MaterialsPage />} />
+    <Route path="/electricians/toolbox-talk/safety" element={<SafetyPage />} />
+    <Route path="/electricians/toolbox-talk/pricing" element={<PricingPage />} />
+    <Route path="/electricians/toolbox-talk/updates" element={<UpdatesPage />} />
     <Route path="/electricians/mentorship" element={<Mentorship />} />
 
     {/* Specialisations routes */}
