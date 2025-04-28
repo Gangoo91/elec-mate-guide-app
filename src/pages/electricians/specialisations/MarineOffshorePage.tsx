@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -67,6 +66,35 @@ const MarineOffshorePage = () => {
                 <li>• Port Facilities</li>
                 <li>• Naval Vessels</li>
               </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#22251e] border-[#FFC900]/20">
+            <CardContent className="pt-6">
+              <h3 className="text-[#FFC900] text-xl font-medium mb-4">Find Jobs</h3>
+              <div className="space-y-4">
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => window.open('https://www.oilandgasjobsearch.com/jobs/marine-electrician', '_blank')}
+                >
+                  Oil & Gas Job Search <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => window.open('https://www.maritimejobs.com/jobs/marine-electrical', '_blank')}
+                >
+                  Maritime Jobs <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+                <Button
+                  className="w-full"
+                  variant="outline"
+                  onClick={() => window.open('https://www.indeed.co.uk/Marine-Electrician-jobs', '_blank')}
+                >
+                  Indeed UK <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
