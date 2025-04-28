@@ -7,7 +7,7 @@ import { handleProjectRoutes } from './navigation/projectRoutes';
 
 export const handleNavigationLogic = (
   location: Location,
-  navigate: (to: string) => void,
+  navigate: (to: string | number) => void,
   customAction?: () => void
 ) => {
   console.log("Navigation: handleNavigationLogic called from:", location.pathname);
@@ -50,6 +50,12 @@ export const handleNavigationLogic = (
     } else {
       navigate("/electricians");
     }
+    return;
+  }
+  
+  // Special handling for toolbox talk pages
+  if (location.pathname === "/electricians/toolbox-talk/chat") {
+    navigate('/electricians/toolbox-talk');
     return;
   }
 
