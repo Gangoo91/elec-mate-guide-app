@@ -59,7 +59,10 @@ const EVInfrastructurePage = () => {
                   <Button
                     className="mt-4"
                     variant="outline"
-                    onClick={() => window.open('https://www.cityandguilds.com/qualifications-and-apprenticeships/electric-vehicle/2919-electric-vehicle-charging-equipment-installation', '_blank')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open('https://www.cityandguilds.com/qualifications-and-apprenticeships/electric-vehicle/2919-electric-vehicle-charging-equipment-installation', '_blank');
+                    }}
                   >
                     Training Info <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
@@ -90,7 +93,10 @@ const EVInfrastructurePage = () => {
                     <Button
                       className="w-full mt-2"
                       variant="outline"
-                      onClick={() => window.open('https://www.checkasalary.co.uk/salary/ev-charging-installer', '_blank')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open('https://www.checkasalary.co.uk/salary/ev-charging-installer', '_blank');
+                      }}
                     >
                       Latest Salary Data <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
@@ -144,21 +150,30 @@ const EVInfrastructurePage = () => {
               <Button
                 className="w-full md:w-auto"
                 variant="outline"
-                onClick={() => window.open('https://www.totaljobs.com/jobs/ev-charging-installer', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.totaljobs.com/jobs/ev-charging-installer', '_blank');
+                }}
               >
                 Total Jobs <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 className="w-full md:w-auto ml-0 md:ml-2"
                 variant="outline"
-                onClick={() => window.open('https://www.indeed.co.uk/EV-Charging-Installation-jobs', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.indeed.co.uk/EV-Charging-Installation-jobs', '_blank');
+                }}
               >
                 Indeed UK <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 className="w-full md:w-auto ml-0 md:ml-2"
                 variant="outline"
-                onClick={() => window.open('https://www.reed.co.uk/jobs/ev-charging-installer', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.reed.co.uk/jobs/ev-charging-installer', '_blank');
+                }}
               >
                 Reed <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
