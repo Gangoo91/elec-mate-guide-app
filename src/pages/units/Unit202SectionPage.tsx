@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -14,7 +13,6 @@ const Unit202SectionPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  // Get total sections to determine navigation
   const sectionKeys = Object.keys(sections202).sort();
   const currentSectionIndex = sectionKeys.indexOf(sectionId);
   const prevSection = currentSectionIndex > 0 ? sectionKeys[currentSectionIndex - 1] : null;
@@ -67,6 +65,15 @@ const Unit202SectionPage = () => {
             {sectionContent.content}
           </div>
           
+          {sectionContent.detailedContent && (
+            <div className="mt-12 pt-8 border-t border-[#FFC900]/20">
+              <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
+                Detailed Learning Materials
+              </h3>
+              {sectionContent.detailedContent}
+            </div>
+          )}
+          
           <div className="mb-8">
             <div className="flex justify-between items-center">
               <div>
@@ -106,15 +113,6 @@ const Unit202SectionPage = () => {
                 take this quiz to test your understanding of key concepts.
               </p>
               <SafetyQuiz unitId="202" timeLimit={300} />
-            </div>
-          )}
-          
-          {sectionContent.detailedContent && (
-            <div className="mt-12 pt-8 border-t border-[#FFC900]/20">
-              <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
-                Detailed Learning Materials
-              </h3>
-              {sectionContent.detailedContent}
             </div>
           )}
         </div>

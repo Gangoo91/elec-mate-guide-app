@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
@@ -17,7 +16,6 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
   const [hasStarted, setHasStarted] = useState(false);
   const { toast } = useToast();
 
-  // Get the appropriate question set based on unitId
   const getQuestionSet = () => {
     switch(unitId) {
       case "201":
@@ -91,7 +89,6 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
           <Progress 
             value={(timeRemaining / timeLimit) * 100} 
             className="h-2 mb-6 bg-[#353a2c]"
-            indicatorClassName="bg-[#FFC900]"
           />
           
           <FormativeAssessment 
