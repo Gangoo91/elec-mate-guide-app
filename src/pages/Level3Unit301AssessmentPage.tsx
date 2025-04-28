@@ -28,9 +28,9 @@ const Level3Unit301AssessmentPage = () => {
             <CardContent className="p-6">
               <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Environmental Technology Assessment</h2>
               <p className="text-[#FFC900]/80 mb-6">
-                This assessment will test your understanding of renewable energy technologies, sustainability principles, and environmental considerations in electrical installations.
+                This assessment will test your understanding of renewable energy technologies, sustainability principles, and environmental considerations in electrical installations. The questions are randomly selected from a pool of 50 questions to ensure a fresh experience each time.
               </p>
-              <SafetyQuiz unitId="301" timeLimit={900} />
+              <SafetyQuiz unitId="301" timeLimit={900} questionsToShow={10} />
             </CardContent>
           </Card>
         </div>
@@ -40,3 +40,4 @@ const Level3Unit301AssessmentPage = () => {
 };
 
 export default Level3Unit301AssessmentPage;
+

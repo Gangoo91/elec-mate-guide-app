@@ -1,4 +1,3 @@
-
 export const environmentalTechnologyQuestions = [
   {
     id: 1,
@@ -104,5 +103,250 @@ export const environmentalTechnologyQuestions = [
     options: ["To prevent overheating", "To prevent power generation during grid outages for safety", "To increase energy output", "To regulate voltage"],
     correctAnswer: "To prevent power generation during grid outages for safety",
     explanation: "Anti-islanding protection prevents inverters from feeding power into the grid during an outage, which is essential for the safety of utility workers who may be working on what they expect to be de-energized lines."
+  },
+  {
+    id: 16,
+    question: "What is the primary benefit of microgeneration technologies in residential settings?",
+    options: ["Reduced reliance on the grid", "Increased property value only", "Lower maintenance costs", "Simpler installation procedures"],
+    correctAnswer: "Reduced reliance on the grid",
+    explanation: "Microgeneration technologies allow homeowners to generate their own electricity, reducing reliance on the grid, potentially saving money, and decreasing their carbon footprint."
+  },
+  {
+    id: 17,
+    question: "Which of the following is a key component of a smart meter installation?",
+    options: ["In-home display unit", "Solar panels", "Battery storage", "Heat exchanger"],
+    correctAnswer: "In-home display unit",
+    explanation: "An in-home display unit is a key component of smart meter installations, allowing users to see real-time energy usage and costs, helping them make informed decisions about energy consumption."
+  },
+  {
+    id: 18,
+    question: "What is the function of maximum power point tracking (MPPT) in solar PV systems?",
+    options: ["To maximize panel orientation", "To optimize energy conversion efficiency", "To regulate grid connection", "To control panel temperature"],
+    correctAnswer: "To optimize energy conversion efficiency",
+    explanation: "MPPT technology continuously adjusts the electrical operating point of PV modules to extract the maximum power available, optimizing energy conversion efficiency under varying conditions."
+  },
+  {
+    id: 19,
+    question: "Which renewable heating technology typically has the highest coefficient of performance (COP)?",
+    options: ["Electric resistance heating", "Gas boiler", "Air source heat pump", "Ground source heat pump"],
+    correctAnswer: "Ground source heat pump",
+    explanation: "Ground source heat pumps typically have the highest COP among heating technologies, often ranging from 3-5, meaning they produce 3-5 units of heat energy for each unit of electrical energy consumed."
+  },
+  {
+    id: 20,
+    question: "What is a 'feed-in tariff' in the context of renewable energy systems?",
+    options: ["A tax on fossil fuel consumption", "A payment for renewable energy exported to the grid", "A connection charge for renewable systems", "A maintenance contract for renewable installations"],
+    correctAnswer: "A payment for renewable energy exported to the grid",
+    explanation: "A feed-in tariff is a policy mechanism designed to accelerate investment in renewable energy technologies by offering long-term contracts to renewable energy producers, typically based on the cost of generation of each technology."
+  },
+  {
+    id: 21,
+    question: "Which of the following devices is used to prevent DC current from a solar PV system entering the AC grid?",
+    options: ["Voltage regulator", "DC isolator", "AC isolator", "DC blocking diode"],
+    correctAnswer: "DC blocking diode",
+    explanation: "DC blocking diodes prevent DC current from flowing back into the AC grid, which is important for grid safety and compliance with electrical standards."
+  },
+  {
+    id: 22,
+    question: "What is the main environmental concern with improperly disposed solar panels?",
+    options: ["Noise pollution", "Air pollution", "Leaching of toxic materials", "Radio frequency interference"],
+    correctAnswer: "Leaching of toxic materials",
+    explanation: "Improperly disposed solar panels can leach toxic materials such as lead, cadmium, and selenium into soil and groundwater, creating environmental hazards."
+  },
+  {
+    id: 23,
+    question: "Which lighting technology has the longest typical lifespan?",
+    options: ["Incandescent bulbs", "Fluorescent tubes", "Compact fluorescent lamps (CFLs)", "LED lighting"],
+    correctAnswer: "LED lighting",
+    explanation: "LED lighting typically has the longest lifespan among common lighting technologies, often lasting 25,000 to 50,000 hours compared to 1,000 hours for incandescent and 8,000-10,000 for CFLs."
+  },
+  {
+    id: 24,
+    question: "What is 'embodied energy' in the context of environmental technology?",
+    options: ["Energy stored in batteries", "Energy used during a building's operation", "Energy consumed in the production and disposal of materials", "Potential energy in mechanical systems"],
+    correctAnswer: "Energy consumed in the production and disposal of materials",
+    explanation: "Embodied energy refers to the total energy consumed in the extraction, manufacturing, transportation, installation, and eventual disposal of materials or products, which is important when considering the full lifecycle environmental impact."
+  },
+  {
+    id: 25,
+    question: "Which of the following is NOT a common type of wind turbine design?",
+    options: ["Horizontal axis", "Vertical axis", "Diagonal axis", "Multi-rotor"],
+    correctAnswer: "Diagonal axis",
+    explanation: "Diagonal axis wind turbines are not a common design. The main types are horizontal axis (most common) and vertical axis turbines, with some variations like multi-rotor designs."
+  },
+  {
+    id: 26,
+    question: "What is the primary function of an electrical load management system?",
+    options: ["To increase energy production", "To optimize energy consumption patterns", "To isolate electrical faults", "To reduce transmission losses"],
+    correctAnswer: "To optimize energy consumption patterns",
+    explanation: "Electrical load management systems optimize energy consumption patterns by controlling when and how electricity is used, often shifting loads to off-peak times or reducing unnecessary consumption."
+  },
+  {
+    id: 27,
+    question: "Which renewable energy source typically has the highest energy density per unit area?",
+    options: ["Wind power", "Solar PV", "Tidal power", "Biomass"],
+    correctAnswer: "Tidal power",
+    explanation: "Tidal power typically has the highest energy density per unit area among these renewable sources due to the high density of water and the predictable, concentrated nature of tidal flows."
+  },
+  {
+    id: 28,
+    question: "What is the main advantage of DC microgrids over traditional AC distribution?",
+    options: ["Lower equipment costs", "Reduced conversion losses", "Simpler installation", "Easier fault finding"],
+    correctAnswer: "Reduced conversion losses",
+    explanation: "DC microgrids can reduce energy losses by eliminating multiple AC-DC-AC conversion stages, especially in systems with DC generation (like solar PV) and many DC loads (like electronics)."
+  },
+  {
+    id: 29,
+    question: "Which of the following is a key benefit of phase change materials in building design?",
+    options: ["Improved acoustic insulation", "Thermal mass without added weight", "Enhanced structural strength", "Increased fire resistance"],
+    correctAnswer: "Thermal mass without added weight",
+    explanation: "Phase change materials provide significant thermal mass by absorbing and releasing heat during phase transitions, helping to regulate building temperature without the weight associated with traditional thermal mass materials like concrete."
+  },
+  {
+    id: 30,
+    question: "What technology enables appliances to communicate with smart meters in a home energy management system?",
+    options: ["RFID", "Low voltage signaling", "Home Area Network (HAN)", "Power line communication"],
+    correctAnswer: "Home Area Network (HAN)",
+    explanation: "A Home Area Network (HAN) enables communication between smart meters and appliances, allowing for automated energy management, demand response, and intelligent operation of devices based on energy availability and pricing."
+  },
+  {
+    id: 31,
+    question: "Which of the following contributes to the 'urban heat island' effect?",
+    options: ["High-reflectivity roofing materials", "Extensive tree planting", "High thermal mass construction", "Reduced green spaces"],
+    correctAnswer: "Reduced green spaces",
+    explanation: "Reduced green spaces contribute to the urban heat island effect as vegetation helps cool urban areas through shade and evapotranspiration. Removing green spaces increases heat absorption and retention in urban environments."
+  },
+  {
+    id: 32,
+    question: "What is the primary role of a Battery Management System (BMS) in energy storage systems?",
+    options: ["To increase charging speed", "To monitor and protect the battery", "To connect to renewable sources", "To convert DC to AC power"],
+    correctAnswer: "To monitor and protect the battery",
+    explanation: "A Battery Management System monitors parameters like temperature, voltage, and current to protect the battery from operating outside safe conditions, optimize performance, and extend battery life."
+  },
+  {
+    id: 33,
+    question: "Which building certification system emphasizes health and wellbeing alongside environmental performance?",
+    options: ["LEED", "Passivhaus", "WELL Building Standard", "BREEAM"],
+    correctAnswer: "WELL Building Standard",
+    explanation: "The WELL Building Standard specifically focuses on health and wellbeing of building occupants, while incorporating environmental sustainability principles, unlike other standards that primarily focus on environmental performance."
+  },
+  {
+    id: 34,
+    question: "What is 'dynamic insulation' in building design?",
+    options: ["Insulation that changes R-value seasonally", "Walls that store and release heat", "Building elements that filter incoming air while recovering heat", "Automated systems that adjust insulation thickness"],
+    correctAnswer: "Building elements that filter incoming air while recovering heat",
+    explanation: "Dynamic insulation allows air to pass through the insulation while recovering heat, combining ventilation and thermal performance in a single building element for improved energy efficiency."
+  },
+  {
+    id: 35,
+    question: "Which energy storage technology is most suitable for short-duration, high-power applications?",
+    options: ["Pumped hydro storage", "Lithium-ion batteries", "Supercapacitors", "Hydrogen fuel cells"],
+    correctAnswer: "Supercapacitors",
+    explanation: "Supercapacitors excel at short-duration, high-power applications due to their ability to charge and discharge quickly with high power density, making them ideal for applications requiring rapid energy bursts."
+  },
+  {
+    id: 36,
+    question: "What is the purpose of 'free cooling' in data center design?",
+    options: ["Eliminating cooling costs completely", "Using outside air for cooling when conditions permit", "Providing cooling at no cost to clients", "Cooling without mechanical refrigeration"],
+    correctAnswer: "Using outside air for cooling when conditions permit",
+    explanation: "Free cooling uses outside air directly for cooling when ambient conditions permit, reducing or eliminating the need for energy-intensive mechanical refrigeration, significantly improving energy efficiency."
+  },
+  {
+    id: 37,
+    question: "Which renewable energy technology is particularly suitable for providing baseload power?",
+    options: ["Solar PV", "Wind power", "Geothermal energy", "Tidal stream generators"],
+    correctAnswer: "Geothermal energy",
+    explanation: "Geothermal energy provides a consistent output regardless of weather conditions or time of day, making it particularly suitable for baseload power generation unlike many other renewable sources."
+  },
+  {
+    id: 38,
+    question: "What is a key advantage of radiant heating systems over forced air systems?",
+    options: ["Faster heating response", "Lower installation costs", "More efficient heat distribution", "Easier maintenance"],
+    correctAnswer: "More efficient heat distribution",
+    explanation: "Radiant heating systems distribute heat more efficiently by directly warming surfaces and objects in a space, which then radiate heat evenly throughout, avoiding the energy losses associated with duct systems."
+  },
+  {
+    id: 39,
+    question: "Which type of insulation has the highest R-value per inch?",
+    options: ["Fiberglass batts", "Cellulose", "Expanded polystyrene (EPS)", "Aerogel"],
+    correctAnswer: "Aerogel",
+    explanation: "Aerogel has the highest R-value per inch among common insulation materials, with values ranging from R-8 to R-10.3 per inch, significantly outperforming traditional insulation materials."
+  },
+  {
+    id: 40,
+    question: "What is the primary benefit of a thermal energy storage system?",
+    options: ["Elimination of heating equipment", "Time-shifting energy consumption", "Reduced insulation requirements", "Simplified control systems"],
+    correctAnswer: "Time-shifting energy consumption",
+    explanation: "Thermal energy storage systems allow energy consumption to be time-shifted, storing energy when it's abundant or cheaper, and using it when energy is expensive or unavailable, improving system efficiency and reducing costs."
+  },
+  {
+    id: 41,
+    question: "Which technology is used to convert organic waste into biogas?",
+    options: ["Pyrolysis", "Gasification", "Anaerobic digestion", "Composting"],
+    correctAnswer: "Anaerobic digestion",
+    explanation: "Anaerobic digestion is a biological process that breaks down organic matter in the absence of oxygen to produce biogas, which is primarily composed of methane and carbon dioxide and can be used for energy generation."
+  },
+  {
+    id: 42,
+    question: "What does the Energy Performance Certificate (EPC) rating indicate?",
+    options: ["The potential value of a property", "The energy efficiency of a building", "The structural integrity of a building", "The renewable energy generation capacity"],
+    correctAnswer: "The energy efficiency of a building",
+    explanation: "An Energy Performance Certificate (EPC) rates the energy efficiency of a property on a scale from A (most efficient) to G (least efficient), providing information about a property's energy use and costs."
+  },
+  {
+    id: 43,
+    question: "Which factor has the greatest impact on the performance of a ground source heat pump?",
+    options: ["Above-ground temperature", "Soil type and moisture content", "Heat pump brand", "Property orientation"],
+    correctAnswer: "Soil type and moisture content",
+    explanation: "Soil type and moisture content significantly impact heat transfer efficiency in ground source heat pumps, affecting their overall performance more than the other factors listed."
+  },
+  {
+    id: 44,
+    question: "What is the primary purpose of a building automation system (BAS)?",
+    options: ["Security monitoring", "Centralized control of building systems", "Internet connectivity management", "Occupancy tracking"],
+    correctAnswer: "Centralized control of building systems",
+    explanation: "A building automation system provides centralized control of building systems including HVAC, lighting, security, and fire safety, optimizing their operation for energy efficiency, comfort, and safety."
+  },
+  {
+    id: 45,
+    question: "Which renewable energy technology has the lowest carbon footprint across its entire lifecycle?",
+    options: ["Solar PV", "Wind power", "Hydroelectric power", "Geothermal power"],
+    correctAnswer: "Wind power",
+    explanation: "Wind power typically has the lowest lifecycle carbon footprint among major renewable energy technologies, with emissions primarily associated with manufacturing and installation rather than operation."
+  },
+  {
+    id: 46,
+    question: "What is the main purpose of demand control ventilation?",
+    options: ["Increase air flow rates", "Maintain minimum airflow regardless of occupancy", "Adjust ventilation rates based on occupancy or air quality", "Reduce humidity levels"],
+    correctAnswer: "Adjust ventilation rates based on occupancy or air quality",
+    explanation: "Demand control ventilation adjusts ventilation rates based on actual occupancy levels or measured air quality indicators, saving energy by avoiding over-ventilation while maintaining healthy indoor air quality."
+  },
+  {
+    id: 47,
+    question: "Which of the following is a key component of a building energy management system?",
+    options: ["Water softener", "Occupancy sensors", "Drainage system", "Acoustic dampers"],
+    correctAnswer: "Occupancy sensors",
+    explanation: "Occupancy sensors are a key component of building energy management systems, allowing for automated control of lighting, HVAC, and other systems based on whether spaces are occupied, saving significant energy."
+  },
+  {
+    id: 48,
+    question: "What is the primary benefit of a heat recovery ventilation (HRV) system?",
+    options: ["Dehumidification", "Reduced heating and cooling loads", "Air filtration", "Increased air velocity"],
+    correctAnswer: "Reduced heating and cooling loads",
+    explanation: "Heat recovery ventilation systems recover heat from exhaust air and transfer it to incoming fresh air (or vice versa during cooling season), significantly reducing heating and cooling energy requirements while maintaining good ventilation."
+  },
+  {
+    id: 49,
+    question: "Which factor most significantly affects the efficiency of a solar thermal system?",
+    options: ["Color of the collector", "Orientation and tilt of collectors", "Brand of the system", "Size of the storage tank"],
+    correctAnswer: "Orientation and tilt of collectors",
+    explanation: "The orientation (typically south-facing in the northern hemisphere) and tilt angle of solar thermal collectors most significantly affect system efficiency by determining how much solar radiation can be captured throughout the year."
+  },
+  {
+    id: 50,
+    question: "What is the primary purpose of an energy audit?",
+    options: ["Legal compliance verification", "Identifying energy-saving opportunities", "Determining property value", "Establishing insurance requirements"],
+    correctAnswer: "Identifying energy-saving opportunities",
+    explanation: "An energy audit systematically examines energy use within a building or system to identify waste and recommend efficiency improvements, providing a roadmap for energy and cost savings."
   }
 ];

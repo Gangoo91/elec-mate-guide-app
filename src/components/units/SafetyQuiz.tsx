@@ -13,6 +13,7 @@ import { useToast } from '@/components/ui/use-toast';
 interface SafetyQuizProps {
   unitId: string;
   timeLimit?: number; // in seconds
+  questionsToShow?: number; // Number of questions to display from the pool
 }
 
 interface AssessmentQuestion {
@@ -32,29 +33,51 @@ interface SourceQuestion {
   explanation: string;
 }
 
-export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 }) => {
+export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ 
+  unitId, 
+  timeLimit = 600,
+  questionsToShow = 10 
+}) => {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [isActive, setIsActive] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const { toast } = useToast();
 
   const getQuestionSet = () => {
+    // Get the appropriate question pool based on unitId
+    let questionPool: SourceQuestion[] = [];
+    
     switch(unitId) {
       case "201":
-        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions as SourceQuestion[]);
+        questionPool = healthAndSafetyQuestions as SourceQuestion[];
+        break;
       case "202":
-        return mapQuestionsToAssessmentFormat(electricalScienceQuestions as SourceQuestion[]);
+        questionPool = electricalScienceQuestions as SourceQuestion[];
+        break;
       case "203":
-        return mapQuestionsToAssessmentFormat(electricalInstallationsQuestions as SourceQuestion[]);
+        questionPool = electricalInstallationsQuestions as SourceQuestion[];
+        break;
       case "204":
-        return mapQuestionsToAssessmentFormat(wiringSystemsQuestions as SourceQuestion[]);
+        questionPool = wiringSystemsQuestions as SourceQuestion[];
+        break;
       case "210":
-        return mapQuestionsToAssessmentFormat(communicationQuestions as SourceQuestion[]);
+        questionPool = communicationQuestions as SourceQuestion[];
+        break;
       case "301":
-        return mapQuestionsToAssessmentFormat(environmentalTechnologyQuestions as SourceQuestion[]);
+        questionPool = environmentalTechnologyQuestions as SourceQuestion[];
+        break;
       default:
-        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions as SourceQuestion[]);
+        questionPool = healthAndSafetyQuestions as SourceQuestion[];
     }
+    
+    // Shuffle the entire question pool
+    const shuffledPool = [...questionPool].sort(() => 0.5 - Math.random());
+    
+    // Take the first questionsToShow from the shuffled pool
+    const selectedQuestions = shuffledPool.slice(0, questionsToShow);
+    
+    // Map to assessment format
+    return mapQuestionsToAssessmentFormat(selectedQuestions);
   };
   
   const mapQuestionsToAssessmentFormat = (questions: SourceQuestion[]): AssessmentQuestion[] => {
@@ -106,7 +129,7 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
             Unit {unitId} Final Assessment
           </h3>
           <p className="text-[#FFC900]/80 mb-6">
-            This assessment contains 10 questions to test your knowledge of the unit materials.
+            This assessment contains {questionsToShow} questions randomly selected from a pool of {unitId === "301" ? 50 : "multiple"} questions to test your knowledge.
             You'll have {Math.floor(timeLimit / 60)} minutes to complete the assessment.
           </p>
           <button
@@ -132,7 +155,7 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
           
           <FormativeAssessment 
             questions={getQuestionSet()} 
-            questionsToShow={10} 
+            questionsToShow={questionsToShow} 
             unitId={unitId}
           />
         </>
@@ -140,3 +163,4 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
     </div>
   );
 };
+
