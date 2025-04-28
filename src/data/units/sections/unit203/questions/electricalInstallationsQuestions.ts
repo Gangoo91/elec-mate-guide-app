@@ -1,8 +1,14 @@
 
-// Using the same structure as electricalScienceQuestions.ts
-import { Question } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
+// Create our own Question interface that includes the explanation field
+export interface ElectricalInstallationQuestion {
+  id: number;
+  text: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+}
 
-export const electricalInstallationsQuestions: Question[] = [
+export const electricalInstallationsQuestions: ElectricalInstallationQuestion[] = [
   {
     id: 1,
     text: "What is the main purpose of a consumer unit in an electrical installation?",
