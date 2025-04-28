@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { sections210 } from './unit210/sections';
+import { sections210 as unit210Sections } from './unit210/sections';
 
-export { sections210 };
+// Re-export the sections
+export const sections210 = unit210Sections;
 export default sections210;
