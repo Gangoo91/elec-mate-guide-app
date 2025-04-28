@@ -1,6 +1,6 @@
 
 import React from "react";
-import { MessageSquare, Box, Wrench, Shield, PoundSterling, Feed } from "lucide-react";
+import { MessageSquare, Box, Wrench, Shield, PoundSterling, Rss } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
@@ -41,7 +41,7 @@ const ToolboxTalkPage = () => {
     {
       title: "Industry Updates",
       description: "Stay informed with the latest UK electrical industry news, regulations, and developments.",
-      icon: <Feed className="h-7 w-7 text-[#FFC900]" />,
+      icon: <Rss className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/toolbox-talk/updates"
     }
   ];
