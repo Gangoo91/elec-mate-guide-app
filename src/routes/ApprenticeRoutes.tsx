@@ -1,55 +1,50 @@
 
-import { lazy, Suspense } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import LoadingSpinner from "@/components/LoadingSpinner";
 
-// Use consistent lazy loading for all components
-const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
-const LearningHubPage = lazy(() => import('@/pages/LearningHubPage'));
-const StudyGroupsPage = lazy(() => import('@/pages/StudyGroupsPage'));
-const StudyGroupDetailsPage = lazy(() => import('@/pages/StudyGroupDetailsPage'));
-const StudyMaterialsPage = lazy(() => import('@/pages/StudyMaterialsPage'));
-const CityGuildsPage = lazy(() => import('@/pages/CityGuildsPage'));
-const Level2ElectricalPage = lazy(() => import('@/pages/Level2ElectricalPage'));
-const Level2CoreUnitsPage = lazy(() => import('@/pages/Level2CoreUnitsPage'));
-const Level2SimplifiedPage = lazy(() => import('@/pages/Level2SimplifiedPage'));
-const Level2ExamsPage = lazy(() => import('@/pages/Level2ExamsPage'));
-const EALQualificationsPage = lazy(() => import('@/pages/EALQualificationsPage'));
-const MOETPage = lazy(() => import('@/pages/MOETPage'));
-const PracticeExamsPage = lazy(() => import('@/pages/PracticeExamsPage'));
-const AIToolsPage = lazy(() => import('@/pages/AIToolsPage'));
-const VideoDemonstrationsPage = lazy(() => import('@/pages/VideoDemonstrationsPage'));
-const ARLearningPage = lazy(() => import('@/pages/ARLearningPage'));
-const AudioTutorialsPage = lazy(() => import('@/pages/AudioTutorialsPage'));
-const ProgressTrackingPage = lazy(() => import('@/pages/apprentices/ProgressTrackingPage'));
-const UnitContentPage = lazy(() => import('@/pages/UnitContentPage'));
+import ApprenticeHub from '@/pages/ApprenticeHub';
+import LearningHubPage from '@/pages/LearningHubPage';
+import StudyMaterialsPage from '@/pages/StudyMaterialsPage';
+import CityGuildsPage from '@/pages/CityGuildsPage';
+import Level2CoreUnitsPage from '@/pages/Level2CoreUnitsPage';
+import Level2ElectricalPage from '@/pages/Level2ElectricalPage';
+import Level3ElectricalPage from '@/pages/Level3ElectricalPage';
+import Level2SimplifiedPage from '@/pages/Level2SimplifiedPage';
+import Level2ExamsPage from '@/pages/Level2ExamsPage';
+import Unit202SectionPage from '@/pages/units/Unit202SectionPage';
+import Level2Unit202Page from '@/pages/Level2Unit202Page';
+import Level2Unit201Page from '@/pages/Level2Unit201Page';
+import SectionPage from '@/pages/units/SectionPage';
+import Level2SectionPage from '@/pages/units/Level2SectionPage';
+import UnitContentPage from '@/pages/UnitContentPage';
+import ProgressTrackingPage from '@/pages/apprentices/ProgressTrackingPage';
+import StudyGroupsPage from '@/pages/StudyGroupsPage';
+import StudyGroupDetailsPage from '@/pages/StudyGroupDetailsPage';
+import ARLearningPage from '@/pages/ARLearningPage';
+import PracticeExamsPage from '@/pages/PracticeExamsPage';
 
-// Wrap lazy components in suspense
-const withSuspense = (Component) => (
-  <Suspense fallback={<div className="w-full h-full min-h-screen flex items-center justify-center"><LoadingSpinner /></div>}>
-    {Component}
-  </Suspense>
+export const ApprenticeRoutes = (
+  <>
+    <Route path="/apprentices" element={<ApprenticeHub />} />
+    <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
+    <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units" element={<Level2CoreUnitsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/exams" element={<Level2ExamsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202" element={<Level2Unit202Page />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201" element={<Level2Unit201Page />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202/:sectionId" element={<Unit202SectionPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId/:sectionId" element={<Level2SectionPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<UnitContentPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId/:sectionId" element={<SectionPage />} />
+    <Route path="/apprentices/progress-tracking" element={<ProgressTrackingPage />} />
+    <Route path="/apprentices/study-groups" element={<StudyGroupsPage />} />
+    <Route path="/apprentices/study-groups/:groupId" element={<StudyGroupDetailsPage />} />
+    <Route path="/apprentices/ar-learning" element={<ARLearningPage />} />
+    <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
+  </>
 );
-
-export const ApprenticeRoutes = [
-  <Route key="apprentice-hub" path="/apprentices" element={withSuspense(<ApprenticeHub />)} />,
-  <Route key="learning-hub" path="/apprentices/learning-hub" element={withSuspense(<LearningHubPage />)} />,
-  <Route key="study-groups" path="/apprentices/study-groups" element={withSuspense(<StudyGroupsPage />)} />,
-  <Route key="study-group-details" path="/apprentices/study-groups/:groupId" element={withSuspense(<StudyGroupDetailsPage />)} />,
-  <Route key="study-materials" path="/apprentices/study-materials" element={withSuspense(<StudyMaterialsPage />)} />,
-  <Route key="city-guilds" path="/apprentices/study-materials/city-guilds" element={withSuspense(<CityGuildsPage />)} />,
-  <Route key="level2-electrical" path="/apprentices/study-materials/city-guilds/level-2" element={withSuspense(<Level2ElectricalPage />)} />,
-  <Route key="level2-core-units" path="/apprentices/study-materials/city-guilds/level-2/core-units" element={withSuspense(<Level2CoreUnitsPage />)} />,
-  <Route key="level2-simplified" path="/apprentices/study-materials/city-guilds/level-2/simplified" element={withSuspense(<Level2SimplifiedPage />)} />,
-  <Route key="level2-exams" path="/apprentices/study-materials/city-guilds/level-2/exams" element={withSuspense(<Level2ExamsPage />)} />,
-  <Route key="eal-qualifications" path="/apprentices/study-materials/eal" element={withSuspense(<EALQualificationsPage />)} />,
-  <Route key="moet" path="/apprentices/study-materials/city-guilds/moet" element={withSuspense(<MOETPage />)} />,
-  <Route key="practice-exams" path="/apprentices/practice-exams" element={withSuspense(<PracticeExamsPage />)} />,
-  <Route key="ai-tools" path="/apprentices/ai-tools" element={withSuspense(<AIToolsPage />)} />,
-  <Route key="video-demonstrations" path="/apprentices/video-demonstrations" element={withSuspense(<VideoDemonstrationsPage />)} />,
-  <Route key="ar-learning" path="/apprentices/ar-learning" element={withSuspense(<ARLearningPage />)} />,
-  <Route key="audio-tutorials" path="/apprentices/audio-tutorials" element={withSuspense(<AudioTutorialsPage />)} />,
-  <Route key="progress-tracking" path="/apprentices/progress" element={withSuspense(<ProgressTrackingPage />)} />,
-  // Add route for individual unit pages
-  <Route key="unit-content" path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={withSuspense(<UnitContentPage />)} />
-];

@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import LessonContent from "@/components/units/LessonContent";
+import { sections201 } from "@/data/units/sections/unit201Sections";
 import { sections202 } from "@/data/units/sections/unit202Sections";
 import { sections203 } from "@/data/units/sections/unit203Sections";
 import { sections204 } from "@/data/units/sections/unit204Sections";
@@ -89,6 +90,9 @@ const Level2SectionPage = () => {
     console.log("Looking for section content in unit:", unitId);
     
     switch (unitId) {
+      case "201":
+        console.log("Available sections in 201:", Object.keys(sections201));
+        return sections201[sectionId];
       case "202":
         console.log("Available sections in 202:", Object.keys(sections202));
         return sections202[sectionId];
