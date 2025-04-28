@@ -1,43 +1,170 @@
 
 import React from 'react';
 import { SectionData } from './interfaces';
+import { EnhancedLearningSection } from "@/components/units/EnhancedLearningSection";
+import { FormativeAssessment } from "@/components/units/FormativeAssessment";
 
 export const section1_2: SectionData = {
   title: "Ohm's Law - The Basic Rule",
   description: "Understanding the relationship between voltage, current, and resistance",
   content: (
     <>
-      <h3 className="text-xl font-semibold mb-4">Ohm's Law in Detail</h3>
-      <p className="mb-4">
-        Ohm's Law states that the current flowing through a conductor is directly proportional to the voltage 
-        and inversely proportional to the resistance.
-      </p>
-      
-      <h4 className="text-lg font-semibold mb-3">The Formula</h4>
-      <div className="bg-gray-800 p-4 rounded-lg mb-4">
-        <p className="text-lg font-mono">V = I × R</p>
-        <p>Where:</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>V = Voltage (in Volts)</li>
-          <li>I = Current (in Amperes)</li>
-          <li>R = Resistance (in Ohms)</li>
-        </ul>
-      </div>
-
-      <h4 className="text-lg font-semibold mb-3">Practical Examples</h4>
-      <div className="space-y-3">
-        <p>Example 1: Finding Current</p>
-        <ul className="list-disc pl-6 mb-3">
-          <li>If voltage = 230V and resistance = 23Ω</li>
-          <li>Current = 230V ÷ 23Ω = 10A</li>
-        </ul>
-
-        <p>Example 2: Finding Resistance</p>
-        <ul className="list-disc pl-6">
-          <li>If voltage = 12V and current = 2A</li>
-          <li>Resistance = 12V ÷ 2A = 6Ω</li>
-        </ul>
-      </div>
+      <EnhancedLearningSection
+        title="Ohm's Law Explained"
+        description="Learn the fundamental relationship between voltage, current, and resistance"
+        illustration="/images/ohms-law-triangle.png"
+        content={
+          <>
+            <h3 className="text-xl font-semibold mb-4">The Foundation of Electrical Theory</h3>
+            <p className="mb-4">
+              Ohm's Law is one of the most fundamental principles in electrical theory, establishing the 
+              relationship between voltage (V), current (I), and resistance (R).
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-lg my-4">
+              <h4 className="text-lg font-medium mb-2">Ohm's Law Formula</h4>
+              <div className="text-center p-3">
+                <div className="text-2xl font-bold mb-2">V = I × R</div>
+                <p className="text-sm">Where:</p>
+                <ul className="inline-block text-left">
+                  <li>V = Voltage in volts (V)</li>
+                  <li>I = Current in amperes (A)</li>
+                  <li>R = Resistance in ohms (Ω)</li>
+                </ul>
+              </div>
+            </div>
+            
+            <p className="my-4">
+              From the basic formula, we can derive two additional equations:
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+              <div className="bg-[#353a2c] p-4 rounded-lg text-center">
+                <div className="text-xl font-bold mb-1">I = V ÷ R</div>
+                <p className="text-sm">
+                  To find current when you know voltage and resistance
+                </p>
+              </div>
+              
+              <div className="bg-[#353a2c] p-4 rounded-lg text-center">
+                <div className="text-xl font-bold mb-1">R = V ÷ I</div>
+                <p className="text-sm">
+                  To find resistance when you know voltage and current
+                </p>
+              </div>
+            </div>
+            
+            <h4 className="text-lg font-semibold mt-6 mb-2">The Ohm's Law Triangle</h4>
+            <p className="mb-4">
+              Many electricians remember Ohm's Law using a triangle diagram. Cover the quantity you want to 
+              find, and the remaining values show you how to calculate it.
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-lg my-4">
+              <h4 className="text-lg font-medium mb-2">How to Use the Triangle</h4>
+              <ol className="list-decimal pl-5 space-y-2">
+                <li>Locate the quantity you want to find on the triangle</li>
+                <li>Cover that quantity with your finger</li>
+                <li>The remaining visible quantities show you how to calculate the covered quantity:
+                  <ul className="list-disc pl-5 mt-1">
+                    <li>Side-by-side means multiply</li>
+                    <li>One above the other means divide (top ÷ bottom)</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+          </>
+        }
+        examples={
+          <>
+            <h4 className="text-lg font-medium mb-3">Practical Examples</h4>
+            
+            <div className="space-y-4">
+              <div className="bg-[#353a2c] p-4 rounded-lg">
+                <h5 className="font-medium mb-2">Example 1: Finding Current</h5>
+                <div className="mb-2">
+                  <strong>Problem:</strong> A light bulb connected to a 230V power supply has a resistance of 529Ω. What current flows through it?
+                </div>
+                <div className="mb-2">
+                  <strong>Formula:</strong> I = V ÷ R
+                </div>
+                <div className="mb-2">
+                  <strong>Calculation:</strong> I = 230V ÷ 529Ω = 0.435A
+                </div>
+                <div>
+                  <strong>Answer:</strong> The current flowing through the light bulb is 0.435 amperes.
+                </div>
+              </div>
+              
+              <div className="bg-[#353a2c] p-4 rounded-lg">
+                <h5 className="font-medium mb-2">Example 2: Finding Voltage</h5>
+                <div className="mb-2">
+                  <strong>Problem:</strong> A motor draws 5A of current and has a resistance of 24Ω. What voltage is applied to it?
+                </div>
+                <div className="mb-2">
+                  <strong>Formula:</strong> V = I × R
+                </div>
+                <div className="mb-2">
+                  <strong>Calculation:</strong> V = 5A × 24Ω = 120V
+                </div>
+                <div>
+                  <strong>Answer:</strong> The voltage applied to the motor is 120 volts.
+                </div>
+              </div>
+              
+              <div className="bg-[#353a2c] p-4 rounded-lg">
+                <h5 className="font-medium mb-2">Example 3: Finding Resistance</h5>
+                <div className="mb-2">
+                  <strong>Problem:</strong> An electrical heater connected to a 230V supply draws a current of 10A. What is its resistance?
+                </div>
+                <div className="mb-2">
+                  <strong>Formula:</strong> R = V ÷ I
+                </div>
+                <div className="mb-2">
+                  <strong>Calculation:</strong> R = 230V ÷ 10A = 23Ω
+                </div>
+                <div>
+                  <strong>Answer:</strong> The resistance of the heater is 23 ohms.
+                </div>
+              </div>
+            </div>
+          </>
+        }
+        practice={
+          <>
+            <h4 className="text-lg font-medium mb-3">Apply Your Knowledge</h4>
+            
+            <FormativeAssessment
+              questions={[
+                {
+                  question: "If a circuit has a voltage of 12V and a resistance of 4Ω, what is the current?",
+                  options: ["3A", "4A", "8A", "16A"],
+                  correctAnswer: "3A",
+                  explanation: "Using Ohm's Law: I = V ÷ R = 12V ÷ 4Ω = 3A"
+                },
+                {
+                  question: "An electric shower draws 25A from a 230V supply. What is its resistance?",
+                  options: ["5.75Ω", "9.2Ω", "25Ω", "230Ω"],
+                  correctAnswer: "9.2Ω",
+                  explanation: "Using Ohm's Law: R = V ÷ I = 230V ÷ 25A = 9.2Ω"
+                },
+                {
+                  question: "A device with a resistance of 50Ω draws a current of 0.1A. What voltage is applied to it?",
+                  options: ["0.5V", "5V", "10V", "500V"],
+                  correctAnswer: "5V",
+                  explanation: "Using Ohm's Law: V = I × R = 0.1A × 50Ω = 5V"
+                },
+                {
+                  question: "If the resistance in a circuit increases while the voltage remains constant, what happens to the current?",
+                  options: ["Increases", "Decreases", "Stays the same", "Becomes zero"],
+                  correctAnswer: "Decreases",
+                  explanation: "According to Ohm's Law (I = V ÷ R), if R increases while V remains constant, then I must decrease."
+                }
+              ]}
+            />
+          </>
+        }
+      />
     </>
   ),
   detailedContent: (
