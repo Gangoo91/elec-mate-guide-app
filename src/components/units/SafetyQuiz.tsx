@@ -1,7 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
 import { healthAndSafetyQuestions } from '@/data/units/sections/unit201/questions/healthAndSafetyQuestions';
+import { electricalInstallationsQuestions } from '@/data/units/sections/unit203/questions/electricalInstallationsQuestions';
+import { wiringSystemsQuestions } from '@/data/units/sections/unit204/questions/wiringSystemsQuestions';
+import { communicationQuestions } from '@/data/units/sections/unit210/questions/communicationQuestionsUnitians';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -22,6 +26,12 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
         return healthAndSafetyQuestions;
       case "202":
         return electricalScienceQuestions;
+      case "203":
+        return electricalInstallationsQuestions;
+      case "204":
+        return wiringSystemsQuestions;
+      case "210":
+        return communicationQuestions;
       default:
         return healthAndSafetyQuestions;
     }
