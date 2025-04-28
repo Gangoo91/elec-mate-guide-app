@@ -131,14 +131,14 @@ const MarineOffshorePage = () => {
             title="Cruise Ship Retrofit"
             description="Complete electrical system upgrade for a luxury cruise liner, including power distribution and smart systems integration."
             icon={<Ship className="h-6 w-6 text-[#FFC900]" />}
-            onClick={() => navigate('/electricians/specialisations/marine/case-studies/cruise-ship')}
+            fullCardLink="/electricians/specialisations/marine/case-studies/cruise-ship"
           />
           
           <ResourceCard
             title="Offshore Wind Platform"
             description="Installation and commissioning of electrical systems for an offshore wind farm maintenance platform."
             icon={<Anchor className="h-6 w-6 text-[#FFC900]" />}
-            onClick={() => navigate('/electricians/specialisations/marine/case-studies/wind-platform')}
+            fullCardLink="/electricians/specialisations/marine/case-studies/wind-platform"
           />
         </div>
 

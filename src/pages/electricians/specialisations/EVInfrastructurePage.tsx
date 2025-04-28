@@ -111,14 +111,14 @@ const EVInfrastructurePage = () => {
             title="Commercial Fleet Charging"
             description="Installation of a smart charging system for a 50-vehicle commercial fleet, including load management and monitoring systems."
             icon={<Battery className="h-6 w-6 text-[#FFC900]" />}
-            onClick={() => navigate('/electricians/specialisations/ev/case-studies/fleet-charging')}
+            fullCardLink="/electricians/specialisations/ev/case-studies/fleet-charging"
           />
           
           <ResourceCard
             title="Public Charging Hub"
             description="Development of a multi-point rapid charging hub with integrated renewable energy and battery storage."
             icon={<Zap className="h-6 w-6 text-[#FFC900]" />}
-            onClick={() => navigate('/electricians/specialisations/ev/case-studies/charging-hub')}
+            fullCardLink="/electricians/specialisations/ev/case-studies/charging-hub"
           />
         </div>
 

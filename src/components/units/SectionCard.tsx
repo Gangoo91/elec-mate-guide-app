@@ -14,7 +14,9 @@ interface SectionCardProps {
 const SectionCard = ({ sectionId, unitId, title, description, isLevel3 = false }: SectionCardProps) => {
   const navigate = useNavigate();
   
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
     const basePath = isLevel3 
       ? '/apprentices/study-materials/city-guilds/level-3'
       : '/apprentices/study-materials/city-guilds/level-2/core-units';

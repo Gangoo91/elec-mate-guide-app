@@ -12,6 +12,11 @@ const IndustrySpecialisationsPage = () => {
     navigate('/electricians/development');
   };
 
+  const handleCardClick = (path: string) => {
+    console.log("Navigating to:", path);
+    navigate(path);
+  };
+
   const specialisations = [
     {
       title: "Renewable Energy Systems",
@@ -77,7 +82,7 @@ const IndustrySpecialisationsPage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-              onClick={() => navigate(spec.path)}
+              onClick={() => handleCardClick(spec.path)}
             >
               <CardContent className="pt-6">
                 <h3 className="text-[#FFC900] text-xl font-medium mb-2">{spec.title}</h3>

@@ -11,7 +11,9 @@ interface SectionContentProps {
 const SectionContent = ({ title, path }: SectionContentProps) => {
   const navigate = useNavigate();
   
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
     if (path) {
       console.log("Navigating to:", path);
       navigate(path);
