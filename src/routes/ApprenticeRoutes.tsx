@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import LearningHubPage from '@/pages/LearningHubPage';
 import StudyMaterialsPage from '@/pages/StudyMaterialsPage';
 import CityGuildsPage from '@/pages/CityGuildsPage';
 import Level2CoreUnitsPage from '@/pages/Level2CoreUnitsPage';
+import Level3CoreUnitsPage from '@/pages/Level3CoreUnitsPage';
 import Level2ElectricalPage from '@/pages/Level2ElectricalPage';
 import Level3ElectricalPage from '@/pages/Level3ElectricalPage';
 import Level2SimplifiedPage from '@/pages/Level2SimplifiedPage';
@@ -46,7 +46,7 @@ export const ApprenticeRoutes = (
     <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/installation" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/troubleshooting" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/exams" element={<Level2ExamsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/core-units" element={<Level2CoreUnitsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/core-units" element={<Level3CoreUnitsPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-3/simplified" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-3/exams" element={<PracticeExamsPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202" element={<Level2Unit202Page />} />
