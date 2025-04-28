@@ -26,7 +26,7 @@ const Level3Unit301AssessmentPage = () => {
         <div className="mt-8">
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="p-6">
-              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Complete Assessment</h2>
+              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Environmental Technology Assessment</h2>
               <p className="text-[#FFC900]/80 mb-6">
                 This assessment will test your understanding of renewable energy technologies, sustainability principles, and environmental considerations in electrical installations.
               </p>

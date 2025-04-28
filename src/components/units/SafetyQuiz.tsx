@@ -6,6 +6,7 @@ import { healthAndSafetyQuestions } from '@/data/units/sections/unit201/question
 import { electricalInstallationsQuestions } from '@/data/units/sections/unit203/questions/electricalInstallationsQuestions';
 import { wiringSystemsQuestions } from '@/data/units/sections/unit204/questions/wiringSystemsQuestions';
 import { communicationQuestions } from '@/data/units/sections/unit210/questions/communicationQuestions';
+import { environmentalTechnologyQuestions } from '@/data/units/sections/unit301/questions/environmentalTechnologyQuestions';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -49,6 +50,8 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
         return mapQuestionsToAssessmentFormat(wiringSystemsQuestions as SourceQuestion[]);
       case "210":
         return mapQuestionsToAssessmentFormat(communicationQuestions as SourceQuestion[]);
+      case "301":
+        return mapQuestionsToAssessmentFormat(environmentalTechnologyQuestions as SourceQuestion[]);
       default:
         return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions as SourceQuestion[]);
     }
