@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { QuestionCard } from './assessment/QuestionCard';
 import { ExplanationPanel } from './assessment/ExplanationPanel';
 import { ResultsView } from './assessment/ResultsView';
 
-interface AssessmentQuestion {
+export interface AssessmentQuestion {
   question: string;
   options: string[];
   correctAnswer: string;
