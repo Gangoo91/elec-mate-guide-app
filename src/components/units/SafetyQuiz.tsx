@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
@@ -20,9 +21,11 @@ interface AssessmentQuestion {
   explanation: string;
 }
 
+// Define a more comprehensive source question type to handle all formats
 interface SourceQuestion {
   id: number;
-  text: string;
+  text?: string; // Optional for compatibility
+  question?: string; // Optional for compatibility
   options: string[];
   correctAnswer: string;
   explanation: string;
@@ -37,23 +40,23 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 
   const getQuestionSet = () => {
     switch(unitId) {
       case "201":
-        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions);
+        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions as SourceQuestion[]);
       case "202":
-        return mapQuestionsToAssessmentFormat(electricalScienceQuestions);
+        return mapQuestionsToAssessmentFormat(electricalScienceQuestions as SourceQuestion[]);
       case "203":
-        return mapQuestionsToAssessmentFormat(electricalInstallationsQuestions);
+        return mapQuestionsToAssessmentFormat(electricalInstallationsQuestions as SourceQuestion[]);
       case "204":
-        return mapQuestionsToAssessmentFormat(wiringSystemsQuestions);
+        return mapQuestionsToAssessmentFormat(wiringSystemsQuestions as SourceQuestion[]);
       case "210":
-        return mapQuestionsToAssessmentFormat(communicationQuestions);
+        return mapQuestionsToAssessmentFormat(communicationQuestions as SourceQuestion[]);
       default:
-        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions);
+        return mapQuestionsToAssessmentFormat(healthAndSafetyQuestions as SourceQuestion[]);
     }
   };
   
   const mapQuestionsToAssessmentFormat = (questions: SourceQuestion[]): AssessmentQuestion[] => {
     return questions.map(q => ({
-      question: q.text,
+      question: q.question || q.text || '', // Handle both formats
       options: q.options,
       correctAnswer: q.correctAnswer,
       explanation: q.explanation
