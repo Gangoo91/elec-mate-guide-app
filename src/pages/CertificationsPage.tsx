@@ -6,34 +6,69 @@ import PageHeader from "@/components/layout/PageHeader";
 import BackButton from "@/components/navigation/BackButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Book, GraduationCap } from 'lucide-react';
+import { Book, GraduationCap, ExternalLink } from 'lucide-react';
 
 const CertificationsPage = () => {
   const specializations = [
     {
       title: "Industrial Automation",
-      certs: ["PLC Programming Certification", "SCADA Systems", "Industrial Networks"],
-      path: "/electricians/development/specialisations/automation"
+      certs: [
+        "PLC Programming (Siemens SIMATIC)",
+        "Allen Bradley PLC Certification",
+        "SCADA Systems Expert",
+        "Industrial Networks Specialist",
+        "CompEx Certification"
+      ],
+      path: "/electricians/development/specialisations/automation",
+      provider: "https://www.siemens.com/global/en/products/automation/training.html"
     },
     {
       title: "Renewable Energy",
-      certs: ["Solar PV Installation", "MCS Certification", "Energy Storage Systems"],
-      path: "/electricians/development/specialisations/renewable"
+      certs: [
+        "Solar PV Design & Installation",
+        "MCS Certification",
+        "Energy Storage Systems",
+        "Smart Grid Integration",
+        "EV Charging Infrastructure"
+      ],
+      path: "/electricians/development/specialisations/renewable",
+      provider: "https://mcscertified.com/become-certified/"
     },
     {
       title: "Smart Building Technologies",
-      certs: ["KNX Certification", "BMS Programming", "IoT Integration"],
-      path: "/electricians/development/specialisations/smart-building"
+      certs: [
+        "KNX Partner Certification",
+        "BMS Programming Expert",
+        "IoT Systems Integration",
+        "Building Automation",
+        "Smart Home Designer"
+      ],
+      path: "/electricians/development/specialisations/smart-building",
+      provider: "https://www.knx.org/knx-en/for-professionals/training/"
     },
     {
       title: "High Voltage",
-      certs: ["HV Safety Management", "Protection Coordination", "CompEx Certification"],
-      path: "/electricians/development/specialisations/highvoltage"
+      certs: [
+        "HV Safety Management",
+        "Protection & Coordination",
+        "CompEx HV Certification",
+        "Switchgear Operations",
+        "Network Design"
+      ],
+      path: "/electricians/development/specialisations/highvoltage",
+      provider: "https://www.compex.org.uk/"
     },
     {
       title: "Data Center Power",
-      certs: ["Data Center Operations", "Critical Systems Management", "Power Distribution"],
-      path: "/electricians/development/specialisations/datacenter"
+      certs: [
+        "Data Center Operations",
+        "Critical Systems Expert",
+        "Power Distribution Specialist",
+        "Cooling Infrastructure",
+        "Emergency Systems Management"
+      ],
+      path: "/electricians/development/specialisations/datacenter",
+      provider: "https://www.datacenterdynamics.com/en/training/"
     }
   ];
 
@@ -55,12 +90,22 @@ const CertificationsPage = () => {
                   <div key={index} className="border border-[#FFC900]/20 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-[#FFC900]">{spec.title}</h3>
-                      <Link to={spec.path}>
-                        <Button variant="outline" size="sm">
-                          <Book className="mr-2 h-4 w-4" />
-                          View Path
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => window.open(spec.provider, '_blank')}
+                        >
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Training
                         </Button>
-                      </Link>
+                        <Link to={spec.path}>
+                          <Button variant="outline" size="sm">
+                            <Book className="mr-2 h-4 w-4" />
+                            View Path
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                     <ul className="space-y-2">
                       {spec.certs.map((cert, idx) => (
@@ -76,20 +121,27 @@ const CertificationsPage = () => {
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-[#FFC900]">Upcoming Course Content</h2>
+                <h2 className="text-xl font-semibold text-[#FFC900]">Course Content</h2>
                 <GraduationCap className="h-6 w-6 text-[#FFC900]" />
               </div>
               <p className="text-[#FFC900]/70 mb-4">
-                We're building comprehensive certification preparation programs for each specialization. 
-                Our structured learning paths will include:
+                Our comprehensive certification preparation programs include:
               </p>
               <ul className="space-y-2 text-[#FFC900]/70">
-                <li>• Detailed study materials and practice exams</li>
+                <li>• Interactive learning modules with real-world examples</li>
+                <li>• Hands-on practical exercises and simulations</li>
                 <li>• Video tutorials and demonstrations</li>
-                <li>• Hands-on practical exercises</li>
-                <li>• Industry expert guidance</li>
-                <li>• Test-taking strategies</li>
+                <li>• Practice exams with detailed explanations</li>
+                <li>• Industry expert guidance and mentorship</li>
+                <li>• Study guides and reference materials</li>
+                <li>• Regular progress assessments</li>
+                <li>• Test-taking strategies and tips</li>
               </ul>
+              <div className="mt-6 p-4 bg-[#FFC900]/10 rounded-lg">
+                <p className="text-[#FFC900]">
+                  Looking to start your certification journey? Visit the specific specialization pages for detailed information about requirements, study materials, and preparation resources.
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
