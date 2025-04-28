@@ -1,9 +1,10 @@
 
 import React from "react";
-import { MessageSquare, Box, Wrench, Shield, PoundSterling } from "lucide-react";
+import { MessageSquare, Box, Wrench, Shield, PoundSterling, Feed } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
+import IndustryResources from "@/components/IndustryResources";
 
 const ToolboxTalkPage = () => {
   const resources = [
@@ -36,6 +37,12 @@ const ToolboxTalkPage = () => {
       description: "Get real-time updates on material costs and market prices.",
       icon: <PoundSterling className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/toolbox-talk/pricing"
+    },
+    {
+      title: "Industry Updates",
+      description: "Stay informed with the latest UK electrical industry news, regulations, and developments.",
+      icon: <Feed className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/toolbox-talk/updates"
     }
   ];
 
@@ -55,6 +62,8 @@ const ToolboxTalkPage = () => {
             />
           ))}
         </div>
+
+        <IndustryResources />
       </div>
     </MainLayout>
   );

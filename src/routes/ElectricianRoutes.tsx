@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
@@ -68,6 +67,7 @@ import MaterialsPage from "@/pages/toolbox/MaterialsPage";
 import ToolsPage from "@/pages/toolbox/ToolsPage";
 import SafetyPage from "@/pages/toolbox/SafetyPage";
 import PricingPage from "@/pages/toolbox/PricingPage";
+import UpdatesPage from "@/pages/toolbox/UpdatesPage";
 
 export const ElectricianRoutes = (
   <>
@@ -138,6 +138,7 @@ export const ElectricianRoutes = (
     <Route path="/electricians/toolbox-talk/materials" element={<MaterialsPage />} />,
     <Route path="/electricians/toolbox-talk/tools" element={<ToolsPage />} />,
     <Route path="/electricians/toolbox-talk/safety" element={<SafetyPage />} />,
-    <Route path="/electricians/toolbox-talk/pricing" element={<PricingPage />} />
+    <Route path="/electricians/toolbox-talk/pricing" element={<PricingPage />} />,
+    <Route path="/electricians/toolbox-talk/updates" element={<UpdatesPage />} />
   </>
 );
