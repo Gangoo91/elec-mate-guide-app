@@ -59,7 +59,10 @@ const MarineOffshorePage = () => {
                   <Button
                     className="mt-4"
                     variant="outline"
-                    onClick={() => window.open('https://www.maritimeuk.org/careers/careers-maritime/', '_blank')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open('https://www.maritimeuk.org/careers/careers-maritime/', '_blank');
+                    }}
                   >
                     Maritime Careers Info <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
@@ -90,7 +93,10 @@ const MarineOffshorePage = () => {
                     <Button
                       className="w-full mt-2"
                       variant="outline"
-                      onClick={() => window.open('https://www.checkasalary.co.uk/salary/marine-electrician', '_blank')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open('https://www.checkasalary.co.uk/salary/marine-electrician', '_blank');
+                      }}
                     >
                       Latest Salary Data <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
@@ -125,14 +131,14 @@ const MarineOffshorePage = () => {
             title="Cruise Ship Retrofit"
             description="Complete electrical system upgrade for a luxury cruise liner, including power distribution and smart systems integration."
             icon={<Ship className="h-6 w-6 text-[#FFC900]" />}
-            fullCardLink="/electricians/specialisations/marine/case-studies/cruise-ship"
+            onClick={() => navigate('/electricians/specialisations/marine/case-studies/cruise-ship')}
           />
           
           <ResourceCard
             title="Offshore Wind Platform"
             description="Installation and commissioning of electrical systems for an offshore wind farm maintenance platform."
             icon={<Anchor className="h-6 w-6 text-[#FFC900]" />}
-            fullCardLink="/electricians/specialisations/marine/case-studies/wind-platform"
+            onClick={() => navigate('/electricians/specialisations/marine/case-studies/wind-platform')}
           />
         </div>
 
@@ -144,21 +150,30 @@ const MarineOffshorePage = () => {
               <Button
                 className="w-full md:w-auto"
                 variant="outline"
-                onClick={() => window.open('https://www.oilandgasjobsearch.com/jobs/marine-electrician', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.oilandgasjobsearch.com/jobs/marine-electrician', '_blank');
+                }}
               >
                 Oil & Gas Job Search <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 className="w-full md:w-auto ml-0 md:ml-2"
                 variant="outline"
-                onClick={() => window.open('https://www.maritimejobs.com/jobs/marine-electrical', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.maritimejobs.com/jobs/marine-electrical', '_blank');
+                }}
               >
                 Maritime Jobs <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 className="w-full md:w-auto ml-0 md:ml-2"
                 variant="outline"
-                onClick={() => window.open('https://www.indeed.co.uk/Marine-Electrician-jobs', '_blank')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open('https://www.indeed.co.uk/Marine-Electrician-jobs', '_blank');
+                }}
               >
                 Indeed UK <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
@@ -171,4 +186,3 @@ const MarineOffshorePage = () => {
 };
 
 export default MarineOffshorePage;
-

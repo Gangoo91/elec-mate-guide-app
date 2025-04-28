@@ -25,6 +25,21 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
+    // Specialization page handling - direct navigation to parent
+    if (location.pathname.startsWith('/electricians/specialisations/')) {
+      console.log("BackButton: Navigating to specialisations");
+      navigate('/electricians/development/specialisations');
+      return;
+    }
+    
+    // Case studies handling
+    if (location.pathname.includes('/case-studies/')) {
+      const specialisationPath = location.pathname.split('/case-studies/')[0];
+      console.log(`BackButton: Navigating back to specialization: ${specialisationPath}`);
+      navigate(specialisationPath);
+      return;
+    }
+    
     // Job scheduling pages - direct navigation to parent
     if ([
       '/electricians/job-scheduling/upcoming',
