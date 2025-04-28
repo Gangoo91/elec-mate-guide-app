@@ -10,6 +10,7 @@ import InspectionTestingGuide from "@/pages/InspectionTestingGuide";
 import JobPriceEstimatorPage from "@/pages/JobPriceEstimatorPage";
 import JobSchedulePage from "@/pages/electricians/JobSchedulePage";
 import ProjectManagementPage from "@/pages/electricians/ProjectManagementPage";
+import ProjectOverviewPage from "@/pages/electricians/ProjectOverviewPage";
 import SolarPVInstallationPage from "@/pages/electricians/SolarPVInstallationPage";
 import SmartHomeTechnologiesPage from "@/pages/electricians/SmartHomeTechnologiesPage";
 import FireAlarmSystemsPage from "@/pages/electricians/FireAlarmSystemsPage";
@@ -99,6 +100,7 @@ export const ElectricianRoutes = (
     <Route path="/electricians/technical/job-price-estimator" element={<JobPriceEstimatorPage />} />
     <Route path="/electricians/job-scheduling" element={<JobSchedulePage />} />
     <Route path="/electricians/project-management" element={<ProjectManagementPage />} />
+    <Route path="/electricians/project-overview" element={<ProjectOverviewPage />} />
     <Route path="/electricians/solar-pv" element={<SolarPVInstallationPage />} />
     <Route path="/electricians/smart-home" element={<SmartHomeTechnologiesPage />} />
     <Route path="/electricians/fire-alarms" element={<FireAlarmSystemsPage />} />
