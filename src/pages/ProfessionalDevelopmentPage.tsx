@@ -1,11 +1,17 @@
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Briefcase, GraduationCap, Award, Factory, Users } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const ProfessionalDevelopmentPage = () => {
+  const navigate = useNavigate();
+  
+  const handleBackClick = () => {
+    navigate('/electricians');
+  };
+
   const resources = [
     {
       title: "Career Pathways",
@@ -51,6 +57,7 @@ const ProfessionalDevelopmentPage = () => {
         <PageHeader 
           title="Professional Development"
           description="Advance your electrical career with specialised training, education, and industry connections."
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
