@@ -31,7 +31,7 @@ export const SafetyQuiz = ({ timeLimit }: SafetyQuizProps) => {
   }
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 px-2 md:px-0">
       <QuizTimer 
         timeRemaining={timeRemaining}
         quizSubmitted={quizSubmitted}
@@ -41,7 +41,7 @@ export const SafetyQuiz = ({ timeLimit }: SafetyQuizProps) => {
         e.preventDefault();
         handleSubmit();
       }}>
-        <div className="space-y-4">
+        <div className="space-y-6">
           {questions.map((q) => (
             <QuizQuestion
               key={q.id}
@@ -60,22 +60,24 @@ export const SafetyQuiz = ({ timeLimit }: SafetyQuizProps) => {
           ))}
         </div>
         
-        {!quizSubmitted ? (
-          <Button 
-            type="submit"
-            className="mt-6 w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
-          >
-            Submit Quiz
-          </Button>
-        ) : (
-          <Button 
-            type="button"
-            onClick={handleRetry}
-            className="mt-6 w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
-          >
-            Try Another Quiz
-          </Button>
-        )}
+        <div className="sticky bottom-4 mt-8 px-2 md:px-0">
+          {!quizSubmitted ? (
+            <Button 
+              type="submit"
+              className="w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] py-6 text-lg font-medium shadow-lg"
+            >
+              Submit Quiz
+            </Button>
+          ) : (
+            <Button 
+              type="button"
+              onClick={handleRetry}
+              className="w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] py-6 text-lg font-medium shadow-lg"
+            >
+              Try Another Quiz
+            </Button>
+          )}
+        </div>
       </form>
     </div>
   );

@@ -22,30 +22,32 @@ export const QuizQuestion = ({
   disabled
 }: QuizQuestionProps) => {
   return (
-    <Card className="bg-[#2a2d24] p-4">
-      <h4 className="text-[#FFC900] font-medium mb-3">{question}</h4>
+    <Card className="bg-[#2a2d24] p-4 md:p-6 shadow-lg">
+      <h4 className="text-[#FFC900] font-medium mb-4 text-lg md:text-xl">{question}</h4>
       <RadioGroup
         disabled={disabled}
         value={selectedAnswer}
         onValueChange={onAnswerChange}
+        className="space-y-3"
       >
-        <div className="space-y-2">
-          {options.map((option, index) => (
-            <div key={index} className="flex items-center space-x-2">
-              <RadioGroupItem 
-                value={option} 
-                id={`q${id}-option${index}`}
-                className="border-[#FFC900]"
-              />
-              <Label 
-                htmlFor={`q${id}-option${index}`}
-                className="text-[#FFC900]/80"
-              >
-                {option}
-              </Label>
-            </div>
-          ))}
-        </div>
+        {options.map((option, index) => (
+          <div 
+            key={index} 
+            className="flex items-start space-x-3 p-3 rounded-lg hover:bg-[#353a2c] transition-colors"
+          >
+            <RadioGroupItem 
+              value={option} 
+              id={`q${id}-option${index}`}
+              className="border-[#FFC900] mt-1"
+            />
+            <Label 
+              htmlFor={`q${id}-option${index}`}
+              className="text-[#FFC900]/80 cursor-pointer flex-1 text-base md:text-lg"
+            >
+              {option}
+            </Label>
+          </div>
+        ))}
       </RadioGroup>
     </Card>
   );

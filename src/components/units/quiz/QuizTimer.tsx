@@ -15,17 +15,19 @@ const formatTime = (seconds: number) => {
 
 export const QuizTimer = ({ timeRemaining, quizSubmitted }: QuizTimerProps) => {
   return (
-    <div className="flex items-center justify-between bg-[#2a2d24] p-3 rounded-lg">
-      <div className="flex items-center gap-2">
-        <Timer className="h-5 w-5 text-[#FFC900]" />
-        <span className="text-[#FFC900]">Time Remaining: {formatTime(timeRemaining)}</span>
-      </div>
-      {timeRemaining < 60 && !quizSubmitted && (
+    <div className="sticky top-16 z-10 bg-[#2a2d24] p-4 rounded-lg shadow-lg mb-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div className="flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-[#FFC900]" />
-          <span className="text-[#FFC900]">Less than 1 minute remaining!</span>
+          <Timer className="h-5 w-5 text-[#FFC900]" />
+          <span className="text-[#FFC900] text-lg">Time: {formatTime(timeRemaining)}</span>
         </div>
-      )}
+        {timeRemaining < 60 && !quizSubmitted && (
+          <div className="flex items-center gap-2 text-[#FFC900]">
+            <AlertTriangle className="h-5 w-5" />
+            <span className="text-sm md:text-base">Less than 1 minute left!</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
