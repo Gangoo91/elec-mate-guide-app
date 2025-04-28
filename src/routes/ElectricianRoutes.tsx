@@ -160,6 +160,8 @@ export const ElectricianRoutes = (
     {/* Case Studies routes */}
     <Route path="/electricians/specialisations/renewable/case-studies/commercial-solar" element={<CommercialSolarCaseStudy />} />
     <Route path="/electricians/specialisations/renewable/case-studies/community-energy" element={<CommunityEnergyStudy />} />
+    <Route path="/electricians/specialisations/automation/case-studies/manufacturing" element={<ManufacturingAutomationStudy />} />
+    <Route path="/electricians/specialisations/automation/case-studies/warehouse" element={<WarehouseAutomationStudy />} />
 
     {/* Certifications */}
     <Route path="/certifications" element={<CertificationsPage />} />
