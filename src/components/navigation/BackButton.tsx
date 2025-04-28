@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -32,6 +33,24 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     
     if (location.pathname === "/electricians/templates") {
       navigate('/electricians/project-overview');
+      return;
+    }
+    
+    // Technical tools navigation
+    if (location.pathname === "/electricians/technical-tools") {
+      navigate('/electricians');
+      return;
+    }
+    
+    // Toolbox talk navigation
+    if (location.pathname === "/electricians/toolbox-talk") {
+      navigate('/electricians');
+      return;
+    }
+    
+    // Mentorship navigation
+    if (location.pathname === "/electricians/mentorship") {
+      navigate('/electricians');
       return;
     }
     

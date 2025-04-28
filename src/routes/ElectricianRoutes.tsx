@@ -65,6 +65,9 @@ import SafetyConsiderationsPage from "@/pages/electricians/solar/installation/Sa
 import RoofEvaluationPage from "@/pages/electricians/solar/installation/structural/RoofEvaluationPage";
 import LoadAnalysisPage from "@/pages/electricians/solar/installation/structural/LoadAnalysisPage";
 import SupportStructurePage from "@/pages/electricians/solar/installation/structural/SupportStructurePage";
+import ToolboxTalkPage from "@/pages/ToolboxTalkPage";
+import ToolsPage from "@/pages/toolbox/ToolsPage";
+import Mentorship from "@/pages/Mentorship";
 
 // Specialisations pages
 import IndustrialAutomationPage from "@/pages/electricians/specialisations/IndustrialAutomationPage";
@@ -93,11 +96,12 @@ export const ElectricianRoutes = (
     <Route path="/electricians" element={<ElectriciansPage />} />
     <Route path="/electricians/study" element={<ElectriciansStudyGuidePage />} />
     <Route path="/electricians/exams" element={<ElectriciansExamsPage />} />
-    <Route path="/electricians/technical/calculators" element={<CalculatorTools />} />
-    <Route path="/electricians/technical" element={<TechnicalToolsPage />} />
-    <Route path="/electricians/technical/inspection-testing" element={<InspectionTestingPage />} />
-    <Route path="/electricians/technical/inspection-testing/guide" element={<InspectionTestingGuide />} />
-    <Route path="/electricians/technical/job-price-estimator" element={<JobPriceEstimatorPage />} />
+    <Route path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />
+    <Route path="/electricians/technical-tools" element={<TechnicalToolsPage />} />
+    <Route path="/electricians/technical-tools/inspection-testing" element={<InspectionTestingPage />} />
+    <Route path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />
+    <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />
+    <Route path="/electricians/technical-tools/invoice-manager" element={<InvoiceManagerPage />} />
     <Route path="/electricians/job-scheduling" element={<JobSchedulePage />} />
     <Route path="/electricians/project-management" element={<ProjectManagementPage />} />
     <Route path="/electricians/project-overview" element={<ProjectOverviewPage />} />
@@ -111,7 +115,6 @@ export const ElectricianRoutes = (
     <Route path="/electricians/ev-infrastructure" element={<EVInfrastructurePage />} />
     <Route path="/electricians/energy-efficiency" element={<EnergyEfficiencyPage />} />
     <Route path="/electricians/energy-storage" element={<EnergyStorageSystemsPage />} />
-    <Route path="/electricians/invoice-manager" element={<InvoiceManagerPage />} />
     <Route path="/electricians/templates" element={<TemplatesPage />} />
     <Route path="/electricians/sign-document" element={<SignDocumentPage />} />
     <Route path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />
@@ -155,6 +158,9 @@ export const ElectricianRoutes = (
     <Route path="/electricians/solar-pv/installation/structural/roof" element={<RoofEvaluationPage />} />
     <Route path="/electricians/solar-pv/installation/structural/load" element={<LoadAnalysisPage />} />
     <Route path="/electricians/solar-pv/installation/structural/support" element={<SupportStructurePage />} />
+    <Route path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />
+    <Route path="/electricians/toolbox-talk/tools" element={<ToolsPage />} />
+    <Route path="/electricians/mentorship" element={<Mentorship />} />
 
     {/* Specialisations routes */}
     <Route path="/electricians/development/specialisations/automation" element={<IndustrialAutomationPage />} />
