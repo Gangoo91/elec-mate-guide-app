@@ -8,9 +8,14 @@ export const useReactions = (
   setReactions: React.Dispatch<React.SetStateAction<Record<string, ChatReaction[]>>>
 ) => {
   const { handleError } = useErrorHandler();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const toggleReaction = async (messageId: string, type: 'upvote' | 'downvote', userId: string) => {
+    if (isProcessing) return; // Prevent multiple simultaneous clicks
+    
     try {
+      setIsProcessing(true);
+      
       // Check if user has already reacted
       const { data: existingReaction } = await supabase
         .from('chat_reactions')
@@ -65,6 +70,8 @@ export const useReactions = (
       }
     } catch (error) {
       handleError(error, 'Failed to update reaction');
+    } finally {
+      setIsProcessing(false);
     }
   };
 

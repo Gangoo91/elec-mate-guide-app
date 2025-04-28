@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown, MessageSquare } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 interface MessageReactionsProps {
   upvotes: number;
@@ -23,17 +24,32 @@ export function MessageReactions({
   onReaction,
   onToggleComments
 }: MessageReactionsProps) {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleReaction = (type: 'upvote' | 'downvote') => {
+    if (isDisabled) return;
+    
+    setIsDisabled(true);
+    onReaction(type);
+    
+    // Prevent multiple clicks for a short period
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 500);
+  };
+
   return (
     <div className="flex items-center gap-4">
       <Button
         variant="ghost"
         size="sm"
+        disabled={isDisabled}
         className={cn(
           "flex items-center gap-1 transition-all",
           userReaction === 'upvote' ? 'text-green-500' : 'text-[#FFC900]/70',
           isAnimating && userReaction === 'upvote' ? 'scale-125' : ''
         )}
-        onClick={() => onReaction('upvote')}
+        onClick={() => handleReaction('upvote')}
       >
         <ThumbsUp className="w-4 h-4" />
         <span>{upvotes}</span>
@@ -42,12 +58,13 @@ export function MessageReactions({
       <Button
         variant="ghost"
         size="sm"
+        disabled={isDisabled}
         className={cn(
           "flex items-center gap-1 transition-all",
           userReaction === 'downvote' ? 'text-red-500' : 'text-[#FFC900]/70',
           isAnimating && userReaction === 'downvote' ? 'scale-125' : ''
         )}
-        onClick={() => onReaction('downvote')}
+        onClick={() => handleReaction('downvote')}
       >
         <ThumbsDown className="w-4 h-4" />
         <span>{downvotes}</span>

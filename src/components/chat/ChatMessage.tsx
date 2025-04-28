@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ChatMessage, ChatComment, ChatReaction } from '@/types/chat-room';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -76,11 +76,11 @@ export function ChatMessageComponent({
     setEditingCommentContent(comment.content);
   };
 
-  const handleReaction = (type: 'upvote' | 'downvote') => {
+  const handleReaction = useCallback((type: 'upvote' | 'downvote') => {
     setIsAnimating(true);
     onReaction(type);
     setTimeout(() => setIsAnimating(false), 500);
-  };
+  }, [onReaction]);
 
   const isCurrentUserMessage = user?.id === message.user_id;
 
