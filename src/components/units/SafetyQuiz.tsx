@@ -38,21 +38,51 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
 
   const fetchQuestions = async () => {
     try {
-      const { data, error } = await supabase
+      // Get the total count of questions first
+      const { count, error: countError } = await supabase
         .from('safety_quiz_questions')
-        .select('id, question, options, category')
-        .limit(5);
+        .select('*', { count: 'exact', head: true });
 
-      if (error) throw error;
+      if (countError) throw countError;
+      
+      if (!count || count === 0) {
+        setLoading(false);
+        return;
+      }
 
-      setQuestions(data.map(q => ({
-        ...q,
-        options: q.options as string[]
-      })));
+      // Generate 5 random unique indices within the count range
+      const totalQuestions = count;
+      const questionIndices = new Set<number>();
+      const questionLimit = Math.min(5, totalQuestions);
+      
+      while (questionIndices.size < questionLimit) {
+        const randomIndex = Math.floor(Math.random() * totalQuestions);
+        questionIndices.add(randomIndex);
+      }
+
+      // Fetch questions using the random offsets
+      const promises = Array.from(questionIndices).map(index => {
+        return supabase
+          .from('safety_quiz_questions')
+          .select('id, question, options, category')
+          .range(index, index)
+          .single();
+      });
+
+      const results = await Promise.all(promises);
+      const validResults = results
+        .filter(result => !result.error && result.data)
+        .map(result => ({
+          ...result.data,
+          options: result.data.options as string[]
+        }));
+
+      setQuestions(validResults);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching questions:', error);
       handleError(error, "Failed to load quiz questions. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -112,6 +142,14 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
     } catch (error) {
       handleError(error, "Failed to save your results. Please try again.");
     }
+  };
+
+  const handleRetry = () => {
+    setSelectedAnswers({});
+    setQuizSubmitted(false);
+    setTimeRemaining(timeLimit);
+    setLoading(true);
+    fetchQuestions();
   };
 
   if (loading) {
@@ -177,15 +215,24 @@ export const SafetyQuiz = ({ unitId, timeLimit }: SafetyQuizProps) => {
           ))}
         </div>
         
-        {!quizSubmitted && (
+        {!quizSubmitted ? (
           <Button 
             type="submit"
             className="mt-6 w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
           >
             Submit Quiz
           </Button>
+        ) : (
+          <Button 
+            type="button"
+            onClick={handleRetry}
+            className="mt-6 w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
+          >
+            Try Another Quiz
+          </Button>
         )}
       </form>
     </div>
   );
 };
+
