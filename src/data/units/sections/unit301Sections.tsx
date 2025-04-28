@@ -318,5 +318,236 @@ export const sections301: Record<string, SectionData> = {
         </ul>
       </div>
     ),
+  },
+  "2.2": {
+    title: "Installation Requirements",
+    description: "Guidelines and requirements for installing solar PV systems",
+    content: (
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Installation Planning and Preparation</h2>
+        <p>
+          Proper planning and preparation are crucial for successful solar PV installations. This section covers 
+          the key requirements and considerations for installing solar photovoltaic systems.
+        </p>
+        
+        <h3 className="text-lg font-medium mt-4">Site Assessment</h3>
+        <p>
+          A thorough site assessment is a prerequisite for any installation:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Solar resource evaluation (annual solar irradiation)</li>
+          <li>Shading analysis using specialized tools</li>
+          <li>Roof structural integrity assessment</li>
+          <li>Orientation and tilt analysis for optimal energy yield</li>
+          <li>Available roof area calculation</li>
+          <li>Existing electrical infrastructure assessment</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Legal and Regulatory Requirements</h3>
+        <p>
+          Various regulations govern solar PV installations:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Building regulations compliance</li>
+          <li>Planning permission requirements</li>
+          <li>MCS (Microgeneration Certification Scheme) standards</li>
+          <li>DNO (Distribution Network Operator) notification and approval</li>
+          <li>G98/G99 connection requirements for grid-connected systems</li>
+          <li>Local authority requirements and restrictions</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Structural Requirements</h2>
+        <p>
+          The structural aspects of installation must be carefully considered:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Roof load-bearing capacity assessment</li>
+          <li>Wind and snow load calculations</li>
+          <li>Mounting system selection based on roof type</li>
+          <li>Penetrative vs. non-penetrative mounting solutions</li>
+          <li>Waterproofing and weather sealing measures</li>
+          <li>Thermal expansion considerations for mounting hardware</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Electrical Requirements</h2>
+        <p>
+          Electrical installations must comply with specific requirements:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>BS 7671 (IET Wiring Regulations) compliance</li>
+          <li>DC system design considerations</li>
+          <li>String configuration and voltage/current limits</li>
+          <li>AC connection point requirements</li>
+          <li>Earthing and bonding requirements for PV systems</li>
+          <li>Surge protection requirements</li>
+          <li>Isolation and switching requirements</li>
+          <li>Cable selection and sizing for DC and AC circuits</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Safety Requirements</h2>
+        <p>
+          Safety is paramount in solar PV installations:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Working at height regulations</li>
+          <li>Personal protective equipment (PPE) requirements</li>
+          <li>Safe isolation procedures for DC systems</li>
+          <li>Fire safety considerations and access routes</li>
+          <li>Risk assessment process</li>
+          <li>System labeling and documentation requirements</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Commissioning Requirements</h2>
+        <p>
+          Proper commissioning ensures system functionality and safety:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Visual inspection procedures</li>
+          <li>DC circuit testing requirements</li>
+          <li>AC circuit testing requirements</li>
+          <li>Earth continuity and insulation resistance testing</li>
+          <li>Performance ratio verification</li>
+          <li>MCS commissioning certificate requirements</li>
+          <li>Handover documentation for the client</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Common Installation Standards</h3>
+        <p>
+          Key standards governing PV installations:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>IEC 62446: Grid connected photovoltaic systems - Minimum requirements for system documentation, commissioning tests and inspection</li>
+          <li>MCS MIS 3002: Requirements for contractors undertaking solar PV installations</li>
+          <li>IEC 60364-7-712: Requirements for special installations or locations - Solar photovoltaic (PV) power supply systems</li>
+          <li>BS EN 62305: Protection against lightning</li>
+          <li>BS 7671 Section 712: Solar photovoltaic power supply systems</li>
+        </ul>
+      </div>
+    ),
+  },
+  "2.3": {
+    title: "Maintenance and Troubleshooting",
+    description: "Common issues and maintenance procedures for solar PV systems",
+    content: (
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Maintenance Procedures for Solar PV Systems</h2>
+        <p>
+          Regular maintenance is essential to ensure optimal performance and longevity of solar PV systems. 
+          This section covers key maintenance procedures and troubleshooting techniques.
+        </p>
+        
+        <h3 className="text-lg font-medium mt-4">Regular Maintenance Schedule</h3>
+        <p>
+          A systematic maintenance approach includes:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Visual inspections (quarterly recommended)</li>
+          <li>Panel cleaning (frequency depends on location)</li>
+          <li>Electrical testing (annual recommended)</li>
+          <li>Inverter checks and maintenance</li>
+          <li>Mounting system inspection</li>
+          <li>Performance data review and analysis</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Panel Cleaning Procedures</h3>
+        <p>
+          Proper cleaning techniques to maximize efficiency:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Early morning or evening cleaning to avoid thermal shock</li>
+          <li>Soft brushes and non-abrasive tools only</li>
+          <li>Use of deionized water to prevent mineral deposits</li>
+          <li>Avoiding high-pressure water systems</li>
+          <li>Special considerations for bird droppings and tree sap</li>
+          <li>Safety procedures for working at height</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">System Monitoring</h2>
+        <p>
+          Effective monitoring helps detect issues early:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Understanding monitoring system data</li>
+          <li>Setting up performance alerts</li>
+          <li>Analyzing production trends</li>
+          <li>Comparing actual vs. expected yield</li>
+          <li>Remote monitoring best practices</li>
+          <li>Data storage and backup procedures</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Common System Issues</h2>
+        <p>
+          Frequent problems encountered in PV systems:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Inverter faults and error codes</li>
+          <li>Panel hotspots</li>
+          <li>Bypass diode failures</li>
+          <li>Shading issues</li>
+          <li>Connection and wiring problems</li>
+          <li>Weather damage</li>
+          <li>PID (Potential Induced Degradation)</li>
+          <li>Microcracks in cells</li>
+          <li>Delamination of panels</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Troubleshooting Techniques</h2>
+        <p>
+          Systematic approach to identifying and resolving issues:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>IV curve tracing</li>
+          <li>Thermal imaging inspection</li>
+          <li>Voltage and current measurements</li>
+          <li>Insulation resistance testing</li>
+          <li>String comparison analysis</li>
+          <li>DC:AC ratio assessment</li>
+          <li>Performance ratio calculation</li>
+          <li>Earth fault detection</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Inverter Troubleshooting</h3>
+        <p>
+          Common inverter issues and resolution:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Error code interpretation</li>
+          <li>Communication problems</li>
+          <li>Grid voltage/frequency issues</li>
+          <li>Overheating problems</li>
+          <li>Firmware update procedures</li>
+          <li>Fan/cooling system maintenance</li>
+          <li>DC input issues</li>
+        </ul>
+        
+        <h2 className="text-xl font-semibold mt-6">Repair and Replacement</h2>
+        <p>
+          Guidelines for component repair or replacement:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Panel replacement procedures</li>
+          <li>Inverter repair vs. replacement considerations</li>
+          <li>DC connector replacement best practices</li>
+          <li>Cable repair techniques</li>
+          <li>Mounting hardware replacement</li>
+          <li>Component compatibility considerations</li>
+          <li>Warranty claim procedures</li>
+        </ul>
+        
+        <h3 className="text-lg font-medium mt-4">Documentation and Record Keeping</h3>
+        <p>
+          Maintaining thorough maintenance records:
+        </p>
+        <ul className="list-disc pl-6 space-y-2 mt-2">
+          <li>Maintenance log requirements</li>
+          <li>Test certificates and results</li>
+          <li>Component replacement records</li>
+          <li>Performance data history</li>
+          <li>Fault and resolution documentation</li>
+          <li>Warranty information</li>
+          <li>System modification records</li>
+        </ul>
+      </div>
+    ),
   }
 };

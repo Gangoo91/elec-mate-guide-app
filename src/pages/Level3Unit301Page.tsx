@@ -131,7 +131,7 @@ const Level3Unit301Page = () => {
                 </div>
               </div>
               
-              {/* Sections 2.2 & 2.3 would be similar, but they don't have content yet so I'm showing placeholders */}
+              {/* Section 2.2 - Now enabled */}
               <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -147,7 +147,6 @@ const Level3Unit301Page = () => {
                     variant="outline" 
                     className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
                     onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/2.2')}
-                    disabled={true}
                   >
                     <BookOpen className="h-4 w-4" />
                     Study
@@ -155,6 +154,7 @@ const Level3Unit301Page = () => {
                 </div>
               </div>
               
+              {/* Section 2.3 - Now enabled */}
               <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -170,7 +170,6 @@ const Level3Unit301Page = () => {
                     variant="outline" 
                     className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
                     onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/2.3')}
-                    disabled={true}
                   >
                     <BookOpen className="h-4 w-4" />
                     Study
