@@ -1,5 +1,52 @@
 
-/* Add this to the end of your index.css file */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 220 8% 7%;
+    --foreground: 51 100% 50%;
+    
+    --card: 220 8% 12%;
+    --card-foreground: 51 100% 50%;
+    
+    --popover: 220 8% 7%;
+    --popover-foreground: 51 100% 50%;
+    
+    --primary: 51 100% 50%;
+    --primary-foreground: 220 8% 7%;
+    
+    --secondary: 220 8% 12%;
+    --secondary-foreground: 51 100% 50%;
+    
+    --muted: 220 8% 15%;
+    --muted-foreground: 51 70% 50%;
+    
+    --accent: 220 8% 15%;
+    --accent-foreground: 51 100% 50%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 51 30% 30%;
+    --input: 51 30% 30%;
+    --ring: 51 50% 40%;
+    
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animation for typing indicator */
 @keyframes pulse {
   0%, 100% { 
     opacity: 0.3; 
@@ -16,7 +63,7 @@
   display: inline-block;
 }
 
-/* Add additional animation for reactions */
+/* Animation for reactions */
 @keyframes reaction-pop {
   0% { 
     transform: scale(1); 
@@ -41,4 +88,24 @@
 
 .pull-refresh-rotate {
   animation: rotate 1s linear infinite;
+}
+
+/* Add fade in animation */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Add scale in animation */
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
 }

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,6 +23,7 @@ import { ApprenticeRoutes } from "./routes/ApprenticeRoutes";
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import { MentalHealthRoutes } from "./routes/MentalHealthRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
+import "./index.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -10,7 +10,7 @@ type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-[#151812]">
       <Navbar />
       <motion.main 
         className="flex-grow pt-16 px-4 sm:px-6"
