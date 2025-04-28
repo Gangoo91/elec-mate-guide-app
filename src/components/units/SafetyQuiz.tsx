@@ -9,6 +9,7 @@ import { communicationQuestions } from '@/data/units/sections/unit210/questions/
 import { environmentalTechnologyQuestions } from '@/data/units/sections/unit301/questions/environmentalTechnologyQuestions';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
+import { QuizTimer } from './quiz/QuizTimer';
 
 interface SafetyQuizProps {
   unitId: string;
@@ -41,6 +42,8 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [isActive, setIsActive] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [quizKey, setQuizKey] = useState(Date.now()); // Key to force re-render
   const { toast } = useToast();
 
   const getQuestionSet = () => {
@@ -98,6 +101,7 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
       }, 1000);
     } else if (timeRemaining === 0 && isActive) {
       setIsActive(false);
+      setQuizSubmitted(true);
       toast({
         title: "Time's up!",
         description: "Your quiz time has expired.",
@@ -121,6 +125,20 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
     setHasStarted(true);
   };
 
+  const handleQuizComplete = () => {
+    setQuizSubmitted(true);
+    setIsActive(false);
+  };
+
+  const handleRetake = () => {
+    // Reset all quiz states
+    setTimeRemaining(timeLimit);
+    setQuizSubmitted(false);
+    setIsActive(true);
+    // Update key to force re-render of the FormativeAssessment component
+    setQuizKey(Date.now());
+  };
+
   return (
     <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
       {!hasStarted ? (
@@ -141,26 +159,23 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
         </div>
       ) : (
         <>
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg text-[#FFC900]">Unit {unitId} Assessment</h3>
-            <div className="text-[#FFC900]">
-              Time remaining: <span className="font-medium">{formatTime(timeRemaining)}</span>
-            </div>
-          </div>
-          
-          <Progress 
-            value={(timeRemaining / timeLimit) * 100} 
-            className="h-2 mb-6 bg-[#353a2c]"
-          />
+          {isActive && (
+            <QuizTimer 
+              timeRemaining={timeRemaining}
+              quizSubmitted={quizSubmitted}
+            />
+          )}
           
           <FormativeAssessment 
+            key={quizKey}
             questions={getQuestionSet()} 
             questionsToShow={questionsToShow} 
             unitId={unitId}
+            onQuizComplete={handleQuizComplete}
+            onRetake={handleRetake}
           />
         </>
       )}
     </div>
   );
 };
-

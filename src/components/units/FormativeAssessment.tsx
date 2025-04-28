@@ -15,12 +15,16 @@ interface FormativeAssessmentProps {
   questions: AssessmentQuestion[];
   questionsToShow?: number;
   unitId?: string;
+  onQuizComplete?: () => void;
+  onRetake?: () => void;
 }
 
 export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({ 
   questions, 
   questionsToShow = 3,
-  unitId
+  unitId,
+  onQuizComplete,
+  onRetake
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
@@ -59,6 +63,9 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
     
     if (currentQuestions.length <= 1) {
       setCompleted(true);
+      if (onQuizComplete) {
+        onQuizComplete();
+      }
     } else {
       setCurrentQuestions(prev => prev.slice(1));
       setSelectedAnswer(null);
@@ -72,6 +79,9 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
     setShowExplanation(false);
     setScore(0);
     setCompleted(false);
+    if (onRetake) {
+      onRetake();
+    }
   };
 
   if (completed) {
