@@ -21,6 +21,7 @@ const Unit202SectionPage = () => {
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
   
   const sectionContent = sections202[sectionId];
+  const isLastSection = sectionId === "1.4";
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/level-2/core-units/202');
@@ -95,7 +96,7 @@ const Unit202SectionPage = () => {
             </div>
           </div>
           
-          {!nextSection && (
+          {isLastSection && (
             <div className="mt-8 pt-8 border-t border-[#FFC900]/20">
               <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
                 Test Your Knowledge
@@ -105,6 +106,15 @@ const Unit202SectionPage = () => {
                 take this quiz to test your understanding of key concepts.
               </p>
               <SafetyQuiz unitId="202" timeLimit={300} />
+            </div>
+          )}
+          
+          {sectionContent.detailedContent && (
+            <div className="mt-12 pt-8 border-t border-[#FFC900]/20">
+              <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
+                Detailed Learning Materials
+              </h3>
+              {sectionContent.detailedContent}
             </div>
           )}
         </div>

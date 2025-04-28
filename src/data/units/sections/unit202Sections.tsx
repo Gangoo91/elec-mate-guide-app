@@ -4,6 +4,7 @@ import { section1_2 } from './unit202/section1-2';
 import { section1_3 } from './unit202/section1-3';
 import { section1_4 } from './unit202/section1-4';
 import type { SectionData } from './unit202/interfaces';
+// The electricalScienceQuestions are properly imported in the SafetyQuiz component
 
 export const sections202: Record<string, SectionData> = {
   "1.1": section1_1,

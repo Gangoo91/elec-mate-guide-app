@@ -14,17 +14,20 @@ interface AssessmentQuestion {
 interface FormativeAssessmentProps {
   questions: AssessmentQuestion[];
   questionsToShow?: number;
+  unitId?: string;
 }
 
 export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({ 
   questions, 
-  questionsToShow = 3 
+  questionsToShow = 3,
+  unitId
 }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState<AssessmentQuestion[]>([]);
+  const [answeredQuestions, setAnsweredQuestions] = useState<number>(0);
 
   useEffect(() => {
     selectRandomQuestions();
@@ -33,6 +36,7 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
   const selectRandomQuestions = () => {
     const shuffled = [...questions].sort(() => 0.5 - Math.random());
     setCurrentQuestions(shuffled.slice(0, questionsToShow));
+    setAnsweredQuestions(0);
   };
 
   const handleAnswerSelect = (answer: string) => {
@@ -51,6 +55,8 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
   };
 
   const handleNext = () => {
+    setAnsweredQuestions(prev => prev + 1);
+    
     if (currentQuestions.length <= 1) {
       setCompleted(true);
     } else {
@@ -74,6 +80,7 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
         score={score}
         totalQuestions={questionsToShow}
         onReset={handleReset}
+        unitId={unitId}
       />
     );
   }
@@ -87,9 +94,11 @@ export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({
   return (
     <div className="bg-[#2a2d24] p-6 rounded-lg my-6">
       <div className="flex justify-between items-center mb-4">
-        <h4 className="text-lg text-[#FFC900]">Quick Check</h4>
+        <h4 className="text-lg text-[#FFC900]">
+          {unitId ? `Unit ${unitId} Assessment` : 'Quick Check'}
+        </h4>
         <span className="text-sm text-[#FFC900]/70">
-          Question {questionsToShow - currentQuestions.length + 1} of {questionsToShow}
+          Question {answeredQuestions + 1} of {questionsToShow}
         </span>
       </div>
 

@@ -1,98 +1,106 @@
 
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { useQuiz } from "@/hooks/useQuiz";
-import { QuizTimer } from "./quiz/QuizTimer";
-import { QuizQuestion } from "./quiz/QuizQuestion";
-import { Card } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react';
+import { FormativeAssessment } from './FormativeAssessment';
+import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
+import { healthAndSafetyQuestions } from '@/data/units/sections/unit201/questions/healthAndSafetyQuestions';
+import { Progress } from '@/components/ui/progress';
+import { useToast } from '@/components/ui/use-toast';
 
 interface SafetyQuizProps {
   unitId: string;
-  timeLimit: number;
+  timeLimit?: number; // in seconds
 }
 
-export const SafetyQuiz = ({ timeLimit }: SafetyQuizProps) => {
-  const {
-    timeRemaining,
-    selectedAnswers,
-    setSelectedAnswers,
-    quizSubmitted,
-    questions,
-    loading,
-    handleSubmit,
-    handleRetry
-  } = useQuiz(timeLimit);
+export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ unitId, timeLimit = 600 }) => {
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  const [isActive, setIsActive] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const { toast } = useToast();
 
-  if (loading) {
-    return (
-      <div className="text-center p-4">
-        <p className="text-[#FFC900]">Loading quiz questions...</p>
-      </div>
-    );
-  }
-  
-  const answeredQuestions = Object.keys(selectedAnswers).length;
-  const totalQuestions = questions.length;
+  // Get the appropriate question set based on unitId
+  const getQuestionSet = () => {
+    switch(unitId) {
+      case "201":
+        return healthAndSafetyQuestions;
+      case "202":
+        return electricalScienceQuestions;
+      default:
+        return healthAndSafetyQuestions;
+    }
+  };
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    
+    if (isActive && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining(prevTime => prevTime - 1);
+      }, 1000);
+    } else if (timeRemaining === 0 && isActive) {
+      setIsActive(false);
+      toast({
+        title: "Time's up!",
+        description: "Your quiz time has expired.",
+        variant: "destructive"
+      });
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isActive, timeRemaining, toast]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
+  const handleStart = () => {
+    setIsActive(true);
+    setHasStarted(true);
+  };
 
   return (
-    <div className="space-y-4 px-2 md:px-0">
-      <QuizTimer 
-        timeRemaining={timeRemaining}
-        quizSubmitted={quizSubmitted}
-      />
-      
-      <Card className="bg-[#2a2d24] p-4 mb-4 border-[#FFC900]/20">
-        <p className="text-[#FFC900] text-lg">
-          Progress: {answeredQuestions} of {totalQuestions} questions answered
-        </p>
-      </Card>
-      
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}>
-        <div className="space-y-6">
-          {questions.map((q) => (
-            <QuizQuestion
-              key={q.id}
-              id={q.id}
-              question={q.question}
-              options={q.options}
-              selectedAnswer={selectedAnswers[q.id]}
-              onAnswerChange={(value) => {
-                setSelectedAnswers(prev => ({
-                  ...prev,
-                  [q.id]: value
-                }));
-              }}
-              disabled={quizSubmitted}
-            />
-          ))}
+    <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+      {!hasStarted ? (
+        <div className="text-center py-8">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">
+            Unit {unitId} Final Assessment
+          </h3>
+          <p className="text-[#FFC900]/80 mb-6">
+            This assessment contains 10 questions to test your knowledge of the unit materials.
+            You'll have {Math.floor(timeLimit / 60)} minutes to complete the assessment.
+          </p>
+          <button
+            onClick={handleStart}
+            className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-6 py-3 rounded font-medium"
+          >
+            Begin Assessment
+          </button>
         </div>
-        
-        <div className="sticky bottom-4 mt-8 px-2 md:px-0">
-          {!quizSubmitted ? (
-            <Button 
-              type="submit"
-              className="w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] py-6 text-lg font-medium shadow-lg"
-              disabled={answeredQuestions < totalQuestions}
-            >
-              {answeredQuestions < totalQuestions 
-                ? `Answer all questions to submit (${totalQuestions - answeredQuestions} remaining)`
-                : "Submit Quiz"
-              }
-            </Button>
-          ) : (
-            <Button 
-              type="button"
-              onClick={handleRetry}
-              className="w-full bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] py-6 text-lg font-medium shadow-lg"
-            >
-              Try Another Quiz
-            </Button>
-          )}
-        </div>
-      </form>
+      ) : (
+        <>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg text-[#FFC900]">Unit {unitId} Assessment</h3>
+            <div className="text-[#FFC900]">
+              Time remaining: <span className="font-medium">{formatTime(timeRemaining)}</span>
+            </div>
+          </div>
+          
+          <Progress 
+            value={(timeRemaining / timeLimit) * 100} 
+            className="h-2 mb-6 bg-[#353a2c]"
+            indicatorClassName="bg-[#FFC900]"
+          />
+          
+          <FormativeAssessment 
+            questions={getQuestionSet()} 
+            questionsToShow={10} 
+            unitId={unitId}
+          />
+        </>
+      )}
     </div>
   );
 };
