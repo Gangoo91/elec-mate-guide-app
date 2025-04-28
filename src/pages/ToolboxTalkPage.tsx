@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { MessageSquare, Box, Wrench, Shield, PoundSterling, Rss } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
@@ -7,6 +8,12 @@ import ResourceCard from "@/components/shared/ResourceCard";
 import IndustryResources from "@/components/IndustryResources";
 
 const ToolboxTalkPage = () => {
+  const navigate = useNavigate();
+  
+  const handleBackClick = () => {
+    navigate('/electricians');
+  };
+  
   const resources = [
     {
       title: "Chat Room",
@@ -52,6 +59,7 @@ const ToolboxTalkPage = () => {
         <PageHeader 
           title="Toolbox Talk"
           description="Connect, share knowledge, and stay updated with industry resources."
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
