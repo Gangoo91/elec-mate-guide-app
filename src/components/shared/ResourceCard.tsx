@@ -19,10 +19,7 @@ interface ResourceCardProps {
 const ResourceCard = ({ title, description, icon, fullCardLink, onClick, action, children }: ResourceCardProps) => {
   const navigate = useNavigate();
   
-  const handleClick = (e: React.MouseEvent) => {
-    // Stop propagation to prevent competing click events
-    e.stopPropagation();
-    
+  const handleClick = () => {
     if (onClick) {
       onClick();
     } else if (fullCardLink) {

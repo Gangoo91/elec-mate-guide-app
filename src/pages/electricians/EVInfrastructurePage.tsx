@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,12 +8,14 @@ import { Zap, Settings, Wrench, Shield, FileText, Network } from "lucide-react";
 
 const EVInfrastructurePage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   
   const handleBackClick = () => {
-    if (window.location.pathname === '/electricians/specialisations/ev') {
+    // Check if we came from specialisations page
+    if (location.pathname === '/electricians/specialisations/ev') {
       navigate('/electricians/development/specialisations');
     } else {
-      navigate('/electricians/study-guide');
+      navigate('/electricians', { state: { from: 'study-guide' } });
     }
   };
 
@@ -65,6 +67,7 @@ const EVInfrastructurePage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => console.log(`Module ${index + 1} clicked: ${module.title}`)}
             >
               <CardHeader>
                 <div className="flex items-center gap-3">

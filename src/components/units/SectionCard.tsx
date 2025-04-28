@@ -15,9 +15,7 @@ interface SectionCardProps {
 const SectionCard = ({ sectionId, unitId, title, description, isLevel3 = false, customPath }: SectionCardProps) => {
   const navigate = useNavigate();
   
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    
+  const handleClick = () => {
     if (customPath) {
       console.log("Navigating to custom path:", customPath);
       navigate(customPath);

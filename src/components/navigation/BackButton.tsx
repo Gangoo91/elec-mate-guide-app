@@ -16,7 +16,7 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const isEntry = location.pathname === "/" || location.pathname === "/dashboard";
 
   const handleBackNavigation = () => {
-    console.log("BackButton: handleBackNavigation called");
+    console.log("BackButton: handleBackNavigation called from:", location.pathname);
     
     // Use custom action if provided - this takes priority
     if (customAction) {
@@ -29,6 +29,13 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     if (location.pathname.match(/\/electricians\/specialisations\/marine\/case-studies\/[a-z-]+$/)) {
       console.log("BackButton: Marine case study - navigating back to marine specialisation");
       navigate('/electricians/specialisations/marine');
+      return;
+    }
+    
+    // EV specialisation case studies handling
+    if (location.pathname.match(/\/electricians\/specialisations\/ev\/case-studies\/[a-z-]+$/)) {
+      console.log("BackButton: EV case study - navigating back to EV specialisation");
+      navigate('/electricians/specialisations/ev');
       return;
     }
     
@@ -56,15 +63,14 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       '/electricians/job-scheduling/completion'
     ].includes(location.pathname)) {
       console.log("BackButton: Navigating to job scheduling");
-      // Using direct window location to force a clean state
-      window.location.href = '/electricians/job-scheduling';
+      navigate('/electricians/job-scheduling');
       return;
     }
     
     // Handle existing route patterns
     if (location.pathname.startsWith('/electricians/job-scheduling/')) {
       console.log("BackButton: Navigating to job scheduling (pattern match)");
-      window.location.href = '/electricians/job-scheduling';
+      navigate('/electricians/job-scheduling');
       return;
     }
     
@@ -107,21 +113,55 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     // For mental health main page, go back to electricians hub
     if (location.pathname === "/mental-health") {
       navigate("/electricians");
+      return;
     }
     // For mental health subpages, go back to mental health hub
     else if (location.pathname.startsWith("/mental-health/") && location.pathname !== "/mental-health") {
       navigate("/mental-health");
+      return;
     } 
     // For electricians mentorship page, go back to electricians hub
     else if (location.pathname === "/electricians/mentorship") {
       navigate("/electricians");
+      return;
+    }
+    // For electricians learning hub page, go back to electricians hub
+    else if (location.pathname === "/electricians/learning-hub") {
+      navigate("/electricians");
+      return;
+    }
+    // For electricians technical tools page, go back to electricians hub
+    else if (location.pathname === "/electricians/technical-tools") {
+      navigate("/electricians");
+      return;
+    }
+    // For electricians toolbox talk page, go back to electricians hub
+    else if (location.pathname === "/electricians/toolbox-talk") {
+      navigate("/electricians");
+      return;
+    }
+    // For electricians development page, go back to electricians hub
+    else if (location.pathname === "/electricians/development") {
+      navigate("/electricians");
+      return;
     }
     // For electricians sections, go back to dashboard
     else if (location.pathname === "/electricians") {
       navigate("/dashboard");
+      return;
     }
+    // Handle navigation from EV infrastructure page
+    else if (location.pathname === "/electricians/ev-infrastructure") {
+      if (location.state?.from === "specialisations") {
+        navigate('/electricians/development/specialisations');
+      } else {
+        navigate("/electricians");
+      }
+      return;
+    }
+    // For all other cases, go back in history
     else {
-      // Default behavior - go back one step in history
+      console.log("BackButton: Default - navigating back in history");
       navigate(-1);
     }
   };

@@ -84,7 +84,10 @@ const ElectriciansPage = () => {
           {mainFeatures.map((feature, index) => (
             <ResourceCard
               key={index}
-              {...feature}
+              title={feature.title}
+              description={feature.description}
+              icon={feature.icon}
+              fullCardLink={feature.fullCardLink}
             />
           ))}
         </div>
@@ -93,7 +96,10 @@ const ElectriciansPage = () => {
           {resources.map((resource, index) => (
             <ResourceCard
               key={index}
-              {...resource}
+              title={resource.title}
+              description={resource.description}
+              icon={resource.icon}
+              fullCardLink={resource.fullCardLink}
             />
           ))}
         </div>
