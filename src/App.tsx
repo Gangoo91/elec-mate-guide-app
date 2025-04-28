@@ -22,6 +22,13 @@ import { ApprenticeRoutes } from "./routes/ApprenticeRoutes";
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import { MentalHealthRoutes } from "./routes/MentalHealthRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
+import Level2Unit201Page from "./pages/Level2Unit201Page";
+import Level2Unit202Page from "./pages/Level2Unit202Page";
+import Level2Unit203Page from "./pages/Level2Unit203Page";
+import Unit201SectionPage from "./pages/units/Unit201SectionPage";
+import Unit202SectionPage from "./pages/units/Unit202SectionPage";
+import Unit203SectionPage from "./pages/units/Unit203SectionPage";
+import UnitContentPage from "./pages/UnitContentPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -56,6 +63,40 @@ const App = () => {
                     <Route path="/manage-subscription" element={<ManageSubscription />} />
                     <Route path="/subscription" element={<Subscription />} />
                     <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                    
+                    {/* Units Pages */}
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" 
+                      element={<UnitContentPage />} 
+                    />
+
+                    {/* Specific Unit Detail Pages */}
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/201"
+                      element={<Level2Unit201Page />} 
+                    />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/202" 
+                      element={<Level2Unit202Page />} 
+                    />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/203" 
+                      element={<Level2Unit203Page />} 
+                    />
+
+                    {/* Unit Section Pages */}
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/201/:sectionId" 
+                      element={<Unit201SectionPage />} 
+                    />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/202/:sectionId" 
+                      element={<Unit202SectionPage />} 
+                    />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/203/:sectionId" 
+                      element={<Unit203SectionPage />} 
+                    />
                     
                     {AuthRoutes}
                     {ApprenticeRoutes}
