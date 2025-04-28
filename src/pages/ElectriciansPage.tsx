@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Calendar, MessageSquare, Heart, Book, Handshake, Users, BookOpen, FolderOpen } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
@@ -6,23 +5,13 @@ import BackButton from "@/components/navigation/BackButton";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const ElectriciansPage = () => {
-  const projectResources = {
-    title: "Project Overview",
-    description: "Access all your project management tools, job scheduling, and document templates in one place.",
-    icon: <FolderOpen className="h-7 w-7 text-[#FFC900]" />,
-    fullCardLink: "/electricians/project-overview",
-    children: (
-      <div className="grid grid-cols-1 gap-4 mt-4">
-        <div className="text-[#FFC900]/70 text-sm border border-[#FFC900]/20 rounded-md p-3">
-          • Project Management
-          • Job Scheduling
-          • Templates & Documents
-        </div>
-      </div>
-    )
-  };
-
   const resources = [
+    {
+      title: "Project Overview",
+      description: "Access all your project management tools, job scheduling, and document templates in one place.",
+      icon: <FolderOpen className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/project-management"
+    },
     {
       title: "Learning Hub",
       description: "Access comprehensive study materials and practice exams for professional development and qualifications.",
@@ -73,17 +62,6 @@ const ElectriciansPage = () => {
           <p className="text-[#FFC900]/80 max-w-2xl mx-auto">
             Your central resource for professional growth, technical support, and community connection within the electrical industry.
           </p>
-        </div>
-
-        <div className="mb-8">
-          <ResourceCard
-            title={projectResources.title}
-            description={projectResources.description}
-            icon={projectResources.icon}
-            fullCardLink={projectResources.fullCardLink}
-          >
-            {projectResources.children}
-          </ResourceCard>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
