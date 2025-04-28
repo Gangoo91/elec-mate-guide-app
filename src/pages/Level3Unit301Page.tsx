@@ -6,6 +6,72 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, BookOpen } from "lucide-react";
 
+// Section interface for type safety and consistency
+interface SectionProps {
+  id: string;
+  title: string;
+  description: string;
+  onStudy: (id: string) => void;
+}
+
+// Component for each section item (1.1, 1.2, etc.)
+const SectionItem: React.FC<SectionProps> = ({ id, title, description, onStudy }) => {
+  return (
+    <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-xl font-medium text-[#FFC900]">
+            <span className="mr-2">{id}</span>
+            {title}
+          </h3>
+          <p className="text-[#FFC900]/70 mt-2">
+            {description}
+          </p>
+        </div>
+        <Button 
+          variant="outline" 
+          className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
+          onClick={() => onStudy(id)}
+        >
+          <BookOpen className="h-4 w-4" />
+          Study
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+// Section group component (e.g., "1. Introduction to Environmental Technology")
+interface SectionGroupProps {
+  number: string;
+  title: string;
+  sections: Array<{
+    id: string;
+    title: string;
+    description: string;
+  }>;
+  onStudy: (id: string) => void;
+}
+
+const SectionGroup: React.FC<SectionGroupProps> = ({ number, title, sections, onStudy }) => {
+  return (
+    <div>
+      <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">{number}. {title}</h2>
+      <div className="grid grid-cols-1 gap-4">
+        {sections.map((section) => (
+          <SectionItem
+            key={section.id}
+            id={section.id}
+            title={section.title}
+            description={section.description}
+            onStudy={onStudy}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Level3Unit301Page = () => {
   const navigate = useNavigate();
   
@@ -14,10 +80,114 @@ const Level3Unit301Page = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
   };
 
+  // Study function
+  const handleStudy = (sectionId: string) => {
+    navigate(`/apprentices/study-materials/city-guilds/level-3/301/${sectionId}`);
+  };
+
   // Take quiz function
   const handleTakeQuiz = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3/301/assessment');
   };
+
+  // Section data
+  const sectionGroups = [
+    {
+      number: "1",
+      title: "Introduction to Environmental Technology",
+      sections: [
+        {
+          id: "1.1",
+          title: "Renewable Energy Systems",
+          description: "Understanding various renewable energy technologies and their applications in electrical installations"
+        },
+        {
+          id: "1.2",
+          title: "Energy Efficiency Measures",
+          description: "Understanding and implementing energy efficiency measures in electrical installations"
+        },
+        {
+          id: "1.3",
+          title: "Sustainability in Electrical Installations",
+          description: "Implementing sustainable practices in the design and installation of electrical systems"
+        }
+      ]
+    },
+    {
+      number: "2",
+      title: "Solar Photovoltaic Installation",
+      sections: [
+        {
+          id: "2.1",
+          title: "System Components Overview",
+          description: "Understanding the key components of solar photovoltaic systems"
+        },
+        {
+          id: "2.2",
+          title: "Installation Requirements",
+          description: "Guidelines and requirements for installing solar PV systems"
+        },
+        {
+          id: "2.3",
+          title: "Maintenance and Troubleshooting",
+          description: "Common issues and maintenance procedures for solar PV systems"
+        }
+      ]
+    },
+    {
+      number: "3",
+      title: "Heat Pump Technologies",
+      sections: [
+        {
+          id: "3.1",
+          title: "Air Source Heat Pumps (ASHP)",
+          description: "Understanding the principles, components, and applications of air source heat pump systems"
+        },
+        {
+          id: "3.2",
+          title: "Ground Source Heat Pumps (GSHP)",
+          description: "Understanding the principles, components, and applications of ground source heat pump systems"
+        },
+        {
+          id: "3.3",
+          title: "Electrical Requirements for Heat Pumps",
+          description: "Understanding the electrical installation and integration requirements for heat pump systems"
+        }
+      ]
+    },
+    {
+      number: "4",
+      title: "Wind Energy Systems",
+      sections: [
+        {
+          id: "4.1",
+          title: "Small-Scale Wind Turbine Technologies",
+          description: "Understanding the principles, components, and applications of small-scale wind turbine systems"
+        },
+        {
+          id: "4.2",
+          title: "Electrical Integration of Wind Systems",
+          description: "Understanding the electrical requirements and grid integration of small wind turbine systems"
+        }
+      ]
+    },
+    {
+      number: "5",
+      title: "Energy Storage Systems",
+      sections: [
+        {
+          id: "5.1",
+          title: "Battery Storage Technologies",
+          description: "Understanding different battery technologies and their applications in electrical energy storage"
+        },
+        {
+          id: "5.2",
+          title: "Integration with Renewable Sources",
+          description: "Understanding how energy storage systems integrate with renewable energy sources"
+        }
+      ]
+    }
+  ];
 
   return (
     <MainLayout>
@@ -29,334 +199,16 @@ const Level3Unit301Page = () => {
         />
         
         <div className="mt-8 space-y-8">
-          {/* Section 1: Introduction to Environmental Technology */}
-          <div>
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">1. Introduction to Environmental Technology</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {/* Section 1.1 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">1.1</span>
-                      Renewable Energy Systems
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding various renewable energy technologies and their applications in electrical installations
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/1.1')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 1.2 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">1.2</span>
-                      Energy Efficiency Measures
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding and implementing energy efficiency measures in electrical installations
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/1.2')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 1.3 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">1.3</span>
-                      Sustainability in Electrical Installations
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Implementing sustainable practices in the design and installation of electrical systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/1.3')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Section 2: Solar Photovoltaic Installation */}
-          <div>
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">2. Solar Photovoltaic Installation</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {/* Section 2.1 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">2.1</span>
-                      System Components Overview
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the key components of solar photovoltaic systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/2.1')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Section 2.2 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">2.2</span>
-                      Installation Requirements
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Guidelines and requirements for installing solar PV systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/2.2')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-              
-              {/* Section 2.3 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">2.3</span>
-                      Maintenance and Troubleshooting
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Common issues and maintenance procedures for solar PV systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/2.3')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Section 3: Heat Pump Technologies */}
-          <div>
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">3. Heat Pump Technologies</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {/* Section 3.1 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">3.1</span>
-                      Air Source Heat Pumps (ASHP)
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the principles, components, and applications of air source heat pump systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/3.1')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 3.2 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">3.2</span>
-                      Ground Source Heat Pumps (GSHP)
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the principles, components, and applications of ground source heat pump systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/3.2')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 3.3 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">3.3</span>
-                      Electrical Requirements for Heat Pumps
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the electrical installation and integration requirements for heat pump systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/3.3')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Section 4: Wind Energy Systems */}
-          <div>
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">4. Wind Energy Systems</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {/* Section 4.1 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">4.1</span>
-                      Small-Scale Wind Turbine Technologies
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the principles, components, and applications of small-scale wind turbine systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/4.1')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 4.2 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">4.2</span>
-                      Electrical Integration of Wind Systems
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding the electrical requirements and grid integration of small wind turbine systems
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/4.2')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Section 5: Energy Storage Systems */}
-          <div>
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">5. Energy Storage Systems</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {/* Section 5.1 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">5.1</span>
-                      Battery Storage Technologies
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding different battery technologies and their applications in electrical energy storage
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/5.1')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-
-              {/* Section 5.2 */}
-              <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium text-[#FFC900]">
-                      <span className="mr-2">5.2</span>
-                      Integration with Renewable Sources
-                    </h3>
-                    <p className="text-[#FFC900]/70 mt-2">
-                      Understanding how energy storage systems integrate with renewable energy sources
-                    </p>
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center gap-2 border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
-                    onClick={() => navigate('/apprentices/study-materials/city-guilds/level-3/301/5.2')}
-                  >
-                    <BookOpen className="h-4 w-4" />
-                    Study
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Map through section groups */}
+          {sectionGroups.map((group) => (
+            <SectionGroup
+              key={group.number}
+              number={group.number}
+              title={group.title}
+              sections={group.sections}
+              onStudy={handleStudy}
+            />
+          ))}
           
           {/* Unit Quiz Button */}
           <div className="mt-12">
@@ -375,4 +227,3 @@ const Level3Unit301Page = () => {
 };
 
 export default Level3Unit301Page;
-
