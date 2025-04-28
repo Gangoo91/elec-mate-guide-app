@@ -4,18 +4,18 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfiles } from '@/hooks/useProfiles';
 
-interface TypingState {
-  userId: string;
-  isTyping: boolean;
-  chatId?: string;
-  username?: string;
-}
-
-interface TypingUserInfo {
+export interface TypingUserInfo {
   userId: string;
   username?: string;
   isTyping: boolean;
   lastTyped: number;
+}
+
+export interface TypingState {
+  userId: string;
+  isTyping: boolean;
+  chatId?: string;
+  username?: string;
 }
 
 /**
@@ -95,7 +95,14 @@ export function useTypingIndicator(chatId?: string) {
     });
   };
 
-  const typingUsersArray = Object.values(typingUsers).filter(u => u.isTyping);
+  // Convert the typing users object to array for components that need it
+  const typingUsersArray = Object.values(typingUsers)
+    .filter(u => u.isTyping)
+    .map(u => ({
+      userId: u.userId,
+      username: u.username,
+      isTyping: u.isTyping
+    }));
 
   return {
     typingUsers,

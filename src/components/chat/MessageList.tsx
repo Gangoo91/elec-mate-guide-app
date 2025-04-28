@@ -13,7 +13,11 @@ import { cn } from "@/lib/utils";
 interface MessageListProps {
   messages: Message[];
   loading?: boolean;
-  typingUsers?: Record<string, boolean>;
+  typingUsers?: {
+    userId: string;
+    username?: string;
+    isTyping: boolean;
+  }[];
   showReadReceipts?: boolean;
   onRefresh?: () => Promise<void>;
 }
@@ -21,7 +25,7 @@ interface MessageListProps {
 export function MessageList({ 
   messages, 
   loading = false,
-  typingUsers = {},
+  typingUsers = [],
   showReadReceipts = false,
   onRefresh
 }: MessageListProps) {
@@ -41,7 +45,7 @@ export function MessageList({
   }, [messages]);
 
   // Get if anyone is typing
-  const isAnyoneTyping = Object.values(typingUsers).some(Boolean);
+  const isAnyoneTyping = typingUsers.length > 0;
 
   // Handle pull to refresh
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -128,7 +132,7 @@ export function MessageList({
         
         {/* Show typing indicator */}
         {isAnyoneTyping && (
-          <TypingIndicator isTyping={true} />
+          <TypingIndicator isTyping={true} typingUsers={typingUsers} />
         )}
         
         <div ref={messagesEndRef} />

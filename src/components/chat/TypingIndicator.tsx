@@ -55,7 +55,8 @@ export function TypingIndicator({ isTyping, typingUsers = [] }: TypingIndicatorP
         <span className="dot-pulse" style={{ animationDelay: '0.2s' }}>.</span>
         <span className="dot-pulse" style={{ animationDelay: '0.4s' }}>.</span>
       </div>
-      <style jsx>{`
+      <style>
+        {`
         .dot-pulse {
           animation: pulse 1.4s infinite ease-in-out;
           display: inline-block;
@@ -64,7 +65,8 @@ export function TypingIndicator({ isTyping, typingUsers = [] }: TypingIndicatorP
           0%, 100% { opacity: 0.2; transform: translateY(0); }
           50% { opacity: 1; transform: translateY(-2px); }
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 }

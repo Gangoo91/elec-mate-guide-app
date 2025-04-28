@@ -39,7 +39,7 @@ export function DirectChatDialog({
   const { toast } = useToast();
   const [reportDialogOpen, setReportDialogOpen] = useState(false);
   const [blockDialogOpen, setBlockDialogOpen] = useState(false);
-  const { typingUsers } = useTypingIndicator(`direct-${recipientId}`);
+  const { typingUsersArray } = useTypingIndicator(`direct-${recipientId}`);
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -101,7 +101,7 @@ export function DirectChatDialog({
                 <MessageList 
                   messages={messages} 
                   loading={loading} 
-                  typingUsers={typingUsers}
+                  typingUsers={typingUsersArray}
                   showReadReceipts={true}
                 />
               </div>
