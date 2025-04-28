@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -36,7 +37,13 @@ export const useQuiz = (timeLimit: number) => {
         return;
       }
 
-      setQuestions(data);
+      // Parse the JSON options into string arrays
+      const parsedQuestions: QuizQuestion[] = data.map(q => ({
+        ...q,
+        options: Array.isArray(q.options) ? q.options : JSON.parse(q.options as string)
+      }));
+
+      setQuestions(parsedQuestions);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching questions:', error);
