@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -22,6 +21,17 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     if (customAction) {
       console.log("BackButton: Using custom action");
       customAction();
+      return;
+    }
+    
+    // Project overview related navigation
+    if (location.pathname === "/electricians/project-management") {
+      navigate('/electricians/project-overview');
+      return;
+    }
+    
+    if (location.pathname === "/electricians/templates") {
+      navigate('/electricians/project-overview');
       return;
     }
     
@@ -56,20 +66,8 @@ const BackButton = ({ customAction }: BackButtonProps) => {
     }
     
     // Job scheduling pages - direct navigation to parent
-    if ([
-      '/electricians/job-scheduling/upcoming',
-      '/electricians/job-scheduling/time',
-      '/electricians/job-scheduling/clients',
-      '/electricians/job-scheduling/completion'
-    ].includes(location.pathname)) {
+    if (location.pathname.match(/\/electricians\/job-scheduling\/[a-z-]+/)) {
       console.log("BackButton: Navigating to job scheduling");
-      navigate('/electricians/job-scheduling');
-      return;
-    }
-    
-    // Handle existing route patterns
-    if (location.pathname.startsWith('/electricians/job-scheduling/')) {
-      console.log("BackButton: Navigating to job scheduling (pattern match)");
       navigate('/electricians/job-scheduling');
       return;
     }
@@ -145,7 +143,7 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       navigate("/electricians");
       return;
     }
-    // For electricians sections, go back to dashboard
+    // For electricians sections, depending on the source
     else if (location.pathname === "/electricians") {
       navigate("/dashboard");
       return;

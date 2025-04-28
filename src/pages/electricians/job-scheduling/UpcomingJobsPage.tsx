@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -64,9 +63,7 @@ const UpcomingJobsPage = () => {
   };
 
   const handleBackNavigation = () => {
-    console.log("Custom back action triggered");
-    // Using direct window.location navigation to force a clean state
-    window.location.href = '/electricians/job-scheduling';
+    navigate('/electricians/job-scheduling');
   };
 
   return (

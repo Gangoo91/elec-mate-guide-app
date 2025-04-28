@@ -14,31 +14,31 @@ const JobSchedulePage = () => {
       title: "Upcoming Jobs",
       description: "View and manage your scheduled appointments and upcoming work orders.",
       icon: <Calendar className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/job-scheduling/upcoming"
+      fullCardLink: "/electricians/job-scheduling/upcoming-jobs"
     },
     {
       title: "Time Management",
       description: "Track work hours, travel time, and job durations efficiently.",
       icon: <ClockIcon className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/job-scheduling/time"
+      fullCardLink: "/electricians/job-scheduling/time-management"
     },
     {
       title: "Client Management",
       description: "Access client details, contact information, and job histories.",
       icon: <Users className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/job-scheduling/clients"
+      fullCardLink: "/electricians/job-scheduling/client-management"
     },
     {
       title: "Job Completion",
       description: "Mark jobs as complete, collect signatures, and process paperwork.",
       icon: <CheckSquare className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/job-scheduling/completion"
+      fullCardLink: "/electricians/job-scheduling/job-completion"
     }
   ];
 
   const handleBackNavigation = () => {
-    // Using direct window.location navigation to force a clean state
-    window.location.href = "/electricians";
+    // Navigate to the Project Overview page instead of the Electricians hub
+    navigate('/electricians/project-overview');
   };
 
   return (
