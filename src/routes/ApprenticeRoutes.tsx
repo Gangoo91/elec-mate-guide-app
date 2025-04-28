@@ -40,6 +40,11 @@ export const ApprenticeRoutes = (
     <Route path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units" element={<Level2CoreUnitsPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/simplified" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/basics" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/circuits" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/regulations" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/installation" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/troubleshooting" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/exams" element={<Level2ExamsPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202" element={<Level2Unit202Page />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201" element={<Level2Unit201Page />} />
