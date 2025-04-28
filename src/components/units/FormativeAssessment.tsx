@@ -1,5 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
+import { QuestionCard } from './assessment/QuestionCard';
+import { ExplanationPanel } from './assessment/ExplanationPanel';
+import { ResultsView } from './assessment/ResultsView';
 
 interface AssessmentQuestion {
   question: string;
@@ -13,7 +16,10 @@ interface FormativeAssessmentProps {
   questionsToShow?: number;
 }
 
-export const FormativeAssessment = ({ questions, questionsToShow = 3 }: FormativeAssessmentProps) => {
+export const FormativeAssessment: React.FC<FormativeAssessmentProps> = ({ 
+  questions, 
+  questionsToShow = 3 
+}) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showExplanation, setShowExplanation] = useState(false);
   const [score, setScore] = useState(0);
@@ -21,7 +27,6 @@ export const FormativeAssessment = ({ questions, questionsToShow = 3 }: Formativ
   const [currentQuestions, setCurrentQuestions] = useState<AssessmentQuestion[]>([]);
 
   useEffect(() => {
-    // Randomly select questions when the component mounts
     selectRandomQuestions();
   }, []);
 
@@ -65,23 +70,11 @@ export const FormativeAssessment = ({ questions, questionsToShow = 3 }: Formativ
 
   if (completed) {
     return (
-      <div className="bg-[#2a2d24] p-6 rounded-lg my-6">
-        <h4 className="text-xl text-[#FFC900] mb-4">Assessment Complete!</h4>
-        <p className="text-[#FFC900]/80 mb-6">
-          You scored {score} out of {questionsToShow}.
-          {score === questionsToShow 
-            ? " Perfect! You've mastered this concept."
-            : score > questionsToShow / 2
-              ? " Good job! Review the questions you missed to improve your understanding."
-              : " You might want to review this section again to strengthen your knowledge."}
-        </p>
-        <button 
-          onClick={handleReset}
-          className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-4 py-2 rounded"
-        >
-          Try New Questions
-        </button>
-      </div>
+      <ResultsView
+        score={score}
+        totalQuestions={questionsToShow}
+        onReset={handleReset}
+      />
     );
   }
 
@@ -100,33 +93,17 @@ export const FormativeAssessment = ({ questions, questionsToShow = 3 }: Formativ
         </span>
       </div>
 
-      <p className="text-[#FFC900]/90 mb-4">{currentQuestion.question}</p>
-
-      <div className="space-y-3 mb-6">
-        {currentQuestion.options.map((option, index) => (
-          <div 
-            key={index}
-            className={`p-3 rounded-lg cursor-pointer border transition-colors ${
-              selectedAnswer === option 
-                ? showExplanation 
-                  ? option === currentQuestion.correctAnswer 
-                    ? "bg-green-900/20 border-green-500/50" 
-                    : "bg-red-900/20 border-red-500/50"
-                  : "bg-[#353a2c] border-[#FFC900]/50" 
-                : "bg-[#22251e] border-[#FFC900]/20 hover:bg-[#353a2c]"
-            }`}
-            onClick={() => handleAnswerSelect(option)}
-          >
-            <p className="text-[#FFC900]/80">{option}</p>
-          </div>
-        ))}
-      </div>
+      <QuestionCard
+        question={currentQuestion.question}
+        options={currentQuestion.options}
+        selectedAnswer={selectedAnswer}
+        correctAnswer={currentQuestion.correctAnswer}
+        showExplanation={showExplanation}
+        onAnswerSelect={handleAnswerSelect}
+      />
 
       {showExplanation && (
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6 animate-fade-in">
-          <h5 className="text-[#FFC900] font-medium mb-2">Explanation:</h5>
-          <p className="text-[#FFC900]/80 text-sm">{currentQuestion.explanation}</p>
-        </div>
+        <ExplanationPanel explanation={currentQuestion.explanation} />
       )}
 
       <div className="flex justify-between">
