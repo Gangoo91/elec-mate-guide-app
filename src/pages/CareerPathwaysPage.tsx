@@ -1,11 +1,18 @@
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
 import { Briefcase, Factory, Wrench, Settings, ClipboardCheck } from "lucide-react";
 
 const CareerPathwaysPage = () => {
+  const navigate = useNavigate();
+  
+  const handleBackClick = () => {
+    navigate('/electricians/development');
+  };
+
   const careers = [
     {
       title: "Design Engineer",
@@ -51,6 +58,7 @@ const CareerPathwaysPage = () => {
         <PageHeader 
           title="Career Pathways"
           description="Explore specialised career paths and advancement opportunities in the electrical industry."
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
