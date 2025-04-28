@@ -75,6 +75,9 @@ import ProfessionalAssociationsPage from "@/pages/development/ProfessionalAssoci
 import NAPITPage from "@/pages/development/associations/NAPITPage";
 import NAECIPage from "@/pages/development/associations/NAECIPage";
 import ECAPage from "@/pages/development/associations/ECAPage";
+import StartingBusinessPage from "@/pages/development/business/StartingBusinessPage";
+import GrowingBusinessPage from "@/pages/development/business/GrowingBusinessPage";
+import FinancialManagementPage from "@/pages/development/business/FinancialManagementPage";
 
 export const ElectricianRoutes = (
   <>
@@ -153,6 +156,9 @@ export const ElectricianRoutes = (
     <Route path="/electricians/development/associations" element={<ProfessionalAssociationsPage />} />,
     <Route path="/electricians/development/associations/napit" element={<NAPITPage />} />,
     <Route path="/electricians/development/associations/naeci" element={<NAECIPage />} />,
-    <Route path="/electricians/development/associations/eca" element={<ECAPage />} />
+    <Route path="/electricians/development/associations/eca" element={<ECAPage />} />,
+    <Route path="/electricians/development/business/starting" element={<StartingBusinessPage />} />,
+    <Route path="/electricians/development/business/growing" element={<GrowingBusinessPage />} />,
+    <Route path="/electricians/development/business/finance" element={<FinancialManagementPage />} />
   </>
 );

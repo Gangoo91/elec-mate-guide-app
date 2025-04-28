@@ -1,7 +1,6 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Briefcase } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,6 +15,7 @@ const BusinessDevelopmentPage = () => {
   const businessTopics = [
     {
       title: "Starting Your Business",
+      path: "/electricians/development/business/starting",
       points: [
         "Business Planning and Strategy",
         "Legal Requirements and Registration",
@@ -25,6 +25,7 @@ const BusinessDevelopmentPage = () => {
     },
     {
       title: "Growing Your Business",
+      path: "/electricians/development/business/growing",
       points: [
         "Marketing and Client Acquisition",
         "Pricing Strategies",
@@ -34,6 +35,7 @@ const BusinessDevelopmentPage = () => {
     },
     {
       title: "Financial Management",
+      path: "/electricians/development/business/finance",
       points: [
         "Bookkeeping and Accounting",
         "Tax Compliance",
@@ -54,7 +56,11 @@ const BusinessDevelopmentPage = () => {
         
         <div className="grid gap-6 mt-6">
           {businessTopics.map((topic, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => navigate(topic.path)}
+            >
               <CardContent className="pt-6">
                 <h3 className="text-[#FFC900] text-xl font-medium mb-4">{topic.title}</h3>
                 <ul className="space-y-2">
