@@ -10,7 +10,7 @@ const ElectriciansPage = () => {
       title: "Project Overview",
       description: "Access all your project management tools, job scheduling, and document templates in one place.",
       icon: <FolderOpen className="h-7 w-7 text-[#FFC900]" />,
-      fullCardLink: "/electricians/project-management"
+      fullCardLink: "/electricians/project-overview"
     },
     {
       title: "Learning Hub",
