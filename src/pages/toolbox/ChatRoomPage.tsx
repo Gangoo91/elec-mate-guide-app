@@ -6,7 +6,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
-import { Send, Search } from "lucide-react";
+import { Send, Search, Edit, Trash2, MessageSquare } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChatRoom } from "@/hooks/useChatRoom";
 import { Input } from "@/components/ui/input";
@@ -14,21 +14,31 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProfiles } from "@/hooks/useProfiles";
 import { format } from 'date-fns';
 import { Card } from '@/components/ui/card';
+import { ChatMessageComponent } from '@/components/chat/ChatMessage';
+import { useToast } from '@/hooks/use-toast';
+import { ChatMessage as ChatMessageType } from '@/types/chat-room';
 
 const ChatRoomPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { profiles } = useProfiles();
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [newMessage, setNewMessage] = useState("");
+  const [showConfirmDelete, setShowConfirmDelete] = useState<string | null>(null);
   
   const {
     messages,
     comments,
+    reactions,
     loading,
     sendMessage,
+    editMessage,
+    deleteMessage,
     toggleReaction,
     addComment,
+    editComment,
+    deleteComment,
     fetchMessages,
     searchMessages
   } = useChatRoom();
@@ -41,13 +51,42 @@ const ChatRoomPage = () => {
     e.preventDefault();
     if (!newMessage.trim()) return;
     
-    await sendMessage(newMessage);
-    setNewMessage("");
+    try {
+      await sendMessage(newMessage);
+      setNewMessage("");
+      toast({
+        title: "Message sent",
+        description: "Your message has been sent successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     searchMessages(searchQuery);
+  };
+
+  const handleDeleteMessage = async (messageId: string) => {
+    try {
+      await deleteMessage(messageId);
+      setShowConfirmDelete(null);
+      toast({
+        title: "Message deleted",
+        description: "Your message has been deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete message",
+        variant: "destructive",
+      });
+    }
   };
 
   useEffect(() => {
@@ -81,88 +120,27 @@ const ChatRoomPage = () => {
             </Button>
           </form>
 
-          <ScrollArea className="h-[400px] pr-4">
+          <ScrollArea className="h-[500px] pr-4">
             {loading ? (
               <div className="flex items-center justify-center h-full">
                 <p className="text-[#FFC900]/70">Loading messages...</p>
               </div>
             ) : messages.length > 0 ? (
               <div className="space-y-4">
-                {messages.map((message) => {
-                  const isCurrentUser = message.user_id === user?.id;
-                  const messageComments = comments[message.id] || [];
-                  
-                  return (
-                    <div key={message.id} className="bg-[#333] rounded-lg p-4">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="h-8 w-8 bg-[#444]">
-                          <span className="text-xs text-[#FFC900]">
-                            {getUserName(message.user_id).substring(0, 2).toUpperCase()}
-                          </span>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-center mb-1">
-                            <span className="font-semibold text-[#FFC900]">
-                              {getUserName(message.user_id)}
-                            </span>
-                            <span className="text-xs text-[#FFC900]/60">
-                              {format(new Date(message.created_at), 'PPp')}
-                            </span>
-                          </div>
-                          <p className="text-[#FFC900]/90">{message.content}</p>
-                          
-                          <div className="flex gap-4 mt-2">
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => toggleReaction(message.id, 'upvote')}
-                              className="text-xs text-[#FFC900]/70 hover:text-[#FFC900] hover:bg-[#FFC900]/10"
-                            >
-                              👍 {message.upvotes || 0}
-                            </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm"
-                              onClick={() => toggleReaction(message.id, 'downvote')}
-                              className="text-xs text-[#FFC900]/70 hover:text-[#FFC900] hover:bg-[#FFC900]/10"
-                            >
-                              👎 {message.downvotes || 0}
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                const comment = prompt('Add a comment:');
-                                if (comment) addComment(message.id, comment);
-                              }}
-                              className="text-xs text-[#FFC900]/70 hover:text-[#FFC900] hover:bg-[#FFC900]/10"
-                            >
-                              💬 {messageComments.length}
-                            </Button>
-                          </div>
-                          
-                          {messageComments.length > 0 && (
-                            <div className="mt-3 pl-3 border-l-2 border-[#444] space-y-2">
-                              {messageComments.map(comment => (
-                                <div key={comment.id} className="text-sm">
-                                  <div className="flex justify-between items-center">
-                                    <span className="font-medium text-[#FFC900]/80">
-                                      {getUserName(comment.user_id)}
-                                    </span>
-                                    <span className="text-xs text-[#FFC900]/50">
-                                      {format(new Date(comment.created_at), 'PPp')}
-                                    </span>
-                                  </div>
-                                  <p className="text-[#FFC900]/80">{comment.content}</p>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                {messages.map((message: ChatMessageType) => (
+                  <ChatMessageComponent 
+                    key={message.id}
+                    message={message}
+                    comments={comments[message.id] || []}
+                    reactions={reactions[message.id] || []}
+                    onReaction={(type) => toggleReaction(message.id, type)}
+                    onComment={(content) => addComment(message.id, content)}
+                    onDeleteComment={(commentId) => deleteComment(commentId)}
+                    onEditMessage={(content) => editMessage(message.id, content)}
+                    onDeleteMessage={() => handleDeleteMessage(message.id)}
+                    onEditComment={(commentId, content) => editComment(commentId, content)}
+                  />
+                ))}
               </div>
             ) : (
               <div className="flex items-center justify-center h-full">
@@ -180,7 +158,11 @@ const ChatRoomPage = () => {
               placeholder="Type your message here..."
               className="flex-1 bg-[#333] border-[#444] text-[#FFC900] min-h-20"
             />
-            <Button type="submit" className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 self-end">
+            <Button 
+              type="submit" 
+              className="bg-[#FFC900] text-black hover:bg-[#FFC900]/90 self-end"
+              disabled={!newMessage.trim()}
+            >
               <Send className="h-5 w-5" />
             </Button>
           </form>
