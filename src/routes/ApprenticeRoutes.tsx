@@ -22,6 +22,7 @@ import Level2SectionPage from '@/pages/units/Level2SectionPage';
 import Unit201SectionPage from '@/pages/units/Unit201SectionPage';
 import Unit203SectionPage from '@/pages/units/Unit203SectionPage'; 
 import Unit204SectionPage from '@/pages/units/Unit204SectionPage';
+import Unit210SectionPage from '@/pages/units/Unit210SectionPage';
 import UnitContentPage from '@/pages/UnitContentPage';
 import ProgressTrackingPage from '@/pages/apprentices/ProgressTrackingPage';
 import StudyGroupsPage from '@/pages/StudyGroupsPage';
@@ -49,6 +50,7 @@ export const ApprenticeRoutes = (
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201/:sectionId" element={<Unit201SectionPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/203/:sectionId" element={<Unit203SectionPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId" element={<Unit204SectionPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId" element={<Unit210SectionPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId/:sectionId" element={<Level2SectionPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<UnitContentPage />} />
