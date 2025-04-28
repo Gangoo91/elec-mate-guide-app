@@ -78,6 +78,9 @@ import ECAPage from "@/pages/development/associations/ECAPage";
 import StartingBusinessPage from "@/pages/development/business/StartingBusinessPage";
 import GrowingBusinessPage from "@/pages/development/business/GrowingBusinessPage";
 import FinancialManagementPage from "@/pages/development/business/FinancialManagementPage";
+import RenewableEnergyPage from "@/pages/electricians/specialisations/RenewableEnergyPage";
+import IndustrialAutomationPage from "@/pages/electricians/specialisations/IndustrialAutomationPage";
+import SmartBuildingPage from "@/pages/electricians/specialisations/SmartBuildingPage";
 
 export const ElectricianRoutes = (
   <>
@@ -159,6 +162,9 @@ export const ElectricianRoutes = (
     <Route path="/electricians/development/associations/eca" element={<ECAPage />} />,
     <Route path="/electricians/development/business/starting" element={<StartingBusinessPage />} />,
     <Route path="/electricians/development/business/growing" element={<GrowingBusinessPage />} />,
-    <Route path="/electricians/development/business/finance" element={<FinancialManagementPage />} />
+    <Route path="/electricians/development/business/finance" element={<FinancialManagementPage />} />,
+    <Route path="/electricians/development/specialisations/renewable" element={<RenewableEnergyPage />} />,
+    <Route path="/electricians/development/specialisations/automation" element={<IndustrialAutomationPage />} />,
+    <Route path="/electricians/development/specialisations/smart-building" element={<SmartBuildingPage />} />
   </>
 );

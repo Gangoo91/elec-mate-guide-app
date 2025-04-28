@@ -1,7 +1,6 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Factory } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,16 +16,19 @@ const IndustrySpecialisationsPage = () => {
     {
       title: "Renewable Energy Systems",
       description: "Specialise in solar PV, wind energy, and other renewable technologies.",
+      path: "/electricians/development/specialisations/renewable",
       skills: ["Solar PV Installation", "Battery Storage", "Smart Grid Integration"]
     },
     {
       title: "Industrial Automation",
       description: "Focus on automated manufacturing systems and industrial controls.",
+      path: "/electricians/development/specialisations/automation",
       skills: ["PLC Programming", "SCADA Systems", "Industrial Networks"]
     },
     {
       title: "Smart Building Technologies",
       description: "Work with building automation and smart home systems.",
+      path: "/electricians/development/specialisations/smart-building",
       skills: ["Building Management Systems", "IoT Integration", "Energy Management"]
     }
   ];
@@ -42,7 +44,11 @@ const IndustrySpecialisationsPage = () => {
         
         <div className="grid gap-6 mt-6">
           {specialisations.map((spec, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => navigate(spec.path)}
+            >
               <CardContent className="pt-6">
                 <h3 className="text-[#FFC900] text-xl font-medium mb-2">{spec.title}</h3>
                 <p className="text-[#FFC900]/70 mb-4">{spec.description}</p>
