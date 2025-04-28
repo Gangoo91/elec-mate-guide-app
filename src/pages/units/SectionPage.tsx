@@ -47,7 +47,7 @@ const SectionPage = () => {
   const currentSectionIndex = sectionKeys.indexOf(sectionId);
   const prevSection = currentSectionIndex > 0 ? sectionKeys[currentSectionIndex - 1] : null;
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
-  const sectionContent = sectionsData[sectionId];
+  const sectionContent = sectionsData[sectionId] as SectionData;
   
   // Check if this is the last section in the unit
   const isLastSection = currentSectionIndex === sectionKeys.length - 1;
