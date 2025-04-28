@@ -48,7 +48,7 @@ const Level3CoreUnitsPage = () => {
     }
   ];
 
-  // Add custom back navigation function
+  // Updated back navigation function to go to Level 3 page
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3');
   };

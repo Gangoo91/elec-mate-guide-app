@@ -18,9 +18,9 @@ export const handleStudyRoutes = (
     return true;
   }
 
-  // Level 3 pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}/)) {
-    navigate('/apprentices/study-materials/city-guilds/level-3');
+  // Level 3 unit pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}$/)) {
+    navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
     return true;
   }
 
