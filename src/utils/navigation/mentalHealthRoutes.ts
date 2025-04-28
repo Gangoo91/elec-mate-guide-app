@@ -6,7 +6,7 @@ export const handleMentalHealthRoutes = (
   navigate: (to: string) => void
 ): boolean => {
   if (location.pathname === "/mental-health") {
-    navigate("/electricians");
+    navigate("/apprentices");
     return true;
   }
   
