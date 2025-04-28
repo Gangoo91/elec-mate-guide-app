@@ -16,6 +16,14 @@ import { sections304 } from "@/data/units/sections/unit304Sections";
 import { sections305 } from "@/data/units/sections/unit305Sections";
 import { sections308 } from "@/data/units/sections/unit308Sections";
 
+// Define interface for section data to ensure type safety
+interface SectionData {
+  title: string;
+  description: string;
+  content: React.ReactNode;
+  detailedContent?: React.ReactNode; // Make detailedContent optional
+}
+
 const SectionPage = () => {
   const { unitId = "", sectionId = "" } = useParams<{ unitId: string; sectionId: string }>();
   const navigate = useNavigate();
@@ -125,6 +133,7 @@ const SectionPage = () => {
             {sectionContent.content}
           </div>
           
+          {/* Only show detailedContent if it exists */}
           {sectionContent.detailedContent && (
             <div className="mt-12 pt-8 border-t border-[#FFC900]/20">
               <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
