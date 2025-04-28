@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown, MessageSquare } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface MessageReactionsProps {
   upvotes: number;
@@ -25,6 +25,16 @@ export function MessageReactions({
   onToggleComments
 }: MessageReactionsProps) {
   const [isDisabled, setIsDisabled] = useState(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear timeout on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      if (clickTimeoutRef.current) {
+        clearTimeout(clickTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleReaction = (type: 'upvote' | 'downvote') => {
     if (isDisabled) return;
@@ -32,10 +42,15 @@ export function MessageReactions({
     setIsDisabled(true);
     onReaction(type);
     
+    // Clear any existing timeout
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    
     // Prevent multiple clicks for a short period
-    setTimeout(() => {
+    clickTimeoutRef.current = setTimeout(() => {
       setIsDisabled(false);
-    }, 500);
+    }, 1000); // Use a longer timeout to prevent rapid clicking
   };
 
   return (
