@@ -5,13 +5,17 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Book, GraduationCap } from "lucide-react";
+import { ExternalLink, Book, GraduationCap, ChevronRight } from "lucide-react";
 
 const RenewableEnergyPage = () => {
   const navigate = useNavigate();
   
   const handleBackClick = () => {
     navigate('/electricians/development/specialisations');
+  };
+
+  const navigateToCase = (caseStudy) => {
+    navigate(`/electricians/specialisations/renewable/case-studies/${caseStudy}`);
   };
 
   return (
@@ -44,7 +48,7 @@ const RenewableEnergyPage = () => {
               </ul>
               <div className="mt-4 p-4 bg-[#FFC900]/10 rounded-lg">
                 <p className="text-[#FFC900]">
-                  Visit our Certifications page for detailed information about requirements, study materials, and preparation resources.
+                  Visit our <Link to="/certifications" className="underline">Certifications page</Link> for detailed information about requirements, study materials, and preparation resources.
                 </p>
               </div>
             </CardContent>
@@ -98,8 +102,14 @@ const RenewableEnergyPage = () => {
             <CardContent className="pt-6">
               <h3 className="text-[#FFC900] text-xl font-medium mb-4">Case Studies</h3>
               <div className="space-y-4">
-                <div className="border border-[#FFC900]/20 rounded-lg p-4">
-                  <h4 className="text-[#FFC900] mb-2">Commercial Solar Installation</h4>
+                <div 
+                  className="border border-[#FFC900]/20 rounded-lg p-4 hover:bg-[#FFC900]/5 cursor-pointer transition-all"
+                  onClick={() => navigateToCase("commercial-solar")}
+                >
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-[#FFC900] mb-2">Commercial Solar Installation</h4>
+                    <ChevronRight className="h-5 w-5 text-[#FFC900]/70" />
+                  </div>
                   <p className="text-[#FFC900]/70 mb-2">Large-scale solar PV installation for a retail complex.</p>
                   <ul className="text-[#FFC900]/70 list-disc pl-4">
                     <li>250kW system capacity</li>
@@ -107,8 +117,14 @@ const RenewableEnergyPage = () => {
                     <li>Battery storage integration</li>
                   </ul>
                 </div>
-                <div className="border border-[#FFC900]/20 rounded-lg p-4">
-                  <h4 className="text-[#FFC900] mb-2">Community Energy Project</h4>
+                <div 
+                  className="border border-[#FFC900]/20 rounded-lg p-4 hover:bg-[#FFC900]/5 cursor-pointer transition-all"
+                  onClick={() => navigateToCase("community-energy")}
+                >
+                  <div className="flex justify-between items-center">
+                    <h4 className="text-[#FFC900] mb-2">Community Energy Project</h4>
+                    <ChevronRight className="h-5 w-5 text-[#FFC900]/70" />
+                  </div>
                   <p className="text-[#FFC900]/70 mb-2">Mixed renewable energy system for a housing development.</p>
                   <ul className="text-[#FFC900]/70 list-disc pl-4">
                     <li>Solar + wind hybrid system</li>

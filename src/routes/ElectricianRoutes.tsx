@@ -1,178 +1,167 @@
+
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
-import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
-import ElectriciansStudyGuidePage from "@/pages/electricians/ElectriciansStudyGuidePage";
+import ElectriciansStudyGuidePage from "@/pages/ElectriciansStudyGuidePage";
+import ElectriciansExamsPage from "@/pages/ElectriciansExamsPage";
+import CalculatorTools from "@/pages/CalculatorTools";
+import TechnicalToolsPage from "@/pages/TechnicalToolsPage";
+import InspectionTestingPage from "@/pages/InspectionTestingPage";
+import InspectionTestingGuide from "@/pages/InspectionTestingGuide";
+import JobPriceEstimatorPage from "@/pages/JobPriceEstimatorPage";
+import JobSchedulePage from "@/pages/electricians/JobSchedulePage";
+import ProjectManagementPage from "@/pages/electricians/ProjectManagementPage";
 import SolarPVInstallationPage from "@/pages/electricians/SolarPVInstallationPage";
+import SmartHomeTechnologiesPage from "@/pages/electricians/SmartHomeTechnologiesPage";
+import FireAlarmSystemsPage from "@/pages/electricians/FireAlarmSystemsPage";
+import EmergencyLightingPage from "@/pages/electricians/EmergencyLightingPage";
+import BuildingManagementSystemsPage from "@/pages/electricians/BuildingManagementSystemsPage";
+import DataNetworksPage from "@/pages/electricians/DataNetworksPage";
+import AccessControlPage from "@/pages/electricians/AccessControlPage";
+import EVInfrastructurePage from "@/pages/electricians/EVInfrastructurePage";
+import EnergyEfficiencyPage from "@/pages/electricians/EnergyEfficiencyPage";
+import EnergyStorageSystemsPage from "@/pages/electricians/EnergyStorageSystemsPage";
+import InvoiceManagerPage from "@/pages/InvoiceManagerPage";
+import TemplatesPage from "@/pages/TemplatesPage";
+import SignDocumentPage from "@/pages/SignDocumentPage";
+import LearningHubElectriciansPage from "@/pages/LearningHubElectriciansPage";
+import ProfessionalDevelopmentPage from "@/pages/ProfessionalDevelopmentPage";
+import IndustrySpecialisationsPage from "@/pages/development/IndustrySpecialisationsPage";
+import BusinessDevelopmentPage from "@/pages/development/BusinessDevelopmentPage";
+import HigherEducationPage from "@/pages/development/HigherEducationPage";
+import ProfessionalAssociationsPage from "@/pages/development/ProfessionalAssociationsPage";
+import ECAPage from "@/pages/development/associations/ECAPage";
+import NAPITPage from "@/pages/development/associations/NAPITPage";
+import NAECIPage from "@/pages/development/associations/NAECIPage";
+import FinancialManagementPage from "@/pages/development/business/FinancialManagementPage";
+import GrowingBusinessPage from "@/pages/development/business/GrowingBusinessPage";
+import StartingBusinessPage from "@/pages/development/business/StartingBusinessPage";
+import TeamManagementPage from "@/pages/electricians/project-management/TeamManagementPage";
+import ClientManagementPage from "@/pages/electricians/job-scheduling/ClientManagementPage";
+import JobCompletionPage from "@/pages/electricians/job-scheduling/JobCompletionPage";
+import TimeManagementPage from "@/pages/electricians/job-scheduling/TimeManagementPage";
+import UpcomingJobsPage from "@/pages/electricians/job-scheduling/UpcomingJobsPage";
 import SystemComponentsPage from "@/pages/electricians/solar/SystemComponentsPage";
+import InstallationProcessPage from "@/pages/electricians/solar/InstallationProcessPage";
+import SafetyProceduresPage from "@/pages/electricians/solar/SafetyProceduresPage";
+import ElectricalIntegrationPage from "@/pages/electricians/solar/ElectricalIntegrationPage";
+import DocumentationPage from "@/pages/electricians/solar/DocumentationPage";
+import WiringConnectionsPage from "@/pages/electricians/solar/WiringConnectionsPage";
 import SolarPanelsPage from "@/pages/electricians/solar/components/SolarPanelsPage";
 import InvertersPage from "@/pages/electricians/solar/components/InvertersPage";
 import MountingSystemsPage from "@/pages/electricians/solar/components/MountingSystemsPage";
 import ElectricalComponentsPage from "@/pages/electricians/solar/components/ElectricalComponentsPage";
-import InstallationProcessPage from "@/pages/electricians/solar/InstallationProcessPage";
-import ElectricalIntegrationPage from "@/pages/electricians/solar/ElectricalIntegrationPage";
-import WiringConnectionsPage from "@/pages/electricians/solar/WiringConnectionsPage";
-import SafetyProceduresPage from "@/pages/electricians/solar/SafetyProceduresPage";
-import DocumentationPage from "@/pages/electricians/solar/DocumentationPage";
-import EnergyStorageSystemsPage from "@/pages/electricians/EnergyStorageSystemsPage";
-import BuildingManagementSystemsPage from "@/pages/electricians/BuildingManagementSystemsPage";
-import SmartHomeTechnologiesPage from "@/pages/electricians/SmartHomeTechnologiesPage";
-import EVInfrastructurePage from "@/pages/electricians/EVInfrastructurePage";
-import DataNetworksPage from "@/pages/electricians/DataNetworksPage";
-import EnergyEfficiencyPage from "@/pages/electricians/EnergyEfficiencyPage";
-import EmergencyLightingPage from "@/pages/electricians/EmergencyLightingPage";
-import FireAlarmSystemsPage from "@/pages/electricians/FireAlarmSystemsPage";
-import AccessControlPage from "@/pages/electricians/AccessControlPage";
-import ElectriciansExamsPage from "@/pages/ElectriciansExamsPage";
-import ToolboxTalkPage from "@/pages/ToolboxTalkPage";
-import TechnicalToolsPage from "@/pages/TechnicalToolsPage";
-import ProfessionalDevelopmentPage from "@/pages/ProfessionalDevelopmentPage";
-import CareerPathwaysPage from "@/pages/CareerPathwaysPage";
-import JobPriceEstimatorPage from "@/pages/JobPriceEstimatorPage";
-import CalculatorTools from "@/pages/CalculatorTools";
-import InspectionTestingGuide from "@/pages/InspectionTestingGuide";
-import TemplatesPage from "@/pages/TemplatesPage";
-import SignDocumentPage from "@/pages/SignDocumentPage";
-import DesignEngineerPage from "@/pages/careers/DesignEngineerPage";
-import CommissioningEngineerPage from "@/pages/careers/CommissioningEngineerPage";
-import ProjectManagerPage from "@/pages/careers/ProjectManagerPage";
-import ControlSystemsEngineerPage from "@/pages/careers/ControlSystemsEngineerPage";
-import ElectricalInspectorPage from "@/pages/careers/ElectricalInspectorPage";
-import BuildingServicesEngineerPage from "@/pages/careers/BuildingServicesEngineerPage";
 import SiteAssessmentPage from "@/pages/electricians/solar/installation/SiteAssessmentPage";
-import StructuralAssessmentPage from "@/pages/electricians/solar/installation/StructuralAssessmentPage";
-import SolarResourcePage from "@/pages/electricians/solar/installation/SolarResourcePage";
 import SiteSurveyPage from "@/pages/electricians/solar/installation/SiteSurveyPage";
-import Mentorship from "@/pages/Mentorship";
+import SolarResourcePage from "@/pages/electricians/solar/installation/SolarResourcePage";
+import StructuralAssessmentPage from "@/pages/electricians/solar/installation/StructuralAssessmentPage";
 import SystemDesignPage from "@/pages/electricians/solar/installation/SystemDesignPage";
 import PhysicalInstallationPage from "@/pages/electricians/solar/installation/PhysicalInstallationPage";
-import CommissioningPage from "@/pages/electricians/solar/installation/CommissioningPage";
 import MountingSystemsInstallationPage from "@/pages/electricians/solar/installation/MountingSystemsInstallationPage";
 import PanelInstallationPage from "@/pages/electricians/solar/installation/PanelInstallationPage";
 import EquipmentInstallationPage from "@/pages/electricians/solar/installation/EquipmentInstallationPage";
+import CommissioningPage from "@/pages/electricians/solar/installation/CommissioningPage";
 import SafetyConsiderationsPage from "@/pages/electricians/solar/installation/SafetyConsiderationsPage";
 import RoofEvaluationPage from "@/pages/electricians/solar/installation/structural/RoofEvaluationPage";
 import LoadAnalysisPage from "@/pages/electricians/solar/installation/structural/LoadAnalysisPage";
 import SupportStructurePage from "@/pages/electricians/solar/installation/structural/SupportStructurePage";
-import JobSchedulePage from "@/pages/electricians/JobSchedulePage";
-import ProjectManagementPage from "@/pages/electricians/ProjectManagementPage";
-import UpcomingJobsPage from "@/pages/electricians/job-scheduling/UpcomingJobsPage";
-import TimeManagementPage from "@/pages/electricians/job-scheduling/TimeManagementPage";
-import ClientManagementPage from "@/pages/electricians/job-scheduling/ClientManagementPage";
-import JobCompletionPage from "@/pages/electricians/job-scheduling/JobCompletionPage";
-import TeamManagementPage from "@/pages/electricians/project-management/TeamManagementPage";
-import InvoiceManagerPage from "@/pages/InvoiceManagerPage";
-import VideoDemonstrationsPage from "@/pages/VideoDemonstrationsPage";
-import ChatRoomPage from "@/pages/toolbox/ChatRoomPage";
-import MaterialsPage from "@/pages/toolbox/MaterialsPage";
-import ToolsPage from "@/pages/toolbox/ToolsPage";
-import SafetyPage from "@/pages/toolbox/SafetyPage";
-import PricingPage from "@/pages/toolbox/PricingPage";
-import UpdatesPage from "@/pages/toolbox/UpdatesPage";
-import HigherEducationPage from "@/pages/development/HigherEducationPage";
-import IndustrySpecialisationsPage from "@/pages/development/IndustrySpecialisationsPage";
-import BusinessDevelopmentPage from "@/pages/development/BusinessDevelopmentPage";
-import ProfessionalAssociationsPage from "@/pages/development/ProfessionalAssociationsPage";
-import NAPITPage from "@/pages/development/associations/NAPITPage";
-import NAECIPage from "@/pages/development/associations/NAECIPage";
-import ECAPage from "@/pages/development/associations/ECAPage";
-import StartingBusinessPage from "@/pages/development/business/StartingBusinessPage";
-import GrowingBusinessPage from "@/pages/development/business/GrowingBusinessPage";
-import FinancialManagementPage from "@/pages/development/business/FinancialManagementPage";
-import RenewableEnergyPage from "@/pages/electricians/specialisations/RenewableEnergyPage";
+
+// Specialisations pages
 import IndustrialAutomationPage from "@/pages/electricians/specialisations/IndustrialAutomationPage";
+import RenewableEnergyPage from "@/pages/electricians/specialisations/RenewableEnergyPage";
 import SmartBuildingPage from "@/pages/electricians/specialisations/SmartBuildingPage";
+import HighVoltagePage from "@/pages/electricians/specialisations/HighVoltagePage";
+import DataCenterPage from "@/pages/electricians/specialisations/DataCenterPage";
 import HazardousAreasPage from "@/pages/electricians/specialisations/HazardousAreasPage";
 import MarineOffshorePage from "@/pages/electricians/specialisations/MarineOffshorePage";
-import DataCenterPage from "@/pages/electricians/specialisations/DataCenterPage";
-import HighVoltagePage from "@/pages/electricians/specialisations/HighVoltagePage";
+
+// Case Studies
+import CommercialSolarCaseStudy from "@/pages/electricians/specialisations/case-studies/CommercialSolarCaseStudy";
+import CommunityEnergyStudy from "@/pages/electricians/specialisations/case-studies/CommunityEnergyStudy";
+
+// Certifications
+import CertificationsPage from "@/pages/CertificationsPage";
 
 export const ElectricianRoutes = (
   <>
-    <Route key="electricians-video-demonstrations" path="/electricians/video-demonstrations" element={<VideoDemonstrationsPage />} />,
-    <Route key="electricians" path="/electricians" element={<ElectriciansPage />} />,
-    <Route key="electricians-job-scheduling" path="/electricians/job-scheduling" element={<JobSchedulePage />} />,
-    <Route key="electricians-project-management" path="/electricians/project-management" element={<ProjectManagementPage />} />,
-    <Route key="electricians-project-management-team" path="/electricians/project-management/team" element={<TeamManagementPage />} />,
-    <Route key="electricians-learning-hub" path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />,
-    <Route key="electricians-study-guide" path="/electricians/study-guide" element={<ElectriciansStudyGuidePage />} />,
-    <Route key="electricians-solar-pv" path="/electricians/solar-pv-installation" element={<SolarPVInstallationPage />} />,
-    <Route key="electricians-job-scheduling-upcoming" path="/electricians/job-scheduling/upcoming" element={<UpcomingJobsPage />} />,
-    <Route key="electricians-job-scheduling-time" path="/electricians/job-scheduling/time" element={<TimeManagementPage />} />,
-    <Route key="electricians-job-scheduling-clients" path="/electricians/job-scheduling/clients" element={<ClientManagementPage />} />,
-    <Route key="electricians-job-scheduling-completion" path="/electricians/job-scheduling/completion" element={<JobCompletionPage />} />,
-    <Route key="electricians-solar-components" path="/electricians/solar-pv-installation/system-components" element={<SystemComponentsPage />} />,
-    <Route key="electricians-solar-panels" path="/electricians/solar-pv-installation/system-components/panels" element={<SolarPanelsPage />} />,
-    <Route key="electricians-solar-inverters" path="/electricians/solar-pv-installation/system-components/inverters" element={<InvertersPage />} />,
-    <Route key="electricians-solar-mounting" path="/electricians/solar-pv-installation/system-components/mounting" element={<MountingSystemsPage />} />,
-    <Route key="electricians-solar-electrical" path="/electricians/solar-pv-installation/system-components/electrical" element={<ElectricalComponentsPage />} />,
-    <Route key="electricians-solar-installation" path="/electricians/solar-pv-installation/installation-process" element={<InstallationProcessPage />} />,
-    <Route key="electricians-solar-integration" path="/electricians/solar-pv-installation/electrical-integration" element={<ElectricalIntegrationPage />} />,
-    <Route key="electricians-solar-wiring" path="/electricians/solar-pv-installation/wiring-connections" element={<WiringConnectionsPage />} />,
-    <Route key="electricians-solar-safety" path="/electricians/solar-pv-installation/safety-procedures" element={<SafetyProceduresPage />} />,
-    <Route key="electricians-solar-documentation" path="/electricians/solar-pv-installation/documentation" element={<DocumentationPage />} />,
-    <Route key="electricians-energy-storage" path="/electricians/energy-storage-systems" element={<EnergyStorageSystemsPage />} />,
-    <Route key="electricians-building-management" path="/electricians/building-management-systems" element={<BuildingManagementSystemsPage />} />,
-    <Route key="electricians-smart-home" path="/electricians/smart-home-technologies" element={<SmartHomeTechnologiesPage />} />,
-    <Route key="electricians-ev" path="/electricians/ev-infrastructure" element={<EVInfrastructurePage />} />,
-    <Route key="electricians-data" path="/electricians/data-networks" element={<DataNetworksPage />} />,
-    <Route key="electricians-energy" path="/electricians/energy-efficiency" element={<EnergyEfficiencyPage />} />,
-    <Route key="electricians-emergency" path="/electricians/emergency-lighting" element={<EmergencyLightingPage />} />,
-    <Route key="electricians-fire" path="/electricians/fire-alarm-systems" element={<FireAlarmSystemsPage />} />,
-    <Route key="electricians-access" path="/electricians/access-control" element={<AccessControlPage />} />,
-    <Route key="electricians-exams" path="/electricians/practice-exams" element={<ElectriciansExamsPage />} />,
-    <Route key="electricians-toolbox" path="/electricians/toolbox-talk" element={<ToolboxTalkPage />} />,
-    <Route key="electricians-tools" path="/electricians/technical-tools" element={<TechnicalToolsPage />} />,
-    <Route key="electricians-development" path="/electricians/development" element={<ProfessionalDevelopmentPage />} />,
-    <Route key="electricians-career" path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />,
-    <Route key="electricians-estimator" path="/electricians/technical-tools/estimator" element={<JobPriceEstimatorPage />} />,
-    <Route key="electricians-calculators" path="/electricians/technical-tools/calculators" element={<CalculatorTools />} />,
-    <Route key="electricians-inspection" path="/electricians/technical-tools/inspection-guide" element={<InspectionTestingGuide />} />,
-    <Route key="electricians-templates" path="/electricians/technical-tools/templates" element={<TemplatesPage />} />,
-    <Route key="electricians-sign" path="/electricians/technical-tools/templates/:templateId/sign" element={<SignDocumentPage />} />,
-    <Route key="electricians-mentorship" path="/electricians/mentorship" element={<Mentorship />} />,
-    <Route key="electricians-design" path="/electricians/development/career-pathways/design" element={<DesignEngineerPage />} />,
-    <Route key="electricians-commissioning" path="/electricians/development/career-pathways/commissioning" element={<CommissioningEngineerPage />} />,
-    <Route key="electricians-project" path="/electricians/development/career-pathways/project-management" element={<ProjectManagerPage />} />,
-    <Route key="electricians-control" path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />,
-    <Route key="electricians-inspector" path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />,
-    <Route key="electricians-building" path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />,
-    <Route key="site-assessment" path="/electricians/solar-pv-installation/installation-process/site-assessment" element={<SiteAssessmentPage />} />,
-    <Route key="structural-assessment" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural" element={<StructuralAssessmentPage />} />,
-    <Route key="solar-resource" path="/electricians/solar-pv-installation/installation-process/site-assessment/solar-resource" element={<SolarResourcePage />} />,
-    <Route key="site-survey" path="/electricians/solar-pv-installation/installation-process/site-assessment/survey" element={<SiteSurveyPage />} />,
-    <Route key="system-design" path="/electricians/solar-pv-installation/installation-process/system-design" element={<SystemDesignPage />} />,
-    <Route key="physical-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation" element={<PhysicalInstallationPage />} />,
-    <Route key="commissioning" path="/electricians/solar-pv-installation/installation-process/commissioning" element={<CommissioningPage />} />,
-    <Route key="mounting-systems-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/mounting-systems" element={<MountingSystemsInstallationPage />} />,
-    <Route key="panel-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/panel-installation" element={<PanelInstallationPage />} />,
-    <Route key="equipment-installation" path="/electricians/solar-pv-installation/installation-process/physical-installation/equipment-installation" element={<EquipmentInstallationPage />} />,
-    <Route key="safety-considerations" path="/electricians/solar-pv-installation/installation-process/physical-installation/safety-considerations" element={<SafetyConsiderationsPage />} />,
-    <Route key="structural-roof" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/roof-evaluation" element={<RoofEvaluationPage />} />,
-    <Route key="structural-load" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/load-analysis" element={<LoadAnalysisPage />} />,
-    <Route key="structural-support" path="/electricians/solar-pv-installation/installation-process/site-assessment/structural/support-structure" element={<SupportStructurePage />} />,
-    <Route path="/electricians/technical-tools/invoice-manager" element={<InvoiceManagerPage />} />,
-    <Route path="/electricians/toolbox-talk/chat" element={<ChatRoomPage />} />,
-    <Route path="/electricians/toolbox-talk/materials" element={<MaterialsPage />} />,
-    <Route path="/electricians/toolbox-talk/tools" element={<ToolsPage />} />,
-    <Route path="/electricians/toolbox-talk/safety" element={<SafetyPage />} />,
-    <Route path="/electricians/toolbox-talk/pricing" element={<PricingPage />} />,
-    <Route path="/electricians/toolbox-talk/updates" element={<UpdatesPage />} />,
-    <Route path="/electricians/development/higher-education" element={<HigherEducationPage />} />,
-    <Route path="/electricians/development/specialisations" element={<IndustrySpecialisationsPage />} />,
-    <Route path="/electricians/development/business" element={<BusinessDevelopmentPage />} />,
-    <Route path="/electricians/development/associations" element={<ProfessionalAssociationsPage />} />,
-    <Route path="/electricians/development/associations/napit" element={<NAPITPage />} />,
-    <Route path="/electricians/development/associations/naeci" element={<NAECIPage />} />,
-    <Route path="/electricians/development/associations/eca" element={<ECAPage />} />,
-    <Route path="/electricians/development/business/starting" element={<StartingBusinessPage />} />,
-    <Route path="/electricians/development/business/growing" element={<GrowingBusinessPage />} />,
-    <Route path="/electricians/development/business/finance" element={<FinancialManagementPage />} />,
-    <Route path="/electricians/development/specialisations/renewable" element={<RenewableEnergyPage />} />,
-    <Route path="/electricians/development/specialisations/automation" element={<IndustrialAutomationPage />} />,
-    <Route path="/electricians/development/specialisations/smart-building" element={<SmartBuildingPage />} />,
-    <Route path="/electricians/development/specialisations/hazardous" element={<HazardousAreasPage />} />,
-    <Route path="/electricians/development/specialisations/marine" element={<MarineOffshorePage />} />,
-    <Route path="/electricians/development/specialisations/datacenter" element={<DataCenterPage />} />,
+    <Route path="/electricians" element={<ElectriciansPage />} />
+    <Route path="/electricians/study" element={<ElectriciansStudyGuidePage />} />
+    <Route path="/electricians/exams" element={<ElectriciansExamsPage />} />
+    <Route path="/electricians/technical/calculators" element={<CalculatorTools />} />
+    <Route path="/electricians/technical" element={<TechnicalToolsPage />} />
+    <Route path="/electricians/technical/inspection-testing" element={<InspectionTestingPage />} />
+    <Route path="/electricians/technical/inspection-testing/guide" element={<InspectionTestingGuide />} />
+    <Route path="/electricians/technical/job-price-estimator" element={<JobPriceEstimatorPage />} />
+    <Route path="/electricians/job-scheduling" element={<JobSchedulePage />} />
+    <Route path="/electricians/project-management" element={<ProjectManagementPage />} />
+    <Route path="/electricians/solar-pv" element={<SolarPVInstallationPage />} />
+    <Route path="/electricians/smart-home" element={<SmartHomeTechnologiesPage />} />
+    <Route path="/electricians/fire-alarms" element={<FireAlarmSystemsPage />} />
+    <Route path="/electricians/emergency-lighting" element={<EmergencyLightingPage />} />
+    <Route path="/electricians/building-management" element={<BuildingManagementSystemsPage />} />
+    <Route path="/electricians/data-networks" element={<DataNetworksPage />} />
+    <Route path="/electricians/access-control" element={<AccessControlPage />} />
+    <Route path="/electricians/ev-infrastructure" element={<EVInfrastructurePage />} />
+    <Route path="/electricians/energy-efficiency" element={<EnergyEfficiencyPage />} />
+    <Route path="/electricians/energy-storage" element={<EnergyStorageSystemsPage />} />
+    <Route path="/electricians/invoice-manager" element={<InvoiceManagerPage />} />
+    <Route path="/electricians/templates" element={<TemplatesPage />} />
+    <Route path="/electricians/sign-document" element={<SignDocumentPage />} />
+    <Route path="/electricians/learning-hub" element={<LearningHubElectriciansPage />} />
+    <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
+    <Route path="/electricians/development/specialisations" element={<IndustrySpecialisationsPage />} />
+    <Route path="/electricians/development/business" element={<BusinessDevelopmentPage />} />
+    <Route path="/electricians/development/higher-education" element={<HigherEducationPage />} />
+    <Route path="/electricians/development/associations" element={<ProfessionalAssociationsPage />} />
+    <Route path="/electricians/development/associations/eca" element={<ECAPage />} />
+    <Route path="/electricians/development/associations/napit" element={<NAPITPage />} />
+    <Route path="/electricians/development/associations/naeci" element={<NAECIPage />} />
+    <Route path="/electricians/development/business/financial-management" element={<FinancialManagementPage />} />
+    <Route path="/electricians/development/business/growing-business" element={<GrowingBusinessPage />} />
+    <Route path="/electricians/development/business/starting-business" element={<StartingBusinessPage />} />
+    <Route path="/electricians/project-management/team" element={<TeamManagementPage />} />
+    <Route path="/electricians/job-scheduling/client-management" element={<ClientManagementPage />} />
+    <Route path="/electricians/job-scheduling/job-completion" element={<JobCompletionPage />} />
+    <Route path="/electricians/job-scheduling/time-management" element={<TimeManagementPage />} />
+    <Route path="/electricians/job-scheduling/upcoming-jobs" element={<UpcomingJobsPage />} />
+    <Route path="/electricians/solar-pv/components" element={<SystemComponentsPage />} />
+    <Route path="/electricians/solar-pv/installation" element={<InstallationProcessPage />} />
+    <Route path="/electricians/solar-pv/safety" element={<SafetyProceduresPage />} />
+    <Route path="/electricians/solar-pv/electrical" element={<ElectricalIntegrationPage />} />
+    <Route path="/electricians/solar-pv/documentation" element={<DocumentationPage />} />
+    <Route path="/electricians/solar-pv/wiring" element={<WiringConnectionsPage />} />
+    <Route path="/electricians/solar-pv/components/solar-panels" element={<SolarPanelsPage />} />
+    <Route path="/electricians/solar-pv/components/inverters" element={<InvertersPage />} />
+    <Route path="/electricians/solar-pv/components/mounting" element={<MountingSystemsPage />} />
+    <Route path="/electricians/solar-pv/components/electrical" element={<ElectricalComponentsPage />} />
+    <Route path="/electricians/solar-pv/installation/site-assessment" element={<SiteAssessmentPage />} />
+    <Route path="/electricians/solar-pv/installation/site-survey" element={<SiteSurveyPage />} />
+    <Route path="/electricians/solar-pv/installation/solar-resource" element={<SolarResourcePage />} />
+    <Route path="/electricians/solar-pv/installation/structural" element={<StructuralAssessmentPage />} />
+    <Route path="/electricians/solar-pv/installation/system-design" element={<SystemDesignPage />} />
+    <Route path="/electricians/solar-pv/installation/physical" element={<PhysicalInstallationPage />} />
+    <Route path="/electricians/solar-pv/installation/mounting" element={<MountingSystemsInstallationPage />} />
+    <Route path="/electricians/solar-pv/installation/panels" element={<PanelInstallationPage />} />
+    <Route path="/electricians/solar-pv/installation/equipment" element={<EquipmentInstallationPage />} />
+    <Route path="/electricians/solar-pv/installation/commissioning" element={<CommissioningPage />} />
+    <Route path="/electricians/solar-pv/installation/safety" element={<SafetyConsiderationsPage />} />
+    <Route path="/electricians/solar-pv/installation/structural/roof" element={<RoofEvaluationPage />} />
+    <Route path="/electricians/solar-pv/installation/structural/load" element={<LoadAnalysisPage />} />
+    <Route path="/electricians/solar-pv/installation/structural/support" element={<SupportStructurePage />} />
+
+    {/* Specialisations routes */}
+    <Route path="/electricians/development/specialisations/automation" element={<IndustrialAutomationPage />} />
+    <Route path="/electricians/development/specialisations/renewable" element={<RenewableEnergyPage />} />
+    <Route path="/electricians/development/specialisations/smart-building" element={<SmartBuildingPage />} />
     <Route path="/electricians/development/specialisations/highvoltage" element={<HighVoltagePage />} />
+    <Route path="/electricians/development/specialisations/datacenter" element={<DataCenterPage />} />
+    <Route path="/electricians/specialisations/hazardous" element={<HazardousAreasPage />} />
+    <Route path="/electricians/specialisations/marine" element={<MarineOffshorePage />} />
+
+    {/* Case Studies routes */}
+    <Route path="/electricians/specialisations/renewable/case-studies/commercial-solar" element={<CommercialSolarCaseStudy />} />
+    <Route path="/electricians/specialisations/renewable/case-studies/community-energy" element={<CommunityEnergyStudy />} />
+
+    {/* Certifications */}
+    <Route path="/certifications" element={<CertificationsPage />} />
   </>
 );
