@@ -25,6 +25,13 @@ const BackButton = ({ customAction }: BackButtonProps) => {
       return;
     }
     
+    // Marine specialisation case studies handling
+    if (location.pathname.match(/\/electricians\/specialisations\/marine\/case-studies\/[a-z-]+$/)) {
+      console.log("BackButton: Marine case study - navigating back to marine specialisation");
+      navigate('/electricians/specialisations/marine');
+      return;
+    }
+    
     // Specialisation pages handling
     if (location.pathname.match(/\/electricians\/specialisations\/[a-z-]+$/)) {
       console.log("BackButton: Navigating to specialisations");

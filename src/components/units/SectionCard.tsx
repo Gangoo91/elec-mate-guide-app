@@ -9,13 +9,20 @@ interface SectionCardProps {
   title: string;
   description: string;
   isLevel3?: boolean;
+  customPath?: string; // Added to support custom navigation paths
 }
 
-const SectionCard = ({ sectionId, unitId, title, description, isLevel3 = false }: SectionCardProps) => {
+const SectionCard = ({ sectionId, unitId, title, description, isLevel3 = false, customPath }: SectionCardProps) => {
   const navigate = useNavigate();
   
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    
+    if (customPath) {
+      console.log("Navigating to custom path:", customPath);
+      navigate(customPath);
+      return;
+    }
     
     const basePath = isLevel3 
       ? '/apprentices/study-materials/city-guilds/level-3'

@@ -6,16 +6,17 @@ import { useNavigate } from 'react-router-dom';
 interface SectionContentProps {
   title: string;
   path: string;
+  description?: string; // Optional description for more context
 }
 
-const SectionContent = ({ title, path }: SectionContentProps) => {
+const SectionContent = ({ title, path, description }: SectionContentProps) => {
   const navigate = useNavigate();
   
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     
     if (path) {
-      console.log("Navigating to:", path);
+      console.log("SectionContent - Navigating to:", path);
       navigate(path);
     }
   };
@@ -26,9 +27,14 @@ const SectionContent = ({ title, path }: SectionContentProps) => {
       onClick={handleClick}
     >
       <CardContent className="pt-6">
-        <h3 className="text-[#FFC900] font-medium text-xl">
+        <h3 className="text-[#FFC900] font-medium text-xl mb-2">
           {title}
         </h3>
+        {description && (
+          <p className="text-[#FFC900]/70">
+            {description}
+          </p>
+        )}
       </CardContent>
     </Card>
   );

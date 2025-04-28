@@ -9,6 +9,14 @@ import { Zap, Settings, Wrench, Shield, FileText, Network } from "lucide-react";
 const EVInfrastructurePage = () => {
   const navigate = useNavigate();
   
+  const handleBackClick = () => {
+    if (window.location.pathname === '/electricians/specialisations/ev') {
+      navigate('/electricians/development/specialisations');
+    } else {
+      navigate('/electricians/study-guide');
+    }
+  };
+
   const modules = [
     {
       title: "EV Charging Types",
@@ -49,7 +57,7 @@ const EVInfrastructurePage = () => {
           title="EV Infrastructure"
           description="Electric vehicle charging points, load management, and installation standards for modern transport solutions."
           hideBackButton={false}
-          customBackAction={() => navigate('/electricians/study-guide')}
+          customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">

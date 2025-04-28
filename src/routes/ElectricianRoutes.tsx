@@ -1,3 +1,4 @@
+
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import ElectriciansStudyGuidePage from "@/pages/ElectriciansStudyGuidePage";
@@ -80,6 +81,8 @@ import ManufacturingAutomationStudy from "@/pages/electricians/specialisations/c
 import WarehouseAutomationStudy from "@/pages/electricians/specialisations/case-studies/WarehouseAutomationStudy";
 import SmartOfficeAutomationStudy from "@/pages/electricians/specialisations/case-studies/SmartOfficeAutomationStudy";
 import SmartHotelSystemsStudy from "@/pages/electricians/specialisations/case-studies/SmartHotelSystemsStudy";
+import CruiseShipCaseStudy from "@/pages/electricians/specialisations/case-studies/CruiseShipCaseStudy";
+import WindPlatformCaseStudy from "@/pages/electricians/specialisations/case-studies/WindPlatformCaseStudy";
 
 // Import certifications page
 import CertificationsPage from "@/pages/CertificationsPage";
@@ -168,6 +171,8 @@ export const ElectricianRoutes = (
     <Route path="/electricians/specialisations/automation/case-studies/warehouse" element={<WarehouseAutomationStudy />} />
     <Route path="/electricians/specialisations/smart-building/case-studies/office-automation" element={<SmartOfficeAutomationStudy />} />
     <Route path="/electricians/specialisations/smart-building/case-studies/hotel-systems" element={<SmartHotelSystemsStudy />} />
+    <Route path="/electricians/specialisations/marine/case-studies/cruise-ship" element={<CruiseShipCaseStudy />} />
+    <Route path="/electricians/specialisations/marine/case-studies/wind-platform" element={<WindPlatformCaseStudy />} />
 
     {/* Certifications */}
     <Route path="/certifications" element={<CertificationsPage />} />
