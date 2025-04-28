@@ -16,19 +16,19 @@ const IndustrySpecialisationsPage = () => {
     {
       title: "Renewable Energy Systems",
       description: "Specialise in solar PV, wind energy, and other renewable technologies.",
-      path: "/electricians/specialisations/renewable",
+      path: "/electricians/development/specialisations/renewable",
       skills: ["Solar PV Installation", "Battery Storage", "Smart Grid Integration"]
     },
     {
       title: "Industrial Automation",
       description: "Focus on automated manufacturing systems and industrial controls.",
-      path: "/electricians/specialisations/automation",
+      path: "/electricians/development/specialisations/automation",
       skills: ["PLC Programming", "SCADA Systems", "Industrial Networks"]
     },
     {
       title: "Smart Building Technologies",
       description: "Work with building automation and smart home systems.",
-      path: "/electricians/specialisations/smart-building",
+      path: "/electricians/development/specialisations/smart-building",
       skills: ["Building Management Systems", "IoT Integration", "Energy Management"]
     },
     {
@@ -52,13 +52,13 @@ const IndustrySpecialisationsPage = () => {
     {
       title: "Data Center Power",
       description: "Specialise in power distribution and backup systems for data centers.",
-      path: "/electricians/specialisations/datacenter",
+      path: "/electricians/development/specialisations/datacenter",
       skills: ["UPS Systems", "Power Distribution", "Cooling Infrastructure"]
     },
     {
       title: "High Voltage",
       description: "Work with high voltage installations and power distribution networks.",
-      path: "/electricians/specialisations/highvoltage",
+      path: "/electricians/development/specialisations/highvoltage",
       skills: ["HV Switchgear", "Protection Systems", "Network Design"]
     }
   ];

@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Zap, Battery, GraduationCap, Settings } from "lucide-react";
+import { ExternalLink, Battery, GraduationCap, Settings, Zap } from "lucide-react";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const EVInfrastructurePage = () => {
@@ -56,16 +56,6 @@ const EVInfrastructurePage = () => {
                     <li>• Safety Regulations</li>
                     <li>• Load Balancing</li>
                   </ul>
-                  <Button
-                    className="mt-4"
-                    variant="outline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open('https://www.cityandguilds.com/qualifications-and-apprenticeships/electric-vehicle/2919-electric-vehicle-charging-equipment-installation', '_blank');
-                    }}
-                  >
-                    Training Info <ExternalLink className="ml-2 h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -90,16 +80,6 @@ const EVInfrastructurePage = () => {
                       <h4 className="text-[#FFC900] font-medium">Senior/Specialist</h4>
                       <p className="text-[#FFC900]/70">£55,000 - £70,000+</p>
                     </div>
-                    <Button
-                      className="w-full mt-2"
-                      variant="outline"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open('https://www.checkasalary.co.uk/salary/ev-charging-installer', '_blank');
-                      }}
-                    >
-                      Latest Salary Data <ExternalLink className="ml-2 h-4 w-4" />
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -146,7 +126,7 @@ const EVInfrastructurePage = () => {
         <Card className="bg-[#22251e] border-[#FFC900]/20">
           <CardContent className="pt-6">
             <h3 className="text-[#FFC900] text-xl font-medium mb-4">Job Boards</h3>
-            <div className="space-y-4">
+            <div className="space-y-4 md:space-y-0 md:flex md:gap-4">
               <Button
                 className="w-full md:w-auto"
                 variant="outline"
@@ -158,7 +138,7 @@ const EVInfrastructurePage = () => {
                 Total Jobs <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
-                className="w-full md:w-auto ml-0 md:ml-2"
+                className="w-full md:w-auto"
                 variant="outline"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -168,7 +148,7 @@ const EVInfrastructurePage = () => {
                 Indeed UK <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
               <Button
-                className="w-full md:w-auto ml-0 md:ml-2"
+                className="w-full md:w-auto"
                 variant="outline"
                 onClick={(e) => {
                   e.stopPropagation();

@@ -34,19 +34,19 @@ const IndustrySpecialisationsPage = () => {
     {
       title: "Hazardous Areas",
       description: "Specialise in electrical installations for explosive and hazardous environments.",
-      path: "/electricians/development/specialisations/hazardous",
+      path: "/electricians/specialisations/hazardous",
       skills: ["Ex Protection", "Zone Classification", "Intrinsic Safety"]
     },
     {
       title: "Marine & Offshore",
       description: "Work on electrical systems for ships, oil rigs, and offshore installations.",
-      path: "/electricians/development/specialisations/marine",
+      path: "/electricians/specialisations/marine",
       skills: ["Marine Power Systems", "Navigation Equipment", "Corrosion Protection"]
     },
     {
       title: "EV Infrastructure",
       description: "Design and install electric vehicle charging systems and infrastructure.",
-      path: "/electricians/development/specialisations/ev",
+      path: "/electricians/specialisations/ev",
       skills: ["Charging Station Installation", "Load Management", "Smart Charging"]
     },
     {

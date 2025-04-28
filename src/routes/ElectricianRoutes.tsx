@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ElectriciansPage from "@/pages/ElectriciansPage";
 import ElectriciansStudyGuidePage from "@/pages/ElectriciansStudyGuidePage";
@@ -160,6 +159,7 @@ export const ElectricianRoutes = (
     <Route path="/electricians/development/specialisations/datacenter" element={<DataCenterPage />} />
     <Route path="/electricians/specialisations/hazardous" element={<HazardousAreasPage />} />
     <Route path="/electricians/specialisations/marine" element={<MarineOffshorePage />} />
+    <Route path="/electricians/specialisations/ev" element={<EVInfrastructurePage />} />
 
     {/* Case Studies routes */}
     <Route path="/electricians/specialisations/renewable/case-studies/commercial-solar" element={<CommercialSolarCaseStudy />} />
