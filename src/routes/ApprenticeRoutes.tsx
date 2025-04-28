@@ -46,6 +46,9 @@ export const ApprenticeRoutes = (
     <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/installation" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/troubleshooting" element={<Level2SimplifiedPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/exams" element={<Level2ExamsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/core-units" element={<Level2CoreUnitsPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/simplified" element={<Level2SimplifiedPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/exams" element={<PracticeExamsPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202" element={<Level2Unit202Page />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201" element={<Level2Unit201Page />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/203" element={<Level2Unit203Page />} />
