@@ -9,6 +9,7 @@ export const handleProjectRoutes = (
     '/electricians/project-management': '/electricians/project-overview',
     '/electricians/templates': '/electricians/project-overview',
     '/electricians/job-scheduling': '/electricians',
+    '/electricians/project-overview': '/electricians', // Add this line to handle navigation back to electricians hub
   };
 
   if (projectNavigationMap[location.pathname]) {
