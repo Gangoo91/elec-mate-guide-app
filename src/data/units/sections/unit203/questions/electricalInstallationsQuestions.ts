@@ -1,4 +1,5 @@
 
+// Using the same structure as electricalScienceQuestions.ts
 import { Question } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
 
 export const electricalInstallationsQuestions: Question[] = [
