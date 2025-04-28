@@ -13,7 +13,6 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Profile from "./pages/Profile";
 import FAQ from "./pages/FAQ";
-import EmployersPage from "./pages/EmployersPage";
 import Subscription from "./pages/Subscription";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import ManageSubscription from "./pages/ManageSubscription";
@@ -49,7 +48,6 @@ const App = () => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/welcome" element={<Welcome />} />
                     <Route path="/index" element={<Navigate to="/" replace />} />
-                    <Route path="/employers" element={<EmployersPage />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/terms" element={<Terms />} />

@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 type SubscriptionGuardProps = {
   children: ReactNode;
-  requiredTier: "Apprentice" | "Electrician" | "Employer";
+  requiredTier: "Apprentice" | "Electrician";
 };
 
 type SubscriptionStatus = {
@@ -19,7 +19,6 @@ type SubscriptionStatus = {
 const tierAccess = {
   Apprentice: ["Apprentice"],
   Electrician: ["Electrician", "Apprentice"],
-  Employer: ["Employer", "Electrician", "Apprentice"],
 };
 
 export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardProps) => {

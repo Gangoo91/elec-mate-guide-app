@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -89,13 +90,6 @@ const Navbar = () => {
                   <Link to="/electricians">
                     <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''}`}>
                       Electricians
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link to="/employers">
-                    <NavigationMenuLink className={`${navigationMenuTriggerStyle()} ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''}`}>
-                      Employers
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>

@@ -8,16 +8,9 @@ export const subscriptionPlans = [
   },
   {
     name: "Electrician", 
-    monthlyPrice: "£5.99", // Updated price
-    yearlyPrice: "£59.99", // Updated yearly price to match monthly * 10
+    monthlyPrice: "£5.99",
+    yearlyPrice: "£59.99",
     description: "Access to electrician and apprentice resources",
-  },
-  {
-    name: "Employer",
-    monthlyPrice: "£9.99",
-    yearlyPrice: "£99.99",
-    description: "Full access to all platform features and resources",
-    comingSoon: true // Added flag for coming soon
   }
 ];
 
@@ -30,9 +23,5 @@ export const stripePriceIds: Record<string, { monthly: string; yearly: string }>
   Electrician: {
     monthly: "price_1RGIdw2RKw5t5RAmEWjKbGx1",
     yearly: "price_1RGId02RKw5t5RAm2iGQJ9xU",
-  },
-  Employer: {
-    monthly: "price_1RGIgX2RKw5t5RAma3zfsmAc",
-    yearly: "price_1RGIhM2RKw5t5RAmhTfWgGLO",
-  },
+  }
 };

@@ -27,9 +27,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isActive, user, bypassAuth, nav
         <Link to="/electricians" className={`px-3 py-2 rounded-md ${isActive('/electricians') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
           Electricians
         </Link>
-        <Link to="/employers" className={`px-3 py-2 rounded-md ${isActive('/employers') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
-          Employers
-        </Link>
         <Link to="/faq" className={`px-3 py-2 rounded-md ${isActive('/faq') ? 'bg-[#FFC900]/10' : ''} text-[#FFC900] font-medium`}>
           FAQ
         </Link>
