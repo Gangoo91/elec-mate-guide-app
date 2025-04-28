@@ -79,6 +79,8 @@ import CommercialSolarCaseStudy from "@/pages/electricians/specialisations/case-
 import CommunityEnergyStudy from "@/pages/electricians/specialisations/case-studies/CommunityEnergyStudy";
 import ManufacturingAutomationStudy from "@/pages/electricians/specialisations/case-studies/ManufacturingAutomationStudy";
 import WarehouseAutomationStudy from "@/pages/electricians/specialisations/case-studies/WarehouseAutomationStudy";
+import SmartOfficeAutomationStudy from "@/pages/electricians/specialisations/case-studies/SmartOfficeAutomationStudy";
+import SmartHotelSystemsStudy from "@/pages/electricians/specialisations/case-studies/SmartHotelSystemsStudy";
 
 // Import certifications page
 import CertificationsPage from "@/pages/CertificationsPage";
@@ -164,6 +166,8 @@ export const ElectricianRoutes = (
     <Route path="/electricians/specialisations/renewable/case-studies/community-energy" element={<CommunityEnergyStudy />} />
     <Route path="/electricians/specialisations/automation/case-studies/manufacturing" element={<ManufacturingAutomationStudy />} />
     <Route path="/electricians/specialisations/automation/case-studies/warehouse" element={<WarehouseAutomationStudy />} />
+    <Route path="/electricians/specialisations/smart-building/case-studies/office-automation" element={<SmartOfficeAutomationStudy />} />
+    <Route path="/electricians/specialisations/smart-building/case-studies/hotel-systems" element={<SmartHotelSystemsStudy />} />
 
     {/* Certifications */}
     <Route path="/certifications" element={<CertificationsPage />} />
