@@ -77,9 +77,8 @@ import MarineOffshorePage from "@/pages/electricians/specialisations/MarineOffsh
 // Case Studies
 import CommercialSolarCaseStudy from "@/pages/electricians/specialisations/case-studies/CommercialSolarCaseStudy";
 import CommunityEnergyStudy from "@/pages/electricians/specialisations/case-studies/CommunityEnergyStudy";
-
-// Certifications
-import CertificationsPage from "@/pages/CertificationsPage";
+import ManufacturingAutomationStudy from "@/pages/electricians/specialisations/case-studies/ManufacturingAutomationStudy";
+import WarehouseAutomationStudy from "@/pages/electricians/specialisations/case-studies/WarehouseAutomationStudy";
 
 export const ElectricianRoutes = (
   <>
@@ -167,3 +166,4 @@ export const ElectricianRoutes = (
     <Route path="/certifications" element={<CertificationsPage />} />
   </>
 );
+
