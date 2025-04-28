@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Robot, Network, GraduationCap, Factory } from "lucide-react";
+import { ExternalLink, Bot, Network, GraduationCap, Factory } from "lucide-react";
 import ResourceCard from "@/components/shared/ResourceCard";
 
 const IndustrialAutomationPage = () => {
@@ -28,7 +28,7 @@ const IndustrialAutomationPage = () => {
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="pt-6">
               <div className="flex items-start gap-3">
-                <Robot className="h-6 w-6 text-[#FFC900] flex-shrink-0" />
+                <Bot className="h-6 w-6 text-[#FFC900] flex-shrink-0" />
                 <div>
                   <h3 className="text-[#FFC900] text-xl font-medium mb-4">Key Systems</h3>
                   <ul className="space-y-3 text-[#FFC900]/70">
@@ -131,7 +131,7 @@ const IndustrialAutomationPage = () => {
           <ResourceCard
             title="Warehouse Automation Project"
             description="Implementation of AGV systems and robotic picking stations in a distribution center, achieving 45% reduction in processing time."
-            icon={<Robot className="h-6 w-6 text-[#FFC900]" />}
+            icon={<Bot className="h-6 w-6 text-[#FFC900]" />}
             fullCardLink="/electricians/specialisations/automation/case-studies/warehouse"
           />
         </div>
