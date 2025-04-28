@@ -72,6 +72,9 @@ import HigherEducationPage from "@/pages/development/HigherEducationPage";
 import IndustrySpecialisationsPage from "@/pages/development/IndustrySpecialisationsPage";
 import BusinessDevelopmentPage from "@/pages/development/BusinessDevelopmentPage";
 import ProfessionalAssociationsPage from "@/pages/development/ProfessionalAssociationsPage";
+import NAPITPage from "@/pages/development/associations/NAPITPage";
+import NAECIPage from "@/pages/development/associations/NAECIPage";
+import ECAPage from "@/pages/development/associations/ECAPage";
 
 export const ElectricianRoutes = (
   <>
@@ -147,6 +150,9 @@ export const ElectricianRoutes = (
     <Route path="/electricians/development/higher-education" element={<HigherEducationPage />} />,
     <Route path="/electricians/development/specialisations" element={<IndustrySpecialisationsPage />} />,
     <Route path="/electricians/development/business" element={<BusinessDevelopmentPage />} />,
-    <Route path="/electricians/development/associations" element={<ProfessionalAssociationsPage />} />
+    <Route path="/electricians/development/associations" element={<ProfessionalAssociationsPage />} />,
+    <Route path="/electricians/development/associations/napit" element={<NAPITPage />} />,
+    <Route path="/electricians/development/associations/naeci" element={<NAECIPage />} />,
+    <Route path="/electricians/development/associations/eca" element={<ECAPage />} />
   </>
 );

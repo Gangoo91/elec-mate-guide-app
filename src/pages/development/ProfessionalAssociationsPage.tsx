@@ -22,7 +22,8 @@ const ProfessionalAssociationsPage = () => {
         "Technical support",
         "Industry updates",
         "Insurance schemes"
-      ]
+      ],
+      path: "/electricians/development/associations/napit"
     },
     {
       name: "NAECI (National Agreement for the Engineering Construction Industry)",
@@ -32,7 +33,8 @@ const ProfessionalAssociationsPage = () => {
         "Employment guidelines",
         "Wage agreements",
         "Working conditions"
-      ]
+      ],
+      path: "/electricians/development/associations/naeci"
     },
     {
       name: "ECA (Electrical Contractors' Association)",
@@ -42,7 +44,8 @@ const ProfessionalAssociationsPage = () => {
         "Technical advice",
         "Training programs",
         "Industry representation"
-      ]
+      ],
+      path: "/electricians/development/associations/eca"
     }
   ];
 
@@ -57,7 +60,11 @@ const ProfessionalAssociationsPage = () => {
         
         <div className="grid gap-6 mt-6">
           {associations.map((association, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => navigate(association.path)}
+            >
               <CardContent className="pt-6">
                 <h3 className="text-[#FFC900] text-xl font-medium mb-2">{association.name}</h3>
                 <p className="text-[#FFC900]/70 mb-4">{association.description}</p>
