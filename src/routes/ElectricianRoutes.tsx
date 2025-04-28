@@ -80,6 +80,9 @@ import CommunityEnergyStudy from "@/pages/electricians/specialisations/case-stud
 import ManufacturingAutomationStudy from "@/pages/electricians/specialisations/case-studies/ManufacturingAutomationStudy";
 import WarehouseAutomationStudy from "@/pages/electricians/specialisations/case-studies/WarehouseAutomationStudy";
 
+// Import certifications page
+import CertificationsPage from "@/pages/CertificationsPage";
+
 export const ElectricianRoutes = (
   <>
     <Route path="/electricians" element={<ElectriciansPage />} />
@@ -166,4 +169,3 @@ export const ElectricianRoutes = (
     <Route path="/certifications" element={<CertificationsPage />} />
   </>
 );
-
