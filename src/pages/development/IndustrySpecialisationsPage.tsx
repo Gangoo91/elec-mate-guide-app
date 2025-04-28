@@ -30,6 +30,36 @@ const IndustrySpecialisationsPage = () => {
       description: "Work with building automation and smart home systems.",
       path: "/electricians/development/specialisations/smart-building",
       skills: ["Building Management Systems", "IoT Integration", "Energy Management"]
+    },
+    {
+      title: "Hazardous Areas",
+      description: "Specialise in electrical installations for explosive and hazardous environments.",
+      path: "/electricians/development/specialisations/hazardous",
+      skills: ["Ex Protection", "Zone Classification", "Intrinsic Safety"]
+    },
+    {
+      title: "Marine & Offshore",
+      description: "Work on electrical systems for ships, oil rigs, and offshore installations.",
+      path: "/electricians/development/specialisations/marine",
+      skills: ["Marine Power Systems", "Navigation Equipment", "Corrosion Protection"]
+    },
+    {
+      title: "EV Infrastructure",
+      description: "Design and install electric vehicle charging systems and infrastructure.",
+      path: "/electricians/development/specialisations/ev",
+      skills: ["Charging Station Installation", "Load Management", "Smart Charging"]
+    },
+    {
+      title: "Data Center Power",
+      description: "Specialise in power distribution and backup systems for data centers.",
+      path: "/electricians/development/specialisations/datacenter",
+      skills: ["UPS Systems", "Power Distribution", "Cooling Infrastructure"]
+    },
+    {
+      title: "High Voltage",
+      description: "Work with high voltage installations and power distribution networks.",
+      path: "/electricians/development/specialisations/highvoltage",
+      skills: ["HV Switchgear", "Protection Systems", "Network Design"]
     }
   ];
 

@@ -81,6 +81,10 @@ import FinancialManagementPage from "@/pages/development/business/FinancialManag
 import RenewableEnergyPage from "@/pages/electricians/specialisations/RenewableEnergyPage";
 import IndustrialAutomationPage from "@/pages/electricians/specialisations/IndustrialAutomationPage";
 import SmartBuildingPage from "@/pages/electricians/specialisations/SmartBuildingPage";
+import HazardousAreasPage from "@/pages/electricians/specialisations/HazardousAreasPage";
+import MarineOffshorePage from "@/pages/electricians/specialisations/MarineOffshorePage";
+import DataCenterPage from "@/pages/electricians/specialisations/DataCenterPage";
+import HighVoltagePage from "@/pages/electricians/specialisations/HighVoltagePage";
 
 export const ElectricianRoutes = (
   <>
@@ -165,6 +169,10 @@ export const ElectricianRoutes = (
     <Route path="/electricians/development/business/finance" element={<FinancialManagementPage />} />,
     <Route path="/electricians/development/specialisations/renewable" element={<RenewableEnergyPage />} />,
     <Route path="/electricians/development/specialisations/automation" element={<IndustrialAutomationPage />} />,
-    <Route path="/electricians/development/specialisations/smart-building" element={<SmartBuildingPage />} />
+    <Route path="/electricians/development/specialisations/smart-building" element={<SmartBuildingPage />} />,
+    <Route path="/electricians/development/specialisations/hazardous" element={<HazardousAreasPage />} />,
+    <Route path="/electricians/development/specialisations/marine" element={<MarineOffshorePage />} />,
+    <Route path="/electricians/development/specialisations/datacenter" element={<DataCenterPage />} />,
+    <Route path="/electricians/development/specialisations/highvoltage" element={<HighVoltagePage />} />
   </>
 );
