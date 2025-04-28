@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Route } from 'react-router-dom';
 
@@ -31,6 +30,8 @@ import StudyGroupsPage from '@/pages/StudyGroupsPage';
 import StudyGroupDetailsPage from '@/pages/StudyGroupDetailsPage';
 import ARLearningPage from '@/pages/ARLearningPage';
 import PracticeExamsPage from '@/pages/PracticeExamsPage';
+import Level3Unit301Page from '@/pages/Level3Unit301Page';
+import Level3Unit301AssessmentPage from '@/pages/Level3Unit301AssessmentPage';
 
 export const ApprenticeRoutes = (
   <>
@@ -63,6 +64,8 @@ export const ApprenticeRoutes = (
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId" element={<Unit210SectionPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId/:sectionId" element={<Level2SectionPage />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/301" element={<Level3Unit301Page />} />
+    <Route path="/apprentices/study-materials/city-guilds/level-3/301/assessment" element={<Level3Unit301AssessmentPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<Level3UnitContentPage />} />
     <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId/:sectionId" element={<SectionPage />} />
     <Route path="/apprentices/progress-tracking" element={<ProgressTrackingPage />} />
