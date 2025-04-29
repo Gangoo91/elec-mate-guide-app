@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
@@ -16,7 +15,9 @@ import Level2Unit204Page from "../pages/Level2Unit204Page";
 import Level2Unit210Page from "../pages/Level2Unit210Page";
 import Level3Unit301Page from "../pages/Level3Unit301Page";
 import Level3Unit302Page from "../pages/Level3Unit302Page";
+import Level3Unit303Page from "../pages/Level3Unit303Page"; // Import the new Unit 303 page
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
+import Unit303SectionPage from "../pages/units/Unit303SectionPage"; // Import the new Unit 303 section page
 import PracticeExamsPage from "../pages/PracticeExamsPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
 import LearningHubPage from "../pages/LearningHubPage"; // Import the learning hub page
@@ -95,8 +96,16 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level3Unit302Page />,
   },
   {
+    path: "/apprentices/study-materials/city-guilds/level-3/303",
+    element: <Level3Unit303Page />,
+  },
+  {
     path: "/apprentices/study-materials/city-guilds/level-3/302/:sectionId",
     element: <Unit302SectionPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/303/:sectionId",
+    element: <Unit303SectionPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3/302/assessment",
@@ -105,4 +114,3 @@ const ApprenticeRoutes: RouteObject[] = [
 ];
 
 export default ApprenticeRoutes;
-

@@ -18,21 +18,17 @@ export const handleStudyRoutes = (
     return true;
   }
 
-  // Level 3 unit pages (except Unit 301 and Unit 302 which have their own pages)
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)\d{3}$/)) {
+  // Level 3 unit pages (except Unit 301, Unit 302, and Unit 303 which have their own pages)
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)\d{3}$/)) {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
     return true;
   }
   
-  // Special handling for Unit 301
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/301') {
-    // Don't redirect, allow accessing this specific unit page
-    return false;
-  }
-  
-  // Special handling for Unit 302
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302') {
-    // Don't redirect, allow accessing this specific unit page
+  // Special handling for Unit 301, 302, and 303
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/301' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/302' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303') {
+    // Don't redirect, allow accessing these specific unit pages
     return false;
   }
   
