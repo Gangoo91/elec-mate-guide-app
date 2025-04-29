@@ -20,14 +20,18 @@ const Unit201SectionPage = () => {
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
   
   const sectionContent = sections201[sectionId];
-  const isLastSection = sectionId === "1.1"; // Assuming 1.1 is the last section in Unit 201 based on available sections
+  const isLastSection = currentSectionIndex === sectionKeys.length - 1;
   
   const handleBackClick = () => {
-    navigate('/apprentices/study-materials/city-guilds/level-2/core-units/201');
+    navigate('/apprentices/study-materials/city-guilds/level-2/201');
   };
   
   const navigateToSection = (sectionId: string) => {
-    navigate(`/apprentices/study-materials/city-guilds/level-2/core-units/201/${sectionId}`);
+    navigate(`/apprentices/study-materials/city-guilds/level-2/201/${sectionId}`);
+  };
+  
+  const navigateToAssessment = () => {
+    navigate('/apprentices/study-materials/city-guilds/level-2/201/assessment');
   };
   
   useEffect(() => {
@@ -75,8 +79,8 @@ const Unit201SectionPage = () => {
             </div>
           )}
           
-          <div className="mb-8">
-            <div className="flex justify-between items-center">
+          <div className="mt-8 pt-8 border-t border-[#FFC900]/20">
+            <div className="flex justify-between items-center mb-6">
               <div>
                 {prevSection && (
                   <Button 
@@ -89,6 +93,14 @@ const Unit201SectionPage = () => {
                   </Button>
                 )}
               </div>
+
+              <Button
+                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] flex items-center gap-2"
+                onClick={navigateToAssessment}
+              >
+                Take Assessment
+              </Button>
+              
               <div>
                 {nextSection && (
                   <Button 

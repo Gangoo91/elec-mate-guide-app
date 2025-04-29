@@ -21,6 +21,7 @@ import Level3Unit303Page from "../pages/Level3Unit303Page";
 import Level3Unit304Page from "../pages/Level3Unit304Page";
 import Level3Unit305Page from "../pages/Level3Unit305Page";
 import Level3Unit308Page from "../pages/Level3Unit308Page"; // Add import for Unit 308
+import Unit201SectionPage from "../pages/units/Unit201SectionPage";
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
 import Unit303SectionPage from "../pages/units/Unit303SectionPage"; 
 import Unit304SectionPage from "../pages/units/Unit304SectionPage"; 
@@ -86,6 +87,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-2/201",
     element: <Level2Unit201Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/201/:sectionId",
+    element: <Unit201SectionPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/202",
