@@ -9,6 +9,7 @@ import RegulationsFinderChecker from "@/components/apprentices/RegulationsFinder
 import HowToGenerator from "@/components/apprentices/HowToGenerator";
 import SafetyChecklistGenerator from "@/components/apprentices/SafetyChecklistGenerator";
 import TechnicalSpecsAnalyzer from "@/components/apprentices/TechnicalSpecsAnalyzer";
+import InspectionTestingGuide from "@/components/apprentices/InspectionTestingGuide";
 
 const AIToolsPage = () => {
   return (
@@ -49,6 +50,12 @@ const AIToolsPage = () => {
           <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
             <CardContent className="p-0">
               <TechnicalSpecsAnalyzer />
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+            <CardContent className="p-0">
+              <InspectionTestingGuide />
             </CardContent>
           </Card>
         </div>
