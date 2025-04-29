@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -18,7 +17,7 @@ import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import ManageSubscription from "./pages/ManageSubscription";
 import Settings from "./pages/Settings";
 import { AuthRoutes } from "./routes/AuthRoutes";
-import ApprenticeRoutes from "./routes/ApprenticeRoutes"; // Fixed import
+import ApprenticeRoutes from "./routes/ApprenticeRoutes"; 
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import { MentalHealthRoutes } from "./routes/MentalHealthRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
@@ -115,14 +114,8 @@ const App = () => {
                       element={<Unit203SectionPage />} 
                     />
                     
-                    {/* Map apprentice routes */}
-                    {ApprenticeRoutes.map((route) => (
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
-                      />
-                    ))}
+                    {/* Apprentice routes */}
+                    <Route path="/apprentices/*" element={<ApprenticeRoutes />} />
                     
                     {/* Map other route groups */}
                     {AuthRoutes}
