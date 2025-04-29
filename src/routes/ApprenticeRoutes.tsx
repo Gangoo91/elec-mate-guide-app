@@ -36,6 +36,9 @@ import Level3Unit304AssessmentPage from "../pages/Level3Unit304AssessmentPage";
 import Level3Unit305AssessmentPage from "../pages/Level3Unit305AssessmentPage";
 import LearningHubPage from "../pages/LearningHubPage";
 import AudioTutorialsPage from "../pages/AudioTutorialsPage";
+import AIToolsPage from "../pages/AIToolsPage";
+import VideoDemonstrationsPage from "../pages/VideoDemonstrationsPage";
+import ARLearningPage from "../pages/ARLearningPage";
 
 const ApprenticeRoutes: RouteObject[] = [
   {
@@ -61,6 +64,18 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/audio-tutorials",
     element: <AudioTutorialsPage />,
+  },
+  {
+    path: "/apprentices/ai-tools",
+    element: <AIToolsPage />,
+  },
+  {
+    path: "/apprentices/video-demonstrations",
+    element: <VideoDemonstrationsPage />,
+  },
+  {
+    path: "/apprentices/ar-learning",
+    element: <ARLearningPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds",
