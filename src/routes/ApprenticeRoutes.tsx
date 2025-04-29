@@ -78,10 +78,6 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level2Unit204Page />,
   },
   {
-    path: "/apprentices/study-materials/city-guilds/level-2/205",
-    element: <Level2Unit205Page />,
-  },
-  {
     path: "/apprentices/study-materials/city-guilds/level-2/210",
     element: <Level2Unit210Page />,
   },

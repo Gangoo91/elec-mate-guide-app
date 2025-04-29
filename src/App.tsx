@@ -98,8 +98,17 @@ const App = () => {
                       element={<Unit203SectionPage />} 
                     />
                     
+                    {/* Map apprentice routes */}
+                    {ApprenticeRoutes.map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={route.element}
+                      />
+                    ))}
+                    
+                    {/* Map other route groups */}
                     {AuthRoutes}
-                    {ApprenticeRoutes}
                     {ElectricianRoutes}
                     {MentalHealthRoutes}
                     
