@@ -1,43 +1,33 @@
 
 import React from 'react';
-import { Progress } from '@/components/ui/progress';
+import { Timer, AlertTriangle } from "lucide-react";
 
 interface QuizTimerProps {
   timeRemaining: number;
   quizSubmitted: boolean;
 }
 
-export const QuizTimer: React.FC<QuizTimerProps> = ({ timeRemaining, quizSubmitted }) => {
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
+const formatTime = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
 
-  // Calculate percentage of time remaining
-  const getProgressValue = (timeRemaining: number, totalTime: number = 600) => {
-    return (timeRemaining / totalTime) * 100;
-  };
-
+export const QuizTimer = ({ timeRemaining, quizSubmitted }: QuizTimerProps) => {
   return (
-    <div className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-[#FFC900]/80 text-sm">Time Remaining</span>
-        <span className={`font-medium text-lg ${timeRemaining < 60 ? 'text-red-500' : 'text-[#FFC900]'}`}>
-          {quizSubmitted ? "Completed" : formatTime(timeRemaining)}
-        </span>
+    <div className="sticky top-16 z-10 bg-[#2a2d24] p-4 rounded-lg shadow-lg mb-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Timer className="h-5 w-5 text-[#FFC900]" />
+          <span className="text-[#FFC900] text-lg">Time: {formatTime(timeRemaining)}</span>
+        </div>
+        {timeRemaining < 60 && !quizSubmitted && (
+          <div className="flex items-center gap-2 text-[#FFC900]">
+            <AlertTriangle className="h-5 w-5" />
+            <span className="text-sm md:text-base">Less than 1 minute left!</span>
+          </div>
+        )}
       </div>
-      <Progress 
-        value={getProgressValue(timeRemaining)} 
-        className="h-2 bg-[#353a2c]" 
-        indicatorClassName={`${
-          timeRemaining < 60 
-            ? 'bg-red-500' 
-            : timeRemaining < 180 
-              ? 'bg-orange-500' 
-              : 'bg-[#FFC900]'
-        }`}
-      />
     </div>
   );
 };
