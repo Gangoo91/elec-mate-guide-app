@@ -16,7 +16,6 @@ const CityGuildsPage = () => {
       description: "Essential materials for Level 2 qualification including practical tasks, theory modules, and assessment preparation.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => {
-        console.log("Navigating to: /apprentices/study-materials/city-guilds/level-2");
         navigate('/apprentices/study-materials/city-guilds/level-2');
       }
     },
@@ -25,8 +24,6 @@ const CityGuildsPage = () => {
       description: "Advanced materials covering complex installations, fault finding, and inspection & testing preparations.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => {
-        // Fix the navigation to go directly to the Level3ElectricalPage instead
-        console.log("Navigating to: /apprentices/study-materials/city-guilds/level-3");
         navigate('/apprentices/study-materials/city-guilds/level-3');
       }
     },
@@ -35,7 +32,6 @@ const CityGuildsPage = () => {
       description: "Maintenance and Operations Engineering Technician (Electrical) qualification materials, covering industrial maintenance and operations.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => {
-        console.log("Navigating to: /apprentices/study-materials/city-guilds/moet");
         navigate('/apprentices/study-materials/city-guilds/moet');
       }
     },
@@ -44,7 +40,6 @@ const CityGuildsPage = () => {
       description: "Comprehensive preparation materials for the AM2 assessment, including practical scenarios and mock tests.",
       icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => {
-        console.log("Navigating to: /apprentices/study-materials/city-guilds/am2");
         navigate('/apprentices/study-materials/city-guilds/am2');
       }
     }
@@ -64,7 +59,7 @@ const CityGuildsPage = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mt-8">
           {materials.map((material, index) => (
             <Card 
               key={index} 
@@ -79,7 +74,10 @@ const CityGuildsPage = () => {
                     <p className="text-[#FFC900]/70 text-sm mb-4">{material.description}</p>
                     <Button 
                       className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"
-                      onClick={material.onClick}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent double navigation
+                        material.onClick();
+                      }}
                     >
                       Access Materials
                     </Button>
