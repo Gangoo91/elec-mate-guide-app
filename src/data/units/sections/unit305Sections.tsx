@@ -390,3 +390,5 @@ export const unit305sections: SectionContent[] = [
     ],
   }
 ];
+
+export default unit305sections;

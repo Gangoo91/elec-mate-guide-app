@@ -4,15 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { unit305sections } from "@/data/units/sections/unit305Sections";
-import { ContentSection } from "@/components/units/ContentSection";
+import { LearningObjective } from "@/components/units/LearningObjective";
 import { 
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger 
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import SectionGroup from "@/components/units/level3/SectionGroup";
+import { ChevronDown, BookOpen } from "lucide-react";
 
 const Unit305SectionPage = () => {
   const { sectionId } = useParams<{ sectionId: string }>();
@@ -86,7 +85,10 @@ const Unit305SectionPage = () => {
                 variant="ghost" 
                 className="w-full flex items-center justify-between p-4 text-left hover:bg-[#32352b]"
               >
-                <span className="text-[#FFC900] text-lg font-medium">{item.title}</span>
+                <div className="flex items-center">
+                  <BookOpen className="h-5 w-5 text-[#FFC900] mr-2" />
+                  <span className="text-[#FFC900] text-lg font-medium">{item.title}</span>
+                </div>
                 <ChevronDown 
                   className={`h-5 w-5 text-[#FFC900] transition-transform duration-200 ${openSections[index] ? 'rotate-180' : ''}`} 
                 />
