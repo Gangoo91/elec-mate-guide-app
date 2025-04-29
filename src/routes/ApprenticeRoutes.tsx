@@ -1,24 +1,24 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
-import ApprenticeDashboardPage from "@/pages/ApprenticeDashboardPage";
-import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
-import CityGuildsPage from "@/pages/CityGuildsPage";
-import Level2HomePage from "@/pages/Level2HomePage";
-import Level3HomePage from "@/pages/Level3HomePage";
-import MOETHomePage from "@/pages/MOETHomePage";
-import AM2HomePage from "@/pages/AM2HomePage";
-import UnitContentPage from "@/pages/UnitContentPage";
-import Level2Unit201Page from "@/pages/Level2Unit201Page";
-import Level2Unit202Page from "@/pages/Level2Unit202Page";
-import Level2Unit203Page from "@/pages/Level2Unit203Page";
-import Level2Unit204Page from "@/pages/Level2Unit204Page";
-import Level2Unit205Page from "@/pages/Level2Unit205Page";
-import Level2Unit210Page from "@/pages/Level2Unit210Page";
-import Level3Unit301Page from "@/pages/Level3Unit301Page";
-import Level3Unit302Page from "@/pages/Level3Unit302Page";
-import Unit302SectionPage from "@/pages/units/Unit302SectionPage";
-import PracticeExamsPage from "@/pages/PracticeExamsPage";
-import Level3Unit302AssessmentPage from "@/pages/Level3Unit302AssessmentPage";
+import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
+import StudyMaterialsPage from "../pages/StudyMaterialsPage";
+import CityGuildsPage from "../pages/CityGuildsPage";
+import Level2HomePage from "../pages/Level2CoreUnitsPage"; // Using existing page
+import Level3HomePage from "../pages/Level3CoreUnitsPage"; // Using existing page
+import MOETHomePage from "../pages/MOETPage"; // Using existing page
+import AM2HomePage from "../pages/AM2Page"; // Using existing page
+import UnitContentPage from "../pages/UnitContentPage";
+import Level2Unit201Page from "../pages/Level2Unit201Page";
+import Level2Unit202Page from "../pages/Level2Unit202Page";
+import Level2Unit203Page from "../pages/Level2Unit203Page";
+import Level2Unit204Page from "../pages/Level2Unit204Page";
+import Level2Unit210Page from "../pages/Level2Unit210Page";
+import Level3Unit301Page from "../pages/Level3Unit301Page";
+import Level3Unit302Page from "../pages/Level3Unit302Page";
+import Unit302SectionPage from "../pages/units/Unit302SectionPage";
+import PracticeExamsPage from "../pages/PracticeExamsPage";
+import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
 
 const ApprenticeRoutes: RouteObject[] = [
   {

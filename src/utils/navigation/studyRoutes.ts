@@ -35,6 +35,12 @@ export const handleStudyRoutes = (
     // Don't redirect, allow accessing this specific unit page
     return false;
   }
+  
+  // Special handling for Unit 302 assessment
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment') {
+    // Don't redirect, allow accessing the assessment page
+    return false;
+  }
 
   // Level 3 section pages
   if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}\/\d+\.\d+/)) {

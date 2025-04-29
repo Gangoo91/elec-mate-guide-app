@@ -18,7 +18,7 @@ import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import ManageSubscription from "./pages/ManageSubscription";
 import Settings from "./pages/Settings";
 import { AuthRoutes } from "./routes/AuthRoutes";
-import { ApprenticeRoutes } from "./routes/ApprenticeRoutes";
+import ApprenticeRoutes from "./routes/ApprenticeRoutes"; // Fixed import
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import { MentalHealthRoutes } from "./routes/MentalHealthRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
