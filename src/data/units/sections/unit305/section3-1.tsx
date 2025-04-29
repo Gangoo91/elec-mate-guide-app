@@ -119,7 +119,6 @@ export const section3_1: Section = {
               <div className="font-mono mt-2 text-center">
                 Corrected capacity = 32A × 0.88 × 0.7 = 19.71A
               </div>
-            </p>
             </div>
           </>
         }
