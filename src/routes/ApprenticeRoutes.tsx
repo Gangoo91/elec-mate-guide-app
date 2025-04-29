@@ -6,7 +6,6 @@ import Level2SimplifiedPage from "@/pages/Level2SimplifiedPage";
 import Level2CoreUnitsPage from "@/pages/Level2CoreUnitsPage";
 import Level2ElectricalPage from "@/pages/Level2ElectricalPage";
 import Level2ExamsPage from "@/pages/Level2ExamsPage";
-import Level3HomePage from "@/pages/Level3HomePage";
 import Level3Unit301Page from "@/pages/Level3Unit301Page";
 import Level3Unit303Page from "@/pages/Level3Unit303Page";
 import Level3Unit304Page from "@/pages/Level3Unit304Page";
@@ -29,17 +28,17 @@ import Unit204SectionPage from "@/pages/units/Unit204SectionPage";
 import Unit210SectionPage from "@/pages/units/Unit210SectionPage";
 import UnitContentPage from "@/pages/UnitContentPage";
 import Level2Unit201AssessmentPage from "@/pages/Level2Unit201AssessmentPage";
-import ApprenticeDashboard from "@/pages/ApprenticeDashboard";
+import Dashboard from "@/pages/Dashboard";
 
 const ApprenticeRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<ApprenticeDashboard />} />
-      <Route path="dashboard" element={<ApprenticeDashboard />} />
+      <Route path="/" element={<Dashboard />} />
+      <Route path="dashboard" element={<Dashboard />} />
       <Route path="study-materials" element={<StudyMaterialsPage />} />
       
       {/* Level 3 Routes */}
-      <Route path="study-materials/city-guilds/level-3" element={<Level3HomePage />} />
+      <Route path="study-materials/city-guilds/level-3" element={<Level3Unit301Page />} />
       <Route path="study-materials/city-guilds/level-3/301" element={<Level3Unit301Page />} />
       <Route path="study-materials/city-guilds/level-3/301/:sectionId" element={<Unit301SectionPage />} />
       <Route path="study-materials/city-guilds/level-3/303" element={<Level3Unit303Page />} />
