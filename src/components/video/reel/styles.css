@@ -1,0 +1,35 @@
+
+.video-reel-container {
+  height: calc(100vh - 120px);
+  position: relative;
+  overflow: hidden;
+}
+
+.video-reel-item {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-reel-player {
+  flex-grow: 1;
+  width: 100%;
+  position: relative;
+}
+
+.video-reel-info {
+  background: rgba(34, 37, 30, 0.9);
+  padding: 1rem;
+  width: 100%;
+}
+
+/* Custom scrollbar for the category buttons */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
