@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
@@ -34,6 +35,7 @@ import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage";
 import Level3Unit304AssessmentPage from "../pages/Level3Unit304AssessmentPage";
 import Level3Unit305AssessmentPage from "../pages/Level3Unit305AssessmentPage";
 import LearningHubPage from "../pages/LearningHubPage";
+import AudioTutorialsPage from "../pages/AudioTutorialsPage";
 
 const ApprenticeRoutes: RouteObject[] = [
   {
@@ -55,6 +57,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/practice-exams",
     element: <PracticeExamsPage />,
+  },
+  {
+    path: "/apprentices/audio-tutorials",
+    element: <AudioTutorialsPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds",

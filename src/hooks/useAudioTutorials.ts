@@ -1,25 +1,12 @@
 
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
+import { audioTutorials } from '@/data/audioTutorials';
 import { AudioTutorial, AudioCategory } from '@/types/audio';
 
 export const useAudioTutorials = () => {
-  const { data: tutorials = [], isLoading } = useQuery({
-    queryKey: ['audio-tutorials'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('audio_tutorials')
-        .select('*')
-        .order('created_at', { ascending: true });
-
-      if (error) {
-        console.error('Error fetching audio tutorials:', error);
-        return [];
-      }
-
-      return data as unknown as AudioTutorial[];
-    }
-  });
+  // Using the imported data instead of a database call
+  const [tutorials] = useState<AudioTutorial[]>(audioTutorials);
+  const [isLoading] = useState(false);
 
   const categories: AudioCategory[] = [
     'electrical_theory',
