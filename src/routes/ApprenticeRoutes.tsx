@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
@@ -5,6 +6,7 @@ import StudyMaterialsPage from "../pages/StudyMaterialsPage";
 import CityGuildsPage from "../pages/CityGuildsPage";
 import Level2HomePage from "../pages/Level2CoreUnitsPage"; // Using existing page
 import Level3HomePage from "../pages/Level3CoreUnitsPage"; // Using existing page
+import Level3ElectricalPage from "../pages/Level3ElectricalPage"; // Import the Level3ElectricalPage
 import MOETHomePage from "../pages/MOETPage"; // Using existing page
 import AM2HomePage from "../pages/AM2Page"; // Using existing page
 import UnitContentPage from "../pages/UnitContentPage";
@@ -57,6 +59,10 @@ const ApprenticeRoutes: RouteObject[] = [
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3",
+    element: <Level3ElectricalPage />, // Make sure this is Level3ElectricalPage
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/core-units",
     element: <Level3HomePage />,
   },
   {

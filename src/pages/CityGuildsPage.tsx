@@ -25,6 +25,7 @@ const CityGuildsPage = () => {
       description: "Advanced materials covering complex installations, fault finding, and inspection & testing preparations.",
       icon: <Book className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => {
+        // Fix the navigation to go directly to the Level3ElectricalPage instead
         console.log("Navigating to: /apprentices/study-materials/city-guilds/level-3");
         navigate('/apprentices/study-materials/city-guilds/level-3');
       }
@@ -65,7 +66,11 @@ const CityGuildsPage = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {materials.map((material, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={material.onClick}
+            >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   {material.icon}

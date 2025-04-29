@@ -18,8 +18,14 @@ export const handleStudyRoutes = (
     return true;
   }
 
+  // Special handling for Level 3 page (add an explicit check)
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3') {
+    // Don't redirect, allow accessing the Level 3 electrical page
+    return false;
+  }
+
   // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, and Unit 304 which have their own pages)
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)\d{3}$/)) {
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!core-units$)\d{3}$/)) {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
     return true;
   }
