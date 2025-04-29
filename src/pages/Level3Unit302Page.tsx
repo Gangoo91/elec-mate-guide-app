@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, BookOpen } from "lucide-react";
+import LessonContent from "@/components/units/LessonContent";
 
 // Section interface for type safety and consistency
 interface SectionProps {
@@ -90,47 +91,157 @@ const Level3Unit302Page = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3/302/assessment');
   };
 
-  // Section data
+  // Section data - expanded to include all the content you provided
   const sectionGroups = [
     {
       number: "1",
-      title: "Three-Phase Systems",
+      title: "Basic Electrical Theory",
       sections: [
         {
           id: "1.1",
-          title: "Three-Phase Generation and Distribution",
-          description: "Understanding the principles of three-phase power generation and distribution systems"
+          title: "Ohm's Law and Power Formulas",
+          description: "Understanding V = IR and power formulas: P = VI, P = I²R, P = V²/R"
         },
         {
           id: "1.2",
-          title: "Star and Delta Connections",
-          description: "Learning the different connection methods for three-phase systems and their applications"
+          title: "Energy Calculations",
+          description: "Calculating energy consumption using Energy = Power × Time (kWh)"
         },
         {
           id: "1.3",
-          title: "Phase Relationships and Power Calculations",
-          description: "Understanding phase relationships and performing power calculations in three-phase systems"
+          title: "Series and Parallel Circuits",
+          description: "How voltage, current, and resistance behave in series vs parallel circuits"
         }
       ]
     },
     {
       number: "2",
-      title: "Motors and Drives",
+      title: "Electromagnetic Effects",
       sections: [
         {
           id: "2.1",
-          title: "Motor Types and Characteristics",
-          description: "Exploring different types of electric motors and their operational characteristics"
+          title: "Magnetism and Electromagnetism",
+          description: "How electricity creates magnetism and principles of electromagnets"
         },
         {
           id: "2.2",
-          title: "Starting Methods and Speed Control",
-          description: "Understanding various motor starting techniques and speed control methods"
+          title: "Electromagnetic Induction",
+          description: "How moving magnetic fields generate electricity (generators and transformers)"
         },
         {
           id: "2.3",
-          title: "Motor Protection Requirements",
-          description: "Understanding protection devices and strategies for electrical motors"
+          title: "Applications",
+          description: "Practical applications in motors, generators, relays, and transformers"
+        }
+      ]
+    },
+    {
+      number: "3",
+      title: "DC Theory",
+      sections: [
+        {
+          id: "3.1",
+          title: "DC Circuit Behavior",
+          description: "Understanding how direct current behaves in electrical circuits"
+        },
+        {
+          id: "3.2",
+          title: "Batteries and DC Supplies",
+          description: "Principles of DC power sources and their characteristics"
+        },
+        {
+          id: "3.3",
+          title: "DC Calculations",
+          description: "Calculations for resistance, voltage drop, and current in DC circuits"
+        }
+      ]
+    },
+    {
+      number: "4",
+      title: "AC Theory",
+      sections: [
+        {
+          id: "4.1",
+          title: "AC vs DC",
+          description: "Understanding the fundamental differences between AC and DC"
+        },
+        {
+          id: "4.2",
+          title: "Sine Waves",
+          description: "Understanding amplitude, frequency, period and waveform characteristics"
+        },
+        {
+          id: "4.3",
+          title: "RMS Values",
+          description: "Root Mean Square values and calculations (Vrms = 0.707 × Vpeak)"
+        },
+        {
+          id: "4.4",
+          title: "Phase Relationships",
+          description: "Understanding voltage and current phase relationships in AC circuits"
+        }
+      ]
+    },
+    {
+      number: "5",
+      title: "Capacitance",
+      sections: [
+        {
+          id: "5.1",
+          title: "Capacitor Principles",
+          description: "How capacitors store electric charge and their construction"
+        },
+        {
+          id: "5.2",
+          title: "Capacitor Behavior",
+          description: "Charging and discharging of capacitors in circuits"
+        },
+        {
+          id: "5.3",
+          title: "Capacitor Calculations",
+          description: "Using formulas like Q = CV for capacitance calculations"
+        }
+      ]
+    },
+    {
+      number: "6",
+      title: "Inductance",
+      sections: [
+        {
+          id: "6.1",
+          title: "Inductor Principles",
+          description: "How coils store energy in magnetic fields and inductor construction"
+        },
+        {
+          id: "6.2",
+          title: "Inductance in AC Circuits",
+          description: "Effects of inductance on alternating current circuits"
+        },
+        {
+          id: "6.3",
+          title: "Types of Inductance",
+          description: "Understanding self-inductance and mutual inductance principles"
+        }
+      ]
+    },
+    {
+      number: "7",
+      title: "Power in AC Circuits",
+      sections: [
+        {
+          id: "7.1",
+          title: "Power Types",
+          description: "True Power (Watts), Reactive Power (VARs), Apparent Power (VA)"
+        },
+        {
+          id: "7.2",
+          title: "Power Factor",
+          description: "Understanding power factor and its calculation (True Power ÷ Apparent Power)"
+        },
+        {
+          id: "7.3",
+          title: "Power Factor Correction",
+          description: "Methods and importance of improving power factor in electrical systems"
         }
       ]
     }
@@ -141,9 +252,72 @@ const Level3Unit302Page = () => {
       <div className="container px-4 py-8">
         <PageHeader 
           title="Unit 302: Principles of Electrical Science"
-          description="Advanced electrical theory, including three-phase systems, motors, and complex circuit analysis."
+          description="Advanced electrical theory, including electrical fundamentals, electromagnetic principles, DC/AC theory, capacitance, inductance, and power calculations."
           customBackAction={handleBackClick}
         />
+        
+        {/* Unit Overview */}
+        <LessonContent title="What You Learn in Unit 302">
+          <p className="font-medium">
+            This unit is heavy on theory — it builds on the basic electrical science you learned at Level 2 but goes much deeper.
+          </p>
+          
+          <div className="mt-4 space-y-4">
+            <h3 className="text-lg font-medium text-[#FFC900]">Summary of What Unit 302 Covers:</h3>
+            <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+              <li>The science behind electricity</li>
+              <li>How electricity behaves in different types of circuits</li>
+              <li>How electrical machines (like motors and transformers) work</li>
+              <li>Mathematical calculations to solve real-world electrical problems</li>
+            </ul>
+            
+            <h3 className="text-lg font-medium text-[#FFC900] mt-4">Typical Exam Questions Could Include:</h3>
+            <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+              <li>"State Ohm's Law and calculate the resistance when voltage = 240V and current = 2A."</li>
+              <li>"Describe what happens when a conductor cuts through magnetic lines of force."</li>
+              <li>"Explain the difference between true power and apparent power in an AC circuit."</li>
+              <li>"Sketch a sine wave and label the peak voltage and time period."</li>
+            </ul>
+            
+            <h3 className="text-lg font-medium text-[#FFC900] mt-4">Important Formulas You MUST Know:</h3>
+            <div className="bg-[#1a1d17] p-4 rounded-md mt-2">
+              <table className="w-full text-[#FFC900]/90">
+                <thead>
+                  <tr>
+                    <th className="text-left pb-2 border-b border-[#FFC900]/30">Formula</th>
+                    <th className="text-left pb-2 border-b border-[#FFC900]/30">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="py-2 border-b border-[#FFC900]/10">V = IR</td>
+                    <td className="py-2 border-b border-[#FFC900]/10">Ohm's Law</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 border-b border-[#FFC900]/10">P = VI</td>
+                    <td className="py-2 border-b border-[#FFC900]/10">Power</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 border-b border-[#FFC900]/10">Energy = P × t</td>
+                    <td className="py-2 border-b border-[#FFC900]/10">Energy consumption (in kWh)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 border-b border-[#FFC900]/10">Vrms = 0.707 × Vpeak</td>
+                    <td className="py-2 border-b border-[#FFC900]/10">RMS Voltage</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 border-b border-[#FFC900]/10">Apparent Power (VA) = Voltage × Current</td>
+                    <td className="py-2 border-b border-[#FFC900]/10"></td>
+                  </tr>
+                  <tr>
+                    <td className="py-2">Power Factor = True Power / Apparent Power</td>
+                    <td className="py-2"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </LessonContent>
         
         <div className="mt-8 space-y-8">
           {/* Map through section groups */}
