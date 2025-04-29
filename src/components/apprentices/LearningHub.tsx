@@ -12,6 +12,11 @@ const LearningHub = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
+  
+  const handleCardClick = (path: string) => {
+    console.log("Navigating to:", path);
+    navigate(path);
+  };
 
   const resources = [
     {
@@ -71,7 +76,7 @@ const LearningHub = () => {
             title={resource.title}
             description={resource.description}
             icon={resource.icon}
-            fullCardLink={resource.path}
+            onClick={() => handleCardClick(resource.path)}
           />
         ))}
       </div>
