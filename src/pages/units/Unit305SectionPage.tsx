@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { unit305sections } from "@/data/units/sections/unit305Sections";
+import { unit305sections } from "@/data/units/sections/unit305";
 import { LearningObjective } from "@/components/units/LearningObjective";
 import { 
   Collapsible,
