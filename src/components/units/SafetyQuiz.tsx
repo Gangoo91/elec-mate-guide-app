@@ -9,6 +9,7 @@ import { environmentalTechnologyQuestions } from '@/data/units/sections/unit301/
 import { faultDiagnosisQuestions } from '@/data/units/sections/unit303/questions/faultDiagnosisQuestions';
 import { inspectionTestingQuestions } from '@/data/units/sections/unit304/questions/inspectionTestingQuestions';
 import { electricalDesignQuestions } from '@/data/units/sections/unit305/questions/electricalDesignQuestions';
+import { careerAwarenessQuestions } from '@/data/units/sections/unit308/questions/careerAwarenessQuestions';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/components/ui/use-toast';
 import { QuizTimer } from './quiz/QuizTimer';
@@ -79,6 +80,9 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
         break;
       case "305":
         questionPool = electricalDesignQuestions as unknown as SourceQuestion[];
+        break;
+      case "308":
+        questionPool = careerAwarenessQuestions as unknown as SourceQuestion[];
         break;
       default:
         questionPool = healthAndSafetyQuestions as unknown as SourceQuestion[];
@@ -158,7 +162,7 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
             Unit {unitId} Final Assessment
           </h3>
           <p className="text-[#FFC900]/80 mb-6">
-            This assessment contains {questionsToShow} questions randomly selected from a pool of {unitId === "301" || unitId === "303" || unitId === "304" || unitId === "305" ? 50 : "multiple"} questions to test your knowledge.
+            This assessment contains {questionsToShow} questions randomly selected from a pool of {unitId === "301" || unitId === "303" || unitId === "304" || unitId === "305" || unitId === "308" ? 50 : "multiple"} questions to test your knowledge.
             You'll have {Math.floor(timeLimit / 60)} minutes to complete the assessment.
           </p>
           <button

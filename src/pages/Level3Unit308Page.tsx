@@ -6,6 +6,9 @@ import PageHeader from "@/components/layout/PageHeader";
 import { unit308 } from '@/data/units/unit308';
 import SectionGroup from "@/components/units/level3/SectionGroup";
 import { SafetyQuiz } from "@/components/units/SafetyQuiz";
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+import { careerAwarenessQuestions } from '@/data/units/sections/unit308/questions/careerAwarenessQuestions';
 
 const Level3Unit308Page = () => {
   const navigate = useNavigate();
@@ -47,7 +50,7 @@ const Level3Unit308Page = () => {
     },
     {
       number: '4',
-      title: 'Employer Expectations and Professional Conduct',
+      title: 'Professional Conduct',
       sections: [
         { id: '4.1', title: 'Professional Skills and Conduct', description: 'Key skills employers expect and professional behavior' }
       ]
@@ -82,32 +85,12 @@ const Level3Unit308Page = () => {
           customBackAction={handleBackClick}
         />
         
-        {showQuiz ? (
-          <div className="mt-8">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold text-[#FFC900]">Unit 308 Assessment</h2>
-              <button 
-                onClick={() => setShowQuiz(false)}
-                className="text-[#FFC900] hover:text-[#e5b700] border border-[#FFC900]/30 hover:border-[#FFC900] rounded-md px-4 py-2"
-              >
-                Back to Content
-              </button>
-            </div>
-            <SafetyQuiz unitId="308" timeLimit={600} questionsToShow={10} />
-          </div>
-        ) : (
-          <>
-            <div className="mt-8 flex justify-between items-center">
-              <h2 className="text-2xl font-semibold text-[#FFC900]">Unit Content</h2>
-              <button
-                onClick={() => setShowQuiz(true)}
-                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-4 py-2 rounded-md font-medium"
-              >
-                Take Assessment Quiz
-              </button>
-            </div>
+        <div className="mt-8 space-y-10">
+          {/* Unit Content */}
+          <div>
+            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Unit Content</h2>
             
-            <div className="space-y-10 mt-6">
+            <div className="space-y-10">
               {sectionGroups.map((group, index) => (
                 <SectionGroup
                   key={index}
@@ -118,8 +101,32 @@ const Level3Unit308Page = () => {
                 />
               ))}
             </div>
-          </>
-        )}
+          </div>
+          
+          {/* Assessment Quiz - positioned at the bottom */}
+          <div className="mt-12 pt-6 border-t border-gray-700">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+              <h2 className="text-2xl font-semibold text-[#FFC900]">Unit 308 Assessment</h2>
+              <Button
+                onClick={() => setShowQuiz(!showQuiz)}
+                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-4 py-2 rounded-md font-medium mt-2 md:mt-0 flex items-center gap-2"
+              >
+                {showQuiz ? "Hide Assessment Quiz" : "Take Assessment Quiz"}
+                {!showQuiz && <ArrowRight className="h-4 w-4" />}
+              </Button>
+            </div>
+            
+            {showQuiz && (
+              <div className="mt-4">
+                <SafetyQuiz 
+                  unitId="308" 
+                  timeLimit={600} 
+                  questionsToShow={10}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </MainLayout>
   );
