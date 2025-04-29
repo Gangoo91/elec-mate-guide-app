@@ -35,6 +35,16 @@ const Level3Unit305Page = () => {
           id: "1.1",
           title: "Electrical Installation Design Principles",
           description: "Understanding how to plan circuits and choose supply arrangements for various building types"
+        },
+        {
+          id: "1.2",
+          title: "Supply Arrangements",
+          description: "Types of supply systems including TN-S, TN-C-S, and TT systems"
+        },
+        {
+          id: "1.3",
+          title: "Circuit Design",
+          description: "Designing lighting, socket outlets, and special circuits"
         }
       ]
     },
@@ -44,8 +54,23 @@ const Level3Unit305Page = () => {
       sections: [
         {
           id: "2.1",
-          title: "Selection of Electrical Equipment",
-          description: "Guidelines for selecting appropriate protective devices, cables, and accessories"
+          title: "Protective Devices",
+          description: "Selection of MCBs, RCDs, RCBOs"
+        },
+        {
+          id: "2.2",
+          title: "Cables and Cable Types",
+          description: "Selection of T&E, SWA, MICC and other cable types"
+        },
+        {
+          id: "2.3",
+          title: "Accessories and Distribution Boards",
+          description: "Selection of switches, sockets, junction boxes, and distribution boards"
+        },
+        {
+          id: "2.4",
+          title: "Ingress Protection Ratings",
+          description: "Understanding and applying IP ratings in different environments"
         }
       ]
     },
@@ -55,8 +80,23 @@ const Level3Unit305Page = () => {
       sections: [
         {
           id: "3.1",
-          title: "Cable Sizing and Protection",
-          description: "Methods for calculating current-carrying capacity, voltage drop, and protection"
+          title: "Current-Carrying Capacity",
+          description: "Calculating current-carrying capacity (Iz) for cables"
+        },
+        {
+          id: "3.2",
+          title: "Voltage Drop Calculations",
+          description: "Calculating voltage drop and ensuring compliance with regulations"
+        },
+        {
+          id: "3.3",
+          title: "Correction Factors",
+          description: "Applying correction factors for ambient temperature, grouping, and insulation"
+        },
+        {
+          id: "3.4",
+          title: "Adiabatic Equation",
+          description: "Using the adiabatic equation for earth fault protection"
         }
       ]
     },
@@ -66,8 +106,13 @@ const Level3Unit305Page = () => {
       sections: [
         {
           id: "4.1",
-          title: "Discrimination and Coordination",
-          description: "Principles of protective device coordination and nuisance tripping prevention"
+          title: "Principles of Discrimination",
+          description: "Understanding how protective devices should coordinate during faults"
+        },
+        {
+          id: "4.2",
+          title: "Nuisance Tripping Prevention",
+          description: "Strategies for preventing nuisance tripping in electrical installations"
         }
       ]
     },
@@ -77,8 +122,18 @@ const Level3Unit305Page = () => {
       sections: [
         {
           id: "5.1",
-          title: "Earthing and Bonding",
-          description: "Requirements for main protective bonding and supplementary bonding"
+          title: "Main Protective Bonding",
+          description: "Requirements and design for main protective bonding"
+        },
+        {
+          id: "5.2",
+          title: "Supplementary Bonding",
+          description: "When and how to implement supplementary bonding"
+        },
+        {
+          id: "5.3",
+          title: "Earthing Conductors Sizing",
+          description: "Calculations and requirements for sizing earthing conductors"
         }
       ]
     },
@@ -88,8 +143,18 @@ const Level3Unit305Page = () => {
       sections: [
         {
           id: "6.1",
-          title: "Health and Safety and Building Regulations",
-          description: "Regulatory requirements for electrical installations"
+          title: "BS 7671 Wiring Regulations",
+          description: "Compliance with the current edition of wiring regulations"
+        },
+        {
+          id: "6.2",
+          title: "Building Regulations",
+          description: "Meeting requirements of Part P, Part L and other regulations"
+        },
+        {
+          id: "6.3",
+          title: "Energy Efficiency and Fire Safety",
+          description: "Energy efficiency standards and fire safety regulations"
         }
       ]
     }
