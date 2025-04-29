@@ -27,6 +27,7 @@ import Unit304SectionPage from "../pages/units/Unit304SectionPage";
 import Unit305SectionPage from "../pages/units/Unit305SectionPage";
 import Unit308SectionPage from "../pages/units/Unit308SectionPage"; // Import Unit308SectionPage
 import PracticeExamsPage from "../pages/PracticeExamsPage";
+import Level2Unit201AssessmentPage from "../pages/Level2Unit201AssessmentPage";
 import Level3Unit301AssessmentPage from "../pages/Level3Unit301AssessmentPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
 import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage";
@@ -170,6 +171,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-3/305/assessment",
     element: <Level3Unit305AssessmentPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/201/assessment",
+    element: <Level2Unit201AssessmentPage />,
   },
 ];
 

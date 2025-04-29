@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
@@ -10,9 +11,12 @@ import { faultDiagnosisQuestions } from '@/data/units/sections/unit303/questions
 import { inspectionTestingQuestions } from '@/data/units/sections/unit304/questions/inspectionTestingQuestions';
 import { electricalDesignQuestions } from '@/data/units/sections/unit305/questions/electricalDesignQuestions';
 import { careerAwarenessQuestions } from '@/data/units/sections/unit308/questions/careerAwarenessQuestions';
-import { Progress } from '@/components/ui/progress';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { QuizTimer } from './quiz/QuizTimer';
+import { QuizQuestion } from './quiz/QuizQuestion';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Check, AlertTriangle } from 'lucide-react';
 
 interface SafetyQuizProps {
   unitId: string;
@@ -29,7 +33,7 @@ interface AssessmentQuestion {
 
 // Define a more comprehensive source question type to handle all formats
 interface SourceQuestion {
-  id: number;
+  id?: number;
   text?: string; // Optional for compatibility
   question?: string; // Optional for compatibility
   options: string[];
@@ -47,6 +51,11 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
   const [hasStarted, setHasStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizKey, setQuizKey] = useState(Date.now()); // Key to force re-render
+  const [currentQuestions, setCurrentQuestions] = useState<AssessmentQuestion[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [results, setResults] = useState<{ score: number; total: number } | null>(null);
+  const [showExplanation, setShowExplanation] = useState(false);
   const { toast } = useToast();
 
   const getQuestionSet = () => {
@@ -117,9 +126,10 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
     } else if (timeRemaining === 0 && isActive) {
       setIsActive(false);
       setQuizSubmitted(true);
+      handleSubmitQuiz();
       toast({
         title: "Time's up!",
-        description: "Your quiz time has expired.",
+        description: "Your quiz has been automatically submitted.",
         variant: "destructive"
       });
     }
@@ -129,66 +139,242 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
     };
   }, [isActive, timeRemaining, toast]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
+  useEffect(() => {
+    if (hasStarted && currentQuestions.length === 0) {
+      setCurrentQuestions(getQuestionSet());
+    }
+  }, [hasStarted]);
 
   const handleStart = () => {
     setIsActive(true);
     setHasStarted(true);
   };
 
-  const handleQuizComplete = () => {
+  const handleAnswerSelect = (questionIndex: number, answer: string) => {
+    setSelectedAnswers(prev => ({
+      ...prev,
+      [questionIndex]: answer
+    }));
+  };
+
+  const handleNextQuestion = () => {
+    setShowExplanation(false);
+    if (currentQuestionIndex < currentQuestions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePreviousQuestion = () => {
+    setShowExplanation(false);
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const handleSubmitQuiz = () => {
+    let score = 0;
+    
+    // Calculate score
+    currentQuestions.forEach((question, index) => {
+      if (selectedAnswers[index] === question.correctAnswer) {
+        score++;
+      }
+    });
+    
+    setResults({
+      score,
+      total: currentQuestions.length
+    });
+    
     setQuizSubmitted(true);
     setIsActive(false);
+
+    // Send toast notification with results
+    toast({
+      title: "Quiz Completed",
+      description: `You scored ${score} out of ${currentQuestions.length}`,
+      variant: score / currentQuestions.length >= 0.7 ? "default" : "destructive"
+    });
   };
 
   const handleRetake = () => {
     // Reset all quiz states
     setTimeRemaining(timeLimit);
     setQuizSubmitted(false);
+    setSelectedAnswers({});
+    setCurrentQuestionIndex(0);
+    setResults(null);
     setIsActive(true);
-    // Update key to force re-render of the FormativeAssessment component
+    setCurrentQuestions(getQuestionSet());
+    setShowExplanation(false);
+    // Update key to force re-render of the component
     setQuizKey(Date.now());
   };
 
+  const handleCheckAnswer = () => {
+    setShowExplanation(true);
+  };
+
+  const currentQuestion = currentQuestions[currentQuestionIndex];
+
   return (
-    <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+    <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6" key={quizKey}>
       {!hasStarted ? (
         <div className="text-center py-8">
           <h3 className="text-xl font-medium text-[#FFC900] mb-4">
-            Unit {unitId} Final Assessment
+            Unit {unitId} Assessment
           </h3>
           <p className="text-[#FFC900]/80 mb-6">
-            This assessment contains {questionsToShow} questions randomly selected from a pool of {unitId === "301" || unitId === "303" || unitId === "304" || unitId === "305" || unitId === "308" ? 50 : "multiple"} questions to test your knowledge.
+            This assessment contains {questionsToShow} questions randomly selected from a pool of questions to test your knowledge.
             You'll have {Math.floor(timeLimit / 60)} minutes to complete the assessment.
           </p>
-          <button
+          <Button
             onClick={handleStart}
             className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-6 py-3 rounded font-medium"
           >
             Begin Assessment
-          </button>
+          </Button>
         </div>
       ) : (
         <>
-          {isActive && (
+          {isActive && !quizSubmitted && (
             <QuizTimer 
               timeRemaining={timeRemaining}
               quizSubmitted={quizSubmitted}
+              timeLimit={timeLimit}
             />
           )}
           
-          <FormativeAssessment 
-            key={quizKey}
-            questions={getQuestionSet()} 
-            questionsToShow={questionsToShow} 
-            unitId={unitId}
-            onQuizComplete={handleQuizComplete}
-            onRetake={handleRetake}
-          />
+          {!quizSubmitted && currentQuestion && (
+            <div className="mb-8">
+              <div className="flex justify-between items-center mb-4">
+                <h4 className="text-lg text-[#FFC900]">
+                  Question {currentQuestionIndex + 1} of {currentQuestions.length}
+                </h4>
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-[#FFC900]/70">
+                    {Object.keys(selectedAnswers).length} of {currentQuestions.length} answered
+                  </span>
+                  <Progress 
+                    value={(Object.keys(selectedAnswers).length / currentQuestions.length) * 100}
+                    className="w-24 h-2 bg-gray-700"
+                    indicatorClassName="bg-green-500"
+                  />
+                </div>
+              </div>
+              
+              <QuizQuestion
+                id={`${currentQuestionIndex}`}
+                question={currentQuestion.question}
+                options={currentQuestion.options}
+                selectedAnswer={selectedAnswers[currentQuestionIndex]}
+                onAnswerChange={(answer) => handleAnswerSelect(currentQuestionIndex, answer)}
+                disabled={showExplanation}
+              />
+              
+              {showExplanation && (
+                <div className="mt-4 p-4 bg-[#353a2c] rounded-lg border border-[#FFC900]/30">
+                  <div className="flex items-start gap-2 mb-2">
+                    <div className="mt-1">
+                      {selectedAnswers[currentQuestionIndex] === currentQuestion.correctAnswer ? (
+                        <Check className="h-5 w-5 text-green-500" />
+                      ) : (
+                        <AlertTriangle className="h-5 w-5 text-red-500" />
+                      )}
+                    </div>
+                    <div>
+                      <h5 className="font-medium text-[#FFC900]">
+                        {selectedAnswers[currentQuestionIndex] === currentQuestion.correctAnswer 
+                          ? "Correct!" 
+                          : "Incorrect"}
+                      </h5>
+                      <p className="text-[#FFC900]/80 mt-1">
+                        {currentQuestion.explanation}
+                      </p>
+                      {selectedAnswers[currentQuestionIndex] !== currentQuestion.correctAnswer && (
+                        <p className="text-[#FFC900] mt-2">
+                          Correct answer: {currentQuestion.correctAnswer}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              <div className="flex justify-between mt-6">
+                <Button
+                  onClick={handlePreviousQuestion}
+                  disabled={currentQuestionIndex === 0}
+                  variant="outline"
+                  className="border-[#FFC900]/30 text-[#FFC900] hover:bg-[#353a2c]"
+                >
+                  Previous
+                </Button>
+                
+                <div className="flex gap-3">
+                  {!showExplanation && selectedAnswers[currentQuestionIndex] && (
+                    <Button
+                      onClick={handleCheckAnswer}
+                      className="bg-[#353a2c] text-[#FFC900] hover:bg-[#454e36]"
+                    >
+                      Check Answer
+                    </Button>
+                  )}
+                  
+                  {currentQuestionIndex < currentQuestions.length - 1 ? (
+                    <Button
+                      onClick={handleNextQuestion}
+                      className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleSubmitQuiz}
+                      className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]"
+                    >
+                      Submit Quiz
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          {quizSubmitted && results && (
+            <div className="text-center py-8">
+              <h3 className="text-2xl font-medium text-[#FFC900] mb-4">
+                Quiz Results
+              </h3>
+              
+              <div className="flex justify-center mb-6">
+                <div className="bg-[#353a2c] rounded-full w-32 h-32 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-3xl font-bold text-[#FFC900]">
+                      {results.score}/{results.total}
+                    </p>
+                    <p className="text-[#FFC900]/70">
+                      {Math.round((results.score / results.total) * 100)}%
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <p className="text-[#FFC900]/80 mb-6">
+                {results.score >= results.total * 0.7 
+                  ? "Well done! You've successfully completed this assessment." 
+                  : "You might want to review the unit content again and try once more."}
+              </p>
+              
+              <Button
+                onClick={handleRetake}
+                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-6 py-3 rounded font-medium"
+              >
+                Take Quiz Again
+              </Button>
+            </div>
+          )}
         </>
       )}
     </div>

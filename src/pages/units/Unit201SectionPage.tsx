@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { sections201 } from "@/data/units/sections/unit201Sections";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { SafetyQuiz } from "@/components/units/SafetyQuiz";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 
 const Unit201SectionPage = () => {
   const { sectionId = "" } = useParams<{ sectionId: string }>();
@@ -98,7 +98,8 @@ const Unit201SectionPage = () => {
                 className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] flex items-center gap-2"
                 onClick={navigateToAssessment}
               >
-                Take Assessment
+                <CheckCircle className="h-4 w-4" />
+                Take Unit Assessment
               </Button>
               
               <div>
@@ -125,7 +126,7 @@ const Unit201SectionPage = () => {
                 Now that you've completed all sections of Unit 201 on Health and Safety in Building Services Engineering, 
                 take this quiz to test your understanding of key concepts.
               </p>
-              <SafetyQuiz unitId="201" timeLimit={300} />
+              <SafetyQuiz unitId="201" timeLimit={300} questionsToShow={5} />
             </div>
           )}
         </div>
