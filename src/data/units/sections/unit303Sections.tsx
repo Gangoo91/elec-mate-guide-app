@@ -1,14 +1,14 @@
 
 import React from 'react';
-import { SystematicTroubleshooting } from '@/components/sections/unit303/SystematicTroubleshooting';
-import { TestEquipment } from '@/components/sections/unit303/TestEquipment';
-import { TestResults } from '@/components/sections/unit303/TestResults';
-import { OpenCircuits } from '@/components/sections/unit303/fault-diagnosis/OpenCircuits';
-import { ShortCircuits } from '@/components/sections/unit303/fault-diagnosis/ShortCircuits';
-import { HighResistance } from '@/components/sections/unit303/fault-diagnosis/HighResistance';
-import { IsolationProcedures } from '@/components/sections/unit303/rectification/IsolationProcedures';
-import { ComponentReplacement } from '@/components/sections/unit303/rectification/ComponentReplacement';
-import { SystemRestoration } from '@/components/sections/unit303/rectification/SystemRestoration';
+import SystematicTroubleshooting from '@/components/sections/unit303/SystematicTroubleshooting';
+import TestEquipment from '@/components/sections/unit303/TestEquipment';
+import TestResults from '@/components/sections/unit303/TestResults';
+import OpenCircuits from '@/components/sections/unit303/fault-diagnosis/OpenCircuits';
+import ShortCircuits from '@/components/sections/unit303/fault-diagnosis/ShortCircuits';
+import HighResistance from '@/components/sections/unit303/fault-diagnosis/HighResistance';
+import IsolationProcedures from '@/components/sections/unit303/rectification/IsolationProcedures';
+import ComponentReplacement from '@/components/sections/unit303/rectification/ComponentReplacement';
+import SystemRestoration from '@/components/sections/unit303/rectification/SystemRestoration';
 
 export const sections303: Record<string, { 
   title: string; 

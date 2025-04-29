@@ -53,28 +53,28 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
     
     switch(unitId) {
       case "201":
-        questionPool = healthAndSafetyQuestions as SourceQuestion[];
+        questionPool = healthAndSafetyQuestions as unknown as SourceQuestion[];
         break;
       case "202":
-        questionPool = electricalScienceQuestions as SourceQuestion[];
+        questionPool = electricalScienceQuestions as unknown as SourceQuestion[];
         break;
       case "203":
-        questionPool = electricalInstallationsQuestions as SourceQuestion[];
+        questionPool = electricalInstallationsQuestions as unknown as SourceQuestion[];
         break;
       case "204":
-        questionPool = wiringSystemsQuestions as SourceQuestion[];
+        questionPool = wiringSystemsQuestions as unknown as SourceQuestion[];
         break;
       case "210":
-        questionPool = communicationQuestions as SourceQuestion[];
+        questionPool = communicationQuestions as unknown as SourceQuestion[];
         break;
       case "301":
-        questionPool = environmentalTechnologyQuestions as SourceQuestion[];
+        questionPool = environmentalTechnologyQuestions as unknown as SourceQuestion[];
         break;
       case "303":
-        questionPool = faultDiagnosisQuestions as SourceQuestion[];
+        questionPool = faultDiagnosisQuestions as unknown as SourceQuestion[];
         break;
       default:
-        questionPool = healthAndSafetyQuestions as SourceQuestion[];
+        questionPool = healthAndSafetyQuestions as unknown as SourceQuestion[];
     }
     
     // Shuffle the entire question pool
