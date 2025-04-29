@@ -47,31 +47,31 @@ const ProtectiveBonding = () => {
                   <td className="py-2 px-3 text-[#FFC900]/80">6</td>
                 </tr>
                 <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-3 text-[#FFC900]/80">10 < S ≤ 16</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">10 {"<"} S ≤ 16</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">10</td>
                 </tr>
                 <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-3 text-[#FFC900]/80">16 < S ≤ 25</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">16 {"<"} S ≤ 25</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">16</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">25 < S ≤ 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">25 {"<"} S ≤ 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">16</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">35 < S ≤ 50</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">35 {"<"} S ≤ 50</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">25</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">50 < S ≤ 95</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">50 {"<"} S ≤ 95</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">25</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">95 < S ≤ 150</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">95 {"<"} S ≤ 150</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">35</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">150 < S</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">150 {"<"} S</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">50</td>
                 </tr>
               </tbody>

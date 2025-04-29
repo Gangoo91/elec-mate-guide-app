@@ -36,19 +36,19 @@ const IPRatings = () => {
             </tr>
             <tr className="border-b border-[#FFC900]/20">
               <td className="py-2 px-3 text-[#FFC900]/80">1</td>
-              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects > 50mm (e.g., hands)</td>
+              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects {">"} 50mm (e.g., hands)</td>
             </tr>
             <tr className="border-b border-[#FFC900]/20">
               <td className="py-2 px-3 text-[#FFC900]/80">2</td>
-              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects > 12.5mm (e.g., fingers)</td>
+              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects {">"} 12.5mm (e.g., fingers)</td>
             </tr>
             <tr className="border-b border-[#FFC900]/20">
               <td className="py-2 px-3 text-[#FFC900]/80">3</td>
-              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects > 2.5mm (e.g., tools)</td>
+              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects {">"} 2.5mm (e.g., tools)</td>
             </tr>
             <tr className="border-b border-[#FFC900]/20">
               <td className="py-2 px-3 text-[#FFC900]/80">4</td>
-              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects > 1mm (e.g., wires)</td>
+              <td className="py-2 px-3 text-[#FFC900]/80">Protection against solid objects {">"} 1mm (e.g., wires)</td>
             </tr>
             <tr className="border-b border-[#FFC900]/20">
               <td className="py-2 px-3 text-[#FFC900]/80">5</td>

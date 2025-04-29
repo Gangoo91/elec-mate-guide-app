@@ -41,11 +41,11 @@ const EarthingConductors = () => {
                   <td className="py-2 px-3 text-[#FFC900]/80">S</td>
                 </tr>
                 <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-3 text-[#FFC900]/80">16 < S ≤ 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">16 {"<"} S ≤ 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">16</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">S > 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">S {">"} 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">S/2</td>
                 </tr>
               </tbody>
@@ -87,11 +87,11 @@ const EarthingConductors = () => {
                   <td className="py-2 px-3 text-[#FFC900]/80">S</td>
                 </tr>
                 <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-3 text-[#FFC900]/80">16 < S ≤ 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">16 {"<"} S ≤ 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">16</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">S > 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">S {">"} 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">S/2</td>
                 </tr>
               </tbody>
