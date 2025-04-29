@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { sections303 } from "@/data/units/sections/unit303Sections";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 
 const Unit303SectionPage = () => {
   const { sectionId = "" } = useParams<{ sectionId: string }>();
@@ -24,6 +24,10 @@ const Unit303SectionPage = () => {
   
   const navigateToSection = (sectionId: string) => {
     navigate(`/apprentices/study-materials/city-guilds/level-3/303/${sectionId}`);
+  };
+
+  const navigateToAssessment = () => {
+    navigate('/apprentices/study-materials/city-guilds/level-3/303/assessment');
   };
 
   if (!sectionContent) {
@@ -49,12 +53,21 @@ const Unit303SectionPage = () => {
           customBackAction={handleBackClick}
         />
         <div className="mt-8">
-          <div className="mb-12 prose prose-invert max-w-none">
+          <div className="mb-12">
             {sectionContent.content}
           </div>
           
-          <div className="mb-8 mt-16">
-            <div className="flex justify-between items-center">
+          {sectionContent.detailedContent && (
+            <div className="mt-12 pt-8 border-t border-[#FFC900]/20">
+              <h3 className="text-2xl font-semibold text-[#FFC900] mb-6">
+                Detailed Learning Materials
+              </h3>
+              {sectionContent.detailedContent}
+            </div>
+          )}
+          
+          <div className="mt-8 pt-8 border-t border-[#FFC900]/20">
+            <div className="flex justify-between items-center mb-6">
               <div>
                 {prevSection && (
                   <Button 
@@ -67,6 +80,15 @@ const Unit303SectionPage = () => {
                   </Button>
                 )}
               </div>
+
+              <Button
+                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] flex items-center gap-2"
+                onClick={navigateToAssessment}
+              >
+                <CheckCircle className="h-4 w-4" />
+                Take Assessment
+              </Button>
+              
               <div>
                 {nextSection && (
                   <Button 
