@@ -100,3 +100,6 @@ export const sections305: SectionsType = {
     content: <div>Content for Building Regulations section</div>,
   },
 };
+
+// Adding a default export to fix the import issue in SectionPage.tsx
+export default { sections305 };
