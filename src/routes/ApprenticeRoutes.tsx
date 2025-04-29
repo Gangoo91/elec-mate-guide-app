@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
@@ -20,6 +19,7 @@ import Level3Unit302Page from "../pages/Level3Unit302Page";
 import Level3Unit303Page from "../pages/Level3Unit303Page"; 
 import Level3Unit304Page from "../pages/Level3Unit304Page";
 import Level3Unit305Page from "../pages/Level3Unit305Page";
+import Level3Unit308Page from "../pages/Level3Unit308Page"; // Add import for Unit 308
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
 import Unit303SectionPage from "../pages/units/Unit303SectionPage"; 
 import Unit304SectionPage from "../pages/units/Unit304SectionPage"; 
@@ -119,6 +119,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-3/305",
     element: <Level3Unit305Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/308",
+    element: <Level3Unit308Page />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3/302/:sectionId",
