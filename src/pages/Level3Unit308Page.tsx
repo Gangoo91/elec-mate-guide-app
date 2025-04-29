@@ -19,48 +19,56 @@ const Level3Unit308Page = () => {
     navigate(`/apprentices/study-materials/city-guilds/level-3/308/${id}`);
   };
 
-  // Structure the content into proper section groups
+  // Structure the content into proper section groups based on the provided outline
   const sectionGroups = [
     {
       number: '1',
       title: 'Understanding Roles in Building Services Engineering',
       sections: [
-        { id: '1.1', title: 'Specialist Electrical Roles', description: 'Explore different job roles and career paths in the electrical industry' }
+        { id: '1.1', title: 'Electrician and Other Roles', description: 'Learn about different electrical jobs and career paths' },
+        { id: '1.2', title: 'Role Responsibilities', description: 'Understanding the responsibilities of each electrical role' }
       ]
     },
     {
       number: '2',
       title: 'Career Pathways and Progression',
       sections: [
-        { id: '2.1', title: 'Career Pathways and Progression', description: 'Understanding career progression paths in the electrical industry' }
+        { id: '2.1', title: 'Career Progression Path', description: 'How to advance from apprentice to management roles' },
+        { id: '2.2', title: 'Continuing Professional Development', description: 'The importance of ongoing learning and development' },
+        { id: '2.3', title: 'Additional Qualifications', description: 'Key certifications to enhance your career prospects' }
       ]
     },
     {
       number: '3',
       title: 'Professional Bodies and Associations',
       sections: [
-        { id: '3.1', title: 'Professional Bodies and Associations', description: 'Understanding industry bodies and their importance to electricians' }
+        { id: '3.1', title: 'Industry Bodies and Benefits', description: 'Understanding NICEIC, NAPIT, ECA, JIB and their importance' }
       ]
     },
     {
       number: '4',
       title: 'Employer Expectations and Professional Conduct',
       sections: [
-        { id: '4.1', title: 'Employer Expectations and Professional Conduct', description: 'Understanding workplace expectations and professional behavior' }
+        { id: '4.1', title: 'Professional Skills and Conduct', description: 'Key skills employers expect and professional behavior' }
       ]
     },
     {
       number: '5',
       title: 'Health, Safety, and Legal Requirements',
       sections: [
-        { id: '5.1', title: 'Health, Safety, and Legal Requirements', description: 'Understanding key legislation and safety responsibilities' }
+        { id: '5.1', title: 'Health and Safety at Work Act', description: 'Understanding your responsibilities under HSWA 1974' },
+        { id: '5.2', title: 'Electricity at Work Regulations', description: 'Key regulations that govern electrical work safety' },
+        { id: '5.3', title: 'Safe Working Practices', description: 'How to maintain safety for yourself and others' }
       ]
     },
     {
       number: '6',
       title: 'Business Awareness',
       sections: [
-        { id: '6.1', title: 'Business Awareness', description: 'Understanding business operations in the electrical industry' }
+        { id: '6.1', title: 'Customer Service', description: 'The importance of good customer service in electrical work' },
+        { id: '6.2', title: 'Financial Management', description: 'Handling payments and invoices professionally' },
+        { id: '6.3', title: 'Brand Representation', description: 'Properly representing your company's brand' },
+        { id: '6.4', title: 'Self-Employment Basics', description: 'Introduction to self-employment in the electrical industry' }
       ]
     }
   ];

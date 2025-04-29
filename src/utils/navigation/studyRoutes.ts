@@ -51,9 +51,13 @@ export const handleStudyRoutes = (
     return false;
   }
 
-  // Level 3 section pages
+  // Level 3 section pages - support the unit308 section pages with format: /level-3/308/1.1, etc.
   if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}\/\d+\.\d+/)) {
     const unitId = location.pathname.split('/')[6];
+    // Don't redirect section pages for units that have detailed section content
+    if (unitId === '301' || unitId === '302' || unitId === '303' || unitId === '304' || unitId === '305' || unitId === '308') {
+      return false;
+    }
     navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
     return true;
   }

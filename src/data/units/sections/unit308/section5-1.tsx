@@ -1,226 +1,123 @@
 
 import React from 'react';
 import { ContentSection } from "@/components/units/ContentSection";
+import LessonContent from "@/components/units/LessonContent";
 import { SectionData } from './types';
 
+const HealthAndSafety = () => {
+  return (
+    <LessonContent title="Health and Safety at Work Act 1974">
+      <p className="mb-4">
+        The Health and Safety at Work etc. Act 1974 (HSWA) is the primary piece of legislation covering 
+        occupational health and safety in the UK. It sets out the general duties that employers have towards 
+        their employees and members of the public, and that employees have to themselves and each other.
+      </p>
+      
+      <div className="bg-[#2a2d24] p-4 rounded-md mb-4">
+        <h4 className="font-medium text-[#FFC900] mb-2">Key Principles of HSWA 1974</h4>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>General duty of care:</strong> Employers must ensure, so far as reasonably practicable, the health, safety, and welfare of all employees</li>
+          <li><strong>Risk management:</strong> Requires a systematic approach to identifying, assessing, and controlling workplace hazards</li>
+          <li><strong>Safe systems of work:</strong> Employers must establish and maintain safe working procedures</li>
+          <li><strong>Information and training:</strong> Employees must receive adequate information, instruction, training, and supervision</li>
+          <li><strong>Safe workplace:</strong> Provision and maintenance of safe premises, equipment, and working environment</li>
+          <li><strong>Public protection:</strong> Duty to ensure work activities don't put others at risk</li>
+        </ul>
+      </div>
+      
+      <div className="bg-[#2a2d24] p-4 rounded-md">
+        <h4 className="font-medium text-[#FFC900] mb-2">Employer Responsibilities Under HSWA</h4>
+        <p className="mb-2">
+          Section 2 of the Act outlines the following employer duties:
+        </p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Provide and maintain safe plant and systems of work</li>
+          <li>Ensure safe handling, storage, and transport of substances and materials</li>
+          <li>Provide information, instruction, training, and supervision</li>
+          <li>Maintain a safe workplace with safe access and egress</li>
+          <li>Provide a safe working environment with adequate welfare facilities</li>
+          <li>Create a written health and safety policy (if employing 5 or more people)</li>
+          <li>Consult with employees on health and safety matters</li>
+          <li>Conduct risk assessments and implement controls</li>
+          <li>Report certain accidents, incidents, and occupational diseases (RIDDOR)</li>
+        </ul>
+      </div>
+      
+      <div className="mt-4 bg-[#2a2d24] p-4 rounded-md">
+        <h4 className="font-medium text-[#FFC900] mb-2">Employee Responsibilities Under HSWA</h4>
+        <p className="mb-2">
+          Section 7 and 8 of the Act outline employee duties:
+        </p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Take reasonable care of their own health and safety</li>
+          <li>Take reasonable care not to put others at risk through their work</li>
+          <li>Cooperate with their employer on health and safety matters</li>
+          <li>Not interfere with or misuse anything provided for health, safety, or welfare</li>
+          <li>Report hazards, defects, and dangerous situations</li>
+          <li>Use equipment and materials as instructed and trained</li>
+          <li>Use provided PPE correctly and report any defects</li>
+        </ul>
+      </div>
+      
+      <div className="mt-4 bg-[#2a2d24] p-4 rounded-md">
+        <h4 className="font-medium text-[#FFC900] mb-2">Enforcement and Penalties</h4>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>Enforcement authority:</strong> Health and Safety Executive (HSE) and local authorities</li>
+          <li><strong>Inspector powers:</strong> Enter premises, take measurements, photographs, samples, require information</li>
+          <li><strong>Enforcement notices:</strong>
+            <ul className="list-disc pl-6 mt-1">
+              <li>Improvement Notice - requiring remedy of a breach within a specified time</li>
+              <li>Prohibition Notice - stopping dangerous activities until remedied</li>
+            </ul>
+          </li>
+          <li><strong>Prosecution:</strong> For serious breaches, resulting in:
+            <ul className="list-disc pl-6 mt-1">
+              <li>Unlimited fines</li>
+              <li>Up to 2 years imprisonment for certain offenses</li>
+              <li>Disqualification for directors</li>
+            </ul>
+          </li>
+          <li><strong>Fee for Intervention:</strong> HSE can charge for time spent dealing with material breaches</li>
+        </ul>
+      </div>
+      
+      <div className="mt-4">
+        <h4 className="font-medium text-[#FFC900] mb-2">Application in the Electrical Industry</h4>
+        <ul className="list-disc pl-6 space-y-1">
+          <li><strong>Risk assessment:</strong> Identifying electrical hazards and implementing controls</li>
+          <li><strong>Safe isolation procedures:</strong> Working dead wherever possible</li>
+          <li><strong>Permit-to-work systems:</strong> For high-risk electrical activities</li>
+          <li><strong>PPE provision:</strong> Insulated tools, voltage indicators, PPE</li>
+          <li><strong>Training:</strong> Regular updates on safe electrical working practices</li>
+          <li><strong>Maintenance:</strong> Regular inspection and testing of electrical equipment</li>
+          <li><strong>Emergency procedures:</strong> For electrical accidents and incidents</li>
+        </ul>
+      </div>
+    </LessonContent>
+  );
+};
+
 export const section5_1: SectionData = {
-  title: "Health, Safety, and Legal Requirements",
-  description: "Understanding key legislation and safety responsibilities",
+  title: "Health and Safety at Work Act",
+  description: "Understanding your responsibilities under HSWA 1974",
   content: (
     <>
       <ContentSection 
         title="Learning Objectives"
         content={
           <ul className="list-disc pl-6 space-y-1">
-            <li>Understand the key legal frameworks governing electrical work</li>
-            <li>Identify specific responsibilities under health and safety legislation</li>
-            <li>Recognize personal and professional obligations for workplace safety</li>
-            <li>Learn about the consequences of non-compliance with regulations</li>
+            <li>Understand the key principles of the Health and Safety at Work Act 1974</li>
+            <li>Identify the responsibilities of employers under the Act</li>
+            <li>Recognize your own responsibilities as an employee or self-employed person</li>
+            <li>Learn about enforcement and consequences of non-compliance</li>
           </ul>
         }
       />
       
-      <ContentSection 
-        title="Health and Safety at Work Act 1974"
-        content={
-          <div className="space-y-4">
-            <p>
-              The Health and Safety at Work Act (HSWA) 1974 is the primary legislation covering occupational health and safety in the UK, providing a comprehensive framework for workplace safety.
-            </p>
-            
-            <h3 className="text-lg font-medium">Key Principles</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Establishes the general duties of employers to ensure the health, safety, and welfare of employees</li>
-              <li>Creates obligations for employees to take reasonable care of their own and others' safety</li>
-              <li>Requires safe systems of work, safe equipment, and adequate training</li>
-              <li>Mandates risk assessment and management of hazards</li>
-              <li>Establishes enforcement mechanisms and penalties for non-compliance</li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Employer Responsibilities</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Safe Workplace:</span> Providing and maintaining safe premises, equipment, and systems of work
-              </li>
-              <li>
-                <span className="font-medium">Risk Management:</span> Conducting suitable and sufficient risk assessments
-              </li>
-              <li>
-                <span className="font-medium">Information:</span> Providing information, instruction, and training on hazards and controls
-              </li>
-              <li>
-                <span className="font-medium">Consultation:</span> Consulting with employees on health and safety matters
-              </li>
-              <li>
-                <span className="font-medium">Emergency Procedures:</span> Establishing emergency procedures and first aid arrangements
-              </li>
-              <li>
-                <span className="font-medium">Supervision:</span> Ensuring adequate supervision, especially for less experienced workers
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Employee Responsibilities</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Self-Care:</span> Taking reasonable care of your own health and safety
-              </li>
-              <li>
-                <span className="font-medium">Consideration:</span> Avoiding actions that could harm others
-              </li>
-              <li>
-                <span className="font-medium">Cooperation:</span> Cooperating with employers on health and safety matters
-              </li>
-              <li>
-                <span className="font-medium">Proper Use:</span> Using equipment, substances, and safety devices correctly
-              </li>
-              <li>
-                <span className="font-medium">Reporting:</span> Reporting hazards, defects, or shortcomings in safety arrangements
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Self-Employed Persons</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Must conduct their work safely without risking themselves or others</li>
-              <li>Are responsible for their own health and safety management</li>
-              <li>Must coordinate with others working at the same site</li>
-              <li>Have duties similar to both employers and employees</li>
-            </ul>
-          </div>
-        }
-      />
-      
-      <ContentSection 
-        title="Electricity at Work Regulations 1989"
-        content={
-          <div className="space-y-4">
-            <p>
-              The Electricity at Work Regulations (EWR) 1989 specifically address electrical safety in the workplace, applying to all work involving electrical systems and equipment.
-            </p>
-            
-            <h3 className="text-lg font-medium">Core Requirements</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Regulation 4(1):</span> All electrical systems must be constructed and maintained to prevent danger
-              </li>
-              <li>
-                <span className="font-medium">Regulation 4(3):</span> Work activities must be carried out in a way that prevents danger
-              </li>
-              <li>
-                <span className="font-medium">Regulation 14:</span> No person shall work on or near live conductors unless:
-                <ul className="list-disc pl-6 mt-1">
-                  <li>It is unreasonable for the conductors to be dead</li>
-                  <li>It is reasonable for the person to work on or near them while they are live</li>
-                  <li>Suitable precautions are taken to prevent injury</li>
-                </ul>
-              </li>
-              <li>
-                <span className="font-medium">Regulation 16:</span> Work should only be carried out by competent persons or those appropriately supervised
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Practical Implications</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Isolation:</span> Systems must be isolated and proven dead before work begins
-              </li>
-              <li>
-                <span className="font-medium">Testing:</span> Appropriate test equipment must be used to verify isolation
-              </li>
-              <li>
-                <span className="font-medium">Live Working:</span> Work on live systems should be exceptional, with specific risk assessment and controls
-              </li>
-              <li>
-                <span className="font-medium">Equipment:</span> Electrical equipment must be properly maintained and inspected
-              </li>
-              <li>
-                <span className="font-medium">Competence:</span> Workers must have appropriate knowledge and experience for the tasks they perform
-              </li>
-              <li>
-                <span className="font-medium">Documentation:</span> Records of maintenance, testing, and inspection must be kept
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Enforcement and Penalties</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Breaches can result in improvement or prohibition notices</li>
-              <li>Serious breaches can lead to prosecution and substantial fines</li>
-              <li>In cases of gross negligence causing injury or death, custodial sentences are possible</li>
-              <li>The regulations create both corporate and individual liabilities</li>
-            </ul>
-          </div>
-        }
-      />
-      
-      <ContentSection 
-        title="Safe Behaviors in Electrical Work"
-        content={
-          <div className="space-y-4">
-            <p>
-              Beyond legal compliance, safe behaviors are essential for protecting yourself and others in electrical work.
-            </p>
-            
-            <h3 className="text-lg font-medium">Personal Safety Practices</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Knowledge:</span> Ensuring you understand the systems you're working on
-              </li>
-              <li>
-                <span className="font-medium">Planning:</span> Thinking through tasks before starting work
-              </li>
-              <li>
-                <span className="font-medium">PPE:</span> Using appropriate personal protective equipment
-              </li>
-              <li>
-                <span className="font-medium">Tools:</span> Using insulated tools and testing equipment correctly
-              </li>
-              <li>
-                <span className="font-medium">Verification:</span> Always testing circuits before touching them
-              </li>
-              <li>
-                <span className="font-medium">Lock-Off:</span> Using personal padlocks and tags for isolation
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Team Safety Practices</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Communication:</span> Clear exchange of information about work status
-              </li>
-              <li>
-                <span className="font-medium">Supervision:</span> Appropriate oversight of less experienced team members
-              </li>
-              <li>
-                <span className="font-medium">Coordination:</span> Working together on complex isolations or reinstatements
-              </li>
-              <li>
-                <span className="font-medium">Checks:</span> Performing peer checks on critical safety actions
-              </li>
-              <li>
-                <span className="font-medium">Intervention:</span> Willing to step in if unsafe acts are observed
-              </li>
-            </ul>
-            
-            <h3 className="text-lg font-medium mt-4">Safety Culture Elements</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <span className="font-medium">Learning:</span> Taking lessons from near misses and incidents
-              </li>
-              <li>
-                <span className="font-medium">Reporting:</span> Willingness to report safety concerns
-              </li>
-              <li>
-                <span className="font-medium">Knowledge Sharing:</span> Passing on safety information to colleagues
-              </li>
-              <li>
-                <span className="font-medium">Self-Assessment:</span> Honestly evaluating your own competence for tasks
-              </li>
-              <li>
-                <span className="font-medium">Continuous Improvement:</span> Regularly updating safety knowledge
-              </li>
-            </ul>
-          </div>
-        }
+      <ContentSection
+        title="Health and Safety at Work Act 1974" 
+        content={<HealthAndSafety />}
       />
     </>
-  ),
+  )
 };
