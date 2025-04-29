@@ -19,6 +19,13 @@ export const QuizTimer: React.FC<QuizTimerProps> = ({ timeRemaining, quizSubmitt
     return (timeRemaining / totalTime) * 100;
   };
 
+  // Determine the appropriate color class based on time remaining
+  const getIndicatorClass = () => {
+    if (timeRemaining < 60) return 'bg-red-500';
+    if (timeRemaining < 180) return 'bg-orange-500';
+    return 'bg-[#FFC900]';
+  };
+
   return (
     <div className="mb-6">
       <div className="flex justify-between items-center mb-2">
@@ -30,13 +37,7 @@ export const QuizTimer: React.FC<QuizTimerProps> = ({ timeRemaining, quizSubmitt
       <Progress 
         value={getProgressValue(timeRemaining)} 
         className="h-2 bg-[#353a2c]" 
-        indicatorClassName={`${
-          timeRemaining < 60 
-            ? 'bg-red-500' 
-            : timeRemaining < 180 
-              ? 'bg-orange-500' 
-              : 'bg-[#FFC900]'
-        }`}
+        indicatorClassName={getIndicatorClass()}
       />
     </div>
   );

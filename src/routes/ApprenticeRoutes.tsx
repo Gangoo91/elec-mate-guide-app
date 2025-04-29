@@ -1,17 +1,17 @@
+
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import ApprenticeDashboard from "@/pages/apprentices/ApprenticeDashboard";
-import StudyMaterialsPage from "@/pages/apprentices/StudyMaterialsPage";
-import Level2SimplifiedPage from "@/pages/apprentices/level2/Level2SimplifiedPage";
-import Level2CoreUnitsPage from "@/pages/apprentices/level2/Level2CoreUnitsPage";
-import Level2ElectricalPage from "@/pages/apprentices/level2/Level2ElectricalPage";
-import Level2ExamsPage from "@/pages/apprentices/level2/Level2ExamsPage";
-import Level3HomePage from "@/pages/apprentices/level3/Level3HomePage";
-import Level3Unit301Page from "@/pages/apprentices/level3/Level3Unit301Page";
-import Level3Unit303Page from "@/pages/apprentices/level3/Level3Unit303Page";
-import Level3Unit304Page from "@/pages/apprentices/level3/Level3Unit304Page";
-import Level3Unit305Page from "@/pages/apprentices/level3/Level3Unit305Page";
-import Level3Unit308Page from "@/pages/apprentices/level3/Level3Unit308Page";
+import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
+import Level2SimplifiedPage from "@/pages/Level2SimplifiedPage";
+import Level2CoreUnitsPage from "@/pages/Level2CoreUnitsPage";
+import Level2ElectricalPage from "@/pages/Level2ElectricalPage";
+import Level2ExamsPage from "@/pages/Level2ExamsPage";
+import Level3HomePage from "@/pages/Level3HomePage";
+import Level3Unit301Page from "@/pages/Level3Unit301Page";
+import Level3Unit303Page from "@/pages/Level3Unit303Page";
+import Level3Unit304Page from "@/pages/Level3Unit304Page";
+import Level3Unit305Page from "@/pages/Level3Unit305Page";
+import Level3Unit308Page from "@/pages/Level3Unit308Page";
 import Unit301SectionPage from "@/pages/units/Unit301SectionPage";
 import Unit303SectionPage from "@/pages/units/Unit303SectionPage";
 import Unit304SectionPage from "@/pages/units/Unit304SectionPage";
@@ -29,6 +29,7 @@ import Unit204SectionPage from "@/pages/units/Unit204SectionPage";
 import Unit210SectionPage from "@/pages/units/Unit210SectionPage";
 import UnitContentPage from "@/pages/UnitContentPage";
 import Level2Unit201AssessmentPage from "@/pages/Level2Unit201AssessmentPage";
+import ApprenticeDashboard from "@/pages/ApprenticeDashboard";
 
 const ApprenticeRoutes = () => {
   return (
