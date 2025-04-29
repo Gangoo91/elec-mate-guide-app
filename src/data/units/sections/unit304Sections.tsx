@@ -1,1825 +1,2410 @@
 
 import React from 'react';
-import LessonContent from "@/components/units/LessonContent";
-import { ContentSection } from "@/components/units/ContentSection";
 
-export const sections304: Record<string, { 
-  title: string; 
-  description?: string; 
-  content: React.ReactNode;
-  detailedContent?: React.ReactNode;
-}> = {
+export const sections304 = {
   "1.1": {
-    title: "1.1 What to check before you power up",
-    description: "Ensuring compliance with BS 7671, Part 6 through proper verification.",
+    title: "Initial Verification: What to check before you power up",
+    description: "Understanding the critical pre-power checks needed for compliance with BS 7671.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Initial Verification - Pre-Power Checks">
-          <p>Initial verification is a crucial step in ensuring that new electrical installations comply with regulations and are safe to use.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">What to Check Before You Power Up</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Correct wiring:</strong> Verify proper connections, appropriate cable sizes and types according to design specifications</li>
-            <li><strong>Correct protection devices:</strong> Confirm properly rated MCBs, RCDs, fuses are installed as per design</li>
-            <li><strong>No signs of damage:</strong> Inspect cables, accessories, enclosures for physical damage</li>
-            <li><strong>No missing components:</strong> Ensure all required parts have been installed</li>
-            <li><strong>Correct terminations:</strong> Check that all conductors are properly terminated with appropriate torque settings</li>
-            <li><strong>Appropriate labels:</strong> Verify warning notices and circuit identification are in place</li>
-            <li><strong>Accessibility:</strong> Ensure appropriate access to equipment for operation and maintenance</li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the requirements of BS 7671 regarding initial verification</li>
+            <li>Identify critical components that must be checked before energizing an installation</li>
+            <li>Recognize common installation defects that can be identified visually</li>
           </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">What is Initial Verification?</h3>
+          <p className="text-[#FFC900]/80">
+            Initial verification is the process of inspecting and testing a new installation, or an addition or alteration 
+            to an existing installation, to ensure it complies with BS 7671 before it is put into service.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">BS 7671 Part 6 Requirements</h3>
-          <p>Part 6 of BS 7671 (Requirements for Electrical Installations, IET Wiring Regulations) specifically covers:</p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Section 641:</strong> Initial verification requirements</li>
-            <li><strong>Section 642:</strong> Continuity testing procedures</li>
-            <li><strong>Section 643:</strong> Insulation resistance testing</li>
-            <li><strong>Section 644:</strong> Polarity testing</li>
-            <li><strong>Section 645:</strong> Earth loop impedance testing</li>
-            <li><strong>Section 646:</strong> RCD testing protocols</li>
-            <li><strong>Section 647:</strong> Phase sequence verification</li>
-            <li><strong>Section 648:</strong> Functional testing</li>
-          </ul>
+          <h4 className="text-[#FFC900]">Pre-Power Checks</h4>
+          <p className="text-[#FFC900]/80">
+            Before applying power to any installation, the following must be verified:
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Inspector Qualifications</h3>
-          <p>Initial verification must be carried out by a skilled person with:</p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Competence in inspection and testing techniques</li>
-            <li>Understanding of the installation being tested</li>
-            <li>Knowledge of potential hazards during testing</li>
-            <li>Experience in interpreting test results</li>
-            <li>Appropriate qualifications (e.g., City & Guilds 2391-50 or 2394)</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">When Initial Verification Is Required</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>For all new electrical installations before energizing</li>
-            <li>After major alterations to existing installations</li>
-            <li>After additions to an existing installation</li>
-            <li>When there is a change in ownership requiring certification</li>
-            <li>Before reconnection of an installation that has been disconnected for an extended period</li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Learning Objectives - Initial Verification"
-          content={
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Understand the purpose and scope of initial verification</li>
-              <li>Know the key elements to check before powering up an installation</li>
-              <li>Understand the regulatory requirements in BS 7671 Part 6</li>
-              <li>Recognize the qualifications needed to perform verification</li>
-              <li>Identify when initial verification is required</li>
+          <div className="mt-4 bg-[#353a2c] p-4 rounded-md">
+            <h5 className="font-medium text-[#FFC900]">Critical Pre-Power Checks:</h5>
+            <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+              <li>Correct wiring connections in all accessories and distribution boards</li>
+              <li>Correct selection and installation of protective devices</li>
+              <li>No visible damage to electrical components or enclosures</li>
+              <li>No missing parts that would compromise safety</li>
+              <li>Adequate IP ratings for the environment</li>
+              <li>Correct identification and labeling of circuits</li>
             </ul>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Common Pre-Power Issues</h3>
-        <p className="mb-4">During initial verification, these common issues should be identified before applying power:</p>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+          </div>
+          
+          <h4 className="text-[#FFC900] mt-6">BS 7671 Requirements</h4>
+          <p className="text-[#FFC900]/80">
+            Part 6 of BS 7671 (18th Edition Wiring Regulations) specifies that:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Every installation must be verified during erection and on completion before being put into service</li>
+            <li>Precautions must be taken to avoid danger to persons and livestock and to prevent damage to property and equipment</li>
+            <li>The verification must be carried out by a competent person</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Common Installation Defects Found During Initial Verification</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Issue Type</th>
-                <th className="py-2 px-4 text-left">Example Issues</th>
-                <th className="py-2 px-4 text-left">Potential Consequences</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Defect Type</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Potential Issues</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Connection Issues</td>
-                <td className="py-2 px-4">Loose terminals, poor crimping, wrong torque settings</td>
-                <td className="py-2 px-4">Overheating, fire risk, intermittent operation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Incorrect Wiring</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Cross polarity, reversed connections, incorrect color coding</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Cable Issues</td>
-                <td className="py-2 px-4">Undersized cables, damaged insulation, incorrect cable types</td>
-                <td className="py-2 px-4">Overheating, voltage drop, shock risk</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Protection Issues</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Incorrect MCB ratings, wrong type of RCD, improper discrimination</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Protection Issues</td>
-                <td className="py-2 px-4">Incorrect device ratings, wrong type of device, missing RCDs</td>
-                <td className="py-2 px-4">Inadequate protection, nuisance tripping, unsafe installation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Physical Damage</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Damaged insulation, broken enclosures, exposed conductors</td>
               </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Earthing Issues</td>
-                <td className="py-2 px-4">Missing earth connections, undersized earth conductors</td>
-                <td className="py-2 px-4">Shock risk, failure to disconnect during fault</td>
-              </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Identification Issues</td>
-                <td className="py-2 px-4">Missing labels, incorrect circuit identification</td>
-                <td className="py-2 px-4">Difficulty in maintenance, unsafe isolation</td>
+              <tr>
+                <td className="py-3 px-4 text-[#FFC900]/80">Identification</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Missing or incorrect labeling, improper warning notices</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    )
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed BS 7671 Requirements for Initial Verification</h3>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Regulation 641.2</h4>
+          <p className="text-[#FFC900]/80">
+            The initial verification must include, where relevant:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>A visual inspection (Regulation 643)</li>
+            <li>Testing of the installation (Regulation 644)</li>
+            <li>Documentation of the results (Regulation 645)</li>
+          </ul>
+          
+          <h4 className="text-xl font-medium text-[#FFC900] mt-6 mb-4">Regulation 642.1</h4>
+          <p className="text-[#FFC900]/80">
+            The extent and requirements of the verification shall be determined, taking account of:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>The type of installation (domestic, commercial, industrial, etc.)</li>
+            <li>Whether it is a new installation, alteration, or addition</li>
+            <li>The frequency of verification based on statutory requirements</li>
+          </ul>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Pre-Power Safety Checklist</h4>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Verify all connections are tight and secure</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Check protective devices match design specifications</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Inspect main equipotential bonding</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Verify warning notices are correctly placed</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Check all accessories are properly secured</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Documentation Required</h4>
+            <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+              <li>Installation design specifications</li>
+              <li>Schematic diagrams</li>
+              <li>Cable sizing calculations</li>
+              <li>Distribution board schedules</li>
+              <li>Manufacturer's instructions for equipment</li>
+              <li>Previous inspection reports (for alterations)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    ),
   },
-  
   "1.2": {
-    title: "1.2 Documentation requirements",
+    title: "Documentation Requirements",
     description: "Understanding the necessary paperwork for installation verification.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Documentation Requirements for Verification">
-          <p>Proper documentation is not just a legal requirement but essential for future reference, maintenance, and safety.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Identify the required documentation for initial verification</li>
+            <li>Understand how to properly complete verification documentation</li>
+            <li>Recognize the legal importance of accurate record-keeping</li>
+          </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Documentation for Initial Verification</h3>
+          <p className="text-[#FFC900]/80">
+            Proper documentation is a legal requirement for all electrical installations. These documents form 
+            part of the "health record" of the installation and serve as evidence that the work has been designed, 
+            installed, and verified to comply with BS 7671.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Required Documentation</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Electrical Installation Certificate (EIC):</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Required for all new installations</li>
-                <li>Details the extent and limitations of the work</li>
-                <li>Contains declarations by designer, installer, and tester</li>
-                <li>Valid for specific periods depending on installation type</li>
-              </ul>
-            </li>
-            <li><strong>Schedule of Inspections:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Records all items physically checked during visual inspection</li>
-                <li>Contains tick boxes for satisfactory/unsatisfactory/not applicable</li>
-                <li>Must be completed before electrical testing begins</li>
-              </ul>
-            </li>
-            <li><strong>Schedule of Test Results:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Records all measured values from testing</li>
-                <li>Documents specific circuit details</li>
-                <li>Includes all test values (continuity, insulation resistance, etc.)</li>
-              </ul>
-            </li>
-            <li><strong>Distribution board schedules:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Identifies each circuit and its protection device</li>
-                <li>States what each circuit supplies</li>
-                <li>Must be fixed at or near each distribution board</li>
-              </ul>
-            </li>
-            <li><strong>Circuit charts and diagrams:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Schematic diagrams showing electrical connections</li>
-                <li>May include single-line diagrams of supply arrangements</li>
-                <li>Essential for future maintenance and modifications</li>
-              </ul>
-            </li>
+          <h4 className="text-[#FFC900]">Key Documentation Requirements</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Electrical Installation Certificate (EIC)</li>
+            <li>Schedule of Inspections</li>
+            <li>Schedule of Test Results</li>
+            <li>Risk assessments</li>
+            <li>Design calculations</li>
+            <li>As-built drawings</li>
           </ul>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Documentation Requirements by Installation Type</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-[#FFC900]/80">
-              <thead>
-                <tr className="border-b border-[#FFC900]/20">
-                  <th className="py-2 px-4 text-left">Installation Type</th>
-                  <th className="py-2 px-4 text-left">Required Documentation</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">New installation</td>
-                  <td className="py-2 px-4">EIC + Schedules of Inspection and Test Results + DB Schedules</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Major alteration</td>
-                  <td className="py-2 px-4">EIC + Schedules of Inspection and Test Results + Updated DB Schedules</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Minor alteration (e.g., adding a socket)</td>
-                  <td className="py-2 px-4">Minor Electrical Installation Works Certificate (MEIWC)</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4">Periodic inspection</td>
-                  <td className="py-2 px-4">Electrical Installation Condition Report (EICR) + Schedules</td>
-                </tr>
-              </tbody>
-            </table>
+          <h4 className="text-[#FFC900] mt-6">Legal Implications</h4>
+          <p className="text-[#FFC900]/80">
+            Accurate documentation provides evidence of compliance with:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>The Electricity at Work Regulations 1989</li>
+            <li>Building Regulations (Part P for domestic installations)</li>
+            <li>Health and Safety at Work Act 1974</li>
+            <li>BS 7671 Requirements for Electrical Installations</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Documentation Requirements by Installation Type</h4>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-[#FFC900]/20">
+                <th className="py-2 px-4 text-left text-[#FFC900]">Installation Type</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Required Documentation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">New Installation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Full EIC, Schedule of Inspections, Schedule of Test Results</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Addition or Alteration</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Minor Works Certificate or EIC (depending on extent)</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Periodic Inspection</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Electrical Installation Condition Report (EICR)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Documentation Requirements</h3>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">The Electrical Installation Certificate (EIC)</h4>
+          <p className="text-[#FFC900]/80">
+            The EIC must contain the following information:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Details of the client</li>
+            <li>Address of the installation</li>
+            <li>Description of the installation</li>
+            <li>Declaration of design, construction, inspection, and testing</li>
+            <li>Details and signatures of the designer, constructor, and inspector/tester</li>
+            <li>Next inspection recommendation date</li>
+            <li>Supply characteristics and earthing arrangements</li>
+          </ul>
+          
+          <h4 className="text-xl font-medium text-[#FFC900] mt-6 mb-4">Schedule of Inspections</h4>
+          <p className="text-[#FFC900]/80">
+            Must include inspection results for:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Connection of conductors</li>
+            <li>Identification of conductors</li>
+            <li>Routing of cables in safe zones</li>
+            <li>Selection of conductors for current-carrying capacity and voltage drop</li>
+            <li>Connection of equipment and accessories</li>
+            <li>Presence of fire barriers, protective devices, signs, etc.</li>
+          </ul>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Schedule of Test Results</h4>
+            <p className="text-[#FFC900]/80">
+              Must record results for each circuit including:
+            </p>
+            <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+              <li>Circuit description and reference number</li>
+              <li>Continuity test results (R₁+R₂)</li>
+              <li>Insulation resistance</li>
+              <li>Polarity</li>
+              <li>Earth fault loop impedance (Zs)</li>
+              <li>RCD operation times</li>
+              <li>Prospective fault current (PFC)</li>
+              <li>Details of test instruments used</li>
+            </ul>
           </div>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Document Retention</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Originals should be provided to the client/owner</li>
-            <li>Copies should be retained by the electrical contractor</li>
-            <li>Retention period should be at least until the next inspection is due</li>
-            <li>Electronic copies are acceptable if secure and retrievable</li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Documentation Requirements - Key Points"
-          content={
-            <ul className="list-disc pl-6 space-y-2">
-              <li>All documentation must be completed in full - no blank entries</li>
-              <li>Documentation must be signed by competent persons</li>
-              <li>Records must be kept for future reference and legal purposes</li>
-              <li>The type of documentation required depends on the nature of the work</li>
-              <li>Building regulations and other statutory requirements may require specific additional documentation</li>
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Minor Works Certificate</h4>
+            <p className="text-[#FFC900]/80">
+              Used for small-scale additions or alterations that do not include a new circuit. Must include:
+            </p>
+            <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+              <li>Description of the work undertaken</li>
+              <li>Declaration that the work complies with BS 7671</li>
+              <li>Details of inspections and tests carried out</li>
+              <li>Installer's details and signature</li>
+              <li>Date of work completion</li>
+              <li>Any departures from BS 7671</li>
             </ul>
-          }
-        />
+          </div>
+        </div>
       </div>
-    )
+    ),
   },
-  
   "2.1": {
-    title: "2.1 Correct procedure for safe isolation",
+    title: "Correct procedure for safe isolation",
     description: "Step-by-step process for safely isolating electrical installations.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Safe Isolation Procedures">
-          <p>Safe isolation is a fundamental procedure that all electrical personnel must master to ensure safety before working on electrical installations.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the legal requirements for safe isolation</li>
+            <li>Learn the safe isolation procedure step-by-step</li>
+            <li>Identify appropriate equipment for secure isolation</li>
+          </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Legal Requirements for Safe Isolation</h3>
+          <p className="text-[#FFC900]/80">
+            The Electricity at Work Regulations 1989 requires that all electrical systems must be 
+            "dead" when work is carried out, unless it is unreasonable to work dead. Regulation 
+            13 specifically mandates adequate precautions to prevent electrical equipment, which 
+            has been made dead, from becoming live while work is carried out.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">The 'Lock Out, Tag Out' Principle</h3>
-          <p>This is the foundation of safe isolation, ensuring that once a circuit is isolated, it cannot be reconnected while work is in progress.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Safe Isolation Procedure - Step by Step</h3>
-          <ol className="list-decimal pl-6 space-y-3">
-            <li><strong>Identify the circuit to be isolated</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Use diagrams and distribution board schedules</li>
-                <li>Confirm with premises owner if necessary</li>
-                <li>Trace cables if identification is unclear</li>
-              </ul>
-            </li>
-            <li><strong>Test voltage indicator on known live source</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Use a proving unit or confirmed live outlet</li>
-                <li>Verify all functions of the voltage indicator</li>
-                <li>Ensure indicator is suitable for the voltage level</li>
-              </ul>
-            </li>
-            <li><strong>Isolate the supply</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Switch off the appropriate circuit breaker/isolator</li>
-                <li>Remove fuse if applicable</li>
-                <li>Use the main switch if isolating the entire installation</li>
-              </ul>
-            </li>
-            <li><strong>Secure the isolation</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Apply lock to prevent reconnection</li>
-                <li>Keep the key with you at all times</li>
-                <li>Attach warning tag with your name and contact information</li>
-                <li>If multiple people are working, each should apply their own lock</li>
-              </ul>
-            </li>
-            <li><strong>Verify the isolation</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Test between all conductors (L-N, L-E, N-E)</li>
-                <li>Test at the point of work, not just at the isolator</li>
-                <li>Ensure all potential sources are isolated (watch for backfeeds)</li>
-              </ul>
-            </li>
-            <li><strong>Test voltage indicator again on known live source</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Confirm indicator is still functioning correctly</li>
-                <li>Complete the "test-isolate-test" process</li>
-              </ul>
-            </li>
+          <h4 className="text-[#FFC900]">The Safe Isolation Procedure</h4>
+          <ol className="list-decimal list-inside text-[#FFC900]/80 mt-2 space-y-2">
+            <li><strong>Identify</strong> - Correctly identify the circuit or equipment to be isolated</li>
+            <li><strong>Test Voltage Indicator</strong> - Check your voltage indicator works on a known live source</li>
+            <li><strong>Isolate</strong> - Switch off and lock off the supply</li>
+            <li><strong>Prove Dead</strong> - Use voltage indicator to prove the circuit is dead</li>
+            <li><strong>Re-test Voltage Indicator</strong> - Check your voltage indicator still works on a known live source</li>
           </ol>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Approved Test Equipment</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Voltage indicators:</strong> Must meet GS38 requirements and BS EN 61243-3 standards</li>
-            <li><strong>Test leads:</strong> Must be adequately insulated and fused where required</li>
-            <li><strong>Proving units:</strong> Used to verify test equipment functionality</li>
-            <li><strong>Locking devices:</strong> Compatible with the isolation points being used</li>
-            <li><strong>Warning tags:</strong> Clear, durable, and with appropriate information</li>
+          <h4 className="text-[#FFC900] mt-6">Equipment for Safe Isolation</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Approved voltage indicator (GS38 compliant)</li>
+            <li>Proving unit (to test the voltage indicator)</li>
+            <li>Locking off devices (padlocks, MCB locks, etc.)</li>
+            <li>Warning notices</li>
+            <li>Personal protective equipment (PPE)</li>
           </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Common Isolation Failures</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Failure to identify all supplies:</strong> Multiple supplies, generator backfeeds</li>
-            <li><strong>Inadequate testing:</strong> Not testing at the point of work</li>
-            <li><strong>Failure to secure isolation:</strong> Not applying locks or tags</li>
-            <li><strong>Premature reconnection:</strong> Other workers restoring supply</li>
-            <li><strong>Incorrect identification:</strong> Working on wrong circuit</li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Safe Isolation - Critical Points to Remember"
-          content={
-            <div>
-              <p className="font-medium">Remember these critical points to ensure safe isolation:</p>
-              <ul className="list-disc pl-6 space-y-2 mt-3">
-                <li>Never rely on memory for circuit identification</li>
-                <li>Always follow the complete "test-isolate-test" procedure</li>
-                <li>Never lend your keys to anyone while your lock is in use</li>
-                <li>Always test at the point of work, not just at the isolator</li>
-                <li>If in doubt about complete isolation, do not proceed with the work</li>
-                <li>Consider all conductors as potentially live until proven dead</li>
-              </ul>
-            </div>
-          }
-        />
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Common Methods of Isolation</h4>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-[#FFC900]/20">
+                <th className="py-2 px-4 text-left text-[#FFC900]">Isolation Method</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Suitable For</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Security Measures</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Main Switch</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Whole installation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Padlock through hasp or dedicated lock-off device</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Circuit Breaker</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Individual circuit</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">MCB lock-off device</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 text-[#FFC900]/80">Fused Connection Unit</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Individual appliance</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Remove fuse and retain</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     ),
     detailedContent: (
       <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Special Isolation Considerations</h3>
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Safe Isolation in Detail</h3>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Capacitor Discharge</h4>
-          <p className="text-[#FFC900]/80">Even after isolation, some equipment may contain stored energy in capacitors. Always allow adequate discharge time and verify with test equipment before working.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Step-by-Step Safe Isolation Procedure</h4>
+          
+          <div className="space-y-4">
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Step 1: Identify</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Correctly identify the circuit or equipment to be isolated using drawings, 
+                distribution board schedules, or labels. Always check the identification is correct 
+                before proceeding to the next step.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Step 2: Test Voltage Indicator</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Use a proving unit to verify that your voltage indicator is functioning 
+                correctly. If a proving unit is not available, test on a known live source, 
+                but the proving unit is the preferred method.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Step 3: Isolate</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Switch off the appropriate isolation device. Apply a lock and keep the 
+                key with you. If multiple people are working on the system, a multi-lock hasp 
+                should be used so that each person can apply their own lock.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Step 4: Prove Dead</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Use the voltage indicator to prove the conductors are dead. For three-phase 
+                systems, check between all phases and from each phase to neutral and earth. 
+                For single-phase systems, check between line, neutral, and earth.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Step 5: Re-test Voltage Indicator</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Verify that your voltage indicator is still functioning correctly by testing 
+                it on the proving unit again or a known live source. This ensures the indicator 
+                was working when you proved the circuit dead.
+              </p>
+            </div>
+          </div>
         </div>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Induction Hazards</h4>
-          <p className="text-[#FFC900]/80">Long cables run alongside live cables can develop induced voltages even when isolated. Apply temporary bonds to discharge these voltages safely.</p>
-        </div>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Backup Supplies</h4>
-          <p className="text-[#FFC900]/80">UPS systems, generators, and dual supplies can create hazards if not all sources are isolated. Always check system diagrams carefully and isolate all possible sources.</p>
-        </div>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Documentation of Isolation</h4>
-          <p className="text-[#FFC900]/80">In complex systems, create a written isolation plan listing all points of isolation, verification methods, and responsible persons. This becomes especially important in team environments.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Safe Isolation Equipment</h4>
+            
+            <div className="space-y-4">
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Voltage Indicator</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Must comply with HSE Guidance Note GS38. Features should include:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Clear display</li>
+                  <li>Suitable voltage range</li>
+                  <li>CAT III or CAT IV rating for electrical installations</li>
+                  <li>Finger guards and insulated probes</li>
+                  <li>Maximum of 4mm of metal exposed at probe tips</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Proving Unit</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Used to check voltage indicators are working. Provides a known voltage source 
+                  to verify operation of the indicator before and after proving dead.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Lock-Off Devices</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                Different isolation points require different lock-off devices:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">MCB Lock-Off</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Specially designed clips that fit over MCBs to prevent them being switched on.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Multi-Lock Hasps</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Allows multiple padlocks to be fitted to a single isolation point, ensuring 
+                  the circuit cannot be re-energized until all locks are removed.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Warning Tags</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Should be attached to all isolation points with details of:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Who isolated the circuit</li>
+                  <li>Why it was isolated</li>
+                  <li>Contact details</li>
+                  <li>Date and time of isolation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "2.2": {
-    title: "2.2 Visual inspection procedures",
+    title: "Visual inspection procedures",
     description: "Conducting and recording visual inspections before testing.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Visual Inspection Procedures">
-          <p>Visual inspection is the first and one of the most important steps in the verification process. Many defects can be identified by careful visual inspection before any testing takes place.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Visual Inspection Checklist</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Conductor Identification:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Line conductors - Brown (single phase) or Brown/Black/Grey (three phase)</li>
-                <li>Neutral conductors - Blue</li>
-                <li>Protective conductors - Green/Yellow</li>
-                <li>Switch wires - Any color except Green/Yellow</li>
-              </ul>
-            </li>
-            <li><strong>Main and supplementary bonding:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Presence and condition of main bonding conductors</li>
-                <li>Correct sizing of bonding conductors</li>
-                <li>Proper connection to main earthing terminal</li>
-                <li>Bonding of gas, water, and other services</li>
-                <li>Supplementary bonding in special locations (bathrooms, etc.)</li>
-              </ul>
-            </li>
-            <li><strong>IP ratings:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Appropriate for environment/location</li>
-                <li>Correct rating for wet areas (bathrooms, outdoors)</li>
-                <li>Integrity of seals and gaskets</li>
-                <li>Correct equipment for zone classification</li>
-              </ul>
-            </li>
-            <li><strong>Labeling:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Warning notices at appropriate locations</li>
-                <li>Circuit identification at distribution boards</li>
-                <li>Presence of RCD periodic test notices</li>
-                <li>Maximum Zs values displayed</li>
-                <li>Dual supply warnings where applicable</li>
-              </ul>
-            </li>
-            <li><strong>Cable routes and installation methods:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Appropriate support and fixing methods</li>
-                <li>Correct separation from other services</li>
-                <li>Protection from mechanical damage</li>
-                <li>Appropriate use of containment systems</li>
-                <li>Bending radii within limits</li>
-              </ul>
-            </li>
-            <li><strong>Connection and terminations:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Secure and correct termination of conductors</li>
-                <li>No exposed live parts</li>
-                <li>Correct connector types for conductor material/size</li>
-                <li>Evidence of correct torque settings where required</li>
-              </ul>
-            </li>
-            <li><strong>Accessibility for operation and maintenance:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Access to distribution boards and isolation points</li>
-                <li>Adequate working space around equipment</li>
-                <li>Functional access for future maintenance</li>
-              </ul>
-            </li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the importance and scope of visual inspection</li>
+            <li>Learn what to check during a visual inspection</li>
+            <li>Be able to document inspection findings correctly</li>
           </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Recording Inspection Results</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Use Schedule of Inspections form from BS 7671</li>
-            <li>Mark each item as:
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>✓ (tick) - Satisfactory</li>
-                <li>✗ (cross) - Unsatisfactory</li>
-                <li>N/A - Not applicable</li>
-              </ul>
-            </li>
-            <li>Record any defects or omissions in detail</li>
-            <li>Complete before electrical testing begins</li>
-            <li>Include all required sections (no blank entries)</li>
-            <li>Sign and date the inspection schedule</li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Common Installation Defects"
-          content={
-            <div>
-              <p className="font-medium">Inspections frequently reveal certain types of defects that compromise safety or compliance:</p>
-              <ul className="list-disc pl-6 space-y-2 mt-3">
-                <li><strong>Dangerous Defects (Code C1):</strong> Exposed live parts, absence of earthing, incorrect polarity</li>
-                <li><strong>Potentially Dangerous Defects (Code C2):</strong> Inadequate IP ratings, broken accessories, overloaded circuits</li>
-                <li><strong>Improvement Recommended (Code C3):</strong> Lack of RCD protection (in some cases), outdated but safe equipment</li>
-              </ul>
-              <p className="mt-3 italic">Note: C1 defects require immediate action, C2 defects require urgent action, and C3 defects should be addressed when practical.</p>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Visual Inspection Tools and Equipment</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#353a2c] p-4 rounded-lg">
-            <h4 className="text-xl font-medium text-[#FFC900] mb-2">Basic Inspection Tools</h4>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Torch with focused beam</li>
-              <li>Inspection mirrors</li>
-              <li>Digital camera for documentation</li>
-              <li>Steel tape measure</li>
-              <li>Cable detector</li>
-              <li>Thermal imaging camera (for advanced inspections)</li>
-            </ul>
-          </div>
-          
-          <div className="bg-[#353a2c] p-4 rounded-lg">
-            <h4 className="text-xl font-medium text-[#FFC900] mb-2">Documentation Required</h4>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Installation drawings</li>
-              <li>Distribution board schedules</li>
-              <li>Previous inspection reports (if available)</li>
-              <li>Schedule of Inspections form</li>
-              <li>Reference copy of BS 7671</li>
-              <li>Manufacturer's instructions for special equipment</li>
-            </ul>
-          </div>
         </div>
-        
-        <h3 className="text-2xl font-medium text-[#FFC900] mt-6 mb-4">Special Locations - Additional Inspection Requirements</h3>
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Purpose of Visual Inspection</h3>
+          <p className="text-[#FFC900]/80">
+            Visual inspection is the first step in the verification process and often reveals up to 
+            80% of installation defects. It must be completed before any testing begins. A thorough 
+            visual inspection checks that the installation complies with the design specifications 
+            and the requirements of BS 7671.
+          </p>
+          
+          <h4 className="text-[#FFC900]">What to Check During Visual Inspection</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Connection and identification of conductors</li>
+            <li>Presence of protective devices</li>
+            <li>Segregation of circuits</li>
+            <li>Accessibility of equipment for operation and maintenance</li>
+            <li>Presence of fire barriers and seals</li>
+            <li>Protection against thermal effects</li>
+            <li>Methods of protection against electric shock</li>
+            <li>Circuit identification and labeling</li>
+          </ul>
+          
+          <h4 className="text-[#FFC900] mt-6">Recording Visual Inspection Results</h4>
+          <p className="text-[#FFC900]/80">
+            Results must be recorded on the Schedule of Inspections. Each item should be marked as:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>"✓" (tick) - When the item complies</li>
+            <li>"✗" (cross) - When the item does not comply</li>
+            <li>"N/A" - When the item is not applicable</li>
+            <li>"LIM" - When inspection was limited for some reason</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Common Visual Inspection Items</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Location Type</th>
-                <th className="py-2 px-4 text-left">Additional Inspection Requirements</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Inspection Item</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">What to Look For</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Bathrooms</td>
-                <td className="py-2 px-4">Zone classification compliance, supplementary bonding, IPX ratings</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Cable Routing</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Cables in safe zones, appropriate support, no visible damage</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Swimming Pools</td>
-                <td className="py-2 px-4">Zone measurements, SELV lighting, separated circuits</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Bonding</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Main and supplementary bonding conductors correctly installed and sized</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Agricultural Locations</td>
-                <td className="py-2 px-4">Animal-proof equipment, RCD protection, equipotential bonding grids</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">IP Ratings</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Equipment has appropriate IP rating for location/environment</td>
               </tr>
               <tr>
-                <td className="py-2 px-4">Construction Sites</td>
-                <td className="py-2 px-4">Robust equipment, mechanical protection, reduced voltage systems</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Identification</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">All circuits, protective devices, switches properly labeled</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    )
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Comprehensive Visual Inspection Checklist</h3>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Basic Protection (Protection Against Direct Contact)</h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Insulation of live parts is complete with no exposed live parts</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Barriers or enclosures are secure and have appropriate IP rating</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Obstacles (where used) prevent unintentional contact with live parts</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">SELV or PELV systems have correct separation and identification</p>
+            </div>
+          </div>
+          
+          <h4 className="text-xl font-medium text-[#FFC900] mt-6 mb-4">Fault Protection (Protection Against Indirect Contact)</h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Presence of earthing conductor and connections</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Protective conductors are correctly sized and identified</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">RCDs are correctly installed and appropriate type/rating</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="min-w-5 mt-1">
+                <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                </div>
+              </div>
+              <p className="text-[#FFC900]/80">Main and supplementary bonding conductors are correctly installed</p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Circuit Protection and Accessories</h4>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Protective devices are correctly rated for fault and overload protection</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Suitability of protective devices for prospective fault current</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Switchgear and controlgear correctly selected and installed</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Isolators and emergency switches present and accessible</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Conductors and Cables</h4>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Conductors are correctly sized for current-carrying capacity</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Cables correctly supported and fixed</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Cables routed in safe zones and protected from damage</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="min-w-5 mt-1">
+                  <div className="h-5 w-5 rounded border border-[#FFC900] flex items-center justify-center">
+                    <div className="h-3 w-3 rounded-sm bg-[#FFC900]"></div>
+                  </div>
+                </div>
+                <p className="text-[#FFC900]/80">Correct identification of conductors (colors, markings, etc.)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
   },
-  
   "3.1": {
-    title: "3.1 Dead Testing",
+    title: "Dead Testing",
     description: "Continuity, insulation resistance, and polarity tests.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Dead Testing Procedures">
-          <p>Dead testing is performed with the installation disconnected from the supply to verify safety before energization.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Continuity of Protective Conductors</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Ensure complete earth paths exist throughout the installation</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Connect low-resistance ohmmeter between main earthing terminal and exposed conductive parts</li>
-                <li>Measure resistance value and record</li>
-                <li>Test all accessible exposed conductive parts</li>
-                <li>Check all main and supplementary bonding conductors</li>
-              </ol>
-            </li>
-            <li><strong>Expected Results:</strong> Low resistance (typically &lt;0.05Ω plus the resistance of the conductor)</li>
-            <li><strong>Common Issues:</strong> Poor connections, damaged conductors, incorrect terminations, high-resistance joints</li>
-            <li><strong>Tips:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Null test leads before testing to remove their resistance from readings</li>
-                <li>Use R₁+R₂ method for longer circuits</li>
-                <li>Record highest resistance value found</li>
-              </ul>
-            </li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the sequence and purpose of dead testing</li>
+            <li>Learn how to conduct continuity, insulation resistance, and polarity tests</li>
+            <li>Be able to interpret and record dead test results correctly</li>
           </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Dead Testing Overview</h3>
+          <p className="text-[#FFC900]/80">
+            Dead testing is performed with the installation isolated from the supply. These tests 
+            verify the integrity of the installation's conductors and insulation before applying power.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Ring Final Circuit Continuity</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Verify correct wiring of ring final circuits and identify any interconnections</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Measure end-to-end resistance of Line conductors</li>
-                <li>Measure end-to-end resistance of Neutral conductors</li>
-                <li>Measure end-to-end resistance of CPC conductors</li>
-                <li>Measure L-N loop resistance at each socket</li>
-                <li>Measure L-CPC loop resistance at each socket</li>
-              </ol>
-            </li>
-            <li><strong>Expected Results:</strong> End-to-end readings approximately half of cross-connection readings</li>
-            <li><strong>Common Issues:</strong> Broken rings, interconnected rings, uneven conductor sizing, reversed polarity</li>
-            <li><strong>Tips:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Make a table of readings to help identify anomalies</li>
-                <li>Calculate expected values based on cable length and CSA</li>
-                <li>Check for consistency of readings around the ring</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Insulation Resistance Testing</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Ensure no leakage between conductors or to earth</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Disconnect sensitive electronic equipment</li>
-                <li>Apply test voltage between all conductors and between conductors and earth</li>
-                <li>Test Line-Neutral, Line-Earth, and Neutral-Earth</li>
-                <li>Test with all switches closed or link out switches</li>
-                <li>Record lowest readings for each circuit</li>
-              </ol>
-            </li>
-            <li><strong>Test Voltage:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>500V DC for installations up to 500V AC</li>
-                <li>1000V DC for installations up to 1000V AC</li>
-                <li>250V DC for SELV and PELV circuits</li>
-              </ul>
-            </li>
-            <li><strong>Expected Results:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>At least 1MΩ for circuits up to 500V (typically much higher)</li>
-                <li>At least 1MΩ for circuits above 500V</li>
-                <li>At least 0.5MΩ for SELV and PELV circuits</li>
-              </ul>
-            </li>
-            <li><strong>Common Issues:</strong> Moisture, damaged insulation, connected equipment affecting readings</li>
-            <li><strong>Safety:</strong> Disconnect sensitive electronic equipment before testing</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Polarity Testing</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Check correct connection of line, neutral, and earth</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Use continuity testing to verify correct connections</li>
-                <li>Check center contact of lampholders is connected to line</li>
-                <li>Check switched line in correct pole of switched accessories</li>
-                <li>Check single-pole devices only break the line conductor</li>
-              </ol>
-            </li>
-            <li><strong>Expected Results:</strong> Continuity between expected points, no reversed connections</li>
-            <li><strong>Common Issues:</strong> Reversed L/N, switched neutral instead of line, incorrect wiring of two-way switches</li>
-            <li><strong>Critical Points:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Edison screw lampholders (center pin must be line)</li>
-                <li>Single-pole switches (must break line only)</li>
-                <li>Socket outlets (correct orientation of L/N/E)</li>
-                <li>FCUs and connection units (correct orientation)</li>
-              </ul>
-            </li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Dead Testing Sequence - Important!"
-          content={
-            <div>
-              <p className="font-medium">Tests must be performed in this exact order:</p>
-              <ol className="list-decimal pl-6 space-y-2 mt-3">
-                <li>Continuity of Protective Conductors (CPCs)</li>
-                <li>Continuity of Ring Final Circuits</li>
-                <li>Insulation Resistance</li>
-                <li>Polarity Testing</li>
-              </ol>
-              <p className="mt-3 text-[#FFC900]/70 italic">This sequence ensures safety and prevents damage to equipment. Never perform insulation resistance tests before checking continuity, as damaged earth conductors could leave equipment cases dangerously live during testing.</p>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Test Instrument Requirements</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+          <h4 className="text-[#FFC900]">The Order of Dead Tests</h4>
+          <p className="text-[#FFC900]/80">
+            Dead tests must be performed in the following sequence:
+          </p>
+          <ol className="list-decimal list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Continuity of protective conductors (CPCs)</li>
+            <li>Continuity of ring final circuit conductors</li>
+            <li>Insulation resistance</li>
+            <li>Polarity</li>
+            <li>Protection by separation of circuits (where applicable)</li>
+            <li>Protection by barriers or enclosures (where applicable)</li>
+            <li>Protection by SELV or PELV (where applicable)</li>
+            <li>Functional testing of switchgear and control gear (mechanical operation)</li>
+          </ol>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Key Dead Tests</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Test</th>
-                <th className="py-2 px-4 text-left">Instrument Requirements</th>
-                <th className="py-2 px-4 text-left">Applicable Standards</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Test</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Purpose</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Acceptable Results</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Continuity</td>
-                <td className="py-2 px-4">Low-resistance ohmmeter, test current of at least 200mA</td>
-                <td className="py-2 px-4">BS EN 61557-4</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">CPC Continuity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Verify earth path integrity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Low resistance proportional to length</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Insulation Resistance</td>
-                <td className="py-2 px-4">Insulation tester capable of providing 250V, 500V, or 1000V DC test voltage</td>
-                <td className="py-2 px-4">BS EN 61557-2</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Ring Circuit Continuity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Check ring is complete with no breaks</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Balanced readings at each socket</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Insulation Resistance</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Check integrity of insulation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">{'≥1 MΩ (≤500V); ≥2 MΩ (>500V)'}</td>
               </tr>
               <tr>
-                <td className="py-2 px-4">Polarity</td>
-                <td className="py-2 px-4">Low-resistance ohmmeter or continuity tester</td>
-                <td className="py-2 px-4">BS EN 61557-7</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Polarity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Ensure correct connection of conductors</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Continuity on switching devices</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Dead Testing Procedures</h3>
         
-        <h3 className="text-2xl font-medium text-[#FFC900] mt-6 mb-4">Detailed Testing Methods</h3>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">R₁+R₂ Method for Continuity</h4>
-          <p className="text-[#FFC900]/80 mb-3">For circuits where direct access to the earth terminal of the accessory is not possible:</p>
-          <ol className="list-decimal pl-6 space-y-1">
-            <li>Temporarily connect line and CPC together at the distribution board</li>
-            <li>Measure continuity between line and earth terminals at the accessory</li>
-            <li>This measures the loop resistance (R₁+R₂) of both conductors</li>
-            <li>The measurement must be less than the maximum permitted for the circuit protection</li>
-          </ol>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Continuity of Protective Conductors</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              This test verifies that all protective conductors (including main and supplementary bonding 
+              conductors) are correctly connected and have adequate conductance.
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+              <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Use a low-reading ohmmeter or continuity tester</li>
+                <li>Connect one lead to the main earthing terminal</li>
+                <li>Test each exposed-conductive-part in turn with the other lead</li>
+                <li>Record the resistance value (R₂)</li>
+              </ol>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Alternative "Long Lead" Method</h5>
+              <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Use a temporary connection and known resistance test lead</li>
+                <li>Measure resistance of the lead plus the CPC</li>
+                <li>Subtract the resistance of the lead to find R₂</li>
+              </ol>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Expected Results</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Resistance should be proportional to the length of the cable. For bonding conductors, 
+                the maximum values are specified in Table 54.8 of BS 7671. Generally, main bonding 
+                conductor resistance should not exceed 0.05Ω.
+              </p>
+            </div>
+          </div>
         </div>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Determining Ring Circuit Interconnections</h4>
-          <p className="text-[#FFC900]/80 mb-3">If you suspect interconnected rings:</p>
-          <ol className="list-decimal pl-6 space-y-1">
-            <li>Disconnect both ends of one conductor (e.g., line conductor)</li>
-            <li>Test for continuity between the disconnected ends</li>
-            <li>If continuity exists, there is an interconnection</li>
-            <li>Repeat for other conductors to identify all interconnections</li>
-            <li>Interconnections must be removed as they can cause uneven loading and overheating</li>
-          </ol>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Insulation Resistance Testing</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                This test verifies there are no breakdowns in insulation and no cross-connections 
+                between conductors.
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+                <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                  <li>Use an insulation resistance tester (normally 500V for installations up to 500V)</li>
+                  <li>Test between live conductors (phase to neutral)</li>
+                  <li>Test between all live conductors and earth</li>
+                  <li>For 3-phase, test between all phases</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Expected Results</h5>
+                <table className="w-full border-collapse mt-2">
+                  <thead>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <th className="py-2 px-4 text-left text-[#FFC900]">Circuit Voltage</th>
+                      <th className="py-2 px-4 text-left text-[#FFC900]">Test Voltage</th>
+                      <th className="py-2 px-4 text-left text-[#FFC900]">Minimum Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-4 text-[#FFC900]/80">SELV/PELV</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">250V DC</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">0.5 MΩ</td>
+                    </tr>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-4 text-[#FFC900]/80">{'≤500V'}</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">500V DC</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">1.0 MΩ</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 px-4 text-[#FFC900]/80">{'>500V'}</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">1000V DC</td>
+                      <td className="py-2 px-4 text-[#FFC900]/80">2.0 MΩ</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Ring Circuit Continuity</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                This test confirms that ring final circuits are correctly connected with no breaks 
+                or interconnections.
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+                <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                  <li>Disconnect the circuit from the supply</li>
+                  <li>Join phase and CPC conductors at the distribution board</li>
+                  <li>Measure resistance between phase and CPC at each socket</li>
+                  <li>Repeat for neutral and CPC (join neutral and CPC)</li>
+                  <li>Measure between phase and neutral at each socket</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Expected Results</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  The readings should be approximately the same at each socket if 
+                  the ring is continuous and correctly wired. The "mesh" method 
+                  allows calculation of the resistance of each conductor segment.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Common Issues</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Variations in readings indicate broken conductors</li>
+                  <li>Very low readings may indicate cross connections</li>
+                  <li>Unusually high readings suggest poor connections</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "3.2": {
-    title: "3.2 Live Testing",
+    title: "Live Testing",
     description: "Earth fault loop impedance, PFC, and RCD testing.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Live Testing Procedures">
-          <p>Live testing is performed with the installation energized to verify protection performance under fault conditions.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Earth Fault Loop Impedance Testing</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Check that fault current will trip protection quickly enough</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Connect loop impedance tester between line conductor and protective conductor</li>
-                <li>The tester applies a load between these conductors</li>
-                <li>Measure at the origin of the installation (Ze)</li>
-                <li>Measure at the furthest point of each circuit (Zs)</li>
-                <li>Record values for each circuit</li>
-              </ol>
-            </li>
-            <li><strong>External Impedance (Ze):</strong> Measured at origin of installation</li>
-            <li><strong>Circuit Impedance (Zs):</strong> Measured at furthest point of each circuit</li>
-            <li><strong>Expected Results:</strong> Values below maximum permitted for circuit protection type</li>
-            <li><strong>Safety:</strong> Use non-trip testers where RCDs are installed to prevent nuisance tripping</li>
-            <li><strong>Key Formulas:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Zs = Ze + (R₁ + R₂)</li>
-                <li>Maximum Zs values depend on disconnection times and protective device</li>
-              </ul>
-            </li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand when and how to perform live testing safely</li>
+            <li>Learn how to measure earth fault loop impedance and prospective fault current</li>
+            <li>Be able to test RCDs correctly according to regulations</li>
           </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Live Testing Overview</h3>
+          <p className="text-[#FFC900]/80">
+            Live testing is conducted with the installation connected to the supply. These tests verify 
+            the effectiveness of protective measures and the capability of protective devices to operate 
+            correctly in fault conditions.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Prospective Fault Current (PFC) Testing</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Measure potential fault currents to ensure protection can handle them</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Use PFC tester at distribution point</li>
-                <li>Measure between line and neutral (PSCC)</li>
-                <li>Measure between line and earth (PEFC)</li>
-                <li>Record highest value found</li>
-              </ol>
-            </li>
-            <li><strong>Expected Results:</strong> Values within breaking capacity of protective devices</li>
-            <li><strong>Critical Points:</strong> Origin of installation and all distribution boards</li>
-            <li><strong>Safety:</strong> Ensure test equipment is rated for expected fault currents</li>
-            <li><strong>Important Notes:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Record the higher of PSCC and PEFC values</li>
-                <li>Ensure all protective devices have adequate breaking capacity</li>
-                <li>Consider the effect of supply impedance variations</li>
-              </ul>
-            </li>
-          </ul>
+          <h4 className="text-[#FFC900]">Key Live Tests</h4>
+          <p className="text-[#FFC900]/80">
+            The following tests must be carried out with the installation energized:
+          </p>
+          <ol className="list-decimal list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Earth fault loop impedance (Zs)</li>
+            <li>Prospective fault current (PFC)</li>
+            <li>RCD operation</li>
+            <li>Phase rotation (for 3-phase systems)</li>
+            <li>Functional testing</li>
+          </ol>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">RCD Testing</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Purpose:</strong> Verify RCDs operate within required times at rated current</li>
-            <li><strong>Method:</strong>
-              <ol className="list-decimal pl-6 space-y-1 mt-1">
-                <li>Connect RCD tester to protected circuit</li>
-                <li>Apply test current at both 0° and 180° phase angles</li>
-                <li>Record the slower of the two results</li>
-                <li>Perform tests at different current multiples</li>
-              </ol>
-            </li>
-            <li><strong>Test Currents:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>50% rated current (no trip expected)</li>
-                <li>100% rated current (must trip)</li>
-                <li>5× rated current (fast trip required)</li>
-              </ul>
-            </li>
-            <li><strong>Expected Results:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>General RCDs: ≤300ms at rated current, ≤40ms at 5× rated current</li>
-                <li>S-type RCDs: 130-500ms at rated current, ≤150ms at 5× rated current</li>
-                <li>No trip at 50% of rated current</li>
-              </ul>
-            </li>
-            <li><strong>Documentation:</strong> Record worst-case trip time for each test</li>
-            <li><strong>Additional Considerations:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Test integral test button operation</li>
-                <li>Consider RCD type (AC, A, B, F) for compatibility with load</li>
-                <li>Check selectivity between cascaded RCDs</li>
-              </ul>
-            </li>
+          <h4 className="text-[#FFC900] mt-6">Safety During Live Testing</h4>
+          <p className="text-[#FFC900]/80">
+            Live testing presents significant risks. Always:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Use appropriate PPE</li>
+            <li>Use instruments complying with relevant standards</li>
+            <li>Work methodically and avoid rushed decisions</li>
+            <li>Ensure good communication if working with others</li>
+            <li>Have emergency procedures in place</li>
           </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Live Testing Sequence - Important!"
-          content={
-            <div>
-              <p className="font-medium">Live tests must be performed in this order after dead testing is complete:</p>
-              <ol className="list-decimal pl-6 space-y-2 mt-3">
-                <li>Earth Fault Loop Impedance (Zs)</li>
-                <li>Prospective Fault Current (PFC)</li>
-                <li>RCD Trip Testing</li>
-                <li>Functional Tests</li>
-              </ol>
-              <p className="mt-3 text-[#FFC900]/70 italic">Always follow safe isolation procedures before and after live testing. When performing live testing, ensure that you have appropriate safety measures in place and that no one is working on the circuits being tested.</p>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Maximum Earth Fault Loop Impedance Values</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Live Test Summary</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Device Rating</th>
-                <th className="py-2 px-4 text-left">BS 3036 Fuse</th>
-                <th className="py-2 px-4 text-left">BS 1361 Fuse</th>
-                <th className="py-2 px-4 text-left">BS 88-3 Fuse</th>
-                <th className="py-2 px-4 text-left">Type B MCB</th>
-                <th className="py-2 px-4 text-left">Type C MCB</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Test</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Purpose</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Typical Values</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">6A</td>
-                <td className="py-2 px-4">7.15Ω</td>
-                <td className="py-2 px-4">6.45Ω</td>
-                <td className="py-2 px-4">10.99Ω</td>
-                <td className="py-2 px-4">7.67Ω</td>
-                <td className="py-2 px-4">3.83Ω</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Earth Fault Loop Impedance (Zs)</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Verify protective device operation in fault</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Depends on circuit and device type</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">16A</td>
-                <td className="py-2 px-4">2.39Ω</td>
-                <td className="py-2 px-4">2.07Ω</td>
-                <td className="py-2 px-4">3.39Ω</td>
-                <td className="py-2 px-4">2.87Ω</td>
-                <td className="py-2 px-4">1.44Ω</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Prospective Fault Current</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Check for adequate breaking capacity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Varies with supply - 6kA is common minimum</td>
               </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">32A</td>
-                <td className="py-2 px-4">0.96Ω</td>
-                <td className="py-2 px-4">0.86Ω</td>
-                <td className="py-2 px-4">1.54Ω</td>
-                <td className="py-2 px-4">1.44Ω</td>
-                <td className="py-2 px-4">0.72Ω</td>
+              <tr>
+                <td className="py-3 px-4 text-[#FFC900]/80">RCD Testing</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Verify RCD trips within required time</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">{'≤300ms at 1×IΔn, ≤150ms at 5×IΔn'}</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Live Testing Procedures</h3>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg mt-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">RCD Testing Requirements Summary</h4>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-[#FFC900]/80">
-              <thead>
-                <tr className="border-b border-[#FFC900]/20">
-                  <th className="py-2 px-4 text-left">RCD Type</th>
-                  <th className="py-2 px-4 text-left">Test Current</th>
-                  <th className="py-2 px-4 text-left">Maximum Trip Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4" rowSpan={2}>General RCD</td>
-                  <td className="py-2 px-4">1× IΔn</td>
-                  <td className="py-2 px-4">300ms</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">5× IΔn</td>
-                  <td className="py-2 px-4">40ms</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4" rowSpan={2}>S-type RCD</td>
-                  <td className="py-2 px-4">1× IΔn</td>
-                  <td className="py-2 px-4">130-500ms</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4">5× IΔn</td>
-                  <td className="py-2 px-4">50-150ms</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Earth Fault Loop Impedance Testing</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              Earth fault loop impedance (Zs) is the impedance of the earth fault current path from the point 
+              of fault back to the supply. This test verifies that protective devices will operate quickly 
+              enough in the event of a fault.
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+              <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Connect the loop impedance tester to the circuit</li>
+                <li>For final circuits, measure at the furthest point</li>
+                <li>For distribution circuits, measure at the distribution board</li>
+                <li>Press the test button and record the impedance value</li>
+              </ol>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Expected Results</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                The measured Zs value must be less than the maximum stated in BS 7671 for the 
+                specific protective device. For MCBs, refer to Tables 41.2-41.4 and for fuses, 
+                Tables 41.5-41.7.
+              </p>
+              <p className="text-[#FFC900]/80 mt-2">
+                Example maximum values for Type B MCBs:
+              </p>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>6A: 7.67Ω</li>
+                <li>16A: 2.87Ω</li>
+                <li>32A: 1.44Ω</li>
+                <li>40A: 1.15Ω</li>
+              </ul>
+            </div>
           </div>
-          <p className="mt-3 text-[#FFC900]/70 italic">Note: IΔn is the rated residual operating current of the RCD (e.g., 30mA, 100mA)</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Prospective Fault Current (PFC) Testing</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                This test measures the maximum current that would flow during a short-circuit or earth fault 
+                condition. It verifies that protective devices have adequate breaking capacity.
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+                <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                  <li>Ensure the installation is isolated</li>
+                  <li>Connect the PFC tester to the relevant points:</li>
+                  <li>Between phase and neutral for PSCC (Prospective Short Circuit Current)</li>
+                  <li>Between phase and earth for PEFC (Prospective Earth Fault Current)</li>
+                  <li>Between phases for 3-phase systems</li>
+                  <li>Record the highest value measured</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Expected Results</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  The breaking capacity of all protective devices must exceed the measured PFC value. 
+                  For domestic installations, devices with 6kA breaking capacity are typically used. 
+                  Commercial and industrial installations often require 10kA or higher.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">RCD Testing</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                RCD testing verifies that residual current devices operate within the specified time 
+                and at the correct current threshold.
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Test Method</h5>
+                <ol className="list-decimal list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                  <li>Connect the RCD tester to a socket protected by the RCD</li>
+                  <li>For non-socket circuits, connect at appropriate test points</li>
+                  <li>Test at 50% of rated tripping current (should not trip)</li>
+                  <li>Test at 100% of rated tripping current (must trip)</li>
+                  <li>Test at 5× rated tripping current (must trip faster)</li>
+                  <li>For types S and time-delayed RCDs, adjust expectations accordingly</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Maximum Disconnection Times</h5>
+                <table className="w-full border-collapse mt-2">
+                  <thead>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <th className="py-2 px-2 text-left text-[#FFC900]">RCD Rating</th>
+                      <th className="py-2 px-2 text-left text-[#FFC900]">At 1×IΔn</th>
+                      <th className="py-2 px-2 text-left text-[#FFC900]">At 5×IΔn</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-2 text-[#FFC900]/80">General (non-delayed)</td>
+                      <td className="py-2 px-2 text-[#FFC900]/80">300ms</td>
+                      <td className="py-2 px-2 text-[#FFC900]/80">40ms</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 px-2 text-[#FFC900]/80">Type S (selective)</td>
+                      <td className="py-2 px-2 text-[#FFC900]/80">300-500ms</td>
+                      <td className="py-2 px-2 text-[#FFC900]/80">150ms</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900] mt-3">Additional RCD Tests</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Test with 0° and 180° phase angles</li>
+                  <li>Test the manual trip button operation</li>
+                  <li>For special RCDs (Type A, F, B), ensure appropriate testing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "4.1": {
-    title: "4.1 Correct testing sequence",
+    title: "Correct testing sequence",
     description: "From visual inspection through to functional testing.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Sequence of Testing">
-          <p>Following the correct testing sequence is essential for safety and to ensure accurate test results.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the recommended sequence for initial verification</li>
+            <li>Learn why tests must be performed in a specific order</li>
+            <li>Recognize how to adjust the testing sequence for different installation types</li>
+          </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">The Complete Verification Sequence</h3>
+          <p className="text-[#FFC900]/80">
+            Following the correct testing sequence is crucial for safety and effectiveness. The sequence 
+            ensures that potentially dangerous conditions are identified before applying power to the installation.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Complete Testing Sequence</h3>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li><strong>Visual Inspection</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Must be completed before any electrical testing</li>
-                <li>Identify visible defects that could make testing unsafe</li>
-                <li>Check connections, identification, and installation methods</li>
-                <li>Complete Schedule of Inspections form</li>
-                <li>Address any serious defects before proceeding</li>
-              </ul>
-            </li>
-            <li><strong>Dead Tests</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
+          <h4 className="text-[#FFC900]">Complete Verification Sequence</h4>
+          <ol className="list-decimal list-inside text-[#FFC900]/80 mt-2 space-y-2">
+            <li><strong>Visual Inspection</strong> - Before any testing begins</li>
+            <li><strong>Dead Testing</strong>
+              <ul className="list-disc list-inside ml-6 mt-1">
                 <li>Continuity of protective conductors</li>
                 <li>Continuity of ring final circuits</li>
                 <li>Insulation resistance</li>
-                <li>Polarity</li>
-                <li>Note: installation must be completely isolated during these tests</li>
-                <li>Record all results before proceeding to live tests</li>
+                <li>Polarity (initial verification using dead testing)</li>
+                <li>Protection by SELV, PELV or electrical separation</li>
               </ul>
             </li>
-            <li><strong>Live Tests</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Earth fault loop impedance (Zs)</li>
-                <li>Prospective fault current (PFC)</li>
-                <li>RCD operation</li>
-                <li>Note: installation must be energized safely before these tests</li>
-                <li>Ensure circuit protection is reinstated between tests</li>
+            <li><strong>Connect to Supply</strong> - Only after satisfactory completion of dead tests</li>
+            <li><strong>Live Testing</strong>
+              <ul className="list-disc list-inside ml-6 mt-1">
+                <li>Polarity (verification using live testing)</li>
+                <li>Earth fault loop impedance</li>
+                <li>Prospective fault current</li>
+                <li>RCD testing</li>
+                <li>Phase rotation (for 3-phase installations)</li>
               </ul>
             </li>
-            <li><strong>Functional Testing</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Check operation of all switches, controls, and interlocks</li>
-                <li>Test RCD manual test buttons</li>
-                <li>Verify operation of all intended electrical equipment</li>
-                <li>Check emergency systems (where applicable)</li>
-                <li>Verify correct operation of any special installations</li>
-              </ul>
-            </li>
+            <li><strong>Functional Testing</strong> - Operation of switches, controls, interlocks, etc.</li>
+            <li><strong>Verification of Voltage Drop</strong> - Where required</li>
           </ol>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Why Sequence Matters</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Safety:</strong> Early tests identify issues that could make later tests hazardous</li>
-            <li><strong>Test Integrity:</strong> Some tests can affect the results of others if performed out of sequence</li>
-            <li><strong>Efficiency:</strong> Logical progression minimizes time spent on testing</li>
-            <li><strong>Damage Prevention:</strong> Ensures issues are found before they can damage connected equipment</li>
-            <li><strong>Regulatory Compliance:</strong> Required by BS 7671 to follow this specific sequence</li>
+          <h4 className="text-[#FFC900] mt-6">Why the Sequence Matters</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Dead tests identify issues before live testing prevents dangerous situations</li>
+            <li>Visual inspection can detect 80% of potential defects</li>
+            <li>Insulation testing must be performed before connecting to supply</li>
+            <li>Continuity testing ensures protective conductors are effective before energizing</li>
           </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Transition Between Dead and Live Testing</h3>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li><strong>Completion of Dead Tests</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Ensure all test results are satisfactory</li>
-                <li>Record all results in appropriate schedules</li>
-              </ul>
-            </li>
-            <li><strong>Preparation for Live Testing</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Ensure all test equipment disconnected</li>
-                <li>Check for any temporary connections made for testing and remove them</li>
-                <li>Reinstall any devices temporarily removed (fuses, etc.)</li>
-                <li>Inform all relevant personnel that the circuit will be energized</li>
-              </ul>
-            </li>
-            <li><strong>Energizing the Circuit</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Remove locks and tags used for isolation</li>
-                <li>Energize the installation in a controlled manner</li>
-                <li>Observe for any immediate issues (sparks, unusual sounds, etc.)</li>
-              </ul>
-            </li>
-            <li><strong>Verification</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Verify voltage at appropriate test points</li>
-                <li>Check for correct polarity at outlets</li>
-                <li>Confirm voltage levels are within expected ranges</li>
-              </ul>
-            </li>
-          </ol>
-        </LessonContent>
-        
-        <ContentSection
-          title="Safety First: Key Reminders"
-          content={
-            <div>
-              <ul className="list-disc pl-6 space-y-2 mt-3">
-                <li>Never bypass the visual inspection – it's your first line of defense</li>
-                <li>Always complete all dead tests before any live testing</li>
-                <li>Follow proper safe isolation procedures when switching between dead and live testing</li>
-                <li>Record all test results immediately after each test</li>
-                <li>If any test fails, stop and investigate before proceeding</li>
-                <li>Always use appropriate PPE for live testing</li>
-                <li>Never work alone when conducting live tests</li>
-              </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Testing Sequence Flow Diagram</h4>
+          <div className="flex flex-col space-y-6">
+            <div className="bg-[#22251e] p-4 rounded-md border border-[#FFC900]/20">
+              <h5 className="text-[#FFC900]">1. Visual Inspection</h5>
+              <p className="text-[#FFC900]/60">Check compliance with regulations and safety requirements</p>
             </div>
-          }
-        />
+            <div className="flex justify-center">
+              <div className="h-6 w-0.5 bg-[#FFC900]/30"></div>
+            </div>
+            <div className="bg-[#22251e] p-4 rounded-md border border-[#FFC900]/20">
+              <h5 className="text-[#FFC900]">2. Dead Testing</h5>
+              <p className="text-[#FFC900]/60">Continuity, insulation resistance, polarity tests</p>
+            </div>
+            <div className="flex justify-center">
+              <div className="h-6 w-0.5 bg-[#FFC900]/30"></div>
+            </div>
+            <div className="bg-[#22251e] p-4 rounded-md border border-[#FFC900]/20">
+              <h5 className="text-[#FFC900]">3. Connect to Supply</h5>
+              <p className="text-[#FFC900]/60">Only if dead tests are satisfactory</p>
+            </div>
+            <div className="flex justify-center">
+              <div className="h-6 w-0.5 bg-[#FFC900]/30"></div>
+            </div>
+            <div className="bg-[#22251e] p-4 rounded-md border border-[#FFC900]/20">
+              <h5 className="text-[#FFC900]">4. Live Testing</h5>
+              <p className="text-[#FFC900]/60">Earth fault loop impedance, PFC, RCD operation</p>
+            </div>
+            <div className="flex justify-center">
+              <div className="h-6 w-0.5 bg-[#FFC900]/30"></div>
+            </div>
+            <div className="bg-[#22251e] p-4 rounded-md border border-[#FFC900]/20">
+              <h5 className="text-[#FFC900]">5. Functional Testing</h5>
+              <p className="text-[#FFC900]/60">Verify operation of all equipment and controls</p>
+            </div>
+          </div>
+        </div>
       </div>
     ),
     detailedContent: (
       <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Testing Documentation and Record Keeping</h3>
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Testing Sequence Guidelines</h3>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Test Results Organization</h4>
-          <p className="text-[#FFC900]/80 mb-3">For efficient documentation and future reference:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Use dedicated testing software or pre-printed forms where possible</li>
-            <li>Create a systematic approach to recording results (e.g., by circuit number)</li>
-            <li>Take photographs of unusual installations or defects</li>
-            <li>Record ambient conditions that may affect test results</li>
-            <li>Include manufacturer's data for specialized equipment</li>
-          </ul>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Visual Inspection in Detail</h4>
+          
+          <p className="text-[#FFC900]/80">
+            Visual inspection must be performed first and should be comprehensive. It includes checking:
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Connection and Routing</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Correct connections of all conductors</li>
+                <li>Cable routing in safe zones</li>
+                <li>Adequate support and protection</li>
+                <li>Segregation of circuits where required</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Protection Measures</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Fire barriers and seals</li>
+                <li>Protection against thermal effects</li>
+                <li>Protection against electric shock</li>
+                <li>Protection against overcurrent</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Identification and Access</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>Circuit identification and labeling</li>
+                <li>Presence of diagrams and instructions</li>
+                <li>Warning notices where required</li>
+                <li>Accessibility for operation and maintenance</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">General Condition</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1 space-y-1">
+                <li>No damage to conductors or equipment</li>
+                <li>IP ratings appropriate for location</li>
+                <li>Presence and condition of earthing arrangements</li>
+                <li>Selection of equipment suitable for conditions</li>
+              </ul>
+            </div>
+          </div>
         </div>
         
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Testing Considerations for Special Installations</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
-            <thead>
-              <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Installation Type</th>
-                <th className="py-2 px-4 text-left">Special Testing Considerations</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Medical Locations</td>
-                <td className="py-2 px-4">Additional microshock protection tests, UPS testing, equipotential zone verification</td>
-              </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Photovoltaic Systems</td>
-                <td className="py-2 px-4">DC insulation tests, functional tests under varying light conditions, special polarity checks</td>
-              </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Hazardous Areas</td>
-                <td className="py-2 px-4">Special certification requirements, verification of protection methods, additional documentation</td>
-              </tr>
-              <tr>
-                <td className="py-2 px-4">High-Risk Areas</td>
-                <td className="py-2 px-4">Additional testing of backup systems, emergency lighting tests, comprehensive functional testing</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Dead Testing Sequence Rationale</h4>
+            
+            <div className="space-y-4">
+              <div>
+                <h5 className="font-medium text-[#FFC900]">1. Continuity of Protective Conductors</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Always test protective conductors first to ensure the earth path is intact before 
+                  other tests. This is crucial for safety during subsequent testing and when the 
+                  installation is energized.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">2. Continuity of Ring Final Circuits</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Performed next to verify the integrity of ring circuits. If there are breaks or interconnections 
+                  in the ring, it could affect later insulation resistance tests and the overall safety of the installation.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">3. Insulation Resistance</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Only after confirming continuity is correct should insulation resistance be tested. This prevents 
+                  potentially damaging test voltages from being applied to sensitive equipment through unexpected paths.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">4. Polarity (Dead Testing)</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Verification that line conductors are connected to the correct terminals in single-pole devices. 
+                  This must be confirmed before the installation is energized.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Live Testing Sequence Rationale</h4>
+            
+            <div className="space-y-4">
+              <div>
+                <h5 className="font-medium text-[#FFC900]">1. Polarity (Live Verification)</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Final verification of polarity using live testing confirms what was checked during dead testing.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">2. Earth Fault Loop Impedance</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Measures the impedance of the earth fault current path to confirm that protective devices 
+                  will operate within the required disconnection times.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">3. Prospective Fault Current</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Confirms that protective devices have adequate breaking capacity for the maximum fault 
+                  current that could flow.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">4. RCD Testing</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Verifies that RCDs operate correctly at their rated residual operating current and within 
+                  the required time limits.
+                </p>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">5. Functional Testing</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Final verification that all equipment operates as intended, including switches, controls, 
+                  interlocks, and any special functions.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "5.1": {
-    title: "5.1 Forms and certificates",
+    title: "Forms and certificates",
     description: "Completing EICs, Minor Works Certificates, and test schedules.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Certification and Documentation">
-          <p>Proper documentation is a legal requirement and provides evidence of compliance with standards.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the different types of certification required</li>
+            <li>Learn how to complete certification documents correctly</li>
+            <li>Recognize the legal importance of accurate certification</li>
+          </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Types of Certification</h3>
+          <p className="text-[#FFC900]/80">
+            The type of certificate required depends on the nature of the work carried out:
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Types of Certification</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Electrical Installation Certificate (EIC):</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Required for all new installations</li>
-                <li>Required for major alterations or additions to existing installations</li>
-                <li>Contains declaration by designer, constructor, and inspector/tester</li>
-                <li>Must include particulars of installation and departures from standards</li>
-                <li>Must state recommended interval until next inspection</li>
-              </ul>
-            </li>
-            <li><strong>Minor Electrical Installation Works Certificate (MEIWC):</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>For small alterations or additions that do not include a new circuit</li>
-                <li>Examples: adding a socket to an existing circuit, relocating switches</li>
-                <li>Simpler form but still requires test results</li>
-                <li>Does not require schedule of inspections or test results</li>
-              </ul>
-            </li>
-            <li><strong>Electrical Installation Condition Report (EICR):</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>For periodic inspections of existing installations</li>
-                <li>Records the condition of an installation at a point in time</li>
-                <li>Identifies any defects or non-compliances</li>
-                <li>Classifies issues by urgency (C1, C2, C3)</li>
-                <li>Recommends date for next inspection</li>
-              </ul>
-            </li>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li><strong>Electrical Installation Certificate (EIC)</strong> - For new installations or major alterations/additions</li>
+            <li><strong>Minor Electrical Installation Works Certificate (MEIWC)</strong> - For additions or alterations that do not extend to a new circuit</li>
+            <li><strong>Electrical Installation Condition Report (EICR)</strong> - For periodic inspection of existing installations</li>
           </ul>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Schedule of Inspections</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Lists all items inspected visually before testing</li>
-            <li>Records compliance of each item with regulations</li>
-            <li>Uses tick boxes for:
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>✓ - Satisfactory</li>
-                <li>✗ - Unsatisfactory</li>
-                <li>N/A - Not Applicable</li>
-              </ul>
-            </li>
-            <li>Includes checks on:
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Connection of conductors</li>
-                <li>Identification and notices</li>
-                <li>Routing of cables</li>
-                <li>Selection of conductors</li>
-                <li>Presence of fire barriers</li>
-                <li>Protection against thermal effects</li>
-                <li>Methods of protection against electric shock</li>
-              </ul>
-            </li>
-            <li>Must be completed in full with no items left blank</li>
-          </ul>
+          <h4 className="text-[#FFC900] mt-6">Electrical Installation Certificate Components</h4>
+          <p className="text-[#FFC900]/80">
+            A complete EIC consists of:
+          </p>
+          <ol className="list-decimal list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>The main certificate with details of the installation and signatories</li>
+            <li>Schedule of Inspections</li>
+            <li>Schedule of Test Results</li>
+          </ol>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Schedule of Test Results</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Documents measured values from all tests performed</li>
-            <li>Records circuit details and protective device information</li>
-            <li>Includes:
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Circuit description and reference number</li>
-                <li>Type and rating of protective device</li>
-                <li>Conductor details (type, size)</li>
-                <li>Continuity test results</li>
-                <li>Insulation resistance values</li>
-                <li>Polarity confirmation</li>
-                <li>Earth fault loop impedance values</li>
-                <li>Prospective fault current readings</li>
-                <li>RCD operation times</li>
-              </ul>
-            </li>
-            <li>Values must be compared against maximum permitted values</li>
-            <li>Must include all circuits - no exceptions</li>
+          <h4 className="text-[#FFC900] mt-6">Legal Implications</h4>
+          <p className="text-[#FFC900]/80">
+            Electrical certification has significant legal importance:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>It's a legal requirement under the Electricity at Work Regulations</li>
+            <li>For domestic work, it demonstrates compliance with Building Regulations</li>
+            <li>It can be evidence in case of disputes or insurance claims</li>
+            <li>Fraudulent certification is a criminal offense</li>
           </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Documentation Requirements"
-          content={
-            <div>
-              <p className="font-medium">Key documentation requirements for different types of work:</p>
-              <div className="overflow-x-auto mt-3">
-                <table className="min-w-full text-[#FFC900]/80">
-                  <thead>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <th className="py-2 px-4 text-left">Type of Work</th>
-                      <th className="py-2 px-4 text-left">Required Certification</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">New installation</td>
-                      <td className="py-2 px-4">EIC + Schedules + DB Schedules</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Major alteration</td>
-                      <td className="py-2 px-4">EIC + Schedules + DB Schedules</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Minor alteration</td>
-                      <td className="py-2 px-4">MEIWC</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 px-4">Periodic inspection</td>
-                      <td className="py-2 px-4">EICR + Schedules</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Common Certificate Completion Errors</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Certificate Comparison</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Error</th>
-                <th className="py-2 px-4 text-left">Potential Consequence</th>
-                <th className="py-2 px-4 text-left">Correct Approach</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Feature</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">EIC</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">MEIWC</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">EICR</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Missing signatures</td>
-                <td className="py-2 px-4">Certificate legally invalid</td>
-                <td className="py-2 px-4">Ensure all relevant sections signed by qualified persons</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Used for</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">New installations or major changes</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Minor works/alterations</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Periodic inspection</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Incomplete test results</td>
-                <td className="py-2 px-4">Cannot verify compliance</td>
-                <td className="py-2 px-4">Complete all test fields, mark N/A if genuinely not applicable</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Signatories</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Designer, constructor, tester</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Single person</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Inspector</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Incorrect certificate used</td>
-                <td className="py-2 px-4">Legal non-compliance</td>
-                <td className="py-2 px-4">Use EIC for new work, MEIWC for minor work, EICR for inspection</td>
-              </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Missing "extent and limitations"</td>
-                <td className="py-2 px-4">Ambiguity about what was tested</td>
-                <td className="py-2 px-4">Clearly state exactly what work was done and what was excluded</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Schedules</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Inspection and test results</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Basic test results only</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Observations and recommendations</td>
               </tr>
               <tr>
-                <td className="py-2 px-4">No next inspection date</td>
-                <td className="py-2 px-4">Future safety checks missed</td>
-                <td className="py-2 px-4">Always include recommended date based on installation type and usage</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Validity</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Permanent record</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Permanent record</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Until next inspection date</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Certificate Requirements</h3>
         
-        <h3 className="text-2xl font-medium text-[#FFC900] mt-6 mb-4">Sample Schedule Format</h3>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Electrical Installation Certificate (EIC)</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              The Electrical Installation Certificate must include the following sections and information:
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 1: Details of the Client</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Name</li>
+                <li>Address</li>
+                <li>Description of installation</li>
+                <li>Whether it's a new installation, addition, or alteration</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 2: Description and Extent</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Precise description of the work covered by the certificate</li>
+                <li>Clear statement of any limitations</li>
+                <li>For additions/alterations, statement on condition of existing installation</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 3: Design</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Declaration that design meets BS 7671</li>
+                <li>Details of any departures from BS 7671</li>
+                <li>Details of any applicable special requirements</li>
+                <li>Designer's name, qualification, and signature</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 4: Construction</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Declaration that construction meets the design</li>
+                <li>Details of departures from design</li>
+                <li>Constructor's name, qualification, and signature</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 5: Inspection and Testing</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Declaration that inspection and testing has been carried out</li>
+                <li>Inspector's name, qualification, and signature</li>
+                <li>Next inspection recommendation date</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 6: Supply Characteristics</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Number of phases</li>
+                <li>Nature of supply parameters</li>
+                <li>Nominal voltage</li>
+                <li>Frequency</li>
+                <li>Prospective fault current</li>
+                <li>External earth loop impedance</li>
+                <li>Details of supply protective device</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Part 7: Particulars of Installation</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Earthing arrangements</li>
+                <li>Type and composition of circuit protective conductors</li>
+                <li>Main equipotential bonding conductors</li>
+                <li>Main switch or circuit breaker details</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Circuit Test Results Schedule Example</h4>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-[#FFC900]/80">
-              <thead>
-                <tr className="border-b border-[#FFC900]/20">
-                  <th className="py-2 px-4 text-left">Circuit No.</th>
-                  <th className="py-2 px-4 text-left">Description</th>
-                  <th className="py-2 px-4 text-left">Type/Rating</th>
-                  <th className="py-2 px-4 text-left">R₁+R₂ (Ω)</th>
-                  <th className="py-2 px-4 text-left">IR (MΩ)</th>
-                  <th className="py-2 px-4 text-left">Polarity</th>
-                  <th className="py-2 px-4 text-left">Zs (Ω)</th>
-                  <th className="py-2 px-4 text-left">RCD (ms)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">1</td>
-                  <td className="py-2 px-4">Lighting</td>
-                  <td className="py-2 px-4">B6 MCB</td>
-                  <td className="py-2 px-4">0.65</td>
-                  <td className="py-2 px-4">200+</td>
-                  <td className="py-2 px-4">✓</td>
-                  <td className="py-2 px-4">0.85</td>
-                  <td className="py-2 px-4">23</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">2</td>
-                  <td className="py-2 px-4">Sockets</td>
-                  <td className="py-2 px-4">B32 MCB</td>
-                  <td className="py-2 px-4">0.45</td>
-                  <td className="py-2 px-4">200+</td>
-                  <td className="py-2 px-4">✓</td>
-                  <td className="py-2 px-4">0.65</td>
-                  <td className="py-2 px-4">21</td>
-                </tr>
-              </tbody>
-            </table>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Schedule of Inspections</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                The Schedule of Inspections is a comprehensive checklist covering:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Connection of Conductors</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>All connections are mechanically and electrically sound</li>
+                  <li>Properly inserted into terminals</li>
+                  <li>Correct torque applied where specified</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Identification and Notices</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Correct identification of conductors</li>
+                  <li>Presence of danger notices</li>
+                  <li>Circuit identification at distribution boards</li>
+                  <li>Presence of periodic inspection notice</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Cable Installation Methods</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Routing of cables in prescribed zones</li>
+                  <li>Selection of cable types for environmental conditions</li>
+                  <li>Adequate support and fixing</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">How to Complete</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Use ✓ for compliance</li>
+                  <li>Use ✗ for non-compliance</li>
+                  <li>Use N/A for not applicable</li>
+                  <li>Use LIM for when inspection was limited</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Schedule of Test Results</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                The Schedule of Test Results must record the following for each circuit:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Circuit Details</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Circuit description</li>
+                  <li>Cable reference method</li>
+                  <li>Cable size (mm²)</li>
+                  <li>Type of wiring</li>
+                  <li>Reference method</li>
+                  <li>Number of points served</li>
+                  <li>Circuit protective device type and rating</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Test Results</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Continuity: R₁+R₂ or R₂</li>
+                  <li>Insulation resistance (MΩ)</li>
+                  <li>Polarity</li>
+                  <li>Earth fault loop impedance (Zs)</li>
+                  <li>RCD operation time at IΔn</li>
+                  <li>RCD operation time at 5IΔn</li>
+                  <li>Functional testing confirmation</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Test Instrument Details</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Continuity tester: make, serial number, calibration date</li>
+                  <li>Insulation resistance tester: make, serial number, calibration date</li>
+                  <li>Earth fault loop impedance tester: make, serial number, calibration date</li>
+                  <li>RCD tester: make, serial number, calibration date</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "5.2": {
-    title: "5.2 Recording inspection and test results",
+    title: "Recording inspection and test results",
     description: "Properly documenting all test findings and observations.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Recording Inspection and Test Results">
-          <p>Accurate recording of inspection and test results is essential for certification and future reference.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Key Documentation Principles</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Accuracy:</strong> All recorded values must be precise and reflect actual test results</li>
-            <li><strong>Completeness:</strong> Every required field must be filled in with no omissions</li>
-            <li><strong>Clarity:</strong> Information must be legible and unambiguous</li>
-            <li><strong>Consistency:</strong> Use standard units and formats throughout documentation</li>
-            <li><strong>Integrity:</strong> Never falsify or estimate results - always perform the actual tests</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Certificate Completion</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Client and Installation Details:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Full name and address of client</li>
-                <li>Exact address of installation (if different)</li>
-                <li>Date of completion of installation</li>
-                <li>Description of installation (domestic, commercial, etc.)</li>
-              </ul>
-            </li>
-            <li><strong>Extent and Limitations:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Clear description of what work was carried out</li>
-                <li>Identification of any areas not covered</li>
-                <li>Specification of any circuits not tested and why</li>
-                <li>Note any agreed limitations to the inspection</li>
-              </ul>
-            </li>
-            <li><strong>Departures from Standards:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>List any permitted departures from BS 7671</li>
-                <li>Reference the relevant regulation permitting the departure</li>
-                <li>Provide justification for each departure</li>
-                <li>If none, state "None" (don't leave blank)</li>
-              </ul>
-            </li>
-            <li><strong>Next Inspection Recommendation:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Based on installation type, environment, and usage</li>
-                <li>Consider IET Guidance Note 3 recommendations</li>
-                <li>Typical periods:
-                  <ul className="list-disc pl-6 space-y-1 mt-1">
-                    <li>Domestic: 10 years</li>
-                    <li>Commercial: 5 years</li>
-                    <li>Industrial: 3 years</li>
-                    <li>Special installations: 1 year</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><strong>Declarations and Signatures:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Designer: responsible for the design aspects</li>
-                <li>Constructor: responsible for the installation work</li>
-                <li>Inspector/tester: responsible for inspection and testing</li>
-                <li>Each must be signed by a competent person</li>
-                <li>All signatures must be dated</li>
-                <li>Single person can sign multiple declarations if qualified to do so</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Circuit Details Recording</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Circuit References:</strong> Unique identification for each circuit</li>
-            <li><strong>Circuit Description:</strong> Clear description of what the circuit supplies</li>
-            <li><strong>Conductor Details:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Type (e.g., PVC, XLPE)</li>
-                <li>Cross-sectional area in mm²</li>
-                <li>Number of cores</li>
-                <li>Live conductor material (copper, aluminum)</li>
-              </ul>
-            </li>
-            <li><strong>Overcurrent Device:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Type (MCB, RCBO, fuse, etc.)</li>
-                <li>Rating (amperes)</li>
-                <li>Breaking capacity (kA)</li>
-                <li>BS standard (e.g., BS EN 60898)</li>
-              </ul>
-            </li>
-            <li><strong>Test Results:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Record actual measured values, not just "Pass/Fail"</li>
-                <li>Include units of measurement (Ω, MΩ, ms, etc.)</li>
-                <li>For insulation resistance, indicate if value exceeds meter range (e.g., >500MΩ)</li>
-                <li>Record worst-case values for each test</li>
-              </ul>
-            </li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Document Retention Requirements"
-          content={
-            <div>
-              <p className="font-medium">Understanding legal and practical requirements for record keeping:</p>
-              <ul className="list-disc pl-6 space-y-2 mt-3">
-                <li><strong>Original to Client:</strong> The original certificate must be given to the person ordering the work</li>
-                <li><strong>Contractor Copy:</strong> The contractor must retain a duplicate for at least the recommended period to next inspection</li>
-                <li><strong>Building Control Copy:</strong> For notifiable work under Building Regulations, a copy must be submitted to Building Control</li>
-                <li><strong>Electronic Records:</strong> Electronic copies are acceptable if secure, retrievable, and backed up</li>
-                <li><strong>Retention Period:</strong> Minimum of 6 years (legal requirement), but recommended to keep until at least next inspection</li>
-              </ul>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Defect Coding and Reporting</h3>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Understanding Defect Codes</h4>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Code C1 (Danger Present):</strong> Risk of injury - immediate action required</li>
-            <li><strong>Code C2 (Potentially Dangerous):</strong> Urgent remedial action required</li>
-            <li><strong>Code C3 (Improvement Recommended):</strong> Not dangerous but improvement desirable</li>
-            <li><strong>Code FI (Further Investigation):</strong> Additional investigation needed urgently</li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the importance of accurate documentation</li>
+            <li>Learn best practices for recording test results</li>
+            <li>Know how to complete the Schedule of Test Results correctly</li>
           </ul>
         </div>
-        
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Example Defects by Category</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Importance of Accurate Recording</h3>
+          <p className="text-[#FFC900]/80">
+            Accurate recording of inspection and test results is essential for several reasons:
+          </p>
+          
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Provides evidence that the installation has been properly tested</li>
+            <li>Creates a baseline for future maintenance and periodic inspection</li>
+            <li>May be required for legal or insurance purposes</li>
+            <li>Demonstrates compliance with regulations and standards</li>
+            <li>Enables troubleshooting if problems arise later</li>
+          </ul>
+          
+          <h4 className="text-[#FFC900] mt-6">Best Practices for Documentation</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Record actual values, not just "pass" or "fail"</li>
+            <li>Use clear, legible handwriting or electronic recording</li>
+            <li>Include all required information fields</li>
+            <li>Describe any limitations to testing</li>
+            <li>Take photographs of any unusual conditions or special arrangements</li>
+            <li>Record test instrument details including calibration dates</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Common Documentation Errors</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Code</th>
-                <th className="py-2 px-4 text-left">Example Defects</th>
-                <th className="py-2 px-4 text-left">Required Action</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Common Error</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Potential Consequence</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Best Practice</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">C1</td>
-                <td className="py-2 px-4">Exposed live parts, missing earthing, damaged insulation causing shock risk</td>
-                <td className="py-2 px-4">Immediate disconnection until repaired</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Missing values</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Incomplete record, could invalidate certificate</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Complete all fields, mark N/A if truly not applicable</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">C2</td>
-                <td className="py-2 px-4">Inadequate IP rating, missing RCD protection where required, overloaded circuits</td>
-                <td className="py-2 px-4">Urgent action but immediate disconnection may not be needed</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Recording "Pass" instead of values</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">No baseline for future comparison</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Always record actual measured values</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">C3</td>
-                <td className="py-2 px-4">Minor non-compliances, outdated but safe equipment, lack of identification</td>
-                <td className="py-2 px-4">Improvement recommended when practical</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Incorrect circuit descriptions</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Difficulty identifying circuits later</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Use clear, specific descriptions that match labels</td>
               </tr>
               <tr>
-                <td className="py-2 px-4">FI</td>
-                <td className="py-2 px-4">Unusual readings, inconsistent test results, suspected hidden defects</td>
-                <td className="py-2 px-4">Further investigation required before final assessment</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Missing test instrument details</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Questions about validity of results</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Record make, model, serial number, calibration date</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Documentation Guidelines</h3>
         
-        <h3 className="text-2xl font-medium text-[#FFC900] mt-6 mb-4">Digital Documentation Methods</h3>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Recording Test Results in Detail</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              When recording test results, consider the following guidance for different test types:
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Continuity of Protective Conductors</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Record the actual measured R₂ value for each circuit</li>
+                <li>For main and supplementary bonding, record the resistance value</li>
+                <li>Note test method used (e.g., "long lead method")</li>
+                <li>Include test current used for the measurement</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Insulation Resistance</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Record the test voltage used (e.g., 500V)</li>
+                <li>Record the lowest value measured for phase-neutral</li>
+                <li>Record the lowest value measured for phase-earth</li>
+                <li>Record the lowest value measured for neutral-earth</li>
+                <li>Note any disconnected equipment during testing</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Polarity</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Mark as "✓" if satisfactory</li>
+                <li>Note any issues found and how they were corrected</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Earth Fault Loop Impedance</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Record the actual measured Zs value</li>
+                <li>Include the maximum permitted value for comparison</li>
+                <li>Note if applied Ze + (R₁+R₂) method used instead of direct measurement</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">RCD Testing</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Record the RCD type (e.g., general, Type S, Type A)</li>
+                <li>Record the rated residual operating current (IΔn)</li>
+                <li>Record actual disconnection times at both 1×IΔn and 5×IΔn</li>
+                <li>Note which test was performed first (0° or 180°)</li>
+                <li>Include manual test button operation result</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Prospective Fault Current</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Record the highest measured value</li>
+                <li>Note whether it was measured at origin or elsewhere</li>
+                <li>Include the breaking capacity of protective devices for comparison</li>
+              </ul>
+            </div>
+          </div>
+        </div>
         
-        <div className="bg-[#353a2c] p-4 rounded-lg">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Modern Documentation Approaches</h4>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Electronic Test Instruments:</strong> Many modern instruments can store test results and download to software</li>
-            <li><strong>Mobile Apps:</strong> Available for recording results on-site and generating certificates</li>
-            <li><strong>Digital Signatures:</strong> Acceptable on certificates if compliant with Electronic Communications Act</li>
-            <li><strong>Cloud Storage:</strong> Secure backup for all certification documents</li>
-            <li><strong>Client Portals:</strong> Allow clients secure access to their documentation</li>
-          </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Schedule of Inspections Documentation</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                When completing the Schedule of Inspections:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Marking System</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>✓ (tick) - Item inspected and satisfactory</li>
+                  <li>✗ (cross) - Item inspected and unsatisfactory</li>
+                  <li>N/A - Item not applicable to this installation</li>
+                  <li>LIM - Inspection was limited for some reason</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Comments Section</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Use the comments section to explain:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Why any inspections were limited</li>
+                  <li>Details of any unsatisfactory items</li>
+                  <li>Actions taken to remedy unsatisfactory items</li>
+                  <li>Any unusual aspects of the installation</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Photographs and Additional Evidence</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Consider attaching:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Photographs of main earthing and bonding arrangements</li>
+                  <li>Photos of distribution boards with covers removed</li>
+                  <li>Images of any special installations or arrangements</li>
+                  <li>Pictures of any defects that were remedied</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Electronic Documentation</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                Modern testing often uses electronic recording systems with several advantages:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Benefits</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Automatic transfer of measurements from test instruments</li>
+                  <li>Reduced transcription errors</li>
+                  <li>Built-in validation of entered data</li>
+                  <li>Easy integration of photographs and diagrams</li>
+                  <li>Professional presentation</li>
+                  <li>Secure electronic storage and backup</li>
+                  <li>Easy sharing with clients and building control</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Best Practices for Electronic Records</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Always back up electronic records</li>
+                  <li>Use software from reputable providers</li>
+                  <li>Ensure data is stored securely (GDPR compliance)</li>
+                  <li>Consider providing both electronic and hard copy to clients</li>
+                  <li>Maintain records for at least the recommended period (minimum 7 years)</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Electronic Signatures</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Electronic signatures are generally acceptable if they:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Uniquely identify the signatory</li>
+                  <li>Are under the sole control of the signatory</li>
+                  <li>Can detect any changes made after signing</li>
+                  <li>Comply with relevant electronic signature regulations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    )
+    ),
   },
-  
   "6.1": {
-    title: "6.1 Final checks and client handover",
+    title: "Final checks and client handover",
     description: "Functional testing and client instructions.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Final Checks and Client Handover">
-          <p>The commissioning process confirms that the installation functions as intended and includes proper handover to the client.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Final Functional Checks</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Switch Operation:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Verify all switches control appropriate circuits/equipment</li>
-                <li>Check two-way and intermediate switching functions correctly</li>
-                <li>Test dimmer switches through their full range</li>
-                <li>Ensure switched socket outlets function as expected</li>
-              </ul>
-            </li>
-            <li><strong>Safety Devices:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Confirm operation of all circuit breakers</li>
-                <li>Test operation of isolation switches</li>
-                <li>Check proper function of interlocks where present</li>
-                <li>Verify operation of thermal protection devices</li>
-              </ul>
-            </li>
-            <li><strong>RCD Testing:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Press test buttons on all RCDs to verify mechanical trip mechanism</li>
-                <li>Check that tripping occurs promptly</li>
-                <li>Verify that the correct circuits are protected by each RCD</li>
-                <li>Ensure RCD test notices are in place</li>
-              </ul>
-            </li>
-            <li><strong>Special Equipment:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Test operation of heating systems and controls</li>
-                <li>Verify air conditioning and ventilation systems</li>
-                <li>Check motor direction and operation</li>
-                <li>Test any specialized equipment as required</li>
-              </ul>
-            </li>
-            <li><strong>Emergency Systems:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Test operation of emergency lighting systems</li>
-                <li>Verify function of fire alarm interfaces (where applicable)</li>
-                <li>Check backup/standby supplies where installed</li>
-                <li>Test any safety interlocks</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Client Handover Process</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Certificate Presentation:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Provide all required certification documents</li>
-                <li>Explain the purpose and importance of each document</li>
-                <li>Advise on safe storage of certificates</li>
-                <li>Note any recommended reinspection date</li>
-              </ul>
-            </li>
-            <li><strong>User Instructions:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Demonstrate how to reset circuit breakers and RCDs</li>
-                <li>Explain the purpose of each circuit</li>
-                <li>Show location of main isolation points</li>
-                <li>Provide emergency contact information</li>
-                <li>Explain any special controls or systems</li>
-              </ul>
-            </li>
-            <li><strong>Documentation Handover:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Complete Electrical Installation Certificate</li>
-                <li>Schedules of Inspection and Test Results</li>
-                <li>Distribution board schedules (clearly labeled)</li>
-                <li>Manufacturer's instructions for installed equipment</li>
-                <li>Warranty information for equipment and workmanship</li>
-              </ul>
-            </li>
-            <li><strong>Client Demonstration:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Walk through the installation with the client</li>
-                <li>Explain the function of key components</li>
-                <li>Show operation of specialized equipment</li>
-                <li>Address any questions or concerns</li>
-                <li>Record any remaining items to be addressed</li>
-              </ul>
-            </li>
-          </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Professional Client Handover - Key Points"
-          content={
-            <div>
-              <p className="font-medium">Ensure a thorough and professional handover by addressing these key points:</p>
-              <ul className="list-disc pl-6 space-y-2 mt-3">
-                <li>Use clear, non-technical language when explaining to clients</li>
-                <li>Demonstrate RCD testing and explain their purpose</li>
-                <li>Explain which circuits are protected by which devices</li>
-                <li>Point out location of all distribution boards and isolators</li>
-                <li>Advise on safe use and limitations of the installation</li>
-                <li>Leave contact information for future service or questions</li>
-                <li>Document the handover process to prevent future disputes</li>
-                <li>Arrange any follow-up visits if necessary</li>
-              </ul>
-            </div>
-          }
-        />
-      </div>
-    ),
-    detailedContent: (
-      <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Commissioning Checklist</h3>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg mb-6">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Final Verification Checklist</h4>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>All inspection and testing complete with satisfactory results</li>
-            <li>All certification documentation completed and signed</li>
-            <li>All accessories and fixtures properly secured and aligned</li>
-            <li>All labels and circuit identification in place</li>
-            <li>All covers and safety barriers fitted</li>
-            <li>All tools and testing equipment removed from site</li>
-            <li>Site left clean and tidy with no debris</li>
-            <li>Any cosmetic repairs or making good completed</li>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand the importance of functional testing</li>
+            <li>Learn what information must be provided to clients</li>
+            <li>Know how to properly hand over an installation</li>
           </ul>
         </div>
-        
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Client Feedback and Follow-up</h3>
-        
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-[#FFC900]/80">
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Commissioning Process</h3>
+          <p className="text-[#FFC900]/80">
+            Commissioning is the final stage of the installation process, ensuring that the system operates 
+            correctly and that the client understands how to use and maintain it. It includes functional 
+            testing and formal handover to the client.
+          </p>
+          
+          <h4 className="text-[#FFC900]">Functional Testing</h4>
+          <p className="text-[#FFC900]/80">
+            Functional testing confirms that all components and systems operate as intended:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>All switches operate correctly</li>
+            <li>RCDs trip when tested with the test button</li>
+            <li>Dimmer switches function through their full range</li>
+            <li>Sensors and automated systems respond appropriately</li>
+            <li>Emergency systems operate as designed</li>
+            <li>Control systems are properly programmed</li>
+          </ul>
+          
+          <h4 className="text-[#FFC900] mt-6">Client Handover</h4>
+          <p className="text-[#FFC900]/80">
+            The handover should provide the client with all necessary information:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>All certification documents</li>
+            <li>Operation and maintenance instructions</li>
+            <li>Manufacturer's literature and warranties</li>
+            <li>Emergency procedures</li>
+            <li>Contact information for maintenance and emergencies</li>
+            <li>Recommendations for periodic testing and maintenance</li>
+          </ul>
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Client Handover Checklist</h4>
+          <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-4 text-left">Follow-up Activity</th>
-                <th className="py-2 px-4 text-left">Purpose</th>
-                <th className="py-2 px-4 text-left">Typical Timing</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Item</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Details</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">Initial check-in call</td>
-                <td className="py-2 px-4">Address any immediate questions or issues</td>
-                <td className="py-2 px-4">1-2 days after handover</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Documentation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">EIC with schedules, as-built drawings, warranties, operation manuals</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-4">First operation verification</td>
-                <td className="py-2 px-4">Ensure all systems functioning as expected</td>
-                <td className="py-2 px-4">1-2 weeks after handover</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Demonstration</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Show operation of main switches, RCDs, controls, special features</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Safety Information</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Emergency procedures, isolation points, RCD testing instructions</td>
               </tr>
               <tr>
-                <td className="py-2 px-4">Formal feedback request</td>
-                <td className="py-2 px-4">Gather client satisfaction data and testimonials</td>
-                <td className="py-2 px-4">1 month after handover</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Future Requirements</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Periodic inspection intervals, maintenance requirements</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    )
+    ),
+    detailedContent: (
+      <div className="space-y-6">
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Commissioning Process</h3>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Comprehensive Functional Testing</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              Functional testing must be comprehensive to ensure all aspects of the installation operate correctly:
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Switchgear and Control Gear</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Check mechanical operation of switches and circuit breakers</li>
+                <li>Verify all locking mechanisms function properly</li>
+                <li>Test operation under load conditions</li>
+                <li>Check that all switching positions are clearly identified</li>
+                <li>Verify operation of mechanical interlocks</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Protective Devices</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Test all RCDs using the integral test button</li>
+                <li>Verify correct operation of thermal-magnetic circuit breakers</li>
+                <li>Check operation of overvoltage protection devices (if fitted)</li>
+                <li>Test any AFDDs (Arc Fault Detection Devices) using test function</li>
+                <li>Verify operation of any special protection devices</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Special Installations and Equipment</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Test fire alarm interfaces (if present)</li>
+                <li>Check operation of emergency lighting systems</li>
+                <li>Verify operation of any standby supplies or UPS systems</li>
+                <li>Test security systems and interfaces</li>
+                <li>Check heating and cooling control systems</li>
+              </ul>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Control Systems</h5>
+              <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                <li>Test all programmable features and settings</li>
+                <li>Verify operation of timers and scheduling functions</li>
+                <li>Check sensor operations (motion, light, temperature, etc.)</li>
+                <li>Test automated scenarios and scenes</li>
+                <li>Verify remote control functions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Client Training and Demonstration</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                Thorough client training is essential to ensure proper operation and maintenance:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Basic Operations</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Location and operation of main switches</li>
+                  <li>How to isolate the installation in an emergency</li>
+                  <li>Circuit identification and distribution board layout</li>
+                  <li>How to reset circuit breakers after a trip</li>
+                  <li>Testing RCDs using the test button</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Advanced Systems (if applicable)</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Programming controls and timers</li>
+                  <li>Adjusting settings on electronic devices</li>
+                  <li>Using special features of installed systems</li>
+                  <li>Accessing remote control functions</li>
+                  <li>Software interfaces and updates</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Verification of Understanding</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Ask the client to demonstrate operations</li>
+                  <li>Check they can locate important documentation</li>
+                  <li>Ensure they know who to contact for issues</li>
+                  <li>Verify they understand maintenance requirements</li>
+                  <li>Provide written instructions for complex procedures</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Documentation Handover</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                The complete documentation package should include:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Certification and Compliance</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Electrical Installation Certificate (EIC)</li>
+                  <li>Schedule of Inspections</li>
+                  <li>Schedule of Test Results</li>
+                  <li>Building Regulations compliance certificate (where applicable)</li>
+                  <li>Any specialist certification (e.g., hazardous areas)</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Drawings and Specifications</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>As-built drawings showing actual installation details</li>
+                  <li>Schematic diagrams</li>
+                  <li>Distribution board schedules</li>
+                  <li>Cable routes and containment systems</li>
+                  <li>Location of concealed services</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Operation and Maintenance</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Manufacturer's operation manuals</li>
+                  <li>Maintenance schedules</li>
+                  <li>Spare parts information</li>
+                  <li>Warranty documentation</li>
+                  <li>Servicing requirements</li>
+                  <li>Troubleshooting guides</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Contact Information</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Installing contractor details</li>
+                  <li>Emergency contact numbers</li>
+                  <li>Maintenance contractor details</li>
+                  <li>Manufacturer support contacts</li>
+                  <li>Warranty claim procedures</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
   },
-  
   "6.2": {
-    title: "6.2 Maintenance requirements",
+    title: "Maintenance requirements",
     description: "Explaining ongoing maintenance needs to clients.",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Maintenance Requirements and Client Instructions">
-          <p>Proper maintenance ensures the continued safety and performance of electrical installations over time.</p>
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h3 className="text-xl font-medium text-[#FFC900] mb-4">Learning Objectives</h3>
+          <ul className="list-disc list-inside text-[#FFC900]/80 space-y-2">
+            <li>Understand maintenance requirements for electrical installations</li>
+            <li>Learn how to communicate maintenance needs to clients</li>
+            <li>Recognize the importance of periodic inspection and testing</li>
+          </ul>
+        </div>
+
+        <div className="prose prose-invert max-w-none">
+          <h3 className="text-[#FFC900]">Maintenance Requirements</h3>
+          <p className="text-[#FFC900]/80">
+            All electrical installations require ongoing maintenance to ensure continued safe operation. 
+            BS 7671 requires that installations are maintained in a safe condition, and recommends periodic 
+            inspection and testing.
+          </p>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Explaining Maintenance Needs to Clients</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Regular Testing Requirements:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>RCD test button operation - recommended monthly by user</li>
-                <li>Emergency lighting tests - monthly function test, annual full duration test</li>
-                <li>Fire alarm interface testing (where applicable)</li>
-                <li>Periodic inspection and testing as recommended on EIC</li>
-              </ul>
-            </li>
-            <li><strong>Visual Inspections:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Regular checks for damage to accessories</li>
-                <li>Looking for signs of overheating (discoloration)</li>
-                <li>Checking security of fixings and connections</li>
-                <li>Monitoring for any unusual sounds or smells</li>
-                <li>Ensuring ventilation grilles remain unobstructed</li>
-              </ul>
-            </li>
-            <li><strong>Client Responsibilities:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Not overloading circuits or extension leads</li>
-                <li>Reporting any faults promptly</li>
-                <li>Not tampering with or modifying the installation</li>
-                <li>Maintaining access to distribution boards</li>
-                <li>Keeping documentation safe and accessible</li>
-                <li>Following manufacturer's maintenance instructions</li>
-              </ul>
-            </li>
-            <li><strong>Warranty Information:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Duration of workmanship warranty</li>
-                <li>Manufacturer warranties on installed equipment</li>
-                <li>Conditions that could void warranties</li>
-                <li>Process for reporting warranty issues</li>
-                <li>Records of warranty periods for different components</li>
-              </ul>
-            </li>
+          <h4 className="text-[#FFC900]">Types of Maintenance</h4>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li><strong>Preventive Maintenance</strong>: Regular scheduled checks and servicing</li>
+            <li><strong>Predictive Maintenance</strong>: Condition monitoring to predict failures</li>
+            <li><strong>Corrective Maintenance</strong>: Repair or replacement when failures occur</li>
+            <li><strong>Condition-Based Maintenance</strong>: Maintenance based on actual condition assessment</li>
           </ul>
           
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Recommended Maintenance Schedule</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-[#FFC900]/80">
-              <thead>
-                <tr className="border-b border-[#FFC900]/20">
-                  <th className="py-2 px-4 text-left">Component</th>
-                  <th className="py-2 px-4 text-left">Maintenance Task</th>
-                  <th className="py-2 px-4 text-left">Frequency</th>
-                  <th className="py-2 px-4 text-left">By Whom</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">RCDs</td>
-                  <td className="py-2 px-4">Press test button</td>
-                  <td className="py-2 px-4">Monthly</td>
-                  <td className="py-2 px-4">User</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Distribution boards</td>
-                  <td className="py-2 px-4">Visual inspection for damage/heat</td>
-                  <td className="py-2 px-4">Annually</td>
-                  <td className="py-2 px-4">User</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Accessories</td>
-                  <td className="py-2 px-4">Check for damage/loose fixings</td>
-                  <td className="py-2 px-4">Annually</td>
-                  <td className="py-2 px-4">User</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Emergency lighting</td>
-                  <td className="py-2 px-4">Function test</td>
-                  <td className="py-2 px-4">Monthly</td>
-                  <td className="py-2 px-4">Responsible person</td>
-                </tr>
-                <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-4">Emergency lighting</td>
-                  <td className="py-2 px-4">Full duration test</td>
-                  <td className="py-2 px-4">Annually</td>
-                  <td className="py-2 px-4">Qualified technician</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-4">Entire installation</td>
-                  <td className="py-2 px-4">Periodic inspection and testing</td>
-                  <td className="py-2 px-4">As per EIC</td>
-                  <td className="py-2 px-4">Qualified electrician</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Documentation for Future Maintenance</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Record keeping recommendations:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Maintain a log of all maintenance activities</li>
-                <li>Record dates of RCD tests</li>
-                <li>Document any modifications to the installation</li>
-                <li>Keep records of any issues reported and actions taken</li>
-                <li>Store copies of all certificates and reports</li>
-              </ul>
-            </li>
-            <li><strong>Future modification guidance:</strong>
-              <ul className="list-disc pl-6 space-y-1 mt-1">
-                <li>Always use qualified electricians for modifications</li>
-                <li>Ensure appropriate certification for any changes</li>
-                <li>Update distribution board schedules when circuits change</li>
-                <li>Maintain record of changes in a log book</li>
-                <li>Consider impact on existing installation when planning changes</li>
-              </ul>
-            </li>
+          <h4 className="text-[#FFC900] mt-6">Periodic Inspection and Testing</h4>
+          <p className="text-[#FFC900]/80">
+            BS 7671 provides recommended maximum intervals between inspections:
+          </p>
+          <ul className="list-disc list-inside text-[#FFC900]/80 mt-2 space-y-1">
+            <li>Domestic premises: 10 years</li>
+            <li>Commercial premises: 5 years</li>
+            <li>Industrial premises: 3 years</li>
+            <li>Places of public entertainment: 1 year</li>
+            <li>Fire alarm and emergency lighting systems: As manufacturer's instructions</li>
           </ul>
-        </LessonContent>
-        
-        <ContentSection
-          title="Frequency of Periodic Inspection and Testing"
-          content={
-            <div>
-              <p className="font-medium">BS 7671 and IET Guidance Note 3 recommend these maximum intervals between inspections:</p>
-              <div className="overflow-x-auto mt-3">
-                <table className="min-w-full text-[#FFC900]/80">
-                  <thead>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <th className="py-2 px-4 text-left">Installation Type</th>
-                      <th className="py-2 px-4 text-left">Maximum Period</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Domestic premises (general)</td>
-                      <td className="py-2 px-4">10 years</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Domestic premises (rented)</td>
-                      <td className="py-2 px-4">5 years</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Commercial premises</td>
-                      <td className="py-2 px-4">5 years</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Industrial premises</td>
-                      <td className="py-2 px-4">3 years</td>
-                    </tr>
-                    <tr className="border-b border-[#FFC900]/20">
-                      <td className="py-2 px-4">Public buildings</td>
-                      <td className="py-2 px-4">5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 px-4">Special installations (swimming pools, etc.)</td>
-                      <td className="py-2 px-4">1 year</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="mt-3 text-[#FFC900]/70 italic">Note: These are maximum recommended periods. More frequent inspection may be necessary depending on usage, environment, and risk.</p>
-            </div>
-          }
-        />
+        </div>
+
+        <div className="bg-[#353a2c] p-6 rounded-lg border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] text-lg font-medium mb-4">Client Maintenance Instructions</h4>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-[#FFC900]/20">
+                <th className="py-2 px-4 text-left text-[#FFC900]">Maintenance Task</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Frequency</th>
+                <th className="py-2 px-4 text-left text-[#FFC900]">Who Can Perform</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">RCD test button operation</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Quarterly</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">User</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Visual inspection for damage</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Annually</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">User/Owner</td>
+              </tr>
+              <tr className="border-b border-[#FFC900]/20">
+                <td className="py-3 px-4 text-[#FFC900]/80">Emergency lighting tests</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Monthly</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Responsible Person</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 text-[#FFC900]/80">Full periodic inspection and testing</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">As recommended</td>
+                <td className="py-3 px-4 text-[#FFC900]/80">Qualified Electrician</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     ),
     detailedContent: (
       <div className="space-y-6">
-        <h3 className="text-2xl font-medium text-[#FFC900] mb-4">Specialized Equipment Maintenance</h3>
+        <h3 className="text-2xl font-semibold text-[#FFC900]">Detailed Maintenance Requirements</h3>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+          <h4 className="text-xl font-medium text-[#FFC900] mb-4">Legal Requirements for Maintenance</h4>
+          
+          <div className="space-y-4">
+            <p className="text-[#FFC900]/80">
+              Several regulations and legislation require ongoing maintenance of electrical installations:
+            </p>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Electricity at Work Regulations 1989</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Regulation 4(2) requires that "As may be necessary to prevent danger, all systems shall be maintained 
+                so as to prevent, so far as is reasonably practicable, such danger." This places a legal obligation 
+                on duty holders to maintain electrical systems.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Health and Safety at Work Act 1974</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Requires employers to ensure the safety of electrical systems affecting employees and others. 
+                This includes the need for regular maintenance to ensure continued safety.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Management of Health and Safety at Work Regulations 1999</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Requires risk assessment that should include consideration of risks from electrical installations 
+                and the maintenance needed to control those risks.
+              </p>
+            </div>
+            
+            <div className="bg-[#353a2c] p-4 rounded-md">
+              <h5 className="font-medium text-[#FFC900]">Provision and Use of Work Equipment Regulations 1998</h5>
+              <p className="text-[#FFC900]/80 mt-1">
+                Requires that work equipment (including electrical installations) is maintained in an efficient 
+                state, in efficient working order and in good repair.
+              </p>
+            </div>
+          </div>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#353a2c] p-4 rounded-lg">
-            <h4 className="text-xl font-medium text-[#FFC900] mb-2">UPS Systems</h4>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Monthly: Visual inspection and check event logs</li>
-              <li>Quarterly: Functional test of transfer to battery</li>
-              <li>Annually: Full load test and battery assessment</li>
-              <li>As recommended: Battery replacement (typically 3-5 years)</li>
-            </ul>
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Periodic Inspection and Testing Details</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                Periodic inspection and testing should be carried out by a competent person and includes:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Visual Inspection</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Checking for signs of damage or deterioration</li>
+                  <li>Identifying any changes to the installation since last inspection</li>
+                  <li>Verifying compliance with current regulations</li>
+                  <li>Checking for any obvious defects</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Testing</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Insulation resistance testing</li>
+                  <li>Continuity testing of protective conductors</li>
+                  <li>Earth fault loop impedance testing</li>
+                  <li>RCD operation testing</li>
+                  <li>Functional testing of equipment</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Documentation</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Electrical Installation Condition Report (EICR)</li>
+                  <li>Schedule of inspections</li>
+                  <li>Schedule of test results</li>
+                  <li>List of observations and recommendations</li>
+                  <li>Classification of defects found (C1, C2, C3, FI)</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Special Considerations</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Some installations require more frequent or specialized inspection:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Swimming pools: Annually</li>
+                  <li>Caravan parks: Annually</li>
+                  <li>Marinas: Annually</li>
+                  <li>Construction sites: 3 months</li>
+                  <li>Agricultural installations: 3 years</li>
+                </ul>
+              </div>
+            </div>
           </div>
           
-          <div className="bg-[#353a2c] p-4 rounded-lg">
-            <h4 className="text-xl font-medium text-[#FFC900] mb-2">Backup Generators</h4>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Weekly: No-load test run for 5-10 minutes</li>
-              <li>Monthly: Fluid level checks and visual inspection</li>
-              <li>Annually: Load bank testing and full servicing</li>
-              <li>Every 3 years: Comprehensive overhaul</li>
-            </ul>
+          <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
+            <h4 className="text-lg font-medium text-[#FFC900] mb-4">Developing a Maintenance Plan</h4>
+            
+            <div className="space-y-4">
+              <p className="text-[#FFC900]/80">
+                Advise clients on developing a comprehensive maintenance plan:
+              </p>
+              
+              <div>
+                <h5 className="font-medium text-[#FFC900]">Regular User Checks</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Monthly visual inspection for damage</li>
+                  <li>Quarterly RCD test button operation</li>
+                  <li>Checking for warning signs (flickering lights, warm sockets)</li>
+                  <li>Monitoring for tripping circuit breakers</li>
+                  <li>Looking for discoloration around outlets or connections</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Professional Maintenance</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Annual inspection of critical systems</li>
+                  <li>Thermal imaging to identify hotspots</li>
+                  <li>Tightening of connections in distribution boards</li>
+                  <li>Cleaning of equipment and ventilation</li>
+                  <li>Testing of emergency systems</li>
+                  <li>Full periodic inspection and testing at recommended intervals</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Specialist Equipment Maintenance</h5>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>HVAC systems: As per manufacturer's guidelines</li>
+                  <li>Fire alarm systems: Quarterly and annual testing</li>
+                  <li>Emergency lighting: Monthly function test, annual duration test</li>
+                  <li>UPS systems: As per manufacturer's guidelines</li>
+                  <li>Generators: Regular testing under load</li>
+                </ul>
+              </div>
+              
+              <div className="mt-3">
+                <h5 className="font-medium text-[#FFC900]">Maintenance Records</h5>
+                <p className="text-[#FFC900]/80 mt-1">
+                  Advise clients on maintaining comprehensive records:
+                </p>
+                <ul className="list-disc list-inside text-[#FFC900]/80 mt-1">
+                  <li>Log of all user checks</li>
+                  <li>Records of professional maintenance visits</li>
+                  <li>Details of any repairs or modifications</li>
+                  <li>Copies of test certificates and reports</li>
+                  <li>Schedule for future maintenance activities</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <h3 className="text-2xl font-medium text-[#FFC900] mt-6 mb-4">Client Maintenance Instructions</h3>
-        
-        <div className="bg-[#353a2c] p-4 rounded-lg">
-          <h4 className="text-xl font-medium text-[#FFC900] mb-2">Sample Client Instructions for RCD Testing</h4>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>Locate the RCD in your consumer unit (fuse box)</li>
-            <li>Press the button marked 'T' or 'Test'</li>
-            <li>The switch should immediately trip to the off position</li>
-            <li>If it doesn't trip, contact a qualified electrician immediately</li>
-            <li>After successful testing, reset the RCD by moving the switch back to the on position</li>
-            <li>Record the date of testing in your electrical log book</li>
-            <li>Repeat this test monthly</li>
-          </ol>
-          <p className="mt-3 text-[#FFC900]/70">Note: Some circuits may lose power during testing. Consider this when planning test timing.</p>
-        </div>
       </div>
-    )
-  }
+    ),
+  },
 };
+
