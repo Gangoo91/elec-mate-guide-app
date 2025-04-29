@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ClipboardCheck, Eye, FileCheck, TestTube, FileText } from "lucide-react";
+import { ArrowRight, ShieldCheck, Shield, Wrench, FileText, Settings, ClipboardCheck } from "lucide-react";
 import SectionGroup from "@/components/units/level3/SectionGroup";
 import { unit304 } from "@/data/units/unit304";
 
@@ -27,71 +27,78 @@ const Level3Unit304Page = () => {
   const sections = [
     {
       number: "1",
-      title: "Understand Initial Verification Procedures",
-      icon: <ClipboardCheck className="h-6 w-6 text-[#FFC900]" />,
+      title: "Initial Verification",
+      icon: <ShieldCheck className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "1.1",
-          title: "Initial Verification Procedures",
-          description: "Understanding essential verification procedures before commissioning electrical installations",
+          title: "What to check before you power up",
+          description: "Ensuring compliance with BS 7671, Part 6 through proper verification.",
         }
       ]
     },
     {
       number: "2",
-      title: "Understand How to Perform Inspection Activities",
-      icon: <Eye className="h-6 w-6 text-[#FFC900]" />,
+      title: "Safe Isolation and Inspection",
+      icon: <Shield className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "1.2",
-          title: "Visual Inspection Procedures",
-          description: "Systematic approaches for conducting thorough visual inspections",
+          title: "Correct procedure for safe isolation",
+          description: "Visual inspection procedures and recording results before testing.",
         }
       ]
     },
     {
       number: "3",
-      title: "Understand How to Perform Testing Procedures",
-      icon: <TestTube className="h-6 w-6 text-[#FFC900]" />,
+      title: "Testing Procedures",
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "2.1",
-          title: "Dead Testing Procedures",
-          description: "Techniques and procedures for testing de-energized circuits",
+          title: "Dead Testing",
+          description: "Continuity, insulation resistance, and polarity tests.",
         },
         {
           id: "2.2",
-          title: "Live Testing Procedures",
-          description: "Methods for testing energized circuits safely and effectively",
+          title: "Live Testing",
+          description: "Earth fault loop impedance, PFC, and RCD testing.",
         }
       ]
     },
     {
       number: "4",
-      title: "Understand How to Record Results and Documentation",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      title: "Sequence of Testing",
+      icon: <ArrowRight className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "3.1",
-          title: "Documentation and Certification",
-          description: "Required documentation for compliant electrical installations",
+          title: "Correct testing sequence",
+          description: "From visual inspection through to functional testing.",
         }
       ]
     },
     {
       number: "5",
-      title: "Commissioning the Installation",
-      icon: <FileCheck className="h-6 w-6 text-[#FFC900]" />,
+      title: "Certification and Documentation",
+      icon: <ClipboardCheck className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "3.2",
-          title: "Commissioning Process",
-          description: "Final verification and handover procedures for electrical installations",
-        },
+          title: "Forms and certificates",
+          description: "Completing EICs, Minor Works Certificates, and test schedules.",
+        }
+      ]
+    },
+    {
+      number: "6",
+      title: "Commissioning the Installation",
+      icon: <Settings className="h-6 w-6 text-[#FFC900]" />,
+      sections: [
         {
           id: "3.3",
-          title: "Assessment Preparation",
-          description: "Preparing for assessment on Unit 304 content",
+          title: "Final checks and client handover",
+          description: "Functional testing and client instructions.",
         }
       ]
     }
@@ -201,4 +208,3 @@ const Level3Unit304Page = () => {
 };
 
 export default Level3Unit304Page;
-
