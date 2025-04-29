@@ -23,41 +23,21 @@ const AIToolsPage = () => {
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <AIDiagnosticAssistant />
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <RegulationsFinderChecker />
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <HowToGenerator />
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <SafetyChecklistGenerator />
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <TechnicalSpecsAnalyzer />
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-            <CardContent className="p-0">
-              <InspectionTestingGuide />
-            </CardContent>
-          </Card>
+          {/* All cards have the same styling now */}
+          {[
+            <AIDiagnosticAssistant key="diagnostic" />,
+            <RegulationsFinderChecker key="regulations" />,
+            <HowToGenerator key="howto" />,
+            <SafetyChecklistGenerator key="safety" />,
+            <TechnicalSpecsAnalyzer key="specs" />,
+            <InspectionTestingGuide key="inspection" />
+          ].map((component, index) => (
+            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+              <CardContent className="p-0">
+                {component}
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </MainLayout>

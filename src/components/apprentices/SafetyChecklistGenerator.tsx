@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { ClipboardList, ClipboardCheck } from "lucide-react";
+import { ClipboardList } from "lucide-react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 
 const SafetyChecklistGenerator: React.FC = () => {
@@ -47,7 +47,7 @@ const SafetyChecklistGenerator: React.FC = () => {
   return (
     <div className="p-6">
       <div className="flex items-center gap-2 mb-6">
-        <ClipboardCheck className="h-6 w-6 text-[#FFC900]" />
+        <ClipboardList className="h-6 w-6 text-[#FFC900]" />
         <h2 className="text-xl font-semibold text-[#FFC900]">Safety Checklist Generator</h2>
       </div>
       
