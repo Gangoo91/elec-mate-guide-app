@@ -6,7 +6,6 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { unit304 } from "@/data/units/unit304";
 import SectionCard from "@/components/units/SectionCard";
-import { SafetyQuiz } from "@/components/units/SafetyQuiz";
 
 const Level3Unit304Page = () => {
   const navigate = useNavigate();
@@ -37,18 +36,6 @@ const Level3Unit304Page = () => {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-12">
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent className="p-6">
-              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Unit Assessment</h2>
-              <p className="text-[#FFC900]/80 mb-6">
-                Test your knowledge of Unit 304 with this comprehensive assessment.
-              </p>
-              <SafetyQuiz unitId="304" />
-            </CardContent>
-          </Card>
         </div>
       </div>
     </MainLayout>

@@ -33,9 +33,11 @@ export const handleStudyRoutes = (
     return false;
   }
   
-  // Special handling for Unit 302 assessment
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment') {
-    // Don't redirect, allow accessing the assessment page
+  // Special handling for Unit 302, 303, and 304 assessments
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304/assessment') {
+    // Don't redirect, allow accessing the assessment pages
     return false;
   }
 

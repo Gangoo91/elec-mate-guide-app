@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../pages/ApprenticeHub"; // Using existing page
@@ -17,10 +16,10 @@ import Level2Unit210Page from "../pages/Level2Unit210Page";
 import Level3Unit301Page from "../pages/Level3Unit301Page";
 import Level3Unit302Page from "../pages/Level3Unit302Page";
 import Level3Unit303Page from "../pages/Level3Unit303Page"; 
-import Level3Unit304Page from "../pages/Level3Unit304Page"; // Import the Unit 304 page
+import Level3Unit304Page from "../pages/Level3Unit304Page";
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
 import Unit303SectionPage from "../pages/units/Unit303SectionPage"; 
-import Unit304SectionPage from "../pages/units/Unit304SectionPage"; // Import the Unit 304 section page
+import Unit304SectionPage from "../pages/units/Unit304SectionPage"; 
 import PracticeExamsPage from "../pages/PracticeExamsPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
 import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage";
