@@ -67,7 +67,7 @@ const Level3Unit308Page = () => {
       sections: [
         { id: '6.1', title: 'Customer Service', description: 'The importance of good customer service in electrical work' },
         { id: '6.2', title: 'Financial Management', description: 'Handling payments and invoices professionally' },
-        { id: '6.3', title: 'Brand Representation', description: 'Properly representing your company's brand' },
+        { id: '6.3', title: 'Brand Representation', description: 'Properly representing your company\'s brand' },
         { id: '6.4', title: 'Self-Employment Basics', description: 'Introduction to self-employment in the electrical industry' }
       ]
     }
