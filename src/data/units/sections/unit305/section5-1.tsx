@@ -93,11 +93,11 @@ export const section5_1: Section305 = {
                   <td className="py-2 px-3 text-[#FFC900]/80">10</td>
                 </tr>
                 <tr className="border-b border-[#FFC900]/20">
-                  <td className="py-2 px-3 text-[#FFC900]/80">> 16 but ≤ 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">{'>'}16 but ≤ 35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">16</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-[#FFC900]/80">> 35</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">{'>'}35</td>
                   <td className="py-2 px-3 text-[#FFC900]/80">Half the size of the supply neutral conductor</td>
                 </tr>
               </tbody>
