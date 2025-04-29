@@ -1,82 +1,106 @@
-
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
+import ApprenticeDashboardPage from "@/pages/ApprenticeDashboardPage";
+import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
+import CityGuildsPage from "@/pages/CityGuildsPage";
+import Level2HomePage from "@/pages/Level2HomePage";
+import Level3HomePage from "@/pages/Level3HomePage";
+import MOETHomePage from "@/pages/MOETHomePage";
+import AM2HomePage from "@/pages/AM2HomePage";
+import UnitContentPage from "@/pages/UnitContentPage";
+import Level2Unit201Page from "@/pages/Level2Unit201Page";
+import Level2Unit202Page from "@/pages/Level2Unit202Page";
+import Level2Unit203Page from "@/pages/Level2Unit203Page";
+import Level2Unit204Page from "@/pages/Level2Unit204Page";
+import Level2Unit205Page from "@/pages/Level2Unit205Page";
+import Level2Unit210Page from "@/pages/Level2Unit210Page";
+import Level3Unit301Page from "@/pages/Level3Unit301Page";
+import Level3Unit302Page from "@/pages/Level3Unit302Page";
+import Unit302SectionPage from "@/pages/units/Unit302SectionPage";
+import PracticeExamsPage from "@/pages/PracticeExamsPage";
+import Level3Unit302AssessmentPage from "@/pages/Level3Unit302AssessmentPage";
 
-import ApprenticeHub from '@/pages/ApprenticeHub';
-import LearningHubPage from '@/pages/LearningHubPage';
-import StudyMaterialsPage from '@/pages/StudyMaterialsPage';
-import CityGuildsPage from '@/pages/CityGuildsPage';
-import Level2CoreUnitsPage from '@/pages/Level2CoreUnitsPage';
-import Level3CoreUnitsPage from '@/pages/Level3CoreUnitsPage';
-import Level2ElectricalPage from '@/pages/Level2ElectricalPage';
-import Level3ElectricalPage from '@/pages/Level3ElectricalPage';
-import Level2SimplifiedPage from '@/pages/Level2SimplifiedPage';
-import Level2ExamsPage from '@/pages/Level2ExamsPage';
-import Unit202SectionPage from '@/pages/units/Unit202SectionPage';
-import Level2Unit202Page from '@/pages/Level2Unit202Page';
-import Level2Unit201Page from '@/pages/Level2Unit201Page';
-import Level2Unit203Page from '@/pages/Level2Unit203Page';
-import Level2Unit204Page from '@/pages/Level2Unit204Page';
-import Level2Unit210Page from '@/pages/Level2Unit210Page';
-import SectionPage from '@/pages/units/SectionPage';
-import Level2SectionPage from '@/pages/units/Level2SectionPage';
-import Unit201SectionPage from '@/pages/units/Unit201SectionPage';
-import Unit203SectionPage from '@/pages/units/Unit203SectionPage'; 
-import Unit204SectionPage from '@/pages/units/Unit204SectionPage';
-import Unit210SectionPage from '@/pages/units/Unit210SectionPage';
-import UnitContentPage from '@/pages/UnitContentPage';
-import Level3UnitContentPage from '@/pages/Level3UnitContentPage';
-import ProgressTrackingPage from '@/pages/apprentices/ProgressTrackingPage';
-import StudyGroupsPage from '@/pages/StudyGroupsPage';
-import StudyGroupDetailsPage from '@/pages/StudyGroupDetailsPage';
-import ARLearningPage from '@/pages/ARLearningPage';
-import PracticeExamsPage from '@/pages/PracticeExamsPage';
-import Level3Unit301Page from '@/pages/Level3Unit301Page';
-import Level3Unit301AssessmentPage from '@/pages/Level3Unit301AssessmentPage';
-import Level3Unit302Page from '@/pages/Level3Unit302Page';
-import Unit302SectionPage from '@/pages/units/Unit302SectionPage';
+const ApprenticeRoutes: RouteObject[] = [
+  {
+    path: "/apprentices",
+    element: <ApprenticeDashboardPage />,
+  },
+  {
+    path: "/apprentices/dashboard",
+    element: <ApprenticeDashboardPage />,
+  },
+  {
+    path: "/apprentices/study-materials",
+    element: <StudyMaterialsPage />,
+  },
+  {
+    path: "/apprentices/practice-exams",
+    element: <PracticeExamsPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds",
+    element: <CityGuildsPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2",
+    element: <Level2HomePage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3",
+    element: <Level3HomePage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet",
+    element: <MOETHomePage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/am2",
+    element: <AM2HomePage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/core-units/:unitId",
+    element: <UnitContentPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/201",
+    element: <Level2Unit201Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/202",
+    element: <Level2Unit202Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/203",
+    element: <Level2Unit203Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/204",
+    element: <Level2Unit204Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/205",
+    element: <Level2Unit205Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/210",
+    element: <Level2Unit210Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/301",
+    element: <Level3Unit301Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/302",
+    element: <Level3Unit302Page />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/302/:sectionId",
+    element: <Unit302SectionPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/302/assessment",
+    element: <Level3Unit302AssessmentPage />,
+  },
+];
 
-export const ApprenticeRoutes = (
-  <>
-    <Route path="/apprentices" element={<ApprenticeHub />} />
-    <Route path="/apprentices/learning-hub" element={<LearningHubPage />} />
-    <Route path="/apprentices/study-materials" element={<StudyMaterialsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds" element={<CityGuildsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2" element={<Level2ElectricalPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3" element={<Level3ElectricalPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units" element={<Level2CoreUnitsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/basics" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/circuits" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/regulations" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/installation" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/simplified/troubleshooting" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/exams" element={<Level2ExamsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/core-units" element={<Level3CoreUnitsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/simplified" element={<Level2SimplifiedPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/exams" element={<PracticeExamsPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202" element={<Level2Unit202Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201" element={<Level2Unit201Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/203" element={<Level2Unit203Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/204" element={<Level2Unit204Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/210" element={<Level2Unit210Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/202/:sectionId" element={<Unit202SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/201/:sectionId" element={<Unit201SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/203/:sectionId" element={<Unit203SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId" element={<Unit204SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId" element={<Unit210SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" element={<UnitContentPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId/:sectionId" element={<Level2SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/301" element={<Level3Unit301Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/301/assessment" element={<Level3Unit301AssessmentPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/302" element={<Level3Unit302Page />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/302/:sectionId" element={<Unit302SectionPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId" element={<Level3UnitContentPage />} />
-    <Route path="/apprentices/study-materials/city-guilds/level-3/:unitId/:sectionId" element={<SectionPage />} />
-    <Route path="/apprentices/progress-tracking" element={<ProgressTrackingPage />} />
-    <Route path="/apprentices/study-groups" element={<StudyGroupsPage />} />
-    <Route path="/apprentices/study-groups/:groupId" element={<StudyGroupDetailsPage />} />
-    <Route path="/apprentices/ar-learning" element={<ARLearningPage />} />
-    <Route path="/apprentices/practice-exams" element={<PracticeExamsPage />} />
-  </>
-);
+export default ApprenticeRoutes;

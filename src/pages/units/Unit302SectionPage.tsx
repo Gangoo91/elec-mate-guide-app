@@ -7,7 +7,7 @@ import { sections302 } from "@/data/units/sections/unit302Sections";
 import { useToast } from "@/components/ui/use-toast";
 import { SafetyQuiz } from "@/components/units/SafetyQuiz";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 
 const Unit302SectionPage = () => {
   const { sectionId = "" } = useParams<{ sectionId: string }>();
@@ -18,9 +18,9 @@ const Unit302SectionPage = () => {
   const currentSectionIndex = sectionKeys.indexOf(sectionId);
   const prevSection = currentSectionIndex > 0 ? sectionKeys[currentSectionIndex - 1] : null;
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
+  const isLastSection = currentSectionIndex === sectionKeys.length - 1;
   
   const sectionContent = sections302[sectionId];
-  const isLastSection = sectionId === "2.3"; // Set this to the last section ID
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3/302');
@@ -28,6 +28,10 @@ const Unit302SectionPage = () => {
   
   const navigateToSection = (sectionId: string) => {
     navigate(`/apprentices/study-materials/city-guilds/level-3/302/${sectionId}`);
+  };
+
+  const navigateToAssessment = () => {
+    navigate('/apprentices/study-materials/city-guilds/level-3/302/assessment');
   };
   
   useEffect(() => {
@@ -75,8 +79,8 @@ const Unit302SectionPage = () => {
             </div>
           )}
           
-          <div className="mb-8">
-            <div className="flex justify-between items-center">
+          <div className="mt-8 pt-8 border-t border-[#FFC900]/20">
+            <div className="flex justify-between items-center mb-6">
               <div>
                 {prevSection && (
                   <Button 
@@ -89,6 +93,15 @@ const Unit302SectionPage = () => {
                   </Button>
                 )}
               </div>
+
+              <Button
+                className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] flex items-center gap-2"
+                onClick={navigateToAssessment}
+              >
+                <CheckCircle className="h-4 w-4" />
+                Take Assessment
+              </Button>
+              
               <div>
                 {nextSection && (
                   <Button 
