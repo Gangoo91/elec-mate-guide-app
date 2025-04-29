@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Book, Handshake, Heart, Users, Award } from "lucide-react";
 import { Link } from "react-router-dom";

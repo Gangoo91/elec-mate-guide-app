@@ -19,6 +19,7 @@ import Level3Unit302Page from "../pages/Level3Unit302Page";
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
 import PracticeExamsPage from "../pages/PracticeExamsPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
+import LearningHubPage from "../pages/LearningHubPage"; // Import the learning hub page
 
 const ApprenticeRoutes: RouteObject[] = [
   {
@@ -28,6 +29,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/dashboard",
     element: <ApprenticeDashboardPage />,
+  },
+  {
+    path: "/apprentices/learning-hub", // Add the learning hub route
+    element: <LearningHubPage />,
   },
   {
     path: "/apprentices/study-materials",
@@ -100,3 +105,4 @@ const ApprenticeRoutes: RouteObject[] = [
 ];
 
 export default ApprenticeRoutes;
+
