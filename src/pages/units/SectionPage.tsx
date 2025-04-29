@@ -13,7 +13,7 @@ import { sections301 } from "@/data/units/sections/unit301Sections";
 import { sections302 } from "@/data/units/sections/unit302Sections";
 import { sections303 } from "@/data/units/sections/unit303Sections";
 import { sections304 } from "@/data/units/sections/unit304Sections";
-import { sections305 } from "@/data/units/sections/unit305Sections";
+import unit305sections from "@/data/units/sections/unit305/index"; // Fixed import path
 import { sections308 } from "@/data/units/sections/unit308Sections";
 
 // Define interface for section data to ensure type safety
@@ -36,7 +36,7 @@ const SectionPage = () => {
       case "302": return sections302;
       case "303": return sections303;
       case "304": return sections304;
-      case "305": return sections305;
+      case "305": return unit305sections; // Updated to use the imported module
       case "308": return sections308;
       default: return {};
     }

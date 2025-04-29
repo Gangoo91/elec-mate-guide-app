@@ -6,7 +6,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import SectionCard from "@/components/units/SectionCard";
 import AssessmentButton from "@/components/units/level3/unit304/AssessmentButton";
 import { unit305 } from "@/data/units/unit305";
-import { BookOpen, Cable, Database, Plug, Shield, Switch, Calculator } from "lucide-react";
+import { BookOpen, Cable, Database, Plug, Shield, Calculator } from "lucide-react"; // Removed non-existent Switch icon
 import { ContentSection } from "@/components/units/ContentSection";
 import LessonContent from "@/components/units/LessonContent";
 

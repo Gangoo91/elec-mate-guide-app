@@ -5,60 +5,54 @@ import { Section305 } from './types';
 export const section6_1: Section305 = {
   id: "6.1",
   title: "Health, Safety and Building Regulations",
-  description: "Understanding the regulatory framework for electrical installations in buildings.",
+  description: "Learn about the key regulations and standards that govern electrical installations.",
   content: [
     {
       title: "Learning Objectives",
       content: (
         <ul className="list-disc pl-6 space-y-2">
-          <li>Understand BS 7671 Wiring Regulations and their application to design</li>
-          <li>Learn the relevant Building Regulations affecting electrical installations</li>
-          <li>Master energy efficiency considerations in electrical design</li>
-          <li>Apply fire safety requirements to electrical installations</li>
+          <li>Understand the requirements of BS 7671 (Wiring Regulations)</li>
+          <li>Learn how Building Regulations affect electrical installation design</li>
+          <li>Master the application of health and safety regulations in electrical work</li>
         </ul>
       )
     },
     {
-      title: "BS 7671 Wiring Regulations",
+      title: "BS 7671: Requirements for Electrical Installations",
       content: (
         <div className="space-y-4">
           <p>
-            BS 7671 (Requirements for Electrical Installations, IET Wiring Regulations) is the national standard 
-            for electrical installations in the UK. Key design considerations include:
+            BS 7671 (commonly known as the IET Wiring Regulations) is the national standard for electrical installations
+            in the UK. The 18th Edition is the current version, and it specifies:
           </p>
           
           <ul className="list-disc pl-6 space-y-2">
-            <li>
-              <span className="font-medium">Protection against electric shock:</span> Includes both basic protection 
-              (insulation, barriers, enclosures) and fault protection (earthing, bonding, automatic disconnection)
-            </li>
-            <li>
-              <span className="font-medium">Protection against thermal effects:</span> Prevention of fire, burns, and 
-              overheating from electrical equipment
-            </li>
-            <li>
-              <span className="font-medium">Protection against overcurrent:</span> Proper selection and coordination of 
-              protective devices
-            </li>
-            <li>
-              <span className="font-medium">Isolation and switching:</span> Means to disconnect the installation or 
-              individual circuits
-            </li>
-            <li>
-              <span className="font-medium">Special locations:</span> Additional requirements for bathrooms, swimming pools, 
-              outdoor installations, etc.
-            </li>
+            <li>Safety principles for protection against electric shock</li>
+            <li>Selection and erection of equipment</li>
+            <li>Inspection and testing requirements</li>
+            <li>Special installations and locations</li>
+            <li>Energy efficiency considerations</li>
           </ul>
           
           <div className="bg-[#2a2d24] p-4 rounded-md mt-3">
-            <h4 className="font-medium text-[#FFC900] mb-2">Key Design Requirements in BS 7671</h4>
+            <h4 className="font-medium text-[#FFC900] mb-2">Key Design Considerations from BS 7671</h4>
             <ul className="list-disc pl-6 space-y-2">
-              <li>Maximum disconnection times for fault protection</li>
-              <li>Maximum voltage drop limits (3% for lighting, 5% for other uses)</li>
-              <li>Minimum insulation resistance values</li>
-              <li>Maximum earth fault loop impedance values</li>
-              <li>Additional protection by 30mA RCD for socket outlets and cables in walls</li>
-              <li>Particular requirements for special locations</li>
+              <li>
+                <span className="font-medium">Protection against electric shock:</span> Application of 
+                automatic disconnection times, RCD protection, and SELV/PELV systems
+              </li>
+              <li>
+                <span className="font-medium">Protective measures:</span> Requirements for basic, fault, 
+                and additional protection
+              </li>
+              <li>
+                <span className="font-medium">Maximum disconnection times:</span> 0.4s for final circuits up to 32A, 
+                5s for distribution circuits in TN systems
+              </li>
+              <li>
+                <span className="font-medium">Surge protection:</span> Risk assessment required to determine 
+                if SPDs are needed
+              </li>
             </ul>
           </div>
         </div>
@@ -69,113 +63,107 @@ export const section6_1: Section305 = {
       content: (
         <div className="space-y-4">
           <p>
-            Several Building Regulations directly affect electrical design:
+            Building Regulations set standards for design and construction in the UK. For electrical 
+            installations, the key sections are:
           </p>
           
-          <div className="space-y-3">
-            <div className="bg-[#2a2d24] p-4 rounded-md">
-              <h4 className="font-medium text-[#FFC900] mb-2">Part P: Electrical Safety</h4>
-              <p>
-                Requires that electrical installations in dwellings are designed, installed, inspected and tested to 
-                provide reasonable protection against:
-              </p>
-              <ul className="list-disc pl-6 mt-1 space-y-1">
-                <li>Electric shock</li>
-                <li>Fire hazards from electrical components</li>
-                <li>Burns or other injuries from high temperatures</li>
-              </ul>
-              <p className="mt-2">
-                Compliance is typically achieved by following BS 7671, and certain work must be notified to 
-                building control or carried out by a competent person.
-              </p>
-            </div>
-            
-            <div className="bg-[#2a2d24] p-4 rounded-md">
-              <h4 className="font-medium text-[#FFC900] mb-2">Part L: Conservation of Fuel and Power</h4>
-              <p>
-                Affects electrical design through:
-              </p>
-              <ul className="list-disc pl-6 mt-1 space-y-1">
-                <li>Energy-efficient lighting requirements (minimum 75% of fixed lighting to be low energy)</li>
-                <li>Controls for heating and lighting systems</li>
-                <li>Energy usage monitoring provisions</li>
-                <li>Power factor correction considerations</li>
-              </ul>
-            </div>
-            
-            <div className="bg-[#2a2d24] p-4 rounded-md">
-              <h4 className="font-medium text-[#FFC900] mb-2">Part B: Fire Safety</h4>
-              <p>
-                Influences electrical design through:
-              </p>
-              <ul className="list-disc pl-6 mt-1 space-y-1">
-                <li>Fire detection and alarm systems requirements</li>
-                <li>Emergency lighting provisions</li>
-                <li>Fire stopping around cable penetrations</li>
-                <li>Requirements for escape routes</li>
-              </ul>
-            </div>
-            
-            <div className="bg-[#2a2d24] p-4 rounded-md">
-              <h4 className="font-medium text-[#FFC900] mb-2">Part M: Access to and Use of Buildings</h4>
-              <p>
-                Affects electrical design through:
-              </p>
-              <ul className="list-disc pl-6 mt-1 space-y-1">
-                <li>Heights of socket outlets and switches</li>
-                <li>Visual contrast requirements for electrical accessories</li>
-                <li>Accessibility of controls</li>
-                <li>Provision of facilities for people with disabilities</li>
-              </ul>
-            </div>
+          <div className="overflow-x-auto mt-2">
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className="border-b border-[#FFC900]/20">
+                  <th className="py-2 px-3 text-left text-[#FFC900]">Regulation</th>
+                  <th className="py-2 px-3 text-left text-[#FFC900]">Key Requirements</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-[#FFC900]/20">
+                  <td className="py-2 px-3 text-[#FFC900]/80">Part P</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">
+                    Safety of electrical installations in dwellings; requires notification of 
+                    certain electrical work to building control
+                  </td>
+                </tr>
+                <tr className="border-b border-[#FFC900]/20">
+                  <td className="py-2 px-3 text-[#FFC900]/80">Part L</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">
+                    Conservation of fuel and power; affects lighting efficacy, controls, and 
+                    energy efficiency of fixed building services
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-2 px-3 text-[#FFC900]/80">Part B</td>
+                  <td className="py-2 px-3 text-[#FFC900]/80">
+                    Fire safety; influences cable selection, fire detection systems, emergency 
+                    lighting, and escape routes
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          
+          <p className="mt-3">
+            Building Regulations compliance is typically demonstrated through:
+          </p>
+          
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Self-certification by a registered competent person</li>
+            <li>Certification by a building control body</li>
+            <li>Certification by a qualified third-party certifier</li>
+          </ul>
         </div>
       )
     },
     {
-      title: "Energy Efficiency Standards",
+      title: "Health and Safety Regulations",
       content: (
         <div className="space-y-4">
           <p>
-            Modern electrical installations should be designed with energy efficiency in mind:
+            Electrical design must comply with various health and safety regulations:
           </p>
           
           <ul className="list-disc pl-6 space-y-2">
             <li>
-              <span className="font-medium">Lighting design:</span> Use of LED technology, daylight harvesting, 
-              presence detection, and smart controls
+              <span className="font-medium">Electricity at Work Regulations 1989:</span> Requires electrical 
+              systems to be constructed and maintained to prevent danger
             </li>
             <li>
-              <span className="font-medium">Power factor correction:</span> Reducing reactive power demand to 
-              improve efficiency and reduce costs
+              <span className="font-medium">Health and Safety at Work Act 1974:</span> General duties for 
+              employers and employees regarding workplace safety
             </li>
             <li>
-              <span className="font-medium">Harmonics mitigation:</span> Reducing harmonic distortion that causes 
-              additional losses and heating
+              <span className="font-medium">Construction (Design and Management) Regulations 2015:</span> Applies 
+              to construction projects including electrical installations
             </li>
             <li>
-              <span className="font-medium">Cable sizing:</span> Correct sizing to minimize losses while maintaining safety
-            </li>
-            <li>
-              <span className="font-medium">Standby power reduction:</span> Incorporating switched socket outlets or 
-              intelligent power management
-            </li>
-            <li>
-              <span className="font-medium">Energy monitoring:</span> Sub-metering and energy management systems
+              <span className="font-medium">Provision and Use of Work Equipment Regulations 1998:</span> Covers 
+              equipment safety and maintenance requirements
             </li>
           </ul>
           
+          <div className="bg-[#2a2d24] p-4 rounded-md mt-3">
+            <h4 className="font-medium text-[#FFC900] mb-2">Design Risk Assessment</h4>
+            <p>
+              Electrical designers must consider:
+            </p>
+            <ul className="list-disc pl-6 mt-2 space-y-1">
+              <li>Risk identification and evaluation</li>
+              <li>Implementing control measures using the hierarchy of control</li>
+              <li>Safe access and working space around electrical equipment</li>
+              <li>Future maintenance requirements</li>
+              <li>Documentation of safety considerations in the design</li>
+            </ul>
+          </div>
+          
           <p className="mt-3">
-            Specific considerations include:
+            Important note: Designers have legal responsibilities under CDM Regulations to:
           </p>
           
-          <div className="bg-[#2a2d24] p-4 rounded-md space-y-2">
-            <p>1. Compliance with Minimum Energy Efficiency Standards (MEES)</p>
-            <p>2. Energy Performance Certificates (EPCs) requirements</p>
-            <p>3. Building Research Establishment Environmental Assessment Method (BREEAM) standards</p>
-            <p>4. Display Energy Certificates (DECs) for public buildings</p>
-            <p>5. Part L compliance for new buildings and major renovations</p>
-          </div>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Eliminate hazards where possible</li>
+            <li>Reduce risks that cannot be eliminated</li>
+            <li>Provide information about remaining risks</li>
+            <li>Coordinate design work with others</li>
+          </ul>
         </div>
       )
     }
