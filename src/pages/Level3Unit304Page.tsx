@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ClipboardCheck, Eye, FileCheck, Test, TestTube } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Eye, FileCheck, TestTube } from "lucide-react";
 import SectionGroup from "@/components/units/level3/SectionGroup";
 import { unit304 } from "@/data/units/unit304";
 
