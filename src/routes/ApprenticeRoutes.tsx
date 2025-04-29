@@ -19,13 +19,16 @@ import Level3Unit301Page from "../pages/Level3Unit301Page";
 import Level3Unit302Page from "../pages/Level3Unit302Page";
 import Level3Unit303Page from "../pages/Level3Unit303Page"; 
 import Level3Unit304Page from "../pages/Level3Unit304Page";
+import Level3Unit305Page from "../pages/Level3Unit305Page";
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
 import Unit303SectionPage from "../pages/units/Unit303SectionPage"; 
 import Unit304SectionPage from "../pages/units/Unit304SectionPage"; 
+import Unit305SectionPage from "../pages/units/Unit305SectionPage";
 import PracticeExamsPage from "../pages/PracticeExamsPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
 import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage";
 import Level3Unit304AssessmentPage from "../pages/Level3Unit304AssessmentPage";
+import Level3Unit305AssessmentPage from "../pages/Level3Unit305AssessmentPage";
 import LearningHubPage from "../pages/LearningHubPage";
 
 const ApprenticeRoutes: RouteObject[] = [
@@ -114,6 +117,10 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level3Unit304Page />,
   },
   {
+    path: "/apprentices/study-materials/city-guilds/level-3/305",
+    element: <Level3Unit305Page />,
+  },
+  {
     path: "/apprentices/study-materials/city-guilds/level-3/302/:sectionId",
     element: <Unit302SectionPage />,
   },
@@ -126,6 +133,10 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Unit304SectionPage />,
   },
   {
+    path: "/apprentices/study-materials/city-guilds/level-3/305/:sectionId",
+    element: <Unit305SectionPage />,
+  },
+  {
     path: "/apprentices/study-materials/city-guilds/level-3/302/assessment",
     element: <Level3Unit302AssessmentPage />,
   },
@@ -136,6 +147,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-3/304/assessment",
     element: <Level3Unit304AssessmentPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/305/assessment",
+    element: <Level3Unit305AssessmentPage />,
   },
 ];
 

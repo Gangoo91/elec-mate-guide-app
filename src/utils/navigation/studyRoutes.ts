@@ -24,25 +24,27 @@ export const handleStudyRoutes = (
     return false;
   }
 
-  // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, and Unit 304 which have their own pages)
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!core-units$)\d{3}$/)) {
+  // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, Unit 304, and Unit 305 which have their own pages)
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!305$)(?!core-units$)\d{3}$/)) {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
     return true;
   }
   
-  // Special handling for Unit 301, 302, 303, and 304
+  // Special handling for Unit 301, 302, 303, 304, and 305
   if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/301' ||
       location.pathname === '/apprentices/study-materials/city-guilds/level-3/302' ||
       location.pathname === '/apprentices/study-materials/city-guilds/level-3/303' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304') {
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305') {
     // Don't redirect, allow accessing these specific unit pages
     return false;
   }
   
-  // Special handling for Unit 302, 303, and 304 assessments
+  // Special handling for Unit 302, 303, 304, and 305 assessments
   if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment' ||
       location.pathname === '/apprentices/study-materials/city-guilds/level-3/303/assessment' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304/assessment') {
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305/assessment') {
     // Don't redirect, allow accessing the assessment pages
     return false;
   }

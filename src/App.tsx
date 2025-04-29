@@ -31,6 +31,7 @@ import Unit203SectionPage from "./pages/units/Unit203SectionPage";
 import UnitContentPage from "./pages/UnitContentPage";
 import Level3Unit305Page from "./pages/Level3Unit305Page";
 import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
+import Unit305SectionPage from "./pages/units/Unit305SectionPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -94,6 +95,10 @@ const App = () => {
                     <Route 
                       path="/apprentices/study-materials/city-guilds/level-3/305/assessment" 
                       element={<Level3Unit305AssessmentPage />} 
+                    />
+                    <Route
+                      path="/apprentices/study-materials/city-guilds/level-3/305/:sectionId"
+                      element={<Unit305SectionPage />}
                     />
 
                     {/* Unit Section Pages */}
