@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
@@ -29,7 +30,7 @@ interface AssessmentQuestion {
 
 // Define a more comprehensive source question type to handle all formats
 interface SourceQuestion {
-  id: number;
+  id?: number;
   text?: string; // Optional for compatibility
   question?: string; // Optional for compatibility
   options: string[];
