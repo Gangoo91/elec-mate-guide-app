@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { sections305 } from "@/data/units/sections/unit305";
+import sections305 from "@/data/units/sections/unit305";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
@@ -17,7 +17,6 @@ const Unit305SectionPage = () => {
   const currentSectionIndex = sectionKeys.indexOf(sectionId);
   const prevSection = currentSectionIndex > 0 ? sectionKeys[currentSectionIndex - 1] : null;
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
-  const isLastSection = currentSectionIndex === sectionKeys.length - 1;
   
   const sectionContent = sections305[sectionId];
   

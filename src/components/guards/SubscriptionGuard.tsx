@@ -22,9 +22,7 @@ const tierAccess = {
 };
 
 export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardProps) => {
-  const { user, loading } = useAuth();
-  
-  // Always bypass the subscription check for now
+  // Always bypass the subscription check
   // This effectively disables the guard completely, allowing access to all routes
   return <>{children}</>;
 };

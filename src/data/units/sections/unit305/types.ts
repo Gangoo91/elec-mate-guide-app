@@ -1,14 +1,12 @@
 
-import React from 'react';
-
 export interface Section {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   content: React.ReactNode;
   detailedContent?: React.ReactNode;
 }
 
-export interface SectionsType {
+export interface SectionMap {
   [key: string]: Section;
 }
