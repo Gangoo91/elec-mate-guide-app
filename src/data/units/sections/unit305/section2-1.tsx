@@ -142,12 +142,12 @@ export const section2_1: Section = {
             <tbody>
               <tr className="border-b border-[#FFC900]/20">
                 <td className="py-2 px-3 text-[#FFC900]/80">IP20</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">Protected against solid objects >12.5mm, no protection against liquids</td>
+                <td className="py-2 px-3 text-[#FFC900]/80">Protected against solid objects {'>'}12.5mm, no protection against liquids</td>
                 <td className="py-2 px-3 text-[#FFC900]/80">Indoor domestic sockets and switches</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
                 <td className="py-2 px-3 text-[#FFC900]/80">IP44</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">Protected against solid objects >1mm and splashing water</td>
+                <td className="py-2 px-3 text-[#FFC900]/80">Protected against solid objects {'>'}1mm and splashing water</td>
                 <td className="py-2 px-3 text-[#FFC900]/80">Outdoor installations, bathrooms (Zone 2)</td>
               </tr>
               <tr className="border-b border-[#FFC900]/20">
