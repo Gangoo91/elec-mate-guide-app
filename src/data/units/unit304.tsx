@@ -11,9 +11,14 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="What to check before you power up"
+            title="1.1 What to check before you power up"
             path="/apprentices/study-materials/city-guilds/level-3/304/1.1"
             description="Ensuring compliance with BS 7671, Part 6 through proper verification."
+          />
+          <SectionContent 
+            title="1.2 Documentation requirements"
+            path="/apprentices/study-materials/city-guilds/level-3/304/1.2"
+            description="Understanding the necessary paperwork for installation verification."
           />
         </div>
       ),
@@ -23,9 +28,14 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="Correct procedure for safe isolation"
-            path="/apprentices/study-materials/city-guilds/level-3/304/1.2"
-            description="Visual inspection procedures and recording results before testing."
+            title="2.1 Correct procedure for safe isolation"
+            path="/apprentices/study-materials/city-guilds/level-3/304/2.1"
+            description="Step-by-step process for safely isolating electrical installations."
+          />
+          <SectionContent 
+            title="2.2 Visual inspection procedures"
+            path="/apprentices/study-materials/city-guilds/level-3/304/2.2"
+            description="Conducting and recording visual inspections before testing."
           />
         </div>
       ),
@@ -35,13 +45,13 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="Dead Testing"
-            path="/apprentices/study-materials/city-guilds/level-3/304/2.1"
+            title="3.1 Dead Testing"
+            path="/apprentices/study-materials/city-guilds/level-3/304/3.1"
             description="Continuity, insulation resistance, and polarity tests."
           />
           <SectionContent 
-            title="Live Testing"
-            path="/apprentices/study-materials/city-guilds/level-3/304/2.2"
+            title="3.2 Live Testing"
+            path="/apprentices/study-materials/city-guilds/level-3/304/3.2"
             description="Earth fault loop impedance, PFC, and RCD testing."
           />
         </div>
@@ -52,8 +62,8 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="Correct testing sequence"
-            path="/apprentices/study-materials/city-guilds/level-3/304/3.1"
+            title="4.1 Correct testing sequence"
+            path="/apprentices/study-materials/city-guilds/level-3/304/4.1"
             description="From visual inspection through to functional testing."
           />
         </div>
@@ -64,9 +74,14 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="Forms and certificates"
-            path="/apprentices/study-materials/city-guilds/level-3/304/3.2"
+            title="5.1 Forms and certificates"
+            path="/apprentices/study-materials/city-guilds/level-3/304/5.1"
             description="Completing EICs, Minor Works Certificates, and test schedules."
+          />
+          <SectionContent 
+            title="5.2 Recording inspection and test results"
+            path="/apprentices/study-materials/city-guilds/level-3/304/5.2"
+            description="Properly documenting all test findings and observations."
           />
         </div>
       ),
@@ -76,9 +91,14 @@ export const unit304: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="Final checks and client handover"
-            path="/apprentices/study-materials/city-guilds/level-3/304/3.3"
+            title="6.1 Final checks and client handover"
+            path="/apprentices/study-materials/city-guilds/level-3/304/6.1"
             description="Functional testing and client instructions."
+          />
+          <SectionContent 
+            title="6.2 Maintenance requirements"
+            path="/apprentices/study-materials/city-guilds/level-3/304/6.2"
+            description="Explaining ongoing maintenance needs to clients."
           />
         </div>
       ),
