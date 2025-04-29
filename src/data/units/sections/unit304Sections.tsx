@@ -1,452 +1,443 @@
 
 import React from 'react';
 
-interface SectionData {
-  title: string;
-  description: string;
+export const sections304: Record<string, { 
+  title: string; 
+  description?: string; 
   content: React.ReactNode;
-}
-
-export const sections304: Record<string, SectionData> = {
+  detailedContent?: React.ReactNode;
+}> = {
   "1.1": {
     title: "Initial Verification Requirements",
-    description: "Understanding the requirements and procedures for initial verification of electrical installations",
+    description: "Understanding essential verification procedures before commissioning electrical installations",
     content: (
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Purpose of Initial Verification</h2>
-        <p>
-          Initial verification is performed on new installations, additions, or alterations to existing installations before they are put into service. The purpose is to confirm that the installation is:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Safe for use</li>
-          <li>Compliant with BS 7671 (IET Wiring Regulations)</li>
-          <li>Free from defects and damage</li>
-          <li>Correctly designed to meet client requirements</li>
-          <li>Built according to the design specifications</li>
+      <div className="prose prose-invert max-w-none">
+        <h2>Initial Verification Requirements</h2>
+        
+        <p>Initial verification is a crucial step in ensuring that new electrical installations comply with regulations and are safe to use.</p>
+        
+        <h3>Key Components of Initial Verification</h3>
+        <ul>
+          <li>Visual inspection of all accessible components</li>
+          <li>Confirmation that equipment complies with relevant standards</li>
+          <li>Verification of conductor sizes and protective device ratings</li>
+          <li>Checking for fire barriers, protection against thermal effects</li>
+          <li>Verification of disconnection times for protective devices</li>
         </ul>
         
-        <h3 className="text-lg font-medium mt-4">Legal Requirements</h3>
-        <p>
-          Initial verification is mandated by several regulations:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Electricity at Work Regulations 1989</li>
-          <li>Building Regulations Part P (for domestic installations)</li>
-          <li>BS 7671 Requirements for Electrical Installations</li>
-          <li>Health and Safety at Work Act 1974</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Documentation Required</h2>
-        <p>
-          Before starting the verification process, the following documentation should be available:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Design specifications and calculations</li>
-          <li>Circuit diagrams, charts, or tables</li>
-          <li>Distribution board schedules</li>
-          <li>Cable specifications and route plans</li>
-          <li>Risk assessments for the installation</li>
-          <li>Manufacturer's equipment instructions</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Stages of Initial Verification</h2>
-        
-        <h3 className="text-lg font-medium mt-4">1. Visual Inspection</h3>
-        <p>
-          A thorough visual inspection must be completed before testing begins, checking:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Connection of conductors and protective devices</li>
-          <li>Correct selection of conductors for current-carrying capacity</li>
-          <li>Presence and correct location of protective devices</li>
-          <li>Presence of fire barriers, seals, and protection against thermal effects</li>
-          <li>Selection of equipment and protective measures appropriate for external influences</li>
-          <li>Identification of conductors (particularly neutral and protective conductors)</li>
-          <li>Presence of diagrams, warning notices, and other information</li>
-          <li>Accessibility for operation, inspection, and maintenance</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">2. Testing Sequence</h3>
-        <p>
-          Tests must be carried out in the correct sequence:
-        </p>
-        <ol className="list-decimal pl-6 space-y-2 mt-2">
-          <li>Continuity of protective conductors</li>
-          <li>Continuity of ring final circuit conductors</li>
-          <li>Insulation resistance</li>
-          <li>Polarity</li>
-          <li>Earth electrode resistance (where applicable)</li>
-          <li>Earth fault loop impedance</li>
-          <li>RCD operation</li>
-          <li>Phase sequence (for three-phase installations)</li>
-          <li>Functional testing</li>
-        </ol>
-        
-        <h2 className="text-xl font-semibold mt-6">Certification</h2>
-        <p>
-          Upon successful completion of verification, the following documentation must be provided:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
+        <h3>Documentation Requirements</h3>
+        <ul>
           <li>Electrical Installation Certificate (EIC)</li>
-          <li>Schedule(s) of Inspections</li>
-          <li>Schedule(s) of Test Results</li>
-          <li>Any departures from the regulations (if applicable)</li>
-          <li>As-installed drawings and documentation</li>
+          <li>Schedule of Inspections</li>
+          <li>Schedule of Test Results</li>
+          <li>Distribution board schedules</li>
+          <li>Circuit charts and diagrams</li>
         </ul>
         
-        <h3 className="text-lg font-medium mt-4">Certification Requirements</h3>
-        <p>
-          The EIC must include:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Details of the client</li>
-          <li>Installation address</li>
-          <li>Description and extent of the installation covered</li>
-          <li>Declaration that the installation meets BS 7671</li>
-          <li>Details of any departures from BS 7671</li>
-          <li>Designer's, constructor's, and inspector's details and signatures</li>
-          <li>Next inspection recommendation date</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Safety Precautions</h2>
-        <p>
-          When carrying out initial verification, safety precautions must be observed:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Use appropriate PPE (personal protective equipment)</li>
-          <li>Ensure test equipment is suitable and properly calibrated</li>
-          <li>Take precautions against inadvertent contact with live parts</li>
-          <li>Inform all relevant persons before testing begins</li>
-          <li>Use safe isolation procedures when necessary</li>
-          <li>Follow the correct sequence of tests</li>
+        <h3>Inspector Qualifications</h3>
+        <p>Initial verification must be carried out by a skilled person with:</p>
+        <ul>
+          <li>Competence in inspection and testing techniques</li>
+          <li>Understanding of the installation being tested</li>
+          <li>Knowledge of potential hazards during testing</li>
+          <li>Experience in interpreting test results</li>
+          <li>Appropriate qualifications (e.g., City & Guilds 2391-50 or 2394)</li>
         </ul>
       </div>
-    ),
+    )
   },
   "1.2": {
     title: "Periodic Inspection Methodologies",
-    description: "Understanding the approaches and procedures for periodic inspection of electrical installations",
+    description: "Systematic approaches for conducting thorough periodic inspections",
     content: (
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Purpose of Periodic Inspection</h2>
-        <p>
-          Periodic inspection and testing is performed on existing electrical installations to ensure they remain in a satisfactory condition for continued use. The main objectives are:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Identify deterioration that may lead to dangerous conditions</li>
-          <li>Confirm compliance with current regulations or highlight deviations</li>
-          <li>Identify any defects or non-compliances that need remedial action</li>
-          <li>Provide documentation of the installation's condition</li>
-          <li>Determine suitability for continued use or changed circumstances</li>
+      <div className="prose prose-invert max-w-none">
+        <h2>Periodic Inspection Methodologies</h2>
+        
+        <p>Periodic inspection determines whether an existing installation is in a satisfactory condition for continued use.</p>
+        
+        <h3>Sampling Techniques</h3>
+        <ul>
+          <li>Statistical sampling for large installations</li>
+          <li>Risk-based approach focusing on high-risk areas</li>
+          <li>Age-related sampling for older components</li>
+          <li>Increased sample sizes where defects are found</li>
         </ul>
         
-        <h3 className="text-lg font-medium mt-4">Legal and Regulatory Requirements</h3>
-        <p>
-          Periodic inspection is mandated by various regulations:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Electricity at Work Regulations 1989, Regulation 4(2)</li>
-          <li>Management of Health and Safety at Work Regulations 1999</li>
-          <li>BS 7671 Requirements for Electrical Installations</li>
-          <li>Specific industry or sector requirements (e.g., IET Guidance Notes)</li>
-          <li>Insurance requirements</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Recommended Inspection Frequencies</h2>
-        <p>
-          The frequency of periodic inspection depends on the type of installation and environment:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Domestic premises: 10 years (5 years for rented properties)</li>
-          <li>Commercial premises: 5 years</li>
-          <li>Industrial premises: 3 years</li>
-          <li>Educational establishments: 5 years</li>
-          <li>Hospitals: 5 years</li>
-          <li>Construction sites: 3 months</li>
-          <li>Fire alarm and emergency lighting systems: 1 year</li>
-          <li>Swimming pools: 1 year</li>
-          <li>Caravan parks: 1 year</li>
-        </ul>
-        <p className="mt-2">
-          These frequencies may be adjusted based on risk assessment, equipment condition, usage patterns, and environmental factors.
-        </p>
-        
-        <h2 className="text-xl font-semibold mt-6">Planning the Inspection</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Pre-inspection Activities</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Review previous inspection records and documentation</li>
-          <li>Consult with the client about known issues or changes</li>
-          <li>Determine the extent and limitations of the inspection</li>
-          <li>Access arrangements for restricted areas</li>
-          <li>Risk assessment for the inspection process</li>
-          <li>Determine need for outages or isolations</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">Required Documentation</h3>
-        <p>
-          The following documentation should be requested and reviewed:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Previous Electrical Installation Condition Report (EICR)</li>
-          <li>Distribution board schedules</li>
-          <li>Circuit diagrams or descriptions</li>
-          <li>Specifications or as-built drawings</li>
-          <li>Operation and maintenance manuals</li>
-          <li>Records of alterations or additions</li>
-          <li>Records of known issues or problems</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Inspection Methodology</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Sampling Approach</h3>
-        <p>
-          Unlike initial verification, periodic inspection often uses a sampling approach:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>100% inspection of distribution equipment, protective devices, and critical areas</li>
-          <li>Representative sample of accessories (sockets, switches, lighting points)</li>
-          <li>Representative sample of similar circuits</li>
-          <li>Focus on high-risk areas (damp locations, mechanical damage exposure)</li>
-          <li>Increased sample size if defects are found</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">Visual Inspection Sequence</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>External condition of the installation (weathering, physical damage)</li>
-          <li>Main intake position and condition</li>
-          <li>Consumer unit/distribution boards</li>
-          <li>Circuit protective devices and their ratings</li>
-          <li>Adequacy of earthing and bonding arrangements</li>
-          <li>Cable types and condition</li>
-          <li>Accessible accessories and their condition</li>
-          <li>Signs of overheating, damage, or deterioration</li>
-          <li>Presence of adequate identification and warning notices</li>
-          <li>Changes to the building structure affecting the installation</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Testing Procedures</h2>
-        <p>
-          Testing during periodic inspection follows a specific sequence:
-        </p>
-        <ol className="list-decimal pl-6 space-y-2 mt-2">
-          <li>Dead tests (with supply disconnected):
-            <ul className="list-disc pl-6 mt-1">
-              <li>Continuity of protective conductors</li>
-              <li>Continuity of ring final circuit conductors (where applicable)</li>
-              <li>Insulation resistance</li>
-              <li>Site-applied insulation (where applicable)</li>
-              <li>Protection by electrical separation (where applicable)</li>
-            </ul>
-          </li>
-          <li>Live tests (with supply connected):
-            <ul className="list-disc pl-6 mt-1">
-              <li>Polarity</li>
-              <li>Earth fault loop impedance</li>
-              <li>RCD operation</li>
-              <li>Prospective fault current</li>
-              <li>Phase sequence (for three-phase installations)</li>
-              <li>Functional testing</li>
-            </ul>
-          </li>
+        <h3>Inspection Sequence</h3>
+        <ol>
+          <li>Review documentation and previous inspection reports</li>
+          <li>Discuss installation use with client</li>
+          <li>Visual inspection of accessible parts</li>
+          <li>Testing of protective measures</li>
+          <li>Assessment of risk categories for observed defects</li>
+          <li>Compilation of the Electrical Installation Condition Report (EICR)</li>
         </ol>
         
-        <h3 className="text-lg font-medium mt-4">Testing Limitations</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Customer requirements to maintain supply</li>
-          <li>Inaccessible parts of the installation</li>
-          <li>Operational constraints</li>
-          <li>Potential damage to sensitive electronic equipment</li>
-          <li>Health and safety considerations</li>
-        </ul>
-        <p className="mt-2">
-          All limitations must be clearly documented in the inspection report.
-        </p>
-        
-        <h2 className="text-xl font-semibold mt-6">Classification of Inspection Findings</h2>
-        <p>
-          Defects identified during inspection are classified according to their severity:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li><strong>C1 - Danger Present:</strong> Risk of injury. Immediate remedial action required</li>
-          <li><strong>C2 - Potentially Dangerous:</strong> Urgent remedial action required</li>
-          <li><strong>C3 - Improvement Recommended:</strong> Not dangerous but improvement would enhance safety</li>
-          <li><strong>FI - Further Investigation:</strong> Further investigation required without delay</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Reporting and Documentation</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Electrical Installation Condition Report (EICR)</h3>
-        <p>
-          The EICR must include:
-        </p>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Details and location of the installation</li>
-          <li>Extent and limitations of the inspection</li>
-          <li>Schedule of inspection findings</li>
-          <li>Schedule of test results</li>
-          <li>Summary of defects and classification</li>
-          <li>Overall assessment of the installation's condition</li>
-          <li>Recommendation for next inspection</li>
-          <li>Declaration signed by the inspector</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">Follow-up Actions</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Clear communication of findings to the client</li>
-          <li>Immediate notification of dangerous conditions (C1)</li>
-          <li>Written quotation for remedial work if requested</li>
-          <li>Scheduling of further investigations where required</li>
-          <li>Documentation of any remedial work carried out</li>
-          <li>Re-inspection after significant remedial work</li>
+        <h3>Limitations of Inspection</h3>
+        <ul>
+          <li>Extent and limitations must be agreed with client</li>
+          <li>Areas not accessible should be clearly documented</li>
+          <li>Reasons for limitations should be recorded</li>
+          <li>Impact of limitations on safety assessment</li>
         </ul>
       </div>
-    ),
+    )
   },
   "1.3": {
     title: "Common Installation Defects",
-    description: "Identifying and understanding common defects found during electrical inspections",
+    description: "Identifying and classifying typical defects found during inspections",
     content: (
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Categories of Common Electrical Defects</h2>
-        <p>
-          Electrical installations can develop various defects over time due to wear, damage, improper installation, or changes in regulations. Recognizing these defects is essential for ensuring safety and compliance.
-        </p>
+      <div className="prose prose-invert max-w-none">
+        <h2>Common Installation Defects</h2>
         
-        <h3 className="text-lg font-medium mt-4">Earthing and Bonding Defects</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Undersized main earthing conductor</li>
-          <li>Missing or inadequate main equipotential bonding</li>
-          <li>Loose connections at earthing terminal or clamps</li>
-          <li>Painted, corroded, or damaged earthing connections</li>
-          <li>Non-compliant earth electrode arrangements</li>
-          <li>Missing supplementary bonding in special locations</li>
-          <li>High earth loop impedance values</li>
+        <p>Inspections frequently reveal certain types of defects that compromise safety or compliance.</p>
+        
+        <h3>Dangerous Defects (Code C1)</h3>
+        <ul>
+          <li>Exposed live parts accessible to touch</li>
+          <li>Absence of earthing for metal parts</li>
+          <li>Incorrect polarity</li>
+          <li>Damaged insulation exposing conductors</li>
+          <li>Water ingress near electrical equipment</li>
         </ul>
         
-        <h3 className="text-lg font-medium mt-4">Consumer Unit/Distribution Board Issues</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Wooden backing panels (fire risk)</li>
-          <li>Non-compliant metal consumer units (pre-Amendment 3)</li>
-          <li>Inadequate IP rating for the environment</li>
-          <li>Incorrect protective device ratings</li>
-          <li>Missing or damaged blanking pieces</li>
-          <li>Loose connections causing heat damage</li>
-          <li>Inadequate working space in front of boards</li>
-          <li>Incorrectly identified circuits</li>
-          <li>Absence of RCD protection where required</li>
-          <li>Mixed neutral/earth connections in the neutral bar</li>
+        <h3>Potentially Dangerous Defects (Code C2)</h3>
+        <ul>
+          <li>Inadequate IP ratings for location</li>
+          <li>Broken accessories with no immediate exposure</li>
+          <li>Overloaded circuits</li>
+          <li>Missing identification labels</li>
+          <li>Improperly secured equipment or cables</li>
+          <li>Unsatisfactory earthing arrangements</li>
         </ul>
         
-        <h2 className="text-xl font-semibold mt-6">Wiring System Defects</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Cable Issues</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Damaged cable insulation or sheathing</li>
-          <li>Exposed conductors</li>
-          <li>Undersized conductors for current carrying capacity</li>
-          <li>Excessive voltage drop</li>
-          <li>Cables not adequately supported</li>
-          <li>Non-compliant cable colors (old/mixed color codes)</li>
-          <li>Cables run in notches in joists without mechanical protection</li>
-          <li>Excessive bending radii causing damage</li>
-          <li>Use of non-compliant cables (e.g., unsuitable for location)</li>
+        <h3>Improvement Recommended (Code C3)</h3>
+        <ul>
+          <li>Lack of RCD protection (in some circumstances)</li>
+          <li>Outdated but safe equipment</li>
+          <li>Non-compliance with current regulations but acceptable under previous regulations</li>
+          <li>Minor deviations from current best practice</li>
         </ul>
         
-        <h3 className="text-lg font-medium mt-4">Containment System Problems</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Damaged trunking or conduit</li>
-          <li>Inadequate support for containment systems</li>
-          <li>Missing glands or bushes at entries to enclosures</li>
-          <li>Non-continuous protective conductor in metallic containment</li>
-          <li>Inadequate fire barriers at penetrations</li>
-          <li>Overfilled containment systems</li>
-          <li>Incompatible materials causing corrosion</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Accessory and Equipment Defects</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Socket Outlet and Switch Issues</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Cracked or damaged faceplates</li>
-          <li>Loose mounting causing movement</li>
-          <li>Overheating due to loose connections</li>
-          <li>Incorrect IP rating for the location</li>
-          <li>Missing or damaged operational parts</li>
-          <li>Non-compliant locations (e.g., too close to water)</li>
-          <li>Inadequate RCD protection for outdoor sockets</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">Lighting Installation Problems</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Inadequate clearance from combustible materials</li>
-          <li>Missing lamp covers or diffusers</li>
-          <li>Incorrect lamp types or wattages</li>
-          <li>Damaged pendant sets or lampholders</li>
-          <li>Recessed downlights without appropriate fire rating</li>
-          <li>Missing covers on junction boxes</li>
-          <li>Inadequate support for luminaires</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Protection Device Defects</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Circuit Breaker and Fuse Issues</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Incorrect type for the application</li>
-          <li>Wrong rating for the conductor size or load</li>
-          <li>Damaged or modified devices</li>
-          <li>Evidence of overheating</li>
-          <li>Non-approved/counterfeit devices</li>
-          <li>Inadequate breaking capacity for prospective fault current</li>
-          <li>Mixed types within the same consumer unit</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">RCD and RCBO Defects</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Failure to trip within required time</li>
-          <li>Incorrect sensitivity for the application</li>
-          <li>Missing RCD protection where required by regulations</li>
-          <li>Nuisance tripping due to leakage currents</li>
-          <li>RCDs affected by neutral-earth faults</li>
-          <li>Inappropriate RCD type for the load characteristics</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Special Installation Defects</h2>
-        
-        <h3 className="text-lg font-medium mt-4">Bathroom Installation Issues</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Electrical equipment within incorrect zones</li>
-          <li>Missing supplementary bonding (if required)</li>
-          <li>Inadequate IP ratings for accessories</li>
-          <li>Non-compliant electric heating installations</li>
-          <li>Lack of required RCD protection</li>
-          <li>Inappropriate isolating switches</li>
-        </ul>
-        
-        <h3 className="text-lg font-medium mt-4">Outdoor Installation Problems</h3>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Inadequate IP ratings for external equipment</li>
-          <li>Missing RCD protection</li>
-          <li>Cable installation depth insufficient</li>
-          <li>Missing or damaged cable warning tape/tiles</li>
-          <li>Degradation of equipment due to UV exposure</li>
-          <li>Inadequate protection against corrosion</li>
-          <li>Incorrect cable types for external use</li>
-        </ul>
-        
-        <h2 className="text-xl font-semibold mt-6">Documentation and Labelling Defects</h2>
-        <ul className="list-disc pl-6 space-y-2 mt-2">
-          <li>Missing or incomplete circuit charts</li>
-          <li>Absence of required warning notices</li>
-          <li>No RCD periodic test notice</li>
-          <li>Missing next test due labels</li>
-          <li>No isolation procedure information</li>
-          <li>Absence of voltage warning labels</li>
-          <li>No identification of dual supply sources</li>
-          <li>Missing earthing/bonding labels</li>
-          <li>Absence of certification for previous work</li>
+        <h3>Documentation and Reporting</h3>
+        <p>Each defect must be:</p>
+        <ul>
+          <li>Accurately recorded on the EICR</li>
+          <li>Correctly classified according to risk</li>
+          <li>Located precisely for future rectification</li>
+          <li>Photographed where possible for evidence</li>
         </ul>
       </div>
-    ),
+    )
+  },
+  "2.1": {
+    title: "Continuity and Insulation Resistance Testing",
+    description: "Techniques and procedures for testing circuit continuity and insulation integrity",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>Continuity and Insulation Resistance Testing</h2>
+        
+        <h3>Continuity Testing</h3>
+        <p>Tests to verify the integrity of protective conductors and ring final circuits.</p>
+        
+        <h4>Protective Conductor Continuity</h4>
+        <ul>
+          <li>Test between main earthing terminal and exposed conductive parts</li>
+          <li>Low resistance indicates good connection (typically &lt;0.05Ω)</li>
+          <li>Test current: minimum 200mA</li>
+          <li>Account for test lead resistance</li>
+          <li>R₁+R₂ values needed for fault protection verification</li>
+        </ul>
+        
+        <h4>Ring Final Circuit Continuity</h4>
+        <ul>
+          <li>End-to-end test of each conductor (L-L, N-N, PE-PE)</li>
+          <li>Cross-connection test (L-N, L-PE, N-PE)</li>
+          <li>Calculations to verify uniform resistance distribution</li>
+          <li>Identify any interconnections or breaks</li>
+        </ul>
+        
+        <h3>Insulation Resistance Testing</h3>
+        
+        <h4>Test Procedure</h4>
+        <ul>
+          <li>Disconnect sensitive electronic equipment</li>
+          <li>Test voltage: 250V for SELV/PELV, 500V for up to 500V installations</li>
+          <li>Test between live conductors and between all live conductors and PE</li>
+          <li>Minimum acceptable values: 1MΩ for circuits up to 500V</li>
+          <li>Higher values expected in new installations (typically &gt;200MΩ)</li>
+        </ul>
+        
+        <h4>Common Issues</h4>
+        <ul>
+          <li>Low readings due to moisture ingress</li>
+          <li>Parallel paths through connected equipment</li>
+          <li>Surge protection devices affecting readings</li>
+          <li>Electronic components requiring disconnection</li>
+          <li>Neutral linked to earth at distribution board</li>
+        </ul>
+      </div>
+    )
+  },
+  "2.2": {
+    title: "Earth Fault Loop Impedance Testing",
+    description: "Methods for measuring and assessing earth fault loop impedance",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>Earth Fault Loop Impedance Testing</h2>
+        
+        <p>Earth fault loop impedance testing verifies that protective devices will operate within required disconnection times.</p>
+        
+        <h3>Testing Methods</h3>
+        
+        <h4>Ze - External Earth Fault Loop Impedance</h4>
+        <ul>
+          <li>Measured at origin of installation (consumer unit/distribution board)</li>
+          <li>Test between phase conductor and protective conductor at main earthing terminal</li>
+          <li>Typical values: TN-C-S (PME) systems: around 0.35Ω, TT systems: up to 200Ω</li>
+          <li>Values should be less than tabulated maximum values for protective device</li>
+        </ul>
+        
+        <h4>Zs - Circuit Earth Fault Loop Impedance</h4>
+        <ul>
+          <li>Measured at furthest point of each circuit</li>
+          <li>Test between phase conductor and protective conductor</li>
+          <li>Values must be below maximum permitted for protective device type and rating</li>
+          <li>Measured value should include R₁+R₂ (circuit resistance) plus Ze</li>
+        </ul>
+        
+        <h3>Test Considerations</h3>
+        <ul>
+          <li>Safe testing methods - avoid disconnecting circuit protective conductors</li>
+          <li>Temperature correction factors (measured at 20°C, operating at higher temperatures)</li>
+          <li>RCD presence may require special test settings</li>
+          <li>Supply voltage fluctuations affecting readings</li>
+          <li>Documentation of all measured values for verification against calculated values</li>
+        </ul>
+        
+        <h3>Verification Against Design Values</h3>
+        <ul>
+          <li>Comparing measured values with maximum permitted values</li>
+          <li>Applying required correction factors</li>
+          <li>Assessment of compliance with BS 7671 disconnection times</li>
+          <li>Evaluating need for supplementary bonding if values are too high</li>
+        </ul>
+      </div>
+    )
+  },
+  "2.3": {
+    title: "RCD Testing and Polarity Checks",
+    description: "Procedures for testing RCD operation and verifying correct polarity",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>RCD Testing and Polarity Checks</h2>
+        
+        <h3>RCD Testing</h3>
+        
+        <h4>Test Requirements</h4>
+        <ul>
+          <li>Test using purpose-designed RCD tester</li>
+          <li>Verify that RCD trips within specified time at rated operating current</li>
+          <li>Standard RCDs: must trip within 300ms at rated current (30mA, 100mA, etc.)</li>
+          <li>S-type (time-delayed) RCDs: must trip between 130ms and 500ms at rated current</li>
+          <li>Fast-acting RCDs for additional protection: must trip within 40ms at rated current</li>
+        </ul>
+        
+        <h4>Test Procedure</h4>
+        <ol>
+          <li>Test at 50% rated current (no trip should occur)</li>
+          <li>Test at 100% rated current (must trip within specified time)</li>
+          <li>Test at 5× rated current (must trip within 40ms for general RCDs)</li>
+          <li>Test both 0° and 180° phase angles</li>
+          <li>Record worst-case trip time</li>
+          <li>Verify manual test button operation</li>
+        </ol>
+        
+        <h3>Polarity Checks</h3>
+        
+        <h4>Importance of Polarity Testing</h4>
+        <ul>
+          <li>Ensures single-pole devices interrupt the line conductor</li>
+          <li>Verifies that Edison screw lampholders have line connected to center contact</li>
+          <li>Confirms correct connection of switched lines</li>
+          <li>Prevents neutral-earth reversal hazards</li>
+        </ul>
+        
+        <h4>Testing Methods</h4>
+        <ul>
+          <li>Visual verification during installation</li>
+          <li>Continuity testing to verify line connections</li>
+          <li>Voltage indicator to confirm line/neutral identification</li>
+          <li>Testing at every relevant point in the installation</li>
+          <li>Special attention to switched connections</li>
+        </ul>
+        
+        <h4>Common Polarity Faults</h4>
+        <ul>
+          <li>Reversed connections in socket outlets</li>
+          <li>Incorrect connections in consumer units/distribution boards</li>
+          <li>Switched neutral instead of line</li>
+          <li>Two-way switching wiring errors</li>
+          <li>Incorrect identification of conductors in multi-core cables</li>
+        </ul>
+      </div>
+    )
+  },
+  "3.1": {
+    title: "Pre-commissioning Checks",
+    description: "Critical checks required before energizing electrical installations",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>Pre-commissioning Checks</h2>
+        
+        <p>Thorough checks before energizing an electrical installation are essential to ensure safety and compliance.</p>
+        
+        <h3>Documentation Review</h3>
+        <ul>
+          <li>Verification that design documentation is complete</li>
+          <li>Check that all certification for equipment is available</li>
+          <li>Review risk assessments and method statements</li>
+          <li>Ensure all required permissions are in place</li>
+          <li>Verify that installation complies with specification</li>
+        </ul>
+        
+        <h3>Visual Inspection</h3>
+        <ul>
+          <li>Confirmation that all equipment is correctly installed</li>
+          <li>Check for physical damage to equipment</li>
+          <li>Verification of cable types and sizes</li>
+          <li>Assessment of protection against environmental factors</li>
+          <li>Check that all accessories are properly fixed</li>
+          <li>Verify that all connections are secure</li>
+        </ul>
+        
+        <h3>Safety Measures</h3>
+        <ul>
+          <li>Ensure all required warning notices are in place</li>
+          <li>Verify presence of fire barriers and seals</li>
+          <li>Check provision of protective equipment</li>
+          <li>Confirm emergency procedures are established</li>
+          <li>Verify isolation procedures are documented</li>
+        </ul>
+        
+        <h3>Pre-power Checks</h3>
+        <ul>
+          <li>Verification of correct phasing</li>
+          <li>Confirmation that equipment is ready for energization</li>
+          <li>Check that all temporary installations are removed</li>
+          <li>Ensure all covers and safety devices are in place</li>
+          <li>Final visual inspection before energization</li>
+        </ul>
+      </div>
+    )
+  },
+  "3.2": {
+    title: "Functional Testing Procedures",
+    description: "Methods for testing the functionality of electrical systems after installation",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>Functional Testing Procedures</h2>
+        
+        <p>Functional testing verifies that all installed systems operate correctly and as intended.</p>
+        
+        <h3>Sequence of Functional Tests</h3>
+        <ol>
+          <li>Systematic powering up of circuits in sequence</li>
+          <li>Testing of each circuit under load conditions</li>
+          <li>Verification of operation of all switching devices</li>
+          <li>Testing of protective devices by simulation where necessary</li>
+          <li>Operational testing of all equipment and systems</li>
+        </ol>
+        
+        <h3>Testing Specific Systems</h3>
+        
+        <h4>Lighting Systems</h4>
+        <ul>
+          <li>Verification of switching arrangements</li>
+          <li>Testing of dimmers and controls</li>
+          <li>Check for correct lamp types and ratings</li>
+          <li>Verification of emergency lighting operation</li>
+          <li>Testing of automatic control systems (sensors, timers)</li>
+        </ul>
+        
+        <h4>Power Systems</h4>
+        <ul>
+          <li>Load testing of socket outlets</li>
+          <li>Verification of fixed equipment operation</li>
+          <li>Testing of interlocks and safety systems</li>
+          <li>Verification of motor rotation and operation</li>
+          <li>Testing of special installations (e.g., heating systems)</li>
+        </ul>
+        
+        <h4>Control Systems</h4>
+        <ul>
+          <li>Testing of control circuits and interfaces</li>
+          <li>Verification of programmable controls</li>
+          <li>Testing of monitoring systems</li>
+          <li>Verification of alarm functions</li>
+          <li>Testing of remote control capabilities</li>
+        </ul>
+        
+        <h3>Documentation of Tests</h3>
+        <ul>
+          <li>Recording of all test results</li>
+          <li>Documentation of any deviations from expected performance</li>
+          <li>Listing of any adjustments made during testing</li>
+          <li>Verification of client requirements being met</li>
+          <li>Sign-off by responsible person</li>
+        </ul>
+      </div>
+    )
+  },
+  "3.3": {
+    title: "Documentation and Certification",
+    description: "Required documentation for compliant electrical installations",
+    content: (
+      <div className="prose prose-invert max-w-none">
+        <h2>Documentation and Certification</h2>
+        
+        <p>Proper documentation is essential for regulatory compliance and future reference.</p>
+        
+        <h3>Required Documentation</h3>
+        <ul>
+          <li><strong>Electrical Installation Certificate (EIC)</strong> - For new installations or major alterations</li>
+          <li><strong>Minor Electrical Installation Works Certificate (MEIWC)</strong> - For small additions to existing installations</li>
+          <li><strong>Schedule of Test Results</strong> - Recording all measured values</li>
+          <li><strong>Schedule of Inspections</strong> - Checklist of visual inspection items</li>
+          <li><strong>Electrical Installation Condition Report (EICR)</strong> - For periodic inspection</li>
+          <li><strong>As-built drawings</strong> - Updated schematics showing actual installation</li>
+          <li><strong>Operation and maintenance manuals</strong> - For installed equipment</li>
+        </ul>
+        
+        <h3>Certificate Contents</h3>
+        <ul>
+          <li>Details of client and installation address</li>
+          <li>Description of work carried out</li>
+          <li>Design, construction, and inspection/testing declarations</li>
+          <li>Details of departures from standards (if any)</li>
+          <li>Next inspection recommendation date</li>
+          <li>Details of signatories (designer, constructor, inspector/tester)</li>
+        </ul>
+        
+        <h3>Additional Documentation</h3>
+        <ul>
+          <li>Risk assessments</li>
+          <li>Method statements</li>
+          <li>Commissioning records</li>
+          <li>Distribution board schedules</li>
+          <li>Manufacturer's instructions and warranties</li>
+          <li>Special location certificates (e.g., bathroom zones, swimming pools)</li>
+        </ul>
+        
+        <h3>Documentation Management</h3>
+        <ul>
+          <li>Secure storage of original documentation</li>
+          <li>Provision of copies to client/building owner</li>
+          <li>Electronic backup of documentation where possible</li>
+          <li>Clear organization for easy future reference</li>
+          <li>Compliance with retention requirements</li>
+        </ul>
+      </div>
+    )
   },
 };

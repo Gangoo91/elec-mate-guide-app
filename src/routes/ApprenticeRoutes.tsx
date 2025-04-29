@@ -16,13 +16,15 @@ import Level2Unit204Page from "../pages/Level2Unit204Page";
 import Level2Unit210Page from "../pages/Level2Unit210Page";
 import Level3Unit301Page from "../pages/Level3Unit301Page";
 import Level3Unit302Page from "../pages/Level3Unit302Page";
-import Level3Unit303Page from "../pages/Level3Unit303Page"; // Import the Unit 303 page
+import Level3Unit303Page from "../pages/Level3Unit303Page"; 
+import Level3Unit304Page from "../pages/Level3Unit304Page"; // Import the Unit 304 page
 import Unit302SectionPage from "../pages/units/Unit302SectionPage";
-import Unit303SectionPage from "../pages/units/Unit303SectionPage"; // Import the Unit 303 section page
+import Unit303SectionPage from "../pages/units/Unit303SectionPage"; 
+import Unit304SectionPage from "../pages/units/Unit304SectionPage"; // Import the Unit 304 section page
 import PracticeExamsPage from "../pages/PracticeExamsPage";
 import Level3Unit302AssessmentPage from "../pages/Level3Unit302AssessmentPage";
-import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage"; // Import the new assessment page
-import LearningHubPage from "../pages/LearningHubPage"; // Import the learning hub page
+import Level3Unit303AssessmentPage from "../pages/Level3Unit303AssessmentPage";
+import LearningHubPage from "../pages/LearningHubPage";
 
 const ApprenticeRoutes: RouteObject[] = [
   {
@@ -34,7 +36,7 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <ApprenticeDashboardPage />,
   },
   {
-    path: "/apprentices/learning-hub", // Add the learning hub route
+    path: "/apprentices/learning-hub",
     element: <LearningHubPage />,
   },
   {
@@ -102,12 +104,20 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level3Unit303Page />,
   },
   {
+    path: "/apprentices/study-materials/city-guilds/level-3/304",
+    element: <Level3Unit304Page />,
+  },
+  {
     path: "/apprentices/study-materials/city-guilds/level-3/302/:sectionId",
     element: <Unit302SectionPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3/303/:sectionId",
     element: <Unit303SectionPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-3/304/:sectionId",
+    element: <Unit304SectionPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3/302/assessment",
