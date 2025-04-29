@@ -11,57 +11,74 @@ export const unit305: UnitContent = {
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="1.1 Client Requirements Analysis"
+            title="1.1 Electrical Installation Design Principles"
+            description="Understanding how to plan circuits and choose supply arrangements"
             path="/apprentices/study-materials/city-guilds/level-3/305/1.1"
           />
-          <SectionContent 
-            title="1.2 Regulatory Constraints"
-            path="/apprentices/study-materials/city-guilds/level-3/305/1.2"
-          />
-          <SectionContent 
-            title="1.3 Safety and Energy Efficiency Considerations"
-            path="/apprentices/study-materials/city-guilds/level-3/305/1.3"
-          />
         </div>
       ),
     },
     {
-      title: "2. Load Calculations",
+      title: "2. Selection of Electrical Equipment",
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="2.1 Diversity Factors and Maximum Demand"
+            title="2.1 Selection of Electrical Equipment"
+            description="Guidelines for selecting appropriate protective devices, cables, and accessories"
             path="/apprentices/study-materials/city-guilds/level-3/305/2.1"
           />
+        </div>
+      ),
+    },
+    {
+      title: "3. Cable Sizing and Protection",
+      content: (
+        <div className="space-y-6">
           <SectionContent 
-            title="2.2 Cable Sizing Calculations"
-            path="/apprentices/study-materials/city-guilds/level-3/305/2.2"
-          />
-          <SectionContent 
-            title="2.3 Voltage Drop Considerations"
-            path="/apprentices/study-materials/city-guilds/level-3/305/2.3"
+            title="3.1 Cable Sizing and Protection"
+            description="Methods for calculating current-carrying capacity, voltage drop, and protection"
+            path="/apprentices/study-materials/city-guilds/level-3/305/3.1"
           />
         </div>
       ),
     },
     {
-      title: "3. Circuit Planning",
+      title: "4. Discrimination and Coordination",
       content: (
         <div className="space-y-6">
           <SectionContent 
-            title="3.1 Consumer Unit Arrangements"
-            path="/apprentices/study-materials/city-guilds/level-3/305/3.1"
+            title="4.1 Discrimination and Coordination"
+            description="Principles of protective device coordination and nuisance tripping prevention"
+            path="/apprentices/study-materials/city-guilds/level-3/305/4.1"
           />
+        </div>
+      ),
+    },
+    {
+      title: "5. Earthing and Bonding",
+      content: (
+        <div className="space-y-6">
           <SectionContent 
-            title="3.2 Circuit Segregation"
-            path="/apprentices/study-materials/city-guilds/level-3/305/3.2"
+            title="5.1 Earthing and Bonding"
+            description="Requirements for main protective bonding and supplementary bonding"
+            path="/apprentices/study-materials/city-guilds/level-3/305/5.1"
           />
+        </div>
+      ),
+    },
+    {
+      title: "6. Health and Safety and Building Regulations",
+      content: (
+        <div className="space-y-6">
           <SectionContent 
-            title="3.3 Protection Device Selection"
-            path="/apprentices/study-materials/city-guilds/level-3/305/3.3"
+            title="6.1 Health and Safety and Building Regulations"
+            description="Regulatory requirements for electrical installations"
+            path="/apprentices/study-materials/city-guilds/level-3/305/6.1"
           />
         </div>
       ),
     }
   ],
 };
+
+export default unit305;
