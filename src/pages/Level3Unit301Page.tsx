@@ -85,7 +85,7 @@ const Level3Unit301Page = () => {
     navigate(`/apprentices/study-materials/city-guilds/level-3/301/${sectionId}`);
   };
 
-  // Take quiz function
+  // Take quiz function - FIXED: now this correctly navigates to the assessment page
   const handleTakeQuiz = () => {
     navigate('/apprentices/study-materials/city-guilds/level-3/301/assessment');
   };
