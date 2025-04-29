@@ -47,7 +47,7 @@ const Level3CoreUnitsPage = () => {
   };
 
   const handleUnitClick = (unitId: string) => {
-    if (unitId === "301" || unitId === "302") {
+    if (unitId === "301" || unitId === "302" || unitId === "303") {
       navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
     } else {
       navigate(`/apprentices/study-materials/city-guilds/level-3/core-units/${unitId}`);
