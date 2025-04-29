@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ClipboardCheck, Eye, FileCheck, TestTube } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Eye, FileCheck, TestTube, FileText } from "lucide-react";
 import SectionGroup from "@/components/units/level3/SectionGroup";
 import { unit304 } from "@/data/units/unit304";
 
@@ -27,67 +27,71 @@ const Level3Unit304Page = () => {
   const sections = [
     {
       number: "1",
-      title: "Initial Verification Procedures",
+      title: "Understand Initial Verification Procedures",
       icon: <ClipboardCheck className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "1.1",
-          title: "Initial Verification Requirements",
+          title: "Initial Verification Procedures",
           description: "Understanding essential verification procedures before commissioning electrical installations",
-        },
-        {
-          id: "1.2",
-          title: "Periodic Inspection Methodologies",
-          description: "Systematic approaches for conducting thorough periodic inspections",
-        },
-        {
-          id: "1.3",
-          title: "Common Installation Defects",
-          description: "Identifying and classifying typical defects found during inspections",
         }
       ]
     },
     {
       number: "2",
-      title: "Testing Techniques",
-      icon: <TestTube className="h-6 w-6 text-[#FFC900]" />,
+      title: "Understand How to Perform Inspection Activities",
+      icon: <Eye className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
-          id: "2.1",
-          title: "Continuity and Insulation Resistance Testing",
-          description: "Techniques and procedures for testing circuit continuity and insulation integrity",
-        },
-        {
-          id: "2.2",
-          title: "Earth Fault Loop Impedance Testing",
-          description: "Methods for measuring and assessing earth fault loop impedance",
-        },
-        {
-          id: "2.3",
-          title: "RCD Testing and Polarity Checks",
-          description: "Procedures for testing RCD operation and verifying correct polarity",
+          id: "1.2",
+          title: "Visual Inspection Procedures",
+          description: "Systematic approaches for conducting thorough visual inspections",
         }
       ]
     },
     {
       number: "3",
-      title: "Commissioning Process",
-      icon: <FileCheck className="h-6 w-6 text-[#FFC900]" />,
+      title: "Understand How to Perform Testing Procedures",
+      icon: <TestTube className="h-6 w-6 text-[#FFC900]" />,
+      sections: [
+        {
+          id: "2.1",
+          title: "Dead Testing Procedures",
+          description: "Techniques and procedures for testing de-energized circuits",
+        },
+        {
+          id: "2.2",
+          title: "Live Testing Procedures",
+          description: "Methods for testing energized circuits safely and effectively",
+        }
+      ]
+    },
+    {
+      number: "4",
+      title: "Understand How to Record Results and Documentation",
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
       sections: [
         {
           id: "3.1",
-          title: "Pre-commissioning Checks",
-          description: "Critical checks required before energizing electrical installations",
-        },
+          title: "Documentation and Certification",
+          description: "Required documentation for compliant electrical installations",
+        }
+      ]
+    },
+    {
+      number: "5",
+      title: "Commissioning the Installation",
+      icon: <FileCheck className="h-6 w-6 text-[#FFC900]" />,
+      sections: [
         {
           id: "3.2",
-          title: "Functional Testing Procedures",
-          description: "Methods for testing the functionality of electrical systems after installation",
+          title: "Commissioning Process",
+          description: "Final verification and handover procedures for electrical installations",
         },
         {
           id: "3.3",
-          title: "Documentation and Certification",
-          description: "Required documentation for compliant electrical installations",
+          title: "Assessment Preparation",
+          description: "Preparing for assessment on Unit 304 content",
         }
       ]
     }
@@ -197,3 +201,4 @@ const Level3Unit304Page = () => {
 };
 
 export default Level3Unit304Page;
+

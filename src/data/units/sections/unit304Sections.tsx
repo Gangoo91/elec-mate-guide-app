@@ -10,11 +10,11 @@ export const sections304: Record<string, {
   detailedContent?: React.ReactNode;
 }> = {
   "1.1": {
-    title: "Initial Verification Requirements",
-    description: "Understanding essential verification procedures before commissioning electrical installations",
+    title: "1. Understand Initial Verification Procedures",
+    description: "Essential verification procedures before commissioning electrical installations",
     content: (
       <div className="space-y-6">
-        <LessonContent title="Initial Verification Requirements">
+        <LessonContent title="Initial Verification Procedures">
           <p>Initial verification is a crucial step in ensuring that new electrical installations comply with regulations and are safe to use.</p>
           
           <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Key Requirements for Initial Verification</h3>
@@ -62,92 +62,8 @@ export const sections304: Record<string, {
     )
   },
   "1.2": {
-    title: "Periodic Inspection Methodologies",
-    description: "Systematic approaches for conducting thorough periodic inspections",
-    content: (
-      <div className="space-y-6">
-        <LessonContent title="Periodic Inspection Methodologies">
-          <p>Periodic inspection determines whether an existing installation is in a satisfactory condition for continued use.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Sampling Techniques</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Statistical sampling for large installations</li>
-            <li>Risk-based approach focusing on high-risk areas</li>
-            <li>Age-related sampling for older components</li>
-            <li>Increased sample sizes where defects are found</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Inspection Sequence</h3>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>Review documentation and previous inspection reports</li>
-            <li>Discuss installation use with client</li>
-            <li>Visual inspection of accessible parts</li>
-            <li>Testing of protective measures</li>
-            <li>Assessment of risk categories for observed defects</li>
-            <li>Compilation of the Electrical Installation Condition Report (EICR)</li>
-          </ol>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Limitations of Inspection</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Extent and limitations must be agreed with client</li>
-            <li>Areas not accessible should be clearly documented</li>
-            <li>Reasons for limitations should be recorded</li>
-            <li>Impact of limitations on safety assessment</li>
-          </ul>
-        </LessonContent>
-      </div>
-    )
-  },
-  "1.3": {
-    title: "Common Installation Defects",
-    description: "Identifying and classifying typical defects found during inspections",
-    content: (
-      <div className="space-y-6">
-        <LessonContent title="Common Installation Defects">
-          <p>Inspections frequently reveal certain types of defects that compromise safety or compliance.</p>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Dangerous Defects (Code C1)</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Exposed live parts accessible to touch</li>
-            <li>Absence of earthing for metal parts</li>
-            <li>Incorrect polarity</li>
-            <li>Damaged insulation exposing conductors</li>
-            <li>Water ingress near electrical equipment</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Potentially Dangerous Defects (Code C2)</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Inadequate IP ratings for location</li>
-            <li>Broken accessories with no immediate exposure</li>
-            <li>Overloaded circuits</li>
-            <li>Missing identification labels</li>
-            <li>Improperly secured equipment or cables</li>
-            <li>Unsatisfactory earthing arrangements</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Improvement Recommended (Code C3)</h3>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Lack of RCD protection (in some circumstances)</li>
-            <li>Outdated but safe equipment</li>
-            <li>Non-compliance with current regulations but acceptable under previous regulations</li>
-            <li>Minor deviations from current best practice</li>
-          </ul>
-          
-          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Documentation and Reporting</h3>
-          <p>Each defect must be:</p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Accurately recorded on the EICR</li>
-            <li>Correctly classified according to risk</li>
-            <li>Located precisely for future rectification</li>
-            <li>Photographed where possible for evidence</li>
-          </ul>
-        </LessonContent>
-      </div>
-    )
-  },
-  "2.1": {
-    title: "Continuity and Insulation Resistance Testing",
-    description: "Techniques and procedures for testing circuit continuity and insulation integrity",
+    title: "2. Understand How to Perform Inspection Activities",
+    description: "Systematic approaches for conducting thorough visual inspections",
     content: (
       <div className="space-y-6">
         <LessonContent title="Visual Inspection Procedures">
@@ -196,12 +112,26 @@ export const sections304: Record<string, {
             <li>Check accessibility requirements are met</li>
           </ul>
         </LessonContent>
+        
+        <ContentSection
+          title="Common Installation Defects"
+          content={
+            <div>
+              <p className="font-medium">Inspections frequently reveal certain types of defects that compromise safety or compliance:</p>
+              <ul className="list-disc pl-6 space-y-2 mt-3">
+                <li><strong>Dangerous Defects (Code C1):</strong> Exposed live parts, absence of earthing, incorrect polarity</li>
+                <li><strong>Potentially Dangerous Defects (Code C2):</strong> Inadequate IP ratings, broken accessories, overloaded circuits</li>
+                <li><strong>Improvement Recommended (Code C3):</strong> Lack of RCD protection (in some cases), outdated but safe equipment</li>
+              </ul>
+            </div>
+          }
+        />
       </div>
     )
   },
-  "2.2": {
-    title: "Earth Fault Loop Impedance Testing",
-    description: "Methods for measuring and assessing earth fault loop impedance",
+  "2.1": {
+    title: "3. Understand How to Perform Testing Procedures (Part 1)",
+    description: "Dead testing procedures for electrical installations",
     content: (
       <div className="space-y-6">
         <LessonContent title="Dead Testing Procedures">
@@ -263,9 +193,9 @@ export const sections304: Record<string, {
       </div>
     )
   },
-  "2.3": {
-    title: "RCD Testing and Polarity Checks",
-    description: "Procedures for testing RCD operation and verifying correct polarity",
+  "2.2": {
+    title: "3. Understand How to Perform Testing Procedures (Part 2)",
+    description: "Live testing procedures for electrical installations",
     content: (
       <div className="space-y-6">
         <LessonContent title="Live Testing Procedures">
@@ -339,8 +269,8 @@ export const sections304: Record<string, {
     )
   },
   "3.1": {
-    title: "Pre-commissioning Checks",
-    description: "Critical checks required before energizing electrical installations",
+    title: "4. Understand How to Record Inspection and Testing Results",
+    description: "Documentation and certification requirements for electrical installations",
     content: (
       <div className="space-y-6">
         <LessonContent title="Documentation and Certification">
@@ -454,8 +384,8 @@ export const sections304: Record<string, {
     )
   },
   "3.2": {
-    title: "Functional Testing Procedures",
-    description: "Methods for testing the functionality of electrical systems after installation",
+    title: "5. Commissioning the Installation",
+    description: "Final verification and handover procedures for electrical installations",
     content: (
       <div className="space-y-6">
         <LessonContent title="Commissioning Process">
@@ -531,8 +461,8 @@ export const sections304: Record<string, {
     )
   },
   "3.3": {
-    title: "Documentation and Certification",
-    description: "Required documentation for compliant electrical installations",
+    title: "Assessment Preparation",
+    description: "Preparing for assessment on Unit 304 content",
     content: (
       <div className="space-y-6">
         <LessonContent title="Assessment Preparation">
@@ -656,3 +586,4 @@ export const sections304: Record<string, {
     )
   },
 };
+
