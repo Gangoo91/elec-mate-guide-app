@@ -79,6 +79,11 @@ export const unit305: UnitContent = {
       ),
     }
   ],
+  assessment: {
+    path: "/apprentices/study-materials/city-guilds/level-3/305/assessment",
+    title: "Unit 305 Assessment",
+    description: "Test your knowledge of electrical systems design"
+  }
 };
 
 export default unit305;

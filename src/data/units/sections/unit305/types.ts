@@ -1,4 +1,6 @@
 
+import React from 'react';
+
 export interface Section {
   id: string;
   title: string;

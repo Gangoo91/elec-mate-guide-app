@@ -1,168 +1,235 @@
 
 import React from 'react';
 import { Section } from './types';
+import LessonContent from "@/components/units/LessonContent";
+import { ContentSection } from "@/components/units/ContentSection";
 
 export const section3_1: Section = {
   id: "3.1",
   title: "Cable Sizing and Protection",
-  description: "Methods for calculating appropriate cable sizes and protection devices",
+  description: "Methods for calculating current-carrying capacity, voltage drop, and protection",
   content: (
     <div className="space-y-8">
       <div>
         <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Learning Objectives</h3>
         <ul className="list-disc pl-6 space-y-2">
-          <li>Understand the factors affecting cable current-carrying capacity</li>
-          <li>Learn how to calculate voltage drop in cables</li>
-          <li>Master the adiabatic equation for earth fault protection</li>
-          <li>Apply correction factors for different installation conditions</li>
+          <li>Understand how to determine the current-carrying capacity of cables</li>
+          <li>Calculate voltage drop in electrical circuits</li>
+          <li>Apply correction factors for various installation conditions</li>
+          <li>Verify protection against fault currents using the adiabatic equation</li>
         </ul>
       </div>
       
-      <div>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Current-Carrying Capacity (Iz)</h3>
+      <LessonContent title="Current-Carrying Capacity">
         <p className="mb-4">
-          The current-carrying capacity of a cable is the maximum current it can carry continuously without exceeding 
-          its temperature rating. This is determined by:
+          The current-carrying capacity (I<sub>t</sub>) is the maximum current a cable can carry continuously 
+          without exceeding its rated temperature.
         </p>
         
-        <ul className="list-disc pl-6 space-y-2 mb-4">
-          <li>Cable construction (conductor material, insulation)</li>
-          <li>Installation method (reference method)</li>
-          <li>Ambient temperature</li>
-          <li>Grouping of circuits</li>
-          <li>Thermal insulation</li>
-        </ul>
-        
-        <p className="mb-4">
-          The design process requires:
-        </p>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md space-y-2 mb-4">
-          <p>1. Calculate design current (Ib) based on load requirements</p>
-          <p>2. Select protection device rating (In) where In ≥ Ib</p>
-          <p>3. Determine minimum cable rating (Iz) where Iz ≥ In</p>
-          <p>4. Apply correction factors (Cf) for installation conditions</p>
-          <p>5. Calculate tabulated current-carrying capacity: It = Iz / Cf</p>
-          <p>6. Select cable size from appropriate table in BS 7671</p>
+        <div className="space-y-4">
+          <div className="bg-[#2a2d24] p-4 rounded-md">
+            <h4 className="font-medium text-[#FFC900] mb-2">Basic Principles</h4>
+            <p>
+              Current-carrying capacity depends on:
+            </p>
+            <ul className="list-disc pl-6 mt-2 space-y-1">
+              <li>Cable size (cross-sectional area)</li>
+              <li>Cable insulation type (PVC, XLPE, etc.)</li>
+              <li>Installation method (conduit, tray, direct burial, etc.)</li>
+              <li>Ambient temperature</li>
+              <li>Grouping with other cables</li>
+              <li>Thermal insulation crossing or proximity</li>
+            </ul>
+          </div>
+          
+          <div className="bg-[#2a2d24] p-4 rounded-md">
+            <h4 className="font-medium text-[#FFC900] mb-2">Determination Method</h4>
+            <ol className="list-decimal pl-6 space-y-1">
+              <li>Identify the design current (I<sub>b</sub>)</li>
+              <li>Select appropriate protection device rating (I<sub>n</sub>)</li>
+              <li>Calculate minimum current for protection device to operate (I<sub>2</sub>)</li>
+              <li>Determine base current-carrying capacity from tables</li>
+              <li>Apply relevant correction factors (C<sub>a</sub>, C<sub>g</sub>, etc.)</li>
+              <li>Verify that corrected capacity exceeds I<sub>2</sub></li>
+            </ol>
+          </div>
         </div>
-        
-        <p className="mb-4">
-          Example: A 16A circuit in ambient temperature of 35°C with 4 circuits grouped together:
-        </p>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md mb-6">
-          <p>Design current (Ib) = 16A</p>
-          <p>Protection device rating (In) = 16A</p>
-          <p>Ambient temperature correction factor (Ca) = 0.94 (from Table 4B2)</p>
-          <p>Grouping correction factor (Cg) = 0.65 (from Table 4C1)</p>
-          <p>Combined correction factor (Cf) = 0.94 × 0.65 = 0.611</p>
-          <p>Required tabulated current-carrying capacity (It) = 16A ÷ 0.611 = 26.19A</p>
-          <p>From Table 4D2A (twin cable with thermoplastic insulation, reference method C):
-          2.5mm² cable has It = 27A</p>
-          <p>Therefore, 2.5mm² cable is suitable for this circuit.</p>
-        </div>
-      </div>
+      </LessonContent>
       
-      <div>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Voltage Drop Calculations</h3>
+      <ContentSection
+        title="Correction Factors"
+        content={
+          <>
+            <p className="mb-4">
+              Various correction factors must be applied to the tabulated current-carrying capacities:
+            </p>
+            
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <th className="py-2 px-3 text-left text-[#FFC900]">Factor Type</th>
+                    <th className="py-2 px-3 text-left text-[#FFC900]">Description</th>
+                    <th className="py-2 px-3 text-left text-[#FFC900]">Example Values</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-2 px-3 text-[#FFC900]/80">Ambient Temperature (C<sub>a</sub>)</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">Adjusts for temperatures different from the standard reference</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">
+                      PVC at 35°C: 0.88<br />
+                      XLPE at 35°C: 0.93
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-2 px-3 text-[#FFC900]/80">Grouping (C<sub>g</sub>)</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">Accounts for mutual heating when multiple cables are grouped together</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">
+                      2 circuits: 0.80<br />
+                      3 circuits: 0.70<br />
+                      4+ circuits: 0.65
+                    </td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-2 px-3 text-[#FFC900]/80">Thermal Insulation (C<sub>i</sub>)</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">Applied when cables are surrounded by or pass through thermal insulation</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">
+                      Touching insulation: 0.75<br />
+                      Enclosed in insulation: 0.5
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-3 text-[#FFC900]/80">Depth of Burial (C<sub>d</sub>)</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">For direct burial cables at depths different from standard</td>
+                    <td className="py-2 px-3 text-[#FFC900]/80">
+                      0.8m depth: 0.97<br />
+                      1.0m depth: 0.93
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+            <div className="bg-[#2a2d24] p-4 rounded-md mt-4">
+              <h4 className="font-medium text-[#FFC900] mb-2">Calculation Example</h4>
+              <p>
+                For a cable with tabulated rating of 32A, with factors C<sub>a</sub> = 0.88 and C<sub>g</sub> = 0.7:
+              </p>
+              <div className="font-mono mt-2 text-center">
+                Corrected capacity = 32A × 0.88 × 0.7 = 19.71A
+              </div>
+            </p>
+            </div>
+          </>
+        }
+      />
+      
+      <LessonContent title="Voltage Drop Calculations">
         <p className="mb-4">
-          Voltage drop must be limited to ensure proper function of connected equipment:
+          BS 7671 specifies maximum voltage drop limits:
         </p>
-        
-        <ul className="list-disc pl-6 space-y-2 mb-4">
-          <li>3% of nominal voltage for lighting (6.9V in a 230V system)</li>
-          <li>5% of nominal voltage for other uses (11.5V in a 230V system)</li>
+        <ul className="list-disc pl-6 space-y-1 mb-4">
+          <li>3% for lighting circuits (6.9V in a 230V system)</li>
+          <li>5% for other circuits (11.5V in a 230V system)</li>
         </ul>
         
         <p className="mb-4">
-          Voltage drop is calculated using the formula:
+          Voltage drop is calculated using:
         </p>
         
-        <div className="bg-[#2a2d24] p-4 rounded-md mb-4">
-          <p className="font-medium">Voltage drop (V) = (mV/A/m × Ib × L) ÷ 1000</p>
-          <p className="mt-2">Where:</p>
-          <ul className="list-disc pl-6 mt-1 space-y-1">
-            <li>mV/A/m is the voltage drop per ampere per meter (from BS 7671 tables)</li>
-            <li>Ib is the design current in amperes</li>
-            <li>L is the route length in meters</li>
+        <div className="bg-[#1a1d17] p-4 rounded-md font-mono text-center text-lg my-4">
+          Voltage drop (V) = Design current (A) × Conductor resistance (mV/A/m) × Length (m) ÷ 1000
+        </div>
+        
+        <p className="mb-4">
+          Where:
+        </p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>Conductor resistance values are found in tables</li>
+          <li>Length is the one-way length of the circuit</li>
+        </ul>
+      </LessonContent>
+      
+      <LessonContent title="Adiabatic Equation for Short-Circuit Protection">
+        <p className="mb-4">
+          The adiabatic equation is used to verify that cables are protected against thermal effects of fault currents:
+        </p>
+        
+        <div className="bg-[#1a1d17] p-4 rounded-md font-mono text-center text-lg my-4">
+          S² = I² × t ÷ k²
+        </div>
+        
+        <p className="mt-4">
+          Where:
+        </p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>S = Conductor cross-sectional area (mm²)</li>
+          <li>I = Fault current (A)</li>
+          <li>t = Disconnection time of protective device (s)</li>
+          <li>k = Conductor constant (depends on conductor material and insulation)</li>
+        </ul>
+        
+        <div className="mt-4">
+          <p className="font-medium mb-2">k values for common cable types:</p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Copper conductor with PVC insulation: 115</li>
+            <li>Copper conductor with XLPE insulation: 143</li>
+            <li>Aluminum conductor with PVC insulation: 76</li>
+            <li>Aluminum conductor with XLPE insulation: 94</li>
           </ul>
         </div>
         
-        <p className="mb-4">
-          Example: A 20A circuit with 2.5mm² cable and a route length of 18m:
+        <p className="mt-4">
+          The equation can be rearranged to determine the minimum conductor size required:
         </p>
         
-        <div className="bg-[#2a2d24] p-4 rounded-md mb-6">
-          <p>From Table 4D2B, mV/A/m for 2.5mm² copper conductor = 18</p>
-          <p>Voltage drop = (18 × 20 × 18) ÷ 1000 = 6.48V</p>
-          <p>As a percentage of 230V = (6.48 ÷ 230) × 100% = 2.82%</p>
-          <p>This is within the 5% limit for power circuits, so the cable size is suitable.</p>
+        <div className="bg-[#1a1d17] p-4 rounded-md font-mono text-center text-lg my-4">
+          S = (I × √t) ÷ k
         </div>
-      </div>
+      </LessonContent>
+    </div>
+  ),
+  detailedContent: (
+    <div className="space-y-6">
+      <h4 className="text-xl font-medium text-[#FFC900]">Practical Cable Sizing Process</h4>
+      <p className="text-[#FFC900]/80">
+        A complete cable sizing procedure involves the following steps:
+      </p>
+      <ol className="list-decimal pl-6 space-y-2 text-[#FFC900]/80">
+        <li>Determine the design current (I<sub>b</sub>) based on load characteristics</li>
+        <li>Select a protective device with suitable rating (I<sub>n</sub> ≥ I<sub>b</sub>)</li>
+        <li>Determine the minimum current required for the cable (I<sub>z</sub> ≥ I<sub>2</sub>)</li>
+        <li>Select a cable size with tabulated current-carrying capacity</li>
+        <li>Apply all relevant correction factors</li>
+        <li>Verify that corrected capacity exceeds I<sub>2</sub></li>
+        <li>Check voltage drop at design current</li>
+        <li>Verify earth fault loop impedance for required disconnection time</li>
+        <li>Verify short-circuit protection using the adiabatic equation</li>
+      </ol>
       
-      <div>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Adiabatic Equation for Earth Fault Protection</h3>
-        <p className="mb-4">
-          The adiabatic equation ensures that a cable's protective conductor can withstand the energy released during a fault
-          without exceeding its maximum operating temperature:
+      <h4 className="text-xl font-medium text-[#FFC900] mt-6">Special Considerations</h4>
+      <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+        <li><strong>Harmonics:</strong> Apply derating for circuits supplying harmonic-generating equipment</li>
+        <li><strong>Motor circuits:</strong> Account for starting currents (typically 6-8 times full load current)</li>
+        <li><strong>Underground cables:</strong> Consider soil thermal resistivity and drying out</li>
+        <li><strong>Parallel cables:</strong> Ensure equal current sharing through identical paths</li>
+      </ul>
+      
+      <h4 className="text-xl font-medium text-[#FFC900] mt-6">Example Calculation</h4>
+      <div className="bg-[#1a1d17] p-4 rounded-md">
+        <p className="text-[#FFC900]/80">
+          For a 12kW electric shower (230V, single-phase):
         </p>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md mb-4">
-          <p className="font-medium">S² = I² × t ÷ k²</p>
-          <p className="mt-2">Where:</p>
-          <ul className="list-disc pl-6 mt-1 space-y-1">
-            <li>S is the minimum cross-sectional area in mm²</li>
-            <li>I is the fault current in amperes</li>
-            <li>t is the operating time of the protective device in seconds</li>
-            <li>k is a factor depending on the conductor material and insulation</li>
-          </ul>
-        </div>
-        
-        <p className="mb-4">
-          The k factor varies depending on the conductor and insulation materials:
-        </p>
-        
-        <div className="overflow-x-auto mb-4">
-          <table className="min-w-full border-collapse">
-            <thead>
-              <tr className="border-b border-[#FFC900]/20">
-                <th className="py-2 px-3 text-left text-[#FFC900]">Conductor</th>
-                <th className="py-2 px-3 text-left text-[#FFC900]">Insulation</th>
-                <th className="py-2 px-3 text-left text-[#FFC900]">k factor</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-3 text-[#FFC900]/80">Copper</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">PVC</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">115</td>
-              </tr>
-              <tr className="border-b border-[#FFC900]/20">
-                <td className="py-2 px-3 text-[#FFC900]/80">Copper</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">XLPE/EPR</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">143</td>
-              </tr>
-              <tr>
-                <td className="py-2 px-3 text-[#FFC900]/80">Aluminum</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">PVC</td>
-                <td className="py-2 px-3 text-[#FFC900]/80">76</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <p className="mb-4">
-          Example: Calculate the minimum cross-sectional area for a copper protective conductor with PVC insulation, 
-          where the fault current is 1500A and the disconnection time is 0.4 seconds:
-        </p>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md">
-          <p>S² = 1500² × 0.4 ÷ 115²</p>
-          <p>S² = 2,250,000 × 0.4 ÷ 13,225</p>
-          <p>S² = 900,000 ÷ 13,225 = 68.05</p>
-          <p>S = √68.05 = 8.25mm²</p>
-          <p>Therefore, a 10mm² protective conductor would be required.</p>
-        </div>
+        <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80 mt-2">
+          <li>Design current: I<sub>b</sub> = 12000W ÷ 230V = 52.2A</li>
+          <li>Select 63A MCB (Type B): I<sub>n</sub> = 63A, I<sub>2</sub> = 1.45 × 63A = 91.4A</li>
+          <li>Cable route: 18m, clipped direct, ambient temperature 30°C</li>
+          <li>Correction factors: C<sub>a</sub> = 0.94 (temperature), C<sub>g</sub> = 1.0 (no grouping)</li>
+          <li>Required current-carrying capacity: 91.4A ÷ (0.94 × 1.0) = 97.2A</li>
+          <li>Select 16mm² cable with tabulated capacity of 100A</li>
+          <li>Voltage drop calculation: 52.2A × 18m × 2.8mV/A/m ÷ 1000 = 2.63V (1.1%, within limit)</li>
+        </ul>
       </div>
     </div>
   )
