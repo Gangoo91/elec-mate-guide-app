@@ -1,5 +1,7 @@
 
 import React from 'react';
+import LessonContent from "@/components/units/LessonContent";
+import { ContentSection } from "@/components/units/ContentSection";
 
 export const sections304: Record<string, { 
   title: string; 
@@ -11,38 +13,51 @@ export const sections304: Record<string, {
     title: "Initial Verification Requirements",
     description: "Understanding essential verification procedures before commissioning electrical installations",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Initial Verification Requirements</h2>
+      <div className="space-y-6">
+        <LessonContent title="Initial Verification Requirements">
+          <p>Initial verification is a crucial step in ensuring that new electrical installations comply with regulations and are safe to use.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Key Requirements for Initial Verification</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Visual inspection of all accessible components</li>
+            <li>Confirmation that equipment complies with relevant standards</li>
+            <li>Verification of conductor sizes and protective device ratings</li>
+            <li>Checking for fire barriers, protection against thermal effects</li>
+            <li>Verification of disconnection times for protective devices</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Documentation Requirements</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Electrical Installation Certificate (EIC)</li>
+            <li>Schedule of Inspections</li>
+            <li>Schedule of Test Results</li>
+            <li>Distribution board schedules</li>
+            <li>Circuit charts and diagrams</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Inspector Qualifications</h3>
+          <p>Initial verification must be carried out by a skilled person with:</p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Competence in inspection and testing techniques</li>
+            <li>Understanding of the installation being tested</li>
+            <li>Knowledge of potential hazards during testing</li>
+            <li>Experience in interpreting test results</li>
+            <li>Appropriate qualifications (e.g., City & Guilds 2391-50 or 2394)</li>
+          </ul>
+        </LessonContent>
         
-        <p>Initial verification is a crucial step in ensuring that new electrical installations comply with regulations and are safe to use.</p>
-        
-        <h3>Key Components of Initial Verification</h3>
-        <ul>
-          <li>Visual inspection of all accessible components</li>
-          <li>Confirmation that equipment complies with relevant standards</li>
-          <li>Verification of conductor sizes and protective device ratings</li>
-          <li>Checking for fire barriers, protection against thermal effects</li>
-          <li>Verification of disconnection times for protective devices</li>
-        </ul>
-        
-        <h3>Documentation Requirements</h3>
-        <ul>
-          <li>Electrical Installation Certificate (EIC)</li>
-          <li>Schedule of Inspections</li>
-          <li>Schedule of Test Results</li>
-          <li>Distribution board schedules</li>
-          <li>Circuit charts and diagrams</li>
-        </ul>
-        
-        <h3>Inspector Qualifications</h3>
-        <p>Initial verification must be carried out by a skilled person with:</p>
-        <ul>
-          <li>Competence in inspection and testing techniques</li>
-          <li>Understanding of the installation being tested</li>
-          <li>Knowledge of potential hazards during testing</li>
-          <li>Experience in interpreting test results</li>
-          <li>Appropriate qualifications (e.g., City & Guilds 2391-50 or 2394)</li>
-        </ul>
+        <ContentSection
+          title="Learning Objectives - Initial Verification"
+          content={
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Understand the purpose of initial verification</li>
+              <li>Know the documentation required by BS 7671</li>
+              <li>Understand the importance of inspection before testing</li>
+              <li>Recognize defects that can be identified through visual inspection</li>
+              <li>Know when initial verification is required</li>
+            </ul>
+          }
+        />
       </div>
     )
   },
@@ -50,36 +65,36 @@ export const sections304: Record<string, {
     title: "Periodic Inspection Methodologies",
     description: "Systematic approaches for conducting thorough periodic inspections",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Periodic Inspection Methodologies</h2>
-        
-        <p>Periodic inspection determines whether an existing installation is in a satisfactory condition for continued use.</p>
-        
-        <h3>Sampling Techniques</h3>
-        <ul>
-          <li>Statistical sampling for large installations</li>
-          <li>Risk-based approach focusing on high-risk areas</li>
-          <li>Age-related sampling for older components</li>
-          <li>Increased sample sizes where defects are found</li>
-        </ul>
-        
-        <h3>Inspection Sequence</h3>
-        <ol>
-          <li>Review documentation and previous inspection reports</li>
-          <li>Discuss installation use with client</li>
-          <li>Visual inspection of accessible parts</li>
-          <li>Testing of protective measures</li>
-          <li>Assessment of risk categories for observed defects</li>
-          <li>Compilation of the Electrical Installation Condition Report (EICR)</li>
-        </ol>
-        
-        <h3>Limitations of Inspection</h3>
-        <ul>
-          <li>Extent and limitations must be agreed with client</li>
-          <li>Areas not accessible should be clearly documented</li>
-          <li>Reasons for limitations should be recorded</li>
-          <li>Impact of limitations on safety assessment</li>
-        </ul>
+      <div className="space-y-6">
+        <LessonContent title="Periodic Inspection Methodologies">
+          <p>Periodic inspection determines whether an existing installation is in a satisfactory condition for continued use.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Sampling Techniques</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Statistical sampling for large installations</li>
+            <li>Risk-based approach focusing on high-risk areas</li>
+            <li>Age-related sampling for older components</li>
+            <li>Increased sample sizes where defects are found</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Inspection Sequence</h3>
+          <ol className="list-decimal pl-6 space-y-2">
+            <li>Review documentation and previous inspection reports</li>
+            <li>Discuss installation use with client</li>
+            <li>Visual inspection of accessible parts</li>
+            <li>Testing of protective measures</li>
+            <li>Assessment of risk categories for observed defects</li>
+            <li>Compilation of the Electrical Installation Condition Report (EICR)</li>
+          </ol>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Limitations of Inspection</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Extent and limitations must be agreed with client</li>
+            <li>Areas not accessible should be clearly documented</li>
+            <li>Reasons for limitations should be recorded</li>
+            <li>Impact of limitations on safety assessment</li>
+          </ul>
+        </LessonContent>
       </div>
     )
   },
@@ -87,46 +102,46 @@ export const sections304: Record<string, {
     title: "Common Installation Defects",
     description: "Identifying and classifying typical defects found during inspections",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Common Installation Defects</h2>
-        
-        <p>Inspections frequently reveal certain types of defects that compromise safety or compliance.</p>
-        
-        <h3>Dangerous Defects (Code C1)</h3>
-        <ul>
-          <li>Exposed live parts accessible to touch</li>
-          <li>Absence of earthing for metal parts</li>
-          <li>Incorrect polarity</li>
-          <li>Damaged insulation exposing conductors</li>
-          <li>Water ingress near electrical equipment</li>
-        </ul>
-        
-        <h3>Potentially Dangerous Defects (Code C2)</h3>
-        <ul>
-          <li>Inadequate IP ratings for location</li>
-          <li>Broken accessories with no immediate exposure</li>
-          <li>Overloaded circuits</li>
-          <li>Missing identification labels</li>
-          <li>Improperly secured equipment or cables</li>
-          <li>Unsatisfactory earthing arrangements</li>
-        </ul>
-        
-        <h3>Improvement Recommended (Code C3)</h3>
-        <ul>
-          <li>Lack of RCD protection (in some circumstances)</li>
-          <li>Outdated but safe equipment</li>
-          <li>Non-compliance with current regulations but acceptable under previous regulations</li>
-          <li>Minor deviations from current best practice</li>
-        </ul>
-        
-        <h3>Documentation and Reporting</h3>
-        <p>Each defect must be:</p>
-        <ul>
-          <li>Accurately recorded on the EICR</li>
-          <li>Correctly classified according to risk</li>
-          <li>Located precisely for future rectification</li>
-          <li>Photographed where possible for evidence</li>
-        </ul>
+      <div className="space-y-6">
+        <LessonContent title="Common Installation Defects">
+          <p>Inspections frequently reveal certain types of defects that compromise safety or compliance.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Dangerous Defects (Code C1)</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Exposed live parts accessible to touch</li>
+            <li>Absence of earthing for metal parts</li>
+            <li>Incorrect polarity</li>
+            <li>Damaged insulation exposing conductors</li>
+            <li>Water ingress near electrical equipment</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Potentially Dangerous Defects (Code C2)</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Inadequate IP ratings for location</li>
+            <li>Broken accessories with no immediate exposure</li>
+            <li>Overloaded circuits</li>
+            <li>Missing identification labels</li>
+            <li>Improperly secured equipment or cables</li>
+            <li>Unsatisfactory earthing arrangements</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Improvement Recommended (Code C3)</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Lack of RCD protection (in some circumstances)</li>
+            <li>Outdated but safe equipment</li>
+            <li>Non-compliance with current regulations but acceptable under previous regulations</li>
+            <li>Minor deviations from current best practice</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Documentation and Reporting</h3>
+          <p>Each defect must be:</p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Accurately recorded on the EICR</li>
+            <li>Correctly classified according to risk</li>
+            <li>Located precisely for future rectification</li>
+            <li>Photographed where possible for evidence</li>
+          </ul>
+        </LessonContent>
       </div>
     )
   },
@@ -134,48 +149,53 @@ export const sections304: Record<string, {
     title: "Continuity and Insulation Resistance Testing",
     description: "Techniques and procedures for testing circuit continuity and insulation integrity",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Continuity and Insulation Resistance Testing</h2>
-        
-        <h3>Continuity Testing</h3>
-        <p>Tests to verify the integrity of protective conductors and ring final circuits.</p>
-        
-        <h4>Protective Conductor Continuity</h4>
-        <ul>
-          <li>Test between main earthing terminal and exposed conductive parts</li>
-          <li>Low resistance indicates good connection (typically &lt;0.05Ω)</li>
-          <li>Test current: minimum 200mA</li>
-          <li>Account for test lead resistance</li>
-          <li>R₁+R₂ values needed for fault protection verification</li>
-        </ul>
-        
-        <h4>Ring Final Circuit Continuity</h4>
-        <ul>
-          <li>End-to-end test of each conductor (L-L, N-N, PE-PE)</li>
-          <li>Cross-connection test (L-N, L-PE, N-PE)</li>
-          <li>Calculations to verify uniform resistance distribution</li>
-          <li>Identify any interconnections or breaks</li>
-        </ul>
-        
-        <h3>Insulation Resistance Testing</h3>
-        
-        <h4>Test Procedure</h4>
-        <ul>
-          <li>Disconnect sensitive electronic equipment</li>
-          <li>Test voltage: 250V for SELV/PELV, 500V for up to 500V installations</li>
-          <li>Test between live conductors and between all live conductors and PE</li>
-          <li>Minimum acceptable values: 1MΩ for circuits up to 500V</li>
-          <li>Higher values expected in new installations (typically &gt;200MΩ)</li>
-        </ul>
-        
-        <h4>Common Issues</h4>
-        <ul>
-          <li>Low readings due to moisture ingress</li>
-          <li>Parallel paths through connected equipment</li>
-          <li>Surge protection devices affecting readings</li>
-          <li>Electronic components requiring disconnection</li>
-          <li>Neutral linked to earth at distribution board</li>
-        </ul>
+      <div className="space-y-6">
+        <LessonContent title="Visual Inspection Procedures">
+          <p>Visual inspection is the first and most critical step in verifying an electrical installation. It must be completed before any testing begins.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Conductor Identification</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Verify correct color coding (brown - line, blue - neutral, green/yellow - earth)</li>
+            <li>Check appropriate identification of conductors at terminations</li>
+            <li>Ensure consistency of marking throughout the installation</li>
+            <li>Confirm phase rotation where applicable</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Cable Routing Inspection</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Check for appropriate support and fixings</li>
+            <li>Ensure adequate separation from non-electrical services</li>
+            <li>Verify conformity with zone restrictions in special locations (e.g., bathrooms)</li>
+            <li>Check depth of buried cables and mechanical protection</li>
+            <li>Ensure cables are not subject to mechanical strain</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Earthing and Bonding</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Check main earthing terminal is accessible</li>
+            <li>Verify presence of main bonding to water, gas, and other services</li>
+            <li>Check supplementary bonding in special locations</li>
+            <li>Ensure bonding conductor sizes meet requirements</li>
+            <li>Verify secure connections and appropriate labeling</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Equipment Selection and Installation</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Verify appropriate IP ratings for location and external influences</li>
+            <li>Check equipment is installed in correct safe zones where required</li>
+            <li>Verify presence and condition of mechanical protection</li>
+            <li>Check equipment is securely fixed and stable</li>
+            <li>Ensure appropriate fire ratings where applicable</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Building Regulations Compliance</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Check compliance with Part P (safety in dwellings)</li>
+            <li>Verify energy efficiency measures meet Part L requirements</li>
+            <li>Ensure fire safety considerations are addressed</li>
+            <li>Check accessibility requirements are met</li>
+          </ul>
+        </LessonContent>
       </div>
     )
   },
@@ -183,45 +203,63 @@ export const sections304: Record<string, {
     title: "Earth Fault Loop Impedance Testing",
     description: "Methods for measuring and assessing earth fault loop impedance",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Earth Fault Loop Impedance Testing</h2>
+      <div className="space-y-6">
+        <LessonContent title="Dead Testing Procedures">
+          <p>Dead testing is performed with the installation disconnected from the supply to verify safety before energization.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Continuity of Protective Conductors</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Ensure complete earth paths exist throughout the installation</li>
+            <li><strong>Method:</strong> Low-resistance ohmmeter between main earthing terminal and exposed conductive parts</li>
+            <li><strong>Expected Results:</strong> Low resistance (typically &lt;0.05Ω plus the resistance of the conductor)</li>
+            <li><strong>Common Issues:</strong> Poor connections, damaged conductors, incorrect terminations</li>
+            <li><strong>Tips:</strong> Null test leads before testing to remove their resistance from readings</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Ring Final Circuit Continuity</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Verify correct wiring of ring final circuits and identify any interconnections</li>
+            <li><strong>Method:</strong> End-to-end resistance measurement plus cross-connection measurements</li>
+            <li><strong>Expected Results:</strong> End-to-end readings approximately half of cross-connection readings</li>
+            <li><strong>Common Issues:</strong> Broken rings, interconnected rings, uneven conductor sizing</li>
+            <li><strong>Tips:</strong> Make a table of readings to help identify anomalies</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Insulation Resistance Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Ensure no leakage between conductors or to earth</li>
+            <li><strong>Method:</strong> Apply test voltage between all conductors and between conductors and earth</li>
+            <li><strong>Test Voltage:</strong> 500V for installations up to 500V</li>
+            <li><strong>Expected Results:</strong> At least 1MΩ for circuits up to 500V (typically much higher)</li>
+            <li><strong>Common Issues:</strong> Moisture, damaged insulation, connected equipment affecting readings</li>
+            <li><strong>Safety:</strong> Disconnect sensitive electronic equipment before testing</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Polarity Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Check correct connection of line, neutral, and earth</li>
+            <li><strong>Method:</strong> Continuity testing to verify correct connections at switches, fuses, etc.</li>
+            <li><strong>Expected Results:</strong> Continuity between expected points, no reversed connections</li>
+            <li><strong>Common Issues:</strong> Reversed L/N, switched neutral instead of line</li>
+            <li><strong>Critical Points:</strong> Edison screw lampholders, single-pole switches, socket outlets</li>
+          </ul>
+        </LessonContent>
         
-        <p>Earth fault loop impedance testing verifies that protective devices will operate within required disconnection times.</p>
-        
-        <h3>Testing Methods</h3>
-        
-        <h4>Ze - External Earth Fault Loop Impedance</h4>
-        <ul>
-          <li>Measured at origin of installation (consumer unit/distribution board)</li>
-          <li>Test between phase conductor and protective conductor at main earthing terminal</li>
-          <li>Typical values: TN-C-S (PME) systems: around 0.35Ω, TT systems: up to 200Ω</li>
-          <li>Values should be less than tabulated maximum values for protective device</li>
-        </ul>
-        
-        <h4>Zs - Circuit Earth Fault Loop Impedance</h4>
-        <ul>
-          <li>Measured at furthest point of each circuit</li>
-          <li>Test between phase conductor and protective conductor</li>
-          <li>Values must be below maximum permitted for protective device type and rating</li>
-          <li>Measured value should include R₁+R₂ (circuit resistance) plus Ze</li>
-        </ul>
-        
-        <h3>Test Considerations</h3>
-        <ul>
-          <li>Safe testing methods - avoid disconnecting circuit protective conductors</li>
-          <li>Temperature correction factors (measured at 20°C, operating at higher temperatures)</li>
-          <li>RCD presence may require special test settings</li>
-          <li>Supply voltage fluctuations affecting readings</li>
-          <li>Documentation of all measured values for verification against calculated values</li>
-        </ul>
-        
-        <h3>Verification Against Design Values</h3>
-        <ul>
-          <li>Comparing measured values with maximum permitted values</li>
-          <li>Applying required correction factors</li>
-          <li>Assessment of compliance with BS 7671 disconnection times</li>
-          <li>Evaluating need for supplementary bonding if values are too high</li>
-        </ul>
+        <ContentSection
+          title="Dead Testing Sequence - Important!"
+          content={
+            <div>
+              <p className="font-medium">Tests must be performed in this exact order:</p>
+              <ol className="list-decimal pl-6 space-y-2 mt-3">
+                <li>Continuity of Protective Conductors (CPCs)</li>
+                <li>Continuity of Ring Final Circuits</li>
+                <li>Insulation Resistance</li>
+                <li>Polarity Testing</li>
+              </ol>
+              <p className="mt-3 text-[#FFC900]/70 italic">This sequence ensures safety and prevents damage to equipment.</p>
+            </div>
+          }
+        />
       </div>
     )
   },
@@ -229,57 +267,74 @@ export const sections304: Record<string, {
     title: "RCD Testing and Polarity Checks",
     description: "Procedures for testing RCD operation and verifying correct polarity",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>RCD Testing and Polarity Checks</h2>
+      <div className="space-y-6">
+        <LessonContent title="Live Testing Procedures">
+          <p>Live testing is performed with the installation energized to verify protection performance under fault conditions.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Earth Fault Loop Impedance Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Check that fault current will trip protection quickly enough</li>
+            <li><strong>Method:</strong> Connect loop impedance tester between line conductor and protective conductor</li>
+            <li><strong>External Impedance (Ze):</strong> Measured at origin of installation</li>
+            <li><strong>Circuit Impedance (Zs):</strong> Measured at furthest point of each circuit</li>
+            <li><strong>Expected Results:</strong> Values below maximum permitted for circuit protection type</li>
+            <li><strong>Safety:</strong> Use non-trip testers where RCDs are installed to prevent nuisance tripping</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Prospective Fault Current (PFC) Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Measure potential fault currents to ensure protection can handle them</li>
+            <li><strong>Method:</strong> Measure between line and neutral (PSCC) and line and earth (PEFC)</li>
+            <li><strong>Expected Results:</strong> Values within breaking capacity of protective devices</li>
+            <li><strong>Critical Points:</strong> Origin of installation and all distribution boards</li>
+            <li><strong>Safety:</strong> Ensure test equipment is rated for expected fault currents</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">RCD Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Verify RCDs operate within required times at rated current</li>
+            <li><strong>Method:</strong> Apply test current at both 0° and 180° phase angles</li>
+            <li><strong>Test Currents:</strong> 50% (no trip), 100% (must trip), 5× rated current (fast trip)</li>
+            <li><strong>Expected Results:</strong>
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>General RCDs: ≤300ms at rated current, ≤40ms at 5× rated current</li>
+                <li>S-type RCDs: 130-500ms at rated current, ≤150ms at 5× rated current</li>
+              </ul>
+            </li>
+            <li><strong>Documentation:</strong> Record worst-case trip time for each test</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Functional Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Purpose:</strong> Verify all components operate as intended</li>
+            <li><strong>Method:</strong> Manually operate all switches, controls, and protective devices</li>
+            <li><strong>Check Points:</strong>
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Switch operation and correct control of intended circuits</li>
+                <li>RCD test button operation</li>
+                <li>Operation of isolation devices</li>
+                <li>Correct operation of automation and control systems</li>
+              </ul>
+            </li>
+            <li><strong>Documentation:</strong> Note any operational issues or deficiencies</li>
+          </ul>
+        </LessonContent>
         
-        <h3>RCD Testing</h3>
-        
-        <h4>Test Requirements</h4>
-        <ul>
-          <li>Test using purpose-designed RCD tester</li>
-          <li>Verify that RCD trips within specified time at rated operating current</li>
-          <li>Standard RCDs: must trip within 300ms at rated current (30mA, 100mA, etc.)</li>
-          <li>S-type (time-delayed) RCDs: must trip between 130ms and 500ms at rated current</li>
-          <li>Fast-acting RCDs for additional protection: must trip within 40ms at rated current</li>
-        </ul>
-        
-        <h4>Test Procedure</h4>
-        <ol>
-          <li>Test at 50% rated current (no trip should occur)</li>
-          <li>Test at 100% rated current (must trip within specified time)</li>
-          <li>Test at 5× rated current (must trip within 40ms for general RCDs)</li>
-          <li>Test both 0° and 180° phase angles</li>
-          <li>Record worst-case trip time</li>
-          <li>Verify manual test button operation</li>
-        </ol>
-        
-        <h3>Polarity Checks</h3>
-        
-        <h4>Importance of Polarity Testing</h4>
-        <ul>
-          <li>Ensures single-pole devices interrupt the line conductor</li>
-          <li>Verifies that Edison screw lampholders have line connected to center contact</li>
-          <li>Confirms correct connection of switched lines</li>
-          <li>Prevents neutral-earth reversal hazards</li>
-        </ul>
-        
-        <h4>Testing Methods</h4>
-        <ul>
-          <li>Visual verification during installation</li>
-          <li>Continuity testing to verify line connections</li>
-          <li>Voltage indicator to confirm line/neutral identification</li>
-          <li>Testing at every relevant point in the installation</li>
-          <li>Special attention to switched connections</li>
-        </ul>
-        
-        <h4>Common Polarity Faults</h4>
-        <ul>
-          <li>Reversed connections in socket outlets</li>
-          <li>Incorrect connections in consumer units/distribution boards</li>
-          <li>Switched neutral instead of line</li>
-          <li>Two-way switching wiring errors</li>
-          <li>Incorrect identification of conductors in multi-core cables</li>
-        </ul>
+        <ContentSection
+          title="Live Testing Sequence - Important!"
+          content={
+            <div>
+              <p className="font-medium">Live tests must be performed in this order after dead testing is complete:</p>
+              <ol className="list-decimal pl-6 space-y-2 mt-3">
+                <li>Earth Fault Loop Impedance (Zs)</li>
+                <li>Prospective Fault Current (PFC)</li>
+                <li>RCD Trip Testing</li>
+                <li>Functional Tests</li>
+              </ol>
+              <p className="mt-3 text-[#FFC900]/70 italic">Always follow safe isolation procedures before and after live testing.</p>
+            </div>
+          }
+        />
       </div>
     )
   },
@@ -287,47 +342,114 @@ export const sections304: Record<string, {
     title: "Pre-commissioning Checks",
     description: "Critical checks required before energizing electrical installations",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Pre-commissioning Checks</h2>
+      <div className="space-y-6">
+        <LessonContent title="Documentation and Certification">
+          <p>Proper documentation is a legal requirement and provides evidence of compliance with standards.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Types of Certification</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Electrical Installation Certificate (EIC):</strong> For new installations or major alterations</li>
+            <li><strong>Minor Electrical Installation Works Certificate (MEIWC):</strong> For small alterations or additions</li>
+            <li><strong>Electrical Installation Condition Report (EICR):</strong> For periodic inspections of existing installations</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Schedule of Inspections</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Lists all items inspected visually before testing</li>
+            <li>Records compliance of each item with regulations</li>
+            <li>Includes checks on:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Connection of conductors</li>
+                <li>Identification and notices</li>
+                <li>Routing of cables</li>
+                <li>Selection of conductors</li>
+                <li>Presence of fire barriers</li>
+                <li>Protection against thermal effects</li>
+                <li>Methods of protection against electric shock</li>
+              </ul>
+            </li>
+            <li>Must be completed in full with no items left blank</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Schedule of Test Results</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Documents measured values from all tests performed</li>
+            <li>Records circuit details and protective device information</li>
+            <li>Includes:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Continuity test results</li>
+                <li>Insulation resistance values</li>
+                <li>Polarity confirmation</li>
+                <li>Earth fault loop impedance values</li>
+                <li>Prospective fault current readings</li>
+                <li>RCD operation times</li>
+              </ul>
+            </li>
+            <li>Values must be compared against maximum permitted values</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Certificate Completion</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Must include details of client and installation address</li>
+            <li>Requires description of work carried out</li>
+            <li>Must include departures from standards (if any)</li>
+            <li>Requires recommended date for next inspection</li>
+            <li>Must include declarations signed by:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Designer (where design work was involved)</li>
+                <li>Constructor (installer)</li>
+                <li>Inspector/tester</li>
+              </ul>
+            </li>
+            <li>Single person can sign multiple declarations if qualified to do so</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Additional Documentation</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Distribution board schedules</li>
+            <li>Circuit charts and diagrams</li>
+            <li>Operation and maintenance manuals</li>
+            <li>Risk assessments and method statements</li>
+            <li>Manufacturer's instructions and warranties</li>
+          </ul>
+        </LessonContent>
         
-        <p>Thorough checks before energizing an electrical installation are essential to ensure safety and compliance.</p>
-        
-        <h3>Documentation Review</h3>
-        <ul>
-          <li>Verification that design documentation is complete</li>
-          <li>Check that all certification for equipment is available</li>
-          <li>Review risk assessments and method statements</li>
-          <li>Ensure all required permissions are in place</li>
-          <li>Verify that installation complies with specification</li>
-        </ul>
-        
-        <h3>Visual Inspection</h3>
-        <ul>
-          <li>Confirmation that all equipment is correctly installed</li>
-          <li>Check for physical damage to equipment</li>
-          <li>Verification of cable types and sizes</li>
-          <li>Assessment of protection against environmental factors</li>
-          <li>Check that all accessories are properly fixed</li>
-          <li>Verify that all connections are secure</li>
-        </ul>
-        
-        <h3>Safety Measures</h3>
-        <ul>
-          <li>Ensure all required warning notices are in place</li>
-          <li>Verify presence of fire barriers and seals</li>
-          <li>Check provision of protective equipment</li>
-          <li>Confirm emergency procedures are established</li>
-          <li>Verify isolation procedures are documented</li>
-        </ul>
-        
-        <h3>Pre-power Checks</h3>
-        <ul>
-          <li>Verification of correct phasing</li>
-          <li>Confirmation that equipment is ready for energization</li>
-          <li>Check that all temporary installations are removed</li>
-          <li>Ensure all covers and safety devices are in place</li>
-          <li>Final visual inspection before energization</li>
-        </ul>
+        <ContentSection
+          title="Documentation Requirements"
+          content={
+            <div>
+              <p className="font-medium">Key documentation requirements for different types of work:</p>
+              <div className="overflow-x-auto mt-3">
+                <table className="min-w-full text-[#FFC900]/80">
+                  <thead>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <th className="py-2 px-4 text-left">Type of Work</th>
+                      <th className="py-2 px-4 text-left">Required Certification</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-4">New installation</td>
+                      <td className="py-2 px-4">EIC + Schedules + DB Schedules</td>
+                    </tr>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-4">Major alteration</td>
+                      <td className="py-2 px-4">EIC + Schedules + DB Schedules</td>
+                    </tr>
+                    <tr className="border-b border-[#FFC900]/20">
+                      <td className="py-2 px-4">Minor alteration</td>
+                      <td className="py-2 px-4">MEIWC</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 px-4">Periodic inspection</td>
+                      <td className="py-2 px-4">EICR + Schedules</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          }
+        />
       </div>
     )
   },
@@ -335,57 +457,76 @@ export const sections304: Record<string, {
     title: "Functional Testing Procedures",
     description: "Methods for testing the functionality of electrical systems after installation",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Functional Testing Procedures</h2>
+      <div className="space-y-6">
+        <LessonContent title="Commissioning Process">
+          <p>Commissioning is the final verification that an installation is ready for safe use.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Pre-commissioning Checks</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Documentation Review:</strong> Verify all design and installation documentation is complete</li>
+            <li><strong>Visual Inspection:</strong> Final visual check of the entire installation</li>
+            <li><strong>Safety Measures:</strong> Confirm all warning notices and safety equipment are in place</li>
+            <li><strong>Pre-power Checks:</strong>
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Verification of correct phasing</li>
+                <li>Confirmation that equipment is ready for energization</li>
+                <li>Check that all temporary installations are removed</li>
+                <li>Ensure all covers and safety devices are in place</li>
+              </ul>
+            </li>
+            <li><strong>Isolation Procedures:</strong> Verify isolation points are correctly identified and accessible</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Functional Testing</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Sequential Energization:</strong> Power up circuits in a logical sequence</li>
+            <li><strong>Load Testing:</strong> Verify equipment operates correctly under load conditions</li>
+            <li><strong>Switching Verification:</strong> Test operation of all switching devices</li>
+            <li><strong>Testing Specific Systems:</strong>
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li><strong>Lighting:</strong> Operation of all switches, dimmers, sensors</li>
+                <li><strong>Power:</strong> Load testing of socket outlets and fixed equipment</li>
+                <li><strong>Controls:</strong> Operation of control circuits and interfaces</li>
+              </ul>
+            </li>
+            <li><strong>Specialized Equipment:</strong> Testing according to manufacturer's instructions</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Final Verification</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Check for Anomalies:</strong> Unusual sounds, vibrations, or heating</li>
+            <li><strong>Operating Parameters:</strong> Verify equipment operates within specified parameters</li>
+            <li><strong>Final Adjustments:</strong> Make any necessary adjustments to settings</li>
+            <li><strong>Documentation:</strong> Record all test results and operational parameters</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Client Handover</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Certificate Presentation:</strong> Provide all required certification</li>
+            <li><strong>User Instructions:</strong> Explain operation of equipment and systems</li>
+            <li><strong>Safety Information:</strong> Educate client on safety features and procedures</li>
+            <li><strong>Maintenance Requirements:</strong> Advise on ongoing maintenance needs</li>
+            <li><strong>Documentation Handover:</strong> Provide complete set of documentation</li>
+          </ul>
+        </LessonContent>
         
-        <p>Functional testing verifies that all installed systems operate correctly and as intended.</p>
-        
-        <h3>Sequence of Functional Tests</h3>
-        <ol>
-          <li>Systematic powering up of circuits in sequence</li>
-          <li>Testing of each circuit under load conditions</li>
-          <li>Verification of operation of all switching devices</li>
-          <li>Testing of protective devices by simulation where necessary</li>
-          <li>Operational testing of all equipment and systems</li>
-        </ol>
-        
-        <h3>Testing Specific Systems</h3>
-        
-        <h4>Lighting Systems</h4>
-        <ul>
-          <li>Verification of switching arrangements</li>
-          <li>Testing of dimmers and controls</li>
-          <li>Check for correct lamp types and ratings</li>
-          <li>Verification of emergency lighting operation</li>
-          <li>Testing of automatic control systems (sensors, timers)</li>
-        </ul>
-        
-        <h4>Power Systems</h4>
-        <ul>
-          <li>Load testing of socket outlets</li>
-          <li>Verification of fixed equipment operation</li>
-          <li>Testing of interlocks and safety systems</li>
-          <li>Verification of motor rotation and operation</li>
-          <li>Testing of special installations (e.g., heating systems)</li>
-        </ul>
-        
-        <h4>Control Systems</h4>
-        <ul>
-          <li>Testing of control circuits and interfaces</li>
-          <li>Verification of programmable controls</li>
-          <li>Testing of monitoring systems</li>
-          <li>Verification of alarm functions</li>
-          <li>Testing of remote control capabilities</li>
-        </ul>
-        
-        <h3>Documentation of Tests</h3>
-        <ul>
-          <li>Recording of all test results</li>
-          <li>Documentation of any deviations from expected performance</li>
-          <li>Listing of any adjustments made during testing</li>
-          <li>Verification of client requirements being met</li>
-          <li>Sign-off by responsible person</li>
-        </ul>
+        <ContentSection
+          title="Commissioning Sequence"
+          content={
+            <div>
+              <p className="font-medium">The complete commissioning sequence from completion of installation to client handover:</p>
+              <ol className="list-decimal pl-6 space-y-2 mt-3">
+                <li>Pre-commissioning checks and verification</li>
+                <li>Dead testing in correct sequence</li>
+                <li>Live testing in correct sequence</li>
+                <li>Functional testing of all systems</li>
+                <li>Documentation completion</li>
+                <li>Client demonstration and handover</li>
+              </ol>
+              <p className="mt-3 text-[#FFC900]/70 italic">Each step must be completed successfully before proceeding to the next.</p>
+            </div>
+          }
+        />
       </div>
     )
   },
@@ -393,50 +534,124 @@ export const sections304: Record<string, {
     title: "Documentation and Certification",
     description: "Required documentation for compliant electrical installations",
     content: (
-      <div className="prose prose-invert max-w-none">
-        <h2>Documentation and Certification</h2>
+      <div className="space-y-6">
+        <LessonContent title="Assessment Preparation">
+          <p>Understanding how you will be assessed on inspection, testing, and commissioning skills.</p>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Typical Assessment Tasks</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Safe Isolation:</strong> Demonstrate the complete safe isolation procedure including:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Testing the tester before use</li>
+                <li>Isolating the circuit or installation</li>
+                <li>Securing the isolation</li>
+                <li>Verifying the isolation</li>
+                <li>Re-testing the tester after use</li>
+              </ul>
+            </li>
+            <li><strong>Dead Testing:</strong> Perform and record results for:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Continuity of protective conductors</li>
+                <li>Continuity of ring final circuits</li>
+                <li>Insulation resistance</li>
+                <li>Polarity</li>
+              </ul>
+            </li>
+            <li><strong>Live Testing:</strong> Under supervision, perform and record:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Earth fault loop impedance tests</li>
+                <li>Prospective fault current measurements</li>
+                <li>RCD testing</li>
+              </ul>
+            </li>
+            <li><strong>Documentation:</strong> Complete an Electrical Installation Certificate with:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Accurate client and installation details</li>
+                <li>Correct description of work</li>
+                <li>Appropriate declarations</li>
+                <li>Properly completed schedules</li>
+              </ul>
+            </li>
+            <li><strong>Visual Inspection:</strong> Identify defects such as:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Missing cable glands or grommets</li>
+                <li>Incorrect bonding arrangements</li>
+                <li>Missing fixings or mechanical protection</li>
+                <li>Incorrect cable selection or installation</li>
+              </ul>
+            </li>
+            <li><strong>Handover:</strong> Give a verbal or written explanation of:
+              <ul className="list-disc pl-6 space-y-1 mt-1">
+                <li>Inspection and test findings</li>
+                <li>Meaning of certificates provided</li>
+                <li>Any limitations or restrictions</li>
+                <li>Recommendations for remedial work if needed</li>
+              </ul>
+            </li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Assessment Success Tips</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li><strong>Safety First:</strong> Always prioritize safety procedures</li>
+            <li><strong>Sequence Matters:</strong> Follow the correct testing sequence</li>
+            <li><strong>Documentation Clarity:</strong> Complete all documents clearly and accurately</li>
+            <li><strong>Equipment Knowledge:</strong> Be familiar with test equipment operation</li>
+            <li><strong>Communication Skills:</strong> Practice explaining technical concepts clearly</li>
+            <li><strong>Time Management:</strong> Work methodically but efficiently</li>
+          </ul>
+          
+          <h3 className="text-xl font-medium text-[#FFC900] mt-6 mb-3">Common Assessment Errors</h3>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Skipping safety procedures or isolation steps</li>
+            <li>Testing in incorrect sequence</li>
+            <li>Incomplete documentation</li>
+            <li>Incorrect interpretation of test results</li>
+            <li>Failing to identify obvious visual defects</li>
+            <li>Poor explanation of findings during handover</li>
+          </ul>
+        </LessonContent>
         
-        <p>Proper documentation is essential for regulatory compliance and future reference.</p>
-        
-        <h3>Required Documentation</h3>
-        <ul>
-          <li><strong>Electrical Installation Certificate (EIC)</strong> - For new installations or major alterations</li>
-          <li><strong>Minor Electrical Installation Works Certificate (MEIWC)</strong> - For small additions to existing installations</li>
-          <li><strong>Schedule of Test Results</strong> - Recording all measured values</li>
-          <li><strong>Schedule of Inspections</strong> - Checklist of visual inspection items</li>
-          <li><strong>Electrical Installation Condition Report (EICR)</strong> - For periodic inspection</li>
-          <li><strong>As-built drawings</strong> - Updated schematics showing actual installation</li>
-          <li><strong>Operation and maintenance manuals</strong> - For installed equipment</li>
-        </ul>
-        
-        <h3>Certificate Contents</h3>
-        <ul>
-          <li>Details of client and installation address</li>
-          <li>Description of work carried out</li>
-          <li>Design, construction, and inspection/testing declarations</li>
-          <li>Details of departures from standards (if any)</li>
-          <li>Next inspection recommendation date</li>
-          <li>Details of signatories (designer, constructor, inspector/tester)</li>
-        </ul>
-        
-        <h3>Additional Documentation</h3>
-        <ul>
-          <li>Risk assessments</li>
-          <li>Method statements</li>
-          <li>Commissioning records</li>
-          <li>Distribution board schedules</li>
-          <li>Manufacturer's instructions and warranties</li>
-          <li>Special location certificates (e.g., bathroom zones, swimming pools)</li>
-        </ul>
-        
-        <h3>Documentation Management</h3>
-        <ul>
-          <li>Secure storage of original documentation</li>
-          <li>Provision of copies to client/building owner</li>
-          <li>Electronic backup of documentation where possible</li>
-          <li>Clear organization for easy future reference</li>
-          <li>Compliance with retention requirements</li>
-        </ul>
+        <ContentSection
+          title="Key Points to Remember for Unit 304"
+          content={
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-[#FFC900]/80">
+                <thead>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <th className="py-3 px-4 text-left">Topic</th>
+                    <th className="py-3 px-4 text-left">Critical Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-3 px-4">Dead Testing Order</td>
+                    <td className="py-3 px-4">CPC continuity ➔ Ring Continuity ➔ Insulation Resistance ➔ Polarity</td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-3 px-4">Live Testing Order</td>
+                    <td className="py-3 px-4">Earth Fault Loop ➔ PFC ➔ RCD Trip Testing</td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-3 px-4">Isolation</td>
+                    <td className="py-3 px-4">Always use approved procedures: test your tester, isolate, test the circuit is dead, re-test your tester</td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-3 px-4">Test Instruments</td>
+                    <td className="py-3 px-4">Know how to set up, use, and interpret results from Multifunction Tester (MFT)</td>
+                  </tr>
+                  <tr className="border-b border-[#FFC900]/20">
+                    <td className="py-3 px-4">Legal Compliance</td>
+                    <td className="py-3 px-4">Must meet BS 7671 Part 6 standards and record accurately</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4">Sequence</td>
+                    <td className="py-3 px-4">Visual inspection ➔ Dead testing ➔ Live testing ➔ Functional tests</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          }
+        />
       </div>
     )
   },
