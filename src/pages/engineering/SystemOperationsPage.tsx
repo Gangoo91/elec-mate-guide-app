@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -18,7 +17,7 @@ import {
   systemOperationsSection3_2,
   systemOperationsSection3_3,
   systemOperationsQuestions
-} from "@/data/units/sections/engineering/systemOperations";
+} from "@/data/units/sections/engineering";
 
 const SystemOperationsPage = () => {
   const navigate = useNavigate();
