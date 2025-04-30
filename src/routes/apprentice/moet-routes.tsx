@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -30,6 +31,9 @@ import FaultFindingPage from "../../pages/moet/FaultFindingPage";
 import FaultFindingSectionPage from "../../pages/moet/FaultFindingSectionPage";
 import EquipmentInstallationPage from "../../pages/moet/EquipmentInstallationPage";
 import EquipmentInstallationSectionPage from "../../pages/moet/EquipmentInstallationSectionPage";
+import ProfessionalConductPage from "../../pages/moet/ProfessionalConductPage";
+import SafetyAwarenessPage from "../../pages/moet/SafetyAwarenessPage";
+import TeamworkPage from "../../pages/moet/TeamworkPage";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -111,6 +115,18 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/behaviours",
     element: <MOETBehavioursPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct",
+    element: <ProfessionalConductPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness",
+    element: <SafetyAwarenessPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours/teamwork",
+    element: <TeamworkPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/assessment",
