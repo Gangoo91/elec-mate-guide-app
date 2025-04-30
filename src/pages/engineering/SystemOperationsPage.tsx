@@ -3,9 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import SectionGroup from "@/components/units/level3/SectionGroup";
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import LessonContent from "@/components/units/LessonContent";
 
 const SystemOperationsPage = () => {
   const navigate = useNavigate();
@@ -14,84 +12,9 @@ const SystemOperationsPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations');
   };
 
-  const handleStudy = (sectionId: string) => {
-    navigate(`/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/${sectionId}`);
-  };
-
-  const handleTakeQuiz = () => {
-    navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/assessment');
-  };
-
-  // Section data structured like other course pages
-  const sectionGroups = [
-    {
-      number: "1",
-      title: "Introduction to System Operations",
-      sections: [
-        {
-          id: "1.1",
-          title: "System Operations Overview",
-          description: "Basic concepts and principles of electrical system operations"
-        },
-        {
-          id: "1.2",
-          title: "Operational Standards",
-          description: "Industry standards and regulatory requirements"
-        },
-        {
-          id: "1.3",
-          title: "System Components",
-          description: "Key components of electrical operational systems"
-        }
-      ]
-    },
-    {
-      number: "2",
-      title: "Control Systems",
-      sections: [
-        {
-          id: "2.1",
-          title: "SCADA Systems",
-          description: "Supervisory Control and Data Acquisition fundamentals"
-        },
-        {
-          id: "2.2",
-          title: "Building Management Systems",
-          description: "BMS integration and operation"
-        },
-        {
-          id: "2.3",
-          title: "Programmable Logic Controllers",
-          description: "PLC programming and implementation"
-        }
-      ]
-    },
-    {
-      number: "3",
-      title: "Operational Procedures",
-      sections: [
-        {
-          id: "3.1",
-          title: "Standard Operating Procedures",
-          description: "Documentation and implementation of SOPs"
-        },
-        {
-          id: "3.2",
-          title: "Emergency Response Planning",
-          description: "Protocols for system failures and emergencies"
-        },
-        {
-          id: "3.3",
-          title: "Maintenance Integration",
-          description: "Integrating maintenance with system operations"
-        }
-      ]
-    }
-  ];
-
   return (
     <MainLayout>
-      <div className="container px-4 py-8">
+      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="System Operations"
           description="Understanding and managing electrical system operations"
@@ -99,27 +22,61 @@ const SystemOperationsPage = () => {
         />
         
         <div className="mt-8 space-y-8">
-          {/* Map through section groups */}
-          {sectionGroups.map((group) => (
-            <SectionGroup
-              key={group.number}
-              number={group.number}
-              title={group.title}
-              sections={group.sections}
-              onStudy={handleStudy}
-            />
-          ))}
-          
-          {/* Unit Quiz Button */}
-          <div className="mt-12">
-            <Button 
-              className="w-full py-6 bg-[#FFC900] hover:bg-[#e5b700] text-[#22251e] font-semibold text-lg"
-              onClick={handleTakeQuiz}
-            >
-              <CheckCircle className="h-5 w-5 mr-2" />
-              Test Your Knowledge
-            </Button>
-          </div>
+          <LessonContent title="Introduction to System Operations">
+            <div className="space-y-4">
+              <p>
+                System operations in electrical engineering involve the efficient management, control, and monitoring 
+                of electrical systems to ensure reliable power supply and optimal performance. This includes understanding 
+                load management, power quality, automation systems, and operational procedures.
+              </p>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900]">Key Aspects of System Operations</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Real-time monitoring and control systems</li>
+                <li>Load balancing and power distribution</li>
+                <li>Fault detection and isolation</li>
+                <li>Emergency response procedures</li>
+                <li>Operational efficiency and optimization</li>
+              </ul>
+            </div>
+          </LessonContent>
+
+          <LessonContent title="Control Systems">
+            <div className="space-y-4">
+              <p>
+                Control systems are the backbone of modern electrical operations, providing the means to monitor, 
+                adjust, and optimize system performance through automated processes and feedback mechanisms.
+              </p>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900]">Types of Control Systems</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>SCADA (Supervisory Control And Data Acquisition)</li>
+                <li>Distributed Control Systems (DCS)</li>
+                <li>Programmable Logic Controllers (PLCs)</li>
+                <li>Building Management Systems (BMS)</li>
+                <li>Smart grid technologies</li>
+              </ul>
+            </div>
+          </LessonContent>
+
+          <LessonContent title="Operational Procedures">
+            <div className="space-y-4">
+              <p>
+                Standard operating procedures (SOPs) are essential for consistent, safe, and efficient electrical system 
+                operations. These documented processes guide technicians through routine tasks, maintenance activities, 
+                and emergency situations.
+              </p>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900]">Key Operational Procedures</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>System startup and shutdown sequences</li>
+                <li>Switching operations and isolation procedures</li>
+                <li>Emergency response protocols</li>
+                <li>Maintenance scheduling and implementation</li>
+                <li>Performance monitoring and reporting</li>
+              </ul>
+            </div>
+          </LessonContent>
         </div>
       </div>
     </MainLayout>

@@ -23,14 +23,8 @@ import SafetyProtocolsPage from "../../pages/maintenance/SafetyProtocolsPage";
 import DocumentationPage from "../../pages/maintenance/DocumentationPage";
 import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
-import SystemOperationsSectionPage from "../../pages/engineering/SystemOperationsSectionPage";
-import SystemOperationsAssessmentPage from "../../pages/engineering/SystemOperationsAssessmentPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
-import InstallationPlanningAssessmentPage from "../../pages/engineering/InstallationPlanningAssessmentPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
-import ProjectPlanningPage from "../../pages/engineering/installation/ProjectPlanningPage";
-import TechnicalDesignPage from "../../pages/engineering/installation/TechnicalDesignPage";
-import ImplementationPage from "../../pages/engineering/installation/ImplementationPage";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -44,14 +38,6 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills",
     element: <MOETCoreSkillsPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/behaviours",
-    element: <MOETBehavioursPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/assessment",
-    element: <MOETAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",
@@ -86,36 +72,20 @@ const moetRoutes: RouteObject[] = [
     element: <SystemOperationsPage />
   },
   {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/:sectionId",
-    element: <SystemOperationsSectionPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/assessment",
-    element: <SystemOperationsAssessmentPage />
-  },
-  {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning",
     element: <InstallationPlanningPage />
   },
   {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/assessment",
-    element: <InstallationPlanningAssessmentPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/project-planning",
-    element: <ProjectPlanningPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/technical-design",
-    element: <TechnicalDesignPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/implementation",
-    element: <ImplementationPage />
-  },
-  {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/technical-documentation",
     element: <TechnicalDocumentationPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours",
+    element: <MOETBehavioursPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment",
+    element: <MOETAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics",

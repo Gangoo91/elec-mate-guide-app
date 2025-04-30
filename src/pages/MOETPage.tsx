@@ -42,8 +42,7 @@ const MOETPage = () => {
 
   const handleCardClick = (path: string) => {
     console.log("MOETPage - Navigating to:", path);
-    // Force a complete page reload to ensure clean navigation state
-    window.location.href = path;
+    navigate(path);
   };
 
   return (
