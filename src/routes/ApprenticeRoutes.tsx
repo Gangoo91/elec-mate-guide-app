@@ -14,6 +14,9 @@ import BasicElectronicsPage from "../pages/moet/BasicElectronicsPage"; // Import
 import CircuitTheoryPage from "../pages/moet/CircuitTheoryPage"; // Import specific MOET pages
 import PowerSystemsPage from "../pages/moet/PowerSystemsPage"; // Import specific MOET pages
 import ElectricalPrinciplesPage from "../pages/moet/ElectricalPrinciplesPage"; // Import ElectricalPrinciplesPage
+import MOETEngineeringOperationsPage from "../pages/MOETEngineeringOperationsPage"; // Import MOETEngineeringOperationsPage
+import MOETMaintenancePracticesPage from "../pages/MOETMaintenancePracticesPage"; // Import MOETMaintenancePracticesPage
+import MOETElectricalPrinciplesPage from "../pages/MOETElectricalPrinciplesPage"; // Import MOETElectricalPrinciplesPage
 import AM2HomePage from "../pages/AM2Page"; // Using existing page
 import UnitContentPage from "../pages/UnitContentPage";
 import Level2Unit201Page from "../pages/Level2Unit201Page";
@@ -114,6 +117,14 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",
     element: <ElectricalPrinciplesPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices",
+    element: <MOETMaintenancePracticesPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations",
+    element: <MOETEngineeringOperationsPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/behaviours",
