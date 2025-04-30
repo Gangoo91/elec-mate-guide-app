@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { sections204 } from "@/data/units/sections/unit204Sections";
+import { sections204 } from "@/data/units/sections/unit204";
 import { useToast } from "@/components/ui/use-toast";
 import { SafetyQuiz } from "@/components/units/SafetyQuiz";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ const Unit204SectionPage = () => {
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
   
   const sectionContent = sections204[sectionId];
-  const isLastSection = sectionId === "1.2";
+  const isLastSection = currentSectionIndex === sectionKeys.length - 1;
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/level-2/core-units/204');

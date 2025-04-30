@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -25,9 +24,11 @@ import { ChatProvider } from "./contexts/ChatContext";
 import Level2Unit201Page from "./pages/Level2Unit201Page";
 import Level2Unit202Page from "./pages/Level2Unit202Page";
 import Level2Unit203Page from "./pages/Level2Unit203Page";
+import Level2Unit204Page from './pages/Level2Unit204Page';
 import Unit201SectionPage from "./pages/units/Unit201SectionPage";
 import Unit202SectionPage from "./pages/units/Unit202SectionPage";
 import Unit203SectionPage from "./pages/units/Unit203SectionPage";
+import Unit204SectionPage from './pages/units/Unit204SectionPage';
 import UnitContentPage from "./pages/UnitContentPage";
 import Level3Unit305Page from "./pages/Level3Unit305Page";
 import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
@@ -86,6 +87,10 @@ const App = () => {
                       path="/apprentices/study-materials/city-guilds/level-2/core-units/203" 
                       element={<Level2Unit203Page />} 
                     />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/204" 
+                      element={<Level2Unit204Page />} 
+                    />
                     
                     {/* Level 3 Unit Pages */}
                     <Route 
@@ -113,6 +118,10 @@ const App = () => {
                     <Route 
                       path="/apprentices/study-materials/city-guilds/level-2/core-units/203/:sectionId" 
                       element={<Unit203SectionPage />} 
+                    />
+                    <Route 
+                      path="/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId" 
+                      element={<Unit204SectionPage />} 
                     />
                     
                     {/* Map apprentice routes */}
