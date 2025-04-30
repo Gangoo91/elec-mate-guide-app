@@ -105,7 +105,6 @@ const SafetyAwarenessPage = () => {
         {!showAssessment ? (
           <>
             <div className="mt-8 space-y-8">
-              {/* Map through section groups */}
               {sectionGroups.map((group) => (
                 <SectionGroup
                   key={group.number}
@@ -116,7 +115,6 @@ const SafetyAwarenessPage = () => {
                 />
               ))}
               
-              {/* Unit Quiz Button */}
               <div className="mt-12">
                 <Button 
                   className="w-full py-6 bg-[#FFC900] hover:bg-[#e5b700] text-[#22251e] font-semibold text-lg"

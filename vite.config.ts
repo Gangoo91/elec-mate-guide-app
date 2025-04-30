@@ -25,10 +25,17 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       external: ['stream', 'timers', 'events'], // Explicitly mark these as external
+      output: {
+        manualChunks: {
+          // Split large dependencies into separate chunks
+          react: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+        }
+      },
     },
     sourcemap: true, // Enable source maps for better debugging
     minify: 'terser', // Use terser for better minification
     target: 'esnext', // Target modern browsers for better optimization
-    chunkSizeWarningLimit: 1000, // Increase chunk size warning limit
+    chunkSizeWarningLimit: 2000, // Increase chunk size warning limit
   },
 }));

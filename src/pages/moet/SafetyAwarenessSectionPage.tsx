@@ -15,6 +15,7 @@ const SafetyAwarenessSectionPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness');
   };
 
+  // Find the section by ID
   const section = safetyAwarenessSections.find(s => s.id === sectionId);
 
   if (!section) {
