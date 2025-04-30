@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
 import MOETCoreKnowledgePage from "../../pages/MOETCoreKnowledgePage";
+import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import MOETBehavioursPage from "../../pages/MOETBehavioursPage";
 import MOETAssessmentPage from "../../pages/MOETAssessmentPage";
 import BasicElectronicsPage from "../../pages/moet/BasicElectronicsPage";
@@ -21,7 +22,6 @@ import PreventiveMaintenancePage from "../../pages/maintenance/PreventiveMainten
 import PreventiveMaintenanceSectionPage from "../../pages/maintenance/PreventiveMaintenanceSectionPage";
 import SafetyProtocolsPage from "../../pages/maintenance/SafetyProtocolsPage";
 import DocumentationPage from "../../pages/maintenance/DocumentationPage";
-import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";

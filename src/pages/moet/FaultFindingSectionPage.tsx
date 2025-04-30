@@ -6,6 +6,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import LessonContent from "@/components/units/LessonContent";
 import SectionNavigation from "@/components/moet/SectionNavigation";
 import { faultFindingSections } from "@/data/moet/faultFindingSections";
+import SectionNotFound from "@/components/moet/SectionNotFound";
 
 const FaultFindingSectionPage = () => {
   const { sectionId } = useParams<{ sectionId: string }>();
@@ -19,22 +20,7 @@ const FaultFindingSectionPage = () => {
   const currentSection = faultFindingSections[sectionId || ""];
   
   if (!currentSection) {
-    return (
-      <MainLayout>
-        <div className="container px-4 py-8">
-          <PageHeader 
-            title="Section Not Found"
-            description="The requested section could not be found"
-            customBackAction={handleBackClick}
-          />
-          <div className="mt-8">
-            <p className="text-[#FFC900]/80">
-              Please return to the Fault Finding page and select a valid section.
-            </p>
-          </div>
-        </div>
-      </MainLayout>
-    );
+    return <SectionNotFound handleBackClick={handleBackClick} />;
   }
   
   // Find previous and next sections for navigation

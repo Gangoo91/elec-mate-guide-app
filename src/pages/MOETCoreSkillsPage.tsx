@@ -13,6 +13,7 @@ const MOETCoreSkillsPage = () => {
   };
 
   const navigateTo = (path: string) => {
+    console.log("MOETCoreSkillsPage - Navigating to:", path);
     navigate(path);
   };
 
