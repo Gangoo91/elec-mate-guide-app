@@ -13,21 +13,29 @@ const MOETEngineeringOperationsPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge');
   };
 
+  const handleNavigate = (path: string) => {
+    console.log("MOETEngineeringOperationsPage - Navigating to:", path);
+    navigate(path);
+  };
+
   const topics = [
     {
       title: "System Operations",
       description: "Understanding and managing electrical system operations.",
-      icon: <Settings className="h-6 w-6 text-[#FFC900]" />
+      icon: <Settings className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations"
     },
     {
       title: "Installation Planning",
       description: "Planning and executing electrical installation projects.",
-      icon: <LayoutGrid className="h-6 w-6 text-[#FFC900]" />
+      icon: <LayoutGrid className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning"
     },
     {
       title: "Technical Documentation",
       description: "Creating and maintaining technical documentation.",
-      icon: <FileText className="h-6 w-6 text-[#FFC900]" />
+      icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/technical-documentation"
     }
   ];
 
@@ -44,7 +52,8 @@ const MOETEngineeringOperationsPage = () => {
           {topics.map((topic, index) => (
             <Card 
               key={index} 
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300"
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={() => handleNavigate(topic.path)}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
