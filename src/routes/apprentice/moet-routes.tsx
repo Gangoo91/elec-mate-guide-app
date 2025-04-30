@@ -11,6 +11,7 @@ import PowerSystemsPage from "../../pages/moet/PowerSystemsPage";
 import ElectricalPrinciplesPage from "../../pages/moet/ElectricalPrinciplesPage";
 import MOETEngineeringOperationsPage from "../../pages/MOETEngineeringOperationsPage";
 import MOETMaintenancePracticesPage from "../../pages/MOETMaintenancePracticesPage";
+import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge",
     element: <MOETCoreKnowledgePage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills",
+    element: <MOETCoreSkillsPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",

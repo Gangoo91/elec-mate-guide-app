@@ -18,27 +18,31 @@ const MOETPage = () => {
       title: "Core Knowledge",
       description: "Essential knowledge covering electrical principles, maintenance practices, and engineering operations.",
       icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge')
+      path: '/apprentices/study-materials/city-guilds/moet/core-knowledge'
     },
     {
       title: "Core Skills",
       description: "Practical skills in electrical maintenance, fault finding, and equipment installation.",
       icon: <ListCheck className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/core-skills')
+      path: '/apprentices/study-materials/city-guilds/moet/core-skills'
     },
     {
       title: "Behaviours Expected",
       description: "Professional conduct, safety awareness, and teamwork expectations in the workplace.",
       icon: <List className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/behaviours')
+      path: '/apprentices/study-materials/city-guilds/moet/behaviours'
     },
     {
       title: "End Point Assessment",
       description: "Final assessment requirements including practical observations and technical interviews.",
       icon: <FileText className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/city-guilds/moet/assessment')
+      path: '/apprentices/study-materials/city-guilds/moet/assessment'
     }
   ];
+
+  const handleCardClick = (path: string) => {
+    navigate(path);
+  };
 
   return (
     <MainLayout>
@@ -54,7 +58,7 @@ const MOETPage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-              onClick={section.onClick}
+              onClick={() => handleCardClick(section.path)}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
