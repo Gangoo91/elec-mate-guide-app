@@ -1,105 +1,127 @@
 
 import React from 'react';
 import { Section210 } from './types';
-import { ContentSection } from "@/components/units/ContentSection";
 import LessonContent from "@/components/units/LessonContent";
 
-const SectionContent = () => {
-  return (
-    <LessonContent title="Why Communication Matters">
-      <p className="mb-4">
-        Good communication skills are just as important as technical expertise for electricians. This section explores why
-        effective communication is essential in the electrical trade.
-      </p>
-      
-      <div className="bg-[#2a2d24] p-4 rounded-md mb-4">
-        <h4 className="font-medium text-[#FFC900] mb-2">Benefits of Effective Communication</h4>
-        <ul className="list-disc pl-6 space-y-1 mt-2">
-          <li>Prevents misunderstandings that could lead to safety incidents</li>
-          <li>Builds trust with customers and colleagues</li>
-          <li>Makes work go more smoothly and efficiently</li>
-          <li>Reduces costly errors and rework</li>
-          <li>Enhances your professional reputation</li>
-        </ul>
-      </div>
-      
-      <div className="space-y-4">
-        <div className="bg-[#2a2d24] p-4 rounded-md">
-          <h4 className="font-medium text-[#FFC900] mb-2">Safety Implications</h4>
-          <p className="mb-2">Clear communication is crucial for safety reasons:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li><strong>Risk Awareness:</strong> Communicating potential hazards to others on site</li>
-            <li><strong>Work Coordination:</strong> Ensuring everyone knows what's happening and when</li>
-            <li><strong>Emergency Response:</strong> Clear instructions during safety incidents</li>
-            <li><strong>Isolation Procedures:</strong> Confirming when circuits are live or dead</li>
-          </ul>
-        </div>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md">
-          <h4 className="font-medium text-[#FFC900] mb-2">Professional Development</h4>
-          <p className="mb-2">Communication affects your career progress:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Electricians with strong communication skills often advance more quickly</li>
-            <li>Leadership positions require excellent communication abilities</li>
-            <li>Customer-facing roles value clear explanations and rapport-building</li>
-            <li>Working with other trades requires effective interdisciplinary communication</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div className="mt-4">
-        <h4 className="font-medium text-[#FFC900] mb-2">Real-World Impact</h4>
-        <p className="mb-2">Poor communication can lead to:</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Incorrect installations requiring costly rework</li>
-          <li>Safety incidents that could have been prevented</li>
-          <li>Dissatisfied customers and damaged reputation</li>
-          <li>Conflict with colleagues and other trades</li>
-          <li>Missed project deadlines and increased costs</li>
-        </ul>
-      </div>
-    </LessonContent>
-  );
-};
-
 export const section1_1: Section210 = {
-  title: "Why Communication Matters",
-  description: "Understand the importance of effective communication in the electrical trade",
+  title: "Communication Fundamentals",
+  description: "Understand the importance of communication in electrical work",
   content: (
-    <>
-      <ContentSection 
-        title="Learning Objectives"
-        content={
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Recognize the importance of communication skills in electrical work</li>
-            <li>Understand how communication affects safety and efficiency</li>
-            <li>Identify situations where clear communication is critical</li>
-            <li>Appreciate the link between communication skills and career progression</li>
-          </ul>
-        }
-      />
+    <div className="space-y-8">
+      <LessonContent title="Learning Objectives">
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Understand why effective communication is essential in the electrical trade</li>
+          <li>Identify the key components of professional communication</li>
+          <li>Recognize how good communication contributes to safety and efficiency</li>
+        </ul>
+      </LessonContent>
       
-      <ContentSection
-        title="Communication Fundamentals" 
-        content={<SectionContent />}
-      />
-    </>
+      <LessonContent title="1.1.1 Why Communication Matters in Electrical Work">
+        <p className="mb-4">
+          In the electrical trade, clear and effective communication is just as important as technical skills. Good communication:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>Helps prevent dangerous misunderstandings that could lead to safety incidents</li>
+          <li>Ensures work is completed correctly the first time, reducing costly rework</li>
+          <li>Builds trust with customers, colleagues, and other trades</li>
+          <li>Creates a professional impression that enhances your reputation</li>
+        </ul>
+        <p>
+          Many skilled electricians find their career progression limited not by technical ability, but by communication skills. 
+          The ability to explain technical concepts clearly, document work accurately, and collaborate effectively with others
+          is often what separates those who advance to supervisory and management roles.
+        </p>
+      </LessonContent>
+      
+      <LessonContent title="1.1.2 Components of Effective Communication">
+        <p className="mb-4">
+          Effective communication in the electrical trade comprises several key elements:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-4">
+          <li>
+            <strong className="text-[#FFC900]">Clarity:</strong> Using simple, straightforward language that 
+            avoids unnecessary jargon, especially when speaking with customers or non-specialists
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Active listening:</strong> Paying full attention to what others are saying, 
+            asking clarifying questions, and confirming understanding
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Professionalism:</strong> Maintaining a respectful tone and demeanor
+            even in challenging situations
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Thoroughness:</strong> Covering all necessary details without omitting
+            important information
+          </li>
+        </ul>
+        <p>
+          These components apply to all forms of communication, whether you're speaking with a customer,
+          writing up job notes, or coordinating with other trades on a construction site.
+        </p>
+      </LessonContent>
+      
+      <LessonContent title="1.1.3 Safety Through Communication">
+        <p className="mb-4">
+          In few industries is clear communication more directly linked to safety than in electrical work:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>Clear verbal warnings when switching circuits on or off prevent accidents</li>
+          <li>Proper labeling and documentation of installations protects future workers</li>
+          <li>Effective communication about hazards ensures everyone on site stays safe</li>
+          <li>Clear handover information prevents dangerous assumptions by others</li>
+        </ul>
+        <p className="mb-4">
+          Many electrical accidents have communication failures as a contributing factor. Whether it's unclear
+          instructions, poor handover between shifts, or inadequate documentation, communication breakdowns
+          can have serious consequences.
+        </p>
+        <div className="bg-[#353a2c] p-4 rounded-md border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] font-medium mb-2">Case Study: Communication Failure</h4>
+          <p className="text-[#FFC900]/80">
+            An electrician was seriously injured when working on what he believed was an isolated circuit. The previous shift had 
+            documented that they had isolated "the lighting circuit in zone B," but failed to mention they had reconnected it before 
+            leaving. Clearer documentation with specific details about the final state of circuits could have prevented this incident.
+          </p>
+        </div>
+      </LessonContent>
+    </div>
   ),
   detailedContent: (
-    <>
-      <p className="mb-4">As an electrician, your ability to communicate effectively can be just as important as your technical skills. Clear communication ensures:</p>
+    <div className="space-y-6">
+      <h4 className="text-xl font-medium text-[#FFC900]">Communication Barriers in Electrical Work</h4>
+      <p className="mb-4">
+        Several common barriers can impede effective communication on electrical jobs:
+      </p>
+      <ul className="list-disc pl-5 space-y-2 mb-6">
+        <li>Technical jargon that customers or other trades may not understand</li>
+        <li>Noisy work environments making verbal communication difficult</li>
+        <li>Time pressure leading to rushed or incomplete information exchange</li>
+        <li>Cultural and language differences on diverse worksites</li>
+        <li>Assumptions that others have the same technical knowledge as you</li>
+      </ul>
       
-      <h4 className="text-xl text-[#FFC900] mb-2">Safety</h4>
-      <p className="mb-4">Miscommunication can lead to serious safety incidents. When you clearly communicate potential hazards, work procedures, and safety requirements, you help protect yourself and others from harm.</p>
-      
-      <h4 className="text-xl text-[#FFC900] mb-2">Customer Satisfaction</h4>
-      <p className="mb-4">Customers appreciate electricians who can explain technical issues in ways they understand. Good communication builds trust and leads to repeat business and referrals.</p>
-      
-      <h4 className="text-xl text-[#FFC900] mb-2">Efficiency</h4>
-      <p className="mb-4">Clear instructions and expectations help jobs run smoothly. When everyone understands what needs to be done, work progresses with fewer delays and misunderstandings.</p>
-      
-      <h4 className="text-xl text-[#FFC900] mb-2">Career Advancement</h4>
-      <p className="mb-4">Electricians with strong communication skills often advance more quickly. The ability to clearly present ideas, lead teams, and interact professionally with clients becomes increasingly important as you move up in your career.</p>
-    </>
-  )
+      <h4 className="text-xl font-medium text-[#FFC900]">Overcoming Communication Barriers</h4>
+      <p className="mb-4">
+        Successful electricians develop strategies to overcome these barriers:
+      </p>
+      <ul className="list-disc pl-5 space-y-3">
+        <li>
+          <strong className="text-[#FFC900]">Adapt your language:</strong> Use simpler terms with non-specialists, and confirm understanding
+        </li>
+        <li>
+          <strong className="text-[#FFC900]">Use visual aids:</strong> Diagrams, photos, or pointing to physical components can overcome language barriers
+        </li>
+        <li>
+          <strong className="text-[#FFC900]">Document thoroughly:</strong> Written records provide clarity and reference points when verbal communication is challenging
+        </li>
+        <li>
+          <strong className="text-[#FFC900]">Follow up important communications:</strong> Send confirmation emails or texts after important verbal discussions
+        </li>
+        <li>
+          <strong className="text-[#FFC900]">Use the "teach-back" method:</strong> Ask others to explain back to you what they understood to ensure clarity
+        </li>
+      </ul>
+    </div>
+  ),
 };

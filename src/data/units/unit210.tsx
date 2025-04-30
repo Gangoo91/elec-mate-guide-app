@@ -4,10 +4,10 @@ import { UnitContent } from './interfaces';
 
 export const unit210: UnitContent = {
   title: "Understand How to Communicate with Others",
-  description: "Learn how to talk to customers and work well with your team. This helps you explain your work clearly and become a better professional.",
+  description: "Learn how to talk to customers, work well with your team, and create clear written documentation. This helps you explain your work clearly and become a better professional.",
   sections: [
     {
-      title: "Why Communication Matters",
+      title: "1. Communication Fundamentals",
       content: (
         <>
           <p>Good communication is just as important as technical skills:</p>
@@ -21,7 +21,7 @@ export const unit210: UnitContent = {
       )
     },
     {
-      title: "Talking with Customers",
+      title: "2. Communicating with Customers",
       content: (
         <>
           <p>When dealing with customers:</p>
@@ -36,7 +36,7 @@ export const unit210: UnitContent = {
       )
     },
     {
-      title: "Working with Your Team",
+      title: "3. Team Communication",
       content: (
         <>
           <p>On a job site, you'll work with other electricians and different trades:</p>
@@ -51,7 +51,7 @@ export const unit210: UnitContent = {
       )
     },
     {
-      title: "Written Communication",
+      title: "4. Written Communication",
       content: (
         <>
           <p>You'll also need to write clearly for:</p>

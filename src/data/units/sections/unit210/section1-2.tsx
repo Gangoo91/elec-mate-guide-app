@@ -1,122 +1,146 @@
 
 import React from 'react';
 import { Section210 } from './types';
-import { ContentSection } from "@/components/units/ContentSection";
 import LessonContent from "@/components/units/LessonContent";
 
-const SectionContent = () => {
-  return (
-    <LessonContent title="Talking with Customers">
-      <p className="mb-4">
-        Effective customer communication is crucial for success in the electrical trade. This section covers techniques
-        for communicating clearly and professionally with customers.
-      </p>
-      
-      <div className="bg-[#2a2d24] p-4 rounded-md mb-4">
-        <h4 className="font-medium text-[#FFC900] mb-2">Key Principles for Customer Communication</h4>
-        <ul className="list-disc pl-6 space-y-1 mt-2">
-          <li>Use simple, non-technical language they can understand</li>
-          <li>Listen carefully to their needs and concerns</li>
-          <li>Be polite and professional at all times</li>
-          <li>Explain what you're doing and why</li>
-          <li>Remember: you represent your company and the electrical trade</li>
-        </ul>
-      </div>
-      
-      <div className="space-y-4">
-        <div className="bg-[#2a2d24] p-4 rounded-md">
-          <h4 className="font-medium text-[#FFC900] mb-2">Explaining Technical Information</h4>
-          <p className="mb-2">Most customers don't understand electrical terminology:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Avoid jargon like "consumer unit" - say "fuse box" instead</li>
-            <li>Use analogies to explain complex concepts</li>
-            <li>Break down processes into simple steps</li>
-            <li>Use visual aids when helpful</li>
-            <li>Check for understanding by asking questions</li>
-          </ul>
-        </div>
-        
-        <div className="bg-[#2a2d24] p-4 rounded-md">
-          <h4 className="font-medium text-[#FFC900] mb-2">Active Listening Skills</h4>
-          <p className="mb-2">Understanding customer needs requires careful listening:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Give customers your full attention</li>
-            <li>Take notes on specific requirements</li>
-            <li>Ask clarifying questions to confirm understanding</li>
-            <li>Summarize what you've heard before proceeding</li>
-            <li>Address concerns directly rather than dismissing them</li>
-          </ul>
-        </div>
-      </div>
-      
-      <div className="mt-4">
-        <h4 className="font-medium text-[#FFC900] mb-2">Handling Difficult Situations</h4>
-        <p className="mb-2">When challenges arise:</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Stay calm and professional, even if the customer is upset</li>
-          <li>Focus on solutions rather than problems</li>
-          <li>Be honest if mistakes have been made</li>
-          <li>Know when to escalate issues to a supervisor</li>
-          <li>Follow up to ensure customer satisfaction</li>
-        </ul>
-      </div>
-    </LessonContent>
-  );
-};
-
 export const section1_2: Section210 = {
-  title: "Talking with Customers",
-  description: "Learn effective techniques for customer communication",
+  title: "Communicating with Customers",
+  description: "Learn how to effectively communicate with clients and customers",
   content: (
-    <>
-      <ContentSection 
-        title="Learning Objectives"
-        content={
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Use appropriate language when explaining technical matters to customers</li>
-            <li>Apply active listening techniques to understand customer requirements</li>
-            <li>Handle difficult customer situations professionally</li>
-            <li>Project a positive image of yourself and your company</li>
-          </ul>
-        }
-      />
+    <div className="space-y-8">
+      <LessonContent title="Learning Objectives">
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Understand how to explain technical concepts to non-technical customers</li>
+          <li>Learn techniques for managing customer expectations</li>
+          <li>Develop skills for handling challenging customer interactions</li>
+        </ul>
+      </LessonContent>
       
-      <ContentSection
-        title="Customer Communication Skills" 
-        content={<SectionContent />}
-      />
-    </>
+      <LessonContent title="1.2.1 Translating Technical Information">
+        <p className="mb-4">
+          One of the biggest challenges electricians face is explaining complex technical information to customers who have no electrical background:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>Avoid jargon and technical terms (MCBs, RCDs, etc.) unless you explain them first</li>
+          <li>Use everyday analogies to explain electrical concepts (e.g., comparing electrical flow to water)</li>
+          <li>Focus on what the customer needs to know, not everything you know</li>
+          <li>Use visual aids like diagrams or photos when appropriate</li>
+        </ul>
+        <div className="bg-[#353a2c] p-4 rounded-md border border-[#FFC900]/30 mb-4">
+          <h4 className="text-[#FFC900] font-medium mb-2">Example: Instead of:</h4>
+          <p className="text-[#FFC900]/80 italic">
+            "You need a new 30mA Type A RCD because the existing device isn't compliant with the 18th Edition."
+          </p>
+          <h4 className="text-[#FFC900] font-medium mt-4 mb-2">Say:</h4>
+          <p className="text-[#FFC900]/80">
+            "Your current safety switch is outdated and doesn't meet the latest safety standards. I recommend replacing it with a newer version that provides better protection against electric shock."
+          </p>
+        </div>
+        <p>
+          Remember that your goal is to help the customer make informed decisions, not to impress them with your technical knowledge.
+        </p>
+      </LessonContent>
+      
+      <LessonContent title="1.2.2 Setting Clear Expectations">
+        <p className="mb-4">
+          Many customer issues arise from unmet expectations. Clear communication helps prevent these problems:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>Be specific about what work will be done</li>
+          <li>Provide realistic timeframes for completion</li>
+          <li>Be upfront about costs and potential additional charges</li>
+          <li>Explain any limitations or potential issues that might arise</li>
+          <li>Discuss what the customer needs to do (e.g., clear access, be present)</li>
+        </ul>
+        <p className="mb-4">
+          When providing quotes or estimates, always make clear:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>What is included in the price</li>
+          <li>What is excluded</li>
+          <li>Conditions that might affect the final cost</li>
+          <li>How long the quote is valid for</li>
+        </ul>
+        <p>
+          Setting clear expectations helps build trust and reduces the likelihood of disputes later.
+        </p>
+      </LessonContent>
+      
+      <LessonContent title="1.2.3 Handling Difficult Conversations">
+        <p className="mb-4">
+          Even the best electricians sometimes need to deliver difficult news to customers:
+        </p>
+        <ul className="list-disc pl-5 space-y-2 mb-4">
+          <li>When existing installations are unsafe and need costly repairs</li>
+          <li>When work will take longer or cost more than initially expected</li>
+          <li>When a customer's preferred solution isn't compliant with regulations</li>
+        </ul>
+        <p className="mb-4">
+          Tips for handling these situations:
+        </p>
+        <ul className="list-disc pl-5 space-y-3 mb-4">
+          <li>
+            <strong className="text-[#FFC900]">Be direct but empathetic:</strong> Don't sugarcoat safety issues, but acknowledge the impact on the customer
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Provide options:</strong> When possible, give the customer choices along with your recommendation
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Explain why:</strong> Help them understand the reasoning behind requirements or changes
+          </li>
+          <li>
+            <strong className="text-[#FFC900]">Remain calm:</strong> If a customer becomes upset, maintain your professionalism
+          </li>
+        </ul>
+        <div className="bg-[#353a2c] p-4 rounded-md border border-[#FFC900]/30">
+          <h4 className="text-[#FFC900] font-medium mb-2">Scenario: Delivering Unexpected News</h4>
+          <p className="text-[#FFC900]/80 mb-2">
+            "I understand this is disappointing news, and I wish I had better options for you. Unfortunately, your consumer unit doesn't meet current safety standards, and simply replacing the faulty switch would leave other serious safety issues unaddressed. I can show you exactly what I'm concerned about, and we can discuss the different options for making your electrical installation safe."
+          </p>
+        </div>
+      </LessonContent>
+    </div>
   ),
   detailedContent: (
-    <>
-      <p className="mb-4">Effective customer communication is essential for success in the electrical trade.</p>
-      
-      <h4 className="text-xl text-[#FFC900] mb-2">Speaking Simply</h4>
-      <p className="mb-4">Most customers don't understand electrical terminology. When explaining issues:</p>
-      <ul className="list-disc pl-5 mb-4 space-y-1">
-        <li>Avoid technical jargon when possible</li>
-        <li>Use analogies to explain complex concepts</li>
-        <li>Check for understanding by asking questions</li>
-        <li>Use visual aids when helpful</li>
+    <div className="space-y-6">
+      <h4 className="text-xl font-medium text-[#FFC900]">Customer Communication Checklist</h4>
+      <p className="mb-4">
+        Use this checklist when communicating with customers about electrical work:
+      </p>
+      <ul className="list-disc pl-5 space-y-2 mb-6">
+        <li>Introduce yourself clearly, including your qualifications if relevant</li>
+        <li>Listen carefully to the customer's description of their needs or problems</li>
+        <li>Ask clarifying questions to ensure you fully understand their requirements</li>
+        <li>Explain what you're going to do before doing it</li>
+        <li>If you discover additional issues, explain them clearly with reasons</li>
+        <li>Provide written documentation of work done and any recommendations</li>
+        <li>Explain any user instructions or maintenance requirements</li>
+        <li>Follow up after significant work to ensure customer satisfaction</li>
       </ul>
       
-      <h4 className="text-xl text-[#FFC900] mb-2">Active Listening</h4>
-      <p className="mb-4">Understanding customer needs requires careful listening:</p>
-      <ul className="list-disc pl-5 mb-4 space-y-1">
-        <li>Give customers your full attention</li>
-        <li>Ask clarifying questions</li>
-        <li>Summarize what you've heard to confirm understanding</li>
-        <li>Take notes on specific requirements or concerns</li>
+      <h4 className="text-xl font-medium text-[#FFC900]">Cultural Considerations</h4>
+      <p className="mb-4">
+        In a diverse society, you may work with customers from different cultural backgrounds:
+      </p>
+      <ul className="list-disc pl-5 space-y-2 mb-6">
+        <li>Be aware that norms around eye contact, personal space, and formality vary between cultures</li>
+        <li>When working in someone's home, be sensitive to cultural or religious practices</li>
+        <li>If there are language barriers, speak clearly rather than loudly, and use visual aids</li>
+        <li>Avoid using slang, idioms, or humor that might not translate well</li>
+        <li>Be patient if additional explanation is needed</li>
       </ul>
       
-      <h4 className="text-xl text-[#FFC900] mb-2">Professionalism</h4>
-      <p className="mb-4">Your behavior shapes how customers view the entire electrical profession:</p>
-      <ul className="list-disc pl-5 mb-4 space-y-1">
-        <li>Arrive on time and dress appropriately</li>
-        <li>Be respectful of customers' homes and belongings</li>
-        <li>Maintain a calm, professional demeanor even in challenging situations</li>
-        <li>Follow through on commitments and keep customers informed of progress</li>
+      <h4 className="text-xl font-medium text-[#FFC900]">Building Long-term Customer Relationships</h4>
+      <p className="mb-4">
+        Repeat business and referrals are valuable in the electrical trade. Build relationships by:
+      </p>
+      <ul className="list-disc pl-5 space-y-2">
+        <li>Following up after significant work to ensure everything is functioning correctly</li>
+        <li>Providing additional information about maintenance or upgrades when relevant</li>
+        <li>Responding promptly to calls or messages, even for small jobs</li>
+        <li>Remembering details about previous work done for returning customers</li>
+        <li>Asking for feedback and acting on it to improve your service</li>
       </ul>
-    </>
-  )
+    </div>
+  ),
 };
