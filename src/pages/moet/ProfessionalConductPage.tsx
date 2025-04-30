@@ -1,16 +1,118 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import LessonContent from "@/components/units/LessonContent";
+import SectionGroup from "@/components/units/level3/SectionGroup";
+import { SafetyQuiz } from "@/components/units/SafetyQuiz";
+import { professionalConductQuestions } from "@/data/moet/professionalConductSections";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from 'lucide-react';
 
 const ProfessionalConductPage = () => {
   const navigate = useNavigate();
+  const [showAssessment, setShowAssessment] = useState<boolean>(false);
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/behaviours');
   };
+
+  const handleStudy = (sectionId: string) => {
+    navigate(`/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct/${sectionId}`);
+  };
+
+  const handleTakeAssessment = () => {
+    setShowAssessment(true);
+    window.scrollTo(0, 0);
+  };
+
+  // Section data structured like other MOET units
+  const sectionGroups = [
+    {
+      number: "1",
+      title: "Workplace Professionalism",
+      sections: [
+        {
+          id: "1.1",
+          title: "Punctuality and Attendance",
+          description: "Standards for time management and reliability in the workplace"
+        },
+        {
+          id: "1.2",
+          title: "Professional Appearance",
+          description: "Guidelines for appropriate presentation and workwear"
+        },
+        {
+          id: "1.3",
+          title: "Communication Etiquette",
+          description: "Best practices for clear and respectful workplace communication"
+        }
+      ]
+    },
+    {
+      number: "2",
+      title: "Workplace Ethics and Integrity",
+      sections: [
+        {
+          id: "2.1",
+          title: "Honesty and Transparency",
+          description: "Maintaining truthfulness in all professional activities"
+        },
+        {
+          id: "2.2",
+          title: "Confidentiality",
+          description: "Respecting and protecting sensitive information"
+        },
+        {
+          id: "2.3",
+          title: "Professional Boundaries",
+          description: "Maintaining appropriate relationships with colleagues and clients"
+        }
+      ]
+    },
+    {
+      number: "3",
+      title: "Responsibility and Accountability",
+      sections: [
+        {
+          id: "3.1",
+          title: "Taking Ownership of Work",
+          description: "Accepting responsibility for actions and outcomes"
+        },
+        {
+          id: "3.2",
+          title: "Meeting Deadlines",
+          description: "Time management and delivering on commitments"
+        },
+        {
+          id: "3.3",
+          title: "Quality Assurance",
+          description: "Maintaining high standards in all work activities"
+        }
+      ]
+    },
+    {
+      number: "4",
+      title: "Professional Development",
+      sections: [
+        {
+          id: "4.1",
+          title: "Continuous Learning",
+          description: "Staying current with industry knowledge and skills"
+        },
+        {
+          id: "4.2",
+          title: "Seeking and Accepting Feedback",
+          description: "Using constructive criticism to improve performance"
+        },
+        {
+          id: "4.3",
+          title: "Knowledge Sharing",
+          description: "Contributing to team development through sharing expertise"
+        }
+      ]
+    }
+  ];
 
   return (
     <MainLayout>
@@ -21,77 +123,47 @@ const ProfessionalConductPage = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="mt-8 space-y-8">
-          <LessonContent title="Workplace Professionalism">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Punctuality and Attendance</h3>
-              <p className="text-[#FFC900]/80">Consistently arriving on time for work, meetings, and appointments is a fundamental expectation in the electrical industry. Employers and clients rely on technicians to adhere to schedules, especially when critical maintenance or installation work is planned.</p>
+        {!showAssessment ? (
+          <>
+            <div className="mt-8 space-y-8">
+              {/* Map through section groups */}
+              {sectionGroups.map((group) => (
+                <SectionGroup
+                  key={group.number}
+                  number={group.number}
+                  title={group.title}
+                  sections={group.sections}
+                  onStudy={handleStudy}
+                />
+              ))}
               
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Notify your supervisor as early as possible if you will be late or absent</li>
-                <li>Plan travel time considering potential traffic or transport delays</li>
-                <li>Be prepared and ready to start work at the designated time</li>
-                <li>Maintain accurate records of your working hours</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Professional Appearance</h3>
-              <p className="text-[#FFC900]/80">As a representative of your company and the electrical profession, your appearance makes an impression on clients and colleagues. Clean, appropriate workwear and proper personal grooming demonstrate professionalism and respect.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Wear clean, well-maintained work attire according to company policy</li>
-                <li>Ensure proper personal grooming and hygiene</li>
-                <li>Display identification badges or credentials when required</li>
-                <li>Use appropriate PPE for the task and environment</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Communication Etiquette</h3>
-              <p className="text-[#FFC900]/80">Clear, respectful communication is essential when working with colleagues, clients, and stakeholders. Effective communication prevents misunderstandings and ensures that work meets expectations.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Use appropriate language and tone in all communications</li>
-                <li>Listen actively when receiving instructions or feedback</li>
-                <li>Communicate clearly when explaining technical concepts to non-technical individuals</li>
-                <li>Respond to emails, messages, and calls in a timely manner</li>
-                <li>Document work and communications accurately</li>
-              </ul>
+              {/* Unit Quiz Button */}
+              <div className="mt-12">
+                <Button 
+                  className="w-full py-6 bg-[#FFC900] hover:bg-[#e5b700] text-[#22251e] font-semibold text-lg"
+                  onClick={handleTakeAssessment}
+                >
+                  <CheckCircle className="h-5 w-5 mr-2" />
+                  Test Your Knowledge
+                </Button>
+              </div>
             </div>
-          </LessonContent>
-
-          <LessonContent title="Workplace Ethics and Integrity">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Honesty and Transparency</h3>
-              <p className="text-[#FFC900]/80">Maintaining honesty in all aspects of your work builds trust with employers, colleagues, and clients. This includes being truthful about your qualifications, experience, and the status of work.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Accurately report work completed, hours worked, and materials used</li>
-                <li>Acknowledge mistakes promptly and take responsibility</li>
-                <li>Provide realistic timelines and cost estimates</li>
-                <li>Never falsify documents or certifications</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Confidentiality</h3>
-              <p className="text-[#FFC900]/80">Respecting confidentiality is crucial when working in various environments, from private homes to commercial or industrial settings. Electrical technicians often have access to sensitive information or secure areas.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Never share client details or business information without permission</li>
-                <li>Protect access credentials, passwords, and security codes</li>
-                <li>Handle documentation securely and dispose of it properly when no longer needed</li>
-                <li>Be discreet when discussing work matters in public spaces</li>
-                <li>Understand and comply with data protection regulations</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Professional Boundaries</h3>
-              <p className="text-[#FFC900]/80">Maintaining appropriate professional relationships with colleagues, clients, and suppliers ensures a respectful work environment and prevents conflicts of interest.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Respect personal space and property</li>
-                <li>Avoid conflicts of interest when providing services or recommendations</li>
-                <li>Maintain professional distance in client relationships</li>
-                <li>Follow company policies regarding gifts, hospitality, and relationships</li>
-              </ul>
-            </div>
-          </LessonContent>
-        </div>
+          </>
+        ) : (
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Professional Conduct Assessment</h2>
+            <p className="text-[#FFC900]/80 mb-6">
+              Test your understanding of professional conduct in the electrical industry with this assessment.
+              Answer the questions based on the material covered in the previous sections.
+            </p>
+            <SafetyQuiz 
+              unitId="professional-conduct" 
+              timeLimit={600}
+              questions={professionalConductQuestions}
+              questionsToShow={10}
+            />
+          </div>
+        )}
       </div>
     </MainLayout>
   );

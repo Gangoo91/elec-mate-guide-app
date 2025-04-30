@@ -32,6 +32,7 @@ import FaultFindingSectionPage from "../../pages/moet/FaultFindingSectionPage";
 import EquipmentInstallationPage from "../../pages/moet/EquipmentInstallationPage";
 import EquipmentInstallationSectionPage from "../../pages/moet/EquipmentInstallationSectionPage";
 import ProfessionalConductPage from "../../pages/moet/ProfessionalConductPage";
+import ProfessionalConductSectionPage from "../../pages/moet/ProfessionalConductSectionPage";
 import SafetyAwarenessPage from "../../pages/moet/SafetyAwarenessPage";
 import TeamworkPage from "../../pages/moet/TeamworkPage";
 
@@ -119,6 +120,10 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct",
     element: <ProfessionalConductPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct/:sectionId",
+    element: <ProfessionalConductSectionPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness",
