@@ -18,9 +18,14 @@ export const handleStudyRoutes = (
     return true;
   }
 
-  // Special handling for AM2 page
+  // Special handling for AM2 page and its sub-pages
   if (location.pathname === '/apprentices/study-materials/city-guilds/am2') {
     // Don't redirect, allow accessing the AM2 page directly
+    return false;
+  }
+
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/am2\/(core-units|mock-exams)/)) {
+    // Don't redirect, allow accessing the AM2 sub-pages directly
     return false;
   }
 

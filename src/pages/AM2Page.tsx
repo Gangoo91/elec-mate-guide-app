@@ -63,14 +63,16 @@ const AM2Page = () => {
 
   const sections = [
     {
-      title: "Learning Resources",
-      description: "Comprehensive study materials covering all aspects of the AM2 assessment requirements.",
-      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />
+      title: "Core Units",
+      description: "Essential learning materials covering the core AM2 assessment units and requirements.",
+      icon: <BookOpen className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/am2/core-units')
     },
     {
-      title: "Practice Tests",
-      description: "Prepare for your assessment with our collection of practice questions and simulated exams.",
-      icon: <Book className="h-6 w-6 text-[#FFC900]" />
+      title: "Mock Exams",
+      description: "Practice tests and mock assessments to prepare for your AM2 qualification.",
+      icon: <Book className="h-6 w-6 text-[#FFC900]" />,
+      onClick: () => navigate('/apprentices/study-materials/city-guilds/am2/mock-exams')
     },
     {
       title: "Assessment Guidelines",
@@ -116,7 +118,11 @@ const AM2Page = () => {
         <h2 className="text-2xl font-bold text-[#FFC900] mb-6">Study Resources</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {sections.map((section, index) => (
-            <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
+            <Card 
+              key={index} 
+              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
+              onClick={section.onClick}
+            >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
                   {section.icon}
