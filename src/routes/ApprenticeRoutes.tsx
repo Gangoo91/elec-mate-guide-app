@@ -6,7 +6,14 @@ import CityGuildsPage from "../pages/CityGuildsPage";
 import Level2HomePage from "../pages/Level2CoreUnitsPage"; // Using existing page
 import Level3HomePage from "../pages/Level3CoreUnitsPage"; // Using existing page
 import Level3ElectricalPage from "../pages/Level3ElectricalPage"; // Import the Level3ElectricalPage
-import MOETHomePage from "../pages/MOETPage"; // Using existing page
+import MOETPage from "../pages/MOETPage"; // Using existing page
+import MOETCoreKnowledgePage from "../pages/MOETCoreKnowledgePage"; // Using existing page
+import MOETBehavioursPage from "../pages/MOETBehavioursPage"; // Using existing page
+import MOETAssessmentPage from "../pages/MOETAssessmentPage"; // Using existing page
+import BasicElectronicsPage from "../pages/moet/BasicElectronicsPage"; // Import specific MOET pages
+import CircuitTheoryPage from "../pages/moet/CircuitTheoryPage"; // Import specific MOET pages
+import PowerSystemsPage from "../pages/moet/PowerSystemsPage"; // Import specific MOET pages
+import ElectricalPrinciplesPage from "../pages/moet/ElectricalPrinciplesPage"; // Import ElectricalPrinciplesPage
 import AM2HomePage from "../pages/AM2Page"; // Using existing page
 import UnitContentPage from "../pages/UnitContentPage";
 import Level2Unit201Page from "../pages/Level2Unit201Page";
@@ -94,14 +101,46 @@ const ApprenticeRoutes: RouteObject[] = [
     path: "/apprentices/study-materials/city-guilds/level-3/core-units",
     element: <Level3HomePage />,
   },
+  
+  // MOET routes
   {
     path: "/apprentices/study-materials/city-guilds/moet",
-    element: <MOETHomePage />,
+    element: <MOETPage />,
   },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge",
+    element: <MOETCoreKnowledgePage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",
+    element: <ElectricalPrinciplesPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours",
+    element: <MOETBehavioursPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment",
+    element: <MOETAssessmentPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics",
+    element: <BasicElectronicsPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory",
+    element: <CircuitTheoryPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems",
+    element: <PowerSystemsPage />,
+  },
+
   {
     path: "/apprentices/study-materials/city-guilds/am2",
     element: <AM2HomePage />,
   },
+
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/:unitId",
     element: <UnitContentPage />,

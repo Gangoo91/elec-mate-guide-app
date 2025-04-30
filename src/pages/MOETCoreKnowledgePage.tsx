@@ -10,7 +10,7 @@ const MOETCoreKnowledgePage = () => {
   const navigate = useNavigate();
   
   const handleBackClick = () => {
-    navigate('/apprentices/study-materials/city-guilds/moet/content');
+    navigate('/apprentices/study-materials/city-guilds/moet');
   };
 
   const topics = [
