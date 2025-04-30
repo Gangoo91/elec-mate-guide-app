@@ -18,7 +18,8 @@ export const handleMentalHealthRoutes = (
     "/mental-health/buddy",
     "/mental-health/professional-resources/support-groups",
     "/mental-health/professional-resources/find-professional",
-    "/mental-health/professional-resources/self-help"
+    "/mental-health/professional-resources/self-help",
+    "/mental-health/professional-resources/crisis-support"
   ];
   
   // For valid subpages, let them navigate directly

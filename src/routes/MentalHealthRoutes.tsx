@@ -8,6 +8,7 @@ import MentalHealthBuddy from "@/pages/MentalHealthBuddy";
 import SupportGroupsResourcePage from "@/pages/resources/SupportGroupsResourcePage";
 import FindProfessionalPage from "@/pages/resources/FindProfessionalPage";
 import SelfHelpResourcesPage from "@/pages/resources/SelfHelpResourcesPage";
+import CrisisResourcesPage from "@/pages/resources/CrisisResourcesPage";
 
 const mentalHealthRoutes: RouteObject[] = [
   {
@@ -41,6 +42,10 @@ const mentalHealthRoutes: RouteObject[] = [
   {
     path: "/mental-health/professional-resources/self-help",
     element: <SelfHelpResourcesPage />
+  },
+  {
+    path: "/mental-health/professional-resources/crisis-support",
+    element: <CrisisResourcesPage />
   }
 ];
 
