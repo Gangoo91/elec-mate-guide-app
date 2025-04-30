@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      external: ['stream', 'timers', 'events'], // Explicitly mark these as external
+      external: ['stream', 'timers', 'events', 'http', 'https', 'url', 'buffer'], // Explicitly mark these as external
       output: {
         manualChunks: {
           // Split large dependencies into separate chunks
@@ -38,5 +38,13 @@ export default defineConfig(({ mode }) => ({
     minify: 'terser', // Use terser for better minification
     target: 'esnext', // Target modern browsers for better optimization
     chunkSizeWarningLimit: 2000, // Increase chunk size warning limit
+    assetsInlineLimit: 4096, // Limit size of inlined assets
+    commonjsOptions: {
+      transformMixedEsModules: true, // Help with mixed ES modules
+    },
+  },
+  // Increase memory limit for node process
+  define: {
+    'process.env.NODE_OPTIONS': '"--max-old-space-size=4096"',
   },
 }));
