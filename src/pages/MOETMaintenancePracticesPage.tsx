@@ -13,6 +13,11 @@ const MOETMaintenancePracticesPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge');
   };
 
+  const handleNavigate = (path: string) => {
+    console.log("MOETMaintenancePracticesPage - Navigating to:", path);
+    navigate(path);
+  };
+
   const topics = [
     {
       title: "Preventive Maintenance",
@@ -48,7 +53,7 @@ const MOETMaintenancePracticesPage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-              onClick={() => navigate(topic.path)}
+              onClick={() => handleNavigate(topic.path)}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">

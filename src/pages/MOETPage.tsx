@@ -41,6 +41,7 @@ const MOETPage = () => {
   ];
 
   const handleCardClick = (path: string) => {
+    console.log("MOETPage - Navigating to:", path);
     navigate(path);
   };
 
