@@ -13,9 +13,10 @@ const MOETCoreKnowledgePage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet');
   };
 
-  const handleNavigate = (path: string) => {
+  const handleCardClick = (path: string) => {
     console.log("MOETCoreKnowledgePage - Navigating to:", path);
-    navigate(path);
+    // Use direct navigation to ensure consistency across reloads
+    window.location.href = path;
   };
 
   const topics = [
@@ -53,7 +54,7 @@ const MOETCoreKnowledgePage = () => {
             <Card 
               key={index} 
               className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-              onClick={() => handleNavigate(topic.path)}
+              onClick={() => handleCardClick(topic.path)}
             >
               <CardContent className="pt-6">
                 <div className="flex items-start gap-4">
