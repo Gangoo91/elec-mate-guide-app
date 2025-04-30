@@ -7,6 +7,7 @@ import InstallationDetailsPage from "../../pages/am2/InstallationDetailsPage";
 import InspectionTestingPage from "../../pages/am2/InspectionTestingPage";
 import FaultDiagnosisPage from "../../pages/am2/FaultDiagnosisPage";
 import SafeIsolationPage from "../../pages/am2/SafeIsolationPage";
+import SafeIsolationPractice from "../../pages/am2/SafeIsolationPractice";
 import AssessmentGuidelinesPage from "../../pages/am2/AssessmentGuidelinesPage";
 import AM2MockExamsPage from "../../pages/AM2MockExamsPage";
 
@@ -37,7 +38,7 @@ const am2Routes: RouteObject[] = [
   },
   {
     path: "/apprentices/study-materials/city-guilds/am2/safe-isolation/practice",
-    element: <SafeIsolationPage /> // This will be replaced with the actual practice page later
+    element: <SafeIsolationPractice />
   },
   {
     path: "/apprentices/study-materials/city-guilds/am2/assessment-guidelines",
