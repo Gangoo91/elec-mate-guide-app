@@ -7,6 +7,8 @@ import MOETBehavioursPage from "../../pages/MOETBehavioursPage";
 import MOETAssessmentPage from "../../pages/MOETAssessmentPage";
 import BasicElectronicsPage from "../../pages/moet/BasicElectronicsPage";
 import CircuitTheoryPage from "../../pages/moet/CircuitTheoryPage";
+import CircuitTheorySectionPage from "../../pages/moet/CircuitTheorySectionPage";
+import CircuitTheoryAssessmentPage from "../../pages/moet/CircuitTheoryAssessmentPage";
 import PowerSystemsPage from "../../pages/moet/PowerSystemsPage";
 import ElectricalPrinciplesPage from "../../pages/moet/ElectricalPrinciplesPage";
 import MOETEngineeringOperationsPage from "../../pages/MOETEngineeringOperationsPage";
@@ -53,6 +55,14 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory",
     element: <CircuitTheoryPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory/:sectionId",
+    element: <CircuitTheorySectionPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory/assessment",
+    element: <CircuitTheoryAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems",
