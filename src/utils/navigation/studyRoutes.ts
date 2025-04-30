@@ -18,6 +18,12 @@ export const handleStudyRoutes = (
     return true;
   }
 
+  // Special handling for AM2 page
+  if (location.pathname === '/apprentices/study-materials/city-guilds/am2') {
+    // Don't redirect, allow accessing the AM2 page directly
+    return false;
+  }
+
   // Special handling for Level 3 page
   if (location.pathname === '/apprentices/study-materials/city-guilds/level-3') {
     // Don't redirect, allow accessing the Level 3 electrical page directly
