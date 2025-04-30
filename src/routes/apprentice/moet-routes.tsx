@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -25,6 +24,9 @@ import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
+import ElectricalMaintenancePage from "../../pages/moet/ElectricalMaintenancePage";
+import FaultFindingPage from "../../pages/moet/FaultFindingPage";
+import EquipmentInstallationPage from "../../pages/moet/EquipmentInstallationPage";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -38,6 +40,18 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills",
     element: <MOETCoreSkillsPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills/electrical-maintenance",
+    element: <ElectricalMaintenancePage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills/fault-finding",
+    element: <FaultFindingPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills/equipment-installation",
+    element: <EquipmentInstallationPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",

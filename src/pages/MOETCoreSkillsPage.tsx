@@ -12,6 +12,10 @@ const MOETCoreSkillsPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet');
   };
 
+  const navigateTo = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
@@ -22,44 +26,59 @@ const MOETCoreSkillsPage = () => {
         />
         
         <div className="mt-8 space-y-8">
-          <LessonContent title="Electrical Maintenance">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Preventative Maintenance</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Scheduled inspections and servicing</li>
-                <li>Equipment testing procedures</li>
-                <li>Documentation and record keeping</li>
-                <li>Maintenance planning and scheduling</li>
-                <li>Condition monitoring techniques</li>
-              </ul>
-            </div>
-          </LessonContent>
+          <div 
+            onClick={() => navigateTo('/apprentices/study-materials/city-guilds/moet/core-skills/electrical-maintenance')} 
+            className="cursor-pointer hover:opacity-90 transition-opacity"
+          >
+            <LessonContent title="Electrical Maintenance">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-[#FFC900]">Preventative Maintenance</h3>
+                <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                  <li>Scheduled inspections and servicing</li>
+                  <li>Equipment testing procedures</li>
+                  <li>Documentation and record keeping</li>
+                  <li>Maintenance planning and scheduling</li>
+                  <li>Condition monitoring techniques</li>
+                </ul>
+              </div>
+            </LessonContent>
+          </div>
 
-          <LessonContent title="Fault Finding">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Diagnostic Approaches</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Systematic fault diagnosis</li>
-                <li>Test equipment usage and interpretation</li>
-                <li>Circuit analysis and tracing</li>
-                <li>Common fault patterns and solutions</li>
-                <li>Diagnostic documentation</li>
-              </ul>
-            </div>
-          </LessonContent>
+          <div 
+            onClick={() => navigateTo('/apprentices/study-materials/city-guilds/moet/core-skills/fault-finding')}
+            className="cursor-pointer hover:opacity-90 transition-opacity"
+          >
+            <LessonContent title="Fault Finding">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-[#FFC900]">Diagnostic Approaches</h3>
+                <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                  <li>Systematic fault diagnosis</li>
+                  <li>Test equipment usage and interpretation</li>
+                  <li>Circuit analysis and tracing</li>
+                  <li>Common fault patterns and solutions</li>
+                  <li>Diagnostic documentation</li>
+                </ul>
+              </div>
+            </LessonContent>
+          </div>
 
-          <LessonContent title="Equipment Installation">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Installation Practices</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Reading technical drawings and specifications</li>
-                <li>Equipment positioning and mounting</li>
-                <li>Wiring and connection techniques</li>
-                <li>Testing and commissioning</li>
-                <li>Handover procedures</li>
-              </ul>
-            </div>
-          </LessonContent>
+          <div 
+            onClick={() => navigateTo('/apprentices/study-materials/city-guilds/moet/core-skills/equipment-installation')}
+            className="cursor-pointer hover:opacity-90 transition-opacity"
+          >
+            <LessonContent title="Equipment Installation">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-[#FFC900]">Installation Practices</h3>
+                <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
+                  <li>Reading technical drawings and specifications</li>
+                  <li>Equipment positioning and mounting</li>
+                  <li>Wiring and connection techniques</li>
+                  <li>Testing and commissioning</li>
+                  <li>Handover procedures</li>
+                </ul>
+              </div>
+            </LessonContent>
+          </div>
         </div>
       </div>
     </MainLayout>
