@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Book, Tool, Clipboard, Activity, Settings } from "lucide-react";
+import { BookOpen, FileText, Book, Clipboard, Activity, Settings } from "lucide-react";
 
 const AM2Page = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const AM2Page = () => {
     {
       title: "Installation",
       description: "Complete a full installation including consumer unit, containment systems, wiring and accessories to industry standards.",
-      icon: <Tool className="h-10 w-10 text-[#FFC900] mb-4" />,
+      icon: <Settings className="h-10 w-10 text-[#FFC900] mb-4" />,
       key_points: [
         "Circuit installation and wiring",
         "Consumer unit assembly",
