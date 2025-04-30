@@ -6,6 +6,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShieldAlert } from "lucide-react";
 import { LearningObjective } from "@/components/units/LearningObjective";
+import SectionContent from "@/components/units/SectionContent";
 
 const SafeIsolationPage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const SafeIsolationPage = () => {
                   Proving Tools
                 </h3>
                 <p className="text-[#FFC900]/70">
-                  Using and verifying voltage indicators and proving units is essential for safe work practices. Always verify your test equipment before and after use.
+                  Using and verifying voltage indicators and proving units is essential for safe work practices.
                 </p>
               </CardContent>
             </Card>
@@ -65,7 +66,7 @@ const SafeIsolationPage = () => {
                   Locking Off
                 </h3>
                 <p className="text-[#FFC900]/70">
-                  Methods and equipment for securing isolated circuits prevent accidental reconnection during maintenance or installation work.
+                  Methods for securing isolated circuits prevent accidental reconnection during work.
                 </p>
               </CardContent>
             </Card>
@@ -76,7 +77,7 @@ const SafeIsolationPage = () => {
                   Safety Documentation
                 </h3>
                 <p className="text-[#FFC900]/70">
-                  Required permits and documentation for safe isolation ensure proper procedures are followed and responsibility is clearly assigned.
+                  Required permits and documentation ensure proper procedures are followed.
                 </p>
               </CardContent>
             </Card>
@@ -87,7 +88,7 @@ const SafeIsolationPage = () => {
                   Essential Equipment
                 </h3>
                 <p className="text-[#FFC900]/70">
-                  Voltage indicators, proving units, lock-off devices, and warning notices are required for safe isolation procedures.
+                  Voltage indicators, proving units, and warning notices are required for safe isolation.
                 </p>
               </CardContent>
             </Card>
@@ -132,6 +133,14 @@ const SafeIsolationPage = () => {
             </div>
           </div>
         </LearningObjective>
+        
+        <div className="mt-8">
+          <SectionContent
+            title="Practice Safe Isolation Assessment"
+            path="/apprentices/study-materials/city-guilds/am2/safe-isolation/practice"
+            description="Test your knowledge with our interactive safe isolation assessment"
+          />
+        </div>
       </div>
     </MainLayout>
   );
