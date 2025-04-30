@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { ShieldAlert } from "lucide-react";
+import { LearningObjective } from "@/components/units/LearningObjective";
 
 const SafeIsolationPage = () => {
   const navigate = useNavigate();
@@ -12,35 +13,6 @@ const SafeIsolationPage = () => {
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/am2');
   };
-
-  const sections = [
-    {
-      title: "Safe Isolation Procedure",
-      description: "Step-by-step safe isolation methodology"
-    },
-    {
-      title: "Proving Tools",
-      description: "Using and verifying voltage indicators and proving units"
-    },
-    {
-      title: "Locking Off",
-      description: "Methods and equipment for securing isolated circuits"
-    },
-    {
-      title: "Safety Documentation",
-      description: "Required permits and documentation for safe isolation"
-    }
-  ];
-
-  const isolationSteps = [
-    "Identify the circuit or equipment to be isolated",
-    "Inform all affected persons before isolation",
-    "Switch off the circuit and lock off the isolation device",
-    "Verify that proving device is working on a known live source",
-    "Test that the isolated circuit is dead using the proving device",
-    "Re-verify proving device on known live source after use",
-    "Apply circuit warning notices and barriers as necessary"
-  ];
 
   return (
     <MainLayout>
@@ -63,37 +35,70 @@ const SafeIsolationPage = () => {
             </div>
           </div>
           
-          <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6 mb-8">
-            <h3 className="text-[#FFC900] font-medium text-lg mb-4">Safe Isolation Procedure</h3>
-            <ol className="list-decimal list-inside text-[#FFC900]/70 space-y-2">
-              {isolationSteps.map((step, idx) => (
-                <li key={idx}>{step}</li>
-              ))}
+          <LearningObjective title="Safe Isolation Procedure">
+            <ol className="list-decimal list-inside space-y-2">
+              <li>Identify the circuit or equipment to be isolated</li>
+              <li>Inform all affected persons before isolation</li>
+              <li>Switch off the circuit and lock off the isolation device</li>
+              <li>Verify that proving device is working on a known live source</li>
+              <li>Test that the isolated circuit is dead using the proving device</li>
+              <li>Re-verify proving device on known live source after use</li>
+              <li>Apply circuit warning notices and barriers as necessary</li>
             </ol>
-          </div>
+          </LearningObjective>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {sections.map((section, index) => (
-              <Card key={index} className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300">
-                <CardContent className="pt-6">
-                  <h3 className="text-[#FFC900] font-medium text-xl mb-2">
-                    {section.title}
-                  </h3>
-                  <p className="text-[#FFC900]/70">
-                    {section.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardContent className="pt-6">
+                <h3 className="text-[#FFC900] font-medium text-xl mb-2">
+                  Proving Tools
+                </h3>
+                <p className="text-[#FFC900]/70">
+                  Using and verifying voltage indicators and proving units is essential for safe work practices. Always verify your test equipment before and after use.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardContent className="pt-6">
+                <h3 className="text-[#FFC900] font-medium text-xl mb-2">
+                  Locking Off
+                </h3>
+                <p className="text-[#FFC900]/70">
+                  Methods and equipment for securing isolated circuits prevent accidental reconnection during maintenance or installation work.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardContent className="pt-6">
+                <h3 className="text-[#FFC900] font-medium text-xl mb-2">
+                  Safety Documentation
+                </h3>
+                <p className="text-[#FFC900]/70">
+                  Required permits and documentation for safe isolation ensure proper procedures are followed and responsibility is clearly assigned.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-[#22251e] border-[#FFC900]/20">
+              <CardContent className="pt-6">
+                <h3 className="text-[#FFC900] font-medium text-xl mb-2">
+                  Essential Equipment
+                </h3>
+                <p className="text-[#FFC900]/70">
+                  Voltage indicators, proving units, lock-off devices, and warning notices are required for safe isolation procedures.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
-        
-        <div className="bg-[#22251e] border-[#FFC900]/20 rounded-lg border p-6 mt-8">
-          <h3 className="text-[#FFC900] font-medium text-lg mb-4">Essential Equipment</h3>
+
+        <LearningObjective title="Safe Isolation Equipment">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4">
             <div>
               <h4 className="text-[#FFC900] font-medium mb-2">Voltage Indicator</h4>
-              <ul className="list-disc list-inside text-[#FFC900]/70 text-sm">
+              <ul className="list-disc list-inside text-[#FFC900]/70">
                 <li>Must comply with GS38</li>
                 <li>Adequate category rating</li>
                 <li>Suitable voltage rating</li>
@@ -102,7 +107,7 @@ const SafeIsolationPage = () => {
             </div>
             <div>
               <h4 className="text-[#FFC900] font-medium mb-2">Proving Unit</h4>
-              <ul className="list-disc list-inside text-[#FFC900]/70 text-sm">
+              <ul className="list-disc list-inside text-[#FFC900]/70">
                 <li>Battery powered</li>
                 <li>Known voltage output</li>
                 <li>Clear indication</li>
@@ -110,7 +115,7 @@ const SafeIsolationPage = () => {
             </div>
             <div className="mt-4">
               <h4 className="text-[#FFC900] font-medium mb-2">Lock-Off Devices</h4>
-              <ul className="list-disc list-inside text-[#FFC900]/70 text-sm">
+              <ul className="list-disc list-inside text-[#FFC900]/70">
                 <li>MCB locks</li>
                 <li>Fuse carriers</li>
                 <li>Padlocks</li>
@@ -119,14 +124,14 @@ const SafeIsolationPage = () => {
             </div>
             <div className="mt-4">
               <h4 className="text-[#FFC900] font-medium mb-2">Warning Notices</h4>
-              <ul className="list-disc list-inside text-[#FFC900]/70 text-sm">
+              <ul className="list-disc list-inside text-[#FFC900]/70">
                 <li>"Danger - Do Not Switch On"</li>
                 <li>"Danger - Men Working"</li>
                 <li>Circuit identification labels</li>
               </ul>
             </div>
           </div>
-        </div>
+        </LearningObjective>
       </div>
     </MainLayout>
   );
