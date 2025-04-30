@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -19,7 +20,7 @@ import Settings from "./pages/Settings";
 import { AuthRoutes } from "./routes/AuthRoutes";
 import ApprenticeRoutes from "./routes/ApprenticeRoutes"; // Fixed import
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
-import { MentalHealthRoutes } from "./routes/MentalHealthRoutes";
+import mentalHealthRoutes from "./routes/MentalHealthRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
 import Level2Unit201Page from "./pages/Level2Unit201Page";
 import Level2Unit202Page from "./pages/Level2Unit202Page";
@@ -136,7 +137,13 @@ const App = () => {
                     {/* Map other route groups */}
                     {AuthRoutes}
                     {ElectricianRoutes}
-                    {MentalHealthRoutes}
+                    {mentalHealthRoutes.map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={route.element}
+                      />
+                    ))}
                     
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
