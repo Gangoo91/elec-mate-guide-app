@@ -1,4 +1,3 @@
-
 // Technical Documentation quiz questions
 export const technicalDocumentationQuestions = [
   {
@@ -10,7 +9,8 @@ export const technicalDocumentationQuestions = [
       "Operation manual",
       "As-built records"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Design documentation typically includes technical calculations like load calculations and protection coordination studies, which are essential for the proper planning and design of electrical systems."
   },
   {
     id: "td-q2",
@@ -21,7 +21,8 @@ export const technicalDocumentationQuestions = [
       "To avoid regulatory oversight",
       "To reduce the number of workers needed"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Technical documentation serves as a formal record of a system's design, installation, operation, and maintenance, ensuring that all stakeholders have accurate information throughout the system lifecycle."
   },
   {
     id: "td-q3",
@@ -32,7 +33,8 @@ export const technicalDocumentationQuestions = [
       "BS EN 50110",
       "BS EN 12845"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "BS EN 61082 is the British Standard that provides guidelines for the preparation of documents used in electrical engineering, including diagrams, drawings, and charts."
   },
   {
     id: "td-q4",
@@ -43,7 +45,8 @@ export const technicalDocumentationQuestions = [
       "Installation schedules",
       "Cable routing plans"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "A single-line diagram provides a simplified representation of a power system, showing the main components and their connections without detailed wiring information."
   },
   {
     id: "td-q5",
@@ -54,7 +57,8 @@ export const technicalDocumentationQuestions = [
       "Future system expansion plans",
       "Deviations from design"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "As-built documentation records how a system was actually installed, including any deviations from the original design. Future expansion plans would be part of separate planning documentation, not as-built records."
   },
   {
     id: "td-q6",
@@ -65,7 +69,8 @@ export const technicalDocumentationQuestions = [
       "To restrict access to sensitive information",
       "To reduce the number of documents needed"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Document version control systems are primarily used to identify and track changes made to documents over time, ensuring that users always know which version they're working with and what modifications have been made."
   },
   {
     id: "td-q7",
@@ -76,7 +81,8 @@ export const technicalDocumentationQuestions = [
       "BS 7671",
       "BS EN 60617"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "BS EN 81346 provides principles for structuring systems and establishing reference designations, which are essential for organizing and identifying components within electrical documentation."
   },
   {
     id: "td-q8",
@@ -87,7 +93,8 @@ export const technicalDocumentationQuestions = [
       "Testing and commissioning procedure",
       "Method statement"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Testing and commissioning procedures contain detailed instructions for verifying that electrical systems function as intended, including test methods, acceptance criteria, and documentation requirements."
   },
   {
     id: "td-q9",
@@ -98,7 +105,8 @@ export const technicalDocumentationQuestions = [
       "Creating and managing digital representations of physical and functional characteristics of facilities",
       "Replacing all written documentation"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "BIM is used to create and manage digital representations of the physical and functional characteristics of facilities, allowing for integrated information management across the design, construction, and operation phases."
   },
   {
     id: "td-q10",
@@ -109,7 +117,8 @@ export const technicalDocumentationQuestions = [
       "Using precise and unambiguous wording",
       "Omitting technical details to simplify documents"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Good technical writing uses precise and unambiguous wording to clearly communicate information, avoiding misinterpretation and ensuring that technical documents serve their intended purpose."
   },
   {
     id: "td-q11",
@@ -120,7 +129,8 @@ export const technicalDocumentationQuestions = [
       "To document installation costs only",
       "To assign warranty responsibilities"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "An Electrical Installation Certificate verifies compliance with relevant standards and regulations, ensuring that the electrical system meets safety and performance requirements."
   },
   {
     id: "td-q12",
@@ -131,7 +141,8 @@ export const technicalDocumentationQuestions = [
       "Method statement",
       "Test certificate"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A Method Statement contains specific step-by-step instructions for installing electrical equipment, providing a clear guide for installation personnel."
   },
   {
     id: "td-q13",
@@ -142,7 +153,8 @@ export const technicalDocumentationQuestions = [
       "BS EN 61082",
       "BS EN 81346"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "BS EN 61082 covers electrical symbols used in documentation, providing a standardized system for representing electrical components and systems."
   },
   {
     id: "td-q14",
@@ -153,7 +165,8 @@ export const technicalDocumentationQuestions = [
       "Lower security requirements",
       "Elimination of approval processes"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Centralized document repositories provide improved access to the latest document versions, reducing the need for frequent document creation and ensuring that all stakeholders have access to the most up-to-date information."
   },
   {
     id: "td-q15",
@@ -164,7 +177,8 @@ export const technicalDocumentationQuestions = [
       "Complete Assembly Document",
       "Circuit Analysis Diagram"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "CAD stands for Computer-Aided Design, a software tool used for creating and modifying technical drawings and schematics."
   },
   {
     id: "td-q16",
@@ -175,7 +189,8 @@ export const technicalDocumentationQuestions = [
       "Implementing review and approval workflows",
       "Allowing unlimited document changes without tracking"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Effective document management involves implementing review and approval workflows to ensure that documents are accurate, complete, and up-to-date, while also limiting document access to authorized personnel."
   },
   {
     id: "td-q17",
@@ -186,7 +201,8 @@ export const technicalDocumentationQuestions = [
       "To specify cable sizes only",
       "To record equipment serial numbers"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "A Risk Assessment Document identifies and addresses potential hazards, providing a systematic approach to risk management and ensuring that the electrical system is safe and reliable."
   },
   {
     id: "td-q18",
@@ -197,7 +213,8 @@ export const technicalDocumentationQuestions = [
       "Single-line diagram",
       "Design specification"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "An Operation and Maintenance Manual contains complete details of electrical equipment maintenance schedules, providing a comprehensive guide for maintaining the system over time."
   },
   {
     id: "td-q19",
@@ -208,7 +225,8 @@ export const technicalDocumentationQuestions = [
       "To restrict access to documents",
       "To avoid digital document storage"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Document retention policies establish how long different types of documents should be kept, ensuring that important information is preserved and available for future reference."
   },
   {
     id: "td-q20",
@@ -219,7 +237,8 @@ export const technicalDocumentationQuestions = [
       "Organizing content in a logical structure",
       "Considering the target audience"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Good technical writing involves using consistent terminology, organizing content in a logical structure, and considering the target audience to ensure that the document is clear, concise, and effective."
   },
   {
     id: "td-q21",
@@ -230,7 +249,8 @@ export const technicalDocumentationQuestions = [
       "Contractor contact information",
       "Client payment terms"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "A Cable Schedule Document lists cable types, lengths, and routing details, providing a comprehensive overview of the electrical system's cable infrastructure."
   },
   {
     id: "td-q22",
@@ -241,7 +261,8 @@ export const technicalDocumentationQuestions = [
       "Easier searching and retrieval of information",
       "Reduced need for document standards"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Digital documentation offers several benefits over paper-based systems, including easier searching and retrieval of information, reduced need for document standards, and improved collaboration."
   },
   {
     id: "td-q23",
@@ -252,7 +273,8 @@ export const technicalDocumentationQuestions = [
       "It omits minor installation details",
       "It focuses only on future expansion possibilities"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "As-built documentation reflects how the system was actually installed, including any changes, providing a comprehensive record of the system's actual configuration."
   },
   {
     id: "td-q24",
@@ -263,7 +285,8 @@ export const technicalDocumentationQuestions = [
       "Protection coordination study",
       "Equipment catalog"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A Protection Coordination Study includes information about fault current levels and protection device settings, providing a comprehensive guide for ensuring the system's safety and reliability."
   },
   {
     id: "td-q25",
@@ -274,7 +297,8 @@ export const technicalDocumentationQuestions = [
       "Organizing and retrieving documents efficiently",
       "Bypassing regulatory requirements"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A well-designed document identification system helps organize and retrieve documents efficiently, reducing the need for technical content and ensuring that documents are easily accessible."
   },
   {
     id: "td-q26",
@@ -285,7 +309,8 @@ export const technicalDocumentationQuestions = [
       "After installation completion but before handover",
       "Only after system failure occurs"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "An Operation and Maintenance Manual is typically created after installation completion but before handover, providing a comprehensive guide for maintaining the system over time."
   },
   {
     id: "td-q27",
@@ -296,7 +321,8 @@ export const technicalDocumentationQuestions = [
       "Lists of drawings with their numbers, titles, revisions and status",
       "Installation team contact details"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A Drawing Register typically contains lists of drawings with their numbers, titles, revisions, and status, providing a comprehensive overview of the project's drawings."
   },
   {
     id: "td-q28",
@@ -307,7 +333,8 @@ export const technicalDocumentationQuestions = [
       "Using informal language to keep readers engaged",
       "Avoiding diagrams and relying on text descriptions only"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Clear, concise writing with appropriate technical terminology is generally recommended for technical writing, as it ensures that the document is clear, accurate, and effective."
   },
   {
     id: "td-q29",
@@ -318,7 +345,8 @@ export const technicalDocumentationQuestions = [
       "Eliminating the need for training",
       "Reducing overall document quality"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "Implementing document access controls ensures that only authorized personnel can modify critical documents, reducing the risk of unauthorized access and ensuring that the document remains accurate and up-to-date."
   },
   {
     id: "td-q30",
@@ -329,7 +357,8 @@ export const technicalDocumentationQuestions = [
       "Cloud-based document platforms",
       "Microfiche storage"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Cloud-based document platforms have significantly improved collaboration on technical documentation in recent years, allowing for real-time sharing and access to documents across multiple locations."
   },
   {
     id: "td-q31",
@@ -340,7 +369,8 @@ export const technicalDocumentationQuestions = [
       "To calculate project costs only",
       "To assign blame for project delays"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "A Technical Submittal presents technical data for approval before installation, ensuring that the project meets all relevant standards and regulations."
   },
   {
     id: "td-q32",
@@ -351,7 +381,8 @@ export const technicalDocumentationQuestions = [
       "Testing and commissioning procedure",
       "Client brief"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A Testing and Commissioning Procedure contains details about the sequence of testing electrical installations, providing a comprehensive guide for ensuring the system's safety and reliability."
   },
   {
     id: "td-q33",
@@ -362,7 +393,8 @@ export const technicalDocumentationQuestions = [
       "Always including all technical details regardless of audience",
       "Minimizing the use of diagrams and visual aids"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "When preparing documentation for different stakeholders, it is important to tailor content and detail level to the intended audience, ensuring that the document is clear, concise, and effective for the specific audience."
   },
   {
     id: "td-q34",
@@ -373,7 +405,8 @@ export const technicalDocumentationQuestions = [
       "Installation and maintenance errors",
       "Reduced need for training"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Poor technical documentation can lead to installation and maintenance errors, reducing system reliability and increasing the need for training."
   },
   {
     id: "td-q35",
@@ -384,7 +417,8 @@ export const technicalDocumentationQuestions = [
       "They remove legal responsibilities",
       "They replace the need for document review processes"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Standardized documentation templates ensure consistent structure and content across documents, reducing the need for technical expertise and ensuring that documents are accurate and up-to-date."
   },
   {
     id: "td-q36",
@@ -395,7 +429,8 @@ export const technicalDocumentationQuestions = [
       "Focus exclusively on grammatical errors",
       "Eliminating all technical content"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "An effective document review process involves multiple reviewers with different expertise checking for accuracy and completeness, ensuring that the document is clear, accurate, and effective."
   },
   {
     id: "td-q37",
@@ -406,7 +441,8 @@ export const technicalDocumentationQuestions = [
       "Installation quote",
       "Marketing brochure"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "An Operational Document is typically created after installation completion but before handover, providing a comprehensive guide for maintaining the system over time."
   },
   {
     id: "td-q38",
@@ -417,7 +453,8 @@ export const technicalDocumentationQuestions = [
       "To serve as a technical manual",
       "To replace the actual documents"
     ],
-    correctAnswer: 0
+    correctAnswer: 0,
+    explanation: "A Document Transmittal Form records the formal issue of documents to another party, ensuring that all necessary information is included."
   },
   {
     id: "td-q39",
@@ -428,7 +465,8 @@ export const technicalDocumentationQuestions = [
       "They help ensure documentation remains accurate and compliant",
       "They only need to be conducted once in a system's lifetime"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Technical documentation audits help ensure that documentation remains accurate and compliant, providing a systematic approach to maintaining the system's safety and reliability."
   },
   {
     id: "td-q40",
@@ -439,7 +477,8 @@ export const technicalDocumentationQuestions = [
       "It eliminates the need for technical staff",
       "It reduces system capabilities"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Good technical documentation enables effective operation and maintenance of the system, reducing the need for technical staff and improving the system's overall capabilities."
   },
   {
     id: "td-q41",
@@ -450,7 +489,8 @@ export const technicalDocumentationQuestions = [
       "Operation manual",
       "Installation drawing"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "An Operation Manual contains emergency shutdown procedures for electrical equipment, providing a comprehensive guide for maintaining the system's safety and reliability."
   },
   {
     id: "td-q42",
@@ -461,7 +501,8 @@ export const technicalDocumentationQuestions = [
       "To show relationships between different documents and information",
       "To hide important information"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Cross-referencing between technical documents shows relationships between different documents and information, providing a comprehensive overview of the system's design and operation."
   },
   {
     id: "td-q43",
@@ -472,7 +513,8 @@ export const technicalDocumentationQuestions = [
       "Logical structure with clear section organization",
       "Minimizing the use of headings and subheadings"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "Organizing technical documentation involves using a logical structure with clear section organization, ensuring that the information is easy to find and understand."
   },
   {
     id: "td-q44",
@@ -483,7 +525,8 @@ export const technicalDocumentationQuestions = [
       "It becomes irrelevant",
       "It is simplified to remove technical details"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Documentation is formally transferred to the client or operator during the handover phase, ensuring that all necessary information is included."
   },
   {
     id: "td-q45",
@@ -494,7 +537,8 @@ export const technicalDocumentationQuestions = [
       "Maintenance manual",
       "Project timeline"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "A Maintenance Manual includes specific instructions for routine equipment checks, providing a comprehensive guide for maintaining the system over time."
   },
   {
     id: "td-q46",
@@ -505,7 +549,8 @@ export const technicalDocumentationQuestions = [
       "To provide marketing information",
       "To replace warranty documents"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "An Equipment Schedule records equipment details, locations, and specifications, providing a comprehensive overview of the electrical system's equipment."
   },
   {
     id: "td-q47",
@@ -516,7 +561,8 @@ export const technicalDocumentationQuestions = [
       "PDF (Portable Document Format)",
       "Typewritten pages"
     ],
-    correctAnswer: 2
+    correctAnswer: 2,
+    explanation: "PDF (Portable Document Format) is increasingly used for technical document sharing and archiving, providing a standardized format for storing and sharing documents."
   },
   {
     id: "td-q48",
@@ -527,7 +573,8 @@ export const technicalDocumentationQuestions = [
       "The physical size of printed documents",
       "The full content of the document"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Document metadata typically includes information about the document such as author, creation date, version, and keywords, providing a comprehensive overview of the document."
   },
   {
     id: "td-q49",
@@ -538,7 +585,8 @@ export const technicalDocumentationQuestions = [
       "As-built drawings",
       "Compliance certificates"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Installation documentation typically includes test results, as-built drawings, and compliance certificates, providing a comprehensive overview of the installation process."
   },
   {
     id: "td-q50",
@@ -549,6 +597,7 @@ export const technicalDocumentationQuestions = [
       "To restrict document access",
       "To increase printing costs"
     ],
-    correctAnswer: 1
+    correctAnswer: 1,
+    explanation: "Document revision control is used to track and manage changes to documents, ensuring that the document remains accurate and up-to-date."
   }
 ];
