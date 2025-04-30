@@ -4,6 +4,7 @@ import { Section210 } from './types';
 import LessonContent from "@/components/units/LessonContent";
 
 export const section1_4: Section210 = {
+  id: "1.4",
   title: "Written Communication",
   description: "Learn effective written communication for electrical documentation",
   content: (
