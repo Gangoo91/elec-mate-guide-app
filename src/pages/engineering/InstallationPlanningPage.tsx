@@ -3,8 +3,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { Card } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
+import SectionGroup from "@/components/units/level3/SectionGroup";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
 const InstallationPlanningPage = () => {
   const navigate = useNavigate();
@@ -13,51 +14,112 @@ const InstallationPlanningPage = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations');
   };
 
-  const sections = [
+  const handleStudy = (sectionId: string) => {
+    navigate(`/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/${sectionId}`);
+  };
+
+  const handleTakeQuiz = () => {
+    navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/assessment');
+  };
+
+  // Section data structured like other course pages
+  const sectionGroups = [
     {
+      number: "1",
       title: "Project Planning Fundamentals",
-      description: "Site survey and assessment, resource planning, scheduling, and risk management",
-      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/project-planning"
+      sections: [
+        {
+          id: "project-planning",
+          title: "Project Planning Methodology",
+          description: "Understanding project lifecycle and planning principles"
+        },
+        {
+          id: "resource-allocation",
+          title: "Resource Allocation",
+          description: "Techniques for effective allocation of materials and personnel"
+        },
+        {
+          id: "scheduling",
+          title: "Project Scheduling",
+          description: "Creating timelines and managing project milestones"
+        }
+      ]
     },
     {
-      title: "Technical Design Considerations",
-      description: "Circuit design, cable sizing, equipment selection, protection schemes, and control system integration",
-      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/technical-design"
+      number: "2",
+      title: "Technical Design",
+      sections: [
+        {
+          id: "technical-design",
+          title: "Technical Design Principles",
+          description: "Fundamentals of electrical system design and documentation"
+        },
+        {
+          id: "system-architecture",
+          title: "System Architecture",
+          description: "Developing effective electrical system architectures"
+        },
+        {
+          id: "design-tools",
+          title: "Design Tools and Software",
+          description: "CAD and other tools for electrical installation design"
+        }
+      ]
     },
     {
-      title: "Implementation and Quality Control",
-      description: "Installation management, quality assurance, testing, commissioning, and documentation",
-      path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/implementation"
+      number: "3",
+      title: "Implementation",
+      sections: [
+        {
+          id: "implementation",
+          title: "Implementation Procedures",
+          description: "Best practices for executing electrical installation projects"
+        },
+        {
+          id: "quality-control",
+          title: "Quality Control",
+          description: "Inspection and testing during the implementation phase"
+        },
+        {
+          id: "handover-procedures",
+          title: "Handover Procedures",
+          description: "Final testing, documentation and client handover processes"
+        }
+      ]
     }
   ];
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
+      <div className="container px-4 py-8">
         <PageHeader 
           title="Installation Planning"
-          description="Planning and executing electrical installation projects"
+          description="Planning, designing and implementing electrical installation projects"
           customBackAction={handleBackClick}
         />
         
-        <div className="mt-8 space-y-6">
-          {sections.map((section, index) => (
-            <Card 
-              key={index}
-              className="bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer"
-              onClick={() => navigate(section.path)}
-            >
-              <div className="p-6">
-                <div className="flex items-start gap-4">
-                  <BookOpen className="h-6 w-6 text-[#FFC900] mt-1" />
-                  <div>
-                    <h3 className="text-[#FFC900] font-medium text-xl mb-2">{section.title}</h3>
-                    <p className="text-[#FFC900]/70">{section.description}</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
+        <div className="mt-8 space-y-8">
+          {/* Map through section groups */}
+          {sectionGroups.map((group) => (
+            <SectionGroup
+              key={group.number}
+              number={group.number}
+              title={group.title}
+              sections={group.sections}
+              onStudy={handleStudy}
+            />
           ))}
+          
+          {/* Unit Quiz Button */}
+          <div className="mt-12">
+            <Button 
+              className="w-full py-6 bg-[#FFC900] hover:bg-[#e5b700] text-[#22251e] font-semibold text-lg"
+              onClick={handleTakeQuiz}
+            >
+              <CheckCircle className="h-5 w-5 mr-2" />
+              Test Your Knowledge
+            </Button>
+          </div>
         </div>
       </div>
     </MainLayout>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -25,6 +26,7 @@ import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
 import SystemOperationsSectionPage from "../../pages/engineering/SystemOperationsSectionPage";
 import SystemOperationsAssessmentPage from "../../pages/engineering/SystemOperationsAssessmentPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
+import InstallationPlanningAssessmentPage from "../../pages/engineering/InstallationPlanningAssessmentPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
 import ProjectPlanningPage from "../../pages/engineering/installation/ProjectPlanningPage";
 import TechnicalDesignPage from "../../pages/engineering/installation/TechnicalDesignPage";
@@ -94,6 +96,10 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning",
     element: <InstallationPlanningPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/assessment",
+    element: <InstallationPlanningAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/project-planning",
