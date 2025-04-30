@@ -28,6 +28,7 @@ import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumen
 import ElectricalMaintenancePage from "../../pages/moet/ElectricalMaintenancePage";
 import ElectricalMaintenanceSectionPage from "../../pages/moet/ElectricalMaintenanceSectionPage";
 import FaultFindingPage from "../../pages/moet/FaultFindingPage";
+import FaultFindingSectionPage from "../../pages/moet/FaultFindingSectionPage";
 import EquipmentInstallationPage from "../../pages/moet/EquipmentInstallationPage";
 
 const moetRoutes: RouteObject[] = [
@@ -54,6 +55,10 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills/fault-finding",
     element: <FaultFindingPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills/fault-finding/:sectionId",
+    element: <FaultFindingSectionPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills/equipment-installation",
