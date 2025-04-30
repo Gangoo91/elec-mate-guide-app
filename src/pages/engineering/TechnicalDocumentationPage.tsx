@@ -84,14 +84,6 @@ const TechnicalDocumentationPage = () => {
 
   const selectedContent = getSelectedSectionContent();
 
-  // Transform the quiz questions to match the required format
-  const formattedQuestions = technicalDocumentationQuestions.map(q => ({
-    question: q.question,
-    options: q.options,
-    correctAnswer: q.options[q.correctAnswer],
-    explanation: q.explanation
-  }));
-
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
@@ -139,7 +131,7 @@ const TechnicalDocumentationPage = () => {
               and compliance requirements for electrical systems.
             </p>
             <SafetyQuiz 
-              questions={formattedQuestions}
+              questions={technicalDocumentationQuestions}
               questionsToShow={10}
               timeLimit={300}
               unitId="technical-documentation"
