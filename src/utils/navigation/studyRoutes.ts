@@ -24,7 +24,7 @@ export const handleStudyRoutes = (
     return false;
   }
 
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/am2\/(core-units|mock-exams)/)) {
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/am2\/(installation|inspection-testing|fault-diagnosis|safe-isolation|assessment-guidelines)/)) {
     // Don't redirect, allow accessing the AM2 sub-pages directly
     return false;
   }

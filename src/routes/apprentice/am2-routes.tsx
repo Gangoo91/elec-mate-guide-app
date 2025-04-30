@@ -2,8 +2,11 @@
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import AM2HomePage from "../../pages/AM2Page";
-import AM2CoreUnitsPage from "../../pages/AM2CoreUnitsPage";
-import AM2MockExamsPage from "../../pages/AM2MockExamsPage";
+import InstallationPage from "../../pages/am2/InstallationPage";
+import InspectionTestingPage from "../../pages/am2/InspectionTestingPage";
+import FaultDiagnosisPage from "../../pages/am2/FaultDiagnosisPage";
+import SafeIsolationPage from "../../pages/am2/SafeIsolationPage";
+import AssessmentGuidelinesPage from "../../pages/am2/AssessmentGuidelinesPage";
 
 const am2Routes: RouteObject[] = [
   {
@@ -11,12 +14,24 @@ const am2Routes: RouteObject[] = [
     element: <AM2HomePage />
   },
   {
-    path: "/apprentices/study-materials/city-guilds/am2/core-units",
-    element: <AM2CoreUnitsPage />
+    path: "/apprentices/study-materials/city-guilds/am2/installation",
+    element: <InstallationPage />
   },
   {
-    path: "/apprentices/study-materials/city-guilds/am2/mock-exams",
-    element: <AM2MockExamsPage />
+    path: "/apprentices/study-materials/city-guilds/am2/inspection-testing",
+    element: <InspectionTestingPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/am2/fault-diagnosis",
+    element: <FaultDiagnosisPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/am2/safe-isolation",
+    element: <SafeIsolationPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/am2/assessment-guidelines",
+    element: <AssessmentGuidelinesPage />
   }
 ];
 
