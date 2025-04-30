@@ -1,3 +1,4 @@
+
 import { Location } from 'react-router-dom';
 
 export const handleStudyRoutes = (
@@ -20,6 +21,12 @@ export const handleStudyRoutes = (
   // Special handling for Level 3 page
   if (location.pathname === '/apprentices/study-materials/city-guilds/level-3') {
     // Don't redirect, allow accessing the Level 3 electrical page directly
+    return false;
+  }
+
+  // Special handling for MOET pages
+  if (location.pathname === '/apprentices/study-materials/city-guilds/moet/behaviours') {
+    // Don't redirect, allow accessing the behaviours page directly
     return false;
   }
 

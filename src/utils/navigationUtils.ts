@@ -1,3 +1,4 @@
+
 import { Location } from 'react-router-dom';
 import { handleProjectRoutes } from './navigation/projectRoutes';
 import { handleSpecialisationRoutes } from './navigation/specialisationRoutes';
@@ -10,10 +11,13 @@ export const handleNavigationLogic = (
   customAction?: () => void
 ) => {
   if (customAction) {
+    console.log("NavigationUtils - Using custom back action");
     customAction();
     return;
   }
 
+  console.log("NavigationUtils - Using default back logic");
+  
   // Check if the path matches any of the study route patterns
   if (handleStudyRoutes(location, (path) => navigate(path))) {
     return;

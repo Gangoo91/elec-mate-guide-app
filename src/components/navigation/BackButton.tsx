@@ -17,6 +17,7 @@ const BackButton = ({ customAction }: BackButtonProps) => {
   const isEntry = location.pathname === "/" || location.pathname === "/dashboard";
 
   const handleBackNavigation = () => {
+    console.log("BackButton - Custom action exists:", !!customAction);
     handleNavigationLogic(location, (to: string | number) => {
       if (typeof to === 'number') {
         navigate(to);
