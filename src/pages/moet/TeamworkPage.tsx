@@ -14,7 +14,7 @@ const TeamworkPage = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-8">
+      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Teamwork"
           description="Effective collaboration and communication in technical teams"
