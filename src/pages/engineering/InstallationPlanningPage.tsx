@@ -18,7 +18,7 @@ import {
   installationPlanningSection3_2,
   installationPlanningSection3_3,
   installationPlanningQuestions
-} from "@/data/units/sections/engineering";
+} from "@/data/units/sections/engineering/installationPlanning";
 
 const InstallationPlanningPage = () => {
   const navigate = useNavigate();
