@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -6,6 +5,9 @@ import MOETCoreKnowledgePage from "../../pages/MOETCoreKnowledgePage";
 import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import MOETBehavioursPage from "../../pages/MOETBehavioursPage";
 import MOETAssessmentPage from "../../pages/MOETAssessmentPage";
+import PracticalObservationsPage from "../../pages/assessment/PracticalObservationsPage";
+import TechnicalInterviewsPage from "../../pages/assessment/TechnicalInterviewsPage";
+import PortfolioReviewPage from "../../pages/assessment/PortfolioReviewPage";
 import BasicElectronicsPage from "../../pages/moet/BasicElectronicsPage";
 import BasicElectronicsSectionPage from "../../pages/moet/BasicElectronicsSectionPage";
 import BasicElectronicsAssessmentPage from "../../pages/moet/BasicElectronicsAssessmentPage";
@@ -35,7 +37,7 @@ import ProfessionalConductPage from "../../pages/moet/ProfessionalConductPage";
 import ProfessionalConductSectionPage from "../../pages/moet/ProfessionalConductSectionPage";
 import SafetyAwarenessPage from "../../pages/moet/SafetyAwarenessPage";
 import SafetyAwarenessSectionPage from "../../pages/moet/SafetyAwarenessSectionPage";
-import TeamworkPage from "../../pages/moet/TeamworkPage";
+import TeamworkPage from "../../pages/moet/Teamwork";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -141,6 +143,18 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/assessment",
     element: <MOETAssessmentPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment/practical-observations",
+    element: <PracticalObservationsPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment/technical-interviews",
+    element: <TechnicalInterviewsPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment/portfolio-review",
+    element: <PortfolioReviewPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics",

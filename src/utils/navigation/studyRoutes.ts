@@ -42,6 +42,12 @@ export const handleStudyRoutes = (
     return true;
   }
 
+  // Special handling for MOET assessment detail pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/assessment\/[a-z-]+/)) {
+    navigate('/apprentices/study-materials/city-guilds/moet/assessment');
+    return true;
+  }
+
   // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, Unit 304, Unit 305, and Unit 308 which have their own pages)
   if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!305$)(?!308$)(?!core-units$)\d{3}$/)) {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');

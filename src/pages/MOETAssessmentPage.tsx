@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import LessonContent from "@/components/units/LessonContent";
+import SectionContent from "@/components/units/SectionContent";
 
 const MOETAssessmentPage = () => {
   const navigate = useNavigate();
@@ -11,6 +12,24 @@ const MOETAssessmentPage = () => {
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet');
   };
+
+  const assessmentSections = [
+    {
+      title: "Practical Observations",
+      description: "8-hour observation in real-work environment with focus on safety procedures, tool handling, and maintenance tasks",
+      path: "/apprentices/study-materials/city-guilds/moet/assessment/practical-observations"
+    },
+    {
+      title: "Technical Interviews",
+      description: "Knowledge assessment, project discussion, problem-solving scenarios, and safety awareness verification",
+      path: "/apprentices/study-materials/city-guilds/moet/assessment/technical-interviews"
+    },
+    {
+      title: "Portfolio Review",
+      description: "Assessment of project documentation, maintenance records, risk assessments, and personal development evidence",
+      path: "/apprentices/study-materials/city-guilds/moet/assessment/portfolio-review"
+    }
+  ];
 
   return (
     <MainLayout>
@@ -22,44 +41,14 @@ const MOETAssessmentPage = () => {
         />
         
         <div className="mt-8 space-y-8">
-          <LessonContent title="Practical Observations">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Assessment Requirements</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Duration: 8-hour observation period</li>
-                <li>Real-work environment assessment</li>
-                <li>Safety procedures demonstration</li>
-                <li>Tool and equipment handling</li>
-                <li>Maintenance tasks execution</li>
-              </ul>
-            </div>
-          </LessonContent>
-
-          <LessonContent title="Technical Interviews">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Interview Components</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Knowledge assessment questions</li>
-                <li>Project discussion and review</li>
-                <li>Problem-solving scenarios</li>
-                <li>Technical reasoning evaluation</li>
-                <li>Safety awareness verification</li>
-              </ul>
-            </div>
-          </LessonContent>
-
-          <LessonContent title="Portfolio Review">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Portfolio Requirements</h3>
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Project documentation</li>
-                <li>Maintenance records</li>
-                <li>Risk assessments completed</li>
-                <li>Workplace testimonials</li>
-                <li>Personal development evidence</li>
-              </ul>
-            </div>
-          </LessonContent>
+          {assessmentSections.map((section, index) => (
+            <SectionContent
+              key={index}
+              title={section.title}
+              description={section.description}
+              path={section.path}
+            />
+          ))}
         </div>
       </div>
     </MainLayout>
