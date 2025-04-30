@@ -20,7 +20,7 @@ const Unit210SectionPage = () => {
   const nextSection = currentSectionIndex < sectionKeys.length - 1 ? sectionKeys[currentSectionIndex + 1] : null;
   
   const sectionContent = sections210[sectionId];
-  const isLastSection = sectionId === "1.4";
+  const isLastSection = currentSectionIndex === sectionKeys.length - 1;
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/level-2/core-units/210');

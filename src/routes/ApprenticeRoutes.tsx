@@ -198,6 +198,10 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level2Unit201AssessmentPage />,
   },
   {
+    path: "/apprentices/study-materials/city-guilds/level-2/core-units/210",
+    element: <Level2Unit210Page />,
+  },
+  {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId",
     element: <Unit210SectionPage />,
   },
