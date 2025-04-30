@@ -1,16 +1,97 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import LessonContent from "@/components/units/LessonContent";
+import SectionGroup from "@/components/units/level3/SectionGroup";
+import { SafetyQuiz } from "@/components/units/SafetyQuiz";
+import { safetyAwarenessQuestions } from "@/data/moet/safetyAwarenessSections";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from 'lucide-react';
 
 const SafetyAwarenessPage = () => {
   const navigate = useNavigate();
+  const [showAssessment, setShowAssessment] = useState<boolean>(false);
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/behaviours');
   };
+
+  const handleStudy = (sectionId: string) => {
+    navigate(`/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness/${sectionId}`);
+  };
+
+  const handleTakeAssessment = () => {
+    setShowAssessment(true);
+    window.scrollTo(0, 0);
+  };
+
+  // Section data structured like other MOET units
+  const sectionGroups = [
+    {
+      number: "1",
+      title: "Safety Fundamentals",
+      sections: [
+        {
+          id: "1.1",
+          title: "Risk Assessment",
+          description: "Identifying and evaluating potential hazards"
+        },
+        {
+          id: "1.2",
+          title: "PPE Requirements",
+          description: "Personal Protective Equipment for electrical work"
+        },
+        {
+          id: "1.3",
+          title: "Emergency Procedures",
+          description: "Responding to electrical emergencies safely"
+        }
+      ]
+    },
+    {
+      number: "2",
+      title: "Safety Management",
+      sections: [
+        {
+          id: "2.1",
+          title: "Safety Leadership",
+          description: "Leading by example in safety practices"
+        },
+        {
+          id: "2.2",
+          title: "Incident Reporting",
+          description: "Proper documentation and analysis of safety incidents"
+        },
+        {
+          id: "2.3",
+          title: "Safety Documentation",
+          description: "Maintaining proper safety records and documentation"
+        }
+      ]
+    },
+    {
+      number: "3",
+      title: "Safety Implementation",
+      sections: [
+        {
+          id: "3.1",
+          title: "Hazard Recognition",
+          description: "Identifying electrical hazards in the workplace"
+        },
+        {
+          id: "3.2",
+          title: "Lockout/Tagout",
+          description: "Safe isolation procedures for electrical work"
+        },
+        {
+          id: "3.3",
+          title: "Safety Culture Development",
+          description: "Building and sustaining a positive safety culture"
+        }
+      ]
+    }
+  ];
 
   return (
     <MainLayout>
@@ -21,82 +102,47 @@ const SafetyAwarenessPage = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="mt-8 space-y-8">
-          <LessonContent title="Safety Culture">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Risk Assessment</h3>
-              <p className="text-[#FFC900]/80">Identifying and evaluating potential hazards is a critical skill for all electrical workers. Effective risk assessment can prevent accidents, injuries, and equipment damage.</p>
+        {!showAssessment ? (
+          <>
+            <div className="mt-8 space-y-8">
+              {/* Map through section groups */}
+              {sectionGroups.map((group) => (
+                <SectionGroup
+                  key={group.number}
+                  number={group.number}
+                  title={group.title}
+                  sections={group.sections}
+                  onStudy={handleStudy}
+                />
+              ))}
               
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Conduct a site survey before beginning work</li>
-                <li>Identify all potential electrical, physical, and environmental hazards</li>
-                <li>Evaluate the severity and likelihood of each risk</li>
-                <li>Implement appropriate control measures based on the hierarchy of controls</li>
-                <li>Document your risk assessment and control measures</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">PPE Compliance</h3>
-              <p className="text-[#FFC900]/80">Personal Protective Equipment is your last line of defense against workplace hazards. Consistent and correct use of PPE is essential for personal safety in electrical work.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Select appropriate PPE for the specific task and hazards</li>
-                <li>Inspect PPE before each use for damage or wear</li>
-                <li>Use insulated tools when working with electrical equipment</li>
-                <li>Wear appropriate eye protection, gloves, and footwear</li>
-                <li>Use arc flash protection when required for high-energy systems</li>
-                <li>Maintain and store PPE properly to preserve its protective qualities</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Emergency Response</h3>
-              <p className="text-[#FFC900]/80">Knowing how to respond to emergencies can save lives and minimize damage. All electrical workers should be familiar with emergency procedures for common incidents.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Know the location of emergency equipment (fire extinguishers, first aid kits)</li>
-                <li>Understand the procedure for electrical shock incidents</li>
-                <li>Be familiar with evacuation routes and assembly points</li>
-                <li>Know how to isolate power in an emergency</li>
-                <li>Report all incidents, even near misses, to improve safety measures</li>
-              </ul>
+              {/* Unit Quiz Button */}
+              <div className="mt-12">
+                <Button 
+                  className="w-full py-6 bg-[#FFC900] hover:bg-[#e5b700] text-[#22251e] font-semibold text-lg"
+                  onClick={handleTakeAssessment}
+                >
+                  <CheckCircle className="h-5 w-5 mr-2" />
+                  Test Your Knowledge
+                </Button>
+              </div>
             </div>
-          </LessonContent>
-
-          <LessonContent title="Safety Promotion">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-[#FFC900]">Leading by Example</h3>
-              <p className="text-[#FFC900]/80">Your behavior sets the standard for safety culture in your workplace. Consistently demonstrating safe practices encourages others to prioritize safety as well.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Always follow safety procedures, even when under time pressure</li>
-                <li>Speak up when you observe unsafe conditions or practices</li>
-                <li>Share safety knowledge and tips with colleagues</li>
-                <li>Participate actively in safety meetings and training</li>
-                <li>Never take shortcuts that compromise safety</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Reporting and Documentation</h3>
-              <p className="text-[#FFC900]/80">Proper reporting of safety concerns, incidents, and near misses helps identify patterns and prevent future accidents. Documentation creates accountability and drives continuous improvement.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Report unsafe conditions promptly to supervisors</li>
-                <li>Document all incidents thoroughly and accurately</li>
-                <li>Suggest improvements to existing safety procedures</li>
-                <li>Participate in incident investigations constructively</li>
-                <li>Keep safety certifications and training records up to date</li>
-              </ul>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900] mt-6">Continuous Learning</h3>
-              <p className="text-[#FFC900]/80">Safety standards and best practices evolve over time. Staying current with safety knowledge and regulations is an essential professional responsibility.</p>
-              
-              <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-                <li>Attend regular safety training and refresher courses</li>
-                <li>Stay updated on changes to safety standards and regulations</li>
-                <li>Learn from industry incidents and case studies</li>
-                <li>Share new safety information with your team</li>
-                <li>Apply lessons learned from previous incidents</li>
-              </ul>
-            </div>
-          </LessonContent>
-        </div>
+          </>
+        ) : (
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Safety Awareness Assessment</h2>
+            <p className="text-[#FFC900]/80 mb-6">
+              Test your understanding of electrical safety awareness with this assessment.
+              Answer the questions based on the material covered in the previous sections.
+            </p>
+            <SafetyQuiz 
+              unitId="safety-awareness" 
+              timeLimit={600}
+              questions={safetyAwarenessQuestions}
+              questionsToShow={10}
+            />
+          </div>
+        )}
       </div>
     </MainLayout>
   );

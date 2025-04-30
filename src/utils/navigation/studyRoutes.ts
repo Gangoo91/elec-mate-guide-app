@@ -30,6 +30,18 @@ export const handleStudyRoutes = (
     return false;
   }
 
+  // Special handling for MOET behaviours section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/professional-conduct\/\d+\.\d+/)) {
+    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct');
+    return true;
+  }
+  
+  // Special handling for MOET safety awareness section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/safety-awareness\/\d+\.\d+/)) {
+    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness');
+    return true;
+  }
+
   // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, Unit 304, Unit 305, and Unit 308 which have their own pages)
   if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!305$)(?!308$)(?!core-units$)\d{3}$/)) {
     navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
