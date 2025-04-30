@@ -17,54 +17,110 @@ const TechnicalDesignPage = () => {
       <div className="container px-4 py-8">
         <PageHeader 
           title="Technical Design Considerations"
-          description="Essential principles and methods for electrical system design"
+          description="Circuit design, sizing, and integration for successful electrical installations"
           customBackAction={handleBackClick}
         />
         
         <div className="mt-8 space-y-8">
-          <LessonContent title="Circuit Design and Load Distribution">
+          <LessonContent title="Circuit Design and Load Analysis">
             <div className="space-y-4">
               <p>
-                Circuit design is a fundamental aspect of electrical installation planning that involves determining 
-                how electrical loads will be distributed across the various circuits of an installation.
+                Effective circuit design begins with comprehensive load analysis to ensure the 
+                electrical installation can safely and efficiently meet all power requirements.
               </p>
               
-              <h3 className="text-lg font-semibold text-[#FFC900]">Key Design Principles</h3>
+              <h3 className="text-lg font-semibold text-[#FFC900]">Load Calculation Principles</h3>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Load calculation and diversity factors application</li>
-                <li>Circuit segregation by function and load type</li>
-                <li>Phase balancing for three-phase systems</li>
-                <li>Voltage drop considerations over circuit length</li>
-                <li>Future expansion capacity planning</li>
+                <li>Connected load assessment for all electrical equipment</li>
+                <li>Maximum demand calculation with appropriate diversity factors</li>
+                <li>Load growth projections for future expansion</li>
+                <li>Peak load analysis for determining cable and equipment ratings</li>
+                <li>Load balancing across three-phase systems</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900] mt-4">Circuit Arrangement Strategy</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Logical circuit grouping by function, location, and load type</li>
+                <li>Dedicated circuits for high-current appliances and critical equipment</li>
+                <li>Radial vs. ring circuit design considerations</li>
+                <li>Emergency and backup circuit segregation</li>
+                <li>Control circuit integration with power circuits</li>
               </ul>
               
               <p className="mt-4">
-                Well-designed circuits provide safe, reliable power distribution while minimizing energy losses
-                and ensuring system longevity.
+                Thorough circuit design reduces operational issues, simplifies maintenance,
+                and ensures regulatory compliance throughout the installation's lifecycle.
               </p>
             </div>
           </LessonContent>
           
-          <LessonContent title="Cable Sizing and Selection">
+          <LessonContent title="Cable Selection and Sizing">
             <div className="space-y-4">
               <p>
-                Selecting appropriate cables involves detailed calculations based on current-carrying requirements,
-                installation methods, environmental conditions, and regulatory standards.
+                Cable selection involves careful consideration of multiple factors to ensure 
+                safe current-carrying capacity and appropriate voltage drop characteristics.
               </p>
               
-              <h3 className="text-lg font-semibold text-[#FFC900]">Cable Selection Factors</h3>
+              <h3 className="text-lg font-semibold text-[#FFC900]">Cable Sizing Factors</h3>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Current-carrying capacity based on load requirements</li>
-                <li>Voltage drop considerations over distance</li>
-                <li>Derating factors for ambient temperature and grouping</li>
-                <li>Installation method impact (conduit, tray, direct burial)</li>
-                <li>Environmental considerations (temperature, moisture, chemicals)</li>
-                <li>Special requirements (fire performance, mechanical protection)</li>
+                <li>Current rating calculation based on load requirements</li>
+                <li>Correction factors for temperature, grouping, and installation method</li>
+                <li>Voltage drop limitations (typically max 3% lighting, 5% power)</li>
+                <li>Fault current withstand capacity for short-circuit protection</li>
+                <li>Cable type selection based on environment and installation conditions</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900] mt-4">Cable Routing Considerations</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Separation distances from other services and EMI sources</li>
+                <li>Fire barrier penetration requirements</li>
+                <li>Support systems and fixing methods</li>
+                <li>Bend radius limitations and accessibility for maintenance</li>
+                <li>Segregation of power and data circuits</li>
+              </ul>
+              
+              <div className="bg-[#1a1d17] p-4 rounded-md mt-4">
+                <p className="text-[#FFC900] font-semibold">BS 7671 Requirements</p>
+                <p className="text-[#FFC900]/80 mt-2">
+                  Cable sizing must comply with BS 7671 requirements for current-carrying capacity (Section 523) 
+                  and voltage drop (Section 525). Calculations must account for all applicable correction factors
+                  and installation conditions.
+                </p>
+              </div>
+            </div>
+          </LessonContent>
+          
+          <LessonContent title="Equipment Selection and Integration">
+            <div className="space-y-4">
+              <p>
+                Proper selection of electrical equipment ensures compatibility, reliability, and compliance
+                with project requirements and regulatory standards.
+              </p>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900]">Equipment Selection Criteria</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Electrical ratings: voltage, current, and power requirements</li>
+                <li>Environmental protections: IP ratings for dust and moisture resistance</li>
+                <li>Temperature ratings and thermal management needs</li>
+                <li>Physical dimensions and space constraints</li>
+                <li>Compliance with relevant standards and specifications</li>
+                <li>Manufacturer reputation and product warranty</li>
+                <li>Availability of spare parts and technical support</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold text-[#FFC900] mt-4">Control System Integration</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Control hierarchy and architecture design</li>
+                <li>Interface requirements between different systems</li>
+                <li>Protocol selection for communication networks</li>
+                <li>Supervisory control and data acquisition (SCADA) integration</li>
+                <li>Remote monitoring and control capabilities</li>
+                <li>Failsafe and emergency override systems</li>
               </ul>
               
               <p className="mt-4">
-                Proper cable sizing ensures safety, efficiency, and compliance while avoiding unnecessary 
-                costs from oversizing.
+                Well-integrated equipment selections ensure system reliability while minimizing
+                commissioning issues and operational problems.
               </p>
             </div>
           </LessonContent>
@@ -72,48 +128,45 @@ const TechnicalDesignPage = () => {
           <LessonContent title="Protection Schemes">
             <div className="space-y-4">
               <p>
-                Protection schemes safeguard electrical installations from damage due to overcurrent, 
-                short circuits, earth faults, and other abnormal conditions.
+                Protection schemes safeguard personnel, equipment, and property from electrical hazards
+                through carefully coordinated protective devices.
               </p>
               
-              <h3 className="text-lg font-semibold text-[#FFC900]">Protection Design Elements</h3>
+              <h3 className="text-lg font-semibold text-[#FFC900]">Overcurrent Protection</h3>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Overcurrent protection device selection and rating</li>
-                <li>Discrimination/selectivity between protective devices</li>
-                <li>Earth fault protection requirements</li>
-                <li>RCD/RCBO selection based on application</li>
-                <li>Surge protection implementation</li>
-                <li>Backup protection considerations</li>
+                <li>Selection of appropriate circuit breakers and fuses</li>
+                <li>Time-current characteristic coordination</li>
+                <li>Discrimination (selectivity) between protective devices</li>
+                <li>Cascading protection strategies</li>
+                <li>Short-circuit current calculation and interrupting capacity</li>
               </ul>
               
-              <p className="mt-4">
-                A well-designed protection scheme provides multiple layers of safety while maintaining 
-                service continuity under normal conditions.
-              </p>
-            </div>
-          </LessonContent>
-          
-          <LessonContent title="Control System Integration">
-            <div className="space-y-4">
-              <p>
-                Modern electrical installations often incorporate sophisticated control systems that require
-                careful integration into the overall design.
-              </p>
-              
-              <h3 className="text-lg font-semibold text-[#FFC900]">Control System Design Considerations</h3>
+              <h3 className="text-lg font-semibold text-[#FFC900] mt-4">Electric Shock Protection</h3>
               <ul className="list-disc pl-6 space-y-2">
-                <li>Control architecture selection (centralized vs. distributed)</li>
-                <li>Communications protocol selection and network design</li>
-                <li>Integration with building management systems</li>
-                <li>User interface requirements and design</li>
-                <li>Security considerations for networked systems</li>
-                <li>Redundancy and fallback mechanisms</li>
+                <li>Earthing system design (TN-S, TN-C-S, TT, IT)</li>
+                <li>Main and supplementary equipotential bonding</li>
+                <li>RCD protection levels and coordination</li>
+                <li>Protective conductor sizing and routing</li>
+                <li>Earth fault loop impedance calculation</li>
               </ul>
               
-              <p className="mt-4">
-                Effective control system integration enhances functionality, user experience, energy efficiency,
-                and system monitoring capabilities.
-              </p>
+              <h3 className="text-lg font-semibold text-[#FFC900] mt-4">Special Protections</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Surge protection devices and overvoltage protection</li>
+                <li>Undervoltage protection for motor circuits</li>
+                <li>Emergency shutdown systems</li>
+                <li>Arc fault detection devices</li>
+                <li>Lightning protection integration</li>
+              </ul>
+              
+              <div className="bg-[#1a1d17] p-4 rounded-md mt-4">
+                <p className="text-[#FFC900] font-semibold">Protection Coordination Example</p>
+                <p className="text-[#FFC900]/80 mt-2">
+                  In a cascaded protection scheme, upstream devices must have higher current and time settings
+                  than downstream devices to ensure that faults are cleared by the nearest protection device, 
+                  minimizing disruption to the rest of the electrical system.
+                </p>
+              </div>
             </div>
           </LessonContent>
         </div>
