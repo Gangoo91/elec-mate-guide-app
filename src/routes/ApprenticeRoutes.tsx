@@ -39,6 +39,7 @@ import AIToolsPage from "../pages/AIToolsPage";
 import VideoDemonstrationsPage from "../pages/VideoDemonstrationsPage";
 import ARLearningPage from "../pages/ARLearningPage";
 import Unit210SectionPage from "../pages/units/Unit210SectionPage";
+import Unit204SectionPage from "../pages/units/Unit204SectionPage";
 
 const ApprenticeRoutes: RouteObject[] = [
   {
@@ -126,8 +127,8 @@ const ApprenticeRoutes: RouteObject[] = [
     element: <Level2Unit204Page />,
   },
   {
-    path: "/apprentices/study-materials/city-guilds/level-2/210",
-    element: <Level2Unit210Page />,
+    path: "/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId",
+    element: <Unit204SectionPage />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-3/301",
@@ -196,6 +197,10 @@ const ApprenticeRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-2/201/assessment",
     element: <Level2Unit201AssessmentPage />,
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/level-2/210",
+    element: <Level2Unit210Page />,
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210",

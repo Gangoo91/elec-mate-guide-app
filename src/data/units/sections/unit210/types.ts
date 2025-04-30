@@ -1,11 +1,12 @@
 
-import { ReactNode } from 'react';
+import React from 'react';
 
 export interface Section210 {
+  id: string;
   title: string;
   description?: string;
-  content: ReactNode;
-  detailedContent?: ReactNode;
+  content: React.ReactNode;
+  detailedContent?: React.ReactNode;
 }
 
 export interface SectionsMap210 {
