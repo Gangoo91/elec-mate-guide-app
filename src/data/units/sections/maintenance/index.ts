@@ -1,6 +1,4 @@
 
-import { preventiveMaintenanceSections } from './preventiveMaintenance';
-
-export {
-  preventiveMaintenanceSections
-};
+// Export maintenance section data
+export * from './preventiveMaintenance';
+export * from './safetyProtocols';

@@ -1,93 +1,141 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import LessonContent from "@/components/units/LessonContent";
+import { Card } from "@/components/ui/card";
+import SectionGroup from "@/components/units/level3/SectionGroup";
+import { SafetyQuiz } from "@/components/units/SafetyQuiz";
+import {
+  safetySection1_1,
+  safetySection1_2,
+  safetySection1_3,
+  safetySection2_1,
+  safetySection2_2,
+  safetySection2_3,
+  safetySection3_1,
+  safetySection3_2,
+  safetySection3_3,
+  safetyQuestions
+} from "@/data/units/sections/maintenance/safetyProtocols";
 
 const SafetyProtocolsPage = () => {
   const navigate = useNavigate();
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices');
   };
 
+  const handleStudy = (sectionId: string) => {
+    setSelectedSection(sectionId);
+    // Scroll to the content section
+    setTimeout(() => {
+      const element = document.getElementById('content-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const getSelectedSectionContent = () => {
+    switch (selectedSection) {
+      case '1.1':
+        return safetySection1_1;
+      case '1.2':
+        return safetySection1_2;
+      case '1.3':
+        return safetySection1_3;
+      case '2.1':
+        return safetySection2_1;
+      case '2.2':
+        return safetySection2_2;
+      case '2.3':
+        return safetySection2_3;
+      case '3.1':
+        return safetySection3_1;
+      case '3.2':
+        return safetySection3_2;
+      case '3.3':
+        return safetySection3_3;
+      default:
+        return null;
+    }
+  };
+
+  const section1 = [
+    { id: '1.1', title: 'General Safety Principles', description: 'Understanding the fundamental principles of electrical safety' },
+    { id: '1.2', title: 'Risk Assessment Process', description: 'Systematic approach to identifying and mitigating electrical hazards' },
+    { id: '1.3', title: 'Regulatory Framework', description: 'Understanding the legal requirements for electrical safety' }
+  ];
+
+  const section2 = [
+    { id: '2.1', title: 'Safe Isolation Procedures', description: 'Ensuring electrical equipment is safely disconnected before work begins' },
+    { id: '2.2', title: 'Lock-Out/Tag-Out (LOTO) Systems', description: 'Preventing accidental energization of equipment during maintenance' },
+    { id: '2.3', title: 'Working Near Live Equipment', description: 'Safety measures when complete isolation is not possible' }
+  ];
+
+  const section3 = [
+    { id: '3.1', title: 'Personal Protective Equipment (PPE)', description: 'Essential protective gear for electrical maintenance' },
+    { id: '3.2', title: 'Electrical Test Equipment', description: 'Proper use and maintenance of testing tools' },
+    { id: '3.3', title: 'Emergency Response', description: 'Procedures for electrical accidents and incidents' }
+  ];
+
+  const selectedContent = getSelectedSectionContent();
+
   return (
     <MainLayout>
-      <div className="container px-4 py-8">
+      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="Safety Protocols"
-          description="Essential safety procedures and regulations in maintenance"
+          description="Essential safety procedures and regulations in electrical maintenance"
           customBackAction={handleBackClick}
         />
         
-        <div className="mt-8 space-y-8">
-          <LessonContent title="Electrical Safety Fundamentals">
-            <p className="mb-4 text-[#FFC900]/80">
-              Electrical maintenance requires strict adherence to safety protocols to protect personnel from hazards such
-              as electric shock, arc flash, and other injuries. These protocols are based on industry standards, regulations,
-              and best practices.
-            </p>
-            
-            <h3 className="text-xl font-semibold text-[#FFC900] mt-6 mb-3">Core Safety Principles</h3>
-            <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-              <li><strong>De-energize when possible:</strong> Always work on de-energized equipment when feasible</li>
-              <li><strong>Lock-Out/Tag-Out (LOTO):</strong> Secure power sources to prevent unexpected energization</li>
-              <li><strong>Verify absence of voltage:</strong> Test circuits before beginning work</li>
-              <li><strong>Use proper PPE:</strong> Wear appropriate personal protective equipment</li>
-              <li><strong>Maintain safe distances:</strong> Observe minimum approach distances for energized equipment</li>
-              <li><strong>Use insulated tools:</strong> Work with properly rated tools for electrical tasks</li>
-            </ul>
-
-            <h3 className="text-xl font-semibold text-[#FFC900] mt-6 mb-3">Key Safety Standards</h3>
-            <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-              <li>BS 7671 - Requirements for Electrical Installations (IET Wiring Regulations)</li>
-              <li>Health and Safety at Work Act 1974</li>
-              <li>Electricity at Work Regulations 1989</li>
-              <li>The Provision and Use of Work Equipment Regulations (PUWER) 1998</li>
-              <li>Reporting of Injuries, Diseases and Dangerous Occurrences Regulations (RIDDOR)</li>
-            </ul>
-          </LessonContent>
+        <div className="mt-8 space-y-10">
+          <SectionGroup 
+            number="1" 
+            title="Safety Fundamentals" 
+            sections={section1}
+            onStudy={handleStudy}
+          />
           
-          <LessonContent title="Safe Work Procedures">
-            <p className="mb-4 text-[#FFC900]/80">
-              Specific procedures must be followed when performing electrical maintenance to ensure safety.
-              These procedures cover preparation, execution, and completion of maintenance tasks.
+          <SectionGroup 
+            number="2" 
+            title="Safe Working Practices" 
+            sections={section2}
+            onStudy={handleStudy}
+          />
+          
+          <SectionGroup 
+            number="3" 
+            title="Equipment and Emergency Response" 
+            sections={section3}
+            onStudy={handleStudy}
+          />
+          
+          {selectedSection && selectedContent && (
+            <div id="content-section" className="pt-4">
+              <LessonContent title={selectedContent.title}>
+                {selectedContent.content}
+              </LessonContent>
+            </div>
+          )}
+          
+          <Card className="bg-[#22251e] border-[#FFC900]/20 p-6">
+            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Knowledge Assessment</h2>
+            <p className="text-[#FFC900]/80 mb-6">
+              Test your understanding of electrical safety protocols with this assessment. 
+              The quiz covers key aspects of safety principles, safe working practices, 
+              equipment usage, and emergency procedures.
             </p>
-            
-            <h3 className="text-xl font-semibold text-[#FFC900] mt-6 mb-3">Before Maintenance</h3>
-            <ol className="list-decimal pl-6 space-y-2 text-[#FFC900]/80">
-              <li>Conduct a risk assessment specific to the task</li>
-              <li>Obtain necessary work permits and authorizations</li>
-              <li>Review circuit diagrams and maintenance procedures</li>
-              <li>Inspect and verify proper functioning of test equipment</li>
-              <li>Ensure all required PPE is available and in good condition</li>
-              <li>Brief all team members on the work scope and safety measures</li>
-              <li>Plan and communicate emergency procedures</li>
-            </ol>
-
-            <h3 className="text-xl font-semibold text-[#FFC900] mt-6 mb-3">During Maintenance</h3>
-            <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-              <li>Follow approved isolation procedures</li>
-              <li>Apply LOTO to all potential energy sources</li>
-              <li>Verify absence of voltage using properly rated test instruments</li>
-              <li>Use appropriate PPE for the specific hazard category</li>
-              <li>Maintain clear communication between team members</li>
-              <li>Use only approved tools and equipment</li>
-              <li>Continuously monitor for changing conditions</li>
-            </ul>
-            
-            <h3 className="text-xl font-semibold text-[#FFC900] mt-6 mb-3">After Maintenance</h3>
-            <ol className="list-decimal pl-6 space-y-2 text-[#FFC900]/80">
-              <li>Clean the work area and account for all tools</li>
-              <li>Conduct post-maintenance testing when appropriate</li>
-              <li>Return systems to service methodically</li>
-              <li>Document all maintenance work performed</li>
-              <li>Report any safety concerns or incidents</li>
-              <li>Remove LOTO devices in the correct sequence</li>
-              <li>Conduct a post-work briefing to review the maintenance activity</li>
-            </ol>
-          </LessonContent>
+            <SafetyQuiz 
+              unitId="201"
+              questionsToShow={5}
+              timeLimit={300}
+            />
+          </Card>
         </div>
       </div>
     </MainLayout>
