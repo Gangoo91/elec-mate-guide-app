@@ -126,7 +126,7 @@ const TechnicalDesignPage = () => {
                         <li>
                           <span className="font-medium">Dedicated Circuits</span>: Provide separate circuits for:
                           <ul className="list-circle pl-6 mt-2 space-y-1">
-                            <li>High-current appliances (>13A)</li>
+                            <li>High-current appliances ({'>'}13A)</li>
                             <li>Critical equipment requiring isolation</li>
                             <li>Devices sensitive to voltage fluctuations</li>
                           </ul>
@@ -445,8 +445,8 @@ const TechnicalDesignPage = () => {
                           <span className="font-medium">IP ratings</span>: Select appropriate Ingress Protection 
                           rating based on environment:
                           <ul className="list-circle pl-6 mt-2 space-y-1">
-                            <li>IP2X: Protected against solid objects >12.5mm</li>
-                            <li>IP4X: Protected against solid objects >1.0mm</li>
+                            <li>IP2X: Protected against solid objects {'>'}12.5mm</li>
+                            <li>IP4X: Protected against solid objects {'>'}1.0mm</li>
                             <li>IP5X: Protected against dust</li>
                             <li>IP6X: Dust tight</li>
                             <li>IPX4: Protected against water splashing</li>
