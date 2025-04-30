@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -25,6 +26,7 @@ import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
 import ElectricalMaintenancePage from "../../pages/moet/ElectricalMaintenancePage";
+import ElectricalMaintenanceSectionPage from "../../pages/moet/ElectricalMaintenanceSectionPage";
 import FaultFindingPage from "../../pages/moet/FaultFindingPage";
 import EquipmentInstallationPage from "../../pages/moet/EquipmentInstallationPage";
 
@@ -44,6 +46,10 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills/electrical-maintenance",
     element: <ElectricalMaintenancePage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-skills/electrical-maintenance/:sectionId",
+    element: <ElectricalMaintenanceSectionPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills/fault-finding",
