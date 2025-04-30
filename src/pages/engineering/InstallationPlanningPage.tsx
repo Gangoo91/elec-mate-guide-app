@@ -124,16 +124,17 @@ const InstallationPlanningPage = () => {
           )}
           
           <Card className="bg-[#22251e] border-[#FFC900]/20 p-6">
-            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Knowledge Assessment</h2>
+            <h2 className="text-2xl font-semibold text-[#FFC900] mb-6">Installation Planning Assessment</h2>
             <p className="text-[#FFC900]/80 mb-6">
               Test your understanding of installation planning principles with this assessment. 
               The quiz covers key aspects of project planning, technical design, compliance requirements, 
               and quality control in electrical installations.
             </p>
             <SafetyQuiz 
-              unitId="201"
-              questionsToShow={5}
-              timeLimit={300}
+              unitId="installation-planning"
+              questionsToShow={10}
+              timeLimit={600}
+              questions={installationPlanningQuestions}
             />
           </Card>
         </div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FormativeAssessment } from './FormativeAssessment';
 import { electricalScienceQuestions } from '@/data/units/sections/unit202/questions/electricalScienceQuestions';
@@ -22,6 +21,7 @@ interface SafetyQuizProps {
   unitId: string;
   timeLimit?: number; // in seconds
   questionsToShow?: number; // Number of questions to display from the pool
+  questions?: AssessmentQuestion[]; // Optional direct questions array
 }
 
 interface AssessmentQuestion {
@@ -29,6 +29,7 @@ interface AssessmentQuestion {
   options: string[];
   correctAnswer: string;
   explanation: string;
+  id?: number; // Optional ID field
 }
 
 // Define a more comprehensive source question type to handle all formats
@@ -44,7 +45,8 @@ interface SourceQuestion {
 export const SafetyQuiz: React.FC<SafetyQuizProps> = ({ 
   unitId, 
   timeLimit = 600,
-  questionsToShow = 10 
+  questionsToShow = 10,
+  questions
 }) => {
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
   const [isActive, setIsActive] = useState(false);
@@ -59,7 +61,14 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
   const { toast } = useToast();
 
   const getQuestionSet = () => {
-    // Get the appropriate question pool based on unitId
+    // If direct questions were provided, use them
+    if (questions && questions.length > 0) {
+      // Shuffle the provided questions and take the requested number
+      const shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
+      return shuffledQuestions.slice(0, questionsToShow);
+    }
+    
+    // Otherwise, get the appropriate question pool based on unitId
     let questionPool: SourceQuestion[] = [];
     
     switch(unitId) {
@@ -112,7 +121,8 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
       question: q.question || q.text || '', // Handle both formats
       options: q.options,
       correctAnswer: q.correctAnswer,
-      explanation: q.explanation
+      explanation: q.explanation,
+      id: q.id
     }));
   };
 
@@ -222,7 +232,7 @@ export const SafetyQuiz: React.FC<SafetyQuizProps> = ({
       {!hasStarted ? (
         <div className="text-center py-8">
           <h3 className="text-xl font-medium text-[#FFC900] mb-4">
-            Unit {unitId} Assessment
+            {unitId === "installation-planning" ? "Installation Planning Assessment" : `Unit ${unitId} Assessment`}
           </h3>
           <p className="text-[#FFC900]/80 mb-6">
             This assessment contains {questionsToShow} questions randomly selected from a pool of questions to test your knowledge.
