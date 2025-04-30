@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
@@ -43,6 +42,14 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-skills",
     element: <MOETCoreSkillsPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/behaviours",
+    element: <MOETBehavioursPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/assessment",
+    element: <MOETAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",
@@ -103,14 +110,6 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/technical-documentation",
     element: <TechnicalDocumentationPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/behaviours",
-    element: <MOETBehavioursPage />
-  },
-  {
-    path: "/apprentices/study-materials/city-guilds/moet/assessment",
-    element: <MOETAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics",
