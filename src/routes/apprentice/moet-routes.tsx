@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import MOETPage from "../../pages/MOETPage";
 import MOETCoreKnowledgePage from "../../pages/MOETCoreKnowledgePage";
@@ -14,43 +15,43 @@ import MOETMaintenancePracticesPage from "../../pages/MOETMaintenancePracticesPa
 const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet",
-    element: <MOETPage />,
+    element: <MOETPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge",
-    element: <MOETCoreKnowledgePage />,
+    element: <MOETCoreKnowledgePage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles",
-    element: <ElectricalPrinciplesPage />,
+    element: <ElectricalPrinciplesPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices",
-    element: <MOETMaintenancePracticesPage />,
+    element: <MOETMaintenancePracticesPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations",
-    element: <MOETEngineeringOperationsPage />,
+    element: <MOETEngineeringOperationsPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/behaviours",
-    element: <MOETBehavioursPage />,
+    element: <MOETBehavioursPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/assessment",
-    element: <MOETAssessmentPage />,
+    element: <MOETAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/basic-electronics",
-    element: <BasicElectronicsPage />,
+    element: <BasicElectronicsPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/circuit-theory",
-    element: <CircuitTheoryPage />,
+    element: <CircuitTheoryPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/electrical-principles/power-systems",
-    element: <PowerSystemsPage />,
+    element: <PowerSystemsPage />
   },
 ];
 

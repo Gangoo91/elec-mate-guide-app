@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../../pages/ApprenticeHub";
 import StudyMaterialsPage from "../../pages/StudyMaterialsPage";
@@ -13,43 +14,43 @@ import PracticeExamsPage from "../../pages/PracticeExamsPage";
 const apprenticeMainRoutes: RouteObject[] = [
   {
     path: "/apprentices",
-    element: <ApprenticeDashboardPage />,
+    element: <ApprenticeDashboardPage />
   },
   {
     path: "/apprentices/dashboard",
-    element: <ApprenticeDashboardPage />,
+    element: <ApprenticeDashboardPage />
   },
   {
     path: "/apprentices/learning-hub",
-    element: <LearningHubPage />,
+    element: <LearningHubPage />
   },
   {
     path: "/apprentices/study-materials",
-    element: <StudyMaterialsPage />,
+    element: <StudyMaterialsPage />
   },
   {
     path: "/apprentices/practice-exams",
-    element: <PracticeExamsPage />,
+    element: <PracticeExamsPage />
   },
   {
     path: "/apprentices/audio-tutorials",
-    element: <AudioTutorialsPage />,
+    element: <AudioTutorialsPage />
   },
   {
     path: "/apprentices/ai-tools",
-    element: <AIToolsPage />,
+    element: <AIToolsPage />
   },
   {
     path: "/apprentices/video-demonstrations",
-    element: <VideoDemonstrationsPage />,
+    element: <VideoDemonstrationsPage />
   },
   {
     path: "/apprentices/ar-learning",
-    element: <ARLearningPage />,
+    element: <ARLearningPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds",
-    element: <CityGuildsPage />,
+    element: <CityGuildsPage />
   },
 ];
 

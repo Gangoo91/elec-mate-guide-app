@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import Level2HomePage from "../../pages/Level2CoreUnitsPage";
 import UnitContentPage from "../../pages/UnitContentPage";
@@ -15,51 +16,51 @@ import Level2Unit201AssessmentPage from "../../pages/Level2Unit201AssessmentPage
 const level2Routes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/level-2",
-    element: <Level2HomePage />,
+    element: <Level2HomePage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/:unitId",
-    element: <UnitContentPage />,
+    element: <UnitContentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/201",
-    element: <Level2Unit201Page />,
+    element: <Level2Unit201Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/201/:sectionId",
-    element: <Unit201SectionPage />,
+    element: <Unit201SectionPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/202",
-    element: <Level2Unit202Page />,
+    element: <Level2Unit202Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/203",
-    element: <Level2Unit203Page />,
+    element: <Level2Unit203Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/204",
-    element: <Level2Unit204Page />,
+    element: <Level2Unit204Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId",
-    element: <Unit204SectionPage />,
+    element: <Unit204SectionPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/201/assessment",
-    element: <Level2Unit201AssessmentPage />,
+    element: <Level2Unit201AssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/210",
-    element: <Level2Unit210Page />,
+    element: <Level2Unit210Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210",
-    element: <Level2Unit210Page />,
+    element: <Level2Unit210Page />
   },
   {
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId",
-    element: <Unit210SectionPage />,
+    element: <Unit210SectionPage />
   },
 ];
 
