@@ -23,6 +23,8 @@ import SafetyProtocolsPage from "../../pages/maintenance/SafetyProtocolsPage";
 import DocumentationPage from "../../pages/maintenance/DocumentationPage";
 import MOETCoreSkillsPage from "../../pages/MOETCoreSkillsPage";
 import SystemOperationsPage from "../../pages/engineering/SystemOperationsPage";
+import SystemOperationsSectionPage from "../../pages/engineering/SystemOperationsSectionPage";
+import SystemOperationsAssessmentPage from "../../pages/engineering/SystemOperationsAssessmentPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
 
@@ -70,6 +72,14 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations",
     element: <SystemOperationsPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/:sectionId",
+    element: <SystemOperationsSectionPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/system-operations/assessment",
+    element: <SystemOperationsAssessmentPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning",
