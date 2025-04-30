@@ -27,6 +27,9 @@ import SystemOperationsSectionPage from "../../pages/engineering/SystemOperation
 import SystemOperationsAssessmentPage from "../../pages/engineering/SystemOperationsAssessmentPage";
 import InstallationPlanningPage from "../../pages/engineering/InstallationPlanningPage";
 import TechnicalDocumentationPage from "../../pages/engineering/TechnicalDocumentationPage";
+import ProjectPlanningPage from "../../pages/engineering/installation/ProjectPlanningPage";
+import TechnicalDesignPage from "../../pages/engineering/installation/TechnicalDesignPage";
+import ImplementationPage from "../../pages/engineering/installation/ImplementationPage";
 
 const moetRoutes: RouteObject[] = [
   {
@@ -84,6 +87,18 @@ const moetRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning",
     element: <InstallationPlanningPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/project-planning",
+    element: <ProjectPlanningPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/technical-design",
+    element: <TechnicalDesignPage />
+  },
+  {
+    path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/installation-planning/implementation",
+    element: <ImplementationPage />
   },
   {
     path: "/apprentices/study-materials/city-guilds/moet/core-knowledge/engineering-operations/technical-documentation",
