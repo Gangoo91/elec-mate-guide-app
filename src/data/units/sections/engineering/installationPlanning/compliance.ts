@@ -5,7 +5,7 @@ import React from 'react';
 export const installationPlanningSection3_1 = {
   title: "Regulatory Compliance",
   content: (
-    <>
+    <React.Fragment>
       <p>Ensuring compliance with relevant codes, standards, and regulations is fundamental to safe, legal, and insurable electrical installations.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Key Regulatory Considerations</h4>
@@ -27,7 +27,7 @@ export const installationPlanningSection3_1 = {
       </ul>
       
       <p className="mt-4">Proactive compliance planning reduces the risk of work stoppages, rework, penalties, and liability while ensuring that installations meet all legal and safety requirements.</p>
-    </>
+    </React.Fragment>
   )
 };
 
@@ -35,7 +35,7 @@ export const installationPlanningSection3_1 = {
 export const installationPlanningSection3_2 = {
   title: "Risk Assessment and Management",
   content: (
-    <>
+    <React.Fragment>
       <p>Systematic risk assessment and management processes help identify potential problems before they occur, allowing for preventive measures and contingency planning.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Risk Assessment Process</h4>
@@ -57,7 +57,7 @@ export const installationPlanningSection3_2 = {
       </ul>
       
       <p className="mt-4">Effective risk management is an ongoing process throughout the project, requiring regular reviews and updates as conditions change and new risks emerge or existing ones are resolved.</p>
-    </>
+    </React.Fragment>
   )
 };
 
@@ -65,7 +65,7 @@ export const installationPlanningSection3_2 = {
 export const installationPlanningSection3_3 = {
   title: "Quality Planning",
   content: (
-    <>
+    <React.Fragment>
       <p>Quality planning establishes the standards, processes, and verification methods that will ensure the installation meets all technical requirements and client expectations.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Quality Assurance Elements</h4>
@@ -87,6 +87,6 @@ export const installationPlanningSection3_3 = {
       </ul>
       
       <p className="mt-4">A well-structured quality plan prevents defects rather than detecting them after installation, reducing rework, improving client satisfaction, and ensuring the longevity and reliability of the electrical installation.</p>
-    </>
+    </React.Fragment>
   )
 };

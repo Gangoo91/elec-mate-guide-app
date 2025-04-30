@@ -5,7 +5,7 @@ import React from 'react';
 export const installationPlanningSection1_1 = {
   title: "Project Planning Basics",
   content: (
-    <>
+    <React.Fragment>
       <p>Effective electrical installation planning provides the framework for successful project execution and helps prevent costly delays and rework.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Core Planning Elements</h4>
@@ -27,7 +27,7 @@ export const installationPlanningSection1_1 = {
       </ul>
       
       <p className="mt-4">A comprehensive planning approach accounts for all project phases from initiation through closeout, with particular attention to installation-specific considerations like power availability, access requirements, and coordination with other trades.</p>
-    </>
+    </React.Fragment>
   )
 };
 
@@ -35,7 +35,7 @@ export const installationPlanningSection1_1 = {
 export const installationPlanningSection1_2 = {
   title: "Site Assessment",
   content: (
-    <>
+    <React.Fragment>
       <p>Thorough site assessment helps identify potential challenges, constraints, and requirements before installation begins, preventing costly surprises during execution.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Site Assessment Components</h4>
@@ -57,7 +57,7 @@ export const installationPlanningSection1_2 = {
       </ul>
       
       <p className="mt-4">Effective site assessment identifies not just the current state, but also anticipates future requirements and potential expansion needs that might affect installation planning decisions.</p>
-    </>
+    </React.Fragment>
   )
 };
 
@@ -65,7 +65,7 @@ export const installationPlanningSection1_2 = {
 export const installationPlanningSection1_3 = {
   title: "Technical Requirements Analysis",
   content: (
-    <>
+    <React.Fragment>
       <p>Technical requirements analysis ensures that the electrical installation will meet all functional, performance, and compliance needs of the project.</p>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Types of Requirements</h4>
@@ -87,6 +87,6 @@ export const installationPlanningSection1_3 = {
       </ul>
       
       <p className="mt-4">Well-documented technical requirements provide clear direction for design decisions, equipment selection, and installation methods, while also establishing objective criteria for acceptance testing and verification.</p>
-    </>
+    </React.Fragment>
   )
 };
