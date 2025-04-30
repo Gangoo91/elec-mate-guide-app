@@ -42,7 +42,8 @@ const MOETPage = () => {
 
   const handleCardClick = (path: string) => {
     console.log("MOETPage - Navigating to:", path);
-    navigate(path);
+    // Use direct path navigation instead of relative
+    window.location.href = path;
   };
 
   return (
