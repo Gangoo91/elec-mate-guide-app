@@ -1,1380 +1,1517 @@
 
 import React from 'react';
 
-export const installationPlanningSectionsData: Record<string, {
-  title: string;
-  description?: string;
-  content: React.ReactNode;
-}> = {
-  "project-planning": {
-    title: "Project Planning Methodology",
-    description: "Understanding project lifecycle and planning principles",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Project Planning Methodology</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Project planning is a critical first step in any electrical installation. A well-structured planning phase ensures that projects are completed on time, within budget, and to the required specifications.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Project Lifecycle Stages</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Initiation</span> - Defining project scope, objectives, and feasibility analysis
-            </li>
-            <li>
-              <span className="font-medium">Planning</span> - Detailed project plan development, resource allocation, and risk assessment
-            </li>
-            <li>
-              <span className="font-medium">Execution</span> - Implementation of the project plan and monitoring progress
-            </li>
-            <li>
-              <span className="font-medium">Control</span> - Quality assurance, progress tracking, and adjustment of plans as needed
-            </li>
-            <li>
-              <span className="font-medium">Closure</span> - Project handover, documentation completion, and performance review
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Key Planning Documents</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Statement of Work (SOW)</span> - Detailed description of project deliverables and requirements
-            </li>
-            <li>
-              <span className="font-medium">Work Breakdown Structure (WBS)</span> - Hierarchical decomposition of project tasks
-            </li>
-            <li>
-              <span className="font-medium">Project Schedule</span> - Timeline with milestones, dependencies, and resource allocation
-            </li>
-            <li>
-              <span className="font-medium">Risk Management Plan</span> - Identification of potential risks and mitigation strategies
-            </li>
-            <li>
-              <span className="font-medium">Communication Plan</span> - Framework for project communication among stakeholders
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Planning Methodologies</h4>
-          <p>
-            Several methodologies can be applied to electrical installation projects:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Waterfall</span> - Sequential approach where each phase must be completed before the next begins
-            </li>
-            <li>
-              <span className="font-medium">Agile</span> - Iterative approach with flexibility for changes and continuous feedback
-            </li>
-            <li>
-              <span className="font-medium">Critical Path Method (CPM)</span> - Identification of critical tasks that directly impact project completion time
-            </li>
-            <li>
-              <span className="font-medium">PRINCE2</span> - Process-based method focusing on organization and control throughout the project
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Case Study: Factory Automation Project</h4>
-            <p className="text-[#FFC900]/80">
-              A manufacturing plant required installation of a new automated production line. The project planning phase included:
-            </p>
-            <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li>Detailed site survey to assess existing infrastructure</li>
-              <li>Electrical load calculations to determine power requirements</li>
-              <li>Integration planning with existing systems</li>
-              <li>Production downtime scheduling to minimize impact</li>
-              <li>Safety risk assessment and mitigation strategies</li>
-              <li>Regulatory compliance verification</li>
-            </ul>
-            <p className="text-[#FFC900]/80 mt-2">
-              The thorough planning phase identified potential conflicts with the plant's legacy systems early, allowing for design modifications before installation began.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "resource-allocation": {
-    title: "Resource Allocation",
-    description: "Techniques for effective allocation of materials and personnel",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Resource Allocation</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Efficient resource allocation is crucial for the successful completion of electrical installation projects. It involves the strategic distribution of materials, equipment, personnel, and time to optimize project execution.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Personnel Resource Planning</h4>
-          <p>
-            Effective staffing ensures that the right people with appropriate skills are available when needed:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Skill Matrix</span> - Mapping required skills against available team members
-            </li>
-            <li>
-              <span className="font-medium">Resource Leveling</span> - Adjusting project schedule to optimize workforce utilization
-            </li>
-            <li>
-              <span className="font-medium">Training Needs Analysis</span> - Identifying skill gaps and arranging necessary training
-            </li>
-            <li>
-              <span className="font-medium">Subcontractor Management</span> - Planning for specialized services when in-house expertise is unavailable
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Material and Equipment Planning</h4>
-          <p>
-            Proper planning of physical resources prevents costly delays and waste:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Bill of Materials (BOM)</span> - Comprehensive list of all required materials with specifications
-            </li>
-            <li>
-              <span className="font-medium">Procurement Schedule</span> - Timeline for ordering materials accounting for lead times
-            </li>
-            <li>
-              <span className="font-medium">Equipment Utilization Schedule</span> - Planning for optimal use of specialized equipment
-            </li>
-            <li>
-              <span className="font-medium">Inventory Management</span> - Systems for tracking materials from procurement to installation
-            </li>
-            <li>
-              <span className="font-medium">Waste Reduction Planning</span> - Strategies to minimize material waste and maximize efficiency
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Budget Allocation</h4>
-          <p>
-            Financial resource planning ensures project viability and profitability:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Cost Estimation</span> - Detailed breakdown of expected costs for all project components
-            </li>
-            <li>
-              <span className="font-medium">Cost Tracking</span> - Systems for monitoring actual expenses against budgeted amounts
-            </li>
-            <li>
-              <span className="font-medium">Contingency Planning</span> - Financial reserves for unexpected challenges or scope changes
-            </li>
-            <li>
-              <span className="font-medium">Value Engineering</span> - Process to optimize costs without compromising functionality
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Resource Allocation Example: Hospital Generator Installation</h4>
-            <p className="text-[#FFC900]/80">
-              For a critical backup generator installation at a hospital:
-            </p>
-            <table className="w-full border-collapse mt-2">
-              <thead>
-                <tr>
-                  <th className="text-left text-[#FFC900] p-2 border border-[#FFC900]/30">Resource Type</th>
-                  <th className="text-left text-[#FFC900] p-2 border border-[#FFC900]/30">Allocation Strategy</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Personnel</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Dedicated team with specialized hospital electrical systems experience; 24-hour availability during critical switchover</td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Equipment</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Backup lifting equipment on standby; temporary power systems for testing without disruption</td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Materials</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Critical components ordered with redundant suppliers; pre-inspection before delivery to site</td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Time</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Work scheduled during lowest hospital occupancy periods; longest tasks started earliest in timeline</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "scheduling": {
-    title: "Project Scheduling",
-    description: "Creating timelines and managing project milestones",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Project Scheduling</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Project scheduling establishes the timeline for all activities within an electrical installation project. Effective scheduling optimizes resource utilization, prevents delays, and ensures that dependencies between tasks are properly managed.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Scheduling Techniques</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Gantt Charts</span> - Visual representation of tasks over time showing dependencies and overlaps
-            </li>
-            <li>
-              <span className="font-medium">Program Evaluation and Review Technique (PERT)</span> - Statistical tool using optimistic, pessimistic, and most likely time estimates
-            </li>
-            <li>
-              <span className="font-medium">Critical Path Method (CPM)</span> - Identification of the longest sequence of tasks that must be completed on time
-            </li>
-            <li>
-              <span className="font-medium">Rolling Wave Planning</span> - Detailed planning for near-term activities with broader planning for future tasks
-            </li>
-            <li>
-              <span className="font-medium">Line of Balance (LOB)</span> - Visual method for repetitive activities showing production rates
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Milestone Planning</h4>
-          <p>
-            Milestones are significant points in a project that mark the completion of major deliverables:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Project Kickoff</span> - Formal start of project execution
-            </li>
-            <li>
-              <span className="font-medium">Design Approval</span> - Client sign-off on technical designs
-            </li>
-            <li>
-              <span className="font-medium">Material Delivery</span> - Key equipment and materials on site
-            </li>
-            <li>
-              <span className="font-medium">Rough-In Completion</span> - Conduit, cable trays, and backing installation complete
-            </li>
-            <li>
-              <span className="font-medium">Cable Pulling Finished</span> - All cables in place
-            </li>
-            <li>
-              <span className="font-medium">Terminations Complete</span> - All connections made
-            </li>
-            <li>
-              <span className="font-medium">Testing & Commissioning</span> - System verified operational
-            </li>
-            <li>
-              <span className="font-medium">Handover</span> - Project delivered to client
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Schedule Management</h4>
-          <p>
-            Ongoing management ensures the project stays on track:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Progress Tracking</span> - Regular monitoring of task completion against schedule
-            </li>
-            <li>
-              <span className="font-medium">Variance Analysis</span> - Identifying and understanding deviations from the plan
-            </li>
-            <li>
-              <span className="font-medium">Schedule Compression</span> - Fast-tracking or crashing to recover delays
-            </li>
-            <li>
-              <span className="font-medium">Change Management</span> - Processes for incorporating scope changes into the schedule
-            </li>
-            <li>
-              <span className="font-medium">Resource Leveling</span> - Adjusting task timing to optimize resource utilization
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Critical Path Example: Commercial Building Rewiring</h4>
-            <p className="text-[#FFC900]/80">
-              For a major office building electrical system upgrade, the critical path includes:
-            </p>
-            <ol className="list-decimal pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li>Initial site survey and documentation (5 days)</li>
-              <li>Electrical load calculations and design (10 days)</li>
-              <li>Permit application and approval (15 days)</li>
-              <li>Main distribution panel replacement (3 days)</li>
-              <li>Floor-by-floor rewiring (8 days per floor × 5 floors = 40 days)</li>
-              <li>Testing and verification (5 days)</li>
-              <li>Final inspection and certification (2 days)</li>
-            </ol>
-            <p className="text-[#FFC900]/80 mt-2">
-              Total critical path duration: 80 days. Any delay in these activities would directly impact the project completion date. Non-critical activities like fixture selection could be run in parallel without affecting the timeline.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "technical-design": {
-    title: "Technical Design Principles",
-    description: "Fundamentals of electrical system design and documentation",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Technical Design Principles</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Technical design is the process of translating project requirements into detailed specifications and plans for electrical installations. Following sound design principles ensures systems are safe, efficient, compliant with regulations, and meet client needs.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Core Design Principles</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Safety First</span> - All designs must prioritize the safety of users, installers, and maintenance personnel
-            </li>
-            <li>
-              <span className="font-medium">Regulatory Compliance</span> - Adherence to applicable electrical codes and standards (BS 7671, IET Wiring Regulations)
-            </li>
-            <li>
-              <span className="font-medium">Functionality</span> - Meeting the operational requirements of the system
-            </li>
-            <li>
-              <span className="font-medium">Reliability</span> - Ensuring consistent performance under expected conditions
-            </li>
-            <li>
-              <span className="font-medium">Efficiency</span> - Optimizing energy usage and operational costs
-            </li>
-            <li>
-              <span className="font-medium">Maintainability</span> - Allowing for easy access, inspection, and replacement of components
-            </li>
-            <li>
-              <span className="font-medium">Scalability</span> - Accommodating future expansion and technological changes
-            </li>
-            <li>
-              <span className="font-medium">Cost-effectiveness</span> - Balancing performance requirements with budget constraints
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Design Process Stages</h4>
-          <ol className="list-decimal pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Requirements Gathering</span> - Collecting client needs, site constraints, and technical specifications
-            </li>
-            <li>
-              <span className="font-medium">Conceptual Design</span> - Creating high-level system architecture and approach
-            </li>
-            <li>
-              <span className="font-medium">Load Calculations</span> - Determining power requirements and demand factors
-            </li>
-            <li>
-              <span className="font-medium">Equipment Selection</span> - Specifying appropriate components and technologies
-            </li>
-            <li>
-              <span className="font-medium">Detailed Design</span> - Developing comprehensive schematics, layouts, and specifications
-            </li>
-            <li>
-              <span className="font-medium">Design Review</span> - Technical verification for compliance and optimization
-            </li>
-            <li>
-              <span className="font-medium">Documentation</span> - Creating detailed drawings and specifications for implementation
-            </li>
-          </ol>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Key Design Considerations</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Load Analysis</span> - Calculating maximum demand, diversity factors, and capacity requirements
-            </li>
-            <li>
-              <span className="font-medium">Voltage Drop</span> - Ensuring voltage levels remain within acceptable limits throughout the system
-            </li>
-            <li>
-              <span className="font-medium">Fault Current Calculations</span> - Determining potential fault conditions and required protective devices
-            </li>
-            <li>
-              <span className="font-medium">Earthing and Bonding</span> - Designing proper grounding systems for safety
-            </li>
-            <li>
-              <span className="font-medium">Discrimination/Coordination</span> - Ensuring proper selective operation of protective devices
-            </li>
-            <li>
-              <span className="font-medium">Environmental Factors</span> - Accounting for temperature, humidity, corrosion, and other environmental conditions
-            </li>
-            <li>
-              <span className="font-medium">EMI/EMC Considerations</span> - Managing electromagnetic interference and compatibility
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Design Example: Industrial Control System</h4>
-            <p className="text-[#FFC900]/80">
-              For an automated manufacturing process control system, the technical design includes:
-            </p>
-            <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li><strong>Power Distribution:</strong> 400V three-phase supply with redundant feeds</li>
-              <li><strong>Control System:</strong> PLC-based architecture with distributed I/O</li>
-              <li><strong>Motor Control:</strong> Variable frequency drives for process motors with regenerative braking</li>
-              <li><strong>Protection:</strong> Coordinated overcurrent protection with motor thermal overload relays</li>
-              <li><strong>Safety Systems:</strong> Category 4 safety circuits with dual-channel emergency stops</li>
-              <li><strong>Monitoring:</strong> Power quality monitoring and predictive maintenance sensors</li>
-              <li><strong>Communication:</strong> Industrial Ethernet backbone with ProfiNET fieldbus</li>
-            </ul>
-            <p className="text-[#FFC900]/80 mt-2">
-              The design documentation includes single-line diagrams, control schematics, panel layouts, cable schedules, and a comprehensive bill of materials with technical specifications.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "system-architecture": {
-    title: "System Architecture",
-    description: "Developing effective electrical system architectures",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">System Architecture</h3>
-        
-        <div className="space-y-4">
-          <p>
-            System architecture provides the structural framework for electrical installations, defining how components interact and establishing hierarchies within the system. A well-designed architecture ensures reliability, maintainability, and optimal performance.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Power Distribution Architecture</h4>
-          <p>
-            The structure of power distribution systems can take several forms:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Radial Distribution</span> - Power flows from a single source to multiple loads in a tree structure
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Simple, cost-effective, but offers limited redundancy</li>
-                <li>Common in residential and small commercial applications</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Ring Main Distribution</span> - Power is supplied from multiple points in a looped configuration
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Better reliability due to alternative supply paths</li>
-                <li>Used in many commercial and industrial settings</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Mesh Network</span> - Multiple interconnections between supply points and loads
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>High redundancy and fault tolerance</li>
-                <li>Common in critical infrastructure and data centers</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Redundant Systems (N+1, 2N)</span> - Main systems with backup components or complete duplicate systems
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>N+1: One additional component beyond minimum required</li>
-                <li>2N: Complete duplication of critical systems</li>
-                <li>Used in hospitals, data centers, and mission-critical facilities</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Control System Architecture</h4>
-          <p>
-            Modern electrical installations often include control systems with various architectures:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Centralized Control</span> - One central controller managing all operations
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Simple implementation but creates single point of failure</li>
-                <li>Suitable for smaller systems with limited geographical spread</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Distributed Control</span> - Multiple controllers handling specific subsystems
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Better fault isolation and scalability</li>
-                <li>Requires communication infrastructure between controllers</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Hierarchical Control</span> - Layered approach with supervisory control over local controllers
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Combines benefits of centralized overview and distributed operation</li>
-                <li>Common in building management systems and industrial automation</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Communication Architecture</h4>
-          <p>
-            Modern electrical systems rely on various communication architectures:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Fieldbus Systems</span> - Industrial networks connecting controllers and field devices
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Examples: PROFIBUS, DeviceNet, Modbus</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Industrial Ethernet</span> - Ethernet-based networks for industrial applications
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Examples: EtherNet/IP, ProfiNET, EtherCAT</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Wireless Protocols</span> - Radio communication for distributed or mobile systems
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Examples: Zigbee, Bluetooth, Wi-Fi, LoRaWAN</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Architecture Example: Smart Building System</h4>
-            <p className="text-[#FFC900]/80">
-              Modern commercial building with integrated electrical systems:
-            </p>
-            <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li><strong>Power Architecture:</strong> Ring main distribution with automated transfer switches for critical loads</li>
-              <li><strong>Backup Power:</strong> N+1 UPS system for critical circuits and standby generator</li>
-              <li><strong>Control Architecture:</strong> Hierarchical system with central BMS and distributed zone controllers</li>
-              <li><strong>Communication:</strong> BACnet/IP backbone with various subsystem interfaces</li>
-              <li><strong>Integration:</strong> Unified system connecting HVAC, lighting, access control, and energy monitoring</li>
-              <li><strong>User Interface:</strong> Central dashboards with web-based access and mobile applications</li>
-            </ul>
-            <p className="text-[#FFC900]/80 mt-2">
-              This integrated architecture allows for centralized monitoring and control while maintaining operational independence of subsystems for reliability and maintenance purposes.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "design-tools": {
-    title: "Design Tools and Software",
-    description: "CAD and other tools for electrical installation design",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Design Tools and Software</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Modern electrical design relies heavily on specialized software tools that improve accuracy, efficiency, and collaboration. Understanding these tools is essential for electrical installation planning and documentation.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Computer-Aided Design (CAD) Software</h4>
-          <p>
-            CAD software forms the foundation of electrical design documentation:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">General-Purpose CAD</span> - Software for creating 2D drawings and 3D models
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>AutoCAD - Industry standard for 2D drafting and basic 3D modeling</li>
-                <li>MicroStation - Common in infrastructure and government projects</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Electrical-Specific CAD</span> - Specialized tools for electrical design
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>AutoCAD Electrical - Enhanced AutoCAD with electrical symbols and tools</li>
-                <li>EPLAN Electric P8 - Comprehensive electrical engineering design</li>
-                <li>Elecworks - Electrical schematic design and panel layout</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">BIM Software</span> - Building Information Modeling for integrated design
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Revit MEP - Integrated building systems design</li>
-                <li>Bentley AECOsim - Comprehensive BIM for infrastructure</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Calculation and Analysis Tools</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Load Calculation Software</span> - Tools for electrical load analysis
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Calculating maximum demand and diversity factors</li>
-                <li>Equipment sizing based on load requirements</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Short Circuit Analysis</span> - Fault current calculation tools
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>ETAP, SKM Power*Tools, EasyPower</li>
-                <li>Essential for protective device coordination</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Cable Sizing Software</span> - Tools for determining appropriate cable dimensions
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Accounts for current capacity, voltage drop, and installation methods</li>
-                <li>Often includes regulatory standard compliance checking</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Lighting Design Software</span> - Tools for illumination analysis
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>DIALux, Relux - Photometric calculation and visualization</li>
-                <li>Ensures proper illumination levels and energy efficiency</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Project Management Tools</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Scheduling Software</span> - Tools for project timeline management
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Microsoft Project, Primavera P6</li>
-                <li>Creating Gantt charts and resource allocation</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Document Management Systems</span> - Platforms for organizing project files
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Version control and access management</li>
-                <li>Collaboration features for distributed teams</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Estimation Software</span> - Tools for project costing
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Material takeoffs and labor calculations</li>
-                <li>Often integrates with procurement systems</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Emerging Technologies</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Virtual Reality (VR)</span> - Immersive visualization of designs
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Checking access and maintenance clearances</li>
-                <li>Client walkthroughs of proposed installations</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Augmented Reality (AR)</span> - Overlaying digital information on physical spaces
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>On-site visualization of planned installations</li>
-                <li>Maintenance guidance with real-time information</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Generative Design</span> - AI-assisted design optimization
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Automatically generating design alternatives</li>
-                <li>Optimizing for efficiency, cost, and other parameters</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Digital Twins</span> - Virtual replicas of physical installations
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Real-time monitoring and simulation</li>
-                <li>Predictive maintenance and optimization</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Design Tool Workflow: Industrial Panel Design</h4>
-            <p className="text-[#FFC900]/80">
-              A typical workflow for designing an industrial control panel includes:
-            </p>
-            <ol className="list-decimal pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li><strong>Schematic Design:</strong> Using electrical CAD software (e.g., EPLAN) to create circuit diagrams</li>
-              <li><strong>Load Analysis:</strong> Calculating power requirements and heat dissipation</li>
-              <li><strong>Component Selection:</strong> Choosing appropriately rated devices</li>
-              <li><strong>Panel Layout:</strong> 3D modeling of component arrangement</li>
-              <li><strong>Thermal Simulation:</strong> Analyzing heat distribution and ventilation requirements</li>
-              <li><strong>Documentation:</strong> Generating bills of materials, terminal plans, and wire lists</li>
-              <li><strong>Fabrication Drawings:</strong> Creating dimensional drawings for panel building</li>
-            </ol>
-            <p className="text-[#FFC900]/80 mt-2">
-              Modern design software can automate many of these steps, checking for errors and maintaining consistency across documentation. This significantly reduces design time and improves reliability compared to manual methods.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "implementation": {
-    title: "Implementation Procedures",
-    description: "Best practices for executing electrical installation projects",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Implementation Procedures</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Implementation is the phase where designs are transformed into physical installations. Following structured procedures ensures safety, quality, and efficiency during the execution of electrical projects.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Pre-Implementation Planning</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Site Preparation</span> - Ensuring the work area is ready for installation
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Access routes and working spaces cleared</li>
-                <li>Temporary services (power, lighting) arranged</li>
-                <li>Storage areas for materials and equipment prepared</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Material Verification</span> - Checking delivered materials against specifications
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Comparing deliveries against bill of materials</li>
-                <li>Inspecting for damage or defects</li>
-                <li>Verifying compliance certificates and documentation</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Safety Planning</span> - Preparing for safe implementation
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Risk assessments for installation activities</li>
-                <li>Method statements for complex or hazardous tasks</li>
-                <li>Personal protective equipment requirements</li>
-                <li>Permit-to-work systems for applicable activities</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Team Briefing</span> - Ensuring all personnel understand the project
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Installation drawings and specifications review</li>
-                <li>Clarification of roles and responsibilities</li>
-                <li>Discussion of potential challenges and solutions</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Installation Sequence</h4>
-          <p>
-            Typical installation follows a logical sequence:
-          </p>
-          <ol className="list-decimal pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Setting Out</span> - Marking installation positions based on drawings
-            </li>
-            <li>
-              <span className="font-medium">Primary Infrastructure</span> - Installing main distribution equipment
-            </li>
-            <li>
-              <span className="font-medium">Containment Systems</span> - Installing cable trays, conduits, and trunking
-            </li>
-            <li>
-              <span className="font-medium">Cable Installation</span> - Pulling and laying cables through containment
-            </li>
-            <li>
-              <span className="font-medium">Equipment Mounting</span> - Installing switchgear, control panels, and devices
-            </li>
-            <li>
-              <span className="font-medium">Terminations</span> - Connecting cables to equipment and systems
-            </li>
-            <li>
-              <span className="font-medium">Earthing and Bonding</span> - Completing protective earthing connections
-            </li>
-            <li>
-              <span className="font-medium">Labeling and Identification</span> - Marking cables, equipment, and circuits
-            </li>
-          </ol>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Quality Control Procedures</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Inspection Points</span> - Critical stages requiring formal inspection
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Before containment is closed or becomes inaccessible</li>
-                <li>After cable installation but before termination</li>
-                <li>After equipment installation but before commissioning</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Testing During Installation</span> - Verification tests during the process
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Cable insulation tests before termination</li>
-                <li>Continuity testing of protective conductors</li>
-                <li>Polarity verification</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Photographic Documentation</span> - Visual record of installation quality
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Especially for concealed installations before covering</li>
-                <li>For complex assemblies and terminations</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Non-Conformance Procedures</span> - Process for addressing defects
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Identification and documentation of issues</li>
-                <li>Assessment of impact on safety and performance</li>
-                <li>Corrective action planning and implementation</li>
-                <li>Re-inspection after remediation</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Progress Monitoring and Reporting</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Daily Progress Logs</span> - Record of work completed each day
-            </li>
-            <li>
-              <span className="font-medium">Weekly Progress Meetings</span> - Regular review of schedule and issues
-            </li>
-            <li>
-              <span className="font-medium">Progress Photography</span> - Visual documentation of installation progress
-            </li>
-            <li>
-              <span className="font-medium">Updated Schedules</span> - Revisions to project timelines based on actual progress
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Implementation Example: Commercial Office Lighting Installation</h4>
-            <p className="text-[#FFC900]/80">
-              For a major office lighting upgrade project:
-            </p>
-            <ol className="list-decimal pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li><strong>Preparation:</strong> Installation scheduled for weekends to minimize disruption</li>
-              <li><strong>Zone Planning:</strong> Building divided into zones for phased implementation</li>
-              <li><strong>Material Staging:</strong> Materials delivered and stored by zone to minimize movement</li>
-              <li><strong>Template Creation:</strong> Positioning templates created for repeatable layout</li>
-              <li><strong>Installation Sequence:</strong> 
-                <ul className="list-disc pl-6">
-                  <li>Marking fixture positions</li>
-                  <li>Cable tray modification for new routes</li>
-                  <li>Running new circuits from distribution boards</li>
-                  <li>Installing fixture mounting brackets</li>
-                  <li>Hanging and connecting fixtures</li>
-                  <li>Installing control systems</li>
-                </ul>
-              </li>
-              <li><strong>Quality Control:</strong> Sample testing of 20% of fixtures in each zone</li>
-              <li><strong>Remediation:</strong> Any issues addressed before moving to next zone</li>
-            </ol>
-            <p className="text-[#FFC900]/80 mt-2">
-              This structured approach allowed 500 fixture replacements to be completed over 5 weekends with minimal disruption to office operations and zero safety incidents.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "quality-control": {
-    title: "Quality Control",
-    description: "Inspection and testing during the implementation phase",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Quality Control</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Quality control encompasses all activities that ensure electrical installations meet regulatory requirements, design specifications, and client expectations. Effective quality control processes are crucial for safety, reliability, and longevity.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Quality Assurance Framework</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Quality Management System (QMS)</span> - Structured approach to maintaining quality
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Documented policies and procedures</li>
-                <li>Compliance with ISO 9001 standards</li>
-                <li>Process for continual improvement</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Quality Control Plan</span> - Project-specific quality requirements
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Identification of critical inspection points</li>
-                <li>Testing requirements and acceptance criteria</li>
-                <li>Documentation and reporting procedures</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Competency Management</span> - Ensuring qualified personnel
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Verification of appropriate certifications</li>
-                <li>Training records and skill assessments</li>
-                <li>Supervision requirements for trainees</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Inspection Types and Techniques</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Visual Inspection</span> - Assessing visible aspects of installation
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Workmanship quality (straight runs, secure fixings)</li>
-                <li>Component selection and positioning</li>
-                <li>Clearances and accessibility</li>
-                <li>Labels and identification</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Dimensional Inspection</span> - Verifying spatial requirements
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Mounting heights and positions</li>
-                <li>Clearance distances for safety and maintenance</li>
-                <li>Cable bending radii compliance</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Documentation Inspection</span> - Checking records and certificates
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Material certification and compliance</li>
-                <li>Test result documentation</li>
-                <li>As-built drawings accuracy</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Non-destructive Testing</span> - Inspection without damaging components
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Thermal imaging for hotspot detection</li>
-                <li>Ultrasonic testing for loose connections</li>
-                <li>X-ray inspection for embedded installations</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Electrical Testing</h4>
-          <p>
-            Testing verifies that installations function correctly and safely:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Dead Testing</span> - Tests performed with power off
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Continuity of protective conductors</li>
-                <li>Insulation resistance measurement</li>
-                <li>Polarity verification</li>
-                <li>Earth electrode resistance testing</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Live Testing</span> - Tests performed with power applied
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Earth fault loop impedance measurement</li>
-                <li>RCD/RCBO operation testing</li>
-                <li>Functional testing of controls and systems</li>
-                <li>Phase sequence verification</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Specialist Testing</span> - Additional tests for specific applications
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Emergency lighting duration tests</li>
-                <li>Power quality analysis</li>
-                <li>Network cabling certification</li>
-                <li>Building automation system verification</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Defect Management</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Defect Classification</span> - Categorizing issues by severity
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Critical - Safety hazards requiring immediate correction</li>
-                <li>Major - Significant issues affecting functionality</li>
-                <li>Minor - Cosmetic or minor compliance issues</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Defect Tracking</span> - Recording and monitoring issues
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Digital or paper-based tracking systems</li>
-                <li>Clear assignment of responsibility for corrections</li>
-                <li>Timeline for remediation</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Root Cause Analysis</span> - Investigating systemic issues
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Identifying patterns in defects</li>
-                <li>Implementing corrective actions to prevent recurrence</li>
-                <li>Training or process improvements</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Quality Control Example: Data Center Power System</h4>
-            <p className="text-[#FFC900]/80">
-              For a mission-critical data center power distribution system:
-            </p>
-            <table className="w-full border-collapse mt-2">
-              <thead>
-                <tr>
-                  <th className="text-left text-[#FFC900] p-2 border border-[#FFC900]/30">Stage</th>
-                  <th className="text-left text-[#FFC900] p-2 border border-[#FFC900]/30">Quality Control Activities</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Factory Testing</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">
-                    <ul className="list-disc pl-4">
-                      <li>Witness testing of switchgear at manufacturer's facility</li>
-                      <li>Factory acceptance testing of UPS systems with load banks</li>
-                      <li>Review of test certificates for all major components</li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Pre-Installation</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">
-                    <ul className="list-disc pl-4">
-                      <li>Verification of component specifications against design</li>
-                      <li>Inspection of equipment for shipping damage</li>
-                      <li>Review of installation method statements</li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">During Installation</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">
-                    <ul className="list-disc pl-4">
-                      <li>Daily quality inspections with detailed checklists</li>
-                      <li>Photographic documentation of all connections before closing</li>
-                      <li>Torque verification of all power connections</li>
-                      <li>Independent third-party inspection of critical components</li>
-                    </ul>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">Post-Installation</td>
-                  <td className="p-2 border border-[#FFC900]/30 text-[#FFC900]/80">
-                    <ul className="list-disc pl-4">
-                      <li>Comprehensive testing to BS 7671 requirements</li>
-                      <li>Thermographic survey under load conditions</li>
-                      <li>Power quality analysis during operation</li>
-                      <li>Failure mode testing with simulated outages</li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <p className="text-[#FFC900]/80 mt-2">
-              This multi-layered quality control approach ensured the data center achieved 99.999% power availability (less than 5.25 minutes of downtime per year) as required by the Tier IV design specification.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-  "handover-procedures": {
-    title: "Handover Procedures",
-    description: "Final testing, documentation and client handover processes",
-    content: (
-      <>
-        <h3 className="text-xl font-semibold text-[#FFC900] mb-4">Handover Procedures</h3>
-        
-        <div className="space-y-4">
-          <p>
-            Handover is the critical final phase of an electrical installation project, where systems are formally transferred to the client or operational team. A structured handover process ensures that systems are properly completed, documented, and understood by those who will operate and maintain them.
-          </p>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Completion Testing and Verification</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Final Testing</span> - Comprehensive testing of completed systems
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>BS 7671 inspection and testing requirements</li>
-                <li>Functional testing of all operations</li>
-                <li>Performance verification against specifications</li>
-                <li>Integration testing with other systems</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Independent Verification</span> - Third-party confirmation of compliance
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>NICEIC, NAPIT, or other approved contractor inspections</li>
-                <li>Building control approval where applicable</li>
-                <li>Specialized certification (e.g., ATEX for hazardous areas)</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Snagging Process</span> - Addressing remaining defects
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Comprehensive snagging survey</li>
-                <li>Prioritization of issues</li>
-                <li>Sign-off of completed remediation</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Handover Documentation</h4>
-          <p>
-            Complete documentation package typically includes:
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Electrical Installation Certificate</span> - Legal declaration of compliance
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>BS 7671 Electrical Installation Certificates</li>
-                <li>Minor Works Certificates where applicable</li>
-                <li>Test results schedules</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">As-Built Drawings</span> - Accurate records of the installed system
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Updated to reflect any variations from design</li>
-                <li>Detailed for future reference and modification</li>
-                <li>Provided in both paper and digital formats</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Operation and Maintenance Manuals</span> - Information for ongoing use
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>System descriptions and operating instructions</li>
-                <li>Equipment data sheets and manufacturer manuals</li>
-                <li>Maintenance schedules and procedures</li>
-                <li>Troubleshooting guides</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Warranties and Guarantees</span> - Documentation of coverage
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Installer's workmanship warranty</li>
-                <li>Manufacturer equipment warranties</li>
-                <li>Extended warranty options</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Spares and Tools</span> - Items provided for ongoing maintenance
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>List of recommended spare parts</li>
-                <li>Any special tools provided</li>
-                <li>Information on obtaining future spares</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Training and Knowledge Transfer</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Technical Training</span> - Familiarizing operators with systems
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>System operation and control</li>
-                <li>Routine maintenance procedures</li>
-                <li>Emergency procedures</li>
-                <li>Troubleshooting common issues</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Documentation Walkthrough</span> - Ensuring understanding of resources
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Review of as-built drawings and their use</li>
-                <li>Navigation of O&M manuals</li>
-                <li>Explanation of technical documentation</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Demonstration</span> - Showing systems in operation
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Live operation of equipment</li>
-                <li>Testing emergency functions</li>
-                <li>Showing integration with other systems</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Training Materials</span> - Resources for future reference
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Training videos</li>
-                <li>Quick-reference guides</li>
-                <li>Contact information for technical support</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h4 className="text-lg font-medium text-[#FFC900] mt-6 mb-2">Formal Handover Process</h4>
-          <ul className="list-disc pl-6 space-y-2 text-[#FFC900]/80">
-            <li>
-              <span className="font-medium">Pre-Handover Inspection</span> - Joint walkthrough with client
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Visual inspection of completed works</li>
-                <li>Demonstration of system functions</li>
-                <li>Creation of final snagging list</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Handover Meeting</span> - Formal transfer of responsibility
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Presentation of documentation package</li>
-                <li>Discussion of warranty terms and support arrangements</li>
-                <li>Clarification of any outstanding issues</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Handover Certificates</span> - Documentation of formal transfer
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Practical completion certificate</li>
-                <li>System acceptance documentation</li>
-                <li>Defects liability period commencement</li>
-              </ul>
-            </li>
-            <li>
-              <span className="font-medium">Post-Handover Support</span> - Ongoing assistance during transition
-              <ul className="list-disc pl-6 space-y-1 text-[#FFC900]/70 mt-1">
-                <li>Initial operational support period</li>
-                <li>Follow-up training sessions</li>
-                <li>Defect resolution procedures</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <div className="bg-[#2a2d24] p-4 rounded-lg mt-6">
-            <h4 className="text-lg font-medium text-[#FFC900] mb-2">Handover Example: Manufacturing Facility Electrical Upgrade</h4>
-            <p className="text-[#FFC900]/80">
-              For a major manufacturing facility electrical infrastructure upgrade:
-            </p>
-            <ol className="list-decimal pl-6 space-y-1 text-[#FFC900]/80 mt-2">
-              <li><strong>Staged Testing:</strong> Systems were tested individually then under integrated operation</li>
-              <li><strong>Phased Handover:</strong> Systems were handed over in carefully planned stages to minimize production disruption:
-                <ul className="list-disc pl-6">
-                  <li>Phase 1: Main distribution upgrades</li>
-                  <li>Phase 2: Production area power</li>
-                  <li>Phase 3: Building services systems</li>
-                  <li>Phase 4: Backup power systems</li>
-                </ul>
-              </li>
-              <li><strong>Training Program:</strong> Three-tiered training approach:
-                <ul className="list-disc pl-6">
-                  <li>Operator level - Basic operation and emergency procedures</li>
-                  <li>Maintenance level - Routine maintenance and basic troubleshooting</li>
-                  <li>Engineer level - Advanced configuration and technical troubleshooting</li>
-                </ul>
-              </li>
-              <li><strong>Digital Documentation:</strong> All handover documents provided in a searchable digital format on a dedicated maintenance tablet</li>
-              <li><strong>Extended Support:</strong> 4-week on-site support period with gradual transition to remote support</li>
-            </ol>
-            <p className="text-[#FFC900]/80 mt-2">
-              This structured handover approach enabled the facility to maintain production throughout the transition and ensure that staff were fully confident in operating the new systems before the installation team departed.
-            </p>
-          </div>
-        </div>
-      </>
-    ),
-  },
-};
+// Define the structure for installation planning questions
+export interface InstallationPlanningQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: string;
+  explanation: string;
+}
 
-// Create data for an assessment at the end
-export const installationPlanningQuestions = [
+// Sample questions for the Installation Planning Assessment
+export const installationPlanningQuestions: InstallationPlanningQuestion[] = [
   {
-    question: "What document breaks down project tasks into a hierarchical structure?",
+    question: "What is the primary purpose of installation planning in electrical projects?",
     options: [
-      "Statement of Work (SOW)",
-      "Work Breakdown Structure (WBS)",
-      "Project Schedule",
-      "Communication Plan"
+      "To increase the project cost",
+      "To ensure efficient resource allocation and project execution",
+      "To extend the project timeline",
+      "To avoid regulatory compliance"
     ],
-    correctAnswer: "Work Breakdown Structure (WBS)",
-    explanation: "The Work Breakdown Structure (WBS) is a hierarchical decomposition of the total scope of work to be carried out by the project team to accomplish the project objectives."
+    correctAnswer: "To ensure efficient resource allocation and project execution",
+    explanation: "Installation planning is crucial for ensuring that electrical projects are executed efficiently with proper allocation of resources, materials, and personnel, while meeting project timelines and quality standards."
   },
   {
-    question: "Which project scheduling technique identifies the longest sequence of tasks that must be completed on time?",
+    question: "Which of the following is NOT typically included in an electrical installation plan?",
     options: [
-      "Gantt Chart",
-      "Line of Balance (LOB)",
-      "Critical Path Method (CPM)",
-      "Rolling Wave Planning"
+      "Cable routing diagrams",
+      "Equipment specifications",
+      "Employee vacation schedules",
+      "Load calculations"
     ],
-    correctAnswer: "Critical Path Method (CPM)",
-    explanation: "The Critical Path Method (CPM) identifies the sequence of tasks that have zero float (slack) time, meaning any delay in these tasks will directly impact the project completion date."
+    correctAnswer: "Employee vacation schedules",
+    explanation: "While installation plans include technical specifications, diagrams, and calculations, general employee vacation schedules are typically part of resource management rather than the technical installation plan itself."
   },
   {
-    question: "What is typically included in a bill of materials for an electrical installation?",
+    question: "What is a Gantt chart used for in installation planning?",
     options: [
-      "Site survey results only",
-      "List of required materials with specifications",
-      "Project timeline only",
-      "Worker certifications"
+      "To calculate voltage drop",
+      "To schedule and track project activities and timelines",
+      "To determine cable sizes",
+      "To identify potential clients"
     ],
-    correctAnswer: "List of required materials with specifications",
-    explanation: "A Bill of Materials (BOM) is a comprehensive list of all required parts, components, and materials needed for the installation, including their specifications and quantities."
+    correctAnswer: "To schedule and track project activities and timelines",
+    explanation: "Gantt charts are project management tools used to visualize project schedules, showing the start and finish dates of various tasks and their dependencies, which is essential for effective installation planning."
   },
   {
-    question: "Which of the following is NOT a core design principle for electrical installations?",
+    question: "What does the critical path method (CPM) identify in installation planning?",
     options: [
-      "Safety",
-      "Regulatory Compliance",
-      "Aesthetics over Functionality",
-      "Energy Efficiency"
+      "The cheapest installation route",
+      "The sequence of activities that determine the shortest time to complete the project",
+      "The most dangerous aspects of the installation",
+      "The client's preferred installation method"
     ],
-    correctAnswer: "Aesthetics over Functionality",
-    explanation: "While aesthetics may be important, it should never be prioritized over functionality in electrical installations. The core principles include safety, compliance, functionality, reliability, efficiency, maintainability, and cost-effectiveness."
+    correctAnswer: "The sequence of activities that determine the shortest time to complete the project",
+    explanation: "The critical path method (CPM) identifies the sequence of dependent tasks that form the longest duration, determining the minimum time needed to complete the project. Delays in critical path activities will delay the entire project."
   },
   {
-    question: "During the implementation phase, what should be done before containment systems are closed?",
+    question: "Which regulatory standard must be considered when planning electrical installations in the UK?",
     options: [
-      "Final client inspection only",
-      "Formal handover documentation",
-      "Inspection and documentation of concealed work",
-      "Full system commissioning"
+      "NFPA 70",
+      "BS 7671 (IET Wiring Regulations)",
+      "IEEE 802.11",
+      "ISO 9001"
     ],
-    correctAnswer: "Inspection and documentation of concealed work",
-    explanation: "Before containment systems (such as conduits or wall cavities) are closed, work should be inspected and documented, often with photographs, as it will be inaccessible later."
+    correctAnswer: "BS 7671 (IET Wiring Regulations)",
+    explanation: "BS 7671, commonly known as the IET Wiring Regulations, is the national standard in the UK for electrical installations and must be adhered to when planning any electrical installation work."
   },
   {
-    question: "What power distribution architecture offers the best redundancy for critical systems?",
+    question: "What is the purpose of a site survey in installation planning?",
     options: [
-      "Simple radial distribution",
-      "Ring main distribution",
-      "2N redundant system",
-      "Single bus architecture"
+      "To meet legal requirements only",
+      "To assess existing conditions and gather data for accurate planning",
+      "To evaluate staff performance",
+      "To determine material prices"
     ],
-    correctAnswer: "2N redundant system",
-    explanation: "A 2N redundant system provides complete duplication of critical systems, allowing for one entire system to fail while the backup system maintains full functionality."
+    correctAnswer: "To assess existing conditions and gather data for accurate planning",
+    explanation: "A site survey is conducted to assess the existing conditions, gather precise measurements, identify potential obstacles, and collect all necessary data to ensure accurate and effective installation planning."
   },
   {
-    question: "Which type of electrical test is performed with the power turned off?",
+    question: "What information should be included in the technical specifications for electrical equipment in an installation plan?",
     options: [
-      "Earth fault loop impedance testing",
-      "RCD operation testing",
-      "Insulation resistance measurement",
-      "Phase sequence verification"
+      "Manufacturer's warranty period only",
+      "Marketing materials from the supplier",
+      "Detailed electrical ratings, dimensions, and installation requirements",
+      "The installer's personal preferences"
     ],
-    correctAnswer: "Insulation resistance measurement",
-    explanation: "Insulation resistance measurement is a 'dead test' performed with the circuit isolated from the supply to check the condition of the insulation between conductors and between conductors and earth."
+    correctAnswer: "Detailed electrical ratings, dimensions, and installation requirements",
+    explanation: "Technical specifications should include detailed electrical ratings (voltage, current, etc.), physical dimensions, mounting requirements, environmental constraints, and any special installation considerations for each piece of equipment."
   },
   {
-    question: "What should be included in as-built drawings for the handover documentation?",
+    question: "Why is it important to consider future expansion when creating an electrical installation plan?",
     options: [
-      "Original design plans only",
-      "Accurate records reflecting any variations from the original design",
-      "Theoretical design options",
-      "Future expansion plans only"
+      "To use more materials than necessary",
+      "To make the installation look more complex",
+      "To allow for potential growth and additional load requirements",
+      "To justify a higher initial cost"
     ],
-    correctAnswer: "Accurate records reflecting any variations from the original design",
-    explanation: "As-built drawings must accurately represent the actual installation as constructed, including any variations from the original design plans, to serve as reliable reference for future maintenance and modifications."
+    correctAnswer: "To allow for potential growth and additional load requirements",
+    explanation: "Planning for future expansion ensures that the electrical system can accommodate additional loads or equipment that may be added later without requiring extensive modifications, saving time and costs in the long run."
   },
   {
-    question: "Which of these is a primary purpose of resource leveling in project planning?",
+    question: "What is the purpose of creating a risk assessment during the installation planning phase?",
     options: [
-      "Increasing project costs",
-      "Optimizing workforce utilization",
-      "Extending project timeline",
-      "Reducing quality standards"
+      "To comply with insurance requirements only",
+      "To identify, assess, and mitigate potential hazards and risks",
+      "To determine project profitability",
+      "To assign blame if accidents occur"
     ],
-    correctAnswer: "Optimizing workforce utilization",
-    explanation: "Resource leveling is a technique used to adjust the project schedule to optimize workforce utilization by resolving over-allocations or conflicts in resource assignments."
+    correctAnswer: "To identify, assess, and mitigate potential hazards and risks",
+    explanation: "Risk assessments are conducted to systematically identify potential hazards, evaluate their likelihood and severity, and implement control measures to eliminate or minimize risks during the installation process."
   },
   {
-    question: "What is the main purpose of a formal handover meeting at project completion?",
+    question: "Which of the following is a key consideration when planning cable routes in an installation?",
     options: [
-      "To negotiate contract extensions",
-      "To formally transfer responsibility to the client",
-      "To begin planning the next project",
-      "To distribute bonus payments"
+      "Using the longest possible route",
+      "Avoiding all bends regardless of practicality",
+      "Considering EMI sources, accessibility, and mechanical protection",
+      "Following only decorative patterns"
     ],
-    correctAnswer: "To formally transfer responsibility to the client",
-    explanation: "The formal handover meeting marks the official transfer of responsibility for the installation from the contractor to the client, including presentation of documentation and discussion of warranty and support arrangements."
+    correctAnswer: "Considering EMI sources, accessibility, and mechanical protection",
+    explanation: "When planning cable routes, key considerations include avoiding electromagnetic interference (EMI) sources, ensuring future accessibility for maintenance, providing adequate mechanical protection, and minimizing voltage drop by choosing appropriate routes."
+  },
+  {
+    question: "What is the primary purpose of load calculations in installation planning?",
+    options: [
+      "To impress clients with complex mathematics",
+      "To determine the required capacity of the electrical system",
+      "To increase the project budget",
+      "To comply with minimum paperwork requirements"
+    ],
+    correctAnswer: "To determine the required capacity of the electrical system",
+    explanation: "Load calculations are performed to accurately determine the required capacity of the electrical system, ensuring that cables, distribution boards, and protective devices are correctly sized to handle the anticipated loads safely."
+  },
+  {
+    question: "What document typically serves as the legal agreement between client and contractor for an electrical installation project?",
+    options: [
+      "Certificate of completion",
+      "Risk assessment",
+      "Contract with detailed scope of work",
+      "Equipment warranty"
+    ],
+    correctAnswer: "Contract with detailed scope of work",
+    explanation: "The contract with a detailed scope of work serves as the legal agreement between client and contractor, specifying the work to be performed, timelines, payment terms, and other legal obligations of both parties."
+  },
+  {
+    question: "What is the purpose of a handover procedure in installation planning?",
+    options: [
+      "To transfer liability only",
+      "To formally transfer the completed installation to the client with documentation",
+      "To terminate employee contracts",
+      "To request final payment only"
+    ],
+    correctAnswer: "To formally transfer the completed installation to the client with documentation",
+    explanation: "The handover procedure is the formal process of transferring the completed installation to the client, including providing all necessary documentation, test certificates, operating instructions, and warranties."
+  },
+  {
+    question: "Which of the following should be included in installation documentation for client handover?",
+    options: [
+      "Staff personal information",
+      "Supplier discount rates",
+      "As-built drawings and test certificates",
+      "Company financial statements"
+    ],
+    correctAnswer: "As-built drawings and test certificates",
+    explanation: "Installation documentation for handover should include as-built drawings (showing the actual installation as completed), test certificates, equipment manuals, warranty information, and maintenance requirements."
+  },
+  {
+    question: "What is the purpose of a project milestone in installation planning?",
+    options: [
+      "To provide opportunities for team celebrations",
+      "To mark significant events or accomplishments in the project timeline",
+      "To increase the project budget",
+      "To avoid client communications"
+    ],
+    correctAnswer: "To mark significant events or accomplishments in the project timeline",
+    explanation: "Project milestones mark significant events or accomplishments in the project timeline, helping to track progress, trigger payments, and provide natural points for project reviews and course corrections if needed."
   }
 ];
 
-// Function to create assessment page
-export const InstallationPlanningAssessmentPage = () => (
-  <SafetyQuiz unitId="Installation Planning" questionsToShow={10} timeLimit={600} />
-);
+// Project Planning Content
+export const projectPlanningContent = {
+  title: "Project Planning Methodology",
+  introduction: "Effective project planning is the cornerstone of successful electrical installations. This section covers the fundamental methodologies and approaches to planning electrical installation projects.",
+  sections: [
+    {
+      title: "Project Lifecycle",
+      content: (
+        <>
+          <p>The electrical installation project lifecycle typically consists of five key phases:</p>
+          <ol>
+            <li><strong>Initiation:</strong> Defining project scope, objectives, and feasibility</li>
+            <li><strong>Planning:</strong> Detailed planning of resources, schedule, and technical requirements</li>
+            <li><strong>Execution:</strong> Implementation of the installation according to plans</li>
+            <li><strong>Monitoring and Control:</strong> Tracking progress and making adjustments</li>
+            <li><strong>Closure:</strong> Testing, commissioning, and handover to client</li>
+          </ol>
+          <p>Each phase requires specific documentation and deliverables to ensure project success.</p>
+        </>
+      )
+    },
+    {
+      title: "Work Breakdown Structure (WBS)",
+      content: (
+        <>
+          <p>A Work Breakdown Structure is a hierarchical decomposition of the project into smaller, more manageable components:</p>
+          <ul>
+            <li>Divides the project into logical work packages</li>
+            <li>Creates a foundation for scheduling and resource allocation</li>
+            <li>Improves estimation accuracy and project control</li>
+          </ul>
+          <p className="mt-3 mb-3">Example WBS for a commercial electrical installation:</p>
+          <div className="bg-gray-100 p-4 rounded-md mb-4">
+            <p className="font-semibold">1.0 Pre-Installation</p>
+            <p className="ml-4">1.1 Site survey</p>
+            <p className="ml-4">1.2 Design and engineering</p>
+            <p className="ml-4">1.3 Procurement</p>
+            <p className="font-semibold mt-2">2.0 Installation</p>
+            <p className="ml-4">2.1 Power distribution</p>
+            <p className="ml-8">2.1.1 Main distribution board</p>
+            <p className="ml-8">2.1.2 Sub-distribution boards</p>
+            <p className="ml-4">2.2 Cabling infrastructure</p>
+            <p className="ml-4">2.3 Lighting systems</p>
+            <p className="font-semibold mt-2">3.0 Testing and Commissioning</p>
+            <p className="ml-4">3.1 Initial verification</p>
+            <p className="ml-4">3.2 Functional testing</p>
+            <p className="font-semibold mt-2">4.0 Handover</p>
+            <p className="ml-4">4.1 Documentation</p>
+            <p className="ml-4">4.2 Client training</p>
+          </div>
+        </>
+      )
+    },
+    {
+      title: "Project Scheduling",
+      content: (
+        <>
+          <p>Effective scheduling is critical to project success. Key scheduling techniques include:</p>
+          <ul>
+            <li><strong>Gantt Charts:</strong> Visual timeline representation of tasks and dependencies</li>
+            <li><strong>Critical Path Method (CPM):</strong> Identifies the sequence of activities that determine the shortest completion time</li>
+            <li><strong>PERT (Program Evaluation and Review Technique):</strong> Handles uncertainty in activity durations</li>
+          </ul>
+          <p className="mt-3">When scheduling electrical installations, consider:</p>
+          <ul>
+            <li>Regulatory inspection points</li>
+            <li>Equipment delivery lead times</li>
+            <li>Dependencies on other trades</li>
+            <li>Access restrictions and working hours</li>
+            <li>Outage windows for existing systems</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Project Charter Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Project Charter: Office Building Electrical Upgrade</h4>
+          <p className="mt-2"><strong>Project Objective:</strong> Upgrade the electrical distribution system in a 5-story office building to support increased power requirements and improve reliability.</p>
+          <p className="mt-2"><strong>Scope:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Replace main distribution board</li>
+            <li>Install new sub-distribution boards on each floor</li>
+            <li>Upgrade cabling infrastructure</li>
+            <li>Implement power monitoring system</li>
+            <li>Provide as-built documentation and staff training</li>
+          </ul>
+          <p className="mt-2"><strong>Key Milestones:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Design approval: Week 2</li>
+            <li>Procurement complete: Week 5</li>
+            <li>Main distribution board installation: Week 8</li>
+            <li>Final testing and commissioning: Week 12</li>
+            <li>Project handover: Week 14</li>
+          </ul>
+          <p className="mt-2"><strong>Key Stakeholders:</strong> Building owner, tenants, facilities management, local authority</p>
+          <p className="mt-2"><strong>Budget: £175,000</strong></p>
+        </div>
+      )
+    }
+  ],
+  summary: "Effective project planning sets the foundation for successful electrical installations. By properly defining the project lifecycle, creating detailed work breakdowns, and implementing professional scheduling techniques, electrical professionals can ensure projects are delivered on time, within budget, and to the required quality standards."
+};
+
+// Resource Allocation Content
+export const resourceAllocationContent = {
+  title: "Resource Allocation",
+  introduction: "Resource allocation is the process of assigning and managing the resources needed for successful project completion, including personnel, materials, equipment, and time.",
+  sections: [
+    {
+      title: "Personnel Planning",
+      content: (
+        <>
+          <p>Effective personnel planning ensures that the right people with the right skills are available at the right time:</p>
+          <ul>
+            <li><strong>Skills Matrix:</strong> Mapping required skills against available team members</li>
+            <li><strong>Resource Histograms:</strong> Visual representation of resource allocation over time</li>
+            <li><strong>Responsibility Assignment Matrix (RAM):</strong> Clarifies roles and responsibilities</li>
+          </ul>
+          <p className="mt-3">Key considerations for electrical installation teams:</p>
+          <ul>
+            <li>Specialized certifications (e.g., inspection and testing)</li>
+            <li>Experience with specific systems or equipment</li>
+            <li>Compliance with supervision requirements for trainees</li>
+            <li>Health and safety qualifications</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Materials Management",
+      content: (
+        <>
+          <p>Proper materials management is crucial for project flow and cost control:</p>
+          <ul>
+            <li><strong>Bill of Materials (BOM):</strong> Comprehensive list of required materials with specifications</li>
+            <li><strong>Procurement Schedule:</strong> Timing of purchases aligned with installation sequence</li>
+            <li><strong>Just-in-Time Delivery:</strong> Minimizing storage requirements while ensuring availability</li>
+            <li><strong>Quality Control:</strong> Inspection procedures for received materials</li>
+          </ul>
+          <p className="mt-3">Critical factors in electrical materials planning:</p>
+          <ul>
+            <li>Lead times for specialized equipment</li>
+            <li>Storage requirements for sensitive components</li>
+            <li>Compliance with specified standards</li>
+            <li>Substitution procedures for unavailable items</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Equipment and Tools",
+      content: (
+        <>
+          <p>Planning for equipment and tools requirements:</p>
+          <ul>
+            <li><strong>Equipment Schedule:</strong> Allocation of shared equipment resources</li>
+            <li><strong>Specialist Tools:</strong> Identification and sourcing of specialized testing equipment</li>
+            <li><strong>Calibration Requirements:</strong> Ensuring measurement accuracy</li>
+          </ul>
+          <p className="mt-3">Considerations for electrical installation:</p>
+          <ul>
+            <li>Access equipment requirements (scaffolding, lifts)</li>
+            <li>Testing instruments with valid calibration certificates</li>
+            <li>Backup systems for critical equipment</li>
+            <li>Safety equipment specific to electrical hazards</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Resource Allocation Chart Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Weekly Resource Allocation - Factory Electrical Upgrade Project</h4>
+          <table className="min-w-full mt-3">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Resource</th>
+                <th className="border px-4 py-2">Week 1</th>
+                <th className="border px-4 py-2">Week 2</th>
+                <th className="border px-4 py-2">Week 3</th>
+                <th className="border px-4 py-2">Week 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">Project Manager</td>
+                <td className="border px-4 py-2">50%</td>
+                <td className="border px-4 py-2">25%</td>
+                <td className="border px-4 py-2">25%</td>
+                <td className="border px-4 py-2">50%</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Senior Electrician</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">50%</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Electricians (x3)</td>
+                <td className="border px-4 py-2">0%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">100%</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Apprentice</td>
+                <td className="border px-4 py-2">50%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">100%</td>
+                <td className="border px-4 py-2">50%</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Test Engineer</td>
+                <td className="border px-4 py-2">0%</td>
+                <td className="border px-4 py-2">0%</td>
+                <td className="border px-4 py-2">50%</td>
+                <td className="border px-4 py-2">100%</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="mt-3"><strong>Key Equipment:</strong></p>
+          <ul className="list-disc ml-5">
+            <td>Access Tower: Required in Weeks 2-3</td>
+            <td>Cable Puller: Required in Week 2</td>
+            <td>Test Equipment: Required in Weeks 3-4</td>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Effective resource allocation is essential for the success of electrical installation projects. By carefully planning personnel assignments, material procurement, and equipment usage, project managers can optimize efficiency, minimize waste, and ensure that the right resources are available when needed throughout the project lifecycle."
+};
+
+// Scheduling Content
+export const schedulingContent = {
+  title: "Project Scheduling",
+  introduction: "Project scheduling is the process of defining the sequence, timing, and duration of project activities, taking into account resource availability, dependencies, and constraints.",
+  sections: [
+    {
+      title: "Scheduling Techniques",
+      content: (
+        <>
+          <p>Various techniques can be used to create and manage project schedules:</p>
+          <ul>
+            <li><strong>Gantt Charts:</strong> Bar charts showing activities plotted against time, clearly displaying task durations and relationships</li>
+            <li><strong>Critical Path Method (CPM):</strong> Identifies the sequence of activities that determine the minimum project duration</li>
+            <li><strong>PERT (Program Evaluation and Review Technique):</strong> Uses three time estimates (optimistic, most likely, pessimistic) to account for uncertainty</li>
+            <li><strong>Resource-Constrained Scheduling:</strong> Accounts for limited resource availability</li>
+          </ul>
+          <p className="mt-3">For electrical installations, effective scheduling must consider:</p>
+          <ul>
+            <li>Regulatory inspection points and approval timelines</li>
+            <li>Power outage windows and operational constraints</li>
+            <li>Coordination with other trades and construction phases</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Milestones and Dependencies",
+      content: (
+        <>
+          <p>Milestones are significant points in the project timeline that mark important achievements or transitions:</p>
+          <ul>
+            <li>Design approval</li>
+            <li>Material delivery completion</li>
+            <li>Power system isolation</li>
+            <li>Testing and commissioning start/completion</li>
+            <li>Client handover</li>
+          </ul>
+          <p className="mt-3">Dependencies determine the logical relationships between activities:</p>
+          <ul>
+            <li><strong>Finish-to-Start (FS):</strong> Task B cannot start until Task A is complete (most common)</li>
+            <li><strong>Start-to-Start (SS):</strong> Task B cannot start until Task A has started</li>
+            <li><strong>Finish-to-Finish (FF):</strong> Task B cannot finish until Task A has finished</li>
+            <li><strong>Start-to-Finish (SF):</strong> Task B cannot finish until Task A has started (rarely used)</li>
+          </ul>
+          <p className="mt-3">Identifying and managing dependencies is crucial for electrical installations, as many tasks have strict sequence requirements for safety and functionality.</p>
+        </>
+      )
+    },
+    {
+      title: "Schedule Management and Control",
+      content: (
+        <>
+          <p>Once a baseline schedule is established, ongoing management is required:</p>
+          <ul>
+            <li><strong>Progress Tracking:</strong> Regular updates of activity status and completion percentages</li>
+            <li><strong>Schedule Variance Analysis:</strong> Comparing actual progress against planned schedule</li>
+            <li><strong>Corrective Actions:</strong> Implementing recovery measures for delayed activities</li>
+            <li><strong>Schedule Compression:</strong> Techniques like fast-tracking (overlapping activities) or crashing (adding resources)</li>
+          </ul>
+          <p className="mt-3">Effective communication of schedule status:</p>
+          <ul>
+            <li>Regular progress meetings with the project team</li>
+            <li>Updated schedule visualizations</li>
+            <li>Early notification of potential delays to stakeholders</li>
+            <li>Documentation of schedule changes and their justifications</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Electrical Project Schedule Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Schedule for Retail Store Electrical Installation</h4>
+          <table className="min-w-full mt-3">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Activity</th>
+                <th className="border px-4 py-2">Duration</th>
+                <th className="border px-4 py-2">Predecessor</th>
+                <th className="border px-4 py-2">Start</th>
+                <th className="border px-4 py-2">Finish</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">1. Site survey & design</td>
+                <td className="border px-4 py-2">5 days</td>
+                <td className="border px-4 py-2">-</td>
+                <td className="border px-4 py-2">Day 1</td>
+                <td className="border px-4 py-2">Day 5</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">2. Material procurement</td>
+                <td className="border px-4 py-2">10 days</td>
+                <td className="border px-4 py-2">1</td>
+                <td className="border px-4 py-2">Day 6</td>
+                <td className="border px-4 py-2">Day 15</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">3. Cable pathways</td>
+                <td className="border px-4 py-2">7 days</td>
+                <td className="border px-4 py-2">1</td>
+                <td className="border px-4 py-2">Day 6</td>
+                <td className="border px-4 py-2">Day 12</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">4. Distribution board install</td>
+                <td className="border px-4 py-2">3 days</td>
+                <td className="border px-4 py-2">2</td>
+                <td className="border px-4 py-2">Day 16</td>
+                <td className="border px-4 py-2">Day 18</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">5. Cable installation</td>
+                <td className="border px-4 py-2">8 days</td>
+                <td className="border px-4 py-2">3</td>
+                <td className="border px-4 py-2">Day 13</td>
+                <td className="border px-4 py-2">Day 20</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">6. Lighting & power outlets</td>
+                <td className="border px-4 py-2">6 days</td>
+                <td className="border px-4 py-2">5</td>
+                <td className="border px-4 py-2">Day 21</td>
+                <td className="border px-4 py-2">Day 26</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">7. Testing & commissioning</td>
+                <td className="border px-4 py-2">3 days</td>
+                <td className="border px-4 py-2">4, 6</td>
+                <td className="border px-4 py-2">Day 27</td>
+                <td className="border px-4 py-2">Day 29</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">8. Documentation & handover</td>
+                <td className="border px-4 py-2">1 day</td>
+                <td className="border px-4 py-2">7</td>
+                <td className="border px-4 py-2">Day 30</td>
+                <td className="border px-4 py-2">Day 30</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="mt-3"><strong>Critical Path:</strong> 1 → 2 → 4 → 7 → 8 (22 days)</p>
+          <p><strong>Key Milestones:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Design approval: Day 5</li>
+            <li>Material delivery completion: Day 15</li>
+            <li>Power-on testing: Day 27</li>
+            <li>Project handover: Day 30</li>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Professional project scheduling is essential for successful electrical installations. By employing appropriate scheduling techniques, identifying dependencies, setting realistic milestones, and actively managing the schedule throughout the project, electrical professionals can ensure timely project completion while effectively coordinating resources and activities."
+};
+
+// Technical Design Content
+export const technicalDesignContent = {
+  title: "Technical Design Principles",
+  introduction: "Technical design is the process of translating client requirements and regulatory standards into detailed plans that guide the installation of electrical systems. This section covers the fundamental principles and methodologies of technical design for electrical installations.",
+  sections: [
+    {
+      title: "Design Objectives and Constraints",
+      content: (
+        <>
+          <p>Effective technical design balances multiple objectives and constraints:</p>
+          <ul>
+            <li><strong>Functionality:</strong> Meeting the operational requirements of the installation</li>
+            <li><strong>Safety:</strong> Ensuring protection of persons, livestock, and property</li>
+            <li><strong>Reliability:</strong> Designing systems with appropriate redundancy and protection</li>
+            <li><strong>Energy Efficiency:</strong> Minimizing energy consumption and losses</li>
+            <li><strong>Maintainability:</strong> Facilitating future access and servicing</li>
+            <li><strong>Cost-effectiveness:</strong> Optimizing initial and lifecycle costs</li>
+            <li><strong>Compliance:</strong> Meeting all applicable regulations and standards</li>
+          </ul>
+          <p className="mt-3">Design constraints typically include:</p>
+          <ul>
+            <li>Budget limitations</li>
+            <li>Physical space restrictions</li>
+            <li>Existing infrastructure</li>
+            <li>Client specifications</li>
+            <li>Environmental conditions</li>
+            <li>Future expansion requirements</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Design Process and Documentation",
+      content: (
+        <>
+          <p>The electrical design process typically follows these stages:</p>
+          <ol>
+            <li><strong>Client Brief:</strong> Understanding requirements and expectations</li>
+            <li><strong>Concept Design:</strong> High-level system architecture and approaches</li>
+            <li><strong>Detailed Design:</strong> Comprehensive technical specifications and calculations</li>
+            <li><strong>Design Review:</strong> Internal verification and external approval as required</li>
+            <li><strong>Implementation Documentation:</strong> Converting designs to installation instructions</li>
+          </ol>
+          <p className="mt-3">Essential design documentation includes:</p>
+          <ul>
+            <li>Single-line diagrams showing power distribution</li>
+            <li>Layout drawings showing equipment locations</li>
+            <li>Schematic diagrams showing circuit connections</li>
+            <li>Cable schedules and routing plans</li>
+            <li>Equipment specifications and datasheets</li>
+            <li>Design calculations (load, voltage drop, fault levels, etc.)</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Design Standards and Regulations",
+      content: (
+        <>
+          <p>All electrical designs must comply with applicable standards and regulations:</p>
+          <ul>
+            <li><strong>BS 7671 (IET Wiring Regulations):</strong> The fundamental standard for electrical installations in the UK</li>
+            <li><strong>Building Regulations:</strong> Particularly Part P for domestic installations</li>
+            <li><strong>Health and Safety at Work Act:</strong> Governing safety aspects</li>
+            <li><strong>Industry-specific standards:</strong> Such as those for hazardous areas (ATEX), healthcare facilities, or data centers</li>
+          </ul>
+          <p className="mt-3">Design considerations mandated by regulations include:</p>
+          <ul>
+            <li>Protection against electric shock</li>
+            <li>Protection against thermal effects</li>
+            <li>Protection against overcurrent</li>
+            <li>Isolation and switching</li>
+            <li>Accessibility for operation and maintenance</li>
+            <li>Identification and notices</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Design Documentation Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Technical Design Documentation Components</h4>
+          <p className="mt-2"><strong>Project: Office Building Electrical System</strong></p>
+          
+          <p className="mt-3"><strong>1. Single-Line Diagram</strong></p>
+          <p>Shows the main electrical distribution from utility supply through transformers, main switchgear, distribution boards, and major loads. Indicates ratings of equipment, protective devices, and cables.</p>
+          
+          <p className="mt-3"><strong>2. Load Calculation Schedule</strong></p>
+          <table className="min-w-full mt-1">
+            <thead>
+              <tr>
+                <th className="border px-4 py-1">Circuit</th>
+                <th className="border px-4 py-1">Connected Load (kVA)</th>
+                <th className="border px-4 py-1">Demand Factor</th>
+                <th className="border px-4 py-1">Maximum Demand (kVA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-1">Lighting</td>
+                <td className="border px-4 py-1">42.5</td>
+                <td className="border px-4 py-1">0.8</td>
+                <td className="border px-4 py-1">34.0</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-1">Small Power</td>
+                <td className="border px-4 py-1">78.0</td>
+                <td className="border px-4 py-1">0.6</td>
+                <td className="border px-4 py-1">46.8</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-1">HVAC</td>
+                <td className="border px-4 py-1">125.0</td>
+                <td className="border px-4 py-1">0.7</td>
+                <td className="border px-4 py-1">87.5</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-1">Other</td>
+                <td className="border px-4 py-1">35.0</td>
+                <td className="border px-4 py-1">0.5</td>
+                <td className="border px-4 py-1">17.5</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-1 font-semibold">Total</td>
+                <td className="border px-4 py-1">280.5</td>
+                <td className="border px-4 py-1">-</td>
+                <td className="border px-4 py-1">185.8</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p className="mt-3"><strong>3. Cable Sizing Calculation Example</strong></p>
+          <p className="mt-1">For Sub-Distribution Board SDB-2:</p>
+          <ul className="list-disc ml-5">
+            <li>Maximum Demand: 63.4 kVA</li>
+            <li>Voltage: 400V, 3-phase</li>
+            <li>Current: 91.5 A</li>
+            <li>Cable Route Length: 45m</li>
+            <li>Installation Method: Clipped direct to surface</li>
+            <li>Ambient Temperature: 35°C (correction factor 0.96)</li>
+            <li>Cable Type: 4-core XLPE insulated copper</li>
+            <li>Calculated Minimum Size: 25mm²</li>
+            <li>Voltage Drop: 1.2% (within 2% limit)</li>
+            <li>Selected Cable: 25mm² with 100A protection</li>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Technical design is a critical phase in electrical installation projects, requiring a methodical approach that balances functionality, safety, efficiency, and regulatory compliance. By following established design processes and documenting all aspects thoroughly, electrical professionals create the blueprint for successful installations that meet client needs while ensuring long-term reliability and safety."
+};
+
+// System Architecture Content
+export const systemArchitectureContent = {
+  title: "System Architecture",
+  introduction: "System architecture defines the overall structure and organization of electrical systems, including power distribution, control systems, and integration of various components. This section explores key principles and approaches to developing effective electrical system architectures.",
+  sections: [
+    {
+      title: "Power Distribution Architecture",
+      content: (
+        <>
+          <p>The power distribution architecture forms the backbone of any electrical installation:</p>
+          <ul>
+            <li><strong>Radial Distribution:</strong> The most common system with power flowing from a single source to multiple loads</li>
+            <li><strong>Ring Distribution:</strong> Providing alternative supply paths for improved reliability</li>
+            <li><strong>Mesh Networks:</strong> Multiple interconnected paths for critical applications</li>
+          </ul>
+          <p className="mt-3">Key considerations in distribution architecture:</p>
+          <ul>
+            <li><strong>Voltage Levels:</strong> Selection of appropriate distribution voltages (LV, MV, HV)</li>
+            <li><strong>Protective Devices:</strong> Strategic placement of circuit breakers, fuses, and RCDs</li>
+            <li><strong>Isolation Points:</strong> Ensuring safe maintenance and emergency shutdown</li>
+            <li><strong>Discrimination:</strong> Coordinating protective devices for selective operation</li>
+            <li><strong>Power Quality:</strong> Managing harmonics, voltage fluctuations, and power factor</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Control System Architecture",
+      content: (
+        <>
+          <p>Modern electrical installations often incorporate sophisticated control systems:</p>
+          <ul>
+            <li><strong>Centralized Control:</strong> Single point of control for the entire system</li>
+            <li><strong>Distributed Control:</strong> Multiple controllers managing different subsystems</li>
+            <li><strong>Hierarchical Control:</strong> Multi-level architecture with supervisory control</li>
+          </ul>
+          <p className="mt-3">Components of control system architecture:</p>
+          <ul>
+            <li><strong>Controllers:</strong> PLCs, microcontrollers, building management systems</li>
+            <li><strong>Field Devices:</strong> Sensors, switches, relays, actuators</li>
+            <li><strong>Communication Networks:</strong> Fieldbus systems, Ethernet, wireless protocols</li>
+            <li><strong>Human-Machine Interfaces:</strong> Displays, touchscreens, control panels</li>
+            <li><strong>Data Management:</strong> Historian servers, analytics platforms</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "System Integration and Interoperability",
+      content: (
+        <>
+          <p>Modern electrical systems rarely operate in isolation, requiring careful integration:</p>
+          <ul>
+            <li><strong>Subsystem Integration:</strong> Connecting power, lighting, HVAC, security, and other systems</li>
+            <li><strong>Protocol Compatibility:</strong> Ensuring communication between different manufacturers' equipment</li>
+            <li><strong>Legacy System Integration:</strong> Interfacing with existing installations</li>
+            <li><strong>Future-Proofing:</strong> Designing for future expansion and technology evolution</li>
+          </ul>
+          <p className="mt-3">Integration strategies and technologies:</p>
+          <ul>
+            <li><strong>Open Protocols:</strong> BACnet, Modbus, KNX, DALI</li>
+            <li><strong>Middleware:</strong> Protocol converters and gateways</li>
+            <li><strong>API Integration:</strong> Software interfaces for system interoperability</li>
+            <li><strong>Cloud Connectivity:</strong> Remote monitoring and control capabilities</li>
+            <li><strong>IoT Architecture:</strong> Edge devices and cloud platforms</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "System Architecture Diagram Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Commercial Building Electrical System Architecture</h4>
+          <p className="mt-2"><strong>Power Distribution:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Utility Supply (11kV) → Step-down Transformer → Main LV Switchboard (400V)</li>
+            <li>Main Switchboard → Distribution Boards (by floor/zone) → Final Circuits</li>
+            <li>Standby Generator with Automatic Transfer Switch for critical loads</li>
+            <li>Uninterruptible Power Supply for IT and security systems</li>
+          </ul>
+          
+          <p className="mt-3"><strong>Control Systems:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Building Management System (BMS) - centralized monitoring and control</li>
+            <li>Lighting Control System with DALI protocol</li>
+            <li>HVAC Controls with BACnet communication</li>
+            <li>Energy Monitoring System with Modbus meters</li>
+            <li>Fire Alarm System (standalone for regulatory compliance)</li>
+          </ul>
+          
+          <p className="mt-3"><strong>Integration Layer:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>BMS Gateway providing integration of subsystems</li>
+            <li>IP Network backbone for system communications</li>
+            <li>Visualization Dashboards for facility management</li>
+            <li>Remote Access Module for maintenance and monitoring</li>
+            <li>Data logging and analytics for energy optimization</li>
+          </ul>
+          
+          <p className="mt-3"><strong>Architecture Considerations:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Redundancy in critical systems (dual network paths)</li>
+            <li>Segregation of networks for security (IT vs. OT)</li>
+            <li>Scalability for future expansion of office spaces</li>
+            <li>Maintainability through standardized components</li>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Developing an effective electrical system architecture requires a holistic approach that considers power distribution, control systems, and integration requirements. By carefully planning the system structure, selecting appropriate technologies, and ensuring interoperability between components, electrical professionals can create installations that deliver reliability, efficiency, and flexibility while supporting the operational needs of the facility."
+};
+
+// Design Tools Content
+export const designToolsContent = {
+  title: "Design Tools and Software",
+  introduction: "Modern electrical installation design relies heavily on specialized software tools that improve accuracy, efficiency, and collaboration. This section explores the various digital tools available for electrical design and their applications.",
+  sections: [
+    {
+      title: "Computer-Aided Design (CAD) Software",
+      content: (
+        <>
+          <p>CAD software forms the foundation of electrical design documentation:</p>
+          <ul>
+            <li><strong>2D CAD:</strong> For creating floor plans, layouts, and schematic diagrams</li>
+            <li><strong>3D CAD:</strong> For spatial coordination and visualization of installations</li>
+            <li><strong>BIM (Building Information Modeling):</strong> Integrated approach combining 3D models with project information</li>
+          </ul>
+          <p className="mt-3">Common electrical CAD features:</p>
+          <ul>
+            <li>Electrical symbol libraries</li>
+            <li>Automated circuit creation</li>
+            <li>Cable routing tools</li>
+            <li>Panel layout design</li>
+            <li>Bill of materials generation</li>
+            <li>Drawing annotation and dimensioning</li>
+          </ul>
+          <p className="mt-3">Popular electrical CAD software includes AutoCAD Electrical, SOLIDWORKS Electrical, and Revit MEP.</p>
+        </>
+      )
+    },
+    {
+      title: "Calculation and Analysis Software",
+      content: (
+        <>
+          <p>Specialized software for performing critical electrical calculations and analyses:</p>
+          <ul>
+            <li><strong>Load Flow Analysis:</strong> Determining voltage drops and power flows</li>
+            <li><strong>Short Circuit Analysis:</strong> Calculating fault currents for protection design</li>
+            <li><strong>Cable Sizing:</strong> Determining appropriate cable dimensions</li>
+            <li><strong>Lighting Design:</strong> Calculating illumination levels and fixture layouts</li>
+            <li><strong>Harmonic Analysis:</strong> Assessing power quality issues</li>
+            <li><strong>Protection Coordination:</strong> Ensuring proper discrimination between devices</li>
+          </ul>
+          <p className="mt-3">Benefits of calculation software:</p>
+          <ul>
+            <li>Increased accuracy compared to manual calculations</li>
+            <li>Ability to quickly evaluate alternative designs</li>
+            <li>Consistent application of standards and regulations</li>
+            <li>Documentation of calculation methods and results</li>
+            <li>Time savings on complex or repetitive calculations</li>
+          </ul>
+          <p className="mt-3">Examples include ETAP, DIALux, Amtech, and Electrical Calculator Suite.</p>
+        </>
+      )
+    },
+    {
+      title: "Project Management and Documentation Tools",
+      content: (
+        <>
+          <p>Software tools that support the broader design and documentation process:</p>
+          <ul>
+            <li><strong>Project Management Software:</strong> Scheduling, resource allocation, and tracking</li>
+            <li><strong>Document Management Systems:</strong> Organizing and controlling design documentation</li>
+            <li><strong>Collaboration Platforms:</strong> Facilitating team communication and file sharing</li>
+            <li><strong>Specification Writing Tools:</strong> Creating standardized technical specifications</li>
+          </ul>
+          <p className="mt-3">Integration capabilities:</p>
+          <ul>
+            <li>Data exchange between design and calculation tools</li>
+            <li>Connection to procurement and estimating systems</li>
+            <li>Mobile access for on-site reference and updates</li>
+            <li>Cloud-based collaboration for distributed teams</li>
+          </ul>
+          <p className="mt-3">Popular platforms include Microsoft Project, Autodesk Construction Cloud, and Procore.</p>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Design Tool Application Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Design Process Using Modern Software Tools</h4>
+          <p className="mt-2"><strong>Project: Retail Store Electrical Renovation</strong></p>
+          
+          <p className="mt-3"><strong>1. Initial Design Phase</strong></p>
+          <ul className="list-disc ml-5">
+            <li><strong>BIM Software (Revit MEP):</strong> Creating the base electrical model integrated with architectural plans</li>
+            <li><strong>Load Calculation Software:</strong> Determining total electrical demand and distribution requirements</li>
+            <li><strong>Collaboration Platform:</strong> Sharing initial designs with client and architect for feedback</li>
+          </ul>
+          
+          <p className="mt-3"><strong>2. Detailed Design Phase</strong></p>
+          <ul className="list-disc ml-5">
+            <li><strong>Electrical CAD:</strong> Developing detailed single-line diagrams and panel schedules</li>
+            <li><strong>Cable Sizing Software:</strong> Calculating appropriate cable sizes for all circuits</li>
+            <li><strong>Lighting Design Software (DIALux):</strong> Optimizing fixture layout for required illumination levels</li>
+            <li><strong>Protection Coordination Software:</strong> Ensuring proper discrimination between protective devices</li>
+          </ul>
+          
+          <p className="mt-3"><strong>3. Documentation and Implementation</strong></p>
+          <ul className="list-disc ml-5">
+            <li><strong>Specification Software:</strong> Creating detailed technical specifications for equipment</li>
+            <li><strong>BIM Clash Detection:</strong> Identifying and resolving conflicts with other building services</li>
+            <li><strong>Drawing Automation:</strong> Generating installation drawings and cable schedules</li>
+            <li><strong>Bill of Materials Software:</strong> Producing accurate material lists for procurement</li>
+          </ul>
+          
+          <p className="mt-3"><strong>Benefits Realized:</strong></p>
+          <ul className="list-disc ml-5">
+            <li>50% reduction in design time compared to traditional methods</li>
+            <li>Early identification of spatial conflicts, avoiding on-site modifications</li>
+            <li>More accurate material quantities, reducing waste</li>
+            <li>Standardized documentation improving installation quality</li>
+            <li>Digital handover package for facility management</li>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Modern design tools and software have transformed electrical installation planning, enabling more accurate, efficient, and collaborative processes. By leveraging specialized CAD systems, calculation software, and project management platforms, electrical professionals can create comprehensive designs that comply with regulations, optimize performance, and facilitate smooth implementation. Staying current with these technologies is increasingly essential for competitive and high-quality electrical installation work."
+};
+
+// Implementation Content
+export const implementationContent = {
+  title: "Implementation Procedures",
+  introduction: "Implementation is the phase where planning and design are transformed into physical electrical installations. Following structured procedures ensures that installations are completed safely, efficiently, and in compliance with applicable standards and specifications.",
+  sections: [
+    {
+      title: "Pre-Implementation Planning",
+      content: (
+        <>
+          <p>Before physical installation begins, several preparatory steps are essential:</p>
+          <ul>
+            <li><strong>Site Preparation:</strong> Ensuring the work area is ready and accessible</li>
+            <li><strong>Resource Mobilization:</strong> Assembling personnel, materials, and equipment</li>
+            <li><strong>Risk Assessment:</strong> Identifying hazards and implementing control measures</li>
+            <li><strong>Permit Requirements:</strong> Obtaining necessary permits and authorizations</li>
+            <li><strong>Method Statements:</strong> Documenting detailed work procedures</li>
+            <li><strong>Sequencing:</strong> Establishing the logical order of installation activities</li>
+          </ul>
+          <p className="mt-3">Key documentation required before implementation:</p>
+          <ul>
+            <li>Approved installation drawings and specifications</li>
+            <li>Health and safety plan</li>
+            <li>Materials delivery schedule</li>
+            <li>Plant and equipment requirements</li>
+            <li>Quality inspection plan</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Installation Techniques and Standards",
+      content: (
+        <>
+          <p>Implementation must follow established techniques and standards:</p>
+          <ul>
+            <li><strong>Installation Standards:</strong> Following BS 7671 requirements and industry best practices</li>
+            <li><strong>Cable Management:</strong> Proper routing, support, and protection of cables</li>
+            <li><strong>Equipment Mounting:</strong> Secure and accessible installation of devices</li>
+            <li><strong>Connection Methods:</strong> Appropriate termination techniques for reliable connections</li>
+            <li><strong>Labeling and Identification:</strong> Clear marking of circuits, equipment, and warning notices</li>
+          </ul>
+          <p className="mt-3">Critical areas requiring special attention:</p>
+          <ul>
+            <li>Support systems for cables and equipment</li>
+            <li>Segregation of circuits with different voltages or functions</li>
+            <li>Protection against mechanical damage</li>
+            <li>Fire stopping for penetrations through fire-rated boundaries</li>
+            <li>Electromagnetic compatibility considerations</li>
+            <li>Environmental protection for outdoor installations</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Coordination and Supervision",
+      content: (
+        <>
+          <p>Effective management during implementation ensures quality and compliance:</p>
+          <ul>
+            <li><strong>Supervision:</strong> Qualified oversight of installation work</li>
+            <li><strong>Progress Monitoring:</strong> Tracking completion against schedule</li>
+            <li><strong>Coordination with Other Trades:</strong> Aligning work with other construction activities</li>
+            <li><strong>Technical Queries:</strong> Resolving design or installation issues</li>
+            <li><strong>Change Management:</strong> Handling variations to original specifications</li>
+            <li><strong>Compliance Checks:</strong> Ongoing verification of regulatory requirements</li>
+          </ul>
+          <p className="mt-3">Documentation during implementation:</p>
+          <ul>
+            <li>Daily site logs and progress reports</li>
+            <li>Interim inspections and test records</li>
+            <li>Technical queries and resolutions</li>
+            <li>As-built notes for drawing updates</li>
+            <li>Photographic records of concealed installations</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Implementation Method Statement Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Method Statement: Distribution Board Installation</h4>
+          
+          <p className="mt-2"><strong>1. Preparation</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Verify location against approved drawings</li>
+            <li>Confirm dimensions and fixing points</li>
+            <li>Isolate and lock off any existing supplies to the area</li>
+            <li>Complete permit-to-work documentation</li>
+            <li>Ensure all required materials and tools are available</li>
+          </ul>
+          
+          <p className="mt-3"><strong>2. Installation Procedure</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Mark fixing positions according to drawings</li>
+            <li>Install mounting frame or direct fixings as specified</li>
+            <li>Mount distribution board securely</li>
+            <li>Verify level and alignment</li>
+            <li>Install protective bonding connections</li>
+            <li>Prepare cable entries with appropriate glands/bushings</li>
+            <li>Label board as per drawing reference</li>
+          </ul>
+          
+          <p className="mt-3"><strong>3. Circuit Installation</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Install incoming supply cable, maintaining minimum bending radii</li>
+            <li>Connect incoming supply to main switch with correct termination methods</li>
+            <li>Install and secure outgoing circuit cables</li>
+            <li>Terminate conductors to appropriate devices</li>
+            <li>Apply correct torque settings to terminals</li>
+            <li>Fit correct protective devices as specified</li>
+            <li>Install and complete circuit identification</li>
+          </ul>
+          
+          <p className="mt-3"><strong>4. Quality Checks</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Visually inspect all connections</li>
+            <li>Verify correct phase sequence</li>
+            <li>Check security of all fixings and terminations</li>
+            <li>Confirm proper circuit identification and labeling</li>
+            <li>Complete continuity tests of protective conductors</li>
+            <li>Verify insulation resistance of all circuits</li>
+            <li>Complete installation checklist</li>
+          </ul>
+          
+          <p className="mt-3"><strong>5. Safety Considerations</strong></p>
+          <ul className="list-disc ml-5">
+            <li>Use appropriate PPE including safety footwear and insulating gloves</li>
+            <li>Implement safe isolation procedures before commencing work</li>
+            <li>Use insulated tools for electrical connections</li>
+            <li>Maintain clear working area</li>
+            <li>Follow manual handling procedures for heavy components</li>
+          </ul>
+        </div>
+      )
+    }
+  ],
+  summary: "Successful implementation of electrical installations requires careful planning, adherence to technical standards, and effective coordination. By following structured procedures and maintaining thorough documentation, electrical professionals can ensure that installations are completed safely, efficiently, and in compliance with all applicable requirements. The implementation phase translates designs into functional systems that will serve their intended purpose reliably."
+};
+
+// Quality Control Content
+export const qualityControlContent = {
+  title: "Quality Control",
+  introduction: "Quality control is the systematic process of verifying that electrical installations meet specified requirements, standards, and performance criteria. This section covers the principles, methods, and procedures for ensuring quality throughout the installation process.",
+  sections: [
+    {
+      title: "Quality Management Principles",
+      content: (
+        <>
+          <p>Effective quality control for electrical installations is based on several fundamental principles:</p>
+          <ul>
+            <li><strong>Prevention Rather Than Correction:</strong> Identifying and addressing potential issues before they occur</li>
+            <li><strong>Continuous Verification:</strong> Ongoing checks throughout the installation rather than just at completion</li>
+            <li><strong>Documented Standards:</strong> Clear specifications against which quality can be measured</li>
+            <li><strong>Competency:</strong> Ensuring personnel have appropriate skills and training</li>
+            <li><strong>Traceability:</strong> Maintaining records of inspections, tests, and materials</li>
+          </ul>
+          <p className="mt-3">A structured approach to quality control typically includes:</p>
+          <ul>
+            <li>Quality control plan development</li>
+            <li>Identification of critical inspection points</li>
+            <li>Definition of acceptance criteria</li>
+            <li>Allocation of quality responsibilities</li>
+            <li>Implementation of verification methods</li>
+            <li>Documentation and record-keeping systems</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Inspection and Testing Processes",
+      content: (
+        <>
+          <p>Inspection and testing are the primary methods of quality verification:</p>
+          <ul>
+            <li><strong>Visual Inspections:</strong> Checking for correct installation, damage, and compliance with specifications</li>
+            <li><strong>Dimensional Checks:</strong> Verifying spatial requirements and clearances</li>
+            <li><strong>Functional Tests:</strong> Confirming that systems operate as intended</li>
+            <li><strong>Electrical Tests:</strong> Measuring electrical parameters to verify safety and performance</li>
+            <li><strong>Documentation Review:</strong> Ensuring required certifications and records are complete</li>
+          </ul>
+          <p className="mt-3">Key inspection and testing stages include:</p>
+          <ul>
+            <li><strong>Pre-installation:</strong> Material and equipment verification</li>
+            <li><strong>During Installation:</strong> Progressive inspections of work before it becomes inaccessible</li>
+            <li><strong>Post-installation:</strong> Comprehensive testing before energization</li>
+            <li><strong>Commissioning:</strong> Verification under operating conditions</li>
+            <li><strong>Periodic:</strong> Ongoing inspections during the operational life</li>
+          </ul>
+          <p className="mt-3">Electrical testing required by BS 7671 includes:</p>
+          <ul>
+            <li>Continuity of protective conductors</li>
+            <li>Insulation resistance</li>
+            <li>Polarity verification</li>
+            <li>Earth fault loop impedance</li>
+            <li>RCD operation</li>
+            <li>Functional testing of assemblies</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Non-Conformance and Corrective Actions",
+      content: (
+        <>
+          <p>Processes for handling quality issues when they are identified:</p>
+          <ul>
+            <li><strong>Non-conformance Reporting:</strong> Documenting instances where installations fail to meet requirements</li>
+            <li><strong>Root Cause Analysis:</strong> Identifying the underlying reasons for quality issues</li>
+            <li><strong>Corrective Action:</strong> Implementing measures to fix identified problems</li>
+            <li><strong>Preventive Action:</strong> Addressing systemic issues to prevent recurrence</li>
+            <li><strong>Verification:</strong> Confirming that corrective actions have been effective</li>
+          </ul>
+          <p className="mt-3">Classification of non-conformances by severity:</p>
+          <ul>
+            <li><strong>Critical:</strong> Safety issues requiring immediate action</li>
+            <li><strong>Major:</strong> Significant deviations from requirements affecting functionality or compliance</li>
+            <li><strong>Minor:</strong> Issues that don't substantially impact safety or functionality</li>
+          </ul>
+          <p className="mt-3">Documentation for quality control should include:</p>
+          <ul>
+            <li>Inspection checklists and reports</li>
+            <li>Test result records</li>
+            <li>Non-conformance reports and resolutions</li>
+            <li>Material and equipment certificates</li>
+            <li>Calibration records for test equipment</li>
+            <li>Photographs of completed installations</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Quality Control Inspection Checklist Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Distribution Board Installation Quality Inspection Checklist</h4>
+          
+          <table className="min-w-full mt-3">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Inspection Item</th>
+                <th className="border px-4 py-2">Acceptance Criteria</th>
+                <th className="border px-4 py-2">Result</th>
+                <th className="border px-4 py-2">Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">Location and mounting</td>
+                <td className="border px-4 py-2">As per approved drawings, secure fixings</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Equipment rating</td>
+                <td className="border px-4 py-2">Matches design specification</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">IP rating</td>
+                <td className="border px-4 py-2">Meets environmental requirements</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Circuit protection devices</td>
+                <td className="border px-4 py-2">Type and rating as specified</td>
+                <td className="border px-4 py-2">Fail</td>
+                <td className="border px-4 py-2">Two MCBs incorrect rating - replaced</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Cable terminations</td>
+                <td className="border px-4 py-2">Secure, correct torque applied</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Cable identification</td>
+                <td className="border px-4 py-2">All cables clearly labeled</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Circuit directory</td>
+                <td className="border px-4 py-2">Complete and accurate</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2">Updated to include new circuit 12</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Main earth connection</td>
+                <td className="border px-4 py-2">Properly connected and identified</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2"></td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Continuity test</td>
+                <td className="border px-4 py-2">All CPC continuity verified</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2">Test results recorded separately</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Insulation resistance</td>
+                <td className="border px-4 py-2">Minimum 1MΩ at 500V DC</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2">All circuits >200MΩ</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">RCD operation</td>
+                <td className="border px-4 py-2">Trips within specified time</td>
+                <td className="border px-4 py-2">Pass</td>
+                <td className="border px-4 py-2">30mA devices trip <100ms</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div className="mt-4">
+            <p><strong>Inspector:</strong> J. Smith</p>
+            <p><strong>Date:</strong> 15/06/2023</p>
+            <p><strong>Location:</strong> Building A, Floor 2</p>
+            <p><strong>Reference:</strong> DB-2F-01</p>
+            <p><strong>Overall Status:</strong> Pass (after corrective actions)</p>
+          </div>
+        </div>
+      )
+    }
+  ],
+  summary: "Quality control is an integral part of electrical installation projects, ensuring that work meets specified requirements, functions correctly, and complies with relevant standards. By implementing systematic inspection and testing processes, addressing non-conformances effectively, and maintaining comprehensive documentation, electrical professionals can deliver installations that are safe, reliable, and fit for purpose."
+};
+
+// Handover Procedures Content
+export const handoverProceduresContent = {
+  title: "Handover Procedures",
+  introduction: "The handover process marks the formal transfer of an electrical installation from the contractor to the client or end-user. A structured handover ensures that all necessary information, documentation, and training are provided to enable safe operation and maintenance of the installation.",
+  sections: [
+    {
+      title: "Completion and Pre-handover Activities",
+      content: (
+        <>
+          <p>Before proceeding with formal handover, several activities must be completed:</p>
+          <ul>
+            <li><strong>Final Inspections:</strong> Comprehensive checking of the installation against specifications</li>
+            <li><strong>Testing and Commissioning:</strong> Verification that all systems function correctly</li>
+            <li><strong>Snagging:</strong> Identification and rectification of minor defects</li>
+            <li><strong>Documentation Compilation:</strong> Assembly of all required certificates and records</li>
+            <li><strong>As-built Documentation:</strong> Updating drawings and schedules to reflect the actual installation</li>
+          </ul>
+          <p className="mt-3">Key pre-handover verification activities include:</p>
+          <ul>
+            <li>Complete electrical testing to BS 7671 requirements</li>
+            <li>Functional testing of all systems under normal and emergency conditions</li>
+            <li>Verification of compliance with Building Regulations and other statutory requirements</li>
+            <li>Performance testing against specified parameters</li>
+            <li>Integration testing with other building systems</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Handover Documentation",
+      content: (
+        <>
+          <p>A comprehensive documentation package is essential for handover:</p>
+          <ul>
+            <li><strong>Electrical Installation Certificate:</strong> Confirming compliance with BS 7671</li>
+            <li><strong>Test Results:</strong> Records of all electrical tests performed</li>
+            <li><strong>As-built Drawings:</strong> Updated to reflect the actual installation</li>
+            <li><strong>Operation and Maintenance Manuals:</strong> Instructions for system operation</li>
+            <li><strong>Equipment Warranties:</strong> Manufacturer guarantees and their conditions</li>
+            <li><strong>Maintenance Schedules:</strong> Recommended maintenance activities and frequencies</li>
+          </ul>
+          <p className="mt-3">Additional documentation that may be required:</p>
+          <ul>
+            <li>Health and Safety File (for projects under CDM Regulations)</li>
+            <li>Building Control completion certificates</li>
+            <li>Fire detection and alarm system certificates</li>
+            <li>Emergency lighting test certificates</li>
+            <li>Technical submittals and product datasheets</li>
+            <li>Software licenses and access credentials</li>
+          </ul>
+        </>
+      )
+    },
+    {
+      title: "Client Training and Support",
+      content: (
+        <>
+          <p>Ensuring client personnel can safely operate and maintain the installation:</p>
+          <ul>
+            <li><strong>User Training:</strong> Instruction on day-to-day operation of systems</li>
+            <li><strong>Maintenance Training:</strong> Guidance for technical staff on maintenance requirements</li>
+            <li><strong>Emergency Procedures:</strong> Actions to take in case of system failures</li>
+            <li><strong>Demonstration:</strong> Practical operation of key systems and controls</li>
+          </ul>
+          <p className="mt-3">Post-handover support arrangements:</p>
+          <ul>
+            <li>Defects liability period expectations and procedures</li>
+            <li>Emergency callout arrangements</li>
+            <li>Spare parts inventory and sourcing information</li>
+            <li>Contact details for technical support</li>
+            <li>Maintenance contract options</li>
+            <li>Future modification procedures</li>
+          </ul>
+        </>
+      )
+    }
+  ],
+  examples: [
+    {
+      title: "Handover Documentation Checklist Example",
+      content: (
+        <div className="bg-gray-100 p-4 rounded-md">
+          <h4 className="font-semibold">Electrical Installation Handover Checklist</h4>
+          
+          <p className="mt-2"><strong>Project:</strong> Office Building Electrical Upgrade</p>
+          <p><strong>Client:</strong> ABC Corporation</p>
+          <p><strong>Date of Handover:</strong> 28/09/2023</p>
+          
+          <p className="mt-3"><strong>1. Certification Documents</strong></p>
+          <table className="min-w-full mt-1">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Document</th>
+                <th className="border px-4 py-2">Provided</th>
+                <th className="border px-4 py-2">Reference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">Electrical Installation Certificate</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">EIC-2023-118</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Schedule of Test Results</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">TR-2023-118</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Minor Works Certificates</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">MWC-23-45 to 48</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Fire Alarm Commissioning Certificate</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">FA-COM-23-72</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Emergency Lighting Test Certificate</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">EL-2023-36</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p className="mt-3"><strong>2. Technical Documentation</strong></p>
+          <table className="min-w-full mt-1">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Document</th>
+                <th className="border px-4 py-2">Provided</th>
+                <th className="border px-4 py-2">Format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">As-built Drawings</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">PDF + CAD</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Operation & Maintenance Manuals</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">Hardcopy + PDF</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Equipment Datasheets</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">PDF</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Warranty Certificates</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">Hardcopy</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Maintenance Schedule</td>
+                <td className="border px-4 py-2">Yes</td>
+                <td className="border px-4 py-2">PDF</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p className="mt-3"><strong>3. Training Completed</strong></p>
+          <table className="min-w-full mt-1">
+            <thead>
+              <tr>
+                <th className="border px-4 py-2">Training Type</th>
+                <th className="border px-4 py-2">Attendees</th>
+                <th className="border px-4 py-2">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">System Operation Overview</td>
+                <td className="border px-4 py-2">Facility Manager, Building Staff</td>
+                <td className="border px-4 py-2">25/09/2023</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Distribution System Operation</td>
+                <td className="border px-4 py-2">Maintenance Engineers</td>
+                <td className="border px-4 py-2">26/09/2023</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">BMS Interface Training</td>
+                <td className="border px-4 py-2">Technical Staff</td>
+                <td className="border px-4 py-2">27/09/2023</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Emergency Procedures</td>
+                <td className="border px-4 py-2">All Staff</td>
+                <td className="border px-4 py-2">27/09/2023</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div className="mt-4">
+            <p><strong>Handed Over By:</strong> J. Wilson, Project Manager</p>
+            <p><strong>Accepted By:</strong> R. Thomas, Facility Manager</p>
+            <p><strong>Defects Liability Period:</strong> 12 months from date of handover</p>
+            <p><strong>Next Scheduled Maintenance:</strong> 28/03/2024</p>
+          </div>
+        </div>
+      )
+    }
+  ],
+  summary: "A comprehensive and well-executed handover process is vital for ensuring that electrical installations meet client expectations and can be operated and maintained safely. By providing thorough documentation, effective training, and appropriate support arrangements, electrical contractors can facilitate a smooth transition and establish a foundation for the long-term successful operation of the installation."
+};
