@@ -6,29 +6,27 @@ export const installationPlanningSection1_1 = {
   title: "Project Planning Basics",
   content: (
     <>
-      <p>Effective installation planning is the foundation of successful electrical projects, ensuring that work proceeds safely, efficiently, and according to specifications.</p>
+      <p>Effective electrical installation planning provides the framework for successful project execution and helps prevent costly delays and rework.</p>
       
-      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Key Planning Elements</h4>
+      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Core Planning Elements</h4>
       <ul className="list-disc pl-6 space-y-2">
-        <li><strong>Project Scope Definition:</strong> Clearly defining what is and isn't included in the installation</li>
-        <li><strong>Resource Planning:</strong> Identifying personnel, equipment, and materials needed</li>
-        <li><strong>Risk Assessment:</strong> Identifying potential hazards and mitigation strategies</li>
-        <li><strong>Schedule Development:</strong> Creating realistic timelines with clear milestones</li>
-        <li><strong>Budget Preparation:</strong> Developing accurate cost estimates and controls</li>
+        <li><strong>Scope Definition:</strong> Clearly defining what work is included and excluded</li>
+        <li><strong>Requirements Analysis:</strong> Identifying client needs and technical specifications</li>
+        <li><strong>Constraint Identification:</strong> Understanding limitations of time, budget, and resources</li>
+        <li><strong>Work Breakdown:</strong> Dividing the project into manageable tasks</li>
+        <li><strong>Sequencing:</strong> Determining logical order of installation activities</li>
       </ul>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Planning Documentation</h4>
-      <p>Comprehensive planning documentation typically includes:</p>
       <ul className="list-disc pl-6 space-y-2">
-        <li>Project charter or scope statement</li>
+        <li>Project charter</li>
+        <li>Scope statement</li>
         <li>Work breakdown structure (WBS)</li>
-        <li>Resource allocation plans</li>
-        <li>Risk register</li>
-        <li>Project schedule (Gantt chart or similar)</li>
-        <li>Budget and cost estimates</li>
+        <li>Project schedule</li>
+        <li>Resource plan</li>
       </ul>
       
-      <p className="mt-4">Proper planning significantly reduces the likelihood of cost overruns, schedule delays, and quality issues during electrical installations.</p>
+      <p className="mt-4">A comprehensive planning approach accounts for all project phases from initiation through closeout, with particular attention to installation-specific considerations like power availability, access requirements, and coordination with other trades.</p>
     </>
   )
 };
@@ -38,27 +36,27 @@ export const installationPlanningSection1_2 = {
   title: "Site Assessment",
   content: (
     <>
-      <p>Site assessment is a critical first step in installation planning, providing essential information about existing conditions and constraints that will influence the installation approach.</p>
+      <p>Thorough site assessment helps identify potential challenges, constraints, and requirements before installation begins, preventing costly surprises during execution.</p>
       
-      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Site Survey Components</h4>
+      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Site Assessment Components</h4>
       <ul className="list-disc pl-6 space-y-2">
-        <li><strong>Physical Space Evaluation:</strong> Dimensions, access routes, and spatial constraints</li>
-        <li><strong>Existing Electrical Systems:</strong> Current infrastructure, capacity, and condition</li>
-        <li><strong>Environmental Factors:</strong> Temperature, humidity, dust levels, and other environmental conditions</li>
-        <li><strong>Structural Considerations:</strong> Building structure, load-bearing capabilities, and mounting options</li>
-        <li><strong>Access and Security:</strong> Working hours, security protocols, and access restrictions</li>
+        <li><strong>Physical Space Evaluation:</strong> Assessing available space for equipment and access</li>
+        <li><strong>Existing Infrastructure:</strong> Documenting current electrical systems and services</li>
+        <li><strong>Environmental Factors:</strong> Identifying temperature, humidity, dust, and other conditions</li>
+        <li><strong>Structural Considerations:</strong> Evaluating mounting surfaces and load capacity</li>
+        <li><strong>Safety Hazards:</strong> Identifying potential risks and necessary precautions</li>
       </ul>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Assessment Tools and Techniques</h4>
       <ul className="list-disc pl-6 space-y-2">
-        <li>Laser measuring devices for accurate dimensions</li>
-        <li>Thermal imaging cameras to identify hot spots in existing systems</li>
-        <li>Power quality analyzers to assess electrical supply characteristics</li>
-        <li>Digital photography for documentation</li>
-        <li>Building information modeling (BIM) for complex installations</li>
+        <li>Site survey forms and checklists</li>
+        <li>Photographic documentation</li>
+        <li>Dimensional measurements</li>
+        <li>Electrical load measurements</li>
+        <li>Non-intrusive testing methods</li>
       </ul>
       
-      <p className="mt-4">A thorough site assessment reduces surprises during installation, enables more accurate planning, and helps identify potential issues before they impact the project.</p>
+      <p className="mt-4">Effective site assessment identifies not just the current state, but also anticipates future requirements and potential expansion needs that might affect installation planning decisions.</p>
     </>
   )
 };
@@ -68,27 +66,27 @@ export const installationPlanningSection1_3 = {
   title: "Technical Requirements Analysis",
   content: (
     <>
-      <p>Technical requirements analysis involves defining the performance specifications, standards compliance, and functional needs that the installation must satisfy.</p>
+      <p>Technical requirements analysis ensures that the electrical installation will meet all functional, performance, and compliance needs of the project.</p>
       
-      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Requirements Gathering</h4>
+      <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Types of Requirements</h4>
       <ul className="list-disc pl-6 space-y-2">
-        <li><strong>Client Specifications:</strong> Documented client needs and expectations</li>
-        <li><strong>Regulatory Requirements:</strong> Applicable codes, standards, and regulations</li>
-        <li><strong>System Performance:</strong> Expected capacity, reliability, and performance metrics</li>
-        <li><strong>Integration Needs:</strong> Interfaces with existing or future systems</li>
-        <li><strong>Future Expansion:</strong> Anticipated growth and scalability requirements</li>
+        <li><strong>Functional Requirements:</strong> What the system must do and how it operates</li>
+        <li><strong>Performance Requirements:</strong> Speed, capacity, reliability metrics</li>
+        <li><strong>Regulatory Requirements:</strong> Relevant codes and standards to be met</li>
+        <li><strong>User Requirements:</strong> Client-specific needs and preferences</li>
+        <li><strong>Environmental Requirements:</strong> Operating conditions and sustainability goals</li>
       </ul>
       
       <h4 className="text-[#FFC900] font-medium mt-6 mb-2">Analysis Methods</h4>
       <ul className="list-disc pl-6 space-y-2">
-        <li>Load calculations and capacity planning</li>
-        <li>Fault current studies</li>
-        <li>Compliance gap analysis</li>
-        <li>Compatibility assessment</li>
-        <li>Cost-benefit analysis of technical options</li>
+        <li>Client interviews and questionnaires</li>
+        <li>Document review of specifications and drawings</li>
+        <li>Standards and regulations review</li>
+        <li>Load calculations and simulations</li>
+        <li>Requirement traceability matrices</li>
       </ul>
       
-      <p className="mt-4">Thorough technical requirements analysis ensures that the installed system will meet all functional needs while complying with relevant standards and regulations.</p>
+      <p className="mt-4">Well-documented technical requirements provide clear direction for design decisions, equipment selection, and installation methods, while also establishing objective criteria for acceptance testing and verification.</p>
     </>
   )
 };
