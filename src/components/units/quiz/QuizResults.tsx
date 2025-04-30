@@ -1,15 +1,26 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { QuizDetailedResults } from './QuizDetailedResults';
+import { AssessmentQuestion } from './types';
 
 interface QuizResultsProps {
   score: number;
   total: number;
   onRetake: () => void;
+  questions?: AssessmentQuestion[];
+  userAnswers?: Record<number, string>;
 }
 
-export const QuizResults: React.FC<QuizResultsProps> = ({ score, total, onRetake }) => {
+export const QuizResults: React.FC<QuizResultsProps> = ({ 
+  score, 
+  total, 
+  onRetake, 
+  questions = [],
+  userAnswers = {}
+}) => {
   const percentage = Math.round((score / total) * 100);
+  const [showDetailedResults, setShowDetailedResults] = useState(false);
   
   return (
     <div className="text-center py-8">
@@ -36,12 +47,33 @@ export const QuizResults: React.FC<QuizResultsProps> = ({ score, total, onRetake
           : "You might want to review the unit content again and try once more."}
       </p>
       
-      <Button
-        onClick={onRetake}
-        className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-6 py-3 rounded font-medium"
-      >
-        Take Quiz Again
-      </Button>
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <Button
+          onClick={onRetake}
+          className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700] px-6 py-3 rounded font-medium"
+        >
+          Take Quiz Again
+        </Button>
+        
+        {questions.length > 0 && (
+          <Button
+            onClick={() => setShowDetailedResults(!showDetailedResults)}
+            variant="outline"
+            className="border-[#FFC900]/50 text-[#FFC900] hover:bg-[#FFC900]/10 px-6 py-3 rounded font-medium"
+          >
+            {showDetailedResults ? "Hide Detailed Results" : "Show Detailed Results"}
+          </Button>
+        )}
+      </div>
+      
+      {showDetailedResults && questions.length > 0 && (
+        <QuizDetailedResults 
+          questions={questions} 
+          userAnswers={userAnswers}
+          score={score}
+          total={total}
+        />
+      )}
     </div>
   );
 };

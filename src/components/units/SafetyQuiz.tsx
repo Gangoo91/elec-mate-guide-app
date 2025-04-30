@@ -100,6 +100,8 @@ export const SafetyQuiz: React.FC<QuizProps> = ({
               score={results.score}
               total={results.total}
               onRetake={handleRetake}
+              questions={currentQuestions}
+              userAnswers={selectedAnswers}
             />
           )}
         </>
