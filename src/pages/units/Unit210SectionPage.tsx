@@ -1,10 +1,10 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { sections210 } from "@/data/units/sections/unit210/sections";
 import { useToast } from "@/components/ui/use-toast";
+import { SafetyQuiz } from "@/components/units/SafetyQuiz";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -29,7 +29,7 @@ const Unit210SectionPage = () => {
     navigate(`/apprentices/study-materials/city-guilds/level-2/core-units/210/${sectionId}`);
   };
   
-  React.useEffect(() => {
+  useEffect(() => {
     if (sectionContent) {
       toast({
         title: "Section Loaded",
