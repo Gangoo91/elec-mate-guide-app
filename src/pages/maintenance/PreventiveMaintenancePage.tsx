@@ -3,14 +3,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import SectionCard from "@/components/units/SectionCard";
-import { Card, CardContent } from "@/components/ui/card";
+import SectionItem from "@/components/units/level3/SectionItem";
 
 const PreventiveMaintenancePage = () => {
   const navigate = useNavigate();
   
   const handleBackClick = () => {
     navigate('/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices');
+  };
+
+  const handleStudySection = (sectionId: string) => {
+    navigate(`/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/preventive/${sectionId}`);
   };
 
   // Define all the sections and subsections
@@ -119,13 +122,12 @@ const PreventiveMaintenancePage = () => {
               </p>
               <div className="grid grid-cols-1 gap-4">
                 {section.subsections.map((subsection) => (
-                  <SectionCard
+                  <SectionItem
                     key={subsection.id}
-                    sectionId={subsection.id}
-                    unitId="maintenance"
+                    id={subsection.id}
                     title={subsection.title}
                     description={subsection.description}
-                    customPath={`/apprentices/study-materials/city-guilds/moet/core-knowledge/maintenance-practices/preventive/${subsection.id}`}
+                    onStudy={handleStudySection}
                   />
                 ))}
               </div>
