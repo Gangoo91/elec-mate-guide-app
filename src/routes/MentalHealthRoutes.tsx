@@ -5,6 +5,9 @@ import StressManagement from "@/pages/StressManagement";
 import SupportGroups from "@/pages/SupportGroups";
 import ProfessionalResources from "@/pages/ProfessionalResources";
 import MentalHealthBuddy from "@/pages/MentalHealthBuddy";
+import SupportGroupsResourcePage from "@/pages/resources/SupportGroupsResourcePage";
+import FindProfessionalPage from "@/pages/resources/FindProfessionalPage";
+import SelfHelpResourcesPage from "@/pages/resources/SelfHelpResourcesPage";
 
 const mentalHealthRoutes: RouteObject[] = [
   {
@@ -26,6 +29,18 @@ const mentalHealthRoutes: RouteObject[] = [
   {
     path: "/mental-health/buddy",
     element: <MentalHealthBuddy />
+  },
+  {
+    path: "/mental-health/professional-resources/support-groups",
+    element: <SupportGroupsResourcePage />
+  },
+  {
+    path: "/mental-health/professional-resources/find-professional",
+    element: <FindProfessionalPage />
+  },
+  {
+    path: "/mental-health/professional-resources/self-help",
+    element: <SelfHelpResourcesPage />
   }
 ];
 

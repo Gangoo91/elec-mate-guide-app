@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import ResourceCard from "@/components/shared/ResourceCard";
+import { useNavigate } from "react-router-dom";
 
 const ProfessionalResources = () => {
+  const navigate = useNavigate();
+  
   return (
     <MainLayout>
       <div className="container py-8">
@@ -74,6 +77,7 @@ const ProfessionalResources = () => {
             title="Support Groups"
             description="Peer-led mental health support networks"
             icon={<Users className="h-5 w-5 text-[#FFC900]" />}
+            fullCardLink="/mental-health/professional-resources/support-groups"
           >
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="amclub" className="border-[#FFC900]/20">
@@ -133,6 +137,7 @@ const ProfessionalResources = () => {
             title="Find a Professional"
             description="Accredited mental health specialists"
             icon={<Brain className="h-5 w-5 text-[#FFC900]" />}
+            fullCardLink="/mental-health/professional-resources/find-professional"
           >
             <div className="space-y-4 text-[#FFC900]/90">
               <p>
@@ -170,6 +175,61 @@ const ProfessionalResources = () => {
                   >
                     <Handshake className="h-4 w-4" />
                     Counselling Directory
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </ResourceCard>
+          
+          {/* Self-Help Resources Card */}
+          <ResourceCard
+            title="Self-Help Resources"
+            description="Tools and techniques for managing mental health"
+            icon={<BadgeHelp className="h-5 w-5 text-[#FFC900]" />}
+            fullCardLink="/mental-health/professional-resources/self-help"
+          >
+            <div className="space-y-4 text-[#FFC900]/90">
+              <p>
+                Access a range of self-help resources designed for electrical professionals:
+              </p>
+              <ul className="space-y-3">
+                <li>
+                  <a 
+                    href="#"  
+                    className="text-[#FFC900] hover:underline flex items-center gap-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/mental-health/professional-resources/self-help");
+                    }}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Mental Health Workbooks
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#"  
+                    className="text-[#FFC900] hover:underline flex items-center gap-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/mental-health/professional-resources/self-help");
+                    }}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Guided Meditation Resources
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#"  
+                    className="text-[#FFC900] hover:underline flex items-center gap-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate("/mental-health/professional-resources/self-help");
+                    }}
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Industry-Specific Mental Health Guides
                   </a>
                 </li>
               </ul>

@@ -10,21 +10,26 @@ export const handleMentalHealthRoutes = (
     return false;
   }
   
-  // For subpages, let them navigate directly
+  // Define all valid mental health routes
+  const validMentalHealthRoutes = [
+    "/mental-health/stress-management", 
+    "/mental-health/support-groups", 
+    "/mental-health/professional-resources", 
+    "/mental-health/buddy",
+    "/mental-health/professional-resources/support-groups",
+    "/mental-health/professional-resources/find-professional",
+    "/mental-health/professional-resources/self-help"
+  ];
+  
+  // For valid subpages, let them navigate directly
   if (location.pathname.startsWith("/mental-health/") && 
-      ["/mental-health/stress-management", 
-       "/mental-health/support-groups", 
-       "/mental-health/professional-resources", 
-       "/mental-health/buddy"].includes(location.pathname)) {
+      validMentalHealthRoutes.includes(location.pathname)) {
     return false;
   }
 
   // Default back to main mental health page for unknown routes
   if (location.pathname.startsWith("/mental-health/") && 
-      !["/mental-health/stress-management", 
-       "/mental-health/support-groups", 
-       "/mental-health/professional-resources", 
-       "/mental-health/buddy"].includes(location.pathname)) {
+      !validMentalHealthRoutes.includes(location.pathname)) {
     navigate("/mental-health");
     return true;
   }
