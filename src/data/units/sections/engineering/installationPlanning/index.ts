@@ -396,3 +396,4 @@ export const installationPlanningQuestions = [
     explanation: "Technical requirements analysis focuses on performance specifications, standards compliance, and functional needs of the installation. Employee scheduling is part of resource planning, not technical requirements analysis."
   }
 ];
+
