@@ -12,9 +12,16 @@ export const handleStudyRoutes = (
   }
 
   // Handle technical tools routes
-  if (location.pathname === '/electricians/technical-tools/job-price-estimator') {
-    // Don't redirect, allow accessing the job price estimator directly
+  if (location.pathname === '/electricians/technical-tools/job-price-estimator' || 
+      location.pathname === '/electricians/development/career-pathways') {
+    // Don't redirect, allow accessing the job price estimator and career pathways directly
     return false;
+  }
+  
+  // Career pathways detail pages
+  if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
+    navigate('/electricians/development/career-pathways');
+    return true;
   }
   
   // Level 2 unit section pages
@@ -117,4 +124,3 @@ export const handleStudyRoutes = (
 
   return false;
 };
-

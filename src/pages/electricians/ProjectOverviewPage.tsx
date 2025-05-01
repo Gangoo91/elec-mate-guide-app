@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
-import { Calendar, FolderOpen, FileText, Calculator } from "lucide-react";
+import { Calendar, FolderOpen, FileText, Calculator, GraduationCap } from "lucide-react";
 
 const ProjectOverviewPage = () => {
   const resources = [
@@ -30,6 +30,12 @@ const ProjectOverviewPage = () => {
       description: "Generate accurate price estimates for electrical jobs based on detailed specifications.",
       icon: <Calculator className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/technical-tools/job-price-estimator"
+    },
+    {
+      title: "Career Pathways",
+      description: "Explore specialised career paths and advancement opportunities in the electrical industry.",
+      icon: <GraduationCap className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/development/career-pathways"
     }
   ];
 
