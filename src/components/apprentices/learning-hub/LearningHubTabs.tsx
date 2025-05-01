@@ -6,6 +6,7 @@ import StudyGroupsTab from './StudyGroupsTab';
 import ResourcesTab from './ResourcesTab';
 import FeaturedUnits from './FeaturedUnits';
 import QuickAccessTools from './QuickAccessTools';
+import ProgressSummaryCard from './ProgressSummaryCard';
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LearningHubTabsProps {
@@ -43,6 +44,9 @@ const LearningHubTabs = ({ featuredUnits, onCardClick }: LearningHubTabsProps) =
       {/* Main Overview Tab */}
       <TabsContent value="main">
         <div className="space-y-4 md:space-y-6">
+          {/* Progress Summary Card */}
+          <ProgressSummaryCard units={featuredUnits} />
+
           {/* Continue Learning Section */}
           <FeaturedUnits units={featuredUnits} />
 
