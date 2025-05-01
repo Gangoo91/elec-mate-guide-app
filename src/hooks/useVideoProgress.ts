@@ -59,7 +59,8 @@ export function useVideoProgress(videoId: string) {
           watched: data.watched,
           watchTime: data.watch_time,
           lastPosition: data.last_position,
-          trainingRecorded: data.training_recorded || false
+          // If training_recorded field doesn't exist, default to false
+          trainingRecorded: data.training_recorded ?? false
         });
         
         lastPositionRef.current = data.last_position;
