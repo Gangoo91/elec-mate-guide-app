@@ -21,10 +21,25 @@ interface UnitData {
 
 interface FeaturedUnitsProps {
   units: UnitData[];
+  onDeleteCourse?: (unitNumber: string) => void;
 }
 
-const FeaturedUnits = ({ units }: FeaturedUnitsProps) => {
+const FeaturedUnits = ({ units, onDeleteCourse }: FeaturedUnitsProps) => {
   const isMobile = useIsMobile();
+  
+  if (units.length === 0) {
+    return (
+      <section>
+        <div className="flex items-center justify-between mb-3 md:mb-4">
+          <h2 className="text-lg md:text-xl font-semibold text-[#FFC900]">Continue Learning</h2>
+        </div>
+        
+        <div className="bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6 text-center">
+          <p className="text-[#FFC900]/80">No active courses. Explore qualifications to start learning.</p>
+        </div>
+      </section>
+    );
+  }
   
   return (
     <section>
@@ -45,6 +60,7 @@ const FeaturedUnits = ({ units }: FeaturedUnitsProps) => {
             path={unit.path}
             progress={unit.progress}
             difficulty={unit.difficulty}
+            onDelete={onDeleteCourse ? () => onDeleteCourse(unit.unitNumber) : undefined}
           />
         ))}
       </div>

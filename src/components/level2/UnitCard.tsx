@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, CheckCircle, Star } from 'lucide-react';
+import { BookOpen, Clock, CheckCircle, Star, X } from 'lucide-react';
 import ProgressTracker from './ProgressTracker';
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface UnitCardProps {
   unitNumber: string;
@@ -19,6 +20,7 @@ interface UnitCardProps {
   };
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
   isRequired?: boolean;
+  onDelete?: () => void;
 }
 
 const UnitCard = ({ 
@@ -28,7 +30,8 @@ const UnitCard = ({
   path, 
   progress, 
   difficulty = 'intermediate',
-  isRequired = true
+  isRequired = true,
+  onDelete
 }: UnitCardProps) => {
   const navigate = useNavigate();
   
@@ -69,6 +72,20 @@ const UnitCard = ({
             <Badge className={`${getDifficultyColor()} border-0 text-xs`}>
               {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
             </Badge>
+            {onDelete && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-6 w-6 p-0 text-primary/60 hover:text-primary hover:bg-red-500/10"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete();
+                }}
+              >
+                <X className="h-4 w-4" />
+                <span className="sr-only">Remove course</span>
+              </Button>
+            )}
           </div>
         </div>
         

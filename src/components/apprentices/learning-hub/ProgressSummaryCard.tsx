@@ -3,8 +3,9 @@ import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Award, Trophy, Clock } from 'lucide-react';
+import { BookOpen, Award, Trophy, Clock, X } from 'lucide-react';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 interface UnitData {
   unitNumber: string;
@@ -23,9 +24,10 @@ interface UnitData {
 
 interface ProgressSummaryCardProps {
   units: UnitData[];
+  onDeleteCourse?: (unitNumber: string) => void;
 }
 
-const ProgressSummaryCard = ({ units }: ProgressSummaryCardProps) => {
+const ProgressSummaryCard = ({ units, onDeleteCourse }: ProgressSummaryCardProps) => {
   const isMobile = useIsMobile();
   
   // Calculate overall progress statistics
@@ -43,6 +45,14 @@ const ProgressSummaryCard = ({ units }: ProgressSummaryCardProps) => {
   const beginnerUnits = units.filter(unit => unit.difficulty === 'beginner').length;
   const intermediateUnits = units.filter(unit => unit.difficulty === 'intermediate').length;
   const advancedUnits = units.filter(unit => unit.difficulty === 'advanced').length;
+
+  // Function to handle course deletion with confirmation
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, unitNumber: string) => {
+    e.stopPropagation();
+    if (onDeleteCourse) {
+      onDeleteCourse(unitNumber);
+    }
+  };
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 mb-4">
@@ -69,6 +79,47 @@ const ProgressSummaryCard = ({ units }: ProgressSummaryCardProps) => {
               indicatorClassName={completionPercentage > 75 ? "bg-green-500" : completionPercentage > 25 ? "bg-amber-500" : "bg-red-500"}
             />
           </div>
+          
+          {units.length > 0 && (
+            <div className="mt-4 space-y-2">
+              <h3 className="text-[#FFC900]/90 text-sm font-medium">Active Courses:</h3>
+              <div className="space-y-2">
+                {units.map((unit, index) => {
+                  const unitProgress = unit.progress ? Math.round((unit.progress.completed / unit.progress.total) * 100) : 0;
+                  
+                  return (
+                    <div key={index} className="flex items-center justify-between bg-[#22251e]/70 p-2 rounded-lg border border-[#FFC900]/10">
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs text-[#FFC900]/80">{unit.unitNumber}</span>
+                          {onDeleteCourse && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="h-6 w-6 p-0 text-[#FFC900]/60 hover:text-[#FFC900] hover:bg-red-500/10"
+                              onClick={(e) => handleDelete(e, unit.unitNumber)}
+                            >
+                              <X className="h-4 w-4" />
+                              <span className="sr-only">Remove course</span>
+                            </Button>
+                          )}
+                        </div>
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-xs text-[#FFC900]">{unit.progress?.completed || 0}/{unit.progress?.total || 0}</span>
+                          <span className="text-xs text-[#FFC900]">{unitProgress}%</span>
+                        </div>
+                        <Progress 
+                          value={unitProgress} 
+                          className="h-1.5" 
+                          indicatorClassName={unitProgress > 75 ? "bg-green-500" : unitProgress > 25 ? "bg-amber-500" : "bg-red-500"}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
           
           <div className={`grid ${isMobile ? 'grid-cols-2' : 'grid-cols-4'} gap-2 mt-3`}>
             <div className="bg-[#22251e]/70 p-3 rounded-lg border border-[#FFC900]/10 flex flex-col items-center">

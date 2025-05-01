@@ -3,22 +3,14 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import SearchBar from './learning-hub/SearchBar';
 import LearningHubTabs from './learning-hub/LearningHubTabs';
+import { useToast } from '@/hooks/use-toast';
 
 const LearningHub = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { toast } = useToast();
   
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-  
-  const handleCardClick = (path: string) => {
-    console.log("Navigating to:", path);
-    navigate(path);
-  };
-
-  // Featured units with progress tracking
-  const featuredUnits = [
+  const [featuredUnits, setFeaturedUnits] = useState([
     {
       unitNumber: "Level 2 - Unit 201",
       title: "Health and Safety in Electrical Installation",
@@ -46,7 +38,28 @@ const LearningHub = () => {
         estimatedTime: 300
       }
     }
-  ];
+  ]);
+  
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+  
+  const handleCardClick = (path: string) => {
+    console.log("Navigating to:", path);
+    navigate(path);
+  };
+
+  const handleDeleteCourse = (unitNumber: string) => {
+    // Filter out the course with the matching unitNumber
+    const updatedUnits = featuredUnits.filter(unit => unit.unitNumber !== unitNumber);
+    setFeaturedUnits(updatedUnits);
+    
+    // Show confirmation toast
+    toast({
+      title: "Course Removed",
+      description: `${unitNumber} has been removed from your dashboard`,
+    });
+  };
 
   return (
     <div className="space-y-4 md:space-y-6">
@@ -54,6 +67,7 @@ const LearningHub = () => {
       <LearningHubTabs 
         featuredUnits={featuredUnits}
         onCardClick={handleCardClick}
+        onDeleteCourse={handleDeleteCourse}
       />
     </div>
   );

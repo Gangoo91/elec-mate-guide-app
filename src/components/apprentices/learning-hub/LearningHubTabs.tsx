@@ -25,9 +25,10 @@ interface LearningHubTabsProps {
     };
   }>;
   onCardClick: (path: string) => void;
+  onDeleteCourse: (unitNumber: string) => void;
 }
 
-const LearningHubTabs = ({ featuredUnits, onCardClick }: LearningHubTabsProps) => {
+const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: LearningHubTabsProps) => {
   const isMobile = useIsMobile();
 
   return (
@@ -45,10 +46,13 @@ const LearningHubTabs = ({ featuredUnits, onCardClick }: LearningHubTabsProps) =
       <TabsContent value="main">
         <div className="space-y-4 md:space-y-6">
           {/* Progress Summary Card */}
-          <ProgressSummaryCard units={featuredUnits} />
+          <ProgressSummaryCard units={featuredUnits} onDeleteCourse={onDeleteCourse} />
 
           {/* Continue Learning Section */}
-          <FeaturedUnits units={featuredUnits} />
+          <FeaturedUnits 
+            units={featuredUnits} 
+            onDeleteCourse={onDeleteCourse} 
+          />
 
           {/* Quick Access Tools */}
           <QuickAccessTools onCardClick={onCardClick} />
