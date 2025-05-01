@@ -6,8 +6,8 @@ import GlassCard from "@/components/shared/GlassCard";
 import { useDataCaching } from "@/hooks/useDataCaching";
 import { MentorshipSkeleton } from "@/components/mentorship/MentorshipSkeleton";
 import { MentorshipError } from "@/components/mentorship/MentorshipError";
-import MentorList from "@/components/mentorship/MentorList";
-import MentorFilters from "@/components/mentorship/MentorFilters";
+import { MentorList } from "@/components/mentorship/MentorList";
+import { MentorFilters } from "@/components/mentorship/MentorFilters";
 import { demoMentors } from "@/components/mentorship/demoData";
 import { Mentor } from "@/types/mentor";
 

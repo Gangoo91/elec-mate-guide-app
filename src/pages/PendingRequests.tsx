@@ -7,7 +7,7 @@ import { useDataCaching } from "@/hooks/useDataCaching";
 import { MentorshipSkeleton } from "@/components/mentorship/MentorshipSkeleton";
 import { MentorshipError } from "@/components/mentorship/MentorshipError";
 import { demoMentorshipRequests } from "@/components/mentorship/demoData";
-import MentorshipRequestList from "@/components/mentorship/MentorshipRequestList";
+import { MentorshipRequestList } from "@/components/mentorship/MentorshipRequestList";
 
 const PendingRequests = () => {
   const { isLoading, error } = useDataCaching("mentorship-requests", "mentorships");
