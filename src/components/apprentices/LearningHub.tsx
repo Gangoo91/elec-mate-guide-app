@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { 
@@ -10,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { UnitCard } from "@/components/level2/UnitCard";
+import UnitCard from "@/components/level2/UnitCard";
 
 const LearningHub = () => {
   const [searchQuery, setSearchQuery] = useState('');
