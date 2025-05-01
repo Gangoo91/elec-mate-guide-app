@@ -10,6 +10,9 @@ import AIToolsPage from "../../pages/AIToolsPage";
 import VideoDemonstrationsPage from "../../pages/VideoDemonstrationsPage";
 import ARLearningPage from "../../pages/ARLearningPage";
 import PracticeExamsPage from "../../pages/PracticeExamsPage";
+import Mentorship from "../../pages/Mentorship";
+import StudyGroupsPage from "../../pages/StudyGroupsPage";
+import ProgressTrackingPage from "../../pages/apprentices/ProgressTrackingPage";
 
 const apprenticeMainRoutes: RouteObject[] = [
   {
@@ -51,6 +54,18 @@ const apprenticeMainRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/city-guilds",
     element: <CityGuildsPage />
+  },
+  {
+    path: "/apprentices/mentorship",
+    element: <Mentorship />
+  },
+  {
+    path: "/apprentices/study-groups",
+    element: <StudyGroupsPage />
+  },
+  {
+    path: "/apprentices/progress",
+    element: <ProgressTrackingPage />
   },
 ];
 

@@ -1,9 +1,5 @@
 
-import React, { useState, useEffect, ReactNode } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import React from "react";
 import { useAuth } from "@/hooks/useAuth";
 
 type SubscriptionGuardProps = {
@@ -11,17 +7,7 @@ type SubscriptionGuardProps = {
   requiredTier: "Apprentice" | "Electrician";
 };
 
-type SubscriptionStatus = {
-  subscribed: boolean;
-  subscription_tier: string | null;
-};
-
-const tierAccess = {
-  Apprentice: ["Apprentice"],
-  Electrician: ["Electrician", "Apprentice"],
-};
-
-export const SubscriptionGuard = ({ children, requiredTier }: SubscriptionGuardProps) => {
+export const SubscriptionGuard = ({ children }: SubscriptionGuardProps) => {
   // Always bypass the subscription check
   // This effectively disables the guard completely, allowing access to all routes
   return <>{children}</>;
