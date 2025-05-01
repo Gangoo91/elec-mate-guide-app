@@ -1,8 +1,8 @@
 
-import React, { useState } from "react";
+import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BecomeMentorToggle from "@/components/mentorship/BecomeMentorToggle";
 import { useDataCaching } from "@/hooks/useDataCaching";
 import { useToast } from "@/hooks/use-toast";
@@ -10,85 +10,20 @@ import { Mentor } from "@/types/mentor";
 import { MentorshipHero } from "@/components/mentorship/MentorshipHero";
 import { MentorshipSkeleton } from "@/components/mentorship/MentorshipSkeleton";
 import { MentorshipError } from "@/components/mentorship/MentorshipError";
-import { MentorList } from "@/components/mentorship/MentorList";
-import { MentorshipRequestList } from "@/components/mentorship/MentorshipRequestList";
-import { MentorshipGuide } from "@/components/mentorship/MentorshipGuide";
-import { MentorshipRequestDialog } from "@/components/mentorship/MentorshipRequestDialog";
-import { demoMentors, demoMentorshipRequests } from "@/components/mentorship/demoData";
+import ResourceCard from "@/components/shared/ResourceCard";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { demoMentors, demoMentorshipRequests } from "@/components/mentorship/demoData";
+import { GraduationCap, MessageCircle, Users, CheckCircle, Calendar } from "lucide-react";
 
 const Mentorship = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isElectriciansSection = location.pathname.startsWith('/electricians');
   const isApprenticeSection = location.pathname.startsWith('/apprentices');
   const { data: mentors, isLoading, error } = useDataCaching<Mentor>("mentors", "mentorships");
   const { toast } = useToast();
-  const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
-  const [requestMessage, setRequestMessage] = useState("");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [mentorshipRequests, setMentorshipRequests] = useState(demoMentorshipRequests);
-  const [activeTab, setActiveTab] = useState<string>("mentors");
-
-  const handleOpenRequestDialog = (mentor: Mentor) => {
-    setSelectedMentor(mentor);
-    setDialogOpen(true);
-  };
-
-  const handleMentorshipRequest = () => {
-    if (!selectedMentor) return;
-
-    toast({
-      title: "Request Sent",
-      description: `Your mentorship request has been submitted to ${selectedMentor.name}. You'll be notified when they respond.`,
-      variant: "default",
-    });
-
-    setDialogOpen(false);
-    setRequestMessage("");
-    setSelectedMentor(null);
-  };
-
-  const handleAcceptRequest = (request: any) => {
-    setMentorshipRequests(prev => 
-      prev.map(r => r.id === request.id ? {...r, status: "accepted"} : r)
-    );
-    
-    toast({
-      title: "Request Accepted",
-      description: `You have accepted the mentorship request from ${request.apprenticeName}. You can now chat with them.`,
-    });
-  };
-
-  const handleRejectRequest = (request: any) => {
-    setMentorshipRequests(prev => 
-      prev.map(r => r.id === request.id ? {...r, status: "rejected"} : r)
-    );
-    
-    toast({
-      title: "Request Declined",
-      description: `You have declined the mentorship request from ${request.apprenticeName}.`,
-    });
-  };
-
-  const handleScheduleSession = (request: any) => {
-    toast({
-      title: "Schedule a Session",
-      description: `Opening calendar to schedule a session with ${request.apprenticeName}.`,
-    });
-  };
+  const [mentorshipRequests] = React.useState(demoMentorshipRequests);
   
-  const handleStopMentoring = (request: any) => {
-    setMentorshipRequests(prev => 
-      prev.map(r => r.id === request.id ? {...r, status: "rejected"} : r)
-    );
-    
-    toast({
-      title: "Mentorship Ended",
-      description: `You have ended mentorship with ${request.apprenticeName}.`,
-    });
-  };
-
   if (isLoading) return <MentorshipSkeleton />;
   if (error) return <MentorshipError />;
 
@@ -99,6 +34,56 @@ const Mentorship = () => {
   const pageDescription = isElectriciansSection 
     ? "Share your expertise and guide the next generation of electrical professionals"
     : "Connect with experienced professionals in the electrical industry for guidance, support, and career advice";
+
+  const electricianResources = [
+    {
+      title: "Pending Requests",
+      description: "Review and respond to mentorship requests from apprentices",
+      icon: <MessageCircle className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/mentorship/pending-requests"
+    },
+    {
+      title: "Active Mentorships",
+      description: "Manage your ongoing mentorship relationships",
+      icon: <Users className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/mentorship/active"
+    },
+    {
+      title: "Mentoring Guide",
+      description: "Best practices and resources for effective mentoring",
+      icon: <GraduationCap className="h-6 w-6 text-[#FFC900]" />,
+      path: "/electricians/mentorship/guide"
+    }
+  ];
+
+  const apprenticeResources = [
+    {
+      title: "Find Mentors",
+      description: "Browse available mentors and connect with professionals in your field",
+      icon: <Users className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/mentorship/find-mentors"
+    },
+    {
+      title: "My Mentors",
+      description: "Manage your mentor relationships and scheduled sessions",
+      icon: <CheckCircle className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/mentorship/my-mentors"
+    },
+    {
+      title: "Mentorship Guide",
+      description: "Learn how to make the most of your mentorship experience",
+      icon: <GraduationCap className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/mentorship/guide"
+    },
+    {
+      title: "Schedule Sessions",
+      description: "Book time with your mentors for guidance and advice",
+      icon: <Calendar className="h-6 w-6 text-[#FFC900]" />,
+      path: "/apprentices/mentorship/schedule"
+    }
+  ];
+
+  const resources = isElectriciansSection ? electricianResources : apprenticeResources;
 
   return (
     <MainLayout>
@@ -124,84 +109,17 @@ const Mentorship = () => {
           </CardContent>
         </Card>
         
-        {isElectriciansSection ? (
-          <Tabs defaultValue="pending" className="mb-8">
-            <TabsList className="bg-[#22251e] border border-[#FFC900]/20">
-              <TabsTrigger value="pending" className="data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]">
-                Pending Requests 
-                {pendingRequestsCount > 0 && (
-                  <span className="ml-2 bg-[#FFC900] text-[#22251e] text-xs rounded-full px-2 py-1">
-                    {pendingRequestsCount}
-                  </span>
-                )}
-              </TabsTrigger>
-              <TabsTrigger value="active" className="data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]">
-                Active Mentorships
-              </TabsTrigger>
-              <TabsTrigger value="guide" className="data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]">
-                Mentoring Guide
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="pending" className="mt-4">
-              <MentorshipRequestList 
-                requests={mentorshipRequests.filter(r => r.status === "pending")}
-                onAcceptRequest={handleAcceptRequest}
-                onRejectRequest={handleRejectRequest}
-                onScheduleSession={handleScheduleSession}
-                onStopMentoring={handleStopMentoring}
-              />
-            </TabsContent>
-            
-            <TabsContent value="active" className="mt-4">
-              <MentorshipRequestList 
-                requests={mentorshipRequests.filter(r => r.status === "accepted")}
-                onAcceptRequest={handleAcceptRequest}
-                onRejectRequest={handleRejectRequest}
-                onScheduleSession={handleScheduleSession}
-                onStopMentoring={handleStopMentoring}
-              />
-            </TabsContent>
-            
-            <TabsContent value="guide" className="mt-4">
-              <MentorshipGuide isElectriciansSection={true} />
-            </TabsContent>
-          </Tabs>
-        ) : (
-          <>
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-              <TabsList className="bg-[#22251e] border border-[#FFC900]/20">
-                <TabsTrigger value="mentors" className="data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]">
-                  Find Mentors
-                </TabsTrigger>
-                <TabsTrigger value="guide" className="data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900]">
-                  Mentorship Guide
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="mentors" className="mt-4">
-                <MentorList 
-                  mentors={displayMentors}
-                  isLoading={isLoading}
-                  onRequestMentorship={handleOpenRequestDialog}
-                />
-              </TabsContent>
-              
-              <TabsContent value="guide" className="mt-4">
-                <MentorshipGuide isElectriciansSection={false} />
-              </TabsContent>
-            </Tabs>
-            
-            <MentorshipRequestDialog
-              mentor={selectedMentor}
-              open={dialogOpen}
-              onOpenChange={setDialogOpen}
-              requestMessage={requestMessage}
-              onMessageChange={setRequestMessage}
-              onSubmit={handleMentorshipRequest}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {resources.map((resource, index) => (
+            <ResourceCard
+              key={index}
+              title={resource.title}
+              description={resource.description}
+              icon={resource.icon}
+              fullCardLink={resource.path}
             />
-          </>
-        )}
+          ))}
+        </div>
       </div>
     </MainLayout>
   );

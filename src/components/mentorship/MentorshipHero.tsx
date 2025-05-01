@@ -43,17 +43,15 @@ export const MentorshipHero = ({
         </div>
       </div>
       
-      <div className="flex items-center gap-2">
-        {isElectriciansSection ? (
-          <Badge variant="outline" className="border-[#FFC900]/20 bg-[#FFC900]/10 text-[#FFC900] text-sm py-2 px-3">
-            {requestsCount} {requestsCount === 1 ? 'Request' : 'Requests'} pending
-          </Badge>
-        ) : (
-          <Badge variant="outline" className="border-[#FFC900]/20 bg-[#FFC900]/10 text-[#FFC900] text-sm py-2 px-3">
-            {mentorsCount} {mentorsCount === 1 ? 'Mentor' : 'Mentors'} available
-          </Badge>
-        )}
-      </div>
+      {(isElectriciansSection && requestsCount > 0) ? (
+        <Badge variant="outline" className="border-[#FFC900]/20 bg-[#FFC900]/10 text-[#FFC900] text-sm py-2 px-3">
+          {requestsCount} {requestsCount === 1 ? 'Request' : 'Requests'} pending
+        </Badge>
+      ) : (!isElectriciansSection && mentorsCount > 0) ? (
+        <Badge variant="outline" className="border-[#FFC900]/20 bg-[#FFC900]/10 text-[#FFC900] text-sm py-2 px-3">
+          {mentorsCount} {mentorsCount === 1 ? 'Mentor' : 'Mentors'} available
+        </Badge>
+      ) : null}
     </div>
   );
 };
