@@ -1,6 +1,7 @@
 
 import React from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { ReactNode } from "react";
 
 type SubscriptionGuardProps = {
   children: ReactNode;
