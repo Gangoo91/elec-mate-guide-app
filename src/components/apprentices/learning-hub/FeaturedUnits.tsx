@@ -1,6 +1,8 @@
 
 import React from 'react';
 import UnitCard from "@/components/level2/UnitCard";
+import { Badge } from "@/components/ui/badge";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface UnitData {
   unitNumber: string;
@@ -22,22 +24,24 @@ interface FeaturedUnitsProps {
 }
 
 const FeaturedUnits = ({ units }: FeaturedUnitsProps) => {
+  const isMobile = useIsMobile();
+  
   return (
     <section>
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-[#FFC900]">Continue Learning</h2>
-        <Badge variant="outline" className="bg-[#FFC900]/10 text-[#FFC900]">
+      <div className="flex items-center justify-between mb-3 md:mb-4">
+        <h2 className="text-lg md:text-xl font-semibold text-[#FFC900]">Continue Learning</h2>
+        <Badge variant="outline" className="bg-[#FFC900]/10 text-[#FFC900] text-xs md:text-sm">
           {units.length} Active Courses
         </Badge>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-3 md:gap-4">
         {units.map((unit, index) => (
           <UnitCard
             key={index}
             unitNumber={unit.unitNumber}
             title={unit.title}
-            description={unit.description}
+            description={isMobile ? (unit.description.length > 80 ? unit.description.substring(0, 80) + '...' : unit.description) : unit.description}
             path={unit.path}
             progress={unit.progress}
             difficulty={unit.difficulty}
@@ -49,6 +53,3 @@ const FeaturedUnits = ({ units }: FeaturedUnitsProps) => {
 };
 
 export default FeaturedUnits;
-
-// Import for Badge
-import { Badge } from "@/components/ui/badge";

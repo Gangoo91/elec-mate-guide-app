@@ -49,7 +49,7 @@ const LearningHub = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <SearchBar value={searchQuery} onChange={handleSearch} />
       <LearningHubTabs 
         featuredUnits={featuredUnits}

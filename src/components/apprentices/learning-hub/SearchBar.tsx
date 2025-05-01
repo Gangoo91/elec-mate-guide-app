@@ -9,7 +9,7 @@ interface SearchBarProps {
 
 const SearchBar = ({ value, onChange }: SearchBarProps) => {
   return (
-    <div className="relative mb-8">
+    <div className="relative mb-4 md:mb-8">
       <Input
         type="search"
         placeholder="Search learning resources, qualifications, tools..."

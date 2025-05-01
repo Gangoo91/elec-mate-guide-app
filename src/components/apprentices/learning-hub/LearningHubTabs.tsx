@@ -6,6 +6,7 @@ import StudyGroupsTab from './StudyGroupsTab';
 import ResourcesTab from './ResourcesTab';
 import FeaturedUnits from './FeaturedUnits';
 import QuickAccessTools from './QuickAccessTools';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LearningHubTabsProps {
   featuredUnits: Array<{
@@ -26,18 +27,22 @@ interface LearningHubTabsProps {
 }
 
 const LearningHubTabs = ({ featuredUnits, onCardClick }: LearningHubTabsProps) => {
+  const isMobile = useIsMobile();
+
   return (
     <Tabs defaultValue="main" className="w-full">
-      <TabsList className="grid grid-cols-4 mb-6">
-        <TabsTrigger value="main">Overview</TabsTrigger>
-        <TabsTrigger value="qualifications">Qualifications</TabsTrigger>
-        <TabsTrigger value="study-groups">Study Groups</TabsTrigger>
-        <TabsTrigger value="resources">Resources</TabsTrigger>
+      <TabsList className={`grid ${isMobile ? 'grid-cols-2 gap-1 mb-4' : 'grid-cols-4 mb-6'}`}>
+        <TabsTrigger value="main">{isMobile ? 'Overview' : 'Overview'}</TabsTrigger>
+        <TabsTrigger value="qualifications">{isMobile ? 'Quals' : 'Qualifications'}</TabsTrigger>
+        {!isMobile && <TabsTrigger value="study-groups">Study Groups</TabsTrigger>}
+        {!isMobile && <TabsTrigger value="resources">Resources</TabsTrigger>}
+        {isMobile && <TabsTrigger value="study-groups">Groups</TabsTrigger>}
+        {isMobile && <TabsTrigger value="resources">Resources</TabsTrigger>}
       </TabsList>
       
       {/* Main Overview Tab */}
       <TabsContent value="main">
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           {/* Continue Learning Section */}
           <FeaturedUnits units={featuredUnits} />
 
