@@ -5,29 +5,27 @@ import BackButton from "@/components/navigation/BackButton";
 interface PageHeaderProps {
   title: string;
   description?: string;
-  hideBackButton?: boolean;
   customBackAction?: () => void;
+  actions?: React.ReactNode;
 }
 
-const PageHeader = ({ 
-  title, 
-  description, 
-  hideBackButton = false,
-  customBackAction 
-}: PageHeaderProps) => {
+const PageHeader = ({ title, description, customBackAction, actions }: PageHeaderProps) => {
   return (
-    <div className="text-center mb-6 md:mb-8 animate-fade-in px-4">
-      {!hideBackButton && (
-        <div className="mb-4 text-left">
-          <BackButton customAction={customBackAction} />
+    <div className="mb-8">
+      <BackButton customAction={customBackAction} />
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-semibold text-[#FFC900] mb-2">
+            {title}
+          </h1>
+          {description && (
+            <p className="text-[#FFC900]/70 text-sm md:text-base max-w-2xl">
+              {description}
+            </p>
+          )}
         </div>
-      )}
-      <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-[#FFC900] mb-2 md:mb-3">{title}</h1>
-      {description && (
-        <p className="text-sm md:text-base text-[#FFC900]/80 max-w-2xl mx-auto">
-          {description}
-        </p>
-      )}
+        {actions && <div className="mt-4 md:mt-0">{actions}</div>}
+      </div>
     </div>
   );
 };
