@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import SectionContent from "@/components/units/SectionContent";
+import UnitCard from "@/components/level2/UnitCard";
+import GlassCard from "@/components/shared/GlassCard";
 
 const EALLevel2Page = () => {
   const navigate = useNavigate();
@@ -22,37 +23,46 @@ const EALLevel2Page = () => {
           customBackAction={handleBackClick}
         />
         
-        <div className="grid grid-cols-1 gap-6 mt-8">
-          <Card className="bg-[#22251e] border-[#FFC900]/20">
-            <CardContent className="pt-6">
-              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Available Modules</h2>
-              
-              <SectionContent 
-                title="Health and Safety in Building Services Engineering"
-                path="/apprentices/study-materials/eal/level-2/health-safety"
-                description="Essential safety practices and regulations for electrical installation work"
-              />
-              
-              <SectionContent 
-                title="Principles of Electrical Science"
-                path="/apprentices/study-materials/eal/level-2/electrical-science"
-                description="Fundamental electrical theory including circuit principles and calculations"
-              />
-              
-              <SectionContent 
-                title="Electrical Installation Technology"
-                path="/apprentices/study-materials/eal/level-2/installation-technology"
-                description="Practical installation methods and techniques for electrical systems"
-              />
-              
-              <SectionContent 
-                title="Installation of Wiring Systems"
-                path="/apprentices/study-materials/eal/level-2/wiring-systems"
-                description="Cable installation, containment systems, and wiring practices"
-              />
-            </CardContent>
-          </Card>
-        </div>
+        <GlassCard className="mt-8">
+          <h2 className="text-2xl font-semibold text-[#FFC900] mb-6 text-center">EAL Level 2 Units</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <UnitCard
+              unitNumber="ELEC2/01"
+              title="Health and Safety in Electrical Installation"
+              description="Essential safety practices, regulations and procedures for electrical work"
+              path="/apprentices/study-materials/eal/level-2/health-safety"
+            />
+            
+            <UnitCard
+              unitNumber="ELEC2/02"
+              title="Principles of Electrical Science"
+              description="Fundamental electrical theory including circuit principles and calculations"
+              path="/apprentices/study-materials/eal/level-2/electrical-science"
+            />
+            
+            <UnitCard
+              unitNumber="ELEC2/03"
+              title="Electrical Installation Technology"
+              description="Installation methods and techniques for electrical systems and equipment"
+              path="/apprentices/study-materials/eal/level-2/installation-technology"
+            />
+            
+            <UnitCard
+              unitNumber="ELEC2/04"
+              title="Installation of Wiring Systems"
+              description="Cable installation techniques, containment systems, and wiring practices"
+              path="/apprentices/study-materials/eal/level-2/wiring-systems"
+            />
+            
+            <UnitCard
+              unitNumber="ELEC2/05"
+              title="Understanding Electrical Systems and Equipment"
+              description="Components, function and installation of common electrical systems"
+              path="/apprentices/study-materials/eal/level-2/electrical-systems"
+            />
+          </div>
+        </GlassCard>
       </div>
     </MainLayout>
   );
