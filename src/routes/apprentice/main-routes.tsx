@@ -14,6 +14,11 @@ import Mentorship from "../../pages/Mentorship";
 import StudyGroupsPage from "../../pages/StudyGroupsPage";
 import ProgressTrackingPage from "../../pages/apprentices/ProgressTrackingPage";
 import Level2ExamsPage from "../../pages/Level2ExamsPage";
+import Level3ExamsPage from "../../pages/Level3ExamsPage";
+import MOETExamsPage from "../../pages/MOETExamsPage";
+import InspectionTestingExamsPage from "../../pages/InspectionTestingExamsPage";
+import HNCExamsPage from "../../pages/HNCExamsPage";
+import HNDExamsPage from "../../pages/HNDExamsPage";
 import FindMentors from "../../pages/FindMentors";
 import MyMentors from "../../pages/MyMentors";
 import MentorshipGuide from "../../pages/MentorshipGuide";
@@ -91,6 +96,26 @@ const apprenticeMainRoutes: RouteObject[] = [
   {
     path: "/apprentices/mock-exams/level2",
     element: <Level2ExamsPage />
+  },
+  {
+    path: "/apprentices/mock-exams/level3",
+    element: <Level3ExamsPage />
+  },
+  {
+    path: "/apprentices/mock-exams/moet",
+    element: <MOETExamsPage />
+  },
+  {
+    path: "/apprentices/mock-exams/inspection-testing",
+    element: <InspectionTestingExamsPage />
+  },
+  {
+    path: "/apprentices/mock-exams/hnc",
+    element: <HNCExamsPage />
+  },
+  {
+    path: "/apprentices/mock-exams/hnd",
+    element: <HNDExamsPage />
   }
 ];
 

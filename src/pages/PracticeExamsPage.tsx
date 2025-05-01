@@ -14,17 +14,7 @@ const PracticeExamsPage = () => {
   const { toast } = useToast();
   
   const handleNavigate = (path: string) => {
-    if (path === '/apprentices/mock-exams/level2') {
-      navigate('/apprentices/mock-exams/level2');
-    } else if (path === '/apprentices/study-materials/city-guilds/am2/mock-exams') {
-      navigate('/apprentices/study-materials/city-guilds/am2/mock-exams');
-    } else {
-      toast({
-        title: "Coming Soon",
-        description: "This exam section is currently being developed. Check back soon!",
-        variant: "default",
-      });
-    }
+    navigate(path);
   };
 
   const examCategories = [
@@ -40,14 +30,14 @@ const PracticeExamsPage = () => {
       description: "Assessment preparation for Level 3 qualifications covering advanced principles and practices.",
       icon: <GraduationCap className="h-8 w-8 text-[#FFC900] mb-2" />,
       path: "/apprentices/mock-exams/level3",
-      available: false
+      available: true
     },
     {
       title: "MOET Exams",
       description: "Practice tests for Maintenance Operations Engineering Technician modules.",
       icon: <TestTube className="h-8 w-8 text-[#FFC900] mb-2" />,
       path: "/apprentices/mock-exams/moet",
-      available: false
+      available: true
     },
     {
       title: "AM2 Mock Assessments",
@@ -61,21 +51,21 @@ const PracticeExamsPage = () => {
       description: "Practice assessments for 2391, 2394 and 2395 inspection and testing qualifications.",
       icon: <FileText className="h-8 w-8 text-[#FFC900] mb-2" />,
       path: "/apprentices/mock-exams/inspection-testing",
-      available: false
+      available: true
     },
     {
       title: "HNC Exams",
       description: "Higher National Certificate electrical engineering practice assessments.",
       icon: <GraduationCap className="h-8 w-8 text-[#FFC900] mb-2" />,
       path: "/apprentices/mock-exams/hnc",
-      available: false
+      available: true
     },
     {
       title: "HND Exams",
       description: "Higher National Diploma electrical engineering mock assessments and preparation.",
       icon: <GraduationCap className="h-8 w-8 text-[#FFC900] mb-2" />,
       path: "/apprentices/mock-exams/hnd",
-      available: false
+      available: true
     }
   ];
 
@@ -104,7 +94,7 @@ const PracticeExamsPage = () => {
                   className="w-full bg-[#FFC900] hover:bg-[#e5b700] text-[#151812]"
                   onClick={() => handleNavigate(category.path)}
                 >
-                  {category.available ? "View Exams" : "Coming Soon"}
+                  View Exams
                 </Button>
               </CardContent>
             </Card>
