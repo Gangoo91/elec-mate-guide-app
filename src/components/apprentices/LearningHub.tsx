@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { 
@@ -31,7 +32,7 @@ const LearningHub = () => {
       title: "Health and Safety in Electrical Installation",
       description: "Essential knowledge about working safely in electrical environments",
       path: "/apprentices/study-materials/city-guilds/level-2/201",
-      difficulty: "beginner",
+      difficulty: "beginner" as const,
       progress: {
         completed: 2,
         total: 6,
@@ -45,7 +46,7 @@ const LearningHub = () => {
       title: "Electrical Installation Technology",
       description: "Core principles and practices of electrical installation work",
       path: "/apprentices/study-materials/eal/level-2/installation-technology",
-      difficulty: "intermediate",
+      difficulty: "intermediate" as const,
       progress: {
         completed: 1,
         total: 5,
