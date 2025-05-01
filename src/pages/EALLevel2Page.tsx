@@ -30,35 +30,35 @@ const EALLevel2Page = () => {
             <UnitCard
               unitNumber="ELEC2/01"
               title="Health and Safety in Electrical Installation"
-              description="Essential safety practices, regulations and procedures for electrical work"
+              description="Covers essential health and safety practices within the electrical installation environment."
               path="/apprentices/study-materials/eal/level-2/health-safety"
             />
             
             <UnitCard
               unitNumber="ELEC2/02"
-              title="Principles of Electrical Science"
-              description="Fundamental electrical theory including circuit principles and calculations"
+              title="Electrical Installation Theory and Technology"
+              description="Introduces the principles and technologies underpinning electrical installation work."
               path="/apprentices/study-materials/eal/level-2/electrical-science"
             />
             
             <UnitCard
               unitNumber="ELEC2/03"
-              title="Electrical Installation Technology"
-              description="Installation methods and techniques for electrical systems and equipment"
+              title="Electrical Installation Methods, Procedures and Requirements"
+              description="Focuses on standard methods and procedures for electrical installations, ensuring compliance with regulations."
               path="/apprentices/study-materials/eal/level-2/installation-technology"
             />
             
             <UnitCard
               unitNumber="ELEC2/04"
-              title="Installation of Wiring Systems"
-              description="Cable installation techniques, containment systems, and wiring practices"
+              title="Electrical Installation Craft Skills"
+              description="Provides hands-on experience in practical electrical installation tasks, developing essential craft skills."
               path="/apprentices/study-materials/eal/level-2/wiring-systems"
             />
             
             <UnitCard
               unitNumber="ELEC2/05"
-              title="Understanding Electrical Systems and Equipment"
-              description="Components, function and installation of common electrical systems"
+              title="Electrical Science and Principles"
+              description="Explores the fundamental scientific principles that form the basis of electrical theory and practice."
               path="/apprentices/study-materials/eal/level-2/electrical-systems"
             />
           </div>
