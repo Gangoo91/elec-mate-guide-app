@@ -10,6 +10,12 @@ export const handleStudyRoutes = (
     navigate('/apprentices/practice-exams');
     return true;
   }
+
+  // Handle technical tools routes
+  if (location.pathname === '/electricians/technical-tools/job-price-estimator') {
+    // Don't redirect, allow accessing the job price estimator directly
+    return false;
+  }
   
   // Level 2 unit section pages
   if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}\/\d+\.\d+/)) {
@@ -111,3 +117,4 @@ export const handleStudyRoutes = (
 
   return false;
 };
+

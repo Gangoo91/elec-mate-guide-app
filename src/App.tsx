@@ -35,6 +35,8 @@ import UnitContentPage from "./pages/UnitContentPage";
 import Level3Unit305Page from "./pages/Level3Unit305Page";
 import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
 import Unit305SectionPage from "./pages/units/Unit305SectionPage";
+import JobPriceEstimatorPage from "./pages/JobPriceEstimatorPage";
+import CalculatorToolsPage from "./pages/CalculatorTools";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -69,6 +71,10 @@ const App = () => {
                     <Route path="/manage-subscription" element={<ManageSubscription />} />
                     <Route path="/subscription" element={<Subscription />} />
                     <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+                    
+                    {/* Technical Tools Routes */}
+                    <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />
+                    <Route path="/electricians/technical-tools/calculators" element={<CalculatorToolsPage />} />
                     
                     {/* Units Pages */}
                     <Route 

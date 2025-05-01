@@ -3,7 +3,7 @@ import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import ResourceCard from "@/components/shared/ResourceCard";
-import { Calendar, FolderOpen, FileText } from "lucide-react";
+import { Calendar, FolderOpen, FileText, Calculator } from "lucide-react";
 
 const ProjectOverviewPage = () => {
   const resources = [
@@ -24,6 +24,12 @@ const ProjectOverviewPage = () => {
       description: "Access and customize professional templates for invoices, quotes, and important documentation.",
       icon: <FileText className="h-7 w-7 text-[#FFC900]" />,
       fullCardLink: "/electricians/templates"
+    },
+    {
+      title: "Job Price Estimator",
+      description: "Generate accurate price estimates for electrical jobs based on detailed specifications.",
+      icon: <Calculator className="h-7 w-7 text-[#FFC900]" />,
+      fullCardLink: "/electricians/technical-tools/job-price-estimator"
     }
   ];
 
@@ -33,10 +39,9 @@ const ProjectOverviewPage = () => {
         <PageHeader 
           title="Project Overview" 
           description="Access all your project management tools, job scheduling, and document templates in one place."
-          hideBackButton={false}
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto mt-6">
           {resources.map((resource, index) => (
             <ResourceCard
               key={index}
