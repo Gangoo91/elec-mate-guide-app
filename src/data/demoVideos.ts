@@ -1,3 +1,4 @@
+
 import { VideoLesson } from '@/types/videos';
 
 export const demoVideos: VideoLesson[] = [
@@ -9,7 +10,9 @@ export const demoVideos: VideoLesson[] = [
     category: "core_units",
     kudos_points: 10,
     video_url: "https://www.youtube.com/watch?v=mc979OhitAg", 
-    unit_number: "201"
+    unit_number: "201",
+    eal_course_id: "QELTK2-01",
+    training_minutes: 15
   },
   {
     id: "core-unit-2",
@@ -19,7 +22,9 @@ export const demoVideos: VideoLesson[] = [
     category: "core_units",
     kudos_points: 15,
     video_url: "https://www.youtube.com/watch?v=vN9aR2wKv0U",
-    unit_number: "202"
+    unit_number: "202",
+    eal_course_id: "QELTK2-01",
+    training_minutes: 22
   },
   {
     id: "core-unit-3",
@@ -29,7 +34,9 @@ export const demoVideos: VideoLesson[] = [
     category: "core_units",
     kudos_points: 12,
     video_url: "https://www.youtube.com/watch?v=9iKD8kW84C0",
-    unit_number: "203"
+    unit_number: "203",
+    eal_course_id: "QELTK2-02",
+    training_minutes: 19
   },
   {
     id: "installation-1",
@@ -38,7 +45,9 @@ export const demoVideos: VideoLesson[] = [
     duration: "24:10",
     category: "installation",
     kudos_points: 20,
-    video_url: "https://www.youtube.com/watch?v=TAGjuRwx_zw"
+    video_url: "https://www.youtube.com/watch?v=TAGjuRwx_zw",
+    eal_course_id: "QELTK2-03",
+    training_minutes: 24
   },
   {
     id: "installation-2",
@@ -47,7 +56,9 @@ export const demoVideos: VideoLesson[] = [
     duration: "32:25",
     category: "installation",
     kudos_points: 25,
-    video_url: "https://www.youtube.com/watch?v=qXenduGcEiU"
+    video_url: "https://www.youtube.com/watch?v=qXenduGcEiU",
+    eal_course_id: "QELTK2-03",
+    training_minutes: 32
   },
   {
     id: "installation-3",
@@ -56,7 +67,9 @@ export const demoVideos: VideoLesson[] = [
     duration: "28:50",
     category: "installation",
     kudos_points: 20,
-    video_url: "https://www.youtube.com/watch?v=mcDBa0jXhTQ"
+    video_url: "https://www.youtube.com/watch?v=mcDBa0jXhTQ",
+    eal_course_id: "QELTK2-04",
+    training_minutes: 29
   },
   {
     id: "testing-1",
@@ -65,7 +78,9 @@ export const demoVideos: VideoLesson[] = [
     duration: "19:40",
     category: "testing",
     kudos_points: 15,
-    video_url: "https://www.youtube.com/watch?v=GCDSw8zB5ew"
+    video_url: "https://www.youtube.com/watch?v=GCDSw8zB5ew",
+    eal_course_id: "QELTK3-01",
+    training_minutes: 20
   },
   {
     id: "testing-2",
@@ -74,7 +89,9 @@ export const demoVideos: VideoLesson[] = [
     duration: "23:15",
     category: "testing",
     kudos_points: 20,
-    video_url: "https://www.youtube.com/watch?v=DW7HGYTCC3A"
+    video_url: "https://www.youtube.com/watch?v=DW7HGYTCC3A",
+    eal_course_id: "QELTK3-01",
+    training_minutes: 23
   },
   {
     id: "testing-3",
@@ -83,6 +100,8 @@ export const demoVideos: VideoLesson[] = [
     duration: "20:30",
     category: "testing",
     kudos_points: 18,
-    video_url: "https://www.youtube.com/watch?v=zBHDsFUcCEQ"
+    video_url: "https://www.youtube.com/watch?v=zBHDsFUcCEQ",
+    eal_course_id: "QELTK3-02",
+    training_minutes: 21
   }
 ];

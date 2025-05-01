@@ -1,54 +1,64 @@
 
 import React from 'react';
-import { Clock, Play } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-
-interface VideoLesson {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  category: 'core_units' | 'practical_skills' | 'theory' | 'safety' | 'installation' | 'testing';
-  kudos_points: number;
-  video_url: string;
-  unit_number?: string;
-}
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { PlayCircle, Clock, BookOpen, Timer } from "lucide-react";
+import { VideoLesson } from '@/types/videos';
+import { CompletionBadge } from './components/CompletionBadge';
 
 interface VideoCardProps {
   video: VideoLesson;
-  onWatch: (video: VideoLesson) => void;
+  isCompleted?: boolean;
+  onClick?: () => void;
 }
 
-export const VideoCard = ({ video, onWatch }: VideoCardProps) => (
-  <Card 
-    onClick={() => onWatch(video)}
-    className="hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer bg-[#22251e] border-[#FFC900]/20 hover:shadow-lg hover:shadow-[#FFC900]/10 transform hover:-translate-y-1"
-  >
-    <CardHeader>
-      <CardTitle className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[#FFC900]">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-base sm:text-lg">{video.title}</span>
-          {video.unit_number && (
-            <span className="text-sm bg-[#FFC900]/10 px-2 py-1 rounded">
-              Unit {video.unit_number}
-            </span>
+const VideoCard = ({ video, isCompleted = false, onClick }: VideoCardProps) => {
+  return (
+    <Card 
+      className="overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-md bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/70"
+      onClick={onClick}
+    >
+      <div className="relative aspect-video bg-[#151812] overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <PlayCircle className="h-12 w-12 text-[#FFC900]/90" />
+        </div>
+        {isCompleted && <CompletionBadge />}
+      </div>
+      
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start gap-2 mb-2">
+          <h3 className="font-medium text-[#FFC900] line-clamp-2">{video.title}</h3>
+          
+          <Badge variant="outline" className="shrink-0 bg-[#FFC900]/10 border-[#FFC900]/20 text-[#FFC900] text-xs">
+            {video.category.replace('_', ' ')}
+          </Badge>
+        </div>
+        
+        <p className="text-xs text-[#FFC900]/70 line-clamp-2 mb-3">{video.description}</p>
+        
+        <div className="flex items-center justify-between text-[#FFC900]/70 text-xs">
+          <div className="flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            <span>{video.duration}</span>
+          </div>
+          
+          {video.training_minutes && (
+            <div className="flex items-center gap-1">
+              <Timer className="h-3 w-3" />
+              <span>{video.training_minutes}m training</span>
+            </div>
+          )}
+          
+          {video.eal_course_id && (
+            <div className="flex items-center gap-1">
+              <BookOpen className="h-3 w-3" />
+              <span>{video.eal_course_id}</span>
+            </div>
           )}
         </div>
-        <div className="flex items-center gap-1 text-sm">
-          <Clock className="h-4 w-4" />
-          <span>{video.duration}</span>
-        </div>
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-[#FFC900]/70 mb-4 text-sm sm:text-base line-clamp-2">{video.description}</p>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Play className="h-5 w-5 text-[#FFC900]" />
-          <span className="text-[#FFC900]/70 text-sm">Watch Now</span>
-        </div>
-        <span className="text-[#FFC900] text-sm font-semibold">+{video.kudos_points} kudos</span>
-      </div>
-    </CardContent>
-  </Card>
-);
+      </CardContent>
+    </Card>
+  );
+};
+
+export default VideoCard;

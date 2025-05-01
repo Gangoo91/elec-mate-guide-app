@@ -9,7 +9,7 @@ interface VideoProgress {
   watched: boolean;
   watchTime: number;
   lastPosition: number;
-  kudosAwarded: boolean;
+  trainingRecorded: boolean;
 }
 
 export function useVideoProgress(videoId: string) {
@@ -20,7 +20,7 @@ export function useVideoProgress(videoId: string) {
     watched: false,
     watchTime: 0,
     lastPosition: 0,
-    kudosAwarded: false
+    trainingRecorded: false
   });
   
   // Check if this is a demo video ID (non-UUID format)
@@ -59,7 +59,7 @@ export function useVideoProgress(videoId: string) {
           watched: data.watched,
           watchTime: data.watch_time,
           lastPosition: data.last_position,
-          kudosAwarded: data.kudos_awarded
+          trainingRecorded: data.training_recorded || false
         });
         
         lastPositionRef.current = data.last_position;
@@ -106,7 +106,7 @@ export function useVideoProgress(videoId: string) {
       watched,
       watchTime: Math.floor(position),
       lastPosition: position,
-      kudosAwarded: watched ? true : prev.kudosAwarded
+      trainingRecorded: watched ? true : prev.trainingRecorded
     }));
     
     // Debounce database updates
@@ -124,7 +124,7 @@ export function useVideoProgress(videoId: string) {
             watched,
             watch_time: Math.floor(position),
             last_position: position,
-            kudos_awarded: watched && !progress.kudosAwarded
+            training_recorded: watched && !progress.trainingRecorded
           });
 
         if (error) {
@@ -132,27 +132,30 @@ export function useVideoProgress(videoId: string) {
           return;
         }
 
-        if (watched && !progress.kudosAwarded) {
-          // Award kudos points
+        if (watched && !progress.trainingRecorded) {
+          // Get video details to record training time
           const { data: video } = await supabase
             .from('video_lessons')
-            .select('kudos_points, title')
+            .select('training_minutes, title, eal_course_id')
             .eq('id', videoId)
             .single();
 
-          if (video) {
-            const { error: kudosError } = await supabase
-              .from('exercise_kudos')
+          if (video && video.training_minutes) {
+            // Record the training time
+            const { error: trainingError } = await supabase
+              .from('training_records')
               .insert({
                 user_id: user.id,
-                exercise_id: videoId,
-                points: video.kudos_points
+                video_id: videoId,
+                minutes: video.training_minutes,
+                eal_course_id: video.eal_course_id,
+                recorded_at: new Date().toISOString()
               });
 
-            if (!kudosError) {
+            if (!trainingError) {
               toast({
-                title: "Kudos Awarded!",
-                description: `You earned ${video.kudos_points} kudos points for completing "${video.title}"`,
+                title: "Training Time Recorded",
+                description: `${video.training_minutes} minutes added to your off-the-job training record`,
               });
             }
           }
