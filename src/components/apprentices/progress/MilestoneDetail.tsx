@@ -1,24 +1,26 @@
+
 import React, { useState } from 'react';
 import { 
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { formatDistance } from 'date-fns';
-import { Calendar, MessageSquare, Clock, Timer, GraduationCap, BookOpen } from 'lucide-react';
-import MilestoneStatusButton from './MilestoneStatusButton';
-import { Separator } from "@/components/ui/separator";
+import { MessageSquare } from 'lucide-react';
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { MilestoneResource } from './MilestoneResource';
 import { MilestoneUpdates } from './MilestoneUpdates';
 import { Milestone } from './types';
-import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
+import { MilestoneHeader } from './milestone-detail/MilestoneHeader';
+import { MilestoneMetadata } from './milestone-detail/MilestoneMetadata';
+import { MilestoneDescription } from './milestone-detail/MilestoneDescription';
+import { LearningPathway } from './milestone-detail/LearningPathway';
+import { TrainingHours } from './milestone-detail/TrainingHours';
+import { MilestoneStatusBadges } from './milestone-detail/MilestoneStatusBadges';
 
 interface MilestoneDetailProps {
   milestone: Milestone;
@@ -26,7 +28,6 @@ interface MilestoneDetailProps {
 
 const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [trainingHours, setTrainingHours] = useState<string>(milestone.training_hours?.toString() || '');
   const { updateMilestone, addMilestoneUpdate, milestoneUpdates } = useApprenticeProgress();
   const navigate = useNavigate();
   
@@ -50,27 +51,11 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
     });
   };
   
-  const handleHoursUpdate = () => {
-    if (!trainingHours) return;
-    
-    const hours = parseFloat(trainingHours);
-    if (isNaN(hours)) return;
-    
+  const handleHoursUpdate = (hours: number) => {
     updateMilestone({
       id: milestone.id,
       training_hours: hours
     });
-  };
-
-  // Format framework name for display
-  const formatFramework = (framework?: string) => {
-    if (!framework) return 'Not specified';
-    switch(framework) {
-      case 'city_guilds': return 'City & Guilds';
-      case 'eal': return 'EAL';
-      case 'moet': return 'MOET';
-      default: return framework.charAt(0).toUpperCase() + framework.slice(1);
-    }
   };
   
   return (
@@ -87,135 +72,28 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden">
         <DialogHeader>
-          <DialogTitle className="text-xl text-[#FFC900] flex items-center gap-3">
-            <MilestoneStatusButton 
-              status={milestone.status}
-              onStatusChange={handleStatusChange}
-            />
-            {milestone.title}
-          </DialogTitle>
+          <MilestoneHeader 
+            milestone={milestone} 
+            onStatusChange={handleStatusChange} 
+          />
         </DialogHeader>
         <ScrollArea className="h-[500px] pr-4">
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Badge variant="outline" className="text-[#FFC900]">
-                {milestone.type}
-              </Badge>
-              <div className="flex items-center gap-2 text-sm text-[#FFC900]/70">
-                <Calendar className="h-4 w-4" />
-                <span>Created {formatDistance(new Date(milestone.created_at), new Date(), { addSuffix: true })}</span>
-              </div>
-            </div>
+            <MilestoneMetadata milestone={milestone} />
             
-            {milestone.description && (
-              <div>
-                <h4 className="text-sm font-medium mb-1 text-[#FFC900]">Description</h4>
-                <p className="text-[#FFC900]/70">{milestone.description}</p>
-              </div>
-            )}
+            <MilestoneDescription milestone={milestone} />
 
-            <div className="p-4 bg-[#22251e]/80 rounded-md border border-[#FFC900]/20">
-              <h4 className="text-sm font-medium mb-3 text-[#FFC900] flex items-center gap-2">
-                <GraduationCap className="h-4 w-4" />
-                Learning Pathway
-              </h4>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-xs text-[#FFC900]/60 mb-1">Framework</p>
-                  <p className="text-sm text-[#FFC900]">{formatFramework(milestone.qualification_framework)}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-[#FFC900]/60 mb-1">Level</p>
-                  <p className="text-sm text-[#FFC900]">
-                    {milestone.learning_level ? milestone.learning_level.replace('level', 'Level ') : 'Not specified'}
-                  </p>
-                </div>
-              </div>
-              
-              {milestone.qualification_framework && (
-                <div className="bg-[#FFC900]/10 p-3 rounded text-sm text-[#FFC900]/80">
-                  <div className="flex items-center gap-2 mb-2">
-                    <BookOpen className="h-4 w-4 text-[#FFC900]" />
-                    <span className="font-medium text-[#FFC900]">Related Study Materials</span>
-                  </div>
-                  <Button
-                    variant="link"
-                    className="p-0 h-auto text-[#FFC900] text-sm"
-                    onClick={() => {
-                      setIsOpen(false);
-                      if (milestone.qualification_framework === 'city_guilds') {
-                        navigate('/apprentices/study-materials/city-guilds');
-                      } else if (milestone.qualification_framework === 'eal') {
-                        navigate('/apprentices/study-materials/eal');
-                      } else if (milestone.qualification_framework === 'moet') {
-                        navigate('/apprentices/study-materials/city-guilds/moet');
-                      }
-                    }}
-                  >
-                    View {formatFramework(milestone.qualification_framework)} study materials
-                  </Button>
-                </div>
-              )}
-            </div>
+            <LearningPathway 
+              milestone={milestone} 
+              onClose={() => setIsOpen(false)} 
+            />
 
-            <div className="p-4 bg-[#22251e]/80 rounded-md border border-[#FFC900]/20">
-              <h4 className="text-sm font-medium mb-2 text-[#FFC900] flex items-center gap-2">
-                <Timer className="h-4 w-4" />
-                Off-the-Job Training Hours
-              </h4>
-              <div className="flex items-end gap-2">
-                <div className="flex-1">
-                  <Input
-                    type="number" 
-                    min="0"
-                    step="0.5"
-                    value={trainingHours}
-                    onChange={(e) => setTrainingHours(e.target.value)}
-                    placeholder="Record training hours"
-                    className="bg-[#22251e] border-[#FFC900]/30 text-[#FFC900]"
-                  />
-                </div>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  className="border-[#FFC900]/30 text-[#FFC900] hover:text-[#FFC900] hover:bg-[#FFC900]/10"
-                  onClick={handleHoursUpdate}
-                >
-                  Save Hours
-                </Button>
-              </div>
-              <p className="text-xs text-[#FFC900]/60 mt-2">
-                Record the time spent on this off-the-job training activity
-              </p>
-            </div>
+            <TrainingHours 
+              milestone={milestone} 
+              onSaveHours={handleHoursUpdate} 
+            />
             
-            <div className="flex flex-wrap gap-4 text-sm">
-              {milestone.target_completion_date && (
-                <div className="flex items-center gap-2 bg-[#22251e]/80 p-2 rounded">
-                  <Calendar className="h-4 w-4 text-[#FFC900]" />
-                  <span className="text-[#FFC900]/80">Target: {new Date(milestone.target_completion_date).toLocaleDateString()}</span>
-                </div>
-              )}
-              
-              {milestone.completed_at && (
-                <div className="flex items-center gap-2 bg-green-950/30 p-2 rounded">
-                  <Clock className="h-4 w-4 text-green-500" />
-                  <span className="text-green-500">
-                    Completed {formatDistance(new Date(milestone.completed_at), new Date(), { addSuffix: true })}
-                  </span>
-                </div>
-              )}
-              
-              {milestone.training_hours && (
-                <div className="flex items-center gap-2 bg-blue-950/30 p-2 rounded">
-                  <Timer className="h-4 w-4 text-blue-400" />
-                  <span className="text-blue-400">
-                    {milestone.training_hours} training hours logged
-                  </span>
-                </div>
-              )}
-            </div>
+            <MilestoneStatusBadges milestone={milestone} />
             
             <MilestoneResource milestone={milestone} onClose={() => setIsOpen(false)} />
             
