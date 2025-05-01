@@ -21,6 +21,7 @@ export default function AddMilestoneDialog() {
   const [open, setOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<string | null>(null);
   const [resourceType, setResourceType] = useState<'video' | 'exam' | 'quiz' | 'audio' | 'none'>('none');
+  const [trainingHours, setTrainingHours] = useState<string>('');
   const { videos } = useVideos();
   const navigate = useNavigate();
 
@@ -46,7 +47,8 @@ export default function AddMilestoneDialog() {
       target_completion_date: null,
       completed_at: null,
       resource_id: selectedResource,
-      resource_type: resourceType !== 'none' ? resourceType : null
+      resource_type: resourceType !== 'none' ? resourceType : null,
+      training_hours: trainingHours ? parseFloat(trainingHours) : null
     };
 
     addMilestone(newMilestone);
@@ -60,6 +62,7 @@ export default function AddMilestoneDialog() {
     setType('skill');
     setSelectedResource(null);
     setResourceType('none');
+    setTrainingHours('');
   };
 
   const handleResourceSelect = (id: string, type: 'video' | 'exam' | 'quiz' | 'audio') => {
@@ -126,6 +129,25 @@ export default function AddMilestoneDialog() {
                 <SelectItem value="module">Module</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          
+          <div className="mb-4">
+            <label htmlFor="trainingHours" className="text-sm font-medium mb-1 block">
+              Off-the-Job Training Hours
+            </label>
+            <Input
+              id="trainingHours"
+              type="number"
+              min="0"
+              step="0.5"
+              placeholder="Enter hours (optional)"
+              value={trainingHours}
+              onChange={(e) => setTrainingHours(e.target.value)}
+              className="w-full"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Record time for off-the-job training activities (leave empty if unknown)
+            </p>
           </div>
           
           <div className="bg-[#22251e]/50 p-4 rounded-lg mb-4">
