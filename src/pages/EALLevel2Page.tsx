@@ -17,7 +17,7 @@ const EALLevel2Page = () => {
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
-          title="Level 2 EAL Courses"
+          title="EAL Level 2 Diploma in Electrical Installation"
           description="Foundation learning in electrical installation covering basic principles and practices"
           customBackAction={handleBackClick}
         />
