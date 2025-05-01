@@ -12,6 +12,7 @@ import Unit201SectionPage from "../../pages/units/Unit201SectionPage";
 import Unit204SectionPage from "../../pages/units/Unit204SectionPage";
 import Unit210SectionPage from "../../pages/units/Unit210SectionPage";
 import Level2Unit201AssessmentPage from "../../pages/Level2Unit201AssessmentPage";
+import ElectricalInstallationUnitPage from "../../pages/units/ElectricalInstallationUnitPage";
 
 const level2Routes: RouteObject[] = [
   {
@@ -62,6 +63,11 @@ const level2Routes: RouteObject[] = [
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId",
     element: <Unit210SectionPage />
   },
+  // New EAL specific routes
+  {
+    path: "/apprentices/study-materials/eal/level-2/installation-technology",
+    element: <ElectricalInstallationUnitPage />
+  }
 ];
 
 export default level2Routes;
