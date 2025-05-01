@@ -7,12 +7,13 @@ interface PageHeaderProps {
   description?: string;
   customBackAction?: () => void;
   actions?: React.ReactNode;
+  hideBackButton?: boolean;
 }
 
-const PageHeader = ({ title, description, customBackAction, actions }: PageHeaderProps) => {
+const PageHeader = ({ title, description, customBackAction, actions, hideBackButton }: PageHeaderProps) => {
   return (
     <div className="mb-8">
-      <BackButton customAction={customBackAction} />
+      {!hideBackButton && <BackButton customAction={customBackAction} />}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold text-[#FFC900] mb-2">
