@@ -22,6 +22,15 @@ export const handleStudyRoutes = (
     return false;
   }
   
+  // Handle EAL study materials pages - allow direct access
+  if (location.pathname === '/apprentices/study-materials/eal' ||
+      location.pathname === '/apprentices/study-materials/eal/level-2' ||
+      location.pathname === '/apprentices/study-materials/eal/level-3' ||
+      location.pathname === '/apprentices/study-materials/eal/assessment') {
+    // Don't redirect, allow accessing the EAL pages directly
+    return false;
+  }
+  
   // Handle practice exam routes
   if (location.pathname.match(/\/apprentices\/practice-exams\/(level-2|level-3|hnc|hnd|inspection-testing|moet|am2)$/)) {
     navigate('/apprentices/practice-exams');

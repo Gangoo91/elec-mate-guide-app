@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -44,6 +45,10 @@ import ControlSystemsEngineerPage from "./pages/careers/ControlSystemsEngineerPa
 import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
 import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
 import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
+import EALQualificationsPage from "./pages/EALQualificationsPage";
+import EALLevel2Page from "./pages/EALLevel2Page";
+import EALLevel3Page from "./pages/EALLevel3Page";
+import EALAssessmentPage from "./pages/EALAssessmentPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -88,6 +93,12 @@ const App = () => {
                     <Route path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />
                     <Route path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />
                     <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
+                    
+                    {/* EAL Qualifications Routes */}
+                    <Route path="/apprentices/study-materials/eal" element={<EALQualificationsPage />} />
+                    <Route path="/apprentices/study-materials/eal/level-2" element={<EALLevel2Page />} />
+                    <Route path="/apprentices/study-materials/eal/level-3" element={<EALLevel3Page />} />
+                    <Route path="/apprentices/study-materials/eal/assessment" element={<EALAssessmentPage />} />
                     
                     {/* Technical Tools Routes */}
                     <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />

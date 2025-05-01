@@ -43,6 +43,17 @@ export const handleNavigationLogic = (
     }
   }
   
+  // Handle EAL routes
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-[23]/)) {
+    navigate('/apprentices/study-materials/eal');
+    return;
+  }
+  
+  if (location.pathname === '/apprentices/study-materials/eal/assessment') {
+    navigate('/apprentices/study-materials/eal');
+    return;
+  }
+  
   // Check if the path matches any of the study route patterns
   if (handleStudyRoutes(location, (path) => navigate(path))) {
     return;
