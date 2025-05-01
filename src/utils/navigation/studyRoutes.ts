@@ -2,158 +2,48 @@
 import { Location } from 'react-router-dom';
 
 export const handleStudyRoutes = (
-  location: Location,
-  navigate: (to: string) => void
+  location: Location, 
+  navigateCallback: (path: string) => void
 ): boolean => {
-  // Handle development pages - allow direct access
-  if (location.pathname === '/electricians/development' || 
-      location.pathname === '/electricians/development/career-pathways' ||
-      location.pathname === '/electricians/development/higher-education' || 
-      location.pathname === '/electricians/development/business-development' ||
-      location.pathname === '/electricians/development/professional-associations' ||
-      location.pathname === '/electricians/development/industry-specialisations') {
-    // Don't redirect, allow accessing the development pages directly
-    return false;
-  }
-
-  // Handle career pathways detail pages - allow direct access
-  if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
-    // Don't redirect, allow accessing the career pathways detail pages directly
-    return false;
-  }
   
-  // Handle EAL study materials pages - allow direct access
-  if (location.pathname === '/apprentices/study-materials/eal' ||
-      location.pathname === '/apprentices/study-materials/eal/level-2' ||
-      location.pathname === '/apprentices/study-materials/eal/level-3' ||
-      location.pathname === '/apprentices/study-materials/eal/assessment' ||
-      location.pathname === '/apprentices/study-materials/eal/moet' ||
-      location.pathname === '/apprentices/study-materials/eal/inspection-testing' ||
-      location.pathname === '/apprentices/study-materials/eal/ev-installation' ||
-      location.pathname === '/apprentices/study-materials/eal/hazardous-areas' ||
-      location.pathname === '/apprentices/study-materials/eal/building-controls') {
-    // Don't redirect, allow accessing the EAL pages directly
-    return false;
-  }
-  
-  // Handle EAL detailed subject pages - allow direct access
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/moet\/[a-z-]+$/) ||
-      location.pathname.match(/\/apprentices\/study-materials\/eal\/inspection-testing\/[a-z-]+$/) ||
-      location.pathname.match(/\/apprentices\/study-materials\/eal\/ev-installation\/[a-z-]+$/) ||
-      location.pathname.match(/\/apprentices\/study-materials\/eal\/hazardous-areas\/[a-z-]+$/) ||
-      location.pathname.match(/\/apprentices\/study-materials\/eal\/building-controls\/[a-z-]+$/)) {
-    // Don't redirect, allow accessing these subject pages directly
-    return false;
-  }
-  
-  // Handle practice exam routes
-  if (location.pathname.match(/\/apprentices\/practice-exams\/(level-2|level-3|hnc|hnd|inspection-testing|moet|am2)$/)) {
-    navigate('/apprentices/practice-exams');
+  // Handle City & Guilds Level 2 Section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/201\/[a-z0-9-]+$/)) {
+    navigateCallback('/apprentices/study-materials/city-guilds/level-2/201');
     return true;
   }
 
-  // Handle technical tools routes
-  if (location.pathname === '/electricians/technical-tools/job-price-estimator' || 
-      location.pathname === '/electricians/development/career-pathways') {
-    // Don't redirect, allow accessing the job price estimator and career pathways directly
-    return false;
-  }
-  
-  // Level 2 unit section pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}\/\d+\.\d+/)) {
-    const unitId = location.pathname.split('/')[6];
-    navigate(`/apprentices/study-materials/city-guilds/level-2/core-units/${unitId}`);
-    return true;
-  }
-
-  // Level 2 unit pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}/)) {
-    navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
-    return true;
-  }
-
-  // Special handling for AM2 page and its sub-pages
-  if (location.pathname === '/apprentices/study-materials/city-guilds/am2') {
-    // Don't redirect, allow accessing the AM2 page directly
-    return false;
-  }
-
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/am2\/(installation|inspection-testing|fault-diagnosis|safe-isolation|assessment-guidelines)/)) {
-    // Don't redirect, allow accessing the AM2 sub-pages directly
-    return false;
-  }
-
-  // Special handling for Level 3 page
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3') {
-    // Don't redirect, allow accessing the Level 3 electrical page directly
-    return false;
-  }
-
-  // Special handling for MOET pages
-  if (location.pathname === '/apprentices/study-materials/city-guilds/moet/behaviours') {
-    // Don't redirect, allow accessing the behaviours page directly
-    return false;
-  }
-
-  // Special handling for MOET behaviours section pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/professional-conduct\/\d+\.\d+/)) {
-    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct');
+  // Handle City & Guilds Level 2 pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/[0-9]+$/)) {
+    navigateCallback('/apprentices/study-materials/city-guilds/level-2');
     return true;
   }
   
-  // Special handling for MOET safety awareness section pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/safety-awareness\/\d+\.\d+/)) {
-    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness');
-    return true;
-  }
-
-  // Special handling for MOET assessment page
-  if (location.pathname === '/apprentices/study-materials/city-guilds/moet/assessment') {
-    // Don't redirect, allow accessing the assessment page directly
-    return false;
-  }
-
-  // Special handling for MOET assessment detail pages
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/assessment\/[a-z-]+/)) {
-    // Don't redirect, allow accessing the assessment detail pages
-    return false;
-  }
-
-  // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, Unit 304, Unit 305, and Unit 308 which have their own pages)
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!305$)(?!308$)(?!core-units$)\d{3}$/)) {
-    navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
+  // Handle the city & guilds path
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-2') {
+    navigateCallback('/apprentices/study-materials/city-guilds');
     return true;
   }
   
-  // Special handling for specific unit pages
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/301' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/302' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/308') {
-    // Don't redirect, allow accessing these specific unit pages
-    return false;
+  if (location.pathname === '/apprentices/study-materials/city-guilds') {
+    navigateCallback('/apprentices/study-materials');
+    return true;
   }
   
-  // Special handling for Unit assessment pages
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303/assessment' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304/assessment' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305/assessment' ||
-      location.pathname === '/apprentices/study-materials/city-guilds/level-3/308/assessment') {
-    // Don't redirect, allow accessing the assessment pages
-    return false;
+  // Handle the study materials root
+  if (location.pathname === '/apprentices/study-materials') {
+    navigateCallback('/apprentices/learning-hub');
+    return true;
   }
 
-  // Level 3 section pages - support the unit308 section pages with format: /level-3/308/1.1, etc.
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}\/\d+\.\d+/)) {
-    const unitId = location.pathname.split('/')[6];
-    // Don't redirect section pages for units that have detailed section content
-    if (unitId === '301' || unitId === '302' || unitId === '303' || unitId === '304' || unitId === '305' || unitId === '308') {
-      return false;
-    }
-    navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
+  // Handle EAL Level 2 pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-2\/[a-z-]+$/)) {
+    navigateCallback('/apprentices/study-materials/eal/level-2');
+    return true;
+  }
+  
+  // Handle EAL top level
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-[23]$/)) {
+    navigateCallback('/apprentices/study-materials/eal');
     return true;
   }
 
