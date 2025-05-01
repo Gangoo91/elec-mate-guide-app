@@ -19,48 +19,54 @@ const EALLevel2Page = () => {
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
           title="EAL Level 2 Diploma in Electrical Installation"
-          description="Foundation learning in electrical installation covering basic principles and practices"
+          description="Qualification Number: 600/6724/X"
           customBackAction={handleBackClick}
         />
         
         <GlassCard className="mt-8">
-          <h2 className="text-2xl font-semibold text-[#FFC900] mb-6 text-center">EAL Level 2 Units</h2>
+          <h2 className="text-2xl font-semibold text-[#FFC900] mb-6 text-center">Mandatory Units</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <UnitCard
               unitNumber="ELEC2/01"
               title="Health and Safety in Electrical Installation"
-              description="Covers essential health and safety practices within the electrical installation environment."
+              description="Covers essential health and safety practices within the electrical installation environment. (48 GLH)"
               path="/apprentices/study-materials/eal/level-2/health-safety"
             />
             
             <UnitCard
-              unitNumber="ELEC2/02"
+              unitNumber="ELEC2/04"
               title="Electrical Installation Theory and Technology"
-              description="Introduces the principles and technologies underpinning electrical installation work."
+              description="Introduces the principles and technologies underpinning electrical installation work. (146 GLH)"
               path="/apprentices/study-materials/eal/level-2/electrical-science"
             />
             
             <UnitCard
-              unitNumber="ELEC2/03"
+              unitNumber="ELEC2/05A"
               title="Electrical Installation Methods, Procedures and Requirements"
-              description="Focuses on standard methods and procedures for electrical installations, ensuring compliance with regulations."
+              description="Focuses on standard methods and procedures for electrical installations, ensuring compliance with regulations. (59 GLH)"
               path="/apprentices/study-materials/eal/level-2/installation-technology"
             />
             
             <UnitCard
-              unitNumber="ELEC2/04"
+              unitNumber="ELEC2/05B"
               title="Electrical Installation Craft Skills"
-              description="Provides hands-on experience in practical electrical installation tasks, developing essential craft skills."
+              description="Provides hands-on experience in practical electrical installation tasks, developing essential craft skills. (140 GLH)"
               path="/apprentices/study-materials/eal/level-2/wiring-systems"
             />
             
             <UnitCard
-              unitNumber="ELEC2/05"
+              unitNumber="ELEC2/08"
               title="Electrical Science and Principles"
-              description="Explores the fundamental scientific principles that form the basis of electrical theory and practice."
+              description="Explores the fundamental scientific principles that form the basis of electrical theory and practice. (93 GLH)"
               path="/apprentices/study-materials/eal/level-2/electrical-systems"
             />
+          </div>
+          
+          <div className="mt-8 text-center">
+            <p className="text-[#FFC900]/80 text-sm">
+              This qualification has a minimum of 486 guided learning hours (GLH) and a Total Qualification Time (TQT) of 502 hours.
+            </p>
           </div>
         </GlassCard>
       </div>
