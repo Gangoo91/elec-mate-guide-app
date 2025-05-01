@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Dialog,
@@ -19,6 +18,7 @@ import { MilestoneResource } from './MilestoneResource';
 import { MilestoneUpdates } from './MilestoneUpdates';
 import { Milestone } from './types';
 import { Input } from '@/components/ui/input';
+import { useNavigate } from 'react-router-dom';
 
 interface MilestoneDetailProps {
   milestone: Milestone;
@@ -28,6 +28,7 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [trainingHours, setTrainingHours] = useState<string>(milestone.training_hours?.toString() || '');
   const { updateMilestone, addMilestoneUpdate, milestoneUpdates } = useApprenticeProgress();
+  const navigate = useNavigate();
   
   const milestoneSpecificUpdates = milestoneUpdates.filter(
     update => update.milestone_id === milestone.id
