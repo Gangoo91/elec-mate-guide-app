@@ -9,6 +9,7 @@ export type Milestone = {
   completed_at: string | null;
   resource_id: string | null;
   resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  training_hours: number | null;
   created_at: string;
 };
 

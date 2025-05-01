@@ -14,6 +14,7 @@ type Milestone = {
   completed_at: string | null;
   resource_id: string | null;
   resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  training_hours: number | null;
   created_at: string;
 };
 
@@ -49,6 +50,7 @@ export function useApprenticeProgress() {
         const resourceId = 'resource_id' in item ? item.resource_id : null;
         const resourceType = 'resource_type' in item ? 
           item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null : null;
+        const trainingHours = 'training_hours' in item ? item.training_hours : null;
           
         return {
           id: item.id,
@@ -60,6 +62,7 @@ export function useApprenticeProgress() {
           completed_at: item.completed_at,
           resource_id: resourceId,
           resource_type: resourceType,
+          training_hours: trainingHours,
           created_at: item.created_at
         };
       }) as Milestone[];

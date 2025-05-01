@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatDistance } from 'date-fns';
-import { Calendar, MessageSquare, Clock } from 'lucide-react';
+import { Calendar, MessageSquare, Clock, Timer } from 'lucide-react';
 import MilestoneStatusButton from './MilestoneStatusButton';
 import { Separator } from "@/components/ui/separator";
 import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
@@ -18,6 +18,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { MilestoneResource } from './MilestoneResource';
 import { MilestoneUpdates } from './MilestoneUpdates';
 import { Milestone } from './types';
+import { Input } from '@/components/ui/input';
 
 interface MilestoneDetailProps {
   milestone: Milestone;
@@ -25,6 +26,7 @@ interface MilestoneDetailProps {
 
 const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [trainingHours, setTrainingHours] = useState<string>(milestone.training_hours?.toString() || '');
   const { updateMilestone, addMilestoneUpdate, milestoneUpdates } = useApprenticeProgress();
   
   const milestoneSpecificUpdates = milestoneUpdates.filter(
@@ -44,6 +46,18 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
     addMilestoneUpdate({
       milestone_id: milestone.id, 
       note
+    });
+  };
+  
+  const handleHoursUpdate = () => {
+    if (!trainingHours) return;
+    
+    const hours = parseFloat(trainingHours);
+    if (isNaN(hours)) return;
+    
+    updateMilestone({
+      id: milestone.id,
+      training_hours: hours
     });
   };
   
@@ -87,6 +101,37 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
                 <p className="text-[#FFC900]/70">{milestone.description}</p>
               </div>
             )}
+
+            <div className="p-4 bg-[#22251e]/80 rounded-md border border-[#FFC900]/20">
+              <h4 className="text-sm font-medium mb-2 text-[#FFC900] flex items-center gap-2">
+                <Timer className="h-4 w-4" />
+                Off-the-Job Training Hours
+              </h4>
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <Input
+                    type="number" 
+                    min="0"
+                    step="0.5"
+                    value={trainingHours}
+                    onChange={(e) => setTrainingHours(e.target.value)}
+                    placeholder="Record training hours"
+                    className="bg-[#22251e] border-[#FFC900]/30 text-[#FFC900]"
+                  />
+                </div>
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  className="border-[#FFC900]/30 text-[#FFC900] hover:text-[#FFC900] hover:bg-[#FFC900]/10"
+                  onClick={handleHoursUpdate}
+                >
+                  Save Hours
+                </Button>
+              </div>
+              <p className="text-xs text-[#FFC900]/60 mt-2">
+                Record the time spent on this off-the-job training activity
+              </p>
+            </div>
             
             <div className="flex flex-wrap gap-4 text-sm">
               {milestone.target_completion_date && (
@@ -101,6 +146,15 @@ const MilestoneDetail = ({ milestone }: MilestoneDetailProps) => {
                   <Clock className="h-4 w-4 text-green-500" />
                   <span className="text-green-500">
                     Completed {formatDistance(new Date(milestone.completed_at), new Date(), { addSuffix: true })}
+                  </span>
+                </div>
+              )}
+              
+              {milestone.training_hours && (
+                <div className="flex items-center gap-2 bg-blue-950/30 p-2 rounded">
+                  <Timer className="h-4 w-4 text-blue-400" />
+                  <span className="text-blue-400">
+                    {milestone.training_hours} training hours logged
                   </span>
                 </div>
               )}
