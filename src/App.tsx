@@ -49,6 +49,11 @@ import EALQualificationsPage from "./pages/EALQualificationsPage";
 import EALLevel2Page from "./pages/EALLevel2Page";
 import EALLevel3Page from "./pages/EALLevel3Page";
 import EALAssessmentPage from "./pages/EALAssessmentPage";
+import EALMOETPage from "./pages/EALMOETPage";
+import EALInspectionTestingPage from "./pages/EALInspectionTestingPage";
+import EALEVInstallationPage from "./pages/EALEVInstallationPage";
+import EALHazardousAreasPage from "./pages/EALHazardousAreasPage";
+import EALBuildingControlsPage from "./pages/EALBuildingControlsPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -99,6 +104,11 @@ const App = () => {
                     <Route path="/apprentices/study-materials/eal/level-2" element={<EALLevel2Page />} />
                     <Route path="/apprentices/study-materials/eal/level-3" element={<EALLevel3Page />} />
                     <Route path="/apprentices/study-materials/eal/assessment" element={<EALAssessmentPage />} />
+                    <Route path="/apprentices/study-materials/eal/moet" element={<EALMOETPage />} />
+                    <Route path="/apprentices/study-materials/eal/inspection-testing" element={<EALInspectionTestingPage />} />
+                    <Route path="/apprentices/study-materials/eal/ev-installation" element={<EALEVInstallationPage />} />
+                    <Route path="/apprentices/study-materials/eal/hazardous-areas" element={<EALHazardousAreasPage />} />
+                    <Route path="/apprentices/study-materials/eal/building-controls" element={<EALBuildingControlsPage />} />
                     
                     {/* Technical Tools Routes */}
                     <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />

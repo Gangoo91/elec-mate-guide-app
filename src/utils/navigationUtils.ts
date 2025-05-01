@@ -49,6 +49,38 @@ export const handleNavigationLogic = (
     return;
   }
   
+  // Handle other EAL qualification routes
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/(moet|inspection-testing|ev-installation|hazardous-areas|building-controls)$/)) {
+    navigate('/apprentices/study-materials/eal');
+    return;
+  }
+  
+  // Handle EAL detailed subject pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/moet\/[a-z-]+$/)) {
+    navigate('/apprentices/study-materials/eal/moet');
+    return;
+  }
+  
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/inspection-testing\/[a-z-]+$/)) {
+    navigate('/apprentices/study-materials/eal/inspection-testing');
+    return;
+  }
+  
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/ev-installation\/[a-z-]+$/)) {
+    navigate('/apprentices/study-materials/eal/ev-installation');
+    return;
+  }
+  
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/hazardous-areas\/[a-z-]+$/)) {
+    navigate('/apprentices/study-materials/eal/hazardous-areas');
+    return;
+  }
+  
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/building-controls\/[a-z-]+$/)) {
+    navigate('/apprentices/study-materials/eal/building-controls');
+    return;
+  }
+  
   if (location.pathname === '/apprentices/study-materials/eal/assessment') {
     navigate('/apprentices/study-materials/eal');
     return;

@@ -26,8 +26,23 @@ export const handleStudyRoutes = (
   if (location.pathname === '/apprentices/study-materials/eal' ||
       location.pathname === '/apprentices/study-materials/eal/level-2' ||
       location.pathname === '/apprentices/study-materials/eal/level-3' ||
-      location.pathname === '/apprentices/study-materials/eal/assessment') {
+      location.pathname === '/apprentices/study-materials/eal/assessment' ||
+      location.pathname === '/apprentices/study-materials/eal/moet' ||
+      location.pathname === '/apprentices/study-materials/eal/inspection-testing' ||
+      location.pathname === '/apprentices/study-materials/eal/ev-installation' ||
+      location.pathname === '/apprentices/study-materials/eal/hazardous-areas' ||
+      location.pathname === '/apprentices/study-materials/eal/building-controls') {
     // Don't redirect, allow accessing the EAL pages directly
+    return false;
+  }
+  
+  // Handle EAL detailed subject pages - allow direct access
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/moet\/[a-z-]+$/) ||
+      location.pathname.match(/\/apprentices\/study-materials\/eal\/inspection-testing\/[a-z-]+$/) ||
+      location.pathname.match(/\/apprentices\/study-materials\/eal\/ev-installation\/[a-z-]+$/) ||
+      location.pathname.match(/\/apprentices\/study-materials\/eal\/hazardous-areas\/[a-z-]+$/) ||
+      location.pathname.match(/\/apprentices\/study-materials\/eal\/building-controls\/[a-z-]+$/)) {
+    // Don't redirect, allow accessing these subject pages directly
     return false;
   }
   
