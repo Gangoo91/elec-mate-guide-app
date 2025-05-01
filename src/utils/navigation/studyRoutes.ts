@@ -1,9 +1,27 @@
+
 import { Location } from 'react-router-dom';
 
 export const handleStudyRoutes = (
   location: Location,
   navigate: (to: string) => void
 ): boolean => {
+  // Handle development pages - allow direct access
+  if (location.pathname === '/electricians/development' || 
+      location.pathname === '/electricians/development/career-pathways' ||
+      location.pathname === '/electricians/development/higher-education' || 
+      location.pathname === '/electricians/development/business-development' ||
+      location.pathname === '/electricians/development/professional-associations' ||
+      location.pathname === '/electricians/development/industry-specialisations') {
+    // Don't redirect, allow accessing the development pages directly
+    return false;
+  }
+
+  // Handle career pathways detail pages
+  if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
+    navigate('/electricians/development/career-pathways');
+    return true;
+  }
+  
   // Handle practice exam routes
   if (location.pathname.match(/\/apprentices\/practice-exams\/(level-2|level-3|hnc|hnd|inspection-testing|moet|am2)$/)) {
     navigate('/apprentices/practice-exams');
@@ -15,12 +33,6 @@ export const handleStudyRoutes = (
       location.pathname === '/electricians/development/career-pathways') {
     // Don't redirect, allow accessing the job price estimator and career pathways directly
     return false;
-  }
-  
-  // Career pathways detail pages
-  if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
-    navigate('/electricians/development/career-pathways');
-    return true;
   }
   
   // Level 2 unit section pages

@@ -18,6 +18,12 @@ export const handleNavigationLogic = (
 
   console.log("NavigationUtils - Using default back logic");
   
+  // Handle development routes
+  if (location.pathname.match(/\/electricians\/development\/[a-z-]+/)) {
+    navigate('/electricians/development');
+    return;
+  }
+  
   // Handle mentorship routes for both apprentices and electricians
   if (location.pathname.includes('/mentorship/')) {
     if (location.pathname.startsWith('/apprentices/')) {
