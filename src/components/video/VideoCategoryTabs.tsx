@@ -2,18 +2,8 @@
 import React from 'react';
 import { BookOpen, Lightbulb, Wrench, Shield, Hammer, TestTube } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { VideoCard } from './VideoCard';
-
-interface VideoLesson {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  category: 'core_units' | 'practical_skills' | 'theory' | 'safety' | 'installation' | 'testing';
-  kudos_points: number;
-  video_url: string;
-  unit_number?: string;
-}
+import VideoCard from './VideoCard';
+import { VideoLesson } from '@/types/videos';
 
 interface VideoCategoryTabsProps {
   categorizedVideos: Record<string, VideoLesson[]>;

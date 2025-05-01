@@ -10,19 +10,25 @@ interface VideoCardProps {
   video: VideoLesson;
   isCompleted?: boolean;
   onClick?: () => void;
+  onWatch?: (video: VideoLesson) => void;
 }
 
-const VideoCard = ({ video, isCompleted = false, onClick }: VideoCardProps) => {
+const VideoCard = ({ video, isCompleted = false, onClick, onWatch }: VideoCardProps) => {
+  const handleClick = () => {
+    if (onClick) onClick();
+    if (onWatch) onWatch(video);
+  };
+  
   return (
     <Card 
       className="overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-md bg-[#22251e] border-[#FFC900]/20 hover:border-[#FFC900]/70"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <div className="relative aspect-video bg-[#151812] overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
           <PlayCircle className="h-12 w-12 text-[#FFC900]/90" />
         </div>
-        {isCompleted && <CompletionBadge />}
+        <CompletionBadge watched={isCompleted} />
       </div>
       
       <CardContent className="p-4">

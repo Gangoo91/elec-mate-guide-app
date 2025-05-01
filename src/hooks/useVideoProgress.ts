@@ -116,6 +116,7 @@ export function useVideoProgress(videoId: string) {
     
     timeoutRef.current = setTimeout(async () => {
       try {
+        // Update the video progress
         const { error } = await supabase
           .from('video_progress')
           .upsert({
@@ -124,7 +125,7 @@ export function useVideoProgress(videoId: string) {
             watched,
             watch_time: Math.floor(position),
             last_position: position,
-            training_recorded: watched && !progress.trainingRecorded
+            training_recorded: watched ? true : progress.trainingRecorded
           });
 
         if (error) {
@@ -132,34 +133,7 @@ export function useVideoProgress(videoId: string) {
           return;
         }
 
-        if (watched && !progress.trainingRecorded) {
-          // Get video details to record training time
-          const { data: video } = await supabase
-            .from('video_lessons')
-            .select('training_minutes, title, eal_course_id')
-            .eq('id', videoId)
-            .single();
-
-          if (video && video.training_minutes) {
-            // Record the training time
-            const { error: trainingError } = await supabase
-              .from('training_records')
-              .insert({
-                user_id: user.id,
-                video_id: videoId,
-                minutes: video.training_minutes,
-                eal_course_id: video.eal_course_id,
-                recorded_at: new Date().toISOString()
-              });
-
-            if (!trainingError) {
-              toast({
-                title: "Training Time Recorded",
-                description: `${video.training_minutes} minutes added to your off-the-job training record`,
-              });
-            }
-          }
-        }
+        // We'll handle training time recording in useTrainingRecord hook instead
       } catch (err) {
         handleError(err, 'Error updating video progress');
       }

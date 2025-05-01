@@ -5,6 +5,8 @@ import { VideoPlayer } from './VideoPlayer';
 import { VideoLesson } from '@/types/videos';
 import { Timer, Book } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useTrainingRecord } from '@/hooks/useTrainingRecord';
+import { Button } from '@/components/ui/button';
 
 interface VideoDialogProps {
   video: VideoLesson | null;
@@ -13,13 +15,24 @@ interface VideoDialogProps {
 
 export const VideoDialog = ({ video, onClose }: VideoDialogProps) => {
   if (!video) return null;
+  
+  const { recordTrainingTime, isComplete } = useTrainingRecord({
+    videoId: video.id,
+    trainingMinutes: video.training_minutes || 0,
+    ealCourseId: video.eal_course_id,
+    videoTitle: video.title
+  });
 
   return (
     <Dialog open={!!video} onOpenChange={() => onClose()}>
       <DialogContent className="max-w-4xl p-0 bg-[#22251e]">
         <div className="flex flex-col">
           <div className="aspect-video w-full">
-            <VideoPlayer videoUrl={video.video_url} />
+            <VideoPlayer 
+              videoId={video.id} 
+              videoUrl={video.video_url} 
+              title={video.title} 
+            />
           </div>
           
           <div className="p-6">
@@ -61,6 +74,17 @@ export const VideoDialog = ({ video, onClose }: VideoDialogProps) => {
                 </div>
               )}
             </div>
+            
+            {video.training_minutes && !isComplete && (
+              <div className="mt-4">
+                <Button
+                  onClick={recordTrainingTime}
+                  className="bg-[#FFC900] text-black hover:bg-[#FFD700]"
+                >
+                  Record {video.training_minutes} minutes to training record
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>

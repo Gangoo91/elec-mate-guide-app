@@ -48,7 +48,7 @@ const VideoPlayerContent = ({ videoId, videoUrl, title }: { videoId: string, vid
     updateProgress(currentTime, currentTime);
     toast({
       title: "Video completed",
-      description: progress.kudosAwarded ? "Thanks for watching!" : "You earned kudos points!",
+      description: progress.trainingRecorded ? "Thanks for watching!" : "You earned training time!",
     });
   };
 
