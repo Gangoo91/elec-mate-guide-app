@@ -16,10 +16,10 @@ export const handleStudyRoutes = (
     return false;
   }
 
-  // Handle career pathways detail pages
+  // Handle career pathways detail pages - allow direct access
   if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
-    navigate('/electricians/development/career-pathways');
-    return true;
+    // Don't redirect, allow accessing the career pathways detail pages directly
+    return false;
   }
   
   // Handle practice exam routes

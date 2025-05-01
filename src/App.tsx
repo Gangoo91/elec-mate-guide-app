@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -37,6 +36,14 @@ import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
 import Unit305SectionPage from "./pages/units/Unit305SectionPage";
 import JobPriceEstimatorPage from "./pages/JobPriceEstimatorPage";
 import CalculatorToolsPage from "./pages/CalculatorTools";
+import CareerPathwaysPage from "./pages/CareerPathwaysPage";
+import DesignEngineerPage from "./pages/careers/DesignEngineerPage";
+import CommissioningEngineerPage from "./pages/careers/CommissioningEngineerPage";
+import ProjectManagerPage from "./pages/careers/ProjectManagerPage";
+import ControlSystemsEngineerPage from "./pages/careers/ControlSystemsEngineerPage";
+import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
+import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
+import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
 import "./index.css";
 
 const queryClient = new QueryClient({
@@ -72,6 +79,16 @@ const App = () => {
                     <Route path="/subscription" element={<Subscription />} />
                     <Route path="/subscription/success" element={<SubscriptionSuccess />} />
                     
+                    {/* Development & Career Pathway Routes */}
+                    <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
+                    <Route path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />
+                    <Route path="/electricians/development/career-pathways/design" element={<DesignEngineerPage />} />
+                    <Route path="/electricians/development/career-pathways/commissioning" element={<CommissioningEngineerPage />} />
+                    <Route path="/electricians/development/career-pathways/project-management" element={<ProjectManagerPage />} />
+                    <Route path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />
+                    <Route path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />
+                    <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
+                    
                     {/* Technical Tools Routes */}
                     <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />
                     <Route path="/electricians/technical-tools/calculators" element={<CalculatorToolsPage />} />
@@ -87,18 +104,6 @@ const App = () => {
                       path="/apprentices/study-materials/city-guilds/level-2/core-units/201"
                       element={<Level2Unit201Page />} 
                     />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/202" 
-                      element={<Level2Unit202Page />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/203" 
-                      element={<Level2Unit203Page />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/204" 
-                      element={<Level2Unit204Page />} 
-                    />
                     
                     {/* Level 3 Unit Pages */}
                     <Route 
@@ -113,7 +118,7 @@ const App = () => {
                       path="/apprentices/study-materials/city-guilds/level-3/305/:sectionId"
                       element={<Unit305SectionPage />}
                     />
-
+                    
                     {/* Unit Section Pages */}
                     <Route 
                       path="/apprentices/study-materials/city-guilds/level-2/core-units/201/:sectionId" 

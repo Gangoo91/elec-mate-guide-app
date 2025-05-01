@@ -19,8 +19,14 @@ export const handleNavigationLogic = (
   console.log("NavigationUtils - Using default back logic");
   
   // Handle development routes
-  if (location.pathname.match(/\/electricians\/development\/[a-z-]+/)) {
+  if (location.pathname.match(/\/electricians\/development\/[a-z-]+$/)) {
     navigate('/electricians/development');
+    return;
+  }
+
+  // Specific handler for career pathways detail pages
+  if (location.pathname.match(/\/electricians\/development\/career-pathways\/[a-z-]+$/)) {
+    navigate('/electricians/development/career-pathways');
     return;
   }
   
