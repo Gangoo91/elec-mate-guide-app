@@ -13,6 +13,11 @@ import PracticeExamsPage from "../../pages/PracticeExamsPage";
 import Mentorship from "../../pages/Mentorship";
 import StudyGroupsPage from "../../pages/StudyGroupsPage";
 import ProgressTrackingPage from "../../pages/apprentices/ProgressTrackingPage";
+import Level2ExamsPage from "../../pages/Level2ExamsPage";
+import FindMentors from "../../pages/FindMentors";
+import MyMentors from "../../pages/MyMentors";
+import MentorshipGuide from "../../pages/MentorshipGuide";
+import ScheduleSessions from "../../pages/ScheduleSessions";
 
 const apprenticeMainRoutes: RouteObject[] = [
   {
@@ -60,6 +65,22 @@ const apprenticeMainRoutes: RouteObject[] = [
     element: <Mentorship />
   },
   {
+    path: "/apprentices/mentorship/find-mentors",
+    element: <FindMentors />
+  },
+  {
+    path: "/apprentices/mentorship/my-mentors",
+    element: <MyMentors />
+  },
+  {
+    path: "/apprentices/mentorship/guide",
+    element: <MentorshipGuide />
+  },
+  {
+    path: "/apprentices/mentorship/schedule",
+    element: <ScheduleSessions />
+  },
+  {
     path: "/apprentices/study-groups",
     element: <StudyGroupsPage />
   },
@@ -67,6 +88,10 @@ const apprenticeMainRoutes: RouteObject[] = [
     path: "/apprentices/progress",
     element: <ProgressTrackingPage />
   },
+  {
+    path: "/apprentices/mock-exams/level2",
+    element: <Level2ExamsPage />
+  }
 ];
 
 export default apprenticeMainRoutes;
