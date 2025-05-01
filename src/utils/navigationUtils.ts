@@ -18,6 +18,12 @@ export const handleNavigationLogic = (
 
   console.log("NavigationUtils - Using default back logic");
   
+  // Skip navigation handling for apprentice mentorship routes
+  if (location.pathname.includes('/apprentices/mentorship')) {
+    navigate(-1);
+    return;
+  }
+  
   // Check if the path matches any of the study route patterns
   if (handleStudyRoutes(location, (path) => navigate(path))) {
     return;

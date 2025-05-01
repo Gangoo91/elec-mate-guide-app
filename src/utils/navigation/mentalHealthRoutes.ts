@@ -22,18 +22,17 @@ export const handleMentalHealthRoutes = (
     "/mental-health/professional-resources/crisis-support"
   ];
   
+  // Only apply redirection for mental health routes
+  if (!location.pathname.startsWith("/mental-health/")) {
+    return false;
+  }
+  
   // For valid subpages, let them navigate directly
-  if (location.pathname.startsWith("/mental-health/") && 
-      validMentalHealthRoutes.includes(location.pathname)) {
+  if (validMentalHealthRoutes.includes(location.pathname)) {
     return false;
   }
 
   // Default back to main mental health page for unknown routes
-  if (location.pathname.startsWith("/mental-health/") && 
-      !validMentalHealthRoutes.includes(location.pathname)) {
-    navigate("/mental-health");
-    return true;
-  }
-
-  return false;
+  navigate("/mental-health");
+  return true;
 };

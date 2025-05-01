@@ -73,6 +73,18 @@ const Mentorship = () => {
       description: `Opening calendar to schedule a session with ${request.apprenticeName}.`,
     });
   };
+  
+  // Define a function to handle stopping mentorship
+  const handleStopMentoring = (request: any) => {
+    setMentorshipRequests(prev => 
+      prev.map(r => r.id === request.id ? {...r, status: "rejected"} : r)
+    );
+    
+    toast({
+      title: "Mentorship Ended",
+      description: `You have ended mentorship with ${request.apprenticeName}.`,
+    });
+  };
 
   if (isLoading) return <MentorshipSkeleton />;
   if (error) return <MentorshipError />;
@@ -108,6 +120,7 @@ const Mentorship = () => {
             onAcceptRequest={handleAcceptRequest}
             onRejectRequest={handleRejectRequest}
             onScheduleSession={handleScheduleSession}
+            onStopMentoring={handleStopMentoring}
           />
         ) : (
           <MentorList 
@@ -135,4 +148,3 @@ const Mentorship = () => {
 };
 
 export default Mentorship;
-
