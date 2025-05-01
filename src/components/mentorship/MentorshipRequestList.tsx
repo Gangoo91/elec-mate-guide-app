@@ -22,6 +22,7 @@ interface MentorshipRequestListProps {
   onAcceptRequest: (request: MentorshipRequest) => void;
   onRejectRequest: (request: MentorshipRequest) => void;
   onScheduleSession: (request: MentorshipRequest) => void;
+  onStopMentoring: (request: MentorshipRequest) => void;
 }
 
 export const MentorshipRequestList = ({ 
@@ -29,7 +30,8 @@ export const MentorshipRequestList = ({
   isLoading = false,
   onAcceptRequest,
   onRejectRequest,
-  onScheduleSession
+  onScheduleSession,
+  onStopMentoring
 }: MentorshipRequestListProps) => {
   const [filter, setFilter] = useState<"pending" | "accepted" | "all">("pending");
   const [copiedRequestId, setCopiedRequestId] = useState<string | null>(null);
@@ -56,7 +58,7 @@ Request Date: ${new Date(request.requestDate).toLocaleDateString()}
   const handleStopMentoring = () => {
     if (requestToStop) {
       toast.success(`Stopped mentoring ${requestToStop.apprenticeName}`);
-      onRejectRequest(requestToStop);
+      onStopMentoring(requestToStop);
       setRequestToStop(null);
     }
   };

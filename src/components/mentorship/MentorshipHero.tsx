@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Users, FilterX, GraduationCap } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface MentorshipHeroProps {
@@ -15,7 +15,7 @@ export const MentorshipHero = ({
   requestsCount = 0
 }: MentorshipHeroProps) => {
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4 mt-6 mb-6 bg-gradient-to-r from-[#22251e] to-[#22251e]/50 p-4 rounded-lg border border-[#FFC900]/20">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
       <div className="flex items-center gap-3">
         <div className="bg-[#FFC900]/10 p-3 rounded-full">
           <GraduationCap className="h-6 w-6 text-[#FFC900]" />
@@ -27,7 +27,7 @@ export const MentorshipHero = ({
                 Mentor Connect Hub
               </h2>
               <p className="text-sm text-[#FFC900]/70">
-                View and respond to mentorship requests from apprentices seeking your expertise
+                Guide apprentices through their professional journey
               </p>
             </>
           ) : (
@@ -36,7 +36,7 @@ export const MentorshipHero = ({
                 Find Your Mentor
               </h2>
               <p className="text-sm text-[#FFC900]/70">
-                Connect with experienced electricians ready to guide you through your apprenticeship journey
+                Connect with experienced electricians for guidance
               </p>
             </>
           )}
