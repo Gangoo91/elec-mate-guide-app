@@ -7,7 +7,8 @@ import { useDataCaching } from "@/hooks/useDataCaching";
 import { MentorshipSkeleton } from "@/components/mentorship/MentorshipSkeleton";
 import { MentorshipError } from "@/components/mentorship/MentorshipError";
 import { demoMentorshipRequests } from "@/components/mentorship/demoData";
-import { MentorshipRequestList } from "@/components/mentorship/MentorshipRequestList";
+import { MentorshipRequestList, MentorshipRequest } from "@/components/mentorship/MentorshipRequestList";
+import { toast } from "sonner";
 
 const PendingRequests = () => {
   const { isLoading, error } = useDataCaching("mentorship-requests", "mentorships");
@@ -17,6 +18,22 @@ const PendingRequests = () => {
   if (error) return <MentorshipError />;
 
   const pendingRequests = mentorshipRequests.filter(req => req.status === "pending");
+  
+  const handleAcceptRequest = (request: MentorshipRequest) => {
+    toast.success(`Accepted request from ${request.apprenticeName}`);
+  };
+  
+  const handleRejectRequest = (request: MentorshipRequest) => {
+    toast.error(`Rejected request from ${request.apprenticeName}`);
+  };
+  
+  const handleScheduleSession = (request: MentorshipRequest) => {
+    toast.success(`Scheduled session with ${request.apprenticeName}`);
+  };
+  
+  const handleStopMentoring = (request: MentorshipRequest) => {
+    toast.info(`Stopped mentoring ${request.apprenticeName}`);
+  };
 
   return (
     <MainLayout>
@@ -28,7 +45,14 @@ const PendingRequests = () => {
         
         <GlassCard className="mb-6">
           {pendingRequests.length > 0 ? (
-            <MentorshipRequestList requests={pendingRequests} isElectriciansSection={true} />
+            <MentorshipRequestList 
+              requests={pendingRequests} 
+              isLoading={false}
+              onAcceptRequest={handleAcceptRequest}
+              onRejectRequest={handleRejectRequest}
+              onScheduleSession={handleScheduleSession}
+              onStopMentoring={handleStopMentoring}
+            />
           ) : (
             <div className="text-center py-8">
               <p className="text-[#FFC900]/70">You don't have any pending mentorship requests at this time.</p>

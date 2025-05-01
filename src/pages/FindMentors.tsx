@@ -10,15 +10,22 @@ import { MentorList } from "@/components/mentorship/MentorList";
 import { MentorFilters } from "@/components/mentorship/MentorFilters";
 import { demoMentors } from "@/components/mentorship/demoData";
 import { Mentor } from "@/types/mentor";
+import { toast } from "sonner";
 
 const FindMentors = () => {
   const { data: mentors, isLoading, error } = useDataCaching<Mentor>("mentors", "mentorships");
-  const [filter, setFilter] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = React.useState("all");
+  const [selectedAvailability, setSelectedAvailability] = React.useState("all");
   
   if (isLoading) return <MentorshipSkeleton />;
   if (error) return <MentorshipError />;
 
   const displayMentors = mentors || demoMentors;
+  
+  const handleRequestMentorship = (mentor: Mentor) => {
+    toast.success(`Mentorship request sent to ${mentor.name}`);
+  };
 
   return (
     <MainLayout>
@@ -29,11 +36,21 @@ const FindMentors = () => {
         />
         
         <GlassCard className="mb-6">
-          <div className="w-full mb-6">
-            <MentorFilters filter={filter} setFilter={setFilter} />
-          </div>
+          <MentorFilters
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            selectedSpecialty={selectedSpecialty}
+            setSelectedSpecialty={setSelectedSpecialty}
+            availableSpecialties={[]}
+            selectedAvailability={selectedAvailability}
+            setSelectedAvailability={setSelectedAvailability}
+          />
           
-          <MentorList mentors={displayMentors} filter={filter} />
+          <MentorList 
+            mentors={displayMentors} 
+            isLoading={false}
+            onRequestMentorship={handleRequestMentorship} 
+          />
         </GlassCard>
       </div>
     </MainLayout>
