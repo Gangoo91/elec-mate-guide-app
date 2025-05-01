@@ -228,7 +228,12 @@ const EALLevel2Page = () => {
                         {["Circuit Theory Basics", "Safe Working Practices", "Wiring Techniques"].map((title, index) => (
                           <Card key={index} className="bg-secondary/30 border-primary/20 hover:border-primary/50 transition-all duration-300 cursor-pointer overflow-hidden">
                             <div className="aspect-video bg-secondary/50 flex items-center justify-center">
-                              <Play className="h-12 w-12 text-primary/50" />
+                              <div className="h-12 w-12 text-primary/50">
+                                {/* Play icon replaced with inline SVG */}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                              </div>
                             </div>
                             <CardContent className="p-3">
                               <h4 className="font-medium text-primary text-sm">{title}</h4>
