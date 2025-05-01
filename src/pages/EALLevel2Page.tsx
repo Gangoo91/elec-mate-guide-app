@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
@@ -7,16 +6,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import UnitCard from "@/components/level2/UnitCard";
 import GlassCard from "@/components/shared/GlassCard";
 import { useDashboardController } from "@/hooks/useDashboardController";
-import { BookOpen, Award, Users, Calendar } from "lucide-react";
+import { BookOpen, Award, Users, Calendar, Clock, BarChart } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Mock user progress data - in a real app, this would come from a database
 const mockUserProgress = {
-  'ELEC2/01': { completed: 2, total: 5 },
-  'ELEC2/04': { completed: 3, total: 8 },
-  'ELEC2/05A': { completed: 1, total: 6 },
-  'ELEC2/05B': { completed: 4, total: 7 },
-  'ELEC2/08': { completed: 0, total: 5 },
+  'ELEC2/01': { completed: 2, total: 5, timeSpent: 180, estimatedTime: 300 }, // 3h spent, 5h estimated
+  'ELEC2/04': { completed: 3, total: 8, timeSpent: 240, estimatedTime: 480 }, // 4h spent, 8h estimated
+  'ELEC2/05A': { completed: 1, total: 6, timeSpent: 60, estimatedTime: 360 },  // 1h spent, 6h estimated
+  'ELEC2/05B': { completed: 4, total: 7, timeSpent: 270, estimatedTime: 420 }, // 4.5h spent, 7h estimated
+  'ELEC2/08': { completed: 0, total: 5, timeSpent: 0, estimatedTime: 300 },    // 0h spent, 5h estimated
 };
 
 const EALLevel2Page = () => {
@@ -32,6 +31,15 @@ const EALLevel2Page = () => {
   const totalCompleted = Object.values(mockUserProgress).reduce((sum, unit) => sum + unit.completed, 0);
   const totalSections = Object.values(mockUserProgress).reduce((sum, unit) => sum + unit.total, 0);
   const overallProgress = Math.round((totalCompleted / totalSections) * 100);
+  
+  // Calculate total training time
+  const totalTrainingMinutes = Object.values(mockUserProgress).reduce((sum, unit) => sum + (unit.timeSpent || 0), 0);
+  const totalTrainingHours = Math.floor(totalTrainingMinutes / 60);
+  const totalTrainingMins = totalTrainingMinutes % 60;
+  
+  // Calculate estimated total time
+  const totalEstimatedMinutes = Object.values(mockUserProgress).reduce((sum, unit) => sum + (unit.estimatedTime || 0), 0);
+  const totalEstimatedHours = Math.floor(totalEstimatedMinutes / 60);
 
   return (
     <MainLayout>
@@ -84,10 +92,10 @@ const EALLevel2Page = () => {
                     
                     <div className="flex items-center justify-between p-2 border-b border-primary/10">
                       <div className="flex items-center">
-                        <Calendar className="h-4 w-4 text-primary mr-2" />
-                        <span className="text-sm text-primary/80">Study Hours</span>
+                        <Clock className="h-4 w-4 text-primary mr-2" />
+                        <span className="text-sm text-primary/80">Off-the-Job Training</span>
                       </div>
-                      <span className="text-sm font-medium text-primary">12.5 hrs</span>
+                      <span className="text-sm font-medium text-primary">{totalTrainingHours}h {totalTrainingMins}m</span>
                     </div>
                     
                     <div className="flex items-center justify-between p-2">
@@ -120,6 +128,24 @@ const EALLevel2Page = () => {
                     <p className="text-primary/80">
                       <span className="font-medium">Qualification Type:</span> Diploma
                     </p>
+                    <div className="mt-4 pt-3 border-t border-primary/10">
+                      <h3 className="font-medium mb-2 text-primary">Required Off-the-Job Training</h3>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-primary/70">Training Completed</span>
+                        <span className="text-xs font-medium text-primary">
+                          {totalTrainingHours}h / {totalEstimatedHours}h
+                        </span>
+                      </div>
+                      <div className="w-full bg-secondary h-2 rounded-full overflow-hidden">
+                        <div 
+                          className="bg-green-500 h-full rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(100, (totalTrainingMinutes / totalEstimatedMinutes) * 100)}%` }}
+                        ></div>
+                      </div>
+                      <p className="text-xs text-primary/60 mt-2">
+                        Apprenticeship standards require 20% of your contracted hours to be spent on off-the-job training.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </GlassCard>
@@ -145,8 +171,8 @@ const EALLevel2Page = () => {
                       <TabsTrigger value="community" className="data-[state=active]:bg-background">
                         Community
                       </TabsTrigger>
-                      <TabsTrigger value="schedule" className="data-[state=active]:bg-background">
-                        Schedule
+                      <TabsTrigger value="training" className="data-[state=active]:bg-background">
+                        Training Record
                       </TabsTrigger>
                     </TabsList>
                   </div>
@@ -275,23 +301,79 @@ const EALLevel2Page = () => {
                     </CardContent>
                   </TabsContent>
                   
-                  <TabsContent value="schedule" className="m-0">
+                  <TabsContent value="training" className="m-0">
                     <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold text-primary mb-4">Study Schedule</h3>
-                      <p className="text-primary/80 mb-4">Recommended study plan for completing your qualification.</p>
+                      <h3 className="text-xl font-semibold text-primary mb-4">Off-the-Job Training Record</h3>
+                      <p className="text-primary/80 mb-5">
+                        Track your 20% off-the-job training hours for your apprenticeship. This record can be shared with your tutor.
+                      </p>
                       
+                      <Card className="bg-secondary/30 border-primary/20 mb-6">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className="font-medium text-primary flex items-center">
+                              <Clock className="h-4 w-4 mr-2" /> Training Summary
+                            </h4>
+                            <button className="text-xs text-primary underline">Export for Tutor</button>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="bg-secondary/50 p-3 rounded-md text-center">
+                              <div className="text-2xl font-bold text-primary">{totalTrainingHours}h {totalTrainingMins}m</div>
+                              <div className="text-xs text-primary/70">Total Training Time</div>
+                            </div>
+                            
+                            <div className="bg-secondary/50 p-3 rounded-md text-center">
+                              <div className="text-2xl font-bold text-primary">12.5</div>
+                              <div className="text-xs text-primary/70">Weekly Target (hrs)</div>
+                            </div>
+                            
+                            <div className="bg-secondary/50 p-3 rounded-md text-center">
+                              <div className="text-2xl font-bold text-primary">486</div>
+                              <div className="text-xs text-primary/70">Required GLH</div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      
+                      <h4 className="font-medium text-primary mb-3">Training Records by Unit</h4>
                       <div className="space-y-3">
-                        {["Week 1-4: Health and Safety", "Week 5-12: Electrical Science", "Week 13-16: Installation Methods"].map((week, index) => (
-                          <Card key={index} className="bg-secondary/30 border-primary/20">
-                            <CardContent className="p-3 flex justify-between items-center">
-                              <div>
-                                <h4 className="font-medium text-primary text-sm">{week}</h4>
-                                <p className="text-xs text-primary/70 mt-1">Focus on core concepts and practical applications</p>
+                        {Object.entries(mockUserProgress).map(([unitId, data]) => (
+                          <Card key={unitId} className="bg-secondary/30 border-primary/20">
+                            <CardContent className="p-3">
+                              <div className="flex justify-between items-center">
+                                <div>
+                                  <div className="font-medium text-primary">{unitId}</div>
+                                  <div className="text-xs text-primary/70">
+                                    {Math.floor(data.timeSpent / 60)}h {data.timeSpent % 60}m logged
+                                  </div>
+                                </div>
+                                <div className="text-right">
+                                  <div className="text-xs text-primary/70">Last activity: 3 days ago</div>
+                                  <button className="text-xs text-primary underline mt-1">Add time manually</button>
+                                </div>
                               </div>
-                              <Calendar className="h-5 w-5 text-primary/70" />
                             </CardContent>
                           </Card>
                         ))}
+                      </div>
+                      
+                      <div className="mt-6 flex justify-between items-center">
+                        <h4 className="font-medium text-primary">Training Graph</h4>
+                        <div className="text-xs text-primary/70">
+                          <select className="bg-secondary border border-primary/20 rounded p-1">
+                            <option>Last 30 days</option>
+                            <option>Last 3 months</option>
+                            <option>All time</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div className="h-64 bg-secondary/30 border border-primary/20 rounded-md mt-3 flex items-center justify-center">
+                        <div className="text-primary/50 flex flex-col items-center">
+                          <BarChart className="h-12 w-12 mb-2" />
+                          <span>Training activity graph will appear here</span>
+                        </div>
                       </div>
                     </CardContent>
                   </TabsContent>

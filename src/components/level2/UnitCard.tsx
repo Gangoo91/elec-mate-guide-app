@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Clock } from 'lucide-react';
 import ProgressTracker from './ProgressTracker';
 
 interface UnitCardProps {
@@ -12,6 +12,8 @@ interface UnitCardProps {
   progress?: {
     completed: number;
     total: number;
+    timeSpent?: number; // Time spent in minutes
+    estimatedTime?: number; // Estimated time in minutes
   };
 }
 
@@ -47,11 +49,20 @@ const UnitCard = ({ unitNumber, title, description, path, progress }: UnitCardPr
         <p className="text-primary/70 text-sm mb-4">
           {description}
         </p>
+
+        {progress?.timeSpent && (
+          <div className="text-xs text-primary/60 mb-4 flex items-center">
+            <Clock className="h-3 w-3 mr-1" />
+            <span>Training time: {Math.floor(progress.timeSpent / 60)}h {progress.timeSpent % 60}m</span>
+          </div>
+        )}
         
         {progress && (
           <ProgressTracker 
             completedSections={progress.completed}
             totalSections={progress.total}
+            timeSpent={progress.timeSpent}
+            estimatedTime={progress.estimatedTime}
             className="mt-auto"
           />
         )}
