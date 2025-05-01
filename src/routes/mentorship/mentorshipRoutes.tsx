@@ -2,6 +2,12 @@
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import Mentorship from "@/pages/Mentorship";
+import FindMentors from "@/pages/FindMentors";
+import MyMentors from "@/pages/MyMentors";
+import MentorshipGuidePage from "@/pages/MentorshipGuide";
+import ScheduleSessions from "@/pages/ScheduleSessions";
+import PendingRequests from "@/pages/PendingRequests";
+import ActiveMentorships from "@/pages/ActiveMentorships";
 
 // Define all mentorship-related routes
 const mentorshipRoutes: RouteObject[] = [
@@ -12,19 +18,19 @@ const mentorshipRoutes: RouteObject[] = [
   },
   {
     path: "/apprentices/mentorship/find-mentors",
-    element: <Mentorship />
+    element: <FindMentors />
   },
   {
     path: "/apprentices/mentorship/my-mentors",
-    element: <Mentorship />
+    element: <MyMentors />
   },
   {
     path: "/apprentices/mentorship/guide",
-    element: <Mentorship />
+    element: <MentorshipGuidePage />
   },
   {
     path: "/apprentices/mentorship/schedule",
-    element: <Mentorship />
+    element: <ScheduleSessions />
   },
   
   // Electrician mentorship routes
@@ -34,15 +40,15 @@ const mentorshipRoutes: RouteObject[] = [
   },
   {
     path: "/electricians/mentorship/pending-requests",
-    element: <Mentorship />
+    element: <PendingRequests />
   },
   {
     path: "/electricians/mentorship/active",
-    element: <Mentorship />
+    element: <ActiveMentorships />
   },
   {
     path: "/electricians/mentorship/guide",
-    element: <Mentorship />
+    element: <MentorshipGuidePage />
   },
 ];
 
