@@ -2,6 +2,7 @@
 import React from "react";
 import ResourceCard from "@/components/shared/ResourceCard";
 import { MessageCircle, Users, GraduationCap, Calendar, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface MentorshipResourcesProps {
   isElectriciansSection: boolean;

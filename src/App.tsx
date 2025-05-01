@@ -18,9 +18,10 @@ import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import ManageSubscription from "./pages/ManageSubscription";
 import Settings from "./pages/Settings";
 import { AuthRoutes } from "./routes/AuthRoutes";
-import ApprenticeRoutes from "./routes/ApprenticeRoutes"; // Fixed import
+import ApprenticeRoutes from "./routes/ApprenticeRoutes";
 import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import mentalHealthRoutes from "./routes/MentalHealthRoutes";
+import mentorshipRoutes from "./routes/mentorship/mentorshipRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
 import Level2Unit201Page from "./pages/Level2Unit201Page";
 import Level2Unit202Page from "./pages/Level2Unit202Page";
@@ -138,6 +139,15 @@ const App = () => {
                     {AuthRoutes}
                     {ElectricianRoutes}
                     {mentalHealthRoutes.map((route) => (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={route.element}
+                      />
+                    ))}
+                    
+                    {/* Add mentorship routes directly */}
+                    {mentorshipRoutes.map((route) => (
                       <Route
                         key={route.path}
                         path={route.path}
