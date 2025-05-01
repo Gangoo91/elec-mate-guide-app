@@ -24,7 +24,7 @@ const EALLevel2Page = () => {
         />
         
         <GlassCard className="mt-8">
-          <h2 className="text-2xl font-semibold text-[#FFC900] mb-6 text-center">Mandatory Units</h2>
+          <h2 className="text-2xl font-semibold text-primary mb-6 text-center">Mandatory Units</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <UnitCard
@@ -64,7 +64,7 @@ const EALLevel2Page = () => {
           </div>
           
           <div className="mt-8 text-center">
-            <p className="text-[#FFC900]/80 text-sm">
+            <p className="text-primary/80 text-sm">
               This qualification has a minimum of 486 guided learning hours (GLH) and a Total Qualification Time (TQT) of 502 hours.
             </p>
           </div>

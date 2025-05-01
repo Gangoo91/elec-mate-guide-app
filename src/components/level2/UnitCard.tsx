@@ -21,17 +21,17 @@ const UnitCard = ({ unitNumber, title, description, path }: UnitCardProps) => {
   
   return (
     <div 
-      className="bg-[#22251e] border border-[#FFC900]/20 hover:border-[#FFC900]/50 transition-all duration-300 cursor-pointer p-6 rounded-lg"
+      className="bg-secondary border border-primary/20 hover:border-primary/50 transition-all duration-300 cursor-pointer p-6 rounded-lg"
       onClick={handleClick}
     >
       <div className="flex flex-col h-full">
-        <h3 className="text-[#FFC900] font-medium text-xl mb-2">
+        <h3 className="text-primary font-medium text-xl mb-2">
           {unitNumber}
         </h3>
-        <h4 className="text-white font-medium text-lg mb-3">
+        <h4 className="text-foreground font-medium text-lg mb-3">
           {title}
         </h4>
-        <p className="text-[#FFC900]/70 text-sm mt-auto">
+        <p className="text-primary/70 text-sm mt-auto">
           {description}
         </p>
       </div>
