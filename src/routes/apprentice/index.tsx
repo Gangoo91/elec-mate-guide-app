@@ -5,6 +5,7 @@ import moetRoutes from './moet-routes';
 import level2Routes from './level2-routes';
 import level3Routes from './level3-routes';
 import am2Routes from './am2-routes';
+import mentorshipRoutes from '../mentorship/mentorshipRoutes';
 
 // Combine all apprentice routes
 const ApprenticeRoutes: RouteObject[] = [
@@ -12,7 +13,8 @@ const ApprenticeRoutes: RouteObject[] = [
   ...moetRoutes,
   ...level2Routes,
   ...level3Routes,
-  ...am2Routes
+  ...am2Routes,
+  ...mentorshipRoutes.filter(route => route.path?.startsWith('/apprentices'))
 ];
 
 export default ApprenticeRoutes;
