@@ -3,32 +3,96 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
+import { SafetyQuiz } from "@/components/units/SafetyQuiz";
+import ExamCard from "@/components/practice-exams/ExamCard";
+import { useToast } from "@/components/ui/use-toast";
 
 const Level2ExamsPage = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   const handleBackClick = () => {
-    navigate('/apprentices/study-materials/city-guilds/level-2');
+    navigate('/apprentices/practice-exams');
+  };
+
+  const examTopics = [
+    {
+      title: "Unit 201 - Health & Safety",
+      description: "Assessment covering health & safety regulations and practices in electrical installations.",
+      numQuestions: 30,
+      timeLimit: 30,
+      unitId: "201"
+    },
+    {
+      title: "Unit 202 - Electrical Science",
+      description: "Questions on electrical principles, theory and calculations.",
+      numQuestions: 30,
+      timeLimit: 30,
+      unitId: "202"
+    },
+    {
+      title: "Unit 203 - Electrical Installations",
+      description: "Test covering electrical installation technology and practices.",
+      numQuestions: 30,
+      timeLimit: 30,
+      unitId: "203"
+    },
+    {
+      title: "Unit 204 - Wiring Systems",
+      description: "Assessment on installation methods, enclosures and wiring systems.",
+      numQuestions: 30,
+      timeLimit: 30,
+      unitId: "204"
+    },
+    {
+      title: "Unit 210 - Communication",
+      description: "Questions on workplace communication and documentation.",
+      numQuestions: 30,
+      timeLimit: 30,
+      unitId: "210"
+    }
+  ];
+
+  const [selectedExam, setSelectedExam] = React.useState<string | null>(null);
+
+  const handleStartExam = (unitId: string) => {
+    setSelectedExam(unitId);
+    window.scrollTo(0, 0);
+  };
+
+  const handleBackToExams = () => {
+    setSelectedExam(null);
   };
 
   return (
     <MainLayout>
-      <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
+      <div className="container px-4 py-6 md:py-8 pt-16 md:pt-20">
         <PageHeader 
           title="Level 2 Mock Exams"
           description="Practice assessments to help you prepare for your Level 2 qualification examinations."
-          customBackAction={handleBackClick}
+          customBackAction={selectedExam ? handleBackToExams : handleBackClick}
         />
         
-        <div className="mt-8 bg-[#22251e] border border-[#FFC900]/20 rounded-lg p-6">
-          <h3 className="text-[#FFC900] font-medium text-xl mb-4">Available Mock Exams</h3>
-          <p className="text-[#FFC900]/70">
-            Test your knowledge with our collection of mock exams designed to simulate the real Level 2 qualification exams.
-          </p>
-          <div className="mt-6">
-            <p className="text-[#FFC900]/90">Exams coming soon...</p>
+        {!selectedExam ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            {examTopics.map((topic, index) => (
+              <ExamCard
+                key={index}
+                title={topic.title}
+                description={topic.description}
+                numQuestions={topic.numQuestions}
+                timeLimit={topic.timeLimit}
+                onStart={() => handleStartExam(topic.unitId)}
+              />
+            ))}
           </div>
-        </div>
+        ) : (
+          <SafetyQuiz
+            unitId={selectedExam}
+            timeLimit={1800} // 30 minutes in seconds
+            questionsToShow={30}
+          />
+        )}
       </div>
     </MainLayout>
   );
