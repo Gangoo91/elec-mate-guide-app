@@ -10,7 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useVideos } from "@/hooks/useVideos";
 import { useNavigate } from 'react-router-dom';
-import { Play, BookOpen, Headphones, CirclePlay } from "lucide-react";
+import { Play, BookOpen, Headphones, CirclePlay, GraduationCap } from "lucide-react";
+import { Separator } from '@/components/ui/separator';
 
 export default function AddMilestoneDialog() {
   const { toast } = useToast();
@@ -22,6 +23,8 @@ export default function AddMilestoneDialog() {
   const [selectedResource, setSelectedResource] = useState<string | null>(null);
   const [resourceType, setResourceType] = useState<'video' | 'exam' | 'quiz' | 'audio' | 'none'>('none');
   const [trainingHours, setTrainingHours] = useState<string>('');
+  const [qualificationFramework, setQualificationFramework] = useState<'city_guilds' | 'eal' | 'moet' | 'other'>('city_guilds');
+  const [learningLevel, setLearningLevel] = useState<'level2' | 'level3' | 'level4' | null>('level2');
   const { videos } = useVideos();
   const navigate = useNavigate();
 
@@ -48,7 +51,9 @@ export default function AddMilestoneDialog() {
       completed_at: null,
       resource_id: selectedResource,
       resource_type: resourceType !== 'none' ? resourceType : null,
-      training_hours: trainingHours ? parseFloat(trainingHours) : null
+      training_hours: trainingHours ? parseFloat(trainingHours) : null,
+      qualification_framework: qualificationFramework,
+      learning_level: learningLevel
     };
 
     addMilestone(newMilestone);
@@ -63,6 +68,8 @@ export default function AddMilestoneDialog() {
     setSelectedResource(null);
     setResourceType('none');
     setTrainingHours('');
+    setQualificationFramework('city_guilds');
+    setLearningLevel('level2');
   };
 
   const handleResourceSelect = (id: string, type: 'video' | 'exam' | 'quiz' | 'audio') => {
@@ -131,6 +138,57 @@ export default function AddMilestoneDialog() {
             </Select>
           </div>
           
+          <div className="bg-[#22251e]/50 p-4 rounded-lg mb-4">
+            <h3 className="font-medium mb-3 text-[#FFC900] flex items-center gap-2">
+              <GraduationCap className="h-4 w-4" />
+              Learning Pathway
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium mb-1 block text-[#FFC900]/80">
+                  Qualification Framework
+                </label>
+                <Select 
+                  value={qualificationFramework} 
+                  onValueChange={(value: 'city_guilds' | 'eal' | 'moet' | 'other') => setQualificationFramework(value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select framework" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="city_guilds">City & Guilds</SelectItem>
+                    <SelectItem value="eal">EAL</SelectItem>
+                    <SelectItem value="moet">MOET</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium mb-1 block text-[#FFC900]/80">
+                  Learning Level
+                </label>
+                <Select 
+                  value={learningLevel || ''} 
+                  onValueChange={(value: 'level2' | 'level3' | 'level4' | '') => 
+                    setLearningLevel(value === '' ? null : value)
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="level2">Level 2</SelectItem>
+                    <SelectItem value="level3">Level 3</SelectItem>
+                    <SelectItem value="level4">Level 4+</SelectItem>
+                    <SelectItem value="">Not Applicable</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+          
           <div className="mb-4">
             <label htmlFor="trainingHours" className="text-sm font-medium mb-1 block">
               Off-the-Job Training Hours
@@ -149,6 +207,8 @@ export default function AddMilestoneDialog() {
               Record time for off-the-job training activities (leave empty if unknown)
             </p>
           </div>
+          
+          <Separator className="my-4" />
           
           <div className="bg-[#22251e]/50 p-4 rounded-lg mb-4">
             <h3 className="text-sm font-medium mb-2 text-[#FFC900]">Link Learning Resource (Optional)</h3>
