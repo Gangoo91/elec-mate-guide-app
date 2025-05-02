@@ -21,7 +21,7 @@ const TutorHubCard: React.FC<TutorHubCardProps> = ({
 }) => {
   return (
     <Card 
-      className="cursor-pointer hover:border-primary/50 transition-all" 
+      className="cursor-pointer hover:border-primary/50 transition-all hover:shadow-md" 
       onClick={() => onClick(path)}
     >
       <CardHeader>

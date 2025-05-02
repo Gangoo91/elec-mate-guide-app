@@ -43,6 +43,43 @@ const routes: RouteObject[] = [
     path: "/tutors",
     element: <TutorsPage />
   },
+  // Add tutor sub-routes
+  {
+    path: "/tutors/teaching-resources",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/lesson-plans",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/demonstration-guides",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/student-progress",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/off-the-job-monitoring",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/class-management",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/create-assessments",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/grade-assessments",
+    element: <TutorsPage />
+  },
+  {
+    path: "/tutors/assessment-calendar",
+    element: <TutorsPage />
+  },
   {
     path: '/signup',
     element: <Signup />
