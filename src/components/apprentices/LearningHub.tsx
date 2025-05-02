@@ -122,6 +122,7 @@ const LearningHub = () => {
     if (!user) return;
     
     try {
+      // Fix for TypeScript error: Convert Date objects to ISO strings before sending to Supabase
       const coursesToAdd = sampleUnits.map(unit => ({
         user_id: user.id,
         unit_number: unit.unitNumber,
@@ -132,7 +133,7 @@ const LearningHub = () => {
         total: unit.progress?.total || 0,
         time_spent: unit.progress?.timeSpent || 0,
         estimated_time: unit.progress?.estimatedTime || 0,
-        last_activity: unit.progress?.lastActivity
+        last_activity: unit.progress?.lastActivity ? unit.progress.lastActivity.toISOString() : new Date().toISOString()
       }));
       
       const { error } = await supabase
