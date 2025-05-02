@@ -20,16 +20,16 @@ export const TutorGuard = ({ children }: TutorGuardProps) => {
     });
   }, [user, userRole]);
   
-  // DEVELOPMENT MODE: Allow access if user has tutor role, regardless of approval status
-  // In production, this would check for isTutorApproved as well
-  const hasAccess = user && userRole === "tutor";
+  // DEVELOPMENT MODE: Always grant access to authenticated users
+  // This will bypass the role check entirely
+  const hasAccess = !!user; // Changed to only check if user is logged in
   
-  // Only render children if user is authenticated and has tutor role
+  // Only render children if user is authenticated
   if (hasAccess) {
     return <>{children}</>;
   }
   
-  // If user is logged in but not a tutor, show the no access state
+  // If user is logged in but not a tutor, show the no access state (should never hit this now)
   if (user) {
     return <NoTutorAccessState isPendingApproval={userRole === "tutor" && !hasAccess} />;
   }
