@@ -7,6 +7,7 @@ import { createRoutesFromElements } from 'react-router-dom';
 import Welcome from '@/pages/Welcome';
 import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
+import SubscriptionGuard from '@/components/guards/SubscriptionGuard';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -17,6 +18,22 @@ const routes: RouteObject[] = [
   {
     path: '/dashboard',
     element: <Dashboard />
+  },
+  {
+    path: '/tutors',
+    element: (
+      <SubscriptionGuard requiredTier="Electrician">
+        <NotFound />
+      </SubscriptionGuard>
+    )
+  },
+  {
+    path: '/tutors/apply',
+    element: (
+      <SubscriptionGuard requiredTier="Electrician">
+        <NotFound />
+      </SubscriptionGuard>
+    )
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
