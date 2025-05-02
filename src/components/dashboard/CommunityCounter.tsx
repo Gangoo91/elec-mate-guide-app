@@ -32,8 +32,10 @@ const CommunityCounter = () => {
         },
         staleTime: 1000 * 60 * 5, // Cache for 5 minutes
         retry: 2,
-        onError: (error) => {
-          console.error("Error fetching community size:", error);
+        meta: {
+          errorHandler: (error: unknown) => {
+            console.error("Error fetching community size:", error);
+          }
         }
       });
     } catch (error) {

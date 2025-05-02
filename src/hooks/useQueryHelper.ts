@@ -15,24 +15,29 @@ export function useQueryHelper<TData, TError = Error>(
 
   // Try to use the useQuery hook safely
   try {
-    const result = useQuery({
+    const queryOptions: UseQueryOptions<TData, TError> = {
       queryKey,
       queryFn,
       ...options,
-      onError: (error) => {
-        // Show toast for user-friendly errors
-        toast({
-          title: "Something went wrong",
-          description: error instanceof Error ? error.message : "An unknown error occurred",
-          variant: "destructive",
-        });
-        
-        // Call the original onError if provided
-        if (options?.onError) {
-          options.onError(error);
+      meta: {
+        ...options?.meta,
+        errorHandler: (error: unknown) => {
+          // Show toast for user-friendly errors
+          toast({
+            title: "Something went wrong",
+            description: error instanceof Error ? error.message : "An unknown error occurred",
+            variant: "destructive",
+          });
+          
+          // Call the original error handler if provided
+          if (options?.meta?.errorHandler) {
+            options.meta.errorHandler(error);
+          }
         }
       }
-    });
+    };
+
+    const result = useQuery<TData, TError>(queryOptions);
     
     return { ...result, isReady: true };
   } catch (error) {
