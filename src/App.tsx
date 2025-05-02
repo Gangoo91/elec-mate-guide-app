@@ -17,9 +17,11 @@ const queryClient = new QueryClient({
       retry: 1,
       staleTime: 1000 * 60 * 5, // 5 minutes
       refetchOnWindowFocus: false,
-      // Avoid missing QueryClient errors with a graceful error callback
-      onError: (error) => {
-        console.error('Query error:', error);
+      // Using onSettled callback instead of deprecated onError
+      onSettled: (data, error) => {
+        if (error) {
+          console.error('Query error:', error);
+        }
       }
     },
   },

@@ -19,17 +19,20 @@ export function useQueryHelper<TData, TError = Error>(
       queryKey,
       queryFn,
       ...options,
-      onError: (error) => {
+      // In the latest version of React Query, use onSettled or meta for error handling
+      onSettled: (data, error) => {
         // Show toast for user-friendly errors
-        toast({
-          title: "Something went wrong",
-          description: error instanceof Error ? error.message : "An unknown error occurred",
-          variant: "destructive",
-        });
+        if (error) {
+          toast({
+            title: "Something went wrong",
+            description: error instanceof Error ? error.message : "An unknown error occurred",
+            variant: "destructive",
+          });
+        }
         
-        // Call the original onError if provided
-        if (options?.onError) {
-          options.onError(error);
+        // Call the original onSettled if provided
+        if (options?.onSettled) {
+          options.onSettled(data, error);
         }
       }
     });
