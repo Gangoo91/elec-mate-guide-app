@@ -52,6 +52,15 @@ const Signup = () => {
       }
     });
     
+    // If user signed up as a tutor, create an entry in tutor_approvals table
+    if (data?.user && isTutor) {
+      await supabase.from('tutor_approvals').insert({
+        user_id: data.user.id,
+        is_approved: false,
+        applied_at: new Date().toISOString()
+      });
+    }
+    
     setIsSubmitting(false);
 
     if (error) {
@@ -66,7 +75,7 @@ const Signup = () => {
     if (isTutor) {
       toast({
         title: "Tutor Signup Successful",
-        description: "Your tutor account has been created. Please check your email for confirmation and await approval from our team.",
+        description: "Your tutor account has been created. Please check your email for confirmation and email your tutor credentials to complete the approval process.",
       });
     } else {
       toast({
@@ -75,7 +84,12 @@ const Signup = () => {
       });
     }
     
-    navigate("/subscription");
+    // Navigate to appropriate page
+    if (isTutor) {
+      navigate("/tutors"); // Direct tutors to tutor page where they'll see approval pending
+    } else {
+      navigate("/subscription"); // Others go to subscription page
+    }
   };
 
   return (
