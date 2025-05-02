@@ -1370,6 +1370,7 @@ export type Database = {
           id: string
           kudos_awarded: boolean | null
           last_position: number | null
+          training_recorded: boolean | null
           updated_at: string | null
           user_id: string
           video_id: string
@@ -1381,6 +1382,7 @@ export type Database = {
           id?: string
           kudos_awarded?: boolean | null
           last_position?: number | null
+          training_recorded?: boolean | null
           updated_at?: string | null
           user_id: string
           video_id: string
@@ -1392,6 +1394,7 @@ export type Database = {
           id?: string
           kudos_awarded?: boolean | null
           last_position?: number | null
+          training_recorded?: boolean | null
           updated_at?: string | null
           user_id?: string
           video_id?: string

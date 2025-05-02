@@ -4,6 +4,9 @@ import { BookOpen, Lightbulb, Wrench, Shield, Hammer, TestTube } from 'lucide-re
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VideoCard from './VideoCard';
 import { VideoLesson } from '@/types/videos';
+import { useAuth } from "@/hooks/useAuth";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from "@/integrations/supabase/client";
 
 interface VideoCategoryTabsProps {
   categorizedVideos: Record<string, VideoLesson[]>;
@@ -28,40 +31,75 @@ export const categoryTitles = {
   testing: "Testing & Inspection"
 };
 
-export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo }: VideoCategoryTabsProps) => (
-  <Tabs defaultValue="core_units" className="w-full">
-    <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20 flex flex-wrap gap-1 h-auto p-1">
-      {Object.keys(categoryTitles).map((category) => (
-        <TabsTrigger 
-          key={category}
-          value={category}
-          className="flex-1 min-w-[150px] data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900] py-2"
-        >
-          <div className="flex items-center gap-2 text-sm">
-            {categoryIcons[category as keyof typeof categoryIcons]}
-            <span className="hidden sm:inline">{categoryTitles[category as keyof typeof categoryTitles]}</span>
-            <span className="sm:hidden">{categoryTitles[category as keyof typeof categoryTitles].split(' ')[0]}</span>
-          </div>
-        </TabsTrigger>
-      ))}
-    </TabsList>
+export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo }: VideoCategoryTabsProps) => {
+  const { user } = useAuth();
+  
+  // Fetch video progress for current user
+  const { data: videoProgress = [] } = useQuery({
+    queryKey: ['video-progress', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      
+      const { data, error } = await supabase
+        .from('video_progress')
+        .select('video_id, watched')
+        .eq('user_id', user.id);
+        
+      if (error) {
+        console.error('Error fetching video progress:', error);
+        return [];
+      }
+      
+      return data;
+    },
+    enabled: !!user,
+  });
+  
+  // Convert video progress to a lookup map
+  const completedVideos = React.useMemo(() => {
+    const map: Record<string, boolean> = {};
+    videoProgress.forEach(item => {
+      map[item.video_id] = item.watched;
+    });
+    return map;
+  }, [videoProgress]);
 
-    {Object.keys(categorizedVideos).map((category) => (
-      <TabsContent key={category} value={category} className="mt-6">
-        <div className="grid gap-4">
-          {categorizedVideos[category as keyof typeof categorizedVideos].length === 0 ? (
-            <p className="text-center py-6 text-[#FFC900]/60">No videos available in this category.</p>
-          ) : (
-            categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
-              <VideoCard 
-                key={video.id} 
-                video={video} 
-                onWatch={onWatchVideo} 
-              />
-            ))
-          )}
-        </div>
-      </TabsContent>
-    ))}
-  </Tabs>
-);
+  return (
+    <Tabs defaultValue="core_units" className="w-full">
+      <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20 flex flex-wrap gap-1 h-auto p-1">
+        {Object.keys(categoryTitles).map((category) => (
+          <TabsTrigger 
+            key={category}
+            value={category}
+            className="flex-1 min-w-[150px] data-[state=active]:bg-[#FFC900]/20 data-[state=active]:text-[#FFC900] py-2"
+          >
+            <div className="flex items-center gap-2 text-sm">
+              {categoryIcons[category as keyof typeof categoryIcons]}
+              <span className="hidden sm:inline">{categoryTitles[category as keyof typeof categoryTitles]}</span>
+              <span className="sm:hidden">{categoryTitles[category as keyof typeof categoryTitles].split(' ')[0]}</span>
+            </div>
+          </TabsTrigger>
+        ))}
+      </TabsList>
+
+      {Object.keys(categorizedVideos).map((category) => (
+        <TabsContent key={category} value={category} className="mt-6">
+          <div className="grid gap-4">
+            {categorizedVideos[category as keyof typeof categorizedVideos].length === 0 ? (
+              <p className="text-center py-6 text-[#FFC900]/60">No videos available in this category.</p>
+            ) : (
+              categorizedVideos[category as keyof typeof categorizedVideos].map(video => (
+                <VideoCard 
+                  key={video.id} 
+                  video={video}
+                  isCompleted={completedVideos[video.id] || false}
+                  onWatch={onWatchVideo} 
+                />
+              ))
+            )}
+          </div>
+        </TabsContent>
+      ))}
+    </Tabs>
+  );
+};
