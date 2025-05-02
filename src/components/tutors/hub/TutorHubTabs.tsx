@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TeachingResourcesTab from './TeachingResourcesTab';
+import { BookOpen, ClipboardCheck, Users } from "lucide-react";
 import StudentManagementTab from './StudentManagementTab';
 import AssessmentsTab from './AssessmentsTab';
+import TeachingResourcesTab from './TeachingResourcesTab';
 
 interface TutorHubTabsProps {
   activeTab: string;
@@ -12,32 +13,39 @@ interface TutorHubTabsProps {
 }
 
 const TutorHubTabs: React.FC<TutorHubTabsProps> = ({ 
-  activeTab, 
-  setActiveTab, 
+  activeTab,
+  setActiveTab,
   onCardClick 
 }) => {
   return (
-    <Tabs 
-      defaultValue="teaching" 
-      value={activeTab} 
-      onValueChange={setActiveTab} 
-      className="space-y-4"
-    >
-      <TabsList className="grid w-full grid-cols-3 h-auto">
-        <TabsTrigger value="teaching">Teaching Resources</TabsTrigger>
-        <TabsTrigger value="students">Student Management</TabsTrigger>
-        <TabsTrigger value="assessments">Assessments</TabsTrigger>
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      <TabsList className="bg-background/10 p-1">
+        <TabsTrigger value="teaching" className="flex items-center gap-2">
+          <BookOpen className="h-4 w-4" />
+          <span className="hidden sm:inline">Teaching Resources</span>
+          <span className="inline sm:hidden">Resources</span>
+        </TabsTrigger>
+        <TabsTrigger value="students" className="flex items-center gap-2">
+          <Users className="h-4 w-4" />
+          <span className="hidden sm:inline">Student Management</span>
+          <span className="inline sm:hidden">Students</span>
+        </TabsTrigger>
+        <TabsTrigger value="assessments" className="flex items-center gap-2">
+          <ClipboardCheck className="h-4 w-4" />
+          <span className="hidden sm:inline">Assessments & Grading</span>
+          <span className="inline sm:hidden">Assessments</span>
+        </TabsTrigger>
       </TabsList>
       
-      <TabsContent value="teaching" className="space-y-4">
+      <TabsContent value="teaching" className="mt-6">
         <TeachingResourcesTab onCardClick={onCardClick} />
       </TabsContent>
       
-      <TabsContent value="students">
+      <TabsContent value="students" className="mt-6">
         <StudentManagementTab onCardClick={onCardClick} />
       </TabsContent>
       
-      <TabsContent value="assessments">
+      <TabsContent value="assessments" className="mt-6">
         <AssessmentsTab onCardClick={onCardClick} />
       </TabsContent>
     </Tabs>
