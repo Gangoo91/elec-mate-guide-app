@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BadgeAlert, AlignCenter, Award } from "lucide-react";
+import { BadgeAlert, AlignCenter, Award, GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const pricingData = [
@@ -73,6 +73,24 @@ const Welcome = () => {
         <p className="text-white text-lg mb-6 max-w-xs">
           The comprehensive platform for electrical professionals at every stage. Supporting apprentices, electricians, and industry employers with specialized tools and resources.
         </p>
+
+        {/* Free Tutor Box */}
+        <div className="w-full p-4 mb-6 border-2 border-[#FFC900] rounded-xl bg-gradient-to-br from-[#1A1C15] to-[#14130A] shadow-lg">
+          <div className="flex items-center mb-2">
+            <GraduationCap className="h-6 w-6 text-[#FFC900] mr-2" />
+            <h3 className="text-[#FFC900] text-lg font-bold">Free Tutor Access</h3>
+          </div>
+          <p className="text-white text-sm mb-3">
+            Apply to become a tutor and access all teaching resources for free! Perfect for educators and industry professionals.
+          </p>
+          <Button 
+            variant="outline" 
+            className="w-full border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
+            onClick={() => navigate("/signup")}
+          >
+            Apply Now
+          </Button>
+        </div>
 
         <div className="w-full flex flex-col items-center mb-8">
           <span className="inline-block px-3 py-1 rounded-full bg-[#FFC900]/20 text-[#FFC900] text-xs font-semibold uppercase mb-2 tracking-widest">
