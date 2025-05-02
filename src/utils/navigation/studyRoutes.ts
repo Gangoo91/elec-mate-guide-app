@@ -78,6 +78,38 @@ export const handleStudyRoutes = (
     return true;
   }
 
+  // EAL specific routes for level 3 subjects
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-3\/[a-z-]+\/[a-z-]+$/)) {
+    const subject = location.pathname.split('/')[5];
+    navigate(`/apprentices/study-materials/eal/level-3/${subject}`);
+    return true;
+  }
+
+  // EAL specific routes for MOET subjects
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/moet\/[a-z-]+\/[a-z-]+$/)) {
+    const subject = location.pathname.split('/')[5];
+    navigate(`/apprentices/study-materials/eal/moet/${subject}`);
+    return true;
+  }
+
+  // EAL level 2 to EAL main
+  if (location.pathname === '/apprentices/study-materials/eal/level-2') {
+    navigate('/apprentices/study-materials/eal');
+    return true;
+  }
+
+  // EAL level 3 to EAL main
+  if (location.pathname === '/apprentices/study-materials/eal/level-3') {
+    navigate('/apprentices/study-materials/eal');
+    return true;
+  }
+
+  // EAL MOET to EAL main
+  if (location.pathname === '/apprentices/study-materials/eal/moet') {
+    navigate('/apprentices/study-materials/eal');
+    return true;
+  }
+
   // Study Materials to Apprentices
   if (location.pathname === '/apprentices/study-materials') {
     navigate('/apprentices');

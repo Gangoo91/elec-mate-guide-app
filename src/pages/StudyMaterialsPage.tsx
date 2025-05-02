@@ -13,6 +13,11 @@ const StudyMaterialsPage = () => {
   const handleBackClick = () => {
     navigate('/apprentices');
   };
+
+  const handleCardClick = (path: string) => {
+    console.log("ResourceCard - Navigating to:", path);
+    navigate(path);
+  };
   
   return (
     <MainLayout>
@@ -30,6 +35,7 @@ const StudyMaterialsPage = () => {
             description="Essential resources covering all City & Guilds electrical qualifications including Level 2, Level 3, and AM2 preparation materials."
             icon={<Book className="h-7 w-7 text-[#FFC900]" />}
             fullCardLink="/apprentices/study-materials/city-guilds"
+            onClick={() => handleCardClick('/apprentices/study-materials/city-guilds')}
           />
           
           <ResourceCard
@@ -37,6 +43,7 @@ const StudyMaterialsPage = () => {
             description="Comprehensive study materials for EAL electrical qualifications, covering both Level 2 and Level 3 courses."
             icon={<School className="h-7 w-7 text-[#FFC900]" />}
             fullCardLink="/apprentices/study-materials/eal"
+            onClick={() => handleCardClick('/apprentices/study-materials/eal')}
           />
           
           <ResourceCard
@@ -44,6 +51,7 @@ const StudyMaterialsPage = () => {
             description="Advanced electrical engineering resources including HNC, HND, and degree-level materials for career progression."
             icon={<GraduationCap className="h-7 w-7 text-[#FFC900]" />}
             fullCardLink="/apprentices/study-materials/higher-learning"
+            onClick={() => handleCardClick('/apprentices/study-materials/higher-learning')}
           />
           
           <ResourceCard
@@ -51,6 +59,7 @@ const StudyMaterialsPage = () => {
             description="Specialized materials for electrical testing and inspection qualifications, including 2391 and 2394/95 courses."
             icon={<TestTube className="h-7 w-7 text-[#FFC900]" />}
             fullCardLink="/apprentices/study-materials/inspection-testing"
+            onClick={() => handleCardClick('/apprentices/study-materials/inspection-testing')}
           />
         </div>
       </div>

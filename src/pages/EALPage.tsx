@@ -12,6 +12,7 @@ const EALPage = () => {
   
   // Add custom back navigation function
   const handleBackClick = () => {
+    console.log("EALPage - Back button clicked, navigating to study materials");
     navigate('/apprentices/study-materials');
   };
   
@@ -51,10 +52,17 @@ const EALPage = () => {
       description: "EAL Level 4 Award in Advanced Building Controls and Energy Management",
       icon: <Building className="h-6 w-6 text-[#FFC900]" />,
       path: '/apprentices/study-materials/eal/building-controls'
+    },
+    {
+      title: "MOET",
+      description: "Maintenance and Operations Engineering Technician qualification",
+      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />,
+      path: '/apprentices/study-materials/eal/moet'
     }
   ];
 
   const handleCardClick = (path: string) => {
+    console.log("EALPage - Navigating to:", path);
     navigate(path);
   };
 

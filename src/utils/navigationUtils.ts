@@ -20,7 +20,13 @@ export const handleNavigationLogic = (
   }
 
   // EAL routes
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+/)) {
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+\/\w+/)) {
+    const segments = location.pathname.split('/');
+    navigate(`/apprentices/study-materials/eal/${segments[4]}`);
+    return;
+  }
+
+  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+$/)) {
     navigate('/apprentices/study-materials/eal');
     return;
   }
