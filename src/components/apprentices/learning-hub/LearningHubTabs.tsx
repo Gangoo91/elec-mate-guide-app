@@ -29,6 +29,7 @@ interface LearningHubTabsProps {
 }
 
 const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: LearningHubTabsProps) => {
+  console.log("LearningHubTabs - Rendering with units:", featuredUnits);
   
   return (
     <Tabs defaultValue="learning" className="space-y-4">
@@ -45,6 +46,7 @@ const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: Learnin
             <FeaturedUnits
               units={featuredUnits}
               onDeleteCourse={onDeleteCourse}
+              onCardClick={onCardClick}
             />
           </div>
           <div className="space-y-4">

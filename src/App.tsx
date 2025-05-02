@@ -1,201 +1,43 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "@/hooks/useAuth";
-import { NotificationProvider } from "./contexts/NotificationContext";
-import ErrorBoundary from "./components/ErrorBoundary";
-import Dashboard from "./pages/Dashboard";
-import Welcome from "./pages/Welcome";
-import NotFound from "./pages/NotFound";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Profile from "./pages/Profile";
-import FAQ from "./pages/FAQ";
-import Subscription from "./pages/Subscription";
-import SubscriptionSuccess from "./pages/SubscriptionSuccess";
-import ManageSubscription from "./pages/ManageSubscription";
-import Settings from "./pages/Settings";
-import { AuthRoutes } from "./routes/AuthRoutes";
-import ApprenticeRoutes from "./routes/ApprenticeRoutes";
-import { ElectricianRoutes } from "./routes/ElectricianRoutes";
-import mentalHealthRoutes from "./routes/MentalHealthRoutes";
-import mentorshipRoutes from "./routes/mentorship/mentorshipRoutes";
-import { ChatProvider } from "./contexts/ChatContext";
-import Level2Unit201Page from "./pages/Level2Unit201Page";
-import Level2Unit202Page from "./pages/Level2Unit202Page";
-import Level2Unit203Page from "./pages/Level2Unit203Page";
-import Level2Unit204Page from './pages/Level2Unit204Page';
-import Unit201SectionPage from "./pages/units/Unit201SectionPage";
-import Unit202SectionPage from "./pages/units/Unit202SectionPage";
-import Unit203SectionPage from "./pages/units/Unit203SectionPage";
-import Unit204SectionPage from './pages/units/Unit204SectionPage';
-import UnitContentPage from "./pages/UnitContentPage";
-import Level3Unit305Page from "./pages/Level3Unit305Page";
-import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
-import Unit305SectionPage from "./pages/units/Unit305SectionPage";
-import JobPriceEstimatorPage from "./pages/JobPriceEstimatorPage";
-import CalculatorToolsPage from "./pages/CalculatorTools";
-import CareerPathwaysPage from "./pages/CareerPathwaysPage";
-import DesignEngineerPage from "./pages/careers/DesignEngineerPage";
-import CommissioningEngineerPage from "./pages/careers/CommissioningEngineerPage";
-import ProjectManagerPage from "./pages/careers/ProjectManagerPage";
-import ControlSystemsEngineerPage from "./pages/careers/ControlSystemsEngineerPage";
-import ElectricalInspectorPage from "./pages/careers/ElectricalInspectorPage";
-import BuildingServicesEngineerPage from "./pages/careers/BuildingServicesEngineerPage";
-import ProfessionalDevelopmentPage from "./pages/ProfessionalDevelopmentPage";
-import EALQualificationsPage from "./pages/EALQualificationsPage";
-import EALLevel2Page from "./pages/EALLevel2Page";
-import EALLevel3Page from "./pages/EALLevel3Page";
-import EALAssessmentPage from "./pages/EALAssessmentPage";
-import EALMOETPage from "./pages/EALMOETPage";
-import EALInspectionTestingPage from "./pages/EALInspectionTestingPage";
-import EALEVInstallationPage from "./pages/EALEVInstallationPage";
-import EALHazardousAreasPage from "./pages/EALHazardousAreasPage";
-import EALBuildingControlsPage from "./pages/EALBuildingControlsPage";
-import "./index.css";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 1,
-      staleTime: 30000,
-    },
-  },
-});
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import routes from './routes';
+import { AuthProvider } from '@/hooks/useAuth';
+import { Toaster } from '@/components/ui/toaster';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import './App.css';
 
 const App = () => {
   return (
-    <Router>
-      <ErrorBoundary>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <NotificationProvider>
-              <ChatProvider>
-                <TooltipProvider>
-                  <Toaster />
-                  <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/welcome" element={<Welcome />} />
-                    <Route path="/index" element={<Navigate to="/" replace />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/privacy" element={<Privacy />} />
-                    <Route path="/terms" element={<Terms />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/settings" element={<Settings />} />
-                    <Route path="/manage-subscription" element={<ManageSubscription />} />
-                    <Route path="/subscription" element={<Subscription />} />
-                    <Route path="/subscription/success" element={<SubscriptionSuccess />} />
-                    
-                    {/* Development & Career Pathway Routes */}
-                    <Route path="/electricians/development" element={<ProfessionalDevelopmentPage />} />
-                    <Route path="/electricians/development/career-pathways" element={<CareerPathwaysPage />} />
-                    <Route path="/electricians/development/career-pathways/design" element={<DesignEngineerPage />} />
-                    <Route path="/electricians/development/career-pathways/commissioning" element={<CommissioningEngineerPage />} />
-                    <Route path="/electricians/development/career-pathways/project-management" element={<ProjectManagerPage />} />
-                    <Route path="/electricians/development/career-pathways/control-systems" element={<ControlSystemsEngineerPage />} />
-                    <Route path="/electricians/development/career-pathways/inspection" element={<ElectricalInspectorPage />} />
-                    <Route path="/electricians/development/career-pathways/building-services" element={<BuildingServicesEngineerPage />} />
-                    
-                    {/* EAL Qualifications Routes */}
-                    <Route path="/apprentices/study-materials/eal" element={<EALQualificationsPage />} />
-                    <Route path="/apprentices/study-materials/eal/level-2" element={<EALLevel2Page />} />
-                    <Route path="/apprentices/study-materials/eal/level-3" element={<EALLevel3Page />} />
-                    <Route path="/apprentices/study-materials/eal/assessment" element={<EALAssessmentPage />} />
-                    <Route path="/apprentices/study-materials/eal/moet" element={<EALMOETPage />} />
-                    <Route path="/apprentices/study-materials/eal/inspection-testing" element={<EALInspectionTestingPage />} />
-                    <Route path="/apprentices/study-materials/eal/ev-installation" element={<EALEVInstallationPage />} />
-                    <Route path="/apprentices/study-materials/eal/hazardous-areas" element={<EALHazardousAreasPage />} />
-                    <Route path="/apprentices/study-materials/eal/building-controls" element={<EALBuildingControlsPage />} />
-                    
-                    {/* Technical Tools Routes */}
-                    <Route path="/electricians/technical-tools/job-price-estimator" element={<JobPriceEstimatorPage />} />
-                    <Route path="/electricians/technical-tools/calculators" element={<CalculatorToolsPage />} />
-                    
-                    {/* Units Pages */}
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/:unitId" 
-                      element={<UnitContentPage />} 
-                    />
-
-                    {/* Specific Unit Detail Pages */}
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/201"
-                      element={<Level2Unit201Page />} 
-                    />
-                    
-                    {/* Level 3 Unit Pages */}
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-3/305" 
-                      element={<Level3Unit305Page />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-3/305/assessment" 
-                      element={<Level3Unit305AssessmentPage />} 
-                    />
-                    <Route
-                      path="/apprentices/study-materials/city-guilds/level-3/305/:sectionId"
-                      element={<Unit305SectionPage />}
-                    />
-                    
-                    {/* Unit Section Pages */}
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/201/:sectionId" 
-                      element={<Unit201SectionPage />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/202/:sectionId" 
-                      element={<Unit202SectionPage />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/203/:sectionId" 
-                      element={<Unit203SectionPage />} 
-                    />
-                    <Route 
-                      path="/apprentices/study-materials/city-guilds/level-2/core-units/204/:sectionId" 
-                      element={<Unit204SectionPage />} 
-                    />
-                    
-                    {/* Map apprentice routes */}
-                    {ApprenticeRoutes.map((route) => (
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {routes.map((route, index) => {
+              // Handle nested routes
+              if (route.children) {
+                return (
+                  <Route key={index} path={route.path} element={route.element}>
+                    {route.children.map((childRoute, childIndex) => (
+                      <Route 
+                        key={`${index}-${childIndex}`} 
+                        path={childRoute.path} 
+                        element={childRoute.element} 
                       />
                     ))}
-                    
-                    {/* Map other route groups */}
-                    {AuthRoutes}
-                    {ElectricianRoutes}
-                    {mentalHealthRoutes.map((route) => (
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
-                      />
-                    ))}
-                    
-                    {/* Add mentorship routes directly */}
-                    {mentorshipRoutes.map((route) => (
-                      <Route
-                        key={route.path}
-                        path={route.path}
-                        element={route.element}
-                      />
-                    ))}
-                    
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
-                </TooltipProvider>
-              </ChatProvider>
-            </NotificationProvider>
-          </QueryClientProvider>
-        </AuthProvider>
-      </ErrorBoundary>
-    </Router>
+                  </Route>
+                );
+              }
+              
+              // Handle regular routes
+              return <Route key={index} path={route.path} element={route.element} />;
+            })}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 

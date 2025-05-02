@@ -16,7 +16,7 @@ export const handleNavigationLogic = (
     return;
   }
 
-  console.log("NavigationUtils - Using default back logic");
+  console.log("NavigationUtils - Using default back logic for path:", location.pathname);
   
   // Handle development routes
   if (location.pathname.match(/\/electricians\/development\/[a-z-]+$/)) {
@@ -106,6 +106,13 @@ export const handleNavigationLogic = (
     return;
   }
   
+  // Handle apprentice learning hub routes
+  if (location.pathname === '/apprentices/learning-hub') {
+    navigate('/apprentices');
+    return;
+  }
+  
   // Default to browser back if no specific handler matches
+  console.log("NavigationUtils - No specific handler found, going back in history");
   navigate(-1);
 };

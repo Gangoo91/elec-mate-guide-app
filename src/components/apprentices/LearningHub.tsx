@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import SearchBar from './learning-hub/SearchBar';
 import LearningHubTabs from './learning-hub/LearningHubTabs';
@@ -18,6 +18,10 @@ const LearningHub = () => {
     console.log("Navigating to:", path);
     navigate(path);
   };
+
+  useEffect(() => {
+    console.log("LearningHub - Courses loaded:", courses);
+  }, [courses]);
 
   if (loading) {
     return <div className="flex justify-center items-center p-8">Loading your learning dashboard...</div>;
