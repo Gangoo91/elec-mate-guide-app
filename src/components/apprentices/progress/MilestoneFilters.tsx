@@ -17,14 +17,12 @@ type FiltersProps = {
     type: string;
     search: string;
     framework?: string;
-    level?: string;
   };
   setFilters: React.Dispatch<React.SetStateAction<{
     status: string;
     type: string;
     search: string;
     framework?: string;
-    level?: string;
   }>>;
 }
 
@@ -34,8 +32,7 @@ const MilestoneFilters = ({ filters, setFilters }: FiltersProps) => {
       status: 'all',
       type: 'all',
       search: '',
-      framework: 'all',
-      level: 'all'
+      framework: 'all'
     });
   };
   
@@ -43,12 +40,11 @@ const MilestoneFilters = ({ filters, setFilters }: FiltersProps) => {
     filters.status !== 'all' || 
     filters.type !== 'all' || 
     filters.search !== '' ||
-    (filters.framework && filters.framework !== 'all') ||
-    (filters.level && filters.level !== 'all');
+    (filters.framework && filters.framework !== 'all');
 
   return (
     <div className="w-full bg-[#22251e]/50 p-4 rounded-lg border border-[#FFC900]/20">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         <div>
           <label className="text-xs text-[#FFC900]/70 mb-1 block">Status</label>
           <Select
@@ -101,24 +97,6 @@ const MilestoneFilters = ({ filters, setFilters }: FiltersProps) => {
               <SelectItem value="eal">EAL</SelectItem>
               <SelectItem value="moet">MOET</SelectItem>
               <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div>
-          <label className="text-xs text-[#FFC900]/70 mb-1 block">Level</label>
-          <Select
-            value={filters.level || 'all'}
-            onValueChange={(value) => setFilters({ ...filters, level: value })}
-          >
-            <SelectTrigger className="border-[#FFC900]/30">
-              <SelectValue placeholder="Filter by level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Levels</SelectItem>
-              <SelectItem value="level2">Level 2</SelectItem>
-              <SelectItem value="level3">Level 3</SelectItem>
-              <SelectItem value="level4">Level 4+</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -184,16 +162,6 @@ const MilestoneFilters = ({ filters, setFilters }: FiltersProps) => {
               <X 
                 className="h-3 w-3 ml-1 cursor-pointer" 
                 onClick={() => setFilters({ ...filters, framework: 'all' })}
-              />
-            </Badge>
-          )}
-          
-          {filters.level && filters.level !== 'all' && (
-            <Badge variant="secondary" className="bg-[#FFC900]/20 text-[#FFC900] hover:bg-[#FFC900]/30">
-              Level: {filters.level}
-              <X 
-                className="h-3 w-3 ml-1 cursor-pointer" 
-                onClick={() => setFilters({ ...filters, level: 'all' })}
               />
             </Badge>
           )}

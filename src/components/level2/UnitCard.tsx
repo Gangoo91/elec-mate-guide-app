@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, CheckCircle, Star, X } from 'lucide-react';
+import { BookOpen, Clock, CheckCircle, X } from 'lucide-react';
 import ProgressTracker from './ProgressTracker';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,6 @@ interface UnitCardProps {
     estimatedTime?: number; // Estimated time in minutes
     lastActivity?: Date; // Last activity date
   };
-  difficulty?: 'beginner' | 'intermediate' | 'advanced';
   isRequired?: boolean;
   onDelete?: () => void;
 }
@@ -29,7 +28,6 @@ const UnitCard = ({
   description, 
   path, 
   progress, 
-  difficulty = 'intermediate',
   isRequired = true,
   onDelete
 }: UnitCardProps) => {
@@ -42,14 +40,6 @@ const UnitCard = ({
     }
   };
   
-  const getDifficultyColor = () => {
-    switch(difficulty) {
-      case 'beginner': return 'bg-green-500/20 text-green-500';
-      case 'advanced': return 'bg-red-500/20 text-red-500';
-      default: return 'bg-amber-500/20 text-amber-500';
-    }
-  };
-
   const completionPercentage = progress ? Math.round((progress.completed / progress.total) * 100) : 0;
   const isCompleted = progress && progress.completed === progress.total;
   
@@ -69,9 +59,6 @@ const UnitCard = ({
                 Required
               </Badge>
             )}
-            <Badge className={`${getDifficultyColor()} border-0 text-xs`}>
-              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
-            </Badge>
             {onDelete && (
               <Button 
                 variant="ghost" 
