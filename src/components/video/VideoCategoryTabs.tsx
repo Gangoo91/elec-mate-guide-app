@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 interface VideoCategoryTabsProps {
   categorizedVideos: Record<string, VideoLesson[]>;
   onWatchVideo: (video: VideoLesson) => void;
+  selectedCategory?: string;
+  onCategoryChange?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const categoryIcons = {
@@ -31,8 +33,11 @@ export const categoryTitles = {
   testing: "Testing & Inspection"
 };
 
-export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo }: VideoCategoryTabsProps) => {
+export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo, selectedCategory, onCategoryChange }: VideoCategoryTabsProps) => {
   const { user } = useAuth();
+  
+  // Default to 'core_units' if no selectedCategory is provided
+  const defaultCategory = selectedCategory || 'core_units';
   
   // Fetch video progress for current user
   const { data: videoProgress = [] } = useQuery({
@@ -64,8 +69,14 @@ export const VideoCategoryTabs = ({ categorizedVideos, onWatchVideo }: VideoCate
     return map;
   }, [videoProgress]);
 
+  const handleCategoryChange = (category: string) => {
+    if (onCategoryChange) {
+      onCategoryChange(category);
+    }
+  };
+
   return (
-    <Tabs defaultValue="core_units" className="w-full">
+    <Tabs defaultValue={defaultCategory} value={selectedCategory} className="w-full" onValueChange={handleCategoryChange}>
       <TabsList className="w-full bg-[#22251e] border-[#FFC900]/20 flex flex-wrap gap-1 h-auto p-1">
         {Object.keys(categoryTitles).map((category) => (
           <TabsTrigger 
