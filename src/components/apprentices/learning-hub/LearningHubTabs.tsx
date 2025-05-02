@@ -1,6 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import QualificationsTab from './QualificationsTab';
 import StudyGroupsTab from './StudyGroupsTab';
 import ResourcesTab from './ResourcesTab';
@@ -30,46 +38,93 @@ interface LearningHubTabsProps {
 
 const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: LearningHubTabsProps) => {
   const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState<string>("main");
+  
+  const tabOptions = [
+    { value: "main", label: "Overview" },
+    { value: "qualifications", label: "Qualifications" },
+    { value: "study-groups", label: "Study Groups" },
+    { value: "resources", label: "Resources" }
+  ];
+  
+  // Function to render tab content based on active tab
+  const renderTabContent = () => {
+    switch(activeTab) {
+      case "main":
+        return (
+          <div className="space-y-4 md:space-y-6">
+            <ProgressSummaryCard units={featuredUnits} onDeleteCourse={onDeleteCourse} />
+            <FeaturedUnits units={featuredUnits} onDeleteCourse={onDeleteCourse} />
+            <QuickAccessTools onCardClick={onCardClick} />
+          </div>
+        );
+      case "qualifications":
+        return <QualificationsTab onCardClick={onCardClick} />;
+      case "study-groups":
+        return <StudyGroupsTab onCardClick={onCardClick} />;
+      case "resources":
+        return <ResourcesTab onCardClick={onCardClick} />;
+      default:
+        return null;
+    }
+  };
 
+  // Render mobile dropdown version
+  if (isMobile) {
+    return (
+      <div className="w-full space-y-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="w-full justify-between">
+              {tabOptions.find(tab => tab.value === activeTab)?.label || "Overview"}
+              <ChevronDown className="h-4 w-4 ml-2" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[200px] bg-[#22251e] border-[#FFC900]/20">
+            {tabOptions.map(tab => (
+              <DropdownMenuItem 
+                key={tab.value}
+                className={`${activeTab === tab.value ? 'bg-[#FFC900]/10 text-[#FFC900]' : 'text-[#FFC900]/80'}`}
+                onClick={() => setActiveTab(tab.value)}
+              >
+                {tab.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        
+        {renderTabContent()}
+      </div>
+    );
+  }
+
+  // Render desktop tabs version
   return (
-    <Tabs defaultValue="main" className="w-full">
-      <TabsList className={`grid ${isMobile ? 'grid-cols-2 gap-1 mb-4' : 'grid-cols-4 mb-6'}`}>
-        <TabsTrigger value="main">{isMobile ? 'Overview' : 'Overview'}</TabsTrigger>
-        <TabsTrigger value="qualifications">{isMobile ? 'Quals' : 'Qualifications'}</TabsTrigger>
-        {!isMobile && <TabsTrigger value="study-groups">Study Groups</TabsTrigger>}
-        {!isMobile && <TabsTrigger value="resources">Resources</TabsTrigger>}
-        {isMobile && <TabsTrigger value="study-groups">Groups</TabsTrigger>}
-        {isMobile && <TabsTrigger value="resources">Resources</TabsTrigger>}
+    <Tabs defaultValue="main" className="w-full" value={activeTab} onValueChange={setActiveTab}>
+      <TabsList className="grid grid-cols-4 mb-6">
+        {tabOptions.map(tab => (
+          <TabsTrigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </TabsTrigger>
+        ))}
       </TabsList>
       
-      {/* Main Overview Tab */}
       <TabsContent value="main">
         <div className="space-y-4 md:space-y-6">
-          {/* Progress Summary Card */}
           <ProgressSummaryCard units={featuredUnits} onDeleteCourse={onDeleteCourse} />
-
-          {/* Continue Learning Section */}
-          <FeaturedUnits 
-            units={featuredUnits} 
-            onDeleteCourse={onDeleteCourse} 
-          />
-
-          {/* Quick Access Tools */}
+          <FeaturedUnits units={featuredUnits} onDeleteCourse={onDeleteCourse} />
           <QuickAccessTools onCardClick={onCardClick} />
         </div>
       </TabsContent>
 
-      {/* Qualifications Tab */}
       <TabsContent value="qualifications">
         <QualificationsTab onCardClick={onCardClick} />
       </TabsContent>
 
-      {/* Study Groups Tab */}
       <TabsContent value="study-groups">
         <StudyGroupsTab onCardClick={onCardClick} />
       </TabsContent>
 
-      {/* Resources Tab */}
       <TabsContent value="resources">
         <ResourcesTab onCardClick={onCardClick} />
       </TabsContent>
