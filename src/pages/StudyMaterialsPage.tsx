@@ -11,11 +11,12 @@ const StudyMaterialsPage = () => {
   
   // Add custom back navigation function
   const handleBackClick = () => {
+    console.log("StudyMaterialsPage - Back button clicked, navigating to /apprentices");
     navigate('/apprentices');
   };
 
   const handleCardClick = (path: string) => {
-    console.log("ResourceCard - Navigating to:", path);
+    console.log("StudyMaterialsPage - Navigating to:", path);
     navigate(path);
   };
   

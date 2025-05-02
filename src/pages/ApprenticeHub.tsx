@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, School, Users, Calendar, Award, CheckSquare } from "lucide-react";
+import { BookOpen, School, Users, Calendar, Award, CheckSquare, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ApprenticeHub = () => {
@@ -143,6 +143,7 @@ const ApprenticeHub = () => {
               onClick={() => handleCardClick('/apprentices/progress/off-the-job')}
             >
               <CardHeader>
+                <Clock className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>Off-the-Job Training</CardTitle>
                 <CardDescription>20% off-the-job training record</CardDescription>
               </CardHeader>

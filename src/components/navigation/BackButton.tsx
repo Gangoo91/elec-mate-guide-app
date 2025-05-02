@@ -19,10 +19,13 @@ const BackButton = ({ onClick, customAction, className = '' }: BackButtonProps) 
     console.log("BackButton - Clicked with current path:", location.pathname);
     
     if (onClick) {
+      console.log("BackButton - Using custom onClick handler");
       onClick();
     } else if (customAction) {
+      console.log("BackButton - Using custom action");
       customAction();
     } else {
+      console.log("BackButton - Using default navigation logic");
       handleNavigationLogic(location, navigate);
     }
   };

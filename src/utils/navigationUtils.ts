@@ -18,6 +18,18 @@ export const handleNavigationLogic = (
     navigate('/apprentices');
     return;
   }
+  
+  // Progress tracking to Apprentices
+  if (location.pathname === '/apprentices/progress') {
+    navigate('/apprentices');
+    return;
+  }
+  
+  // Off-the-job training to Progress page
+  if (location.pathname === '/apprentices/progress/off-the-job') {
+    navigate('/apprentices/progress');
+    return;
+  }
 
   // EAL routes
   if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+\/\w+/)) {
@@ -33,6 +45,12 @@ export const handleNavigationLogic = (
 
   if (location.pathname === '/apprentices/study-materials/eal') {
     navigate('/apprentices/study-materials');
+    return;
+  }
+
+  // Study Materials to Apprentices
+  if (location.pathname === '/apprentices/study-materials') {
+    navigate('/apprentices');
     return;
   }
 
