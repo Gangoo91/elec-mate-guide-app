@@ -3,8 +3,19 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Milestone } from "@/components/apprentices/progress/types";
-import { useNavigate } from "react-router-dom";
+
+type Milestone = {
+  id: string;
+  title: string;
+  description: string | null;
+  type: 'qualification' | 'certification' | 'skill' | 'module';
+  status: 'not_started' | 'in_progress' | 'completed';
+  target_completion_date: string | null;
+  completed_at: string | null;
+  resource_id: string | null;
+  resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  created_at: string;
+};
 
 type MilestoneUpdate = {
   id: string;
@@ -21,7 +32,6 @@ type NewMilestoneUpdate = {
 export function useApprenticeProgress() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const { data: milestones, isLoading: milestonesLoading } = useQuery({
     queryKey: ['apprentice-milestones'],
@@ -39,11 +49,6 @@ export function useApprenticeProgress() {
         const resourceId = 'resource_id' in item ? item.resource_id : null;
         const resourceType = 'resource_type' in item ? 
           item.resource_type as 'video' | 'exam' | 'quiz' | 'audio' | null : null;
-        const trainingHours = 'training_hours' in item ? item.training_hours : null;
-        const qualificationFramework = 'qualification_framework' in item ? 
-          item.qualification_framework as 'city_guilds' | 'eal' | 'moet' | 'other' : undefined;
-        const learningLevel = 'learning_level' in item ? 
-          item.learning_level as 'level2' | 'level3' | 'level4' | null : null;
           
         return {
           id: item.id,
@@ -55,9 +60,6 @@ export function useApprenticeProgress() {
           completed_at: item.completed_at,
           resource_id: resourceId,
           resource_type: resourceType,
-          training_hours: trainingHours,
-          qualification_framework: qualificationFramework,
-          learning_level: learningLevel,
           created_at: item.created_at
         };
       }) as Milestone[];

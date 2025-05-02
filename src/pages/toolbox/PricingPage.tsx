@@ -1,10 +1,10 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import { Card, CardContent } from "@/components/ui/card";
-import { PoundSterling, TrendingUp, Package, BarChart, Calculator } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import PageHeader from "@/components/layout/PageHeader";
+import { PoundSterling, TrendingUp, Package, BarChart } from 'lucide-react';
+import BackButton from "@/components/navigation/BackButton";
 
 const PricingPage = () => {
   const navigate = useNavigate();
@@ -12,28 +12,19 @@ const PricingPage = () => {
   const handleBackClick = () => {
     navigate('/electricians/toolbox-talk');
   };
-  
-  const handleEstimatorClick = () => {
-    navigate('/electricians/technical-tools/job-price-estimator');
-  };
 
   return (
     <MainLayout>
       <div className="container px-4 py-2 md:py-6">
-        <PageHeader 
-          title="Live Material Pricing"
-          description="Stay updated with current market prices, trends, and cost analysis tools."
-          customBackAction={handleBackClick}
-        />
+        <BackButton customAction={handleBackClick} />
         
-        <div className="mb-6">
-          <Button 
-            className="bg-[#FFC900] hover:bg-[#e5b700] text-black"
-            onClick={handleEstimatorClick}
-          >
-            <Calculator className="mr-2 h-4 w-4" />
-            Use Job Price Estimator
-          </Button>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#FFC900] mb-4">
+            Live Material Pricing
+          </h1>
+          <p className="text-[#FFC900]/80 max-w-2xl mx-auto">
+            Stay updated with current market prices, trends, and cost analysis tools.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

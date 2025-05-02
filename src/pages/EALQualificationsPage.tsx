@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import PageHeader from "@/components/layout/PageHeader";
 import { Card, CardContent } from "@/components/ui/card";
-import { Book, GraduationCap, FileText, TestTube, Wrench, ShieldCheck, Plug, Settings } from "lucide-react";
+import { Book, GraduationCap, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const EALQualificationsPage = () => {
   const navigate = useNavigate();
@@ -25,36 +26,6 @@ const EALQualificationsPage = () => {
       description: "Advanced electrical installation techniques and theoretical concepts.",
       icon: <GraduationCap className="h-6 w-6 text-[#FFC900]" />,
       onClick: () => navigate('/apprentices/study-materials/eal/level-3')
-    },
-    {
-      title: "MOET Electrical Courses",
-      description: "Maintenance and Operations Engineering Technician courses focused on electrical systems.",
-      icon: <Wrench className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/eal/moet')
-    },
-    {
-      title: "Inspection & Testing",
-      description: "Specialized courses for electrical inspection and testing certifications.",
-      icon: <TestTube className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/eal/inspection-testing')
-    },
-    {
-      title: "Electric Vehicle Installation",
-      description: "Training for EV charging point installation and maintenance.",
-      icon: <Plug className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/eal/ev-installation')
-    },
-    {
-      title: "Hazardous Areas",
-      description: "Specialized training for working with electrical systems in hazardous environments.",
-      icon: <ShieldCheck className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/eal/hazardous-areas')
-    },
-    {
-      title: "Building Controls",
-      description: "Courses focused on building management systems and smart controls.",
-      icon: <Settings className="h-6 w-6 text-[#FFC900]" />,
-      onClick: () => navigate('/apprentices/study-materials/eal/building-controls')
     },
     {
       title: "Assessment Preparation",

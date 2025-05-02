@@ -9,7 +9,7 @@ interface VideoProgress {
   watched: boolean;
   watchTime: number;
   lastPosition: number;
-  trainingRecorded: boolean;
+  kudosAwarded: boolean;
 }
 
 export function useVideoProgress(videoId: string) {
@@ -20,7 +20,7 @@ export function useVideoProgress(videoId: string) {
     watched: false,
     watchTime: 0,
     lastPosition: 0,
-    trainingRecorded: false
+    kudosAwarded: false
   });
   
   // Check if this is a demo video ID (non-UUID format)
@@ -59,8 +59,7 @@ export function useVideoProgress(videoId: string) {
           watched: data.watched,
           watchTime: data.watch_time,
           lastPosition: data.last_position,
-          // If training_recorded field doesn't exist, default to false
-          trainingRecorded: data.training_recorded ?? false
+          kudosAwarded: data.kudos_awarded
         });
         
         lastPositionRef.current = data.last_position;
@@ -107,7 +106,7 @@ export function useVideoProgress(videoId: string) {
       watched,
       watchTime: Math.floor(position),
       lastPosition: position,
-      trainingRecorded: watched ? true : prev.trainingRecorded
+      kudosAwarded: watched ? true : prev.kudosAwarded
     }));
     
     // Debounce database updates
@@ -117,7 +116,6 @@ export function useVideoProgress(videoId: string) {
     
     timeoutRef.current = setTimeout(async () => {
       try {
-        // Update the video progress
         const { error } = await supabase
           .from('video_progress')
           .upsert({
@@ -126,7 +124,7 @@ export function useVideoProgress(videoId: string) {
             watched,
             watch_time: Math.floor(position),
             last_position: position,
-            training_recorded: watched ? true : progress.trainingRecorded
+            kudos_awarded: watched && !progress.kudosAwarded
           });
 
         if (error) {
@@ -134,7 +132,31 @@ export function useVideoProgress(videoId: string) {
           return;
         }
 
-        // We'll handle training time recording in useTrainingRecord hook instead
+        if (watched && !progress.kudosAwarded) {
+          // Award kudos points
+          const { data: video } = await supabase
+            .from('video_lessons')
+            .select('kudos_points, title')
+            .eq('id', videoId)
+            .single();
+
+          if (video) {
+            const { error: kudosError } = await supabase
+              .from('exercise_kudos')
+              .insert({
+                user_id: user.id,
+                exercise_id: videoId,
+                points: video.kudos_points
+              });
+
+            if (!kudosError) {
+              toast({
+                title: "Kudos Awarded!",
+                description: `You earned ${video.kudos_points} kudos points for completing "${video.title}"`,
+              });
+            }
+          }
+        }
       } catch (err) {
         handleError(err, 'Error updating video progress');
       }

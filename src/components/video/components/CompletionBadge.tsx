@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface CompletionBadgeProps {
-  watched?: boolean;
+  watched: boolean;
 }
 
 export const CompletionBadge = ({ watched }: CompletionBadgeProps) => {

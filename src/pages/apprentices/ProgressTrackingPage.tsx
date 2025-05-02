@@ -14,9 +14,7 @@ import {
   Clock,
   BookOpen,
   TrendingUp,
-  Trophy,
-  GraduationCap,
-  Book
+  Trophy
 } from 'lucide-react';
 
 const ProgressTrackingPage = () => {
@@ -64,21 +62,12 @@ const ProgressTrackingPage = () => {
   const withResources = filteredMilestones?.filter(m => m.resource_id).length || 0;
   const resourcePercentage = totalMilestones ? (withResources / totalMilestones) * 100 : 0;
 
-  // Calculate estimated off-the-job hours (assuming 6 hours per completed milestone as an example)
-  const hoursPerMilestone = 6;
-  const totalOffTheJobHours = completedMilestones * hoursPerMilestone;
-  
-  // Assume a target of 360 hours per year for the 20% (based on typical UK apprenticeship)
-  const targetAnnualHours = 360;
-  const targetWeeklyHours = Math.round(targetAnnualHours / 52);
-  const progressTowardsTarget = Math.min((totalOffTheJobHours / targetAnnualHours) * 100, 100);
-
   return (
     <MainLayout>
       <div className="container px-4 py-6 md:py-8">
         <PageHeader 
-          title="Off-the-Job Training Tracker"
-          description="Track your 20% off-the-job training progress throughout your apprenticeship"
+          title="Progress Tracking"
+          description="Track your apprenticeship journey, milestones, and achievements"
           customBackAction={handleBackNavigation}
         />
         
@@ -87,8 +76,8 @@ const ProgressTrackingPage = () => {
             <CardHeader className="pb-2">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                 <CardTitle className="text-[#FFC900] text-xl flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5" />
-                  Off-the-Job Training Progress
+                  <TrendingUp className="h-5 w-5" />
+                  Progress Overview
                 </CardTitle>
                 <div className="mt-2 sm:mt-0">
                   <Tabs 
@@ -107,44 +96,10 @@ const ProgressTrackingPage = () => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="mb-6 p-4 bg-[#FFC900]/10 rounded-lg border border-[#FFC900]/20">
-                <h3 className="font-medium text-[#FFC900] mb-1">About 20% Off-the-Job Training</h3>
-                <p className="text-sm text-[#FFC900]/80 mb-2">
-                  Apprenticeship standards require 20% of your contracted hours to be spent on off-the-job training.
-                  This includes learning new knowledge, skills and behaviors relevant to your apprenticeship.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mt-3">
-                  <div className="flex items-center gap-2">
-                    <Book className="h-4 w-4 text-[#FFC900]" />
-                    <span className="text-sm font-medium text-[#FFC900]">Target: {targetWeeklyHours} hours/week</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-[#FFC900]" />
-                    <span className="text-sm font-medium text-[#FFC900]">Annual goal: {targetAnnualHours} hours</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <div className="text-sm text-[#FFC900]/80">
-                    Off-the-Job Training Hours
-                  </div>
-                  <div className="text-sm font-medium text-[#FFC900]">
-                    {totalOffTheJobHours} of {targetAnnualHours} hours ({progressTowardsTarget.toFixed(0)}%)
-                  </div>
-                </div>
-                <Progress 
-                  value={progressTowardsTarget} 
-                  className="h-2 mb-2" 
-                  indicatorClassName={progressTowardsTarget < 30 ? "bg-red-500" : progressTowardsTarget < 70 ? "bg-yellow-500" : "bg-green-500"}
-                />
-              </div>
-
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <div className="text-sm text-[#FFC900]/80">
-                    {completedMilestones} of {totalMilestones} learning activities completed
+                    {completedMilestones} of {totalMilestones} milestones completed
                   </div>
                   <div className="text-sm font-medium text-[#FFC900]">
                     {completionPercentage.toFixed(0)}%
@@ -195,8 +150,8 @@ const ProgressTrackingPage = () => {
                         <Award className="h-6 w-6 text-[#FFC900]" />
                       </div>
                       <div>
-                        <p className="text-sm text-[#FFC900]/80">Training Hours</p>
-                        <p className="text-2xl font-bold text-[#FFC900]">{totalOffTheJobHours}</p>
+                        <p className="text-sm text-[#FFC900]/80">Completion</p>
+                        <p className="text-2xl font-bold text-[#FFC900]">{completionPercentage.toFixed(0)}%</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -224,7 +179,7 @@ const ProgressTrackingPage = () => {
                 <div className="mt-6">
                   <div className="flex justify-between items-center mb-2">
                     <div className="text-sm text-[#FFC900]/80">
-                      Learning activities with resources
+                      Milestones with learning resources
                     </div>
                     <div className="text-sm font-medium text-[#FFC900]">
                       {resourcePercentage.toFixed(0)}%

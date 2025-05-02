@@ -8,7 +8,7 @@ import MilestoneStatusButton from './MilestoneStatusButton';
 import MilestoneDetail from './MilestoneDetail';
 import MilestoneFilters from './MilestoneFilters';
 import { Button } from '@/components/ui/button';
-import { Play, BookOpen, Headphones, CirclePlay, ExternalLink, GraduationCap } from 'lucide-react';
+import { Play, BookOpen, Headphones, CirclePlay, ExternalLink, MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -18,9 +18,7 @@ const MilestoneList = () => {
   const [filters, setFilters] = useState({
     status: 'all',
     type: 'all',
-    search: '',
-    framework: 'all',
-    level: 'all'
+    search: ''
   });
 
   if (isLoading) {
@@ -72,17 +70,6 @@ const MilestoneList = () => {
     }
   };
 
-  // Format framework name for display
-  const formatFramework = (framework?: string) => {
-    if (!framework) return null;
-    switch(framework) {
-      case 'city_guilds': return 'City & Guilds';
-      case 'eal': return 'EAL';
-      case 'moet': return 'MOET';
-      default: return framework.charAt(0).toUpperCase() + framework.slice(1);
-    }
-  };
-
   // Filter milestones based on selected filters
   const filteredMilestones = milestones?.filter(milestone => {
     // Status filter
@@ -92,16 +79,6 @@ const MilestoneList = () => {
     
     // Type filter
     if (filters.type !== 'all' && milestone.type !== filters.type) {
-      return false;
-    }
-    
-    // Framework filter
-    if (filters.framework !== 'all' && milestone.qualification_framework !== filters.framework) {
-      return false;
-    }
-    
-    // Level filter
-    if (filters.level !== 'all' && milestone.learning_level !== filters.level) {
       return false;
     }
     
@@ -136,17 +113,6 @@ const MilestoneList = () => {
                   <Badge variant="outline" className="text-[#FFC900]">
                     {milestone.type}
                   </Badge>
-                  {milestone.qualification_framework && (
-                    <Badge variant="secondary" className="bg-[#FFC900]/20 text-[#FFC900]">
-                      <GraduationCap className="h-3 w-3 mr-1" />
-                      {formatFramework(milestone.qualification_framework)}
-                    </Badge>
-                  )}
-                  {milestone.learning_level && (
-                    <Badge variant="secondary" className="bg-[#FFC900]/10 text-[#FFC900]">
-                      {milestone.learning_level}
-                    </Badge>
-                  )}
                   <MilestoneDetail milestone={milestone} />
                 </div>
               </CardHeader>
@@ -160,9 +126,6 @@ const MilestoneList = () => {
                   )}
                   {milestone.completed_at && (
                     <span>Completed {formatDistance(new Date(milestone.completed_at), new Date(), { addSuffix: true })}</span>
-                  )}
-                  {milestone.training_hours && (
-                    <span>{milestone.training_hours} hours logged</span>
                   )}
                 </div>
               </CardContent>
@@ -198,7 +161,7 @@ const MilestoneList = () => {
             <Button 
               variant="link" 
               className="text-[#FFC900]"
-              onClick={() => setFilters({ status: 'all', type: 'all', search: '', framework: 'all', level: 'all' })}
+              onClick={() => setFilters({ status: 'all', type: 'all', search: '' })}
             >
               Clear filters
             </Button>

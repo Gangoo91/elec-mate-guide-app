@@ -12,14 +12,6 @@ import Unit201SectionPage from "../../pages/units/Unit201SectionPage";
 import Unit204SectionPage from "../../pages/units/Unit204SectionPage";
 import Unit210SectionPage from "../../pages/units/Unit210SectionPage";
 import Level2Unit201AssessmentPage from "../../pages/Level2Unit201AssessmentPage";
-import ElectricalInstallationUnitPage from "../../pages/units/ElectricalInstallationUnitPage";
-
-// Import the new EAL unit pages
-import EALHealthSafetyPage from "../../pages/units/EALHealthSafetyPage";
-import EALElectricalTheoryPage from "../../pages/units/EALElectricalTheoryPage";
-import EALInstallationMethodsPage from "../../pages/units/EALInstallationMethodsPage";
-import EALCraftSkillsPage from "../../pages/units/EALCraftSkillsPage";
-import EALElectricalSciencePage from "../../pages/units/EALElectricalSciencePage";
 
 const level2Routes: RouteObject[] = [
   {
@@ -70,31 +62,6 @@ const level2Routes: RouteObject[] = [
     path: "/apprentices/study-materials/city-guilds/level-2/core-units/210/:sectionId",
     element: <Unit210SectionPage />
   },
-  // New EAL specific routes
-  {
-    path: "/apprentices/study-materials/eal/level-2/installation-technology",
-    element: <ElectricalInstallationUnitPage />
-  },
-  {
-    path: "/apprentices/study-materials/eal/level-2/health-safety",
-    element: <EALHealthSafetyPage />
-  },
-  {
-    path: "/apprentices/study-materials/eal/level-2/electrical-theory",
-    element: <EALElectricalTheoryPage />
-  },
-  {
-    path: "/apprentices/study-materials/eal/level-2/installation-methods",
-    element: <EALInstallationMethodsPage />
-  },
-  {
-    path: "/apprentices/study-materials/eal/level-2/craft-skills",
-    element: <EALCraftSkillsPage />
-  },
-  {
-    path: "/apprentices/study-materials/eal/level-2/electrical-science",
-    element: <EALElectricalSciencePage />
-  }
 ];
 
 export default level2Routes;

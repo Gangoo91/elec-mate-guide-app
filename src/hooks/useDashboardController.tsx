@@ -13,16 +13,10 @@ export function useDashboardController() {
     // Force a re-render and clear any cached state
     setIsReady(false);
     
-    console.log("Dashboard controller initializing", location.pathname);
-    
-    // Clear any cached data
-    sessionStorage.removeItem('dashboard_cache');
-    
-    // Small timeout to ensure DOM is ready and previous cache is cleared
+    // Small timeout to ensure DOM is ready
     const timer = setTimeout(() => {
-      console.log("Dashboard controller ready", location.pathname);
       setIsReady(true);
-    }, 150); // Increased timeout to ensure cache clearing
+    }, 10);
     
     return () => clearTimeout(timer);
   }, [location.pathname]);

@@ -22,14 +22,11 @@ class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    console.error('ErrorBoundary static error:', error.message);
     return { hasError: true, error };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error);
-    console.error('Component stack trace:', errorInfo.componentStack);
-    
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
     this.setState({ errorInfo });
     if (this.props.onError) {
       this.props.onError(error);
@@ -37,12 +34,10 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   private handleReload = () => {
-    console.log("ErrorBoundary - Reloading page");
     window.location.reload();
   }
 
   private handleReset = () => {
-    console.log("ErrorBoundary - Resetting error state");
     this.setState({ hasError: false, error: undefined, errorInfo: undefined });
   }
 
@@ -56,9 +51,6 @@ class ErrorBoundary extends Component<Props, State> {
               <AlertTitle className="text-xl font-bold text-[#FFC900]">Something went wrong</AlertTitle>
               <AlertDescription className="text-[#FFC900]/70">
                 {this.state.error?.message || 'An unexpected error occurred'}
-                <div className="mt-2 text-xs overflow-auto max-h-40 p-2 bg-black/20 rounded">
-                  {this.state.errorInfo?.componentStack || 'No stack trace available'}
-                </div>
               </AlertDescription>
             </Alert>
 

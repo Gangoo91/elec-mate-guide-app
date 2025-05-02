@@ -1,63 +1,56 @@
 
-import { Location, NavigateFunction } from 'react-router-dom';
+import { Location } from 'react-router-dom';
+import { handleProjectRoutes } from './navigation/projectRoutes';
+import { handleSpecialisationRoutes } from './navigation/specialisationRoutes';
+import { handleMentalHealthRoutes } from './navigation/mentalHealthRoutes';
 import { handleStudyRoutes } from './navigation/studyRoutes';
 
 export const handleNavigationLogic = (
-  location: Location,
-  navigate: NavigateFunction
-): void => {
-  console.log("NavigationUtils - Handling navigation from:", location.pathname);
-
-  // Handle study material routes first
-  if (handleStudyRoutes(location, navigate)) {
+  location: Location, 
+  navigate: (to: string | number) => void,
+  customAction?: () => void
+) => {
+  if (customAction) {
+    console.log("NavigationUtils - Using custom back action");
+    customAction();
     return;
   }
 
-  // Learning Hub to Apprentices
-  if (location.pathname === '/apprentices/learning-hub') {
-    navigate('/apprentices');
+  console.log("NavigationUtils - Using default back logic");
+  
+  // Handle mentorship routes for both apprentices and electricians
+  if (location.pathname.includes('/mentorship/')) {
+    if (location.pathname.startsWith('/apprentices/')) {
+      navigate('/apprentices/mentorship');
+      return;
+    }
+    
+    if (location.pathname.startsWith('/electricians/')) {
+      navigate('/electricians/mentorship');
+      return;
+    }
+  }
+  
+  // Check if the path matches any of the study route patterns
+  if (handleStudyRoutes(location, (path) => navigate(path))) {
+    return;
+  }
+
+  // Handle project routes
+  if (handleProjectRoutes(location, (path) => navigate(path))) {
+    return;
+  }
+
+  // Handle specialisation routes
+  if (handleSpecialisationRoutes(location, (path) => navigate(path))) {
+    return;
+  }
+
+  // Handle mental health routes
+  if (handleMentalHealthRoutes(location, (path) => navigate(path))) {
     return;
   }
   
-  // Progress tracking to Apprentices
-  if (location.pathname === '/apprentices/progress') {
-    navigate('/apprentices');
-    return;
-  }
-  
-  // Off-the-job training to Progress page
-  if (location.pathname === '/apprentices/progress/off-the-job') {
-    navigate('/apprentices/progress');
-    return;
-  }
-
-  // EAL routes
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+\/\w+/)) {
-    const segments = location.pathname.split('/');
-    navigate(`/apprentices/study-materials/eal/${segments[4]}`);
-    return;
-  }
-
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/\w+$/)) {
-    navigate('/apprentices/study-materials/eal');
-    return;
-  }
-
-  if (location.pathname === '/apprentices/study-materials/eal') {
-    navigate('/apprentices/study-materials');
-    return;
-  }
-
-  // Study Materials to Apprentices
-  if (location.pathname === '/apprentices/study-materials') {
-    navigate('/apprentices');
-    return;
-  }
-
-  // Default back behavior for other paths
-  if (location.pathname !== '/') {
-    navigate(-1);
-  } else {
-    navigate('/');
-  }
+  // Default to browser back if no specific handler matches
+  navigate(-1);
 };

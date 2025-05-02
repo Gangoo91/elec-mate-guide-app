@@ -3,116 +3,109 @@ import { Location } from 'react-router-dom';
 
 export const handleStudyRoutes = (
   location: Location,
-  navigate: (path: string) => void
+  navigate: (to: string) => void
 ): boolean => {
-  console.log("StudyRoutes - Checking path:", location.pathname);
-
-  // Level 2 Core Units
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d+\/\w+/)) {
+  // Handle practice exam routes
+  if (location.pathname.match(/\/apprentices\/practice-exams\/(level-2|level-3|hnc|hnd|inspection-testing|moet|am2)$/)) {
+    navigate('/apprentices/practice-exams');
+    return true;
+  }
+  
+  // Level 2 unit section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}\/\d+\.\d+/)) {
     const unitId = location.pathname.split('/')[6];
     navigate(`/apprentices/study-materials/city-guilds/level-2/core-units/${unitId}`);
     return true;
   }
 
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d+$/)) {
+  // Level 2 unit pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/core-units\/\d{3}/)) {
     navigate('/apprentices/study-materials/city-guilds/level-2/core-units');
     return true;
   }
 
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-2/core-units') {
-    navigate('/apprentices/study-materials/city-guilds/level-2');
-    return true;
+  // Special handling for AM2 page and its sub-pages
+  if (location.pathname === '/apprentices/study-materials/city-guilds/am2') {
+    // Don't redirect, allow accessing the AM2 page directly
+    return false;
   }
 
-  // Level 2 Installation
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/installation\/\d+\/\w+/)) {
-    const unitId = location.pathname.split('/')[6];
-    navigate(`/apprentices/study-materials/city-guilds/level-2/installation/${unitId}`);
-    return true;
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/am2\/(installation|inspection-testing|fault-diagnosis|safe-isolation|assessment-guidelines)/)) {
+    // Don't redirect, allow accessing the AM2 sub-pages directly
+    return false;
   }
 
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-2\/installation\/\d+$/)) {
-    navigate('/apprentices/study-materials/city-guilds/level-2/installation');
-    return true;
-  }
-
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-2/installation') {
-    navigate('/apprentices/study-materials/city-guilds/level-2');
-    return true;
-  }
-
-  // Level 3 Advanced Units
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d+\/\w+/)) {
-    const unitId = location.pathname.split('/')[5];
-    navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
-    return true;
-  }
-
-  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d+$/)) {
-    navigate('/apprentices/study-materials/city-guilds/level-3');
-    return true;
-  }
-
-  // Level 2 to City & Guilds
-  if (location.pathname === '/apprentices/study-materials/city-guilds/level-2') {
-    navigate('/apprentices/study-materials/city-guilds');
-    return true;
-  }
-
-  // Level 3 to City & Guilds
+  // Special handling for Level 3 page
   if (location.pathname === '/apprentices/study-materials/city-guilds/level-3') {
-    navigate('/apprentices/study-materials/city-guilds');
-    return true;
+    // Don't redirect, allow accessing the Level 3 electrical page directly
+    return false;
   }
 
-  // City & Guilds to Study Materials
-  if (location.pathname === '/apprentices/study-materials/city-guilds') {
-    navigate('/apprentices/study-materials');
+  // Special handling for MOET pages
+  if (location.pathname === '/apprentices/study-materials/city-guilds/moet/behaviours') {
+    // Don't redirect, allow accessing the behaviours page directly
+    return false;
+  }
+
+  // Special handling for MOET behaviours section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/professional-conduct\/\d+\.\d+/)) {
+    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/professional-conduct');
     return true;
   }
   
-  // EAL specific routes for level 2 subjects
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-2\/[a-z-]+\/[a-z-]+$/)) {
-    const subject = location.pathname.split('/')[5];
-    navigate(`/apprentices/study-materials/eal/level-2/${subject}`);
+  // Special handling for MOET safety awareness section pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/behaviours\/safety-awareness\/\d+\.\d+/)) {
+    navigate('/apprentices/study-materials/city-guilds/moet/behaviours/safety-awareness');
     return true;
   }
 
-  // EAL specific routes for level 3 subjects
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/level-3\/[a-z-]+\/[a-z-]+$/)) {
-    const subject = location.pathname.split('/')[5];
-    navigate(`/apprentices/study-materials/eal/level-3/${subject}`);
-    return true;
+  // Special handling for MOET assessment page
+  if (location.pathname === '/apprentices/study-materials/city-guilds/moet/assessment') {
+    // Don't redirect, allow accessing the assessment page directly
+    return false;
   }
 
-  // EAL specific routes for MOET subjects
-  if (location.pathname.match(/\/apprentices\/study-materials\/eal\/moet\/[a-z-]+\/[a-z-]+$/)) {
-    const subject = location.pathname.split('/')[5];
-    navigate(`/apprentices/study-materials/eal/moet/${subject}`);
-    return true;
+  // Special handling for MOET assessment detail pages
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/moet\/assessment\/[a-z-]+/)) {
+    // Don't redirect, allow accessing the assessment detail pages
+    return false;
   }
 
-  // EAL level 2 to EAL main
-  if (location.pathname === '/apprentices/study-materials/eal/level-2') {
-    navigate('/apprentices/study-materials/eal');
+  // Level 3 unit pages (except Unit 301, Unit 302, Unit 303, Unit 304, Unit 305, and Unit 308 which have their own pages)
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/(?!301$)(?!302$)(?!303$)(?!304$)(?!305$)(?!308$)(?!core-units$)\d{3}$/)) {
+    navigate('/apprentices/study-materials/city-guilds/level-3/core-units');
     return true;
   }
-
-  // EAL level 3 to EAL main
-  if (location.pathname === '/apprentices/study-materials/eal/level-3') {
-    navigate('/apprentices/study-materials/eal');
-    return true;
+  
+  // Special handling for specific unit pages
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/301' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/302' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/308') {
+    // Don't redirect, allow accessing these specific unit pages
+    return false;
+  }
+  
+  // Special handling for Unit assessment pages
+  if (location.pathname === '/apprentices/study-materials/city-guilds/level-3/302/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/303/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/304/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/305/assessment' ||
+      location.pathname === '/apprentices/study-materials/city-guilds/level-3/308/assessment') {
+    // Don't redirect, allow accessing the assessment pages
+    return false;
   }
 
-  // EAL MOET to EAL main
-  if (location.pathname === '/apprentices/study-materials/eal/moet') {
-    navigate('/apprentices/study-materials/eal');
-    return true;
-  }
-
-  // Study Materials to Apprentices
-  if (location.pathname === '/apprentices/study-materials') {
-    navigate('/apprentices');
+  // Level 3 section pages - support the unit308 section pages with format: /level-3/308/1.1, etc.
+  if (location.pathname.match(/\/apprentices\/study-materials\/city-guilds\/level-3\/\d{3}\/\d+\.\d+/)) {
+    const unitId = location.pathname.split('/')[6];
+    // Don't redirect section pages for units that have detailed section content
+    if (unitId === '301' || unitId === '302' || unitId === '303' || unitId === '304' || unitId === '305' || unitId === '308') {
+      return false;
+    }
+    navigate(`/apprentices/study-materials/city-guilds/level-3/${unitId}`);
     return true;
   }
 
