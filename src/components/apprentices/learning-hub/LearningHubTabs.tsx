@@ -48,22 +48,25 @@ const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: Learnin
             />
           </div>
           <div className="space-y-4">
-            <ProgressSummaryCard />
-            <QuickAccessTools />
+            <ProgressSummaryCard 
+              units={featuredUnits}
+              onDeleteCourse={onDeleteCourse}
+            />
+            <QuickAccessTools onCardClick={onCardClick} />
           </div>
         </div>
       </TabsContent>
       
       <TabsContent value="qualifications">
-        <QualificationsTab />
+        <QualificationsTab onCardClick={onCardClick} />
       </TabsContent>
       
       <TabsContent value="resources">
-        <ResourcesTab />
+        <ResourcesTab onCardClick={onCardClick} />
       </TabsContent>
       
       <TabsContent value="groups">
-        <StudyGroupsTab />
+        <StudyGroupsTab onCardClick={onCardClick} />
       </TabsContent>
     </Tabs>
   );
