@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
@@ -37,7 +38,12 @@ const Signup = () => {
     if (!validateAll()) {
       return;
     }
+    
     setIsSubmitting(true);
+    
+    // Special message for tutor signups
+    const isTutor = plan === "tutor";
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -45,6 +51,7 @@ const Signup = () => {
         data: { plan }
       }
     });
+    
     setIsSubmitting(false);
 
     if (error) {
@@ -56,10 +63,18 @@ const Signup = () => {
       return;
     }
 
-    toast({
-      title: "Signup Successful",
-      description: "Check your email to confirm your account.",
-    });
+    if (isTutor) {
+      toast({
+        title: "Tutor Signup Successful",
+        description: "Your tutor account has been created. Please check your email for confirmation and await approval from our team.",
+      });
+    } else {
+      toast({
+        title: "Signup Successful",
+        description: "Check your email to confirm your account.",
+      });
+    }
+    
     navigate("/subscription");
   };
 

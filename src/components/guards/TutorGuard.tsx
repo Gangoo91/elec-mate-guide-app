@@ -2,29 +2,29 @@
 import React from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ReactNode } from "react";
+import NoTutorAccessState from "../tutors/NoTutorAccessState";
 
 type TutorGuardProps = {
   children: ReactNode;
 };
 
 export const TutorGuard = ({ children }: TutorGuardProps) => {
-  const { user } = useAuth();
+  const { user, userRole, isTutorApproved } = useAuth();
   
-  // Check if the user has the tutor role
-  // This is a placeholder implementation - you'll need to modify this
-  // to check your actual user roles once you implement the role system
-  const isTutor = () => {
-    // For development purposes, we'll simulate a tutor role check
-    // In a real implementation, you would check a roles database table
-    return user?.email?.includes("tutor") || false;
-  };
-
+  // Check if the user is a tutor and is approved
+  const hasAccess = user && userRole === "tutor" && isTutorApproved;
+  
   // Only render children if user is authenticated and has tutor role
-  if (user && isTutor()) {
+  if (hasAccess) {
     return <>{children}</>;
   }
   
-  // Return null if the conditions aren't met
+  // If user is logged in but not an approved tutor, show the no access state
+  if (user) {
+    return <NoTutorAccessState isPendingApproval={userRole === "tutor" && !isTutorApproved} />;
+  }
+  
+  // Return null if user is not authenticated
   return null;
 };
 

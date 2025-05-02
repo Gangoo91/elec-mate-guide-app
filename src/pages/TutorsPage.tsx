@@ -6,26 +6,26 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import SubscriptionGuard from "@/components/guards/SubscriptionGuard";
 import TutorGuard from "@/components/guards/TutorGuard";
 import { NoSubscriptionState } from "@/components/subscription/NoSubscriptionState";
-import NoTutorAccessState from "@/components/tutors/NoTutorAccessState";
 import { useAuth } from "@/hooks/useAuth";
 
 const TutorsPage = () => {
-  const { user } = useAuth();
+  const { userRole } = useAuth();
   
-  // Simple helper to check if a user might be a tutor (placeholder)
-  // In real implementation, this would check your roles database
-  const mightBeTutor = user?.email?.includes("tutor") || false;
+  // Check if user is a tutor (regardless of approval status)
+  const isTutor = userRole === "tutor";
 
   return (
     <MainLayout>
       <Suspense fallback={<div className="w-full h-full min-h-screen flex items-center justify-center"><LoadingSpinner /></div>}>
-        <TutorGuard>
-          {/* Tutors get access without needing a subscription */}
-          <TutorHub />
-        </TutorGuard>
+        {/* For tutors - use TutorGuard which checks for approval status */}
+        {isTutor && (
+          <TutorGuard>
+            <TutorHub />
+          </TutorGuard>
+        )}
         
-        {/* If not a tutor, then check for Electrician subscription */}
-        {!mightBeTutor && (
+        {/* For non-tutors (e.g., electricians) - check for subscription */}
+        {!isTutor && (
           <>
             <SubscriptionGuard requiredTier="Electrician">
               <TutorHub />
@@ -33,9 +33,6 @@ const TutorsPage = () => {
             <NoSubscriptionState />
           </>
         )}
-        
-        {/* Show tutor-specific message if they're not authorized */}
-        {mightBeTutor && <NoTutorAccessState />}
       </Suspense>
     </MainLayout>
   );

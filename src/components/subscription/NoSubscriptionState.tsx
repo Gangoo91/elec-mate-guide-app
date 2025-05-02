@@ -8,12 +8,11 @@ import { useAuth } from "@/hooks/useAuth";
 export const NoSubscriptionState = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, userRole } = useAuth();
   const isTutorPage = location.pathname.includes("/tutors");
   
-  // Don't show this component if we're on tutor page and user email contains "tutor"
-  // This is a placeholder implementation - in reality you'd check user roles
-  if (isTutorPage && user?.email?.includes("tutor")) {
+  // Don't show this component if we're on tutor page and user is a tutor role
+  if (isTutorPage && userRole === "tutor") {
     return null;
   }
   

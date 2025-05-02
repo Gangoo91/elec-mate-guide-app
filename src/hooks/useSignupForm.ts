@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 
 export const plans = [
   { value: "apprentice", label: "Apprentice" },
   { value: "electrician", label: "Electrician" },
+  { value: "tutor", label: "Tutor" },
   { value: "employer", label: "Employer" },
 ];
 
