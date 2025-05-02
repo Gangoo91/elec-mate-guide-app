@@ -1,16 +1,17 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BadgeAlert, AlignCenter, Award } from "lucide-react";
+import { BadgeAlert, AlignCenter } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const pricingData = [
   {
     title: "Apprentice",
-    price: "£3.99/mo",
-    annual: "£39.99/yr",
+    price: "£2.99/mo",
+    annual: "£29.99/yr",
     features: [
       "Full apprentice toolkit",
       "Access all learning features",
@@ -71,7 +72,7 @@ const Welcome = () => {
         </h1>
         
         <p className="text-white text-lg mb-6 max-w-xs">
-          The comprehensive platform for electrical professionals at every stage. Supporting apprentices, electricians, and industry employers with specialized tools and resources.
+          Your ultimate guide to the electrical industry, built for apprentices, electricians, and employers.
         </p>
 
         <div className="w-full flex flex-col items-center mb-8">
@@ -140,31 +141,20 @@ const Welcome = () => {
           </div>
         </div>
         
-        <div className="w-full flex flex-col gap-2">
-          <div className="space-y-4 w-full max-w-xs mx-auto">
-            <Button
-              onClick={handleGetStarted}
-              className={`w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300 ${isAnimating ? 'scale-95 opacity-70' : ''}`}
-            >
-              GET STARTED
-            </Button>
-            
-            <Button
-              onClick={() => navigate("/login")}
-              variant="outline"
-              className="w-full rounded-2xl bg-transparent border border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10 font-bold text-lg py-6 h-auto"
-            >
-              I ALREADY HAVE AN ACCOUNT
-            </Button>
-          </div>
+        <div className="space-y-4 w-full max-w-xs">
+          <Button
+            onClick={handleGetStarted}
+            className={`w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300 ${isAnimating ? 'scale-95 opacity-70' : ''}`}
+          >
+            GET STARTED
+          </Button>
           
           <Button
-            onClick={() => navigate("/leaderboards")}
-            variant="ghost"
-            className="mt-4 mx-auto text-[#FFC900]/80 hover:text-[#FFC900] hover:bg-[#FFC900]/10 flex items-center gap-2"
+            onClick={() => navigate("/login")}
+            variant="outline"
+            className="w-full rounded-2xl bg-transparent border border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10 font-bold text-lg py-6 h-auto"
           >
-            <Award className="h-4 w-4" />
-            View Recognition & Leaderboards
+            I ALREADY HAVE AN ACCOUNT
           </Button>
         </div>
       </div>

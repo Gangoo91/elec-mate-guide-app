@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useNotificationContext } from "@/contexts/NotificationContext";
+import { Link } from "react-router-dom";
 
 const NotificationBell: React.FC<{ className?: string }> = ({ className }) => {
   const [open, setOpen] = useState(false);
@@ -67,14 +68,20 @@ const NotificationBell: React.FC<{ className?: string }> = ({ className }) => {
                   "p-4 border-b border-[#FFC900]/10 cursor-pointer hover:bg-[#FFC900]/5",
                   !notification.read && "bg-[#FFC900]/10"
                 )}
-                onClick={() => handleMarkAsRead(notification.id)}
               >
-                <div className="mb-1">
-                  <p className="font-medium text-[#FFC900]">
-                    {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
-                  </p>
-                </div>
-                <p className="text-sm text-[#FFC900]/70">{notification.message}</p>
+                {notification.link ? (
+                  <Link 
+                    to={notification.link} 
+                    className="block" 
+                    onClick={() => handleMarkAsRead(notification.id)}
+                  >
+                    <NotificationItem notification={notification} />
+                  </Link>
+                ) : (
+                  <div onClick={() => handleMarkAsRead(notification.id)}>
+                    <NotificationItem notification={notification} />
+                  </div>
+                )}
               </div>
             ))
           ) : (
@@ -87,5 +94,18 @@ const NotificationBell: React.FC<{ className?: string }> = ({ className }) => {
     </Popover>
   );
 };
+
+// Separate component for notification content
+const NotificationItem = ({ notification }) => (
+  <>
+    <div className="flex items-center justify-between mb-1">
+      <p className="font-medium text-[#FFC900]">{notification.title}</p>
+      <span className="text-xs text-[#FFC900]/50">
+        {new Date(notification.date).toLocaleDateString()}
+      </span>
+    </div>
+    <p className="text-sm text-[#FFC900]/70">{notification.message}</p>
+  </>
+);
 
 export default NotificationBell;

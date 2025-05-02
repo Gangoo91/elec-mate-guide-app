@@ -1,17 +1,15 @@
 
 import React from "react";
-import { useQueryHelper } from "@/hooks/useQueryHelper";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 
 const CommunityCounter = () => {
   const { toast } = useToast();
-  
-  // Use the safe query helper instead of wrapping useQuery in useMemo
-  const { data: userCount = 0, isLoading, error, isReady } = useQueryHelper(
-    ['communitySize'],
-    async () => {
+  const { data: userCount = 0, isLoading, error } = useQuery({
+    queryKey: ['communitySize'],
+    queryFn: async () => {
       const { count, error } = await supabase
         .from('subscribers')
         .select('*', { count: 'exact', head: true });
@@ -28,15 +26,9 @@ const CommunityCounter = () => {
       
       return count || 0;
     },
-    {
-      staleTime: 1000 * 60 * 5, // Cache for 5 minutes
-      retry: 2
-    }
-  );
-
-  if (!isReady) {
-    return <span className="text-[#FFC900]/50">Unable to load</span>;
-  }
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+    retry: 2
+  });
 
   if (isLoading) {
     return <Skeleton className="h-4 w-16 bg-[#FFC900]/10" />;
