@@ -1,10 +1,12 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BadgeAlert, AlignCenter, Award, GraduationCap } from "lucide-react";
+import { BadgeAlert, AlignCenter, Award, GraduationCap, Users, ListOrdered } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import GlassCard from "@/components/shared/GlassCard";
 
 const pricingData = [
   {
@@ -74,22 +76,61 @@ const Welcome = () => {
           The comprehensive platform for electrical professionals at every stage. Supporting apprentices, electricians, and industry employers with specialized tools and resources.
         </p>
 
-        {/* Free Tutor Box */}
-        <div className="w-full p-4 mb-6 border-2 border-[#FFC900] rounded-xl bg-gradient-to-br from-[#1A1C15] to-[#14130A] shadow-lg">
-          <div className="flex items-center mb-2">
-            <GraduationCap className="h-6 w-6 text-[#FFC900] mr-2" />
-            <h3 className="text-[#FFC900] text-lg font-bold">Free Tutor Access</h3>
+        {/* Feature Boxes */}
+        <div className="w-full grid grid-cols-1 gap-4 mb-6">
+          {/* Free Tutor Box */}
+          <div className="w-full p-4 border-2 border-[#FFC900] rounded-xl bg-gradient-to-br from-[#1A1C15] to-[#14130A] shadow-lg">
+            <div className="flex items-center mb-2">
+              <GraduationCap className="h-6 w-6 text-[#FFC900] mr-2" />
+              <h3 className="text-[#FFC900] text-lg font-bold">Free Tutor Access</h3>
+            </div>
+            <p className="text-white text-sm mb-3">
+              Apply to become a tutor and access all teaching resources for free! Perfect for educators and industry professionals.
+            </p>
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => navigate("/signup")}
+            >
+              Apply Now
+            </Button>
           </div>
-          <p className="text-white text-sm mb-3">
-            Apply to become a tutor and access all teaching resources for free! Perfect for educators and industry professionals.
-          </p>
-          <Button 
-            variant="outline" 
-            className="w-full border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
-            onClick={() => navigate("/signup")}
-          >
-            Apply Now
-          </Button>
+          
+          {/* Tutors Box */}
+          <div className="w-full p-4 border-2 border-[#FFC900]/80 rounded-xl bg-gradient-to-br from-[#1A1C15] to-[#14130A] shadow-lg">
+            <div className="flex items-center mb-2">
+              <Users className="h-6 w-6 text-[#FFC900] mr-2" />
+              <h3 className="text-[#FFC900] text-lg font-bold">Find Tutors</h3>
+            </div>
+            <p className="text-white text-sm mb-3">
+              Connect with experienced tutors who can guide your learning journey and provide specialized electrical expertise.
+            </p>
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFC900]/80 text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => navigate("/tutors")}
+            >
+              Browse Tutors
+            </Button>
+          </div>
+          
+          {/* Leaderboards Box */}
+          <div className="w-full p-4 border-2 border-[#FFC900]/60 rounded-xl bg-gradient-to-br from-[#1A1C15] to-[#14130A] shadow-lg">
+            <div className="flex items-center mb-2">
+              <Award className="h-6 w-6 text-[#FFC900] mr-2" />
+              <h3 className="text-[#FFC900] text-lg font-bold">Leaderboards</h3>
+            </div>
+            <p className="text-white text-sm mb-3">
+              Track your progress, compete with peers, and earn recognition for your achievements in the ELEC-MATE community.
+            </p>
+            <Button 
+              variant="outline" 
+              className="w-full border-[#FFC900]/60 text-[#FFC900] hover:bg-[#FFC900]/10"
+              onClick={() => navigate("/leaderboards")}
+            >
+              View Leaderboards
+            </Button>
+          </div>
         </div>
 
         <div className="w-full flex flex-col items-center mb-8">
