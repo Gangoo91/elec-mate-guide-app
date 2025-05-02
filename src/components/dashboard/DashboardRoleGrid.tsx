@@ -20,18 +20,11 @@ type DashboardRoleGridProps = {
 
 const DashboardRoleGrid = ({ roles, filteredRoles, className }: DashboardRoleGridProps) => {
   const navigate = useNavigate();
-  
-  // Add console logging for debugging
-  console.log("DashboardRoleGrid - Original roles:", roles.length);
-  console.log("DashboardRoleGrid - Filtered roles:", filteredRoles.length);
-  
-  // Always use roles if filteredRoles is empty
-  const displayRoles = filteredRoles.length > 0 ? filteredRoles : roles;
 
   return (
     <div className={cn("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16", className)}>
       <AnimatePresence>
-        {displayRoles.length === 0 && (
+        {filteredRoles.length === 0 && (
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,7 +34,7 @@ const DashboardRoleGrid = ({ roles, filteredRoles, className }: DashboardRoleGri
             No results found.
           </motion.div>
         )}
-        {displayRoles.map((role, index) => (
+        {filteredRoles.map((role, index) => (
           <motion.div
             key={role.label}
             initial={{ opacity: 0, y: 20 }}

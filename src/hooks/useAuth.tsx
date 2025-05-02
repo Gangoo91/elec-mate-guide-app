@@ -3,24 +3,16 @@ import { useEffect, useState, createContext, useContext } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 
-type UserRole = "apprentice" | "electrician" | "tutor" | "employer";
-
 type AuthContextType = {
   session: Session | null;
   user: User | null;
   loading: boolean;
-  userRole: UserRole | null;
-  isTutorApproved: boolean;
-  refreshTutorStatus: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({
   session: null,
   user: null,
   loading: true,
-  userRole: null,
-  isTutorApproved: false,
-  refreshTutorStatus: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -29,77 +21,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userRole, setUserRole] = useState<UserRole | null>(null);
-  const [isTutorApproved, setIsTutorApproved] = useState(false);
-
-  // Function to check tutor approval status
-  const fetchTutorApprovalStatus = async (userId: string) => {
-    try {
-      const { data: approvalData, error: approvalError } = await supabase
-        .from('tutor_approvals')
-        .select('is_approved')
-        .eq('user_id', userId)
-        .single();
-        
-      // If we have a record and it's approved
-      if (approvalData && approvalData.is_approved) {
-        setIsTutorApproved(true);
-        console.log("Tutor is approved:", approvalData);
-      } else {
-        setIsTutorApproved(false);
-        console.log("Tutor is not approved or no record found");
-      }
-
-      if (approvalError && approvalError.code !== 'PGRST116') {
-        console.error("Error fetching tutor approval status:", approvalError);
-      }
-    } catch (error) {
-      console.error("Error fetching tutor approval status:", error);
-      setIsTutorApproved(false);
-    }
-  };
-
-  // Function to refresh tutor status - can be called after self-approval
-  const refreshTutorStatus = async () => {
-    if (!user) return;
-    await fetchTutorApprovalStatus(user.id);
-  };
-
-  // Fetch user role and tutor approval status
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (!user) return;
-      
-      try {
-        // Get user metadata to determine role
-        const role = user.user_metadata?.plan as UserRole || null;
-        console.log("User role from metadata:", role);
-        setUserRole(role);
-        
-        // If user is a tutor, check if they are approved
-        if (role === "tutor") {
-          await fetchTutorApprovalStatus(user.id);
-        }
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-        setIsTutorApproved(false);
-      }
-    };
-
-    if (user) {
-      fetchUserDetails();
-    } else {
-      setUserRole(null);
-      setIsTutorApproved(false);
-    }
-  }, [user]);
 
   useEffect(() => {
     // Listen for changes immediately
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, s) => {
-      console.log("Auth state changed:", event, s?.user?.id);
       setSession(s);
       setUser(s?.user ?? null);
       setLoading(false);
@@ -107,7 +34,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Fetch initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Initial session:", session?.user?.id);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -119,14 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ 
-      session, 
-      user, 
-      loading, 
-      userRole, 
-      isTutorApproved,
-      refreshTutorStatus
-    }}>
+    <AuthContext.Provider value={{ session, user, loading }}>
       {children}
     </AuthContext.Provider>
   );

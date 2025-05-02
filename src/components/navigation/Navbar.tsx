@@ -167,7 +167,7 @@ const Navbar = () => {
             {mobileMenuOpen ? <X className="h-5 w-5 text-[#FFC900]" /> : <Menu className="h-5 w-5 text-[#FFC900]" />}
           </Button>
 
-          <UserMenu />
+          <UserMenu user={user} bypassAuth={bypassAuth} />
         </div>
       </div>
       

@@ -1,6 +1,5 @@
-
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -25,19 +24,6 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Check for preselected plan from navigation state
-  useEffect(() => {
-    // Access state safely in case it's null or undefined
-    const state = location.state as { preselectedPlan?: string } | null;
-    console.log("Signup page rendered with location state:", state);
-    
-    if (state?.preselectedPlan) {
-      console.log("Setting preselected plan:", state.preselectedPlan);
-      handlePlanChange(state.preselectedPlan);
-    }
-  }, [location.state, handlePlanChange]);  
 
   const onPlanChange = (value: string) => handlePlanChange(value);
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(e.target.value);
@@ -51,12 +37,7 @@ const Signup = () => {
     if (!validateAll()) {
       return;
     }
-    
     setIsSubmitting(true);
-    
-    // Special message for tutor signups
-    const isTutor = plan === "tutor";
-    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -64,21 +45,6 @@ const Signup = () => {
         data: { plan }
       }
     });
-    
-    // If user signed up as a tutor, create an entry in tutor_approvals table
-    if (data?.user && isTutor) {
-      try {
-        await supabase
-          .from('tutor_approvals')
-          .insert({
-            user_id: data.user.id,
-            is_approved: false
-          });
-      } catch (err) {
-        console.error("Error creating tutor approval record:", err);
-      }
-    }
-    
     setIsSubmitting(false);
 
     if (error) {
@@ -90,24 +56,11 @@ const Signup = () => {
       return;
     }
 
-    if (isTutor) {
-      toast({
-        title: "Tutor Signup Successful",
-        description: "Your tutor account has been created. Please check your email for confirmation and email your tutor credentials to complete the approval process.",
-      });
-    } else {
-      toast({
-        title: "Signup Successful",
-        description: "Check your email to confirm your account.",
-      });
-    }
-    
-    // Navigate to appropriate page
-    if (isTutor) {
-      navigate("/tutors"); // Direct tutors to tutor page where they'll see approval pending
-    } else {
-      navigate("/subscription"); // Others go to subscription page
-    }
+    toast({
+      title: "Signup Successful",
+      description: "Check your email to confirm your account.",
+    });
+    navigate("/subscription");
   };
 
   return (

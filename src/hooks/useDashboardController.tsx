@@ -19,18 +19,7 @@ export function useDashboardController() {
       setIsReady(true);
     }, 50);
     
-    // Add event listener for page loads
-    const handleLoad = () => {
-      console.log("Page fully loaded, ensuring dashboard is ready");
-      setIsReady(true);
-    };
-    
-    window.addEventListener('load', handleLoad);
-    
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener('load', handleLoad);
-    };
+    return () => clearTimeout(timer);
   }, [location.pathname]);
   
   return { isReady };

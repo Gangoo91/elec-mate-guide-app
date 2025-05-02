@@ -1,140 +1,102 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { User, Settings, LogOut, BookOpen, ClipboardCheck, CheckCircle } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOut, Settings, User as UserIcon, CreditCard } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
-const UserMenu = () => {
-  const { user, userRole, isTutorApproved, refreshTutorStatus } = useAuth();
+type UserMenuProps = {
+  user: any;
+  bypassAuth: boolean;
+};
+
+const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+  // Get queryClient safely with a try/catch to prevent errors if React Query is not initialized
+  const queryClient = React.useMemo(() => {
+    try {
+      return useQueryClient();
+    } catch (error) {
+      console.warn("QueryClient not available yet:", error);
+      return null;
+    }
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
-  };
-
-  const handleApproveTutor = async () => {
-    if (!user) return;
-
     try {
-      // Check if an application record exists
-      const { data: existingApplication } = await supabase
-        .from('tutor_approvals')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (existingApplication) {
-        // Update existing record to approved
-        await supabase
-          .from('tutor_approvals')
-          .update({
-            is_approved: true,
-            approved_at: new Date().toISOString()
-          })
-          .eq('user_id', user.id);
-      } else {
-        // Create new approved record
-        await supabase
-          .from('tutor_approvals')
-          .insert({
-            user_id: user.id,
-            is_approved: true,
-            approved_at: new Date().toISOString()
-          });
+      await supabase.auth.signOut();
+      // Clear all queries in the cache when logging out, but only if queryClient is available
+      if (queryClient) {
+        queryClient.clear();
       }
-      
-      // Refresh the tutor status
-      if (refreshTutorStatus) {
-        await refreshTutorStatus();
-      }
-
       toast({
-        title: "Tutor Access Granted",
-        description: "You now have access to the tutor area",
+        title: "Logged out successfully",
+        description: "You have been logged out of your account",
       });
+      navigate("/login");
     } catch (error) {
-      console.error("Error approving tutor:", error);
       toast({
-        title: "Error",
-        description: "Could not approve tutor access",
-        variant: "destructive"
+        title: "Error logging out",
+        description: "There was a problem logging you out",
+        variant: "destructive",
       });
     }
   };
 
-  if (!user) return null;
+  if (user || bypassAuth) {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon" className="rounded-full border-[#FFC900]/50 bg-transparent">
+            <UserIcon className="h-5 w-5 text-[#FFC900]" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="bg-[#22251e] border-[#FFC900]/20">
+          <DropdownMenuLabel className="text-[#FFC900]">My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-[#FFC900]/20" />
+          <DropdownMenuItem onClick={() => navigate("/profile")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+            <UserIcon className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/manage-subscription")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+            <CreditCard className="mr-2 h-4 w-4" />
+            <span>Manage Subscription</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/settings")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-[#FFC900]/20" />
+          <DropdownMenuItem onClick={handleLogout} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Logout</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  }
 
+  // Display login/signup buttons for unauthenticated users (rare on desktop)
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="hover:bg-[#FFC900]/20 rounded-full">
-          <User className="h-5 w-5 text-[#FFC900]" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 border border-[#FFC900]/20 bg-[#1A1C15]">
-        <DropdownMenuGroup>
-          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
-            <Link to="/profile" className="flex items-center w-full">
-              <User className="h-4 w-4 mr-2" />
-              <span>Profile</span>
-            </Link>
-          </DropdownMenuItem>
-
-          {userRole === 'tutor' && (
-            <DropdownMenuItem className="hover:bg-[#FFC900]/10">
-              <Link to="/tutors" className="flex items-center w-full">
-                <BookOpen className="h-4 w-4 mr-2" />
-                <span>Tutor Hub</span>
-              </Link>
-            </DropdownMenuItem>
-          )}
-
-          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
-            <Link to="/tutor-application" className="flex items-center w-full">
-              <ClipboardCheck className="h-4 w-4 mr-2" />
-              <span>Tutor Application</span>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
-            <Link to="/settings" className="flex items-center w-full">
-              <Settings className="h-4 w-4 mr-2" />
-              <span>Settings</span>
-            </Link>
-          </DropdownMenuItem>
-          
-          {/* Developer self-approval button */}
-          {userRole === 'tutor' && !isTutorApproved && (
-            <DropdownMenuItem 
-              onClick={handleApproveTutor} 
-              className="hover:bg-[#FFC900]/10 text-green-500"
-            >
-              <CheckCircle className="h-4 w-4 mr-2" />
-              <span>Dev: Approve Tutor</span>
-            </DropdownMenuItem>
-          )}
-        </DropdownMenuGroup>
-
-        <DropdownMenuSeparator className="bg-[#FFC900]/20" />
-
-        <DropdownMenuItem onClick={handleLogout} className="hover:bg-[#FFC900]/10">
-          <LogOut className="h-4 w-4 mr-2" />
-          <span>Logout</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="hidden md:flex items-center gap-2">
+      <Button variant="ghost" onClick={() => navigate("/login")} className="text-[#FFC900] hover:bg-[#FFC900]/10">
+        Login
+      </Button>
+      <Button onClick={() => navigate("/signup")} className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]">
+        Sign Up
+      </Button>
+    </div>
   );
 };
 
