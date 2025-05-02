@@ -13,6 +13,19 @@ export const handleNavigationLogic = (
     return;
   }
 
+  // Handle tutor routes specifically
+  if (location.pathname.startsWith('/tutors/')) {
+    const segments = location.pathname.split('/');
+    if (segments.length > 3) {
+      // If deeper than /tutors/section, go back one level
+      navigate(`/tutors/${segments[2]}`);
+    } else {
+      // If at /tutors/section, go back to /tutors
+      navigate('/tutors');
+    }
+    return;
+  }
+
   // Learning Hub to Apprentices
   if (location.pathname === '/apprentices/learning-hub') {
     navigate('/apprentices');

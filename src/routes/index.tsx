@@ -43,11 +43,12 @@ const routes: RouteObject[] = [
     path: "/leaderboards",
     element: <LeaderboardsPage />
   },
+  // Update tutor routes - make them nested under the main TutorsPage
   {
     path: "/tutors",
     element: <TutorsPage />
   },
-  // Add tutor sub-routes with proper components
+  // Make each tutor sub-route a separate route with its dedicated component
   {
     path: "/tutors/teaching-resources",
     element: <TeachingResourcesPage />
@@ -100,6 +101,7 @@ const routes: RouteObject[] = [
     path: '/tutor-application',
     element: <TutorApplicationStatus />
   },
+  // Include the apprentice and electrician routes
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
 ];
