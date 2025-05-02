@@ -10,8 +10,8 @@ import { Badge } from "@/components/ui/badge";
 const pricingData = [
   {
     title: "Apprentice",
-    price: "£2.99/mo",
-    annual: "£29.99/yr",
+    price: "£3.99/mo",
+    annual: "£39.99/yr",
     features: [
       "Full apprentice toolkit",
       "Access all learning features",
@@ -72,7 +72,7 @@ const Welcome = () => {
         </h1>
         
         <p className="text-white text-lg mb-6 max-w-xs">
-          Your ultimate guide to the electrical industry, built for apprentices, electricians, and employers.
+          The comprehensive platform for electrical professionals at every stage. Supporting apprentices, electricians, and industry employers with specialized tools and resources.
         </p>
 
         <div className="w-full flex flex-col items-center mb-8">
