@@ -11,6 +11,7 @@ type AuthContextType = {
   loading: boolean;
   userRole: UserRole | null;
   isTutorApproved: boolean;
+  refreshTutorStatus: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   userRole: null,
   isTutorApproved: false,
+  refreshTutorStatus: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -29,6 +31,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [isTutorApproved, setIsTutorApproved] = useState(false);
+
+  // Function to check tutor approval status
+  const fetchTutorApprovalStatus = async (userId: string) => {
+    try {
+      const { data: approvalData, error: approvalError } = await supabase
+        .from('tutor_approvals')
+        .select('is_approved')
+        .eq('user_id', userId)
+        .single();
+        
+      // If we have a record and it's approved
+      if (approvalData && approvalData.is_approved) {
+        setIsTutorApproved(true);
+      } else {
+        setIsTutorApproved(false);
+      }
+
+      if (approvalError && approvalError.code !== 'PGRST116') {
+        console.error("Error fetching tutor approval status:", approvalError);
+      }
+    } catch (error) {
+      console.error("Error fetching tutor approval status:", error);
+      setIsTutorApproved(false);
+    }
+  };
+
+  // Function to refresh tutor status - can be called after self-approval
+  const refreshTutorStatus = async () => {
+    if (!user) return;
+    await fetchTutorApprovalStatus(user.id);
+  };
 
   // Fetch user role and tutor approval status
   useEffect(() => {
@@ -42,23 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         // If user is a tutor, check if they are approved
         if (role === "tutor") {
-          // Query the tutor_approvals table
-          const { data: approvalData, error: approvalError } = await supabase
-            .from('tutor_approvals')
-            .select('is_approved')
-            .eq('user_id', user.id)
-            .single();
-            
-          // If we have a record and it's approved
-          if (approvalData && approvalData.is_approved) {
-            setIsTutorApproved(true);
-          } else {
-            setIsTutorApproved(false);
-          }
-
-          if (approvalError && approvalError.code !== 'PGRST116') {
-            console.error("Error fetching tutor approval status:", approvalError);
-          }
+          await fetchTutorApprovalStatus(user.id);
         }
       } catch (error) {
         console.error("Error fetching user details:", error);
@@ -97,7 +114,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, user, loading, userRole, isTutorApproved }}>
+    <AuthContext.Provider value={{ 
+      session, 
+      user, 
+      loading, 
+      userRole, 
+      isTutorApproved,
+      refreshTutorStatus
+    }}>
       {children}
     </AuthContext.Provider>
   );
