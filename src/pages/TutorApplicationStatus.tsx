@@ -17,7 +17,7 @@ type TutorApplicationStatus = {
 };
 
 const TutorApplicationStatus = () => {
-  const { user, userRole } = useAuth();
+  const { user, userRole, refreshTutorStatus } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -70,6 +70,90 @@ const TutorApplicationStatus = () => {
     fetchApplicationStatus();
   }, [user, toast]);
 
+  const handleApplyAsTutor = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('tutor_approvals')
+        .insert({
+          user_id: user.id,
+          is_approved: false,
+        });
+        
+      if (error) {
+        console.error("Error creating tutor application:", error);
+        toast({
+          title: "Application Failed",
+          description: "Could not submit your application",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Refresh the application status
+      setApplicationStatus({
+        isApplied: true,
+        isApproved: false,
+        appliedAt: new Date().toISOString(),
+        approvedAt: null
+      });
+      
+      toast({
+        title: "Application Submitted",
+        description: "Your tutor application has been submitted for review",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+  // Self-approve function for development purposes
+  const handleSelfApprove = async () => {
+    if (!user) return;
+
+    try {
+      // Create or update tutor approval record to approved
+      const { error } = await supabase
+        .from('tutor_approvals')
+        .upsert({
+          user_id: user.id,
+          is_approved: true,
+          applied_at: new Date().toISOString(),
+          approved_at: new Date().toISOString()
+        });
+
+      if (error) {
+        console.error("Error self-approving tutor application:", error);
+        toast({
+          title: "Approval Failed",
+          description: "Could not approve your tutor status",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Refresh auth context to update tutor approval status
+      if (refreshTutorStatus) {
+        await refreshTutorStatus();
+      }
+      
+      setApplicationStatus({
+        isApplied: true,
+        isApproved: true,
+        appliedAt: new Date().toISOString(),
+        approvedAt: new Date().toISOString()
+      });
+      
+      toast({
+        title: "Tutor Status Approved",
+        description: "You now have access to the tutor hub",
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleGoTutorHub = () => {
     navigate("/tutors");
   };
@@ -112,12 +196,39 @@ const TutorApplicationStatus = () => {
               </div>
             ) : (
               <div className="space-y-4">
-                {!applicationStatus.isApplied && userRole !== "tutor" ? (
-                  <div className="bg-yellow-900/20 border border-yellow-500/30 p-4 rounded-md">
-                    <p className="text-[#FFC900]">You haven't applied to be a tutor yet.</p>
-                    <p className="text-sm text-[#FFC900]/70 mt-2">
-                      Apply through the application box on the welcome page.
-                    </p>
+                {!applicationStatus.isApplied ? (
+                  <div>
+                    {userRole === "tutor" ? (
+                      <div className="bg-yellow-900/20 border border-yellow-500/30 p-4 rounded-md">
+                        <p className="text-[#FFC900]">You have the tutor role but haven't formally applied yet.</p>
+                        <p className="text-sm text-[#FFC900]/70 mt-2">
+                          Complete your application to enable your tutor account.
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          onClick={handleApplyAsTutor} 
+                          className="mt-4 border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
+                        >
+                          Submit Application
+                        </Button>
+                        
+                        <Button 
+                          variant="outline" 
+                          onClick={handleSelfApprove}
+                          className="mt-4 ml-2 border-green-500 text-green-500 hover:bg-green-500/10"
+                        >
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Dev: Self-Approve
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="bg-yellow-900/20 border border-yellow-500/30 p-4 rounded-md">
+                        <p className="text-[#FFC900]">You haven't applied to be a tutor yet.</p>
+                        <p className="text-sm text-[#FFC900]/70 mt-2">
+                          Apply through the application box on the welcome page.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <>
@@ -139,21 +250,29 @@ const TutorApplicationStatus = () => {
                       </span>
                     </div>
                     
-                    {applicationStatus.isApproved && (
+                    {applicationStatus.isApproved ? (
                       <div className="bg-green-900/20 border border-green-500/30 p-4 rounded-md mt-4">
                         <p className="text-green-500">Congratulations! Your application has been approved.</p>
                         <p className="text-sm text-green-500/70 mt-2">
                           You can now access the tutor hub and start using tutor features.
                         </p>
                       </div>
-                    )}
-                    
-                    {!applicationStatus.isApproved && (
+                    ) : (
                       <div className="bg-yellow-900/20 border border-yellow-500/30 p-4 rounded-md mt-4">
                         <p className="text-[#FFC900]">Your application is pending approval.</p>
                         <p className="text-sm text-[#FFC900]/70 mt-2">
                           An administrator will review your application soon. Please check back later.
                         </p>
+                        
+                        {/* Add self-approve button for development */}
+                        <Button 
+                          variant="outline" 
+                          onClick={handleSelfApprove}
+                          className="mt-4 border-green-500 text-green-500 hover:bg-green-500/10"
+                        >
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Dev: Self-Approve
+                        </Button>
                       </div>
                     )}
                   </>
