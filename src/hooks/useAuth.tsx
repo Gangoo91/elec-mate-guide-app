@@ -44,8 +44,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       // If we have a record and it's approved
       if (approvalData && approvalData.is_approved) {
         setIsTutorApproved(true);
+        console.log("Tutor is approved:", approvalData);
       } else {
         setIsTutorApproved(false);
+        console.log("Tutor is not approved or no record found");
       }
 
       if (approvalError && approvalError.code !== 'PGRST116') {
@@ -71,6 +73,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         // Get user metadata to determine role
         const role = user.user_metadata?.plan as UserRole || null;
+        console.log("User role from metadata:", role);
         setUserRole(role);
         
         // If user is a tutor, check if they are approved
@@ -96,6 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, s) => {
+      console.log("Auth state changed:", event, s?.user?.id);
       setSession(s);
       setUser(s?.user ?? null);
       setLoading(false);
@@ -103,6 +107,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Fetch initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Initial session:", session?.user?.id);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);

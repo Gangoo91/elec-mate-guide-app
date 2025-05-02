@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { ReactNode } from "react";
 import NoTutorAccessState from "../tutors/NoTutorAccessState";
@@ -10,6 +10,15 @@ type TutorGuardProps = {
 
 export const TutorGuard = ({ children }: TutorGuardProps) => {
   const { user, userRole } = useAuth();
+  
+  // Log guard state for debugging
+  useEffect(() => {
+    console.log("TutorGuard - Guard check:", { 
+      isLoggedIn: !!user, 
+      userRole,
+      hasAccess: user && userRole === "tutor"
+    });
+  }, [user, userRole]);
   
   // DEVELOPMENT MODE: Allow access if user has tutor role, regardless of approval status
   // In production, this would check for isTutorApproved as well

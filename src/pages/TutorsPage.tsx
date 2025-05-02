@@ -1,5 +1,5 @@
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import TutorHub from "./TutorHub";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -7,10 +7,28 @@ import TutorGuard from "@/components/guards/TutorGuard";
 import { useAuth } from "@/hooks/useAuth";
 
 const TutorsPage = () => {
-  const { userRole } = useAuth();
+  const { user, userRole, loading } = useAuth();
   
-  // Check if user is a tutor (regardless of approval status)
-  const isTutor = userRole === "tutor";
+  // Log the auth state on component mount for debugging
+  useEffect(() => {
+    console.log("TutorsPage mounted - Auth state:", { 
+      isLoggedIn: !!user, 
+      userRole, 
+      userId: user?.id 
+    });
+  }, [user, userRole]);
+  
+  // Show loading spinner while auth is being checked
+  if (loading) {
+    return (
+      <MainLayout>
+        <div className="w-full h-full min-h-screen flex items-center justify-center">
+          <LoadingSpinner />
+          <span className="ml-2">Loading your session...</span>
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>
