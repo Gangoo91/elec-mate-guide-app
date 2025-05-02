@@ -33,7 +33,12 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
+  // Force component to re-render with a unique key
+  const renderKey = `dashboard-${Date.now()}`;
+
   useEffect(() => {
+    console.log("Dashboard mounting with timestamp:", renderKey);
+    
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
@@ -44,7 +49,15 @@ const Dashboard = () => {
       });
     }, 100);
 
-    return () => clearTimeout(timer);
+    // Force refresh if navigated directly to dashboard
+    if (window.location.pathname === '/dashboard') {
+      console.log("Direct navigation to dashboard detected");
+    }
+
+    return () => {
+      clearTimeout(timer);
+      console.log("Dashboard unmounting");
+    };
   }, []);
 
   // Add console log to debug rendering
@@ -63,7 +76,7 @@ const Dashboard = () => {
   }
 
   return (
-    <MainLayout>
+    <MainLayout key={renderKey}>
       <div className="container px-4 py-4">
         <DashboardHeroSection hideLogoOverride={false} hideButtons={true} />
         

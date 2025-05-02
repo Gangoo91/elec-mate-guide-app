@@ -9,15 +9,19 @@ import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
 import SubscriptionGuard from '@/components/guards/SubscriptionGuard';
 
-// Combine all routes
+// Combine all routes with correct prioritization
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Welcome />
+    element: <Navigate to="/dashboard" replace />
   },
   {
     path: '/dashboard',
-    element: <Dashboard />
+    element: <Dashboard key="dashboard-main" />
+  },
+  {
+    path: '/welcome',
+    element: <Welcome />
   },
   {
     path: '/tutors',
