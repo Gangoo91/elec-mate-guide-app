@@ -9,7 +9,7 @@ type AdminGuardProps = {
 };
 
 const AdminGuard = ({ children }: AdminGuardProps) => {
-  const { user, loading, userRole } = useAuth();
+  const { user, loading, userRole, isAdmin } = useAuth();
   const { toast } = useToast();
   
   // If still loading auth state, show loading
@@ -23,24 +23,29 @@ const AdminGuard = ({ children }: AdminGuardProps) => {
   
   // If user is not logged in, redirect to login
   if (!user) {
-    toast({
-      title: "Access Denied",
-      description: "Please login to continue",
-      variant: "destructive",
-    });
+    // Using a flag to avoid calling toast repeatedly causing infinite loop
+    React.useEffect(() => {
+      toast({
+        title: "Access Denied",
+        description: "Please login to continue",
+        variant: "destructive",
+      });
+    }, []);
+    
     return <Navigate to="/login" replace />;
   }
   
-  // Check if the user is an admin (for now, we'll assume admin users have this in their metadata)
-  // We'll need to enhance this later with proper admin role checking
-  const isAdmin = userRole === "admin";
-  
+  // Check if the user is an admin using the isAdmin property from useAuth
   if (!isAdmin) {
-    toast({
-      title: "Access Denied",
-      description: "You don't have permission to access this area",
-      variant: "destructive",
-    });
+    // Using a flag to avoid calling toast repeatedly causing infinite loop
+    React.useEffect(() => {
+      toast({
+        title: "Access Denied",
+        description: "You don't have permission to access this area",
+        variant: "destructive",
+      });
+    }, []);
+    
     return <Navigate to="/dashboard" replace />;
   }
   

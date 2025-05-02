@@ -44,7 +44,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUserRole(role);
         
         // Check if user is an admin
-        setIsAdmin(role === "admin");
+        const adminStatus = role === "admin";
+        setIsAdmin(adminStatus);
         
         // If user is a tutor, check if they are approved
         if (role === "tutor") {
