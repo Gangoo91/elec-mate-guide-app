@@ -14,6 +14,7 @@ import NotFound from '@/pages/NotFound';
 import Signup from '@/pages/Signup';
 import Login from '@/pages/Login';
 import ForgotPassword from '@/pages/ForgotPassword';
+import TutorApplicationStatus from '@/pages/TutorApplicationStatus';
 import { AuthRoutes } from './AuthRoutes';
 
 // Combine all routes
@@ -53,6 +54,10 @@ const routes: RouteObject[] = [
   {
     path: '/forgot-password',
     element: <ForgotPassword />
+  },
+  {
+    path: '/tutor-application',
+    element: <TutorApplicationStatus />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)

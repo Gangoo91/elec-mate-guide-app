@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { User, Settings, LogOut, BookOpen } from 'lucide-react';
+import { User, Settings, LogOut, BookOpen, ClipboardCheck } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -48,6 +48,13 @@ const UserMenu = () => {
               </Link>
             </DropdownMenuItem>
           )}
+
+          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
+            <Link to="/tutor-application" className="flex items-center w-full">
+              <ClipboardCheck className="h-4 w-4 mr-2" />
+              <span>Tutor Application</span>
+            </Link>
+          </DropdownMenuItem>
 
           <DropdownMenuItem className="hover:bg-[#FFC900]/10">
             <Link to="/settings" className="flex items-center w-full">
