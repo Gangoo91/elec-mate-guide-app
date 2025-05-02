@@ -9,7 +9,6 @@ interface UnitData {
   title: string;
   description: string;
   path: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
   progress?: {
     completed: number;
     total: number;
@@ -59,7 +58,6 @@ const FeaturedUnits = ({ units, onDeleteCourse }: FeaturedUnitsProps) => {
             description={isMobile ? (unit.description.length > 80 ? unit.description.substring(0, 80) + '...' : unit.description) : unit.description}
             path={unit.path}
             progress={unit.progress}
-            difficulty={unit.difficulty}
             onDelete={onDeleteCourse ? () => onDeleteCourse(unit.unitNumber) : undefined}
           />
         ))}
