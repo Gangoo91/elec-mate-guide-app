@@ -64,7 +64,13 @@ const Welcome = () => {
 
   const handleTutorApply = () => {
     console.log("Tutor apply button clicked");
-    navigate("/signup", { state: { preselectedPlan: "tutor" } });
+    // Force navigation to happen after the current render cycle
+    setTimeout(() => {
+      navigate("/signup", { 
+        state: { preselectedPlan: "tutor" },
+        replace: true 
+      });
+    }, 0);
   };
 
   return (

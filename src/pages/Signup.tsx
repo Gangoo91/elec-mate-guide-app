@@ -29,13 +29,18 @@ const Signup = () => {
 
   // Check for preselected plan from navigation state
   useEffect(() => {
+    // Access state safely in case it's null or undefined
     const state = location.state as { preselectedPlan?: string } | null;
-    console.log("Location state:", state);
+    console.log("Signup page rendered with location state:", state);
+    
     if (state?.preselectedPlan) {
       console.log("Setting preselected plan:", state.preselectedPlan);
-      handlePlanChange(state.preselectedPlan);
+      // Use setTimeout to ensure this happens after component mount
+      setTimeout(() => {
+        handlePlanChange(state.preselectedPlan);
+      }, 0);
     }
-  }, [location.state]);
+  }, []);  // Intentionally run only once on component mount
 
   const onPlanChange = (value: string) => handlePlanChange(value);
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(e.target.value);
