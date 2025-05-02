@@ -3,12 +3,19 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { GraduationCap } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const TutorApplicationBox = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   const handleTutorApply = () => {
     console.log("Tutor apply button clicked");
+    toast({
+      title: "Navigating to tutor signup",
+      description: "Redirecting you to the tutor application form"
+    });
+    
     navigate("/signup", { 
       state: { preselectedPlan: "tutor" }
     });
