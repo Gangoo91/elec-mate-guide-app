@@ -15,8 +15,9 @@ export function useDashboardController() {
     
     // Small timeout to ensure DOM is ready
     const timer = setTimeout(() => {
+      console.log("Dashboard controller ready", location.pathname);
       setIsReady(true);
-    }, 10);
+    }, 50);
     
     return () => clearTimeout(timer);
   }, [location.pathname]);

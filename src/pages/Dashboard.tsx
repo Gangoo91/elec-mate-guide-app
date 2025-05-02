@@ -5,6 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
+import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
 
 const roles = [
   {
@@ -60,6 +61,7 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <div className="container px-4 py-4">
+        <DashboardHeroSection hideLogoOverride={false} hideButtons={true} />
         <DashboardRoleGrid 
           roles={roles} 
           filteredRoles={filteredRoles}
