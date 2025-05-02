@@ -1,37 +1,50 @@
 
 import React from 'react';
-import { CheckSquare, Users } from "lucide-react";
+import { Users, Clock, BarChart } from "lucide-react";
 import TutorHubCard from './TutorHubCard';
+import { useNavigate } from 'react-router-dom';
 
 const StudentManagementTab: React.FC<{
-  onCardClick: (path: string) => void
+  onCardClick?: (path: string) => void
 }> = ({ onCardClick }) => {
+  const navigate = useNavigate();
+  
+  const handleCardClick = (path: string) => {
+    console.log("StudentManagementTab - Handling card click for:", path);
+    if (onCardClick) {
+      onCardClick(path);
+    } else {
+      navigate(path);
+    }
+  };
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <TutorHubCard
         title="Student Progress"
-        description="Track apprentice development"
-        content="Monitor individual and group progress through qualifications and milestones."
+        description="Track individual and group progress"
+        content="Monitor student performance through qualifications and milestones."
+        icon={<BarChart className="h-6 w-6 text-primary mb-2" />}
         path="/tutors/student-progress"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
       
       <TutorHubCard
-        title="Off-the-Job Hours"
-        description="Monitor training requirements"
-        icon={<CheckSquare className="h-6 w-6 text-primary mb-2" />}
-        content="Monitor and verify apprentice off-the-job training hours and activities."
+        title="Off-the-Job Monitoring"
+        description="Track apprentice training hours"
+        content="Monitor and validate apprentices' off-the-job training hours."
+        icon={<Clock className="h-6 w-6 text-primary mb-2" />}
         path="/tutors/off-the-job-monitoring"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
       
       <TutorHubCard
         title="Class Management"
-        description="Organize learning groups"
+        description="Manage class groups and attendance"
+        content="Organize student groups, track attendance, and manage timetables."
         icon={<Users className="h-6 w-6 text-primary mb-2" />}
-        content="Create and manage student groups, schedule sessions and track attendance."
         path="/tutors/class-management"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
     </div>
   );

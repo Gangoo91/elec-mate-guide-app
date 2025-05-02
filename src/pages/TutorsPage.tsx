@@ -5,21 +5,24 @@ import TutorHub from "./TutorHub";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import TutorGuard from "@/components/guards/TutorGuard";
 import { useAuth } from "@/hooks/useAuth";
+import { useDashboardController } from "@/hooks/useDashboardController";
 
 const TutorsPage = () => {
   const { user, userRole, loading } = useAuth();
+  const { isReady } = useDashboardController();
   
   // Log the auth state on component mount for debugging
   useEffect(() => {
     console.log("TutorsPage mounted - Auth state:", { 
       isLoggedIn: !!user, 
       userRole, 
-      userId: user?.id 
+      userId: user?.id,
+      pathname: window.location.pathname
     });
   }, [user, userRole]);
   
   // Show loading spinner while auth is being checked
-  if (loading) {
+  if (loading || !isReady) {
     return (
       <MainLayout>
         <div className="w-full h-full min-h-screen flex items-center justify-center">

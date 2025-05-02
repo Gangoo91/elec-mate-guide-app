@@ -43,12 +43,11 @@ const routes: RouteObject[] = [
     path: "/leaderboards",
     element: <LeaderboardsPage />
   },
-  // Update tutor routes - make them nested under the main TutorsPage
+  // Tutor routes with proper routing
   {
     path: "/tutors",
     element: <TutorsPage />
   },
-  // Make each tutor sub-route a separate route with its dedicated component
   {
     path: "/tutors/teaching-resources",
     element: <TeachingResourcesPage />

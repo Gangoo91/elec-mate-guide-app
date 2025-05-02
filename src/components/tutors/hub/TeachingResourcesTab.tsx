@@ -1,38 +1,50 @@
 
 import React from 'react';
-import { GraduationCap, School, BookOpen } from "lucide-react";
+import { FileText, Book, Video } from "lucide-react";
 import TutorHubCard from './TutorHubCard';
+import { useNavigate } from 'react-router-dom';
 
 const TeachingResourcesTab: React.FC<{
-  onCardClick: (path: string) => void
+  onCardClick?: (path: string) => void
 }> = ({ onCardClick }) => {
+  const navigate = useNavigate();
+  
+  const handleCardClick = (path: string) => {
+    console.log("TeachingResourcesTab - Handling card click for:", path);
+    if (onCardClick) {
+      onCardClick(path);
+    } else {
+      navigate(path);
+    }
+  };
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <TutorHubCard
         title="Teaching Resources"
-        description="Access curriculum materials"
-        icon={<GraduationCap className="h-6 w-6 text-primary mb-2" />}
-        content="Access your teaching materials, lesson plans, and presentation slides."
+        description="Access materials for your classes"
+        content="Find presentations, handouts, and teaching materials."
+        icon={<FileText className="h-6 w-6 text-primary mb-2" />}
         path="/tutors/teaching-resources"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
       
       <TutorHubCard
         title="Lesson Plans"
-        description="Structured teaching guides"
-        icon={<School className="h-6 w-6 text-primary mb-2" />}
-        content="Access and customize lesson plans for Level 2 and Level 3 qualifications."
+        description="Create and manage lesson plans"
+        content="Structured guides for teaching sessions with learning objectives."
+        icon={<Book className="h-6 w-6 text-primary mb-2" />}
         path="/tutors/lesson-plans"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
       
       <TutorHubCard
         title="Demonstration Guides"
-        description="Practical teaching aids"
-        icon={<BookOpen className="h-6 w-6 text-primary mb-2" />}
-        content="Step-by-step guides for demonstrating electrical concepts and techniques."
+        description="Step-by-step practical demonstrations"
+        content="Visual guides for demonstrating practical skills to students."
+        icon={<Video className="h-6 w-6 text-primary mb-2" />}
         path="/tutors/demonstration-guides"
-        onClick={onCardClick}
+        onClick={handleCardClick}
       />
     </div>
   );
