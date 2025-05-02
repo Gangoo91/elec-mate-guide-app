@@ -35,12 +35,9 @@ const Signup = () => {
     
     if (state?.preselectedPlan) {
       console.log("Setting preselected plan:", state.preselectedPlan);
-      // Use setTimeout to ensure this happens after component mount
-      setTimeout(() => {
-        handlePlanChange(state.preselectedPlan);
-      }, 0);
+      handlePlanChange(state.preselectedPlan);
     }
-  }, []);  // Intentionally run only once on component mount
+  }, [location.state, handlePlanChange]);  
 
   const onPlanChange = (value: string) => handlePlanChange(value);
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(e.target.value);

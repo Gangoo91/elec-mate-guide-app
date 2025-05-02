@@ -1,7 +1,6 @@
 
 import { useEffect } from "react";
 import Logo from "@/components/Logo";
-import { motion } from "framer-motion";
 import TutorApplicationBox from "@/components/welcome/TutorApplicationBox";
 import PricingTiersSection from "@/components/welcome/PricingTiersSection";
 import WelcomeActions from "@/components/welcome/WelcomeActions";

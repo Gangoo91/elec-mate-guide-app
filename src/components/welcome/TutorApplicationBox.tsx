@@ -9,13 +9,9 @@ const TutorApplicationBox = () => {
   
   const handleTutorApply = () => {
     console.log("Tutor apply button clicked");
-    // Force navigation to happen after the current render cycle
-    setTimeout(() => {
-      navigate("/signup", { 
-        state: { preselectedPlan: "tutor" },
-        replace: true 
-      });
-    }, 0);
+    navigate("/signup", { 
+      state: { preselectedPlan: "tutor" }
+    });
   };
 
   return (

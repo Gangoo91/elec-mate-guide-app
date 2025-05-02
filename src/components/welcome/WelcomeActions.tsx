@@ -1,18 +1,15 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Award } from "lucide-react";
 
 const WelcomeActions = () => {
   const navigate = useNavigate();
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleGetStarted = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      navigate("/signup");
-    }, 300);
+    console.log("Get started button clicked");
+    navigate("/signup");
   };
 
   return (
@@ -20,7 +17,7 @@ const WelcomeActions = () => {
       <div className="space-y-4 w-full max-w-xs mx-auto">
         <Button
           onClick={handleGetStarted}
-          className={`w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300 ${isAnimating ? 'scale-95 opacity-70' : ''}`}
+          className="w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300"
         >
           GET STARTED
         </Button>
