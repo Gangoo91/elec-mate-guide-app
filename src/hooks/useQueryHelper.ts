@@ -30,8 +30,9 @@ export function useQueryHelper<TData, TError = Error>(
           });
           
           // Call the original error handler if provided
-          if (options?.meta?.errorHandler) {
-            options.meta.errorHandler(error);
+          if (options?.meta?.errorHandler && typeof options.meta.errorHandler === 'function') {
+            // Fixed this line - ensure errorHandler is callable before invoking
+            (options.meta.errorHandler as (error: unknown) => void)(error);
           }
         }
       }
