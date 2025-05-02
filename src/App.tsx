@@ -10,12 +10,17 @@ import { ChatProvider } from '@/contexts/ChatContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 
-// Create a client
+// Create a QueryClient with reasonable defaults
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 1,
       staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+      // Avoid missing QueryClient errors with a graceful error callback
+      onError: (error) => {
+        console.error('Query error:', error);
+      }
     },
   },
 });
