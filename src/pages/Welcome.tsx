@@ -63,7 +63,7 @@ const Welcome = () => {
   };
 
   const handleTutorApply = () => {
-    // Navigate to signup with tutor plan preselected
+    console.log("Tutor apply button clicked");
     navigate("/signup", { state: { preselectedPlan: "tutor" } });
   };
 
@@ -93,6 +93,7 @@ const Welcome = () => {
             variant="outline" 
             className="w-full border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
             onClick={handleTutorApply}
+            type="button"
           >
             Apply Now
           </Button>

@@ -30,7 +30,9 @@ const Signup = () => {
   // Check for preselected plan from navigation state
   useEffect(() => {
     const state = location.state as { preselectedPlan?: string } | null;
+    console.log("Location state:", state);
     if (state?.preselectedPlan) {
+      console.log("Setting preselected plan:", state.preselectedPlan);
       handlePlanChange(state.preselectedPlan);
     }
   }, [location.state]);
