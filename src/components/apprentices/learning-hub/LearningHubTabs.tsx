@@ -75,12 +75,12 @@ const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: Learnin
       <div className="w-full space-y-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full justify-between">
+            <Button variant="outline" className="w-full justify-between bg-[#22251e] border-[#FFC900]/20 text-[#FFC900]">
               {tabOptions.find(tab => tab.value === activeTab)?.label || "Overview"}
               <ChevronDown className="h-4 w-4 ml-2" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[200px] bg-[#22251e] border-[#FFC900]/20">
+          <DropdownMenuContent className="w-full min-w-[200px] bg-[#22251e] border-[#FFC900]/20 z-50">
             {tabOptions.map(tab => (
               <DropdownMenuItem 
                 key={tab.value}
@@ -101,9 +101,13 @@ const LearningHubTabs = ({ featuredUnits, onCardClick, onDeleteCourse }: Learnin
   // Render desktop tabs version
   return (
     <Tabs defaultValue="main" className="w-full" value={activeTab} onValueChange={setActiveTab}>
-      <TabsList className="grid grid-cols-4 mb-6">
+      <TabsList className="grid grid-cols-4 mb-6 bg-[#22251e] border-[#FFC900]/20">
         {tabOptions.map(tab => (
-          <TabsTrigger key={tab.value} value={tab.value}>
+          <TabsTrigger 
+            key={tab.value} 
+            value={tab.value}
+            className="data-[state=active]:bg-[#FFC900]/10 data-[state=active]:text-[#FFC900] text-[#FFC900]/70"
+          >
             {tab.label}
           </TabsTrigger>
         ))}
