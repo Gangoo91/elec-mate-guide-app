@@ -102,7 +102,7 @@ const EALLevel2Page = () => {
                         size="sm" 
                         className="text-xs"
                         variant="outline"
-                        onClick={() => navigate('/apprentices/study-materials/eal/level-2/installation-technology')}
+                        onClick={() => navigate('/apprentices/study-materials/eal/level-2/installation-methods')}
                       >
                         Continue Learning
                       </Button>
@@ -163,19 +163,35 @@ const EALLevel2Page = () => {
                           />
                           
                           <UnitCard
+                            unitNumber="ELEC2/04"
+                            title="Electrical Installation Theory and Technology"
+                            description="Principles and technologies of electrical installation. (146 GLH)"
+                            path="/apprentices/study-materials/eal/level-2/electrical-theory"
+                            progress={mockUserProgress['ELEC2/04']}
+                          />
+                          
+                          <UnitCard
                             unitNumber="ELEC2/05A"
                             title="Electrical Installation Methods, Procedures and Requirements"
                             description="Standard methods and procedures for electrical installations, ensuring compliance. (59 GLH)"
-                            path="/apprentices/study-materials/eal/level-2/installation-technology"
+                            path="/apprentices/study-materials/eal/level-2/installation-methods"
                             progress={mockUserProgress['ELEC2/05A']}
                           />
                           
                           <UnitCard
-                            unitNumber="ELEC2/04"
-                            title="Electrical Installation Theory and Technology"
-                            description="Principles and technologies of electrical installation. (146 GLH)"
+                            unitNumber="ELEC2/05B"
+                            title="Electrical Installation Craft Skills"
+                            description="Practical skills for electrical installation work. (140 GLH)"
+                            path="/apprentices/study-materials/eal/level-2/craft-skills"
+                            progress={mockUserProgress['ELEC2/05B']}
+                          />
+                          
+                          <UnitCard
+                            unitNumber="ELEC2/08"
+                            title="Electrical Science and Principles"
+                            description="Scientific principles that form the basis of electrical theory and practice. (93 GLH)"
                             path="/apprentices/study-materials/eal/level-2/electrical-science"
-                            progress={mockUserProgress['ELEC2/04']}
+                            progress={mockUserProgress['ELEC2/08']}
                           />
                           
                           <Button 
@@ -337,7 +353,7 @@ const EALLevel2Page = () => {
                             unitNumber="ELEC2/04"
                             title="Electrical Installation Theory and Technology"
                             description="Introduces the principles and technologies underpinning electrical installation work. (146 GLH)"
-                            path="/apprentices/study-materials/eal/level-2/electrical-science"
+                            path="/apprentices/study-materials/eal/level-2/electrical-theory"
                             progress={mockUserProgress['ELEC2/04']}
                           />
                           
@@ -345,7 +361,7 @@ const EALLevel2Page = () => {
                             unitNumber="ELEC2/05A"
                             title="Electrical Installation Methods, Procedures and Requirements"
                             description="Focuses on standard methods and procedures for electrical installations, ensuring compliance with regulations. (59 GLH)"
-                            path="/apprentices/study-materials/eal/level-2/installation-technology"
+                            path="/apprentices/study-materials/eal/level-2/installation-methods"
                             progress={mockUserProgress['ELEC2/05A']}
                           />
                           
@@ -353,7 +369,7 @@ const EALLevel2Page = () => {
                             unitNumber="ELEC2/05B"
                             title="Electrical Installation Craft Skills"
                             description="Provides hands-on experience in practical electrical installation tasks, developing essential craft skills. (140 GLH)"
-                            path="/apprentices/study-materials/eal/level-2/wiring-systems"
+                            path="/apprentices/study-materials/eal/level-2/craft-skills"
                             progress={mockUserProgress['ELEC2/05B']}
                           />
                           
@@ -361,7 +377,7 @@ const EALLevel2Page = () => {
                             unitNumber="ELEC2/08"
                             title="Electrical Science and Principles"
                             description="Explores the fundamental scientific principles that form the basis of electrical theory and practice. (93 GLH)"
-                            path="/apprentices/study-materials/eal/level-2/electrical-systems"
+                            path="/apprentices/study-materials/eal/level-2/electrical-science"
                             progress={mockUserProgress['ELEC2/08']}
                           />
                         </div>
@@ -581,6 +597,34 @@ const EALLevel2Page = () => {
                       <span className="font-medium">Qualification Type:</span>
                       <span>Diploma</span>
                     </p>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              <Card className="mb-4">
+                <CardContent className="p-4">
+                  <h2 className="text-lg font-semibold text-primary mb-3">Mandatory Units</h2>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-2 hover:bg-secondary/20 rounded-md transition-colors">
+                      <span className="text-sm text-primary/90">ELEC2/01</span>
+                      <span className="text-xs text-primary/70">48 GLH</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 hover:bg-secondary/20 rounded-md transition-colors">
+                      <span className="text-sm text-primary/90">ELEC2/04</span>
+                      <span className="text-xs text-primary/70">146 GLH</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 hover:bg-secondary/20 rounded-md transition-colors">
+                      <span className="text-sm text-primary/90">ELEC2/05A</span>
+                      <span className="text-xs text-primary/70">59 GLH</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 hover:bg-secondary/20 rounded-md transition-colors">
+                      <span className="text-sm text-primary/90">ELEC2/05B</span>
+                      <span className="text-xs text-primary/70">140 GLH</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 hover:bg-secondary/20 rounded-md transition-colors">
+                      <span className="text-sm text-primary/90">ELEC2/08</span>
+                      <span className="text-xs text-primary/70">93 GLH</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

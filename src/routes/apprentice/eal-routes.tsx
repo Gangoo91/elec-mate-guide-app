@@ -12,6 +12,11 @@ import EALHazardousAreasPage from "../../pages/EALHazardousAreasPage";
 import EALBuildingControlsPage from "../../pages/EALBuildingControlsPage";
 import EALAssessmentPage from "../../pages/EALAssessmentPage";
 import EALMOETPage from "../../pages/EALMOETPage";
+import EALHealthSafetyPage from "../../pages/units/EALHealthSafetyPage";
+import EALElectricalTheoryPage from "../../pages/units/EALElectricalTheoryPage";
+import EALInstallationMethodsPage from "../../pages/units/EALInstallationMethodsPage";
+import EALCraftSkillsPage from "../../pages/units/EALCraftSkillsPage";
+import EALElectricalSciencePage from "../../pages/units/EALElectricalSciencePage";
 
 const ealRoutes: RouteObject[] = [
   {
@@ -53,6 +58,27 @@ const ealRoutes: RouteObject[] = [
   {
     path: "/apprentices/study-materials/eal/moet",
     element: <EALMOETPage />
+  },
+  // Level 2 Unit Pages
+  {
+    path: "/apprentices/study-materials/eal/level-2/health-safety",
+    element: <EALHealthSafetyPage />
+  },
+  {
+    path: "/apprentices/study-materials/eal/level-2/electrical-theory",
+    element: <EALElectricalTheoryPage />
+  },
+  {
+    path: "/apprentices/study-materials/eal/level-2/installation-methods",
+    element: <EALInstallationMethodsPage />
+  },
+  {
+    path: "/apprentices/study-materials/eal/level-2/craft-skills",
+    element: <EALCraftSkillsPage />
+  },
+  {
+    path: "/apprentices/study-materials/eal/level-2/electrical-science",
+    element: <EALElectricalSciencePage />
   },
   {
     path: "/apprentices/study-materials/eal/level-2/installation-technology",
