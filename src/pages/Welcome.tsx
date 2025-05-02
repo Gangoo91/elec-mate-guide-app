@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,10 @@ const pricingData = [
 const Welcome = () => {
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    console.log("Welcome page rendered");
+  }, []);
 
   const handleGetStarted = () => {
     setIsAnimating(true);

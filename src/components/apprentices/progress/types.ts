@@ -9,7 +9,10 @@ export type Milestone = {
   completed_at: string | null;
   resource_id: string | null;
   resource_type: 'video' | 'exam' | 'quiz' | 'audio' | null;
+  training_hours: number | null;
   created_at: string;
+  qualification_framework?: 'city_guilds' | 'eal' | 'moet' | 'other';
+  learning_level?: 'level2' | 'level3' | 'level4' | null;
 };
 
 export type Update = {
@@ -18,3 +21,4 @@ export type Update = {
   created_at: string;
   milestone_id: string;
 };
+

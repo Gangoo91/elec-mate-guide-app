@@ -1,11 +1,12 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Book, Lightbulb } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
-import { generateCacheKey } from "@/utils/cacheUtils";
+import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
+import TutorBox from "@/components/dashboard/TutorBox";
 
 const roles = [
   {
@@ -23,8 +24,6 @@ const roles = [
 ];
 
 const Dashboard = () => {
-  // Generate a unique key for this render to prevent cache issues
-  const [renderKey] = useState(() => generateCacheKey());
   const { isReady } = useDashboardController();
   const {
     query,
@@ -35,8 +34,6 @@ const Dashboard = () => {
   } = useRoleFilter(roles);
 
   useEffect(() => {
-    console.log("Dashboard mounted with key:", renderKey);
-    
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
@@ -48,7 +45,10 @@ const Dashboard = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [renderKey]);
+  }, []);
+
+  // Add console log to debug rendering
+  console.log("Dashboard rendering, isReady:", isReady);
 
   if (!isReady) {
     return (
@@ -64,11 +64,22 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-4" key={renderKey}>
-        <DashboardRoleGrid 
-          roles={roles} 
-          filteredRoles={filteredRoles}
-        />
+      <div className="container px-4 py-4">
+        <DashboardHeroSection hideLogoOverride={false} hideButtons={true} />
+        
+        {/* Dashboard content with Tutor Box */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div className="md:col-span-2">
+            <DashboardRoleGrid 
+              roles={roles} 
+              filteredRoles={filteredRoles}
+            />
+          </div>
+          
+          <div className="md:col-span-1">
+            <TutorBox />
+          </div>
+        </div>
       </div>
     </MainLayout>
   );

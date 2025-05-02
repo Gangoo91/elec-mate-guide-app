@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { clearLocalCache } from "@/utils/cacheUtils";
 
 /**
  * Custom hook to control Dashboard rendering and prevent caching issues
@@ -14,14 +13,13 @@ export function useDashboardController() {
     // Force a re-render and clear any cached state
     setIsReady(false);
     
-    // Clear any potential cache
-    clearLocalCache();
+    console.log("Dashboard controller initializing", location.pathname);
     
     // Small timeout to ensure DOM is ready
     const timer = setTimeout(() => {
-      console.log("Dashboard controller ready, path:", location.pathname);
+      console.log("Dashboard controller ready", location.pathname);
       setIsReady(true);
-    }, 50);
+    }, 100);
     
     return () => clearTimeout(timer);
   }, [location.pathname]);
