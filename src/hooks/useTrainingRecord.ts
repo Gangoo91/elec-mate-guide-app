@@ -24,7 +24,7 @@ export const useTrainingRecord = ({ videoId, trainingMinutes, ealCourseId, video
       setIsRecording(true);
       
       // For demo purposes, we'll simulate a database operation
-      console.log(`Recording ${trainingMinutes} minutes of training for ${ealCourseId || 'unknown course'}`);
+      console.log(`Recording ${trainingMinutes} minutes of off-the-job training for ${ealCourseId || 'unknown course'}`);
       
       // In a real implementation, this would update the database
       /* 
@@ -35,7 +35,8 @@ export const useTrainingRecord = ({ videoId, trainingMinutes, ealCourseId, video
           video_id: videoId,
           minutes: trainingMinutes,
           eal_course_id: ealCourseId,
-          recorded_at: new Date().toISOString()
+          recorded_at: new Date().toISOString(),
+          training_type: 'off-the-job'
         });
       
       if (error) throw error;
@@ -43,7 +44,7 @@ export const useTrainingRecord = ({ videoId, trainingMinutes, ealCourseId, video
       
       // Show success toast
       toast({
-        title: "Training Time Recorded",
+        title: "Off-the-Job Training Time Recorded",
         description: `${trainingMinutes} minutes added to your off-the-job training record`,
       });
       

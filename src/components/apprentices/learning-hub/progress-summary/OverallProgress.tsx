@@ -20,6 +20,9 @@ const OverallProgress = ({ completedSections, totalSections, completionPercentag
         className="h-2" 
         indicatorClassName={completionPercentage > 75 ? "bg-green-500" : completionPercentage > 25 ? "bg-amber-500" : "bg-red-500"}
       />
+      <div className="mt-1 text-xs text-[#FFC900]/60 flex justify-end">
+        <span>Counts toward off-the-job training</span>
+      </div>
     </div>
   );
 };

@@ -55,8 +55,8 @@ const TrainingTimeDisplay: React.FC<TrainingTimeDisplayProps> = ({
     setLastRecorded(new Date());
     
     toast({
-      title: "Training time updated",
-      description: `${minutes} minutes automatically added to your training record`,
+      title: "Off-the-Job Training Updated",
+      description: `${minutes} minutes automatically added to your off-the-job training record`,
     });
   };
 
@@ -67,8 +67,8 @@ const TrainingTimeDisplay: React.FC<TrainingTimeDisplayProps> = ({
       setLastRecorded(new Date());
       
       toast({
-        title: "Training time recorded",
-        description: `${elapsedMinutes} minutes added to your training record`,
+        title: "Off-the-Job Training Recorded",
+        description: `${elapsedMinutes} minutes added to your off-the-job training record`,
       });
     }
   };
@@ -83,7 +83,7 @@ const TrainingTimeDisplay: React.FC<TrainingTimeDisplayProps> = ({
     <div className="bg-secondary p-3 rounded-lg border border-primary/20 flex items-center justify-between">
       <div className="flex items-center">
         <Clock className="h-4 w-4 text-primary mr-2" />
-        <span className="text-sm text-primary/80">Session time: {formatTime(currentSessionTime)}</span>
+        <span className="text-sm text-primary/80">Off-the-Job Training: {formatTime(currentSessionTime)}</span>
       </div>
       
       <Button 
