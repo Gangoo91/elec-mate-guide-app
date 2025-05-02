@@ -1,13 +1,14 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeRoutes from './apprentice';
 import { ElectricianRoutes } from './ElectricianRoutes';
 import { createRoutesFromElements } from 'react-router-dom';
 import Welcome from '@/pages/Welcome';
+import ApprenticeHub from "@/pages/ApprenticeHub";
+import LearningHubPage from "@/pages/LearningHubPage";
+import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
-import SubscriptionGuard from '@/components/guards/SubscriptionGuard';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -20,20 +21,16 @@ const routes: RouteObject[] = [
     element: <Dashboard />
   },
   {
-    path: '/tutors',
-    element: (
-      <SubscriptionGuard requiredTier="Electrician">
-        <NotFound />
-      </SubscriptionGuard>
-    )
+    path: "/apprentices",
+    element: <ApprenticeHub />
   },
   {
-    path: '/tutors/apply',
-    element: (
-      <SubscriptionGuard requiredTier="Electrician">
-        <NotFound />
-      </SubscriptionGuard>
-    )
+    path: "/apprentices/learning-hub",
+    element: <LearningHubPage />
+  },
+  {
+    path: "/leaderboards",
+    element: <LeaderboardsPage />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)

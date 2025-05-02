@@ -1,12 +1,11 @@
 
 import React, { useEffect } from "react";
-import { Book, Lightbulb } from "lucide-react";
+import { Book, Lightbulb, Trophy } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
-import TutorBox from "@/components/dashboard/TutorBox";
 
 const roles = [
   {
@@ -20,6 +19,12 @@ const roles = [
     icon: <Lightbulb className="h-7 w-7 text-[#FFC900]" />,
     path: "/electricians",
     description: "Professional resources for licensed electricians.",
+  },
+  {
+    label: "Leaderboards",
+    icon: <Trophy className="h-7 w-7 text-[#FFC900]" />,
+    path: "/leaderboards",
+    description: "Recognition for top performers across the community.",
   }
 ];
 
@@ -47,9 +52,6 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Add console log to debug rendering
-  console.log("Dashboard rendering, isReady:", isReady);
-
   if (!isReady) {
     return (
       <MainLayout>
@@ -66,20 +68,10 @@ const Dashboard = () => {
     <MainLayout>
       <div className="container px-4 py-4">
         <DashboardHeroSection hideLogoOverride={false} hideButtons={true} />
-        
-        {/* Dashboard content with Tutor Box */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div className="md:col-span-2">
-            <DashboardRoleGrid 
-              roles={roles} 
-              filteredRoles={filteredRoles}
-            />
-          </div>
-          
-          <div className="md:col-span-1">
-            <TutorBox />
-          </div>
-        </div>
+        <DashboardRoleGrid 
+          roles={roles} 
+          filteredRoles={filteredRoles}
+        />
       </div>
     </MainLayout>
   );

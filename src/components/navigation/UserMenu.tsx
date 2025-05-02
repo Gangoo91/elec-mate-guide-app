@@ -23,13 +23,23 @@ type UserMenuProps = {
 const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  // Get queryClient safely with a try/catch to prevent errors if React Query is not initialized
+  const queryClient = React.useMemo(() => {
+    try {
+      return useQueryClient();
+    } catch (error) {
+      console.warn("QueryClient not available yet:", error);
+      return null;
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
       await supabase.auth.signOut();
-      // Clear all queries in the cache when logging out
-      queryClient.clear();
+      // Clear all queries in the cache when logging out, but only if queryClient is available
+      if (queryClient) {
+        queryClient.clear();
+      }
       toast({
         title: "Logged out successfully",
         description: "You have been logged out of your account",

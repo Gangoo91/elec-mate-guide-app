@@ -13,13 +13,11 @@ export function useDashboardController() {
     // Force a re-render and clear any cached state
     setIsReady(false);
     
-    console.log("Dashboard controller initializing", location.pathname);
-    
     // Small timeout to ensure DOM is ready
     const timer = setTimeout(() => {
       console.log("Dashboard controller ready", location.pathname);
       setIsReady(true);
-    }, 100);
+    }, 50);
     
     return () => clearTimeout(timer);
   }, [location.pathname]);

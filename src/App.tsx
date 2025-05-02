@@ -10,12 +10,24 @@ import { ChatProvider } from '@/contexts/ChatContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './App.css';
 
-// Create a new QueryClient instance
-const queryClient = new QueryClient();
+// Create a QueryClient with reasonable defaults
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+      // For React Query v5, configure error handling differently
+      meta: {
+        onError: (error: unknown) => {
+          console.error('Query error:', error);
+        }
+      }
+    },
+  },
+});
 
 const App = () => {
-  console.log("App rendering with routes:", routes.length);
-  
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -43,7 +55,7 @@ const App = () => {
                     // Handle regular routes
                     return <Route key={index} path={route.path} element={route.element} />;
                   })}
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
                 <Toaster />
               </BrowserRouter>

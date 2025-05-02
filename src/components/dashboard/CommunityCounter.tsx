@@ -7,28 +7,44 @@ import { useToast } from "@/hooks/use-toast";
 
 const CommunityCounter = () => {
   const { toast } = useToast();
-  const { data: userCount = 0, isLoading, error } = useQuery({
-    queryKey: ['communitySize'],
-    queryFn: async () => {
-      const { count, error } = await supabase
-        .from('subscribers')
-        .select('*', { count: 'exact', head: true });
-      
-      if (error) {
-        console.error('Error fetching community size:', error);
-        toast({
-          title: "Failed to load community data",
-          description: "Please try again later",
-          variant: "destructive",
-        });
-        return 0;
-      }
-      
-      return count || 0;
-    },
-    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
-    retry: 2
-  });
+  
+  // Wrap the hook in a try/catch to handle situations where QueryClient might not be initialized
+  const queryResult = React.useMemo(() => {
+    try {
+      return useQuery({
+        queryKey: ['communitySize'],
+        queryFn: async () => {
+          const { count, error } = await supabase
+            .from('subscribers')
+            .select('*', { count: 'exact', head: true });
+          
+          if (error) {
+            console.error('Error fetching community size:', error);
+            toast({
+              title: "Failed to load community data",
+              description: "Please try again later",
+              variant: "destructive",
+            });
+            return 0;
+          }
+          
+          return count || 0;
+        },
+        staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+        retry: 2,
+        meta: {
+          errorHandler: (error: unknown) => {
+            console.error("Error fetching community size:", error);
+          }
+        }
+      });
+    } catch (error) {
+      console.warn("Error using Query hook:", error);
+      return { isLoading: false, error: true, data: 0 };
+    }
+  }, [toast]);
+  
+  const { data: userCount = 0, isLoading, error } = queryResult || { data: 0, isLoading: false, error: false };
 
   if (isLoading) {
     return <Skeleton className="h-4 w-16 bg-[#FFC900]/10" />;
