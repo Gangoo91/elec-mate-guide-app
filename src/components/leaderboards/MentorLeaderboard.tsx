@@ -29,33 +29,37 @@ const MentorLeaderboard = ({ timeFilter }: MentorLeaderboardProps) => {
         fromDate = pastMonth.toISOString();
       }
       
-      // Fetch mentorships
-      let query = supabase
+      // First get mentorships with time filter
+      let mentorshipQuery = supabase
         .from('mentorships')
-        .select(`
-          id,
-          created_at,
-          mentor_id,
-          profiles:mentor_id (
-            id,
-            first_name,
-            last_name,
-            avatar_url,
-            qualification_level
-          )
-        `)
+        .select('id, mentor_id, created_at')
         .eq('status', 'active');
         
       // Add time filter if needed
       if (fromDate) {
-        query = query.gte('created_at', fromDate);
+        mentorshipQuery = mentorshipQuery.gte('created_at', fromDate);
       }
 
-      const { data, error } = await query;
+      const mentorshipData = await mentorshipQuery;
       
-      if (error) {
-        throw error;
+      if (mentorshipData.error) {
+        throw mentorshipData.error;
       }
+      
+      // Then get profiles separately
+      const profilesQuery = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, avatar_url, qualification_level');
+        
+      if (profilesQuery.error) {
+        throw profilesQuery.error;
+      }
+      
+      // Create a map of profiles by ID for easy lookup
+      const profilesMap = new Map();
+      profilesQuery.data.forEach(profile => {
+        profilesMap.set(profile.id, profile);
+      });
       
       // Count active mentorships per mentor
       const mentorCounts: Record<string, {
@@ -66,11 +70,12 @@ const MentorLeaderboard = ({ timeFilter }: MentorLeaderboardProps) => {
         level?: string;
       }> = {};
 
-      data.forEach(mentorship => {
-        const profile = mentorship.profiles;
+      mentorshipData.data.forEach(mentorship => {
+        const mentorId = mentorship.mentor_id;
+        const profile = profilesMap.get(mentorId);
+        
         if (!profile) return;
         
-        const mentorId = profile.id;
         const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Anonymous Mentor';
         
         if (!mentorCounts[mentorId]) {

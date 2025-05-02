@@ -29,34 +29,38 @@ const StudyLeaderboard = ({ timeFilter }: StudyLeaderboardProps) => {
         fromDate = pastMonth.toISOString();
       }
       
-      // Base query
-      let query = supabase
+      // First, get the exercise kudos with time filter
+      let kudosQuery = supabase
         .from('exercise_kudos')
-        .select(`
-          id,
-          points,
-          created_at,
-          profiles:user_id (
-            id,
-            first_name,
-            last_name,
-            avatar_url,
-            qualification_level
-          )
-        `)
+        .select('id, user_id, points, created_at')
         .order('created_at', { ascending: false });
         
       // Add time filter if needed
       if (fromDate) {
-        query = query.gte('created_at', fromDate);
+        kudosQuery = kudosQuery.gte('created_at', fromDate);
       }
-
-      const { data, error } = await query;
       
-      if (error) {
-        throw error;
+      const kudosData = await kudosQuery;
+      
+      if (kudosData.error) {
+        throw kudosData.error;
       }
 
+      // Then get profiles separately
+      const profilesQuery = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, avatar_url, qualification_level');
+        
+      if (profilesQuery.error) {
+        throw profilesQuery.error;
+      }
+      
+      // Create a map of profiles by ID for easy lookup
+      const profilesMap = new Map();
+      profilesQuery.data.forEach(profile => {
+        profilesMap.set(profile.id, profile);
+      });
+      
       // Process data to calculate total points per user
       const userScores: Record<string, {
         id: string;
@@ -66,11 +70,12 @@ const StudyLeaderboard = ({ timeFilter }: StudyLeaderboardProps) => {
         level?: string;
       }> = {};
 
-      data.forEach(kudos => {
-        const profile = kudos.profiles;
+      kudosData.data.forEach(kudos => {
+        const userId = kudos.user_id;
+        const profile = profilesMap.get(userId);
+        
         if (!profile) return;
         
-        const userId = profile.id;
         const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Anonymous User';
         
         if (!userScores[userId]) {

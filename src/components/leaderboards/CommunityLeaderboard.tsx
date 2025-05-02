@@ -29,54 +29,52 @@ const CommunityLeaderboard = ({ timeFilter }: CommunityLeaderboardProps) => {
         fromDate = pastMonth.toISOString();
       }
       
-      // Fetch chat messages and comments
+      // First, get chat messages
       let messagesQuery = supabase
         .from('chat_messages')
-        .select(`
-          id,
-          created_at,
-          user_id,
-          profiles:user_id (
-            id,
-            first_name,
-            last_name,
-            avatar_url,
-            qualification_level
-          )
-        `);
+        .select('id, user_id, created_at');
         
       // Add time filter if needed
       if (fromDate) {
         messagesQuery = messagesQuery.gte('created_at', fromDate);
       }
 
+      const messagesData = await messagesQuery;
+      
+      if (messagesData.error) {
+        throw messagesData.error;
+      }
+
+      // Get chat comments
       let commentsQuery = supabase
         .from('chat_comments')
-        .select(`
-          id,
-          created_at,
-          user_id,
-          profiles:user_id (
-            id,
-            first_name,
-            last_name,
-            avatar_url,
-            qualification_level
-          )
-        `);
+        .select('id, user_id, created_at');
         
       // Add time filter if needed
       if (fromDate) {
         commentsQuery = commentsQuery.gte('created_at', fromDate);
       }
 
-      const [messagesRes, commentsRes] = await Promise.all([
-        messagesQuery,
-        commentsQuery
-      ]);
+      const commentsData = await commentsQuery;
       
-      if (messagesRes.error) throw messagesRes.error;
-      if (commentsRes.error) throw commentsRes.error;
+      if (commentsData.error) {
+        throw commentsData.error;
+      }
+
+      // Get profiles
+      const profilesQuery = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, avatar_url, qualification_level');
+      
+      if (profilesQuery.error) {
+        throw profilesQuery.error;
+      }
+
+      // Create a map of profiles by ID for easy lookup
+      const profilesMap = new Map();
+      profilesQuery.data.forEach(profile => {
+        profilesMap.set(profile.id, profile);
+      });
       
       // Count contributions per user
       const userContributions: Record<string, {
@@ -87,12 +85,14 @@ const CommunityLeaderboard = ({ timeFilter }: CommunityLeaderboardProps) => {
         level?: string;
       }> = {};
 
-      // Process messages
-      messagesRes.data.forEach(message => {
-        const profile = message.profiles;
+      // Process messages (2 points each)
+      messagesData.data.forEach(message => {
+        const userId = message.user_id;
+        if (!userId) return;
+        
+        const profile = profilesMap.get(userId);
         if (!profile) return;
         
-        const userId = profile.id;
         const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Anonymous User';
         
         if (!userContributions[userId]) {
@@ -109,12 +109,14 @@ const CommunityLeaderboard = ({ timeFilter }: CommunityLeaderboardProps) => {
         userContributions[userId].score += 2;
       });
 
-      // Process comments
-      commentsRes.data.forEach(comment => {
-        const profile = comment.profiles;
+      // Process comments (1 point each)
+      commentsData.data.forEach(comment => {
+        const userId = comment.user_id;
+        if (!userId) return;
+        
+        const profile = profilesMap.get(userId);
         if (!profile) return;
         
-        const userId = profile.id;
         const fullName = `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Anonymous User';
         
         if (!userContributions[userId]) {
