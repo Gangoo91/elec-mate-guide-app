@@ -44,6 +44,10 @@ const Dashboard = () => {
     filteredRoles
   } = useRoleFilter(roles);
 
+  // Add console logs to debug role rendering
+  console.log("Dashboard rendering, roles:", roles);
+  console.log("Filtered roles:", filteredRoles);
+
   useEffect(() => {
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
@@ -76,7 +80,7 @@ const Dashboard = () => {
         <DashboardHeroSection hideLogoOverride={false} hideButtons={true} />
         <DashboardRoleGrid 
           roles={roles} 
-          filteredRoles={filteredRoles}
+          filteredRoles={roles} // Always use the full roles array rather than filtered
         />
       </div>
     </MainLayout>
