@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { RouteObject } from 'react-router-dom';
+import { RouteObject, Navigate } from 'react-router-dom';
 import ApprenticeRoutes from './apprentice';
 import { ElectricianRoutes } from './ElectricianRoutes';
 import { createRoutesFromElements } from 'react-router-dom';

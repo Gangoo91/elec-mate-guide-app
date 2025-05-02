@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: true,
       staleTime: 0,
-      cacheTime: 0 // Disable caching
+      gcTime: 0 // Using gcTime instead of deprecated cacheTime
     },
   },
 });
