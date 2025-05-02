@@ -3,7 +3,7 @@ import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeRoutes from './apprentice';
 import { ElectricianRoutes } from './ElectricianRoutes';
-import { createRoutesFromElements } from 'react-router-dom';
+import { createRoutesFromElements, Route } from 'react-router-dom';
 import Welcome from '@/pages/Welcome';
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import LearningHubPage from "@/pages/LearningHubPage";
@@ -54,7 +54,6 @@ const routes: RouteObject[] = [
     path: '/forgot-password',
     element: <ForgotPassword />
   },
-  ...AuthRoutes,
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
 ];

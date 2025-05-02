@@ -16,6 +16,7 @@ const ApprenticeRoutes: RouteObject[] = [
   ...level3Routes,
   ...am2Routes,
   ...ealRoutes,
+  // Filter mentorship routes to only include apprentice-related paths
   ...mentorshipRoutes.filter(route => route.path?.startsWith('/apprentices'))
 ];
 
