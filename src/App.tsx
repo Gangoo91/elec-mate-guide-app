@@ -1,8 +1,7 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -23,6 +22,8 @@ import { ElectricianRoutes } from "./routes/ElectricianRoutes";
 import mentalHealthRoutes from "./routes/MentalHealthRoutes";
 import mentorshipRoutes from "./routes/mentorship/mentorshipRoutes";
 import { ChatProvider } from "./contexts/ChatContext";
+import { useEffect } from "react";
+import { clearLocalCache } from "./utils/cacheUtils";
 import Level2Unit201Page from "./pages/Level2Unit201Page";
 import Level2Unit202Page from "./pages/Level2Unit202Page";
 import Level2Unit203Page from "./pages/Level2Unit203Page";
@@ -37,12 +38,36 @@ import Level3Unit305AssessmentPage from "./pages/Level3Unit305AssessmentPage";
 import Unit305SectionPage from "./pages/units/Unit305SectionPage";
 import "./index.css";
 
+// Create a route observer component to clear cache on route changes
+const RouteObserver = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    console.log("Route changed to:", location.pathname);
+    
+    // Force clear cache when navigating to dashboard
+    if (location.pathname === "/" || location.pathname === "/index" || location.pathname === "/dashboard") {
+      clearLocalCache();
+    }
+    
+    // Ensure index routes redirect properly to dashboard
+    if (location.pathname === "/index") {
+      navigate("/", { replace: true });
+    }
+  }, [location.pathname, navigate]);
+  
+  return null;
+};
+
+// Configure the QueryClient with proper settings
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
       retry: 1,
       staleTime: 30000,
+      gcTime: 60000, // Using gcTime instead of deprecated cacheTime
     },
   },
 });
@@ -57,6 +82,7 @@ const App = () => {
               <ChatProvider>
                 <TooltipProvider>
                   <Toaster />
+                  <RouteObserver />
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/welcome" element={<Welcome />} />

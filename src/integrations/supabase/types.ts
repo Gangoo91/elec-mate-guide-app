@@ -1287,6 +1287,81 @@ export type Database = {
         }
         Relationships: []
       }
+      tutor_approvals: {
+        Row: {
+          applied_at: string
+          approved_at: string | null
+          id: string
+          is_approved: boolean
+          reviewer_notes: string | null
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          approved_at?: string | null
+          id?: string
+          is_approved?: boolean
+          reviewer_notes?: string | null
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          approved_at?: string | null
+          id?: string
+          is_approved?: boolean
+          reviewer_notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_courses: {
+        Row: {
+          completed: number | null
+          created_at: string
+          description: string
+          estimated_time: number | null
+          id: string
+          last_activity: string | null
+          path: string
+          time_spent: number | null
+          title: string
+          total: number | null
+          unit_number: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: number | null
+          created_at?: string
+          description: string
+          estimated_time?: number | null
+          id?: string
+          last_activity?: string | null
+          path: string
+          time_spent?: number | null
+          title: string
+          total?: number | null
+          unit_number: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: number | null
+          created_at?: string
+          description?: string
+          estimated_time?: number | null
+          id?: string
+          last_activity?: string | null
+          path?: string
+          time_spent?: number | null
+          title?: string
+          total?: number | null
+          unit_number?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           content_id: string
@@ -1370,6 +1445,7 @@ export type Database = {
           id: string
           kudos_awarded: boolean | null
           last_position: number | null
+          training_recorded: boolean | null
           updated_at: string | null
           user_id: string
           video_id: string
@@ -1381,6 +1457,7 @@ export type Database = {
           id?: string
           kudos_awarded?: boolean | null
           last_position?: number | null
+          training_recorded?: boolean | null
           updated_at?: string | null
           user_id: string
           video_id: string
@@ -1392,6 +1469,7 @@ export type Database = {
           id?: string
           kudos_awarded?: boolean | null
           last_position?: number | null
+          training_recorded?: boolean | null
           updated_at?: string | null
           user_id?: string
           video_id?: string

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeDashboardPage from "../../pages/ApprenticeHub";
@@ -8,6 +7,7 @@ import LearningHubPage from "../../pages/LearningHubPage";
 import AudioTutorialsPage from "../../pages/AudioTutorialsPage";
 import AIToolsPage from "../../pages/AIToolsPage";
 import VideoDemonstrationsPage from "../../pages/VideoDemonstrationsPage";
+import VideosGalleryPage from "../../pages/VideosGalleryPage";
 import ARLearningPage from "../../pages/ARLearningPage";
 import PracticeExamsPage from "../../pages/PracticeExamsPage";
 import Mentorship from "../../pages/Mentorship";
@@ -23,6 +23,7 @@ import FindMentors from "../../pages/FindMentors";
 import MyMentors from "../../pages/MyMentors";
 import MentorshipGuide from "../../pages/MentorshipGuide";
 import ScheduleSessions from "../../pages/ScheduleSessions";
+import JobPriceEstimatorPage from "../../pages/JobPriceEstimatorPage";
 
 const apprenticeMainRoutes: RouteObject[] = [
   {
@@ -58,12 +59,16 @@ const apprenticeMainRoutes: RouteObject[] = [
     element: <VideoDemonstrationsPage />
   },
   {
+    path: "/apprentices/videos-gallery",
+    element: <VideosGalleryPage />
+  },
+  {
     path: "/apprentices/ar-learning",
     element: <ARLearningPage />
   },
   {
-    path: "/apprentices/study-materials/city-guilds",
-    element: <CityGuildsPage />
+    path: "/apprentices/job-price-estimator",
+    element: <JobPriceEstimatorPage />
   },
   {
     path: "/apprentices/mentorship",

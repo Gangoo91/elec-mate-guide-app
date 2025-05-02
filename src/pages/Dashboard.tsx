@@ -1,10 +1,11 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Book, Lightbulb } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
+import { generateCacheKey } from "@/utils/cacheUtils";
 
 const roles = [
   {
@@ -22,6 +23,8 @@ const roles = [
 ];
 
 const Dashboard = () => {
+  // Generate a unique key for this render to prevent cache issues
+  const [renderKey] = useState(() => generateCacheKey());
   const { isReady } = useDashboardController();
   const {
     query,
@@ -32,6 +35,8 @@ const Dashboard = () => {
   } = useRoleFilter(roles);
 
   useEffect(() => {
+    console.log("Dashboard mounted with key:", renderKey);
+    
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
@@ -43,7 +48,7 @@ const Dashboard = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [renderKey]);
 
   if (!isReady) {
     return (
@@ -59,7 +64,7 @@ const Dashboard = () => {
 
   return (
     <MainLayout>
-      <div className="container px-4 py-4">
+      <div className="container px-4 py-4" key={renderKey}>
         <DashboardRoleGrid 
           roles={roles} 
           filteredRoles={filteredRoles}
