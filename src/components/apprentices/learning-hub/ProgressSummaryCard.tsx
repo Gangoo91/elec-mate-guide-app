@@ -12,7 +12,6 @@ interface UnitData {
   title: string;
   description: string;
   path: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
   progress?: {
     completed: number;
     total: number;
@@ -42,9 +41,9 @@ const ProgressSummaryCard = ({ units, onDeleteCourse }: ProgressSummaryCardProps
   const minutes = totalTimeSpent % 60;
   
   // Count units by difficulty
-  const beginnerUnits = units.filter(unit => unit.difficulty === 'beginner').length;
-  const intermediateUnits = units.filter(unit => unit.difficulty === 'intermediate').length;
-  const advancedUnits = units.filter(unit => unit.difficulty === 'advanced').length;
+  const beginnerUnits = 0;
+  const intermediateUnits = 0;
+  const advancedUnits = 0;
 
   // Function to handle course deletion with confirmation
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, unitNumber: string) => {
