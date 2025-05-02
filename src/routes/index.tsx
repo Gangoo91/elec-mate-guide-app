@@ -8,6 +8,7 @@ import Welcome from '@/pages/Welcome';
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
+import TutorHubPage from "@/pages/TutorHubPage";
 import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
 
@@ -15,7 +16,7 @@ import NotFound from '@/pages/NotFound';
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Welcome />
+    element: <Dashboard />
   },
   {
     path: '/dashboard',
@@ -32,6 +33,10 @@ const routes: RouteObject[] = [
   {
     path: "/leaderboards",
     element: <LeaderboardsPage />
+  },
+  {
+    path: "/tutors",
+    element: <TutorHubPage />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)

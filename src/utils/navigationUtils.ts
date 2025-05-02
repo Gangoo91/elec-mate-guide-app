@@ -55,8 +55,8 @@ export const handleNavigationLogic = (
   }
 
   // Handle cases where someone refreshes directly on a path
-  if (location.pathname === '/') {
-    // Already home, no need for navigation
+  if (location.pathname === '/' || location.pathname === '/dashboard') {
+    // Already on dashboard, no need for navigation
     return;
   }
 
