@@ -8,15 +8,15 @@ import Welcome from '@/pages/Welcome';
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
-import TutorHubPage from "@/pages/TutorHubPage";
 import Dashboard from '@/pages/Dashboard';
+import TutorsPage from '@/pages/TutorsPage';
 import NotFound from '@/pages/NotFound';
 
 // Combine all routes
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Dashboard />
+    element: <Welcome />
   },
   {
     path: '/dashboard',
@@ -36,7 +36,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/tutors",
-    element: <TutorHubPage />
+    element: <TutorsPage />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)

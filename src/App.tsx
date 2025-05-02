@@ -17,6 +17,7 @@ const queryClient = new QueryClient({
       retry: 1,
       staleTime: 1000 * 60 * 5, // 5 minutes
       refetchOnWindowFocus: false,
+      // For React Query v5, configure error handling differently
       meta: {
         onError: (error: unknown) => {
           console.error('Query error:', error);
@@ -54,7 +55,7 @@ const App = () => {
                     // Handle regular routes
                     return <Route key={index} path={route.path} element={route.element} />;
                   })}
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
                 <Toaster />
               </BrowserRouter>

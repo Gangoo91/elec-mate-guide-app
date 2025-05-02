@@ -54,16 +54,10 @@ export const handleNavigationLogic = (
     return;
   }
 
-  // Handle cases where someone refreshes directly on a path
-  if (location.pathname === '/' || location.pathname === '/dashboard') {
-    // Already on dashboard, no need for navigation
-    return;
-  }
-
   // Default back behavior for other paths
-  if (location.pathname !== '/' && location.pathname !== '/dashboard') {
+  if (location.pathname !== '/') {
     navigate(-1);
   } else {
-    navigate('/dashboard');
+    navigate('/');
   }
 };

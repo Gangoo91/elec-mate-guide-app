@@ -24,7 +24,7 @@ const roles = [
     label: "Tutors",
     icon: <GraduationCap className="h-7 w-7 text-[#FFC900]" />,
     path: "/tutors",
-    description: "Resources for educators, training providers, and assessors.",
+    description: "Tools for colleges, training providers & assessors.",
   },
   {
     label: "Leaderboards",
@@ -55,8 +55,6 @@ const Dashboard = () => {
       });
     }, 100);
 
-    console.log("Dashboard component mounted");
-    
     return () => clearTimeout(timer);
   }, []);
 
