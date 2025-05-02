@@ -10,6 +10,10 @@ import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
 import TutorsPage from '@/pages/TutorsPage';
+import TeachingResourcesPage from '@/pages/tutors/TeachingResourcesPage';
+import LessonPlansPage from '@/pages/tutors/LessonPlansPage';
+import StudentProgressPage from '@/pages/tutors/StudentProgressPage';
+import CreateAssessmentsPage from '@/pages/tutors/CreateAssessmentsPage';
 import NotFound from '@/pages/NotFound';
 import Signup from '@/pages/Signup';
 import Login from '@/pages/Login';
@@ -43,14 +47,14 @@ const routes: RouteObject[] = [
     path: "/tutors",
     element: <TutorsPage />
   },
-  // Add tutor sub-routes
+  // Add tutor sub-routes with proper components
   {
     path: "/tutors/teaching-resources",
-    element: <TutorsPage />
+    element: <TeachingResourcesPage />
   },
   {
     path: "/tutors/lesson-plans",
-    element: <TutorsPage />
+    element: <LessonPlansPage />
   },
   {
     path: "/tutors/demonstration-guides",
@@ -58,7 +62,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/tutors/student-progress",
-    element: <TutorsPage />
+    element: <StudentProgressPage />
   },
   {
     path: "/tutors/off-the-job-monitoring",
@@ -70,7 +74,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/tutors/create-assessments",
-    element: <TutorsPage />
+    element: <CreateAssessmentsPage />
   },
   {
     path: "/tutors/grade-assessments",
