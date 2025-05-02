@@ -1,117 +1,79 @@
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User as UserIcon, CreditCard, ShieldCheck } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/useAuth";
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { User, Settings, LogOut, BookOpen, BarChart } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
-type UserMenuProps = {
-  user: any;
-  bypassAuth: boolean;
-};
-
-const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  const { userRole } = useAuth();
-  
-  // Check if user is an admin
-  const isAdmin = userRole === "admin";
-  
-  // Get queryClient safely with a try/catch to prevent errors if React Query is not initialized
-  const queryClient = React.useMemo(() => {
-    try {
-      return useQueryClient();
-    } catch (error) {
-      console.warn("QueryClient not available yet:", error);
-      return null;
-    }
-  }, []);
+const UserMenu = () => {
+  const { user, userRole, isAdmin } = useAuth();
 
   const handleLogout = async () => {
-    try {
-      await supabase.auth.signOut();
-      // Clear all queries in the cache when logging out, but only if queryClient is available
-      if (queryClient) {
-        queryClient.clear();
-      }
-      toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account",
-      });
-      navigate("/login");
-    } catch (error) {
-      toast({
-        title: "Error logging out",
-        description: "There was a problem logging you out",
-        variant: "destructive",
-      });
-    }
+    await supabase.auth.signOut();
+    window.location.href = "/";
   };
 
-  if (user || bypassAuth) {
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon" className="rounded-full border-[#FFC900]/50 bg-transparent">
-            <UserIcon className="h-5 w-5 text-[#FFC900]" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-[#22251e] border-[#FFC900]/20">
-          <DropdownMenuLabel className="text-[#FFC900]">My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-[#FFC900]/20" />
-          <DropdownMenuItem onClick={() => navigate("/profile")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
-            <UserIcon className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+  if (!user) return null;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" className="hover:bg-[#FFC900]/20 rounded-full">
+          <User className="h-5 w-5 text-[#FFC900]" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48 border border-[#FFC900]/20 bg-[#1A1C15]">
+        <DropdownMenuGroup>
+          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
+            <Link to="/profile" className="flex items-center w-full">
+              <User className="h-4 w-4 mr-2" />
+              <span>Profile</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/manage-subscription")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Manage Subscription</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => navigate("/settings")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-          
-          {/* Show Admin option only for admin users */}
-          {isAdmin && (
-            <DropdownMenuItem onClick={() => navigate("/admin")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
-              <ShieldCheck className="mr-2 h-4 w-4" />
-              <span>Admin Dashboard</span>
+
+          {userRole === 'tutor' && (
+            <DropdownMenuItem className="hover:bg-[#FFC900]/10">
+              <Link to="/tutors" className="flex items-center w-full">
+                <BookOpen className="h-4 w-4 mr-2" />
+                <span>Tutor Hub</span>
+              </Link>
             </DropdownMenuItem>
           )}
-          
-          <DropdownMenuSeparator className="bg-[#FFC900]/20" />
-          <DropdownMenuItem onClick={handleLogout} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Logout</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  }
 
-  // Display login/signup buttons for unauthenticated users (rare on desktop)
-  return (
-    <div className="hidden md:flex items-center gap-2">
-      <Button variant="ghost" onClick={() => navigate("/login")} className="text-[#FFC900] hover:bg-[#FFC900]/10">
-        Login
-      </Button>
-      <Button onClick={() => navigate("/signup")} className="bg-[#FFC900] text-[#151812] hover:bg-[#e5b700]">
-        Sign Up
-      </Button>
-    </div>
+          {isAdmin && (
+            <DropdownMenuItem className="hover:bg-[#FFC900]/10">
+              <Link to="/admin" className="flex items-center w-full">
+                <BarChart className="h-4 w-4 mr-2" />
+                <span>Admin Dashboard</span>
+              </Link>
+            </DropdownMenuItem>
+          )}
+
+          <DropdownMenuItem className="hover:bg-[#FFC900]/10">
+            <Link to="/settings" className="flex items-center w-full">
+              <Settings className="h-4 w-4 mr-2" />
+              <span>Settings</span>
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator className="bg-[#FFC900]/20" />
+
+        <DropdownMenuItem onClick={handleLogout} className="hover:bg-[#FFC900]/10">
+          <LogOut className="h-4 w-4 mr-2" />
+          <span>Logout</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
