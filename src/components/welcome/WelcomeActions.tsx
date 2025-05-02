@@ -3,12 +3,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Award } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const WelcomeActions = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleGetStarted = () => {
     console.log("Get started button clicked");
+    toast({
+      title: "Getting Started",
+      description: "Redirecting you to sign up"
+    });
     navigate("/signup");
   };
 

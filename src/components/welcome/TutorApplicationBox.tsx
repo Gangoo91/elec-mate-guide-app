@@ -16,6 +16,7 @@ const TutorApplicationBox = () => {
       description: "Redirecting you to the tutor application form"
     });
     
+    // Ensure we're navigating to the correct route
     navigate("/signup", { 
       state: { preselectedPlan: "tutor" }
     });

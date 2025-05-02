@@ -12,6 +12,9 @@ import Dashboard from '@/pages/Dashboard';
 import TutorsPage from '@/pages/TutorsPage';
 import NotFound from '@/pages/NotFound';
 import AdminPage from '@/pages/AdminPage';
+import Signup from '@/pages/Signup';
+import Login from '@/pages/Login';
+import ForgotPassword from '@/pages/ForgotPassword';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -42,6 +45,18 @@ const routes: RouteObject[] = [
   {
     path: "/admin",
     element: <AdminPage />
+  },
+  {
+    path: '/signup',
+    element: <Signup />
+  },
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
