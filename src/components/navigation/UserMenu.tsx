@@ -10,10 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, Settings, User as UserIcon, CreditCard } from "lucide-react";
+import { LogOut, Settings, User as UserIcon, CreditCard, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/hooks/useAuth";
 
 type UserMenuProps = {
   user: any;
@@ -23,6 +24,11 @@ type UserMenuProps = {
 const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { userRole } = useAuth();
+  
+  // Check if user is an admin
+  const isAdmin = userRole === "admin";
+  
   // Get queryClient safely with a try/catch to prevent errors if React Query is not initialized
   const queryClient = React.useMemo(() => {
     try {
@@ -77,6 +83,15 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, bypassAuth }) => {
             <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </DropdownMenuItem>
+          
+          {/* Show Admin option only for admin users */}
+          {isAdmin && (
+            <DropdownMenuItem onClick={() => navigate("/admin")} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
+              <ShieldCheck className="mr-2 h-4 w-4" />
+              <span>Admin Dashboard</span>
+            </DropdownMenuItem>
+          )}
+          
           <DropdownMenuSeparator className="bg-[#FFC900]/20" />
           <DropdownMenuItem onClick={handleLogout} className="text-[#FFC900]/80 focus:text-[#FFC900] focus:bg-[#FFC900]/10">
             <LogOut className="mr-2 h-4 w-4" />

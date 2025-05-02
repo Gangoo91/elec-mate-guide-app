@@ -3,7 +3,7 @@ import { useEffect, useState, createContext, useContext } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { Session, User } from "@supabase/supabase-js";
 
-type UserRole = "apprentice" | "electrician" | "tutor" | "employer";
+type UserRole = "apprentice" | "electrician" | "tutor" | "employer" | "admin";
 
 type AuthContextType = {
   session: Session | null;
@@ -11,6 +11,7 @@ type AuthContextType = {
   loading: boolean;
   userRole: UserRole | null;
   isTutorApproved: boolean;
+  isAdmin: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -19,6 +20,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   userRole: null,
   isTutorApproved: false,
+  isAdmin: false,
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -29,6 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<UserRole | null>(null);
   const [isTutorApproved, setIsTutorApproved] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Fetch user role and tutor approval status
   useEffect(() => {
@@ -39,6 +42,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Get user metadata to determine role
         const role = user.user_metadata?.plan as UserRole || null;
         setUserRole(role);
+        
+        // Check if user is an admin
+        setIsAdmin(role === "admin");
         
         // If user is a tutor, check if they are approved
         if (role === "tutor") {
@@ -63,6 +69,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (error) {
         console.error("Error fetching user details:", error);
         setIsTutorApproved(false);
+        setIsAdmin(false);
       }
     };
 
@@ -71,6 +78,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       setUserRole(null);
       setIsTutorApproved(false);
+      setIsAdmin(false);
     }
   }, [user]);
 
@@ -97,7 +105,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, user, loading, userRole, isTutorApproved }}>
+    <AuthContext.Provider value={{ session, user, loading, userRole, isTutorApproved, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );
