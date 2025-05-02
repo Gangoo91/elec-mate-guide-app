@@ -7,10 +7,11 @@ import { handleNavigationLogic } from '@/utils/navigationUtils';
 
 interface BackButtonProps {
   onClick?: () => void;
+  customAction?: () => void; // Added this prop to match how it's being used
   className?: string;
 }
 
-const BackButton = ({ onClick, className = '' }: BackButtonProps) => {
+const BackButton = ({ onClick, customAction, className = '' }: BackButtonProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +19,8 @@ const BackButton = ({ onClick, className = '' }: BackButtonProps) => {
     console.log("BackButton - Clicked with current path:", location.pathname);
     if (onClick) {
       onClick();
+    } else if (customAction) {
+      customAction();
     } else {
       handleNavigationLogic(location, navigate);
     }
