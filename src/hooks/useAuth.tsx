@@ -42,20 +42,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         // If user is a tutor, check if they are approved
         if (role === "tutor") {
-          // In a real implementation, query a tutor_approvals table
-          // For now, we'll check if the user's email contains certain keywords for demo purposes
-          // This would be replaced with a proper database query in production
-          const approvalStatus = await supabase
+          // Query the tutor_approvals table
+          const { data: approvalData, error: approvalError } = await supabase
             .from('tutor_approvals')
             .select('is_approved')
             .eq('user_id', user.id)
             .single();
             
           // If we have a record and it's approved
-          if (approvalStatus.data && approvalStatus.data.is_approved) {
+          if (approvalData && approvalData.is_approved) {
             setIsTutorApproved(true);
           } else {
             setIsTutorApproved(false);
+          }
+
+          if (approvalError && approvalError.code !== 'PGRST116') {
+            console.error("Error fetching tutor approval status:", approvalError);
           }
         }
       } catch (error) {

@@ -54,11 +54,16 @@ const Signup = () => {
     
     // If user signed up as a tutor, create an entry in tutor_approvals table
     if (data?.user && isTutor) {
-      await supabase.from('tutor_approvals').insert({
-        user_id: data.user.id,
-        is_approved: false,
-        applied_at: new Date().toISOString()
-      });
+      try {
+        await supabase
+          .from('tutor_approvals')
+          .insert({
+            user_id: data.user.id,
+            is_approved: false
+          });
+      } catch (err) {
+        console.error("Error creating tutor approval record:", err);
+      }
     }
     
     setIsSubmitting(false);

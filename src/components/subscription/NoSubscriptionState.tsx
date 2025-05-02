@@ -12,7 +12,7 @@ export const NoSubscriptionState = () => {
   const isTutorPage = location.pathname.includes("/tutors");
   
   // Don't show this component if we're on tutor page and user is an approved tutor
-  if (isTutorPage && userRole === "tutor") {
+  if (isTutorPage && userRole === "tutor" && isTutorApproved) {
     return null;
   }
   

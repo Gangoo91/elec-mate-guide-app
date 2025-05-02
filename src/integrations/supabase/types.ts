@@ -1287,6 +1287,33 @@ export type Database = {
         }
         Relationships: []
       }
+      tutor_approvals: {
+        Row: {
+          applied_at: string
+          approved_at: string | null
+          id: string
+          is_approved: boolean
+          reviewer_notes: string | null
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          approved_at?: string | null
+          id?: string
+          is_approved?: boolean
+          reviewer_notes?: string | null
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          approved_at?: string | null
+          id?: string
+          is_approved?: boolean
+          reviewer_notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_courses: {
         Row: {
           completed: number | null
