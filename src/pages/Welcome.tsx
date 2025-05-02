@@ -62,6 +62,11 @@ const Welcome = () => {
     }, 300);
   };
 
+  const handleTutorApply = () => {
+    // Navigate to signup with tutor plan preselected
+    navigate("/signup", { state: { preselectedPlan: "tutor" } });
+  };
+
   return (
     <div className="min-h-screen bg-[#151812] flex flex-col items-center justify-center p-4 overflow-hidden">
       <div className="w-full max-w-md flex flex-col items-center text-center animate-fade-in">
@@ -87,7 +92,7 @@ const Welcome = () => {
           <Button 
             variant="outline" 
             className="w-full border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10"
-            onClick={() => navigate("/signup")}
+            onClick={handleTutorApply}
           >
             Apply Now
           </Button>

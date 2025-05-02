@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -25,6 +25,15 @@ const Signup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check for preselected plan from navigation state
+  useEffect(() => {
+    const state = location.state as { preselectedPlan?: string } | null;
+    if (state?.preselectedPlan) {
+      handlePlanChange(state.preselectedPlan);
+    }
+  }, [location.state]);
 
   const onPlanChange = (value: string) => handlePlanChange(value);
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => handleEmailChange(e.target.value);
