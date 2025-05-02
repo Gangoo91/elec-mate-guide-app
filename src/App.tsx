@@ -9,6 +9,8 @@ import { NotificationProvider } from '@/contexts/NotificationContext';
 import './App.css';
 
 const App = () => {
+  console.log("App rendering with routes:", routes.length);
+  
   return (
     <ErrorBoundary>
       <AuthProvider>
@@ -34,7 +36,7 @@ const App = () => {
                 // Handle regular routes
                 return <Route key={index} path={route.path} element={route.element} />;
               })}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
             <Toaster />
           </BrowserRouter>

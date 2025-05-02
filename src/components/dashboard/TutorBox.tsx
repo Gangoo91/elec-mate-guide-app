@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const TutorBox = () => {
   const navigate = useNavigate();
+  
+  console.log("TutorBox rendering");
 
   return (
     <Card className="bg-[#22251e] border-[#FFC900]/20 shadow-lg">

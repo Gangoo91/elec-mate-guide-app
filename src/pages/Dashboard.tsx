@@ -47,6 +47,9 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Add console log to debug rendering
+  console.log("Dashboard rendering, isReady:", isReady);
+
   if (!isReady) {
     return (
       <MainLayout>
@@ -73,7 +76,7 @@ const Dashboard = () => {
             />
           </div>
           
-          <div>
+          <div className="md:col-span-1">
             <TutorBox />
           </div>
         </div>
