@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeRoutes from './apprentice';
@@ -9,7 +8,6 @@ import ApprenticeHub from "@/pages/ApprenticeHub";
 import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
-import TutorsPage from '@/pages/TutorsPage';
 import NotFound from '@/pages/NotFound';
 
 // Combine all routes
@@ -33,10 +31,6 @@ const routes: RouteObject[] = [
   {
     path: "/leaderboards",
     element: <LeaderboardsPage />
-  },
-  {
-    path: "/tutors",
-    element: <TutorsPage />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
