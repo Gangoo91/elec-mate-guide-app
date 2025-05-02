@@ -1287,6 +1287,54 @@ export type Database = {
         }
         Relationships: []
       }
+      user_courses: {
+        Row: {
+          completed: number | null
+          created_at: string
+          description: string
+          estimated_time: number | null
+          id: string
+          last_activity: string | null
+          path: string
+          time_spent: number | null
+          title: string
+          total: number | null
+          unit_number: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: number | null
+          created_at?: string
+          description: string
+          estimated_time?: number | null
+          id?: string
+          last_activity?: string | null
+          path: string
+          time_spent?: number | null
+          title: string
+          total?: number | null
+          unit_number: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: number | null
+          created_at?: string
+          description?: string
+          estimated_time?: number | null
+          id?: string
+          last_activity?: string | null
+          path?: string
+          time_spent?: number | null
+          title?: string
+          total?: number | null
+          unit_number?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_progress: {
         Row: {
           content_id: string
