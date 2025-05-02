@@ -11,6 +11,7 @@ import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
 import TutorsPage from '@/pages/TutorsPage';
 import NotFound from '@/pages/NotFound';
+import AdminPage from '@/pages/AdminPage';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -37,6 +38,10 @@ const routes: RouteObject[] = [
   {
     path: "/tutors",
     element: <TutorsPage />
+  },
+  {
+    path: "/admin",
+    element: <AdminPage />
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
