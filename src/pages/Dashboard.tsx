@@ -49,6 +49,8 @@ const Dashboard = () => {
       });
     }, 100);
 
+    console.log("Dashboard component mounted");
+    
     return () => clearTimeout(timer);
   }, []);
 
