@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, School, Users, Calendar, Award, CheckSquare, Clock } from "lucide-react";
+import { BookOpen, School, Users, Calendar, Award, CheckSquare, Clock, Trophy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ApprenticeHub = () => {
@@ -155,7 +155,7 @@ const ApprenticeHub = () => {
         </TabsContent>
         
         <TabsContent value="community">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card 
               className="cursor-pointer hover:border-primary/50 transition-all"
               onClick={() => handleCardClick('/apprentices/mentorship')}
@@ -179,6 +179,20 @@ const ApprenticeHub = () => {
               </CardHeader>
               <CardContent>
                 <p>Ask questions, share knowledge, and connect with other electrical apprentices.</p>
+              </CardContent>
+            </Card>
+            
+            <Card 
+              className="cursor-pointer hover:border-primary/50 transition-all"
+              onClick={() => handleCardClick('/leaderboards')}
+            >
+              <CardHeader>
+                <Trophy className="h-6 w-6 text-primary mb-2" />
+                <CardTitle>Leaderboards</CardTitle>
+                <CardDescription>Recognition and achievement tracking</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>View top performers in learning, mentorship, and community contribution.</p>
               </CardContent>
             </Card>
           </div>

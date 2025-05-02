@@ -1,6 +1,6 @@
 
 import React, { useEffect } from "react";
-import { Book, Lightbulb } from "lucide-react";
+import { Book, Lightbulb, Trophy } from "lucide-react";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
@@ -19,6 +19,12 @@ const roles = [
     icon: <Lightbulb className="h-7 w-7 text-[#FFC900]" />,
     path: "/electricians",
     description: "Professional resources for licensed electricians.",
+  },
+  {
+    label: "Leaderboards",
+    icon: <Trophy className="h-7 w-7 text-[#FFC900]" />,
+    path: "/leaderboards",
+    description: "Recognition for top performers across the community.",
   }
 ];
 
