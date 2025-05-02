@@ -14,7 +14,6 @@ import NotFound from '@/pages/NotFound';
 import Signup from '@/pages/Signup';
 import Login from '@/pages/Login';
 import ForgotPassword from '@/pages/ForgotPassword';
-import AdminRoutes from './AdminRoutes';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -54,7 +53,6 @@ const routes: RouteObject[] = [
     path: '/forgot-password',
     element: <ForgotPassword />
   },
-  ...AdminRoutes,
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes)
 ];

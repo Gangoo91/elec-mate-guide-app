@@ -10,12 +10,12 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { User, Settings, LogOut, BookOpen, BarChart } from 'lucide-react';
+import { User, Settings, LogOut, BookOpen } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 
 const UserMenu = () => {
-  const { user, userRole, isAdmin } = useAuth();
+  const { user, userRole, isTutorApproved } = useAuth();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -45,15 +45,6 @@ const UserMenu = () => {
               <Link to="/tutors" className="flex items-center w-full">
                 <BookOpen className="h-4 w-4 mr-2" />
                 <span>Tutor Hub</span>
-              </Link>
-            </DropdownMenuItem>
-          )}
-
-          {isAdmin && (
-            <DropdownMenuItem className="hover:bg-[#FFC900]/10">
-              <Link to="/admin" className="flex items-center w-full">
-                <BarChart className="h-4 w-4 mr-2" />
-                <span>Admin Dashboard</span>
               </Link>
             </DropdownMenuItem>
           )}
