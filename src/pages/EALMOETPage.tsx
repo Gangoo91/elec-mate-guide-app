@@ -17,38 +17,38 @@ const EALMOETPage = () => {
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
-          title="EAL MOET Courses"
-          description="Maintenance and Operations Engineering Technician electrical qualifications"
+          title="EAL Maintenance and Operations Engineering Technician"
+          description="Resources for EAL MOET qualification pathway"
           customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 gap-6 mt-8">
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="pt-6">
-              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">MOET Modules</h2>
+              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">MOET Pathway Modules</h2>
               
               <SectionContent 
-                title="Electrical Maintenance"
-                path="/apprentices/study-materials/eal/moet/electrical-maintenance"
-                description="Core maintenance principles for electrical systems and equipment"
+                title="Electrical Maintenance Principles"
+                path="/apprentices/study-materials/eal/moet/electrical"
+                description="Principles and practices for maintaining electrical systems"
+              />
+              
+              <SectionContent 
+                title="Electronic Control Systems"
+                path="/apprentices/study-materials/eal/moet/control-systems"
+                description="Electronic and digital control systems for industrial applications"
               />
               
               <SectionContent 
                 title="Fault Finding Techniques"
                 path="/apprentices/study-materials/eal/moet/fault-finding"
-                description="Systematic approaches to identifying and resolving electrical faults"
+                description="Advanced diagnostic methods for complex systems"
               />
               
               <SectionContent 
-                title="Control Systems"
-                path="/apprentices/study-materials/eal/moet/control-systems"
-                description="Installation and maintenance of electrical control systems"
-              />
-              
-              <SectionContent 
-                title="Health & Safety"
-                path="/apprentices/study-materials/eal/moet/health-safety"
-                description="Safety procedures and practices for electrical maintenance operations"
+                title="Maintenance Planning"
+                path="/apprentices/study-materials/eal/moet/planning"
+                description="Scheduling and organizing preventative and reactive maintenance"
               />
             </CardContent>
           </Card>

@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom';
 import LearningHubPage from "@/pages/LearningHubPage";
 import ApprenticesPage from "@/pages/ApprenticesPage";
 import MOETPage from "@/pages/MOETPage";
+import StudyMaterialsPage from "@/pages/StudyMaterialsPage";
 
 // Main apprentice routes
 const apprenticeMainRoutes: RouteObject[] = [
@@ -14,6 +15,10 @@ const apprenticeMainRoutes: RouteObject[] = [
   {
     path: '/apprentices/learning-hub',
     element: <LearningHubPage />
+  },
+  {
+    path: '/apprentices/study-materials',
+    element: <StudyMaterialsPage />
   },
   {
     path: '/apprentices/study-materials/city-guilds/moet',

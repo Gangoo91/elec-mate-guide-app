@@ -17,38 +17,44 @@ const EALLevel3Page = () => {
     <MainLayout>
       <div className="container px-4 py-2 md:py-4 pt-16 md:pt-16">
         <PageHeader 
-          title="Level 3 EAL Courses"
-          description="Advanced electrical installation techniques and theoretical concepts"
+          title="EAL Level 3 Advanced Diploma in Electrical Installation"
+          description="Advanced units and resources for the EAL Level 3 qualification"
           customBackAction={handleBackClick}
         />
         
         <div className="grid grid-cols-1 gap-6 mt-8">
           <Card className="bg-[#22251e] border-[#FFC900]/20">
             <CardContent className="pt-6">
-              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Available Modules</h2>
+              <h2 className="text-2xl font-semibold text-[#FFC900] mb-4">Core Units</h2>
               
               <SectionContent 
-                title="Electrical Systems Design"
-                path="/apprentices/study-materials/eal/level-3/electrical-design"
-                description="Advanced design principles for electrical installations and systems"
+                title="ELEC3/01 – Advanced Electrical Science and Principles"
+                path="/apprentices/study-materials/eal/level-3/advanced-science"
+                description="Complex electrical theory and calculations for advanced installations"
               />
               
               <SectionContent 
-                title="Electrical Scientific Principles and Technologies"
-                path="/apprentices/study-materials/eal/level-3/principles-technologies"
-                description="Complex electrical theory including three-phase systems and motor control"
+                title="ELEC3/02 – Installation Design and Planning"
+                path="/apprentices/study-materials/eal/level-3/design-planning"
+                description="Designing and planning complex electrical installations"
               />
               
               <SectionContent 
-                title="Fault Diagnosis and Rectification"
-                path="/apprentices/study-materials/eal/level-3/fault-diagnosis"
-                description="Systematic approaches to finding and fixing electrical faults"
-              />
-              
-              <SectionContent 
-                title="Inspection, Testing and Commissioning"
+                title="ELEC3/03 – Inspection, Testing and Commissioning"
                 path="/apprentices/study-materials/eal/level-3/inspection-testing"
-                description="Procedures for verifying electrical installations meet required standards"
+                description="Advanced testing techniques for electrical installations"
+              />
+              
+              <SectionContent 
+                title="ELEC3/04 – Fault Diagnosis and Rectification"
+                path="/apprentices/study-materials/eal/level-3/fault-diagnosis"
+                description="Locating and repairing faults in complex electrical systems"
+              />
+              
+              <SectionContent 
+                title="ELEC3/05 – Electrical Systems and Building Services"
+                path="/apprentices/study-materials/eal/level-3/building-services"
+                description="Integration of electrical systems with building services"
               />
             </CardContent>
           </Card>
