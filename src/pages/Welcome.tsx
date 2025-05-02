@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { BadgeAlert, AlignCenter } from "lucide-react";
+import { BadgeAlert, AlignCenter, Award } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const pricingData = [
@@ -141,20 +140,31 @@ const Welcome = () => {
           </div>
         </div>
         
-        <div className="space-y-4 w-full max-w-xs">
-          <Button
-            onClick={handleGetStarted}
-            className={`w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300 ${isAnimating ? 'scale-95 opacity-70' : ''}`}
-          >
-            GET STARTED
-          </Button>
+        <div className="w-full flex flex-col gap-2">
+          <div className="space-y-4 w-full max-w-xs mx-auto">
+            <Button
+              onClick={handleGetStarted}
+              className={`w-full rounded-2xl bg-[#FFC900] hover:bg-[#f5bb13] text-black font-bold text-lg py-6 h-auto shadow transition-all duration-300 ${isAnimating ? 'scale-95 opacity-70' : ''}`}
+            >
+              GET STARTED
+            </Button>
+            
+            <Button
+              onClick={() => navigate("/login")}
+              variant="outline"
+              className="w-full rounded-2xl bg-transparent border border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10 font-bold text-lg py-6 h-auto"
+            >
+              I ALREADY HAVE AN ACCOUNT
+            </Button>
+          </div>
           
           <Button
-            onClick={() => navigate("/login")}
-            variant="outline"
-            className="w-full rounded-2xl bg-transparent border border-[#FFC900] text-[#FFC900] hover:bg-[#FFC900]/10 font-bold text-lg py-6 h-auto"
+            onClick={() => navigate("/leaderboards")}
+            variant="ghost"
+            className="mt-4 mx-auto text-[#FFC900]/80 hover:text-[#FFC900] hover:bg-[#FFC900]/10 flex items-center gap-2"
           >
-            I ALREADY HAVE AN ACCOUNT
+            <Award className="h-4 w-4" />
+            View Recognition & Leaderboards
           </Button>
         </div>
       </div>
