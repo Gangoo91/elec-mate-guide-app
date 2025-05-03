@@ -7,6 +7,7 @@ import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
 
+// Define current roles explicitly - employers section has been removed
 const roles = [
   {
     label: "Apprentices",
