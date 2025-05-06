@@ -6,6 +6,7 @@ import DashboardRoleGrid from "@/components/dashboard/DashboardRoleGrid";
 import { useRoleFilter } from "@/hooks/useRoleFilter";
 import { useDashboardController } from "@/hooks/useDashboardController";
 import DashboardHeroSection from "@/components/dashboard/DashboardHeroSection";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Define current roles explicitly - employers section has been removed
 const roles = [
@@ -40,6 +41,8 @@ const Dashboard = () => {
   } = useRoleFilter(roles);
 
   useEffect(() => {
+    console.log("Dashboard mounted, ready state:", isReady);
+    
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
@@ -51,14 +54,14 @@ const Dashboard = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isReady]);
 
   if (!isReady) {
     return (
       <MainLayout>
         <div className="container px-4 py-4">
-          <div className="flex items-center justify-center h-screen">
-            <div className="animate-pulse">Loading dashboard...</div>
+          <div className="flex items-center justify-center h-[60vh]">
+            <LoadingSpinner size="lg" className="text-[#FFC900]" label="Loading dashboard..." />
           </div>
         </div>
       </MainLayout>

@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -10,25 +11,18 @@ export function useDashboardController() {
   const previousPathRef = useRef<string | null>(null);
   
   useEffect(() => {
-    // Only reset state when the actual path changes
-    if (previousPathRef.current !== location.pathname) {
-      // Store the current path to track changes
+    // Always mark as not ready first to ensure we get a clean render
+    setIsReady(false);
+    
+    // Small delay to ensure the DOM is ready
+    const timer = setTimeout(() => {
+      // Store the current path
       previousPathRef.current = location.pathname;
-      
-      // Force a re-render and clear any cached state
-      setIsReady(false);
-      
-      // Small timeout to ensure DOM is ready, but keep it very short
-      const timer = setTimeout(() => {
-        console.log("Dashboard controller ready", location.pathname);
-        setIsReady(true);
-      }, 10); // Reduced timeout for faster rendering
-      
-      return () => clearTimeout(timer);
-    } else {
-      // If it's the same path, we should still be ready
+      console.log("Dashboard controller ready", location.pathname);
       setIsReady(true);
-    }
+    }, 20);
+    
+    return () => clearTimeout(timer);
   }, [location.pathname]);
   
   return { isReady };
