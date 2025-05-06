@@ -10,6 +10,7 @@ import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
 import NotFound from '@/pages/NotFound';
+import { AuthRoutes } from './AuthRoutes';
 
 // Combine all routes
 const routes: RouteObject[] = [
@@ -35,6 +36,7 @@ const routes: RouteObject[] = [
   },
   ...ApprenticeRoutes,
   ...createRoutesFromElements(ElectricianRoutes),
+  ...createRoutesFromElements(AuthRoutes),
   {
     path: "*", 
     element: <NotFound />
