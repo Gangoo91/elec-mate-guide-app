@@ -47,6 +47,18 @@ const App = () => {
     };
     
     cleanStaleCache();
+    
+    // Add a handler for when the page is reloaded/refreshed
+    const handleBeforeUnload = () => {
+      // Store current location to restore after refresh
+      sessionStorage.setItem('lastPath', window.location.pathname);
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   return (

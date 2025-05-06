@@ -43,6 +43,9 @@ const Dashboard = () => {
   useEffect(() => {
     console.log("Dashboard mounted, ready state:", isReady);
     
+    // Clear any stored navigation path to prevent redirection loops
+    sessionStorage.removeItem('lastPath');
+    
     // Apply animations after component mounts without clearing caches
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
@@ -56,6 +59,7 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, [isReady]);
 
+  // If the component is not ready yet, show a loading indicator
   if (!isReady) {
     return (
       <MainLayout>

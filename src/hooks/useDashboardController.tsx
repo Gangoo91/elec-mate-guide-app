@@ -22,7 +22,23 @@ export function useDashboardController() {
       setIsReady(true);
     }, 20);
     
-    return () => clearTimeout(timer);
+    // Check if we're coming from a page refresh
+    const checkPageRefresh = () => {
+      const lastPath = sessionStorage.getItem('lastPath');
+      
+      // If we have a stored path and we're at root, it was likely a refresh
+      if (lastPath && location.pathname === '/') {
+        console.log("Detected page refresh, restoring path:", lastPath);
+        // Clear the stored path so we don't redirect again
+        sessionStorage.removeItem('lastPath');
+      }
+    };
+    
+    checkPageRefresh();
+    
+    return () => {
+      clearTimeout(timer);
+    };
   }, [location.pathname]);
   
   return { isReady };

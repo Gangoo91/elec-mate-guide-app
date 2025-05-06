@@ -1,4 +1,3 @@
-
 import { Location, NavigateFunction } from 'react-router-dom';
 import { handleStudyRoutes } from './navigation/studyRoutes';
 
@@ -7,6 +6,15 @@ export const handleNavigationLogic = (
   navigate: NavigateFunction
 ): void => {
   console.log("NavigationUtils - Handling navigation from:", location.pathname);
+
+  // Check if this is a page refresh navigation
+  const lastPath = sessionStorage.getItem('lastPath');
+  if (lastPath && location.pathname === '/') {
+    console.log("Restoring navigation after refresh to:", lastPath);
+    sessionStorage.removeItem('lastPath');
+    navigate(lastPath);
+    return;
+  }
 
   // Handle study material routes first
   if (location.pathname.includes('/study-materials') && handleStudyRoutes) {
@@ -55,9 +63,9 @@ export const handleNavigationLogic = (
     return;
   }
   
-  // Handling dashboard
+  // Handling dashboard - redirect to dashboard instead of root for better UX
   if (location.pathname === '/dashboard') {
-    navigate('/');
+    // Keep on dashboard, don't navigate away
     return;
   }
 
@@ -68,11 +76,13 @@ export const handleNavigationLogic = (
     // Stay on the current page, it's a valid route
     return;
   }
+  
+  // Root path - show the dashboard or welcome page
+  if (location.pathname === '/') {
+    // Stay at root, don't navigate
+    return;
+  }
 
   // Default back behavior for other paths
-  if (location.pathname !== '/') {
-    navigate(-1);
-  } else {
-    navigate('/');
-  }
+  navigate(-1);
 };
