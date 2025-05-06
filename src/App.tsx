@@ -31,6 +31,22 @@ const App = () => {
   useEffect(() => {
     // Log when the app mounts to help with debugging
     console.log('App mounted, initializing application');
+    
+    // Clean up any stale cache that might be causing navigation issues
+    const cleanStaleCache = () => {
+      if ('caches' in window) {
+        caches.keys().then(cacheNames => {
+          cacheNames.forEach(cacheName => {
+            if (cacheName.includes('runtime')) {
+              console.log('Cleaning stale cache:', cacheName);
+              caches.delete(cacheName);
+            }
+          });
+        });
+      }
+    };
+    
+    cleanStaleCache();
   }, []);
 
   return (

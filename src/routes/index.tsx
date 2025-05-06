@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { RouteObject } from 'react-router-dom';
 import ApprenticeRoutes from './apprentice';
@@ -33,7 +34,11 @@ const routes: RouteObject[] = [
     element: <LeaderboardsPage />
   },
   ...ApprenticeRoutes,
-  ...createRoutesFromElements(ElectricianRoutes)
+  ...createRoutesFromElements(ElectricianRoutes),
+  {
+    path: "*", 
+    element: <NotFound />
+  }
 ];
 
 export default routes;

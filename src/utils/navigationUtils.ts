@@ -9,8 +9,9 @@ export const handleNavigationLogic = (
   console.log("NavigationUtils - Handling navigation from:", location.pathname);
 
   // Handle study material routes first
-  if (handleStudyRoutes(location, navigate)) {
-    return;
+  if (location.pathname.includes('/study-materials') && handleStudyRoutes) {
+    const handled = handleStudyRoutes(location, navigate);
+    if (handled) return;
   }
 
   // Learning Hub to Apprentices
@@ -51,6 +52,20 @@ export const handleNavigationLogic = (
   // Study Materials to Apprentices
   if (location.pathname === '/apprentices/study-materials') {
     navigate('/apprentices');
+    return;
+  }
+  
+  // Handling dashboard
+  if (location.pathname === '/dashboard') {
+    navigate('/');
+    return;
+  }
+
+  // If all pages are blank, ensure we always navigate correctly to a valid page
+  if (location.pathname === '/leaderboards' || 
+      location.pathname === '/electricians' ||
+      location.pathname === '/apprentices') {
+    // Stay on the current page, it's a valid route
     return;
   }
 
