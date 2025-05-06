@@ -1,9 +1,9 @@
 
-import { Location } from 'react-router-dom';
+import { Location, NavigateFunction } from 'react-router-dom';
 
 export const handleProjectRoutes = (
   location: Location,
-  navigate: (to: string) => void
+  navigate: NavigateFunction
 ): boolean => {
   const projectNavigationMap: Record<string, string> = {
     '/electricians/project-management': '/electricians/project-overview',

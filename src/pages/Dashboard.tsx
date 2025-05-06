@@ -46,7 +46,7 @@ const Dashboard = () => {
     // Clear any stored navigation path to prevent redirection loops
     sessionStorage.removeItem('lastPath');
     
-    // Apply animations after component mounts without clearing caches
+    // Apply animations after component mounts
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll('.animate-on-load');
       elements.forEach((el, i) => {

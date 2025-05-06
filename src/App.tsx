@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import routes from './routes';
 import { AuthProvider } from '@/hooks/useAuth';
 import { Toaster } from '@/components/ui/toaster';
@@ -27,6 +27,46 @@ const queryClient = new QueryClient({
   },
 });
 
+// Router component to handle navigation
+const AppRoutes = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('Current route:', location.pathname);
+    
+    // Store current location on page changes to restore after refresh
+    if (location.pathname !== '/') {
+      sessionStorage.setItem('lastPath', location.pathname);
+    }
+  }, [location.pathname]);
+
+  return (
+    <Routes>
+      {routes.map((route, index) => {
+        // Handle nested routes
+        if (route.children) {
+          return (
+            <Route key={index} path={route.path} element={route.element}>
+              {route.children.map((childRoute, childIndex) => (
+                <Route 
+                  key={`${index}-${childIndex}`} 
+                  path={childRoute.path} 
+                  element={childRoute.element} 
+                />
+              ))}
+            </Route>
+          );
+        }
+        
+        // Handle regular routes
+        return <Route key={index} path={route.path} element={route.element} />;
+      })}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+};
+
 const App = () => {
   useEffect(() => {
     // Log when the app mounts to help with debugging
@@ -51,7 +91,11 @@ const App = () => {
     // Add a handler for when the page is reloaded/refreshed
     const handleBeforeUnload = () => {
       // Store current location to restore after refresh
-      sessionStorage.setItem('lastPath', window.location.pathname);
+      const currentPath = window.location.pathname;
+      if (currentPath !== '/') {
+        sessionStorage.setItem('lastPath', currentPath);
+        console.log('Stored path before unload:', currentPath);
+      }
     };
     
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -68,28 +112,7 @@ const App = () => {
           <NotificationProvider>
             <ChatProvider>
               <BrowserRouter>
-                <Routes>
-                  {routes.map((route, index) => {
-                    // Handle nested routes
-                    if (route.children) {
-                      return (
-                        <Route key={index} path={route.path} element={route.element}>
-                          {route.children.map((childRoute, childIndex) => (
-                            <Route 
-                              key={`${index}-${childIndex}`} 
-                              path={childRoute.path} 
-                              element={childRoute.element} 
-                            />
-                          ))}
-                        </Route>
-                      );
-                    }
-                    
-                    // Handle regular routes
-                    return <Route key={index} path={route.path} element={route.element} />;
-                  })}
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
+                <AppRoutes />
                 <Toaster />
               </BrowserRouter>
             </ChatProvider>

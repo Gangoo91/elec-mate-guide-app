@@ -1,5 +1,7 @@
+
 import { Location, NavigateFunction } from 'react-router-dom';
 import { handleStudyRoutes } from './navigation/studyRoutes';
+import { handleProjectRoutes } from './navigation/projectRoutes';
 
 export const handleNavigationLogic = (
   location: Location,
@@ -19,6 +21,16 @@ export const handleNavigationLogic = (
   // Handle study material routes first
   if (location.pathname.includes('/study-materials') && handleStudyRoutes) {
     const handled = handleStudyRoutes(location, navigate);
+    if (handled) return;
+  }
+
+  // Handle project-related routes
+  if (handleProjectRoutes && (
+      location.pathname.includes('/project-') || 
+      location.pathname.includes('/templates') ||
+      location.pathname.includes('/job-scheduling')
+    )) {
+    const handled = handleProjectRoutes(location, navigate);
     if (handled) return;
   }
 
@@ -60,6 +72,21 @@ export const handleNavigationLogic = (
   // Study Materials to Apprentices
   if (location.pathname === '/apprentices/study-materials') {
     navigate('/apprentices');
+    return;
+  }
+  
+  // Electricians routes - ensure they stay on their pages
+  if (location.pathname === '/electricians' || 
+      location.pathname.includes('/electricians/toolbox-talk') ||
+      location.pathname.includes('/electricians/learning-hub')) {
+    // Stay on the current page, it's a valid route
+    return;
+  }
+
+  // Special handling for electricians chat room
+  if (location.pathname === '/electricians/toolbox-talk/chat') {
+    // Stay on the chat page, don't navigate away
+    console.log("Staying on chat room page");
     return;
   }
   
