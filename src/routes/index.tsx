@@ -9,6 +9,7 @@ import ApprenticeHub from "@/pages/ApprenticeHub";
 import LearningHubPage from "@/pages/LearningHubPage";
 import LeaderboardsPage from "@/pages/LeaderboardsPage";
 import Dashboard from '@/pages/Dashboard';
+import StudyMaterialsPage from '@/pages/StudyMaterialsPage';
 import NotFound from '@/pages/NotFound';
 import { AuthRoutes } from './AuthRoutes';
 
@@ -29,6 +30,10 @@ const routes: RouteObject[] = [
   {
     path: "/apprentices/learning-hub",
     element: <LearningHubPage />
+  },
+  {
+    path: "/apprentices/study-materials",
+    element: <StudyMaterialsPage />
   },
   {
     path: "/leaderboards",

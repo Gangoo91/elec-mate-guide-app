@@ -17,7 +17,6 @@ const queryClient = new QueryClient({
       retry: 1,
       staleTime: 1000 * 60 * 5, // 5 minutes
       refetchOnWindowFocus: false,
-      // For React Query v5, configure error handling differently
       meta: {
         onError: (error: unknown) => {
           console.error('Query error:', error);
@@ -30,15 +29,9 @@ const queryClient = new QueryClient({
 // Router component to handle navigation
 const AppRoutes = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     console.log('Current route:', location.pathname);
-    
-    // Store current location on page changes to restore after refresh
-    if (location.pathname !== '/') {
-      sessionStorage.setItem('lastPath', location.pathname);
-    }
   }, [location.pathname]);
 
   return (
@@ -69,40 +62,7 @@ const AppRoutes = () => {
 
 const App = () => {
   useEffect(() => {
-    // Log when the app mounts to help with debugging
     console.log('App mounted, initializing application');
-    
-    // Clean up any stale cache that might be causing navigation issues
-    const cleanStaleCache = () => {
-      if ('caches' in window) {
-        caches.keys().then(cacheNames => {
-          cacheNames.forEach(cacheName => {
-            if (cacheName.includes('runtime')) {
-              console.log('Cleaning stale cache:', cacheName);
-              caches.delete(cacheName);
-            }
-          });
-        });
-      }
-    };
-    
-    cleanStaleCache();
-    
-    // Add a handler for when the page is reloaded/refreshed
-    const handleBeforeUnload = () => {
-      // Store current location to restore after refresh
-      const currentPath = window.location.pathname;
-      if (currentPath !== '/') {
-        sessionStorage.setItem('lastPath', currentPath);
-        console.log('Stored path before unload:', currentPath);
-      }
-    };
-    
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
   }, []);
 
   return (

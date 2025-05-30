@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "@/components/layout/MainLayout";
 import { Book, GraduationCap, School, TestTube } from "lucide-react";
@@ -9,7 +9,10 @@ import PageHeader from "@/components/layout/PageHeader";
 const StudyMaterialsPage = () => {
   const navigate = useNavigate();
   
-  // Add custom back navigation function
+  useEffect(() => {
+    console.log("StudyMaterialsPage component mounted");
+  }, []);
+  
   const handleBackClick = () => {
     console.log("StudyMaterialsPage - Back button clicked, navigating to /apprentices");
     navigate('/apprentices');
